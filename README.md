@@ -1,6 +1,5 @@
 
-<!-- ![alt text](https://github.com/sulianthual/thebookofthings/blob/master/screenshot.jpg?raw=true) -->
-![alt text](screenshot.jpg?raw=true)
+![alt text](https://github.com/sulianthual/thebookofthings/blob/master/screenshot.jpg?raw=true)
 
 The Book of Things
 
