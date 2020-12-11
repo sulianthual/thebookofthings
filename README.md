@@ -3,7 +3,7 @@
 
 <h4>The Book of Things</h4>
 
-code by Sulian Thual 
+code by Sulian Thual (2020)
 
 A simple adventure game with a twist: you draw and write everything! Made this to learn object-oriented python in a fun way. WIP
 
