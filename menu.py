@@ -22,6 +22,7 @@ import utils
 import tests
 import chapter0
 import chapter1
+import chapter2
 
 
 ##########################################################
@@ -85,7 +86,8 @@ class obj_scene_titlescreen:
         share.screen.blit(share.fonts.font30.render('[Up/Down: Select]  [Enter: Read]',True,(0,0,0)),(550,350)) 
         share.screen.blit(share.fonts.font30.render('Erase Book',True,(0,0,0)),(550,380))
         share.screen.blit(share.fonts.font30.render('Prologue',True,(0,0,0)),(550,410))
-        if share.savefile.chapter>0: share.screen.blit(share.fonts.font30.render('Chapter I: The Hero',True,(0,0,0)),(550,440))                
+        if share.savefile.chapter>0: share.screen.blit(share.fonts.font30.render('Chapter I: The Hero',True,(0,0,0)),(550,440))  
+        if share.savefile.chapter>1: share.screen.blit(share.fonts.font30.render('Chapter II: A House',True,(0,0,0)),(550,470))                
         # Select Chapter
         share.screen.blit(share.fonts.font30.render('---',True,(0,0,0)),(510,410+self.ichapter*30))
         if self.imgpen: share.screen.blit(self.imgpen,(470,360+self.ichapter*30))
@@ -99,6 +101,8 @@ class obj_scene_titlescreen:
                 self.creator.scene=chapter0.obj_scene_prologue(self.creator)
             elif self.ichapter==1:
                 self.creator.scene=chapter1.obj_scene_chapter1(self.creator)
+            elif self.ichapter==2:
+                self.creator.scene=chapter2.obj_scene_chapter2(self.creator)
         # Quit Game with Esc
         if controls.esc and controls.escc: share.quitgame()
             

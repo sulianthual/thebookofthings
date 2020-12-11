@@ -94,11 +94,13 @@ class obj_colors:
         self.brown=(165,42,42)
         # 
         # Specific colors for some game elements
+        self.book=self.blue# anything book of thing
         self.input=self.red# input text color
         self.hero=self.red# hero text color
         self.weapon=self.brown# hero weapon text color
         self.itemloved=self.green
         self.itemhated=self.blue
+        self.house=self.red# hero house
         
 ####################################################################################################################
 # Brushes used for drawing

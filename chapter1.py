@@ -248,6 +248,21 @@ class obj_scene_ch1p9(utils.obj_page):
         self.world.update(controls)
     def prevpage(self):
         self.creator.scene=obj_scene_ch1p8(self.creator) 
-    # def nextpage(self):
-    #     self.creator.scene=obj_scene_ch1p10(self.creator) 
+    def nextpage(self): 
+        self.creator.scene=obj_scene_ch1p10(self.creator)# next scene
             
+class obj_scene_ch1p10(utils.obj_page):
+    def setup(self):        
+        self.text=['That was what, in the book of things, the hero ',('{heroname}',share.colors.hero),' was, ',\
+                   'and ',('{heroname}',share.colors.hero),' the hero was going to do a lot of things in the book of things.'
+                   '[Tab: Back]   [Enter: Continue]']
+        self.animation1=draw.obj_animation('herozoom','herohead',(640,360))# head anim
+        self.animation1.addimage('herohead_happy')# 
+    def page(self,controls):
+        self.animation1.update(controls)# used when recording anim
+    def prevpage(self):
+        self.creator.scene=obj_scene_ch1p9(self.creator) 
+    def nextpage(self): 
+        share.savefile.chapter=max(share.savefile.chapter,2)# update progress to chapter 2
+        share.savefile.save()# save progress in file
+        super().nextpage()
