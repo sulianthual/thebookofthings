@@ -104,24 +104,28 @@ class obj_scene_ch1p3(utils.obj_page):
 class obj_scene_ch1p4(utils.obj_page):
     def setup(self):       
         self.text=['Soon ',('{heroname}',share.colors.hero),' remembered he had forgotten his head somewhere. ',\
-            'The hero head, facing slightly to the right, looked like this [Draw].',\
-            'Sometimes, the hero was very happy, and sometimes very angry. [Draw].',\
-                   '[Tab: Back]   [Enter: Continue]']
-        self.drawing1=draw.obj_drawing('herohead',(340,460))
-        self.drawing1.legend='Hero Head'
-        self.drawing2=draw.obj_drawing('herohead_happy',(640,460))
-        self.drawing2.legend='Happy'
-        self.drawing3=draw.obj_drawing('herohead_angry',(940,460))
-        self.drawing3.legend='Angry'
+            'The hero head, facing slightly to the right, looked like this, ',\
+            'and was sometimes very happy or angry.',\
+            '\n\nIt was easier to first draw the head contours then draw all the faces. ',\
+                   '\n[Tab: Back]   [Enter: Continue]']
+        self.drawing0=draw.obj_drawing('herohead_contours',(190,460))
+        self.drawing0.legend='Head Contours'    
+        self.drawing1=draw.obj_drawing('herohead',(490,460),base=self.drawing0)
+        self.drawing1.legend='Normal Face'
+        self.drawing2=draw.obj_drawing('herohead_happy',(790,460),base=self.drawing0)
+        self.drawing2.legend='Happy Face'
+        self.drawing3=draw.obj_drawing('herohead_angry',(1090,460),base=self.drawing0)
+        self.drawing3.legend='Angry Face'
+        self.drawlist=[self.drawing0,self.drawing1, self.drawing2, self.drawing3]
     def page(self,controls):
-        for i in [self.drawing1, self.drawing2, self.drawing3]:
+        for i in self.drawlist:
             i.display()
             i.update(controls)
     def prevpage(self):
-        for i in [self.drawing1, self.drawing2, self.drawing3]: i.finish()
+        for i in self.drawlist: i.finish()
         self.creator.scene=obj_scene_ch1p3(self.creator)
     def nextpage(self):
-        for i in [self.drawing1, self.drawing2, self.drawing3]: i.finish()
+        for i in self.drawlist: i.finish()
         self.creator.scene=obj_scene_ch1p5(self.creator)# next scene   
 
 
@@ -195,28 +199,33 @@ class obj_scene_ch1p7(utils.obj_page):
         
 class obj_scene_ch1p8(utils.obj_page):
     def setup(self):        
-        self.text=[('{heroname}',share.colors.hero),' was a fierce fighter with his favorite ',('weapon',share.colors.weapon),', that could strike things. ',\
-            'The ',('weapon',share.colors.weapon),' was called like this [Write], and ',\
-            'when striking things to the right it looked like this [Draw].',\
+        self.text=[('{heroname}',share.colors.hero),' was a fierce fighter. ',\
+            'His ',('weapon',share.colors.weapon),' could strike things to the right like this [Draw]. '\
+            ' When destroyed things would leave behind a trail of ',('smoke',share.colors.weapon),'. '\
             ' [Tab: Back]   [Enter: Continue]']
-        self.drawing=draw.obj_drawing('herostrike',(680,490))
+        self.drawing=draw.obj_drawing('herostrike',(480,490))
         self.drawing.legend='Weapon Strike'
-        self.image1=draw.obj_image('herohead_angry',(440,410))
-        self.image2=draw.obj_image('herolegs_stand',(440,570))
+
+        self.drawing2=draw.obj_drawing('smoke',(880,490))
+        self.drawing2.legend='Smoke'
+
+        self.image1=draw.obj_image('herohead_angry',(240,410))
+        self.image2=draw.obj_image('herolegs_stand',(240,570))
         self.textinput1=draw.obj_textinput('weaponname',25,(650,260),color=share.colors.hero)# input keyword, max characters, position
         self.textinput1.legend='Weapon Name'
     def page(self,controls):
         self.image2.display()
         self.image1.display()
-        self.drawing.display()
-        self.drawing.update(controls)
+        for i in [self.drawing,self.drawing2]:
+            i.display()
+            i.update(controls)
         self.textinput1.update(controls)
     def prevpage(self):
-        self.drawing.finish()
+        for i in [self.drawing,self.drawing2]: i.finish()
         share.words.save()# resave (entire) dictionary of words in file
         self.creator.scene=obj_scene_ch1p7(self.creator)
     def nextpage(self):
-        self.drawing.finish()
+        for i in [self.drawing,self.drawing2]: i.finish()
         share.words.save()# resave (entire) dictionary of words in file
         self.creator.scene=obj_scene_ch1p9(self.creator)# next scene 
         
@@ -224,7 +233,7 @@ class obj_scene_ch1p8(utils.obj_page):
 class obj_scene_ch1p9(utils.obj_page):
     def setup(self):        
         self.text=['With his weapon ',('{weaponname}',share.colors.weapon),', ',\
-                   ('{heroname}',share.colors.hero),' could strike in the direction he was facing, by using [Left Mouse]. ',\
+                   ('{heroname}',share.colors.hero),' could strike in the direction he was facing, by using [Left Mouse] or [Space]. ',\
                    '\nIt could break things like his most hated thing ',('{itemhated}',share.colors.itemhated),', which was cool, ',\
                    'but it could also break his favorite thing ',('{itemloved}',share.colors.itemloved),\
                    ', so it was important to be a little careful. [Tab: Back]   [Enter: Continue]']

@@ -158,11 +158,11 @@ class obj_rule_weapon_breaks_stuff(obj_rule):
         self.subject_types["subjects_stuff"]=["item_loved","item_hated"]# loved items
     def update(self,controls):
         for i in self.subjects["subjects_weapon"]:
-            if i.striking:# if weapon is striking (=active)
+            if i.striking0 or i.striking1:# if weapon is striking (first or second frame only)
                 for j in self.subjects["subjects_stuff"]:
                     if utils.checkrectcollide(i,j):
-                        j.kill()# item disappears (pickup)
-                    
+                        j.destroy()# item is destroyed (kill+possible effect e.g. smoke)
+                        
 ####################################################################################################################
 # Actor
 
@@ -196,10 +196,12 @@ class obj_actor:
         #
     def setup(self):# add here modifications for childs 
         pass
-    def birth(self):
-        self.creator.addactor(self)# add self to world list of actors
-    def kill(self):
+    def birth(self):# add to world
+        self.creator.addactor(self)# add self to world list of actors    
+    def kill(self):# remove from world
         self.creator.removeactor(self)
+    def destroy(self):# kill with additional funcionalities (e.g. leave trailing smoke)
+        self.kill()
     def addpart(self,name,element):# add element to actor dictionary (embedded actor, image,animation or animationgroup...)
         self.dict[name]=element
     def removepart(self,name):# remove element
@@ -351,7 +353,7 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         self.timer_strikeshow.update()
         if self.timer_strikeshow.ring: self.endstrike()
     def controls_strike(self,controls):
-        if controls.mouse1 and controls.mouse1c:
+        if (controls.mouse1 and controls.mouse1c) or (controls.space and controls.spacec):
             if self.timer_strikereload.off: # reloaded
                 self.startstrike()
                 self.quickangryface()
@@ -382,8 +384,11 @@ class obj_actor_sword(obj_actor):
         term.scale(self.s)
         self.addpart("strike",term)# add to self
         self.striking=False# sword is striking or not
+        self.striking0=False# first frame of striking 
+        self.striking1=False# second frame of striking
     def startstrike(self):
         self.striking=True
+        self.striking0=True
         self.dict["strike"].show=True# show image
     def endstrike(self):
         self.striking=False
@@ -400,13 +405,36 @@ class obj_actor_sword(obj_actor):
         self.dict["strike"].y=self.y# image
         if self.padre.turnright: self.dict["strike"].ofliph()# flip image
         if self.padre.turnleft: self.dict["strike"].ifliph()# flip image
+        if self.striking:# evolve from first to second frame of striking (for hit detection)
+            if self.striking0: 
+                self.striking0=False# 
+                self.striking1=True
+            elif self.striking1:
+                self.striking1=False
 
-        
+####################################################################################################################
+# Effects Actors        
+     
+# trail of smoke when something breaks/dies
+# (created by other actors upon kill)
+class obj_actor_effects_smoke(obj_actor):
+    def setup(self):
+        self.type='smoke'
+        image=draw.obj_image('smoke',(self.xini,self.yini))
+        self.s=0.5
+        image.scale(self.s)
+        self.addpart("image",image)
+        self.timer=utils.obj_timer(30)# timer for existence
+        self.timer.start()# start timer at creation
+    def update(self,controls):
+        super().update(controls)
+        self.timer.update()
+        if self.timer.ring: self.kill()# kill upon timer end
+            
         
 ####################################################################################################################
 # Items Actors
         
-
 # loved item (static)
 class obj_actor_item_loved(obj_actor):
     def setup(self):
@@ -417,11 +445,16 @@ class obj_actor_item_loved(obj_actor):
         self.image1=draw.obj_image('herothings_loved',(self.xini,self.yini))
         self.s=0.5
         self.image1.scale(self.s)
-        self.addpart("item",self.image1)
+        self.addpart("image",self.image1)
+        self.dict["image"].legend=share.words.dict["itemloved"]
+    def destroy(self):# when destroyed, leave trailing smoke 
+        self.kill()# remove from world
+        term=obj_actor_effects_smoke(self.creator,(self.x,self.y))# trailing smoke
         
 # hated item (static)
 class obj_actor_item_hated(obj_actor_item_loved):
     def setup(self):
         super().setup()
         self.type='item_hated'
-        self.dict["item"].replaceimage('herothings_hated')
+        self.dict["image"].replaceimage('herothings_hated')
+        self.dict["image"].legend=share.words.dict["itemhated"]

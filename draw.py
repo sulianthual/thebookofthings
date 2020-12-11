@@ -62,7 +62,9 @@ class obj_textinput:
         pygame.draw.rect(share.screen, (220,0,0), \
                          (self.xytl[0], self.xytl[1], self.size[0]+self.xmargin*2,self.size[1]+self.ymargin*2), 3)     
         # frame legend
-        if self.legend:
+        self.displaylegend()
+    def displaylegend(self):
+        if self.legend:# could have a def makelegend, such that doesnt recompute/render every update
             text_surface=share.fonts.font30.render(self.legend, True, (220, 0, 0))
             text_width,text_height=text_surface.get_size()
             termx=self.xytl[0]+int(self.size[0]/2)+self.xmargin-int(text_width/2)
@@ -119,6 +121,8 @@ class obj_image:
         self.x_ini=xy[0]# xy is the CENTER of the image on screen
         self.y_ini=xy[1]
         self.reset()
+        # legend (displayed under, optional)
+        self.legend=[]    
     def reset(self):# reset image to initial
         self.img=self.img_ini
         self.x=self.x_ini
@@ -193,7 +197,14 @@ class obj_image:
             ww=int(self.imgsize[0])
             hh=int(self.imgsize[1])
             share.screen.blit(self.img,(xtl,ytl))
-            
+            self.displaylegend()
+    def displaylegend(self):
+        if self.legend:
+            text_surface=share.fonts.font50.render(self.legend, True, (0, 0, 0))
+            text_width,text_height=text_surface.get_size()
+            termx=self.x-int(text_width/2)
+            termy=self.y+int(self.imgsize[1]/2)-int(text_height/2)
+            share.screen.blit(text_surface, (termx,termy))            
     def play(self,controls):# same as display, but renamed for consitency with play() for animations, animationgroups
         self.display()
 
@@ -203,9 +214,10 @@ class obj_image:
 # A drawing (image to edit interactively by the player)
 # *DRAWING
 class obj_drawing:
-    def __init__(self,name,xy):# start new drawing (load or new)
+    def __init__(self,name,xy,base=None):# start new drawing (load or new)
         self.name=name# drawing name
         self.xy=xy# drawing position on screen (x,y), CENTER OF THE DRAWING
+        self.base=base# drawing base (drawn over, part of final drawing), must be other drawing object (same dimensions)
         # Load brush
         self.brush=share.brushes.pen# currently used brush (can be changed externally)
         # Load drawing function with mouse
@@ -230,9 +242,13 @@ class obj_drawing:
         self.drawing.blit(self.imgbase,(0,0))# add shadow
     def display(self):
         pygame.draw.rect(share.screen, (255,255,255), (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 0)# white background
-        # share.screen.blit(self.imgbase,self.xytl)# display base
+        if self.base:
+            share.screen.blit(self.base.drawing,self.xytl)# display other drawing base at 
+        # share.screen.blit(self.imgbase,self.xytl)# display shadow
         share.screen.blit(self.drawing,self.xytl)
         pygame.draw.rect(share.screen, (220,0,0), (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 3)# red borders (optional)
+        self.displaylegend()
+    def displaylegend(self):
         if self.legend:
             text_surface=share.fonts.font50.render(self.legend, True, (0, 0, 0))
             text_width,text_height=text_surface.get_size()
@@ -251,7 +267,11 @@ class obj_drawing:
         self.draw(controls)
         self.display()
     def finish(self):
-        pygame.image.save(self.drawing, 'drawings/'+self.name+'.png')# save drawing
+        term=self.drawing.copy()# final
+        term.fill((255,255,255))# erase drawing
+        if self.base: term.blit(self.base.drawing,(0,0))# add base
+        term.blit(self.drawing,(0,0))# add drawing
+        pygame.image.save(term, 'drawings/'+self.name+'.png')# save drawing
 
 # Function for drawing with mouse on a drawing (using Left Mouse)
 # (Records Mouse Position to Draw Lines between Mouse Positions each frame)

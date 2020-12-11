@@ -39,25 +39,42 @@ class obj_scene_tests:
         #####
         # ADD ALL TESTS FROM THIS MODULE HERE
         #
+        # quickdraft
         self.list.append(obj_scene_testdraftanimation(self.creator))
+        # text tests
         self.list.append(obj_scene_testsmessage(self.creator))
+        self.list.append(obj_scene_interactivetext(self.creator))
+        self.list.append(obj_scene_inputtext(self.creator))        
+        
+
+        # drawings tests
         self.list.append(obj_scene_testdrawing(self.creator))
-        self.list.append(obj_scene_testimage(self.creator))
+        self.list.append(obj_scene_testdrawingimage(self.creator))
+        self.list.append(obj_scene_testdrawinganimation(self.creator))
         self.list.append(obj_scene_testseveraldrawings(self.creator))
+        self.list.append(obj_scene_testdrawingbase(self.creator))
+        # image test
+        self.list.append(obj_scene_testimage(self.creator))
+        
+        
+        # animations tests
+        
         self.list.append(obj_scene_testanimation(self.creator))
         self.list.append(obj_scene_testanimation2(self.creator))
         self.list.append(obj_scene_testmoveanimation(self.creator))
-        self.list.append(obj_scene_testdrawingimage(self.creator))
+        
         self.list.append(obj_scene_testanimationimage(self.creator))
-        self.list.append(obj_scene_testdrawinganimation(self.creator))
+
         self.list.append(obj_scene_testanimationanimation(self.creator))
         self.list.append(obj_scene_testanimationseveralimages(self.creator))
+        # group animations tests
         self.list.append(obj_scene_testanimationgroup(self.creator))
         self.list.append(obj_scene_testanimationgroupmove(self.creator))
+        # world and actors tests
         self.list.append(obj_scene_testherodraw(self.creator))
         self.list.append(obj_scene_testworldactor(self.creator))
-        self.list.append(obj_scene_interactivetext(self.creator))
-        self.list.append(obj_scene_inputtext(self.creator))
+        # text tests
+
         #
         #####
         self.listlen=len(self.list)
@@ -92,10 +109,10 @@ class obj_scene_tests:
 ##########################################################
 ##########################################################
 
-# Scene: draft animations (do it quickly here)
+# Scene: quickdraft animations (do it quickly here)
 class obj_scene_testdraftanimation:
     def __init__(self,creator):
-        self.name='Draft One Animation'
+        self.name='QuickDraft'
         self.creator=creator# created by scenemanager         
         self.text=['Draft One Animation here [Tab: Back]']
         #
@@ -118,10 +135,11 @@ class obj_scene_testdraftanimation:
 
 ##########################################################
 ##########################################################
-        
+# Text Tests
+
 class obj_scene_testsmessage:
     def __init__(self,creator):
-        self.name='Developer Tests Message'
+        self.name='Text Basics'
         self.creator=creator# created by scenemanager         
         self.text=['-----   Appendix: Developer Tests   -----   ',\
                    '\nIt was just an Appendix for tests by the Game Developer.',\
@@ -132,10 +150,60 @@ class obj_scene_testsmessage:
         share.textdisplay(self.text)
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
 
+
+class obj_scene_interactivetext:
+    def __init__(self,creator):
+        self.name='Text Dynamics and color'
+        self.creator=creator# created by scenemanager         
+        self.text=[
+            'Interactive Text: the text returns to line with a symbol (antislash-n) \n or returns to line automatically using closest whitespace. '\
+            '\n\nCode inputs with list of [text,..,(text,color),...] writing, with default or optional color. For example:',\
+            ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'.',\
+                ]
+
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)
+        #
+        if controls.tab  and controls.tabc:
+            self.creator.scene=obj_scene_tests(self.creator)
+
+
+class obj_scene_inputtext:
+    def __init__(self,creator):
+        self.name='Text input and keyword'
+        self.creator=creator# created by scenemanager         
+        self.text=[
+            'Input text on this page. Hover over the text box to input with keyboard. [Backspace] erases all.',\
+            'This saves keywords in the game dictionary (words.txt) to be reused like:',\
+            'Test1 name is',('{test1}',share.colors.gray),', '\
+            'and Test2 name is',('{test2}',share.colors.gray),'. '\
+            'Only use existing keywords in text.',\
+            '[Tab:Return]',\
+                ]
+        self.textinput1=draw.obj_textinput('test1',20,(500,300))# input keyword, max characters, position
+        self.textinput1.legend='The name of the test1'
+        #
+        self.textinput2=draw.obj_textinput('test2',20,(500,500))# input text, max characters, position
+        self.textinput2.legend='The name of the test2'
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)
+        #
+        self.textinput1.update(controls)
+        self.textinput2.update(controls)
+        #
+        if controls.tab  and controls.tabc:
+            share.words.save()# resave (entire) dictionary of words in file
+            self.creator.scene=obj_scene_tests(self.creator)
+            
+#########################################################################3
+# Tests Drawings
+
 # Scene: test draw something
 class obj_scene_testdrawing:
     def __init__(self,creator):
-        self.name='Drawing Test One'
+        self.name='Drawing Basics'
         self.creator=creator# created by scenemanager         
         self.text=['It was a test for a drawing [draw].Draw with [Left Mouse], Erase with [Right Mouse]',\
                    ' [Tab: Back]']
@@ -150,10 +218,100 @@ class obj_scene_testdrawing:
             self.drawing.finish()# save drawing
             self.creator.scene=obj_scene_tests(self.creator)
 
+
+# Scene: test drawing alongside image
+class obj_scene_testdrawingimage:
+    def __init__(self,creator):
+        self.name='Drawing alongside Image'
+        self.creator=creator# created by scenemanager         
+        self.text=['It was a test for a drawing alongside an image. It was straightforward.',\
+                   ' [Tab: Back]']
+        self.image=draw.obj_image('testimage',(440,360))# image
+        self.drawing=draw.obj_drawing('testimage2',(840,360))# new drawing                        
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)
+        #
+        self.image.display()
+        self.drawing.display()
+        self.drawing.update(controls)
+        if controls.tab  and controls.tabc:
+            self.drawing.finish()# save drawing
+            self.creator.scene=obj_scene_tests(self.creator)
+
+# Scene: test drawing alongside animation
+class obj_scene_testdrawinganimation:
+    def __init__(self,creator):
+        self.name='Drawing alongside animation'
+        self.creator=creator# created by scenemanager         
+        self.text=['It was a test for an animation alongside a drawing. The animation cannot be edited,',\
+                   'so one must use -play- instead of -update- in code. [Tab: Back]']
+        self.drawing=draw.obj_drawing('testimage3',(440,420))# new drawing 
+        self.animation=draw.obj_animation('testanimation2','testimage2',(640,360))# start animation                           
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)
+        #
+        self.animation.play(controls)# this means animation CANNOT be edited
+        self.drawing.display()
+        self.drawing.update(controls)
+        if controls.tab  and controls.tabc:
+            self.drawing.finish()# save drawing
+            self.creator.scene=obj_scene_tests(self.creator)
+            
+# Scene: test several drawings at the same time
+class obj_scene_testseveraldrawings:
+    def __init__(self,creator):
+        self.name='Drawing alongside drawing'
+        self.creator=creator# created by scenemanager         
+        self.text=['It was a test for several drawings on the same page.  [Tab: Back]',\
+                    'Erasing with [Right Mouse] works only when the mouse is in the corresponding rectangle.']
+        self.drawing1=draw.obj_drawing('testimagea',(340,420))# new drawing
+        self.drawing2=draw.obj_drawing('testimageb',(940,420))# new drawing
+        self.drawing1.eraseonareahover=True# only erase if mouse hovers this drawing area (is default value!)
+        self.drawing2.eraseonareahover=True# only erase if mouse hovers this drawing area (is default value!)
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)      
+        #
+        self.drawing1.display()
+        self.drawing1.update(controls)
+        self.drawing2.display()
+        self.drawing2.update(controls)
+        if controls.tab  and controls.tabc:
+            self.drawing1.finish()# save drawing
+            self.drawing2.finish()# save drawing
+            self.creator.scene=obj_scene_tests(self.creator)
+
+# Scene: test several drawings at the same time
+class obj_scene_testdrawingbase:
+    def __init__(self,creator):
+        self.name='Drawing Base from other drawing'
+        self.creator=creator# created by scenemanager         
+        self.text=['Test Drawing Base. Drawing 1 is the base drawing 2 [Tab: Back]. ',\
+                    'Should have same dimensions, and avoid shadows on drawing 2']
+        self.drawing1=draw.obj_drawing('testimagea',(340,420))# new drawing
+        self.drawing2=draw.obj_drawing('testimageb',(940,420),base=self.drawing1)# new drawing
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)      
+        #
+        self.drawing1.display()
+        self.drawing1.update(controls)
+        self.drawing2.display()
+        self.drawing2.update(controls)
+        if controls.tab  and controls.tabc:
+            self.drawing1.finish()# save drawing
+            self.drawing2.finish()# save drawing
+            self.creator.scene=obj_scene_tests(self.creator)
+
+#########################################################################
+# Tests Images
+
 # Scene: test show image
 class obj_scene_testimage:
     def __init__(self,creator):
-        self.name='Image Test One'
+        self.name='Image Basics'
         self.creator=creator# created by scenemanager         
         self.text=['It was a test to show an image and a transformed one.',\
                    'For transformations rotation should always be applied last [Tab: Back]']
@@ -174,36 +332,14 @@ class obj_scene_testimage:
         self.image1.display()
         self.image2.display()
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
-
-
-# Scene: test several drawings at the same time
-class obj_scene_testseveraldrawings:
-    def __init__(self,creator):
-        self.name='Drawing Test Several'
-        self.creator=creator# created by scenemanager         
-        self.text=['It was a test for several drawings on the same page.  [Tab: Back]',\
-                    'Erasing with [Right Mouse] works only when the mouse is in the corresponding rectangle.']
-        self.drawing1=draw.obj_drawing('testimagea',(340,420))# new drawing
-        self.drawing2=draw.obj_drawing('testimageb',(940,420))# new drawing
-        self.drawing1.eraseonareahover=True# only erase if mouse hovers this drawing area (is default value!)
-        self.drawing2.eraseonareahover=True# only erase if mouse hovers this drawing area (is default value!)
-    def update(self,controls):
-        share.screen.fill((255,255,255))
-        share.textdisplay(self.text)      
-        #
-        self.drawing1.display()
-        self.drawing1.update(controls)
-        self.drawing2.display()
-        self.drawing2.update(controls)
-        if controls.tab  and controls.tabc:
-            self.drawing1.finish()# save drawing
-            self.drawing2.finish()# save drawing
-            self.creator.scene=obj_scene_tests(self.creator)
+            
+#########################################################################
+# Tests Animations
             
 # Scene: test create/show animation
 class obj_scene_testanimation:
     def __init__(self,creator):
-        self.name='Animation Test One'
+        self.name='Animation Basics'
         self.creator=creator# created by scenemanager         
         self.text=['It was a test to create and play an animation. Toggle Edit Mode with [Space]..',\
                     '\n-- While in Edit Mode:',\
@@ -261,25 +397,6 @@ class obj_scene_testmoveanimation:
         if controls.s or controls.down: self.animation.movey(self.dy)
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
         
-# Scene: test drawing alongside image
-class obj_scene_testdrawingimage:
-    def __init__(self,creator):
-        self.name='Drawing alongside Image'
-        self.creator=creator# created by scenemanager         
-        self.text=['It was a test for a drawing alongside an image. It was straightforward.',\
-                   ' [Tab: Back]']
-        self.image=draw.obj_image('testimage',(440,360))# image
-        self.drawing=draw.obj_drawing('testimage2',(840,360))# new drawing                        
-    def update(self,controls):
-        share.screen.fill((255,255,255))
-        share.textdisplay(self.text)
-        #
-        self.image.display()
-        self.drawing.display()
-        self.drawing.update(controls)
-        if controls.tab  and controls.tabc:
-            self.drawing.finish()# save drawing
-            self.creator.scene=obj_scene_tests(self.creator)
 
 # Scene: test animation alongside image
 class obj_scene_testanimationimage:
@@ -299,25 +416,6 @@ class obj_scene_testanimationimage:
         if controls.tab  and controls.tabc:
             self.creator.scene=obj_scene_tests(self.creator)
 
-# Scene: test drawing alongside animation
-class obj_scene_testdrawinganimation:
-    def __init__(self,creator):
-        self.name='Drawing alongside Animation'
-        self.creator=creator# created by scenemanager         
-        self.text=['It was a test for a drawing alongside an animation. The animation cannot be edited,',\
-                   'so one must use -play- instead of -update- in code. [Tab: Back]']
-        self.drawing=draw.obj_drawing('testimage3',(440,420))# new drawing 
-        self.animation=draw.obj_animation('testanimation2','testimage2',(640,360))# start animation                           
-    def update(self,controls):
-        share.screen.fill((255,255,255))
-        share.textdisplay(self.text)
-        #
-        self.animation.play(controls)# this means animation CANNOT be edited
-        self.drawing.display()
-        self.drawing.update(controls)
-        if controls.tab  and controls.tabc:
-            self.drawing.finish()# save drawing
-            self.creator.scene=obj_scene_tests(self.creator)
 
 # Scene: test animation alongside animation
 class obj_scene_testanimationanimation:
@@ -364,12 +462,13 @@ class obj_scene_testanimationseveralimages:
         self.animation.update(controls)# this means animation CAN be edited
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
             
-
+#########################################################################
+# Tests Group Animations
 
 # Scene: test animation group
 class obj_scene_testanimationgroup:
     def __init__(self,creator):
-        self.name='Animation Group'
+        self.name='Group Animation'
         self.creator=creator# created by scenemanager         
         self.text=['It was a test for a group of animation. All the animations were played together.',\
                     'There was also an image in the group, treated similarly. [Tab: Back]']
@@ -391,7 +490,7 @@ class obj_scene_testanimationgroup:
 # Scene: test animation group move
 class obj_scene_testanimationgroupmove:
     def __init__(self,creator):
-        self.name='Animation Group Move'
+        self.name='Group Animation Move'
         self.creator=creator# created by scenemanager         
         self.text=['It was a test to move the group of animation. Use WASD or arrow keys to move.',\
                    ' Flip with [q] and [e]. Group cannot be scaled (too complex)',\
@@ -421,11 +520,13 @@ class obj_scene_testanimationgroupmove:
         #
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
             
+#########################################################################
+# Actors Tests
 
 # Scene: test drawing the hero
 class obj_scene_testherodraw:
     def __init__(self,creator):
-        self.name='Hero Draw Test'
+        self.name='Actors Draw Hero'
         self.creator=creator# created by scenemanager         
         self.text=['It was a test to draw the hero. Only head and legs is easier and more functional.',\
                    'Legs=360x200, Head=200x200, Strike=360x200, Overlap=40',\
@@ -455,9 +556,10 @@ class obj_scene_testherodraw:
 
 class obj_scene_testworldactor:
     def __init__(self,creator):
-        self.name='World with simple actor'
+        self.name='Actors World with simple actor'
         self.creator=creator# created by scenemanager         
-        self.text=['Test world with simple actor. Walk with [WASD] [Tab: Back]']
+        self.text=['Test world with simple actor. Walk with [WASD] [Tab: Back].',\
+                   'Activate Dev mode with [Ctrl] to see actors hit boxes.']
         # Build world
         self.world=actor.obj_world_v1(self)
         # Hero in world
@@ -476,55 +578,10 @@ class obj_scene_testworldactor:
             self.creator.scene=obj_scene_tests(self.creator)
 
 
-class obj_scene_interactivetext:
-    def __init__(self,creator):
-        self.name='Interactive Text'
-        self.creator=creator# created by scenemanager         
-        self.text=[
-            'Interactive Text: the text returns to line with a symbol (antislash-n) \n or returns to line automatically using closest whitespace. '\
-            '\n\nCode inputs with list of [text,..,(text,color),...] writing, with default or optional color. For example:',\
-            ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'.',\
-                ]
-
-    def update(self,controls):
-        share.screen.fill((255,255,255))
-        share.textdisplay(self.text)
-        #
-        if controls.tab  and controls.tabc:
-            self.creator.scene=obj_scene_tests(self.creator)
 
 
-class obj_scene_inputtext:
-    def __init__(self,creator):
-        self.name='Input Text'
-        self.creator=creator# created by scenemanager         
-        self.text=[
-            'Input text on this page. Hover over the text box to input with keyboard. [Backspace] erases all.',\
-            'This saves keywords in the game dictionary (words.txt) to be reused like:',\
-            'Test1 name is',('{test1}',share.colors.gray),', '\
-            'and Test2 name is',('{test2}',share.colors.gray),'. '\
-            'Only use existing keywords in text.',\
-            '[Tab:Return]',\
-                ]
-        self.textinput1=draw.obj_textinput('test1',20,(500,300))# input keyword, max characters, position
-        self.textinput1.legend='The name of the test1'
-        #
-        self.textinput2=draw.obj_textinput('test2',20,(500,500))# input text, max characters, position
-        self.textinput2.legend='The name of the test2'
 
 
-    def update(self,controls):
-        share.screen.fill((255,255,255))
-        share.textdisplay(self.text)
-        #
-        self.textinput1.update(controls)
-        self.textinput2.update(controls)
-        #
-        if controls.tab  and controls.tabc:
-            share.words.save()# resave (entire) dictionary of words in file
-            self.creator.scene=obj_scene_tests(self.creator)
-
-            
 ####################################################################################################################
 
 
