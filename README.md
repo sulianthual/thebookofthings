@@ -18,5 +18,3 @@ references: https://github.com/sulianthual/thebookofthings
 2) Run the file main.py to execute: $ python -m main.py
 
 
-3) From the titlescreen, erase the book to start your own
-
