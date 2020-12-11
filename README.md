@@ -1,5 +1,5 @@
 
-![alt text](https://github.com/sulianthual/thebookofthings/blob/master/screenshot.png?raw=true "Screenshot")
+![alt text](screenshot.png?raw=true "Screenshot")
 
 <h4>The Book of Things</h4>
 
