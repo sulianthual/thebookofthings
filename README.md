@@ -1,18 +1,17 @@
 
 ![alt text](https://github.com/sulianthual/thebookofthings/blob/master/screenshot.png?raw=true "Screenshot")
 
-The Book of Things
+<h4>The Book of Things</h4>
 
-created by Sulian Thual 
+code by Sulian Thual 
 
-A simple adventure game with a twist: you draw and write everything! Made this to learn object-oriented python in a fun way. 
+A simple adventure game with a twist: you draw and write everything! Made this to learn object-oriented python in a fun way. WIP
 
-Still very WIP
 
-Sources:
-github: https://github.com/sulianthual/thebookofthings
+references: https://github.com/sulianthual/thebookofthings
 
-Instructions: 
+<h4>Instructions:</h4> 
+
 1) You need python 3 installed as well as python module: pygame. 
 
 
