@@ -114,11 +114,11 @@ class obj_scene_testdraftanimation:
         #
         if False:# hero legs stand (chapter 1)
             self.animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360))
-        elif True:# hero legs walk (chapter 1)
+        elif False:# hero legs walk (chapter 1)
             self.animation=draw.obj_animation('herolegs_walk','herolegs_stand',(640,360))
             self.animation.addimage('herolegs_walk')
-        elif False:# hero head (chapter 1)
-            self.animation=draw.obj_animation('herohead_basic','herohead',(640,360))
+        elif True:# hero head (chapter 1)
+            self.animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
         elif False:# hero  strike (chapter 1)
             self.animation=draw.obj_animation('herostrike_basic','herostrike',(640,360))
             

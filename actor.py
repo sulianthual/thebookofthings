@@ -242,7 +242,8 @@ class obj_actor_hero(obj_actor):
     def update(self,controls):
         super().update(controls)
         if self.apply_controls_move: self.controls_move(controls)
-
+  
+    
 # Hero with only legs walking around
 class obj_actor_hero_v1(obj_actor_hero):
     def setup(self):

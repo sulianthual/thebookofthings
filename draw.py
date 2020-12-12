@@ -181,7 +181,8 @@ class obj_brushes:
         self.pen=pygame.transform.scale(self.pen,(8,8))
         self.smallpen=pygame.image.load('data/pen.png')
         self.smallpen=pygame.transform.scale(self.smallpen,(4,4))
-        
+        self.tinypen=pygame.image.load('data/pen.png')
+        self.tinypen=pygame.transform.scale(self.smallpen,(2,2))        
 ####################################################################################################################
 
 # A simple image (from the drawings folder) to display at a given location
