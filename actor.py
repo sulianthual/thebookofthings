@@ -184,7 +184,7 @@ class obj_actor:
         self.move_dx=5# movement amount
         self.move_dy=5
         #
-        # Dictionary of actor elements (embedded actors, images/animations/animationgroups)
+        # Dictionary of actor elements (embedded actors, images/animations/dispgroups)
         self.dict={}
         #
         # Booleans for behavior (must be defined)
@@ -202,7 +202,7 @@ class obj_actor:
         self.creator.removeactor(self)
     def destroy(self):# kill with additional funcionalities (e.g. leave trailing smoke)
         self.kill()
-    def addpart(self,name,element):# add element to actor dictionary (embedded actor, image,animation or animationgroup...)
+    def addpart(self,name,element):# add element to actor dictionary (embedded actor, image,animation or dispgroup...)
         self.dict[name]=element
     def removepart(self,name):# remove element
         self.dict.pop(name,None)# removes element if exists (returns None otherwise)
@@ -249,16 +249,16 @@ class obj_actor_hero_v1(obj_actor_hero):
         super().setup()
         #
         self.s=0.5# scaling factor
-        animgroup=draw.obj_animationgroup((self.xini,self.yini))
+        dispgroup=draw.obj_dispgroup((self.xini,self.yini))
         animation=draw.obj_animation('herolegs_walk','herolegs_stand',(self.xini,self.yini+80))# start animation
         animation.addimage('herolegs_walk')# add image to list
         animation.scale(self.s)
-        animgroup.addpart("legs_walk",animation)
+        dispgroup.addpart("legs_walk",animation)
         #
         animation=draw.obj_animation('herolegs_stand','herolegs_stand',(self.xini,self.yini+80))# standing
         animation.scale(self.s)
-        animgroup.addpart("legs_stand",animation)
-        self.addpart("hero_animgroup",animgroup)
+        dispgroup.addpart("legs_stand",animation)
+        self.addpart("hero_dispgroup",dispgroup)
         #
         self.walking=False# hero is walking or not
         self.facingright=True# hero is facing to the right (False=to the left)
@@ -273,33 +273,33 @@ class obj_actor_hero_v1(obj_actor_hero):
         self.turnright=False# reset
         self.turnleft=False
         if self.walking:
-            self.dict["hero_animgroup"].dict["legs_walk"].show=True
-            self.dict["hero_animgroup"].dict["legs_stand"].show=False
+            self.dict["hero_dispgroup"].dict["legs_walk"].show=True
+            self.dict["hero_dispgroup"].dict["legs_stand"].show=False
         else:
-            self.dict["hero_animgroup"].dict["legs_walk"].show=False
-            self.dict["hero_animgroup"].dict["legs_stand"].show=True        
+            self.dict["hero_dispgroup"].dict["legs_walk"].show=False
+            self.dict["hero_dispgroup"].dict["legs_stand"].show=True        
         if controls.d or controls.right: 
             self.movex(self.move_dx) 
             if controls.dc or controls.rightc:
                 self.turnright=True
                 self.facingright= True
-                self.dict["hero_animgroup"].ofliph()
-                self.dict["hero_animgroup"].dict["legs_walk"].firstframe()# reset to first frame 
+                self.dict["hero_dispgroup"].ofliph()
+                self.dict["hero_dispgroup"].dict["legs_walk"].firstframe()# reset to first frame 
         if controls.a or controls.left: 
             self.movex(-self.move_dx)  
             if controls.ac or controls.leftc:
                 self.turnleft= True
                 self.facingright= False
-                self.dict["hero_animgroup"].ifliph()
-                self.dict["hero_animgroup"].dict["legs_walk"].firstframe()# reset to first frame 
+                self.dict["hero_dispgroup"].ifliph()
+                self.dict["hero_dispgroup"].dict["legs_walk"].firstframe()# reset to first frame 
         if controls.w or controls.up: 
             self.movey(-self.move_dy) 
             if controls.wc or controls.upc: 
-                self.dict["hero_animgroup"].dict["legs_walk"].firstframe()# reset to first frame  
+                self.dict["hero_dispgroup"].dict["legs_walk"].firstframe()# reset to first frame  
         if controls.s or controls.down: 
             self.movey(self.move_dy)        
             if controls.sc or controls.downc: 
-                self.dict["hero_animgroup"].dict["legs_walk"].firstframe()# reset to first frame      
+                self.dict["hero_dispgroup"].dict["legs_walk"].firstframe()# reset to first frame      
 
 # Hero with only legs walking around, add head
 class obj_actor_hero_v2(obj_actor_hero_v1):
@@ -307,7 +307,7 @@ class obj_actor_hero_v2(obj_actor_hero_v1):
         super().setup() 
         animation=draw.obj_animation('herohead_basic','herohead',(self.xini,self.yini))
         animation.scale(self.s)
-        self.dict["hero_animgroup"].addpart("head",animation)
+        self.dict["hero_dispgroup"].addpart("head",animation)
 
 
 # Hero with only heads and legs walking around, add face expressions
@@ -319,11 +319,11 @@ class obj_actor_hero_v3(obj_actor_hero_v2):
         super().update(controls)        
         self.autoresetface()
     def makenormalface(self):# make happy face
-        self.dict["hero_animgroup"].dict["head"].replaceimage('herohead',0)
+        self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead',0)
     def makehappyface(self):# make happy face
-        self.dict["hero_animgroup"].dict["head"].replaceimage('herohead_happy',0)
+        self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_happy',0)
     def makeangryface(self):# make happy face
-        self.dict["hero_animgroup"].dict["head"].replaceimage('herohead_angry',0)
+        self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_angry',0)
     def autoresetface(self):# reset face automatically if timer rings
         self.timer_quickface.update()
         if self.timer_quickface.ring: self.makenormalface()

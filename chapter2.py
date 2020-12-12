@@ -32,8 +32,8 @@ class obj_scene_chapter2(utils.obj_page):
     def setup(self):
         self.text=['-----   Chapter II: A House   -----   ',\
                    '\nThe Hero ',('{heroname}',share.colors.hero),' lived in a large house. '\
-                   'The ',('house',share.colors.house),' was name like this and looked like this from the outside. ',\
-                   '[Tab: Back]   [Enter: Continue]']
+                   'The ',('house',share.colors.house),' was named like this and looked like this from the outside. ',\
+                   'This chapter wasnt written yet....']
         self.textinput1=draw.obj_textinput('housename',25,(650,260),color=share.colors.house)# input keyword, max characters, position
         self.textinput1.legend='House Name'
     def page(self,controls):

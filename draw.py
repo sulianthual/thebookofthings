@@ -18,6 +18,77 @@ import utils
 
 ####################################################################################################################
 #  
+# A text box
+# acts like an image (can be moved/scaled, part of a animgroup)
+class obj_textbox:
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0)):
+        self.xini=xy[0]# initial position
+        self.yini=xy[1]
+        self.text=text
+        self.color=color# color of text (default=black)
+        self.fontsize=fontsize# font size of text (default=medium)
+        self.bold=True#bold or not
+        self.flippedh=False# is image flipped horizontally (inverted) or not (original)
+        self.flippedv=False# is image flipped vertically (inverted) or not (original)
+        self.show=True# show the image or not (can be toggled on/off)
+        self.setup()
+    def setup(self):
+        self.x=self.xini# center of textbox
+        self.y=self.yini
+        if self.fontsize=='tiny':
+            self.img=share.fonts.font15.render(self.text, self.bold, self.color)
+        elif self.fontsize=='small':
+            self.img=share.fonts.font30.render(self.text, self.bold, self.color)
+        elif self.fontsize=='medium':
+            self.img=share.fonts.font50.render(self.text, self.bold, self.color)
+        elif self.fontsize=='huge':
+            self.img=share.fonts.font100.render(self.text, self.bold, self.color)
+        self.imgsize=self.img.get_size()
+    def movex(self,dx): # displace by dx
+        self.x += dx
+    def movey(self,dy): #displace by dy
+        self.y += dy
+    def fliph(self): # flip image horizontally
+        self.flippedh= not self.flippedh
+        self.img=pygame.transform.flip(self.img,True,False)
+    def ifliph(self): # flip image horizontally to inverted
+        if not self.flippedh:
+            self.img=pygame.transform.flip(self.img,True,False)
+            self.flippedh=True
+    def ofliph(self): # flip image horizontally to original
+        if self.flippedh:
+            self.img=pygame.transform.flip(self.img,True,False)
+            self.flippedh=False
+    def flipv(self): # flip image vertically
+        self.flippedv= not self.flippedv
+        self.img=pygame.transform.flip(self.img,False,True)
+    def iflipv(self): # flip image vertically to inverted
+        if not self.flippedv:
+            self.img=pygame.transform.flip(self.img,False,True)
+            self.flippedv=True
+    def oflipv(self): # flip image vertically to original
+        if self.flippedv:
+            self.img=pygame.transform.flip(self.img,False,True)
+            self.flippedv=False
+    def rotate(self,r): # rotate image by given angle r (and correct position)
+        self.r += r
+        term1=self.img.get_rect().center
+        self.img=pygame.transform.rotate(self.img,r)
+        term2= self.img.get_rect().center 
+        self.x +=term1[0]-term2[0]
+        self.y +=term1[1]-term2[1]
+    def scale(self,s): # scale image by given factor s (and correct position)
+        self.s *= s
+        self.img=pygame.transform.scale(self.img,(int(self.imgsize[0]*s),int(self.imgsize[1]*s)))
+        self.imgsize=self.img.get_rect().size
+    def display(self):
+        if self.show:
+            xtl=self.x-int(self.imgsize[0]/2)# top left corner position
+            ytl=self.y-int(self.imgsize[1]/2)
+            share.screen.blit(self.img,(xtl,ytl))
+    def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
+        self.display()
+
 # A text input area
 class obj_textinput:
     def __init__(self,key,nchar,xy,color=(0,0,0)):
@@ -120,15 +191,15 @@ class obj_image:
             self.img_ini=pygame.image.load('drawings/'+name+'.png')# load drawing image
         else:
             self.img_ini=pygame.image.load('data/error.png')# load error image
-        self.x_ini=xy[0]# xy is the CENTER of the image on screen
-        self.y_ini=xy[1]
+        self.xini=xy[0]# xy is the CENTER of the image on screen
+        self.yini=xy[1]
         self.reset()
         # legend (displayed under, optional)
         self.legend=[]    
     def reset(self):# reset image to initial
         self.img=self.img_ini
-        self.x=self.x_ini
-        self.y=self.y_ini
+        self.x=self.xini
+        self.y=self.yini
         self.s=1# scaling
         self.r=0# rotation
         self.imgsize=self.img.get_rect().size
@@ -207,7 +278,7 @@ class obj_image:
             termx=self.x-int(text_width/2)
             termy=self.y+int(self.imgsize[1]/2)-int(text_height/2)
             share.screen.blit(text_surface, (termx,termy))            
-    def play(self,controls):# same as display, but renamed for consitency with play() for animations, animationgroups
+    def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
         self.display()
 
 
@@ -318,8 +389,8 @@ class obj_animation:
     def __init__(self,name,imgname,xy):# start new animation (load or new)
         self.name=name# animation name
         self.imgname=imgname# reference image (more can be added)
-        self.x_ini=xy[0]# reference position of animation ( (0,0)=default or center of screen)
-        self.y_ini=xy[1]
+        self.xini=xy[0]# reference position of animation ( (0,0)=default or center of screen)
+        self.yini=xy[1]
         # self.img_ini=pygame.image.load('drawings/'+self.imgname+'.png')# reference image
         if os.path.exists('drawings/'+imgname+'.png'):
             self.img_ini=pygame.image.load('drawings/'+imgname+'.png')# load drawing image
@@ -344,8 +415,8 @@ class obj_animation:
         self.img.set_colorkey((255,255,255))# set white to transparent
         self.imglist=[]# reset list of all available images
         self.imglist.append(self.img)
-        self.x=0# images position x offset (additional to x_ini, from external e.g. commands, anim group)
-        self.y=0# images position y offset (additional to y_ini, from external e.g. commands, anim group)
+        self.x=0# images position x offset (additional to xini, from external e.g. commands, anim group)
+        self.y=0# images position y offset (additional to yini, from external e.g. commands, anim group)
         self.flippedh=False# are the images flipped horizontally or not
         self.flippedv=False# are the images flipped horizontally or not
         self.r=0# current rotation angle of images
@@ -447,8 +518,8 @@ class obj_animation:
         share.screen.blit(share.fonts.font15.render('r: Save', True, (255, 0, 0)), (1180,275))
         share.screen.blit(share.fonts.font15.render('f: change image', True, (255, 0, 0)), (1180,295))
         # Position
-        self.anim_x=controls.mousex-self.x_ini# anomalies around reference
-        self.anim_y=controls.mousey-self.y_ini
+        self.anim_x=controls.mousex-self.xini# anomalies around reference
+        self.anim_y=controls.mousey-self.yini
         # Transformations
         if controls.q and controls.qc: self.anim_fh = not self.anim_fh# toggle horizontal flip
         if controls.e and controls.ec: self.anim_fv = not self.anim_fv# toggle vertical flip
@@ -474,13 +545,13 @@ class obj_animation:
         # Show trajectories of image center for all frames (red)
         if self.animation and len(self.animation)>1: 
             for i in range(1,len(self.animation)): 
-                term1=self.animation[i-1][1]+self.x_ini
-                term2=self.animation[i-1][2]+self.y_ini
-                term3=self.animation[i][1]+self.x_ini
-                term4=self.animation[i][2]+self.y_ini
+                term1=self.animation[i-1][1]+self.xini
+                term2=self.animation[i-1][2]+self.yini
+                term3=self.animation[i][1]+self.xini
+                term4=self.animation[i][2]+self.yini
                 pygame.draw.line(share.screen,(255,0,0),(term1,term2),(term3,term4),3)
-        # Show reference animation position with cross (x_ini, y_ini)
-        share.crossdisplay((self.x_ini,self.y_ini),10,(0,0,255),3)
+        # Show reference animation position with cross (xini, yini)
+        share.crossdisplay((self.xini,self.yini),10,(0,0,255),3)
         
     def save(self):# save animation to file      
         f1=open(self.aniname, 'w+')
@@ -566,10 +637,10 @@ class obj_animation:
             else:
                 self.anim_r_dc=(0,0)
             # Display
-            # position=x_ini(ref) + x(move from external) +x_anim(animation)+corrections (center/scaling...)
+            # position=xini(ref) + x(move from external) +x_anim(animation)+corrections (center/scaling...)
             # use x to modify with commands, animation group, etc
-            term1=self.x_ini+self.x+self.anim_x-int(self.imgsize[0]/2*self.anim_s-self.anim_r_dc[0])
-            term2=self.y_ini+self.y+self.anim_y-int(self.imgsize[1]/2*self.anim_s-self.anim_r_dc[1])
+            term1=self.xini+self.x+self.anim_x-int(self.imgsize[0]/2*self.anim_s-self.anim_r_dc[0])
+            term2=self.yini+self.y+self.anim_y-int(self.imgsize[1]/2*self.anim_s-self.anim_r_dc[1])
             share.screen.blit(self.imgt,(term1,term2))
     def update(self,controls):
         # switch between play mode and record mode (dev only)
@@ -581,21 +652,19 @@ class obj_animation:
 
 ####################################################################################################################
 
-# Group of Animations (and Images)
-# Can apply some transformations (scaling, moving, flipping) to all elements within
+# Group of Displays (Animations, Images or textboxes)
+# Can apply moving, flipping to all elements within
 # while conserving some group properties (distance between elements, etc)
-
-# TODO:
-# Just one list, with additional list type=[0,1] (anim or image), additional list active=[True,False...] for playing or not
-class obj_animationgroup:
+# Cannot apply scaling, rotating while conserving properties (not implemented yet)
+class obj_dispgroup:
     def __init__(self,xy):
-        self.x_ini=xy[0]# position center of group
-        self.y_ini=xy[1]
+        self.xini=xy[0]# position center of group
+        self.yini=xy[1]
         self.reset()
     def reset(self): # reset all (and erase lists)
         self.dict={}# dictionary of animations and images (treated the same!)
-        self.x=self.x_ini# x position of group (useful to track overall position, starts a x_ini, y_ini)
-        self.y=self.y_ini
+        self.x=self.xini# x position of group (useful to track overall position, starts a xini, yini)
+        self.y=self.yini
         self.flippedh=False# are the images flipped horizontally (inverted) or not (original)
         self.flippedv=False# are the images flipped vertically (inverted) or not (original)
     def addpart(self,name,element):# add animation or image object to dictionary 
@@ -610,14 +679,14 @@ class obj_animationgroup:
         for i in self.dict.values(): i.movey(dy)
     def symh(self,element,invert): # shift group element horizontally to symmetric (invert=True reverses operation)
         if not invert:
-            element.movex(2*(element.x_ini-self.x_ini))
+            element.movex(2*(element.xini-self.xini))
         else:
-            element.movex(-2*(element.x_ini-self.x_ini))
+            element.movex(-2*(element.xini-self.xini))
     def symv(self,element,invert): # shift group element vertically to symmetric (invert=True reverses operation)
         if not invert:
-            element.movey(2*(element.y_ini-self.y_ini))
+            element.movey(2*(element.yini-self.yini))
         else:
-            element.movey(-2*(element.y_ini-self.y_ini))
+            element.movey(-2*(element.yini-self.yini))
     def fliph(self): # flip group horizontally
         self.flippedh=not self.flippedh
         for i in self.dict.values(): 

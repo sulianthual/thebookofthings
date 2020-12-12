@@ -89,10 +89,12 @@ class obj_scene_ch1p2(utils.obj_page):
 
 class obj_scene_ch1p3(utils.obj_page):
     def setup(self):       
-        self.text=['The heros legs could walk around with the [arrows] or [WASD] keys.',\
-                           'It was a little weird but it worked just fine. [Tab: Back]   [Enter: Continue]']
+        self.text=['the legs of ',('{heroname}',share.colors.hero),' could walk around with the [arrows] or [WASD] keys.',\
+                   'It was a little weird but it worked just fine. [Tab: Back]   [Enter: Continue]']
         self.world=actor.obj_world_v1(self)# Build world
         self.hero=actor.obj_actor_hero_v1(self.world,(640,360))# Hero in world
+        self.textbox=draw.obj_textbox('Move with [arrows] or [WASD]',(640,520),fontsize='small')
+        self.hero.addpart("instructions",self.textbox)
     def page(self,controls):
         self.world.update(controls)
     def prevpage(self):
@@ -137,6 +139,8 @@ class obj_scene_ch1p5(utils.obj_page):
                                    '[Tab: Back]   [Enter: Continue]']
         self.world=actor.obj_world_v1(self)# Build world
         self.hero=actor.obj_actor_hero_v2(self.world,(640,360))  # Hero in world   
+        self.textbox=draw.obj_textbox('Move with [arrows] or [WASD]',(640,520),fontsize='small')
+        self.hero.addpart("instructions",self.textbox)
     def page(self,controls):
         self.world.update(controls)
     def prevpage(self):
@@ -234,13 +238,13 @@ class obj_scene_ch1p9(utils.obj_page):
     def setup(self):        
         self.text=['With his weapon ',('{weaponname}',share.colors.weapon),', ',\
                    ('{heroname}',share.colors.hero),' could strike in the direction he was facing, by using [Left Mouse] or [Space]. ',\
-                   '\nIt could break things like his most hated thing ',('{itemhated}',share.colors.itemhated),', which was cool, ',\
-                   'but it could also break his favorite thing ',('{itemloved}',share.colors.itemloved),\
-                   ', so it was important to be a little careful. [Tab: Back]   [Enter: Continue]']
+                   '[Tab: Back]   [Enter: Continue]']
         self.world=actor.obj_world_v3(self)# Build world (interactions sword items)
         self.hero=actor.obj_actor_hero_v4(self.world,(640,360))# Hero in world
+        self.textbox=draw.obj_textbox('Strike with [Left Mouse] or [Space]',(640,520),fontsize='small')
+        self.hero.addpart("instructions",self.textbox)
         for i in [150,350]:
-            for j in [400,600]:
+            for j in [200,400,600]:
                 term=actor.obj_actor_item_loved(self.world,(i,j))
                 term=actor.obj_actor_item_hated(self.world,(1280-i,j))#  
     def page(self,controls):
@@ -254,8 +258,8 @@ class obj_scene_ch1p9(utils.obj_page):
 class obj_scene_ch1p10(utils.obj_page):
     def setup(self):        
         self.text=['That was what, in the book of things, the hero ',('{heroname}',share.colors.hero),' was, ',\
-                   'and ',('{heroname}',share.colors.hero),' the hero was going to do a lot of things in the book of things.'
-                   '[Tab: Back]   [Enter: Continue]']
+                   'and ',('{heroname}',share.colors.hero),' the hero was going to do a lot of things in the book of things. '
+                   '\n[Tab: Back]   [Enter: Continue]']
         self.animation1=draw.obj_animation('herozoom','herohead',(640,360))# head anim
         self.animation1.addimage('herohead_happy')# 
     def page(self,controls):

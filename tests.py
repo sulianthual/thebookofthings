@@ -41,11 +41,12 @@ class obj_scene_tests:
         #
         # quickdraft
         self.list.append(obj_scene_testdraftanimation(self.creator))
+
         # text tests
         self.list.append(obj_scene_testsmessage(self.creator))
         self.list.append(obj_scene_interactivetext(self.creator))
-        self.list.append(obj_scene_inputtext(self.creator))        
-        
+        self.list.append(obj_scene_inputtext(self.creator))           
+        self.list.append(obj_scene_textbox(self.creator))       
 
         # drawings tests
         self.list.append(obj_scene_testdrawing(self.creator))
@@ -54,27 +55,22 @@ class obj_scene_tests:
         self.list.append(obj_scene_testseveraldrawings(self.creator))
         self.list.append(obj_scene_testdrawingbase(self.creator))
         # image test
-        self.list.append(obj_scene_testimage(self.creator))
+        self.list.append(obj_scene_testimage(self.creator))        
         
-        
-        # animations tests
-        
+        # animations tests        
         self.list.append(obj_scene_testanimation(self.creator))
         self.list.append(obj_scene_testanimation2(self.creator))
-        self.list.append(obj_scene_testmoveanimation(self.creator))
-        
+        self.list.append(obj_scene_testmoveanimation(self.creator))        
         self.list.append(obj_scene_testanimationimage(self.creator))
-
         self.list.append(obj_scene_testanimationanimation(self.creator))
         self.list.append(obj_scene_testanimationseveralimages(self.creator))
         # group animations tests
-        self.list.append(obj_scene_testanimationgroup(self.creator))
-        self.list.append(obj_scene_testanimationgroupmove(self.creator))
+        self.list.append(obj_scene_testdispgroup(self.creator))
+        self.list.append(obj_scene_testdispgroupmove(self.creator))
         # world and actors tests
         self.list.append(obj_scene_testherodraw(self.creator))
         self.list.append(obj_scene_testworldactor(self.creator))
         # text tests
-
         #
         #####
         self.listlen=len(self.list)
@@ -102,9 +98,9 @@ class obj_scene_tests:
             share.screen.blit(share.fonts.font30.render(test.name,True,(0,0,0)),(100,130+i*30))
         for i,test in enumerate(self.list[self.nrow-1:]):
             share.screen.blit(share.fonts.font30.render(test.name,True,(0,0,0)),(500,130+i*30))
-            
         self.selecttest(controls)
-
+        # Quit Game with Esc
+        if controls.esc and controls.escc: share.quitgame()
         
 ##########################################################
 ##########################################################
@@ -160,7 +156,6 @@ class obj_scene_interactivetext:
             '\n\nCode inputs with list of [text,..,(text,color),...] writing, with default or optional color. For example:',\
             ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'.',\
                 ]
-
     def update(self,controls):
         share.screen.fill((255,255,255))
         share.textdisplay(self.text)
@@ -192,6 +187,44 @@ class obj_scene_inputtext:
         #
         self.textinput1.update(controls)
         self.textinput2.update(controls)
+        #
+        if controls.tab  and controls.tabc:
+            share.words.save()# resave (entire) dictionary of words in file
+            self.creator.scene=obj_scene_tests(self.creator)
+
+
+class obj_scene_textbox:
+    def __init__(self,creator):
+        self.name='Text Box'
+        self.creator=creator# created by scenemanager         
+        self.text=[
+            'Display text in a text box. Acts like an image, can be part of dispgroup, actor,moved, scaled, flipped.',\
+            'Use WASD or arrow keys to move, flip with [q] and [e], reset with [space] [Tab:Return]',\
+                ]
+        #
+        self.textbox=draw.obj_textbox('textbox',(340,360),color=share.colors.blue)
+        #
+        self.dispgroup=draw.obj_dispgroup((840,360))
+        self.image1=draw.obj_image('testimage',(840,360))
+        self.dispgroup.addpart("image", self.image1)
+        self.textbox2=draw.obj_textbox('textbox in  dispgroup',(840,460),color=share.colors.blue)
+        self.dispgroup.addpart("textbox", self.textbox2)
+        self.dx=5# move rate with controls
+        self.dy=5# move rate 
+
+    def update(self,controls):
+        share.screen.fill((255,255,255))
+        share.textdisplay(self.text)
+        #
+        self.textbox.display()
+        self.dispgroup.play(controls)
+        if controls.d or controls.right: self.dispgroup.movex(self.dx)
+        if controls.a or controls.left: self.dispgroup.movex(-self.dx)
+        if controls.w or controls.up: self.dispgroup.movey(-self.dy)
+        if controls.s or controls.down: self.dispgroup.movey(self.dy)
+        if controls.e and controls.ec: self.dispgroup.fliph()# tests
+        if controls.q and controls.qc: self.dispgroup.flipv()# tests
+        if controls.space  and controls.space: self.reset()
         #
         if controls.tab  and controls.tabc:
             share.words.save()# resave (entire) dictionary of words in file
@@ -466,56 +499,57 @@ class obj_scene_testanimationseveralimages:
 # Tests Group Animations
 
 # Scene: test animation group
-class obj_scene_testanimationgroup:
+class obj_scene_testdispgroup:
     def __init__(self,creator):
-        self.name='Group Animation'
+        self.name='Display Group'
         self.creator=creator# created by scenemanager         
-        self.text=['It was a test for a group of animation. All the animations were played together.',\
-                    'There was also an image in the group, treated similarly. [Tab: Back]']
+        self.text=['It was a test for a group of displays. Displays could be images, animations or textboxes. ',\
+                   'All the animations were played together.',\
+                   'There was also an image in the group, treated similarly. [Tab: Back]']
 
-        self.animationgroup=draw.obj_animationgroup((640,360))# create animation group (give ref position xini)
+        self.dispgroup=draw.obj_dispgroup((640,360))# create animation group (give ref position xini)
         self.animation2=draw.obj_animation('testanimation2','testimage2',(440,360))# animation xini is respect to group ref now
         self.animation3=draw.obj_animation('testanimation3','testimage3',(840,360))# animation xini is respect to group ref now      
         self.image1=draw.obj_image('testimage',(640,360))
-        self.animationgroup.addpart("testanim2",self.animation2)# add animation to group
-        self.animationgroup.addpart("testanim3",self.animation3)# add animation to group
-        self.animationgroup.addpart("testimg1",self.image1)# add image to group
+        self.dispgroup.addpart("testanim2",self.animation2)# add animation to group
+        self.dispgroup.addpart("testanim3",self.animation3)# add animation to group
+        self.dispgroup.addpart("testimg1",self.image1)# add image to group
     def update(self,controls):
         share.screen.fill((255,255,255))
         share.textdisplay(self.text)
-        self.animationgroup.play(controls)# play all animations
+        self.dispgroup.play(controls)# play all animations
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
         
 
 # Scene: test animation group move
-class obj_scene_testanimationgroupmove:
+class obj_scene_testdispgroupmove:
     def __init__(self,creator):
-        self.name='Group Animation Move'
+        self.name='Display Group Move'
         self.creator=creator# created by scenemanager         
-        self.text=['It was a test to move the group of animation. Use WASD or arrow keys to move.',\
-                   ' Flip with [q] and [e]. Group cannot be scaled (too complex)',\
+        self.text=['It was a test to move the group of displays. Use WASD or arrow keys to move.',\
+                   ' Flip with [q] and [e]. reset with [space]. Group cannot be scaled or rotated (not implemented)',\
                       'Reset with [Space]. [Tab: Back]']
         self.reset()
     def reset(self):
-        self.animationgroup=draw.obj_animationgroup((640,360))# create animation group (give ref position xini)
+        self.dispgroup=draw.obj_dispgroup((640,360))# create animation group (give ref position xini)
         self.animation2=draw.obj_animation('testanimation2','testimage2',(540,360))# (place animation with respect to group)
         self.animation3=draw.obj_animation('testanimation3','testimage3',(740,360))# (place animation with respect to group)
         self.image1=draw.obj_image('testimage',(640,360))
-        self.animationgroup.addpart("testanim2",self.animation2)# add animation to group
-        self.animationgroup.addpart("testanim3",self.animation3)# add animation to group
-        self.animationgroup.addpart("testimg1",self.image1)# add image to group
+        self.dispgroup.addpart("testanim2",self.animation2)# add animation to group
+        self.dispgroup.addpart("testanim3",self.animation3)# add animation to group
+        self.dispgroup.addpart("testimg1",self.image1)# add image to group
         self.dx=5# move rate with controls
         self.dy=5# move rate 
     def update(self,controls):
         share.screen.fill((255,255,255))
         share.textdisplay(self.text)
-        self.animationgroup.play(controls)# play all animations
-        if controls.d or controls.right: self.animationgroup.movex(self.dx)
-        if controls.a or controls.left: self.animationgroup.movex(-self.dx)
-        if controls.w or controls.up: self.animationgroup.movey(-self.dy)
-        if controls.s or controls.down: self.animationgroup.movey(self.dy)
-        if controls.e and controls.ec: self.animationgroup.fliph()# tests
-        if controls.q and controls.qc: self.animationgroup.flipv()# tests
+        self.dispgroup.play(controls)# play all animations
+        if controls.d or controls.right: self.dispgroup.movex(self.dx)
+        if controls.a or controls.left: self.dispgroup.movex(-self.dx)
+        if controls.w or controls.up: self.dispgroup.movey(-self.dy)
+        if controls.s or controls.down: self.dispgroup.movey(self.dy)
+        if controls.e and controls.ec: self.dispgroup.fliph()# tests
+        if controls.q and controls.qc: self.dispgroup.flipv()# tests
         if controls.space  and controls.space: self.reset()
         #
         if controls.tab  and controls.tabc: self.creator.scene=obj_scene_tests(self.creator)
@@ -567,7 +601,7 @@ class obj_scene_testworldactor:
         self.s=0.5# scaling factor
         self.image1=draw.obj_image('herolegs_stand',(640,440)) 
         self.image1.scale(self.s)
-        self.hero.addpart("legs_stand",self.image1)# add shown element (image, animation or animationgroup)
+        self.hero.addpart("legs_stand",self.image1)# add shown element (image, animation or dispgroup)
         #
     def update(self,controls):
         share.screen.fill((255,255,255))
