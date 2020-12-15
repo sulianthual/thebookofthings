@@ -5,7 +5,7 @@
 
 code by Sulian Thual (2020)
 
-A simple adventure game with a twist: you draw and name everything! Made this to learn object-oriented python in a fun way. WIP
+A simple adventure game with a twist: you draw and name everything! Made this to learn object-oriented programming (OOP) with python in a fun way. WIP
 
 
 references: https://github.com/sulianthual/thebookofthings
