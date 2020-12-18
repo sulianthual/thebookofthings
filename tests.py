@@ -351,7 +351,7 @@ class obj_scene_testimage:
         self.image1=draw.obj_image('testimage',(440,420))# image
         self.image2=draw.obj_image('testimage',(840,420))# image
         # self.image2.rotate(45)# Do not apply transformations after a rotation! It would mess the image size and center
-        self.image2.reset()# optional, reset to original
+        self.image2.setup()# optional, reset to original
         # self.image2.movex(100)
         # self.image2.movey(50)
         self.image2.fliph()

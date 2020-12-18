@@ -183,6 +183,8 @@ class obj_brushes:
         self.smallpen=pygame.transform.scale(self.smallpen,(4,4))
         self.tinypen=pygame.image.load('data/pen.png')
         self.tinypen=pygame.transform.scale(self.smallpen,(2,2))        
+        
+        
 ####################################################################################################################
 
 # A simple image (from the drawings folder) to display at a given location
@@ -194,10 +196,8 @@ class obj_image:
             self.img_ini=pygame.image.load('data/error.png')# load error image
         self.xini=xy[0]# xy is the CENTER of the image on screen
         self.yini=xy[1]
-        self.reset()
-        # legend (displayed under, optional)
-        self.legend=[]    
-    def reset(self):# reset image to initial
+        self.setup()
+    def setup(self):#
         self.img=self.img_ini
         self.x=self.xini
         self.y=self.yini
@@ -208,6 +208,8 @@ class obj_image:
         self.flippedh=False# is image flipped horizontally (inverted) or not (original)
         self.flippedv=False# is image flipped vertically (inverted) or not (original)
         self.show=True# show the image or not (can be toggled on/off)
+        # legend (displayed under, optional)
+        self.legend=[]  
     def replaceimage(self,newimgname):# replace existing image with new one
         # Should have same dimensions as original (e.g. for correct rotations)
         # load
@@ -410,7 +412,7 @@ class obj_animation:
         self.resetanimation()# reset parameters to default values
         if os.path.exists(self.aniname): self.load()# load animation (if exists)
         #
-        # Functions for images
+    # Part I: IMAGES
     def resetimages(self): # reset all image(s) (erase all permanent changes)
         self.img=self.img_ini
         self.img.set_colorkey((255,255,255))# set white to transparent
@@ -493,8 +495,8 @@ class obj_animation:
         for i,value in enumerate(self.imglist):
             imgsize=value.get_rect().size
             self.imglist[i]=pygame.transform.scale(value,(int(imgsize[0]*s),int(imgsize[1]*s)))
-    #
-    # Functions for animations (transformations reapplied each frame to images)
+    ######
+    # PART II: ANIMATION (transformations reapplied each frame to images)
     def resetanimation(self):# reset animation (=image transformations(t) )entirely
         # Animation transformations
         self.animation=[]# animation vector
@@ -507,6 +509,8 @@ class obj_animation:
         self.anim_r=0# rotation angle (float)
         self.anim_s=1# scaling factor (float)
         self.anim_c=0# index of image used (0=default, >0=next images) 
+    def firstframe(self):# reset animation to first frame
+        self.anim_t=0
     def record(self,controls):# record animation with dev controls
         # Display Informations for Edit Mode
         share.screen.blit(share.fonts.font15.render('- EDIT MODE -', True, (255, 0, 0)), (1180,135)) 
@@ -552,8 +556,7 @@ class obj_animation:
                 term4=self.animation[i][2]+self.yini
                 pygame.draw.line(share.screen,(255,0,0),(term1,term2),(term3,term4),3)
         # Show reference animation position with cross (xini, yini)
-        share.crossdisplay((self.xini,self.yini),10,(0,0,255),3)
-        
+        share.crossdisplay((self.xini,self.yini),10,(0,0,255),3)        
     def save(self):# save animation to file      
         f1=open(self.aniname, 'w+')
         f1.write('---'+'\n')# first line
@@ -605,12 +608,14 @@ class obj_animation:
             self.nt=len(self.animation)
         else:
             self.nt=False
+    ######
+    # Part III: General
     def play(self,controls):# play animation (loop)
         if self.anim_t < len(self.animation)-1:# loop time
             self.anim_t +=1
         else:
             self.anim_t=0  
-        if self.animation:# play animation
+        if self.animation:# read animation state at time
             self.anim_x=self.animation[self.anim_t][1]
             self.anim_y=self.animation[self.anim_t][2]
             self.anim_fh=self.animation[self.anim_t][3]
@@ -619,13 +624,11 @@ class obj_animation:
             self.anim_s=self.animation[self.anim_t][6]
             self.anim_c=self.animation[self.anim_t][7]
             self.display()
-    def firstframe(self):# reset animation to first frame
-        self.anim_t=0
     def display(self):# display one animation frame (either when playing or recording)
         if self.show:
-            self.imgt=self.imglist[self.anim_c]# select image
+            self.imgt=self.imglist[self.anim_c]# base image
             self.imgsize=self.imgt.get_rect().size
-            # Apply Transformations from animation
+            # Apply Transformations (reapplied each frame to base image)
             if self.anim_fh: self.imgt=pygame.transform.flip(self.imgt,True,False)
             if self.anim_fv: self.imgt=pygame.transform.flip(self.imgt,False,True)
             if self.anim_s != 1: # (scale before rotation)
@@ -698,15 +701,13 @@ class obj_dispgroup:
             self.flippedh=True
             for i in self.dict.values(): 
                 i.ifliph()# flip images
-                self.symh(i,True)# shift position symmetrically   
-                     
+                self.symh(i,True)# shift position symmetrically                   
     def ofliph(self):# flip group horizontally to original orientation
         if self.flippedh:
             self.flippedh=False
             for i in self.dict.values(): 
                 i.ofliph()# flip images
-                self.symh(i,False)# shift position symmetrically
-                    
+                self.symh(i,False)# shift position symmetrically               
     def flipv(self): # flip group vertically
         self.flippedv=not self.flippedv
         for i in self.dict.values(): 
