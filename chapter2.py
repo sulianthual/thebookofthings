@@ -36,7 +36,7 @@ class obj_scene_chapter2(utils.obj_page):
                    'The ',('house',share.colors.house),' was to be named using the [KEYBOARD].',\
                        ]
         self.textinput1=draw.obj_textinput('housename',25,(650,260),color=share.colors.house)# input keyword, max characters, position
-        self.textinput1.legend='House Name'
+        self.textinput1.makelegend('House Name')
     def page(self,controls):
         self.textinput1.update(controls)
     def prevpage(self):
@@ -57,9 +57,9 @@ class obj_scene_ch2p1(utils.obj_page):
                    '[Tab: Back]   [Enter: Continue]']
         # 
         self.drawing=draw.obj_drawing('housedoor_closed',(340,460))# new drawing 
-        self.drawing.legend='Door Closed'
+        self.drawing.makelegend('Door Closed')
         self.drawing2=draw.obj_drawing('housedoor_open',(940,460))# new drawing 
-        self.drawing2.legend='Door Open'
+        self.drawing2.makelegend('Door Open')
         self.drawlist=[self.drawing,self.drawing2]
         #
         # add hero in the middle
@@ -88,7 +88,7 @@ class obj_scene_ch2p2(utils.obj_page):
         # 
         self.s=0.25
         self.drawing=draw.obj_drawing('house',(640,400))# new drawing 
-        self.drawing.legend='House from outside'
+        self.drawing.makelegend('House from outside')
         self.drawing.brush=share.brushes.smallpen# draw with smaller pen
         self.image=draw.obj_image('housedoor_closed',(640,500))# new drawing 
         self.image.scale(self.s)

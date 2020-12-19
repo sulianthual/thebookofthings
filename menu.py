@@ -75,7 +75,9 @@ class obj_scene_titlescreen:
         else:
             self.selectchapter(controls)
         # Access Developer Tests
+        share.screen.blit(share.fonts.font30.render('Toggle Dev Mode: (Press Ctrl)',True,(0,0,0)),(10,680))
         if share.devmode: 
+            pygame.draw.rect(share.screen, (0,0,220), (5, 680, 250,40), 3)
             share.screen.blit(share.fonts.font30.render('Appendix: Developer Tests (Press Space)',True,(0,0,0)),(970,680))
             if controls.space and controls.spacec:
                 self.creator.scene=tests.obj_scene_tests(self.creator)

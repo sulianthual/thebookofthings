@@ -54,13 +54,9 @@ class obj_world:
             if actor.type in j: # if actor type matches an accepted actor type
                 if actor in rule.subjects[i]:# if actor a rule subject
                     rule.subjects[i].remove(actor)# remove actor  
-    def devtools(self):
-        for i in self.actorlist:# draw rectangle for each actor rect collision (x,y,rx,ry)
-            pygame.draw.rect(share.screen, (0,0,220), (i.x-i.rx, i.y-i.ry, 2*i.rx,2*i.ry), 3)
     def update(self,controls):
         for i in self.ruledict.values(): i.update(controls)# update rules
         for j in self.actorlist: j.update(controls)# update actors
-        if share.devmode: self.devtools()# dev tools
 
 # World with rule boundary conditions
 class obj_world_v1(obj_world):
@@ -167,6 +163,13 @@ class obj_rule_weapon_breaks_stuff(obj_rule):
 # Actor
 
 # Template for any actor in world (hero, items, enemies..., obstacles...)
+# Actor can have elements (textbox,image,animation or dispgroup) 
+# All elements must have foncitonalities:
+#  self.x, self.y: position
+# self.movex(), movey(), movetox(), movetoy()
+# self.fliph(), self.flipv() (and oflip, iflip...)
+# self.scale()
+# self.rotate()
 class obj_actor:
     def __init__(self,creator,xy):
         # Creation
@@ -178,14 +181,18 @@ class obj_actor:
         self.yini=xy[1]
         self.x=self.xini# actor position for tracking 
         self.y=self.yini
+        self.s=1# scaling factor
+        self.r=0# rotation angle
         self.rx=0# radius width for rectangle collisions 
         self.ry=0# radius height for rectangle collisions 
-        self.r=0# radius for circle collisions
+        self.rd=0# radius for circle collisions
         self.move_dx=5# movement amount
         self.move_dy=5
         #
         # Dictionary of actor elements (embedded actors, images/animations/dispgroups)
         self.dict={}
+        self.dictx={}# relative position of element (conserved)
+        self.dicty={}
         #
         # Booleans for behavior (must be defined)
         self.show=True# show actor (can be toggled on/off)
@@ -204,18 +211,43 @@ class obj_actor:
         self.kill()
     def addpart(self,name,element):# add element to actor dictionary (embedded actor, image,animation or dispgroup...)
         self.dict[name]=element
+        self.dictx[name]= int( element.xini - self.xini )# record relative difference
+        self.dicty[name]= int( element.yini - self.yini )# record relative difference        
     def removepart(self,name):# remove element
-        self.dict.pop(name,None)# removes element if exists (returns None otherwise)
+        for i in [self.dict, self.dictx, self.dicty]: i.pop(name,None)# removes element if exists (returns None otherwise)
+    def movetox(self,x):# 
+        self.x=x
+        for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
+    def movetoy(self,y):# 
+        self.y=y
+        for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
     def movex(self,dx):# displace actor by dx (as well as all actor elements)
         self.x += dx
-        for i in self.dict.values(): i.movex(dx)
+        # for i in self.dict.values(): i.movex(dx)# old translation
+        for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
     def movey(self,dy):# displace actor by dy (as well as all actor elements)
         self.y += dy
-        for i in self.dict.values(): i.movey(dy)
+        # for i in self.dict.values(): i.movey(dy)# old translation
+        for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
+
+    def scale(self,s):# scale actor elements (permanent)
+        self.s *= s# update actor scale
+        self.rx *= s# scale actorh hitbox (rectx)
+        self.ry *= s# (recty)
+        self.rd *= s# (circle radius)
+        for i in self.dict.keys():
+            self.dict[i].scale(s)# scale element
+            self.dictx[i] *= s# update element position in dispgroup
+            self.dicty[i] *= s
+            self.dict[i].movetox(self.x+self.dictx[i])# update element position
+            self.dict[i].movetoy(self.y+self.dicty[i])
     def play(self,controls):
         for i in self.dict.values():  i.play(controls)   
+    def devtools(self):# display hit box
+        pygame.draw.rect(share.screen,share.colors.devactor, (self.x-self.rx, self.y-self.ry, 2*self.rx,2*self.ry), 3)
     def update(self,controls):
-        if self.show: self.play(controls)    
+        if self.show: self.play(controls)  
+        if share.devmode: self.devtools()
         
 ####################################################################################################################
 # Hero Actor
@@ -231,9 +263,9 @@ class obj_actor_hero(obj_actor):
         self.weapon=None# attached weapon (must be an object= weapon actor)
         self.move_dx=5# movement amount
         self.move_dy=5
-        self.r=50# sphere collision radius
-        self.rx=50# rect collisions radius x
-        self.ry=50
+        self.rd=100# sphere collision radius
+        self.rx=100# rect collisions radius x
+        self.ry=100
     def controls_move(self,controls):
         if controls.d or controls.right: self.movex(self.move_dx) 
         if controls.a or controls.left: self.movex(-self.move_dx)  
@@ -249,14 +281,14 @@ class obj_actor_hero_v1(obj_actor_hero):
     def setup(self):
         super().setup()
         #
-        self.s=0.5# scaling factor
+        self.s=1# scaling factor
         dispgroup=draw.obj_dispgroup((self.xini,self.yini))
-        animation=draw.obj_animation('herolegs_walk','herolegs_stand',(self.xini,self.yini+80))# start animation
+        animation=draw.obj_animation('herolegs_walk','herolegs_stand',(self.xini,self.yini+160))# start animation
         animation.addimage('herolegs_walk')# add image to list
         animation.scale(self.s)
         dispgroup.addpart("legs_walk",animation)
         #
-        animation=draw.obj_animation('herolegs_stand','herolegs_stand',(self.xini,self.yini+80))# standing
+        animation=draw.obj_animation('herolegs_stand','herolegs_stand',(self.xini,self.yini+160))# standing
         animation.scale(self.s)
         dispgroup.addpart("legs_stand",animation)
         self.addpart("hero_dispgroup",dispgroup)
@@ -364,6 +396,11 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         self.timer_strikeshow.start()# could be run instead
     def endstrike(self):
         self.weapon.endstrike()# weapon no longer strikes 
+    def scale(self,s):# scaling also scales the weapon
+        super().scale(s)
+        self.weapon.scale(s)
+        self.weapon.xoff *= s# weapon offset to padre=hero
+        self.weapon.yoff *= s
 
         
 # Weapon Actor: sword :
@@ -374,12 +411,12 @@ class obj_actor_sword(obj_actor):
         self.padre=padre# Always attached to a parent=hero
     def setup(self):
         self.type="sword"
-        self.xoff=120# sword offset respect to parent (if facing right)
-        self.yoff=40
-        self.rx=90# radius width for rectangle collisions 
-        self.ry=50# radius height for rectangle collisions 
-        self.r=0# radius for circle collisions 
-        self.s=0.5# scaling
+        self.xoff=240# sword offset respect to padre (if facing right)
+        self.yoff=80
+        self.rx=180# radius width for rectangle collisions 
+        self.ry=100# radius height for rectangle collisions 
+        self.rd=0# radius for circle collisions 
+        self.s=1# scaling
         term=draw.obj_image('herostrike',(self.xini,self.yini))
         term.show=False# show sword image
         term.scale(self.s)
@@ -440,7 +477,7 @@ class obj_actor_effects_smoke(obj_actor):
 class obj_actor_item_loved(obj_actor):
     def setup(self):
         self.type='item_loved'
-        self.r=50
+        self.rd=50
         self.rx=50
         self.ry=50
         self.image1=draw.obj_image('herothings_loved',(self.xini,self.yini))

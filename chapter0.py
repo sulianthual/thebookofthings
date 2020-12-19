@@ -55,7 +55,7 @@ class obj_scene_ch0p2(utils.obj_page):
                    '\n \nThe pen was drawn with [Left Mouse] and erased with [Right Mouse].',\
                        '\n[Tab: Back]   [Enter: Finish]']
         self.drawing=draw.obj_drawing('pen',(600,440))# new drawing
-        self.drawing.legend='Pen'
+        self.drawing.makelegend('Pen')
     def page(self,controls):
         self.drawing.display()
         self.drawing.update(controls)
@@ -85,7 +85,7 @@ class obj_scene_ch0p4(utils.obj_page):
                    '\nThe eraser was drawn with [Left Mouse] and erased with [Right Mouse]',\
                        '\n[Tab: Back]   [Enter: Finish]']
         self.drawing=draw.obj_drawing('eraser',(900,450))# new drawing
-        self.drawing.legend='Eraser'
+        self.drawing.makelegend('Eraser')
         self.animation=draw.obj_animation('penmove2','pen',(640,360))# start animation
     def page(self,controls):
         self.animation.play(controls)
@@ -138,7 +138,7 @@ class obj_scene_ch0p7(utils.obj_page):
                    'It was drawn with [Left Mouse], and could be restarted with [Right Mouse]',\
                        '[Tab: Back]   [Enter: Finish]']
         self.drawing=draw.obj_drawing('book',(640,420))# new drawing
-        self.drawing.legend='Mysterious Book'
+        self.drawing.makelegend('Mysterious Book')
         self.animation1=draw.obj_animation('penmove3','pen',(640,360))# start animation
         self.animation2=draw.obj_animation('erasermove3','eraser',(640,360))# start animation
     def page(self,controls):

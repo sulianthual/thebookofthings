@@ -20,7 +20,7 @@ import menu
 # Global variables 
 #
 fps= 60  # game frames per second
-devmode = False # developer mode on (toggle False at game release)
+devmode = True # developer mode on (toggle False at game release)
 
 itest=0# index of current text in test menu
 ipage=1# current page within a chapter
@@ -37,7 +37,7 @@ screen=pygame.display.set_mode((1280,720))
 clock=pygame.time.Clock()# start clock (to control framerate)
 display=utils.obj_display()# display screen 
 controls=utils.obj_controls()# mouse/keyboard controls
-fonts=utils.obj_fonts()# text fonts
+fonts=draw.obj_fonts()# text fonts
 windowicon=utils.obj_windowicon()# game window icon
 textdisplay=utils.obj_textdisplay()# text display function
 colors=draw.obj_colors()# dictionary of colors

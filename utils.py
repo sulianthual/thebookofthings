@@ -83,6 +83,8 @@ class obj_page:
         self.creator=creator# created by scenemanager
         self.text=[]# displayed text 
         self.setup()# setup on creation
+        share.textdisplay(self.text,rebuild=True)# rebuild text to display
+        share.pagenumberdisplay(rebuild=True)# rebuild page display
     def update(self,controls):
         self.base(controls)# general content (all pages)
         self.page(controls)# specific content (each page)
@@ -182,82 +184,90 @@ class obj_windowicon:
             pygame.display.set_icon(pygame.image.load('drawings/bookicon.png').convert_alpha())# icon on window banner 
         else:
             pygame.display.set_icon(pygame.image.load('data/booknoicon.png').convert_alpha())# default            
-
-# Font
-# *FONT
-class obj_fonts:
-     def __init__(self):
-         self.font15=pygame.font.Font('data/AmaticSC-Bold.ttf', 15)# text font (for FPS) 
-         self.font30=pygame.font.Font('data/AmaticSC-Bold.ttf', 30)# text font for indicators
-         self.font50=pygame.font.Font('data/AmaticSC-Bold.ttf', 50)# text font for story text
-         self.font100=pygame.font.Font('data/AmaticSC-Bold.ttf', 100)# text font for titlescreen
            
 # Game text display 
 # *TEXT DISPLAY
 class obj_textdisplay:
     def __init__(self):
-        self.pos= (50, 30)# top left position        
-    def __call__(self,textmatrix):
-        if textmatrix: # if not empty text
-            self.ipos=self.pos# text cursor position
-            for i in textmatrix:
-                if type(i) is str:# either text=string
-                    text, color = i, (0,0,0)
-                else:
-                    text, color = i# or tuple (text,color)
-                text=self.formattext(text,**share.words.dict)# FORMAT with written words from book 
-                self.ipos=self.disptext(share.screen,text,self.ipos,share.fonts.font50,color=color)
+        self.pos= (50, 30)# top left position 
+        self.words_prerender=[]# list of word_surface and positions (pre-redendered)
+    def __call__(self,textmatrix,rebuild=False):# call text display
+        # rebuild=True: renders the text entirely (expensive, use for first call with new text)
+        # rebuild=False: displays previous text surface (prefer for efficiency, skips font render)
+        if rebuild: # expensive rebuild
+            self.words_prerender=[]# reset prerender text
+            if textmatrix: # if not empty text
+                self.ipos=self.pos# text cursor position
+                for i in textmatrix:
+                    if type(i) is str:# either text=string
+                        text, color = i, (0,0,0)
+                    else:
+                        text, color = i# or tuple (text,color)
+                    text=self.formattext(text,**share.words.dict)# FORMAT with written words from book 
+                    self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font50,color=color)
+        else:
+            self.disptext()
     # Format text using the words written in the book of things
     def formattext(self,text,**kwargs):
         text=text.format(**kwargs)
         return text
     # Display text on surface with automatic return to line
-    def disptext(self,surface,text,pos,font,color=(0,0,0), xmin=50, xmax=1230, linespacing=55):
+    def rebuildtext(self,text,pos,font,color=(0,0,0), xmin=50, xmax=1230, linespacing=55):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space
         x,y=pos# text position
         if x<xmin: x==xmin
         for count,line in enumerate(wordmatrix):
             for word in line:
-                word_surface=font.render(word,True,color)
+                word_surface=font.render(word,True,color)# Very expensive if redone each frame!
                 word_width, word_height = word_surface.get_size()
                 # return to line automated
                 if x + word_width >= xmax:
                     x = xmin
                     y += linespacing
-                # display
-                surface.blit(word_surface, (x,y))
+                # record prerendered text
+                # share.screen.blit(word_surface, (x,y))# old, display text on screen
+                self.words_prerender.append( (word_surface,(x,y)) )# record prerendered text
                 x += word_width + space_width
             # return to line from user
             if count<len(wordmatrix)-1:
                 x = xmin
-                y += linespacing
-        
-        return x,y# return position for next call         
+                y += linespacing        
+        return x,y# return position for next call  
+    def disptext(self):# display prerendered text
+        for i in self.words_prerender:
+            word_surface, xy=i
+            share.screen.blit(word_surface, xy)
         
 # Page Number display
 class obj_pagenumberdisplay:
     def __init__(self):
-        pass
-    def __call__(self):
-        # share.screen.fill((255,255,255), (1180, 0, 100, 30))# necessary (to redraw each frame)
-        share.screen.blit(share.fonts.font30.render('Page '+str(share.ipage), True, (0, 0, 0)), (1190,5))
+        self.prerender=[]# prerender text
+    def __call__(self,rebuild=False):
+        if rebuild:
+            self.prerender=share.fonts.font30.render('Page '+str(share.ipage), True, (0, 0, 0))
+        else:
+            share.screen.blit(self.prerender, (1190,5))# fast display
         
 # FPS display
 class obj_fpsdisplay:
     def __init__(self):
         pass
     def __call__(self):
-        # share.screen.fill((255,255,255), (20, 0, 100, 20))# necessary (to redraw each frame)
+        # annoying to prerender (must have all possible values): so no prerender for fps
         share.screen.blit(share.fonts.font15.render('FPS='+str(int(share.clock.get_fps())), True, (0, 0, 0)), (30,5))# show fps 
 
 # Cross display
 class obj_crossdisplay:
     def __init__(self):
         pass
-    def __call__(self,xy,radius,color,thickness):        
-        pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]),(xy[0]+radius,xy[1]),thickness)
-        pygame.draw.line(share.screen,color,(xy[0],xy[1]-radius),(xy[0],xy[1]+radius),thickness) 
+    def __call__(self,xy,radius,color,thickness,diagonal=False):
+        if not diagonal:        
+            pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]),(xy[0]+radius,xy[1]),thickness)
+            pygame.draw.line(share.screen,color,(xy[0],xy[1]-radius),(xy[0],xy[1]+radius),thickness)
+        else:
+            pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]-radius),(xy[0]+radius,xy[1]+radius),thickness)
+            pygame.draw.line(share.screen,color,(xy[0]+radius,xy[1]-radius),(xy[0]-radius,xy[1]+radius),thickness)            
         
 ####################################################################################################################
 # General Functions and objects for All Uses
@@ -275,9 +285,9 @@ def isinrect(x,y,rect):
 def checkdotscollide(a,b,r):
     return (a.x-b.x)**2+(a.y-b.y)**2<r**2
 
-# check if two actors a,b (with attributes x,y,r) are colliding 
+# check if two actors a,b (with attributes x,y,rd) are colliding 
 def checkcirclecollide(a,b):
-    return (a.x-b.x)**2+(a.y-b.y)**2<(a.r+b.r)**2
+    return (a.x-b.x)**2+(a.y-b.y)**2<(a.rd+b.rd)**2
 
 # check if two actors a,b (with attributes x,y,rx,ry) are colliding 
 def checkrectcollide(a,b):
