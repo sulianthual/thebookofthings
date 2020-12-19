@@ -229,7 +229,6 @@ class obj_actor:
         self.y += dy
         # for i in self.dict.values(): i.movey(dy)# old translation
         for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
-
     def scale(self,s):# scale actor elements (permanent)
         self.s *= s# update actor scale
         self.rx *= s# scale actorh hitbox (rectx)
@@ -484,7 +483,7 @@ class obj_actor_item_loved(obj_actor):
         self.s=0.5
         self.image1.scale(self.s)
         self.addpart("image",self.image1)
-        self.dict["image"].legend=share.words.dict["itemloved"]
+        self.dict["image"].makelegend(share.words.dict["itemloved"])
     def destroy(self):# when destroyed, leave trailing smoke 
         self.kill()# remove from world
         term=obj_actor_effects_smoke(self.creator,(self.x,self.y))# trailing smoke
@@ -495,4 +494,4 @@ class obj_actor_item_hated(obj_actor_item_loved):
         super().setup()
         self.type='item_hated'
         self.dict["image"].replaceimage('herothings_hated')
-        self.dict["image"].legend=share.words.dict["itemhated"]
+        self.dict["image"].makelegend(share.words.dict["itemhated"])
