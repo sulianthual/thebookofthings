@@ -119,11 +119,9 @@ class obj_scene_titlescreen:
 class obj_scene_erasebook(utils.obj_page):
     def setup(self):
         self.text=['It was decided to erase the book to start a new one. One had to be very sure.',\
-                   'All drawings would be erased, and everything would have to be created again.',\
-                   '[Tab: Cancel]  [Enter: It was sure]']
-        self.animation1=draw.obj_animation('bookerase','book',(640,360))# start animation
-    def page(self,controls):
-        self.animation1.update(controls)        
+                   'All drawings, all names would be erased, and everything would have to be created again.',\
+                   '[Tab: Cancel]  [Enter: ',('Erase the Book',share.colors.red),']']
+        self.addpart( draw.obj_animation('bookerase','book',(640,360)) )      
     def nextpage(self):
         self.creator.scene=obj_scene_erasebookconfirm(self.creator)
 
@@ -131,20 +129,24 @@ class obj_scene_erasebook(utils.obj_page):
 class obj_scene_erasebookconfirm(utils.obj_page):
     def setup(self):       
         self.text=['A ',('LAST WARNING',share.colors.red),' was issued. It was time to make a big decision.',\
-                   '\n[Tab: Cancel]  [Enter: ',('Erase the Book',share.colors.red),']']
-        self.imgbook=pygame.image.load('drawings/book.png')
-        self.image=draw.obj_image('book',(640,350))
-    def page(self,controls):
-        self.image.display()
-    def prevpage(self):
-        self.creator.scene=share.titlescreen
+                   '\n[Tab: Cancel]  [Enter+Space+Ctrl: ',('ERASE THE BOOK',share.colors.red),']']
+        self.addpart( draw.obj_image('book',(640,350)) )
+    def callnextpage(self,controls):
+        if controls.enter and controls.space and controls.lctrl: 
+            self.preendpage()# template
+            self.endpage()# customized
+            share.ipage += 1
+            self.nextpage()# switch to next page
+
     def nextpage(self):
         self.creator.scene=obj_scene_erasebookconfirmed(self.creator)
+
 
 class obj_scene_erasebookconfirmed(utils.obj_page):
     def setup(self):      
         self.text=['Temporarily Unable to Erase the Book.',\
-                   '\n Fix this in menu.py for final version[Tab: Back]']
+                   '\n Fix this in menu.py for final version [Tab: Back]']
+
 
 # In Final version replace with the correct one
 class obj_scene_erasebookconfirmed_BACKUP(utils.obj_page):
@@ -153,7 +155,6 @@ class obj_scene_erasebookconfirmed_BACKUP(utils.obj_page):
                    '[Tab: Back]']
         share.savefile.eraseall()# erase all drawings and savefile
         share.words.eraseall()# erase all words written
-    # (page, prevpage,nextpage as in obj_page)
 
 
 ####################################################################################################################

@@ -31,32 +31,55 @@ class obj_colors:
         self.brown=(165,42,42)
         #
         # Specific colors for devtools
-        self.devactor=(0,0,220)# blue (hitbox)
+        
         self.devtextbox=(225,225,25)# yellowish
         self.devimage=(250,150,0)# orange
         self.devanimation=(250,50,50)# red
         self.devdispgroup=(128,0,128)# purple
+        self.devactor=(0,0,220)# blue (hitbox)
+        
         
         # Specific colors for some game elements
+        self.drawing=(220,0,0)# drawing
+        self.textinput=(170,0,0)# text input box
         self.book=self.blue# anything book of thing
-        self.input=self.red# input text color
+        self.input=self.red# input color (in text)
         self.hero=self.red# hero text color
         self.weapon=self.brown# hero weapon text color
-        self.itemloved=self.green
-        self.itemhated=self.blue
+        self.itemloved=(220,50,50)
+        self.itemhated=(50,50,50)
         self.house=self.red# hero house
         
 # Font
 # *FONT
+# $ a=share.fonts.font50# direct access to available ones
+# $ a=share.fonts.font('medium')# by keyword
 class obj_fonts:
-     def __init__(self):
-         self.font15=pygame.font.Font('data/AmaticSC-Bold.ttf', 15)# text font (for FPS) 
-         self.font30=pygame.font.Font('data/AmaticSC-Bold.ttf', 30)# text font for indicators,textbox
-         self.font60=pygame.font.Font('data/AmaticSC-Bold.ttf', 60)# text font for textbox
-         self.font120=pygame.font.Font('data/AmaticSC-Bold.ttf', 120)# text font for textbox
-         self.font50=pygame.font.Font('data/AmaticSC-Bold.ttf', 50)# text font for story text
-         self.font100=pygame.font.Font('data/AmaticSC-Bold.ttf', 100)# text font for titlescreen 
-         
+    def __init__(self):
+         self.font15=pygame.font.Font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
+         self.font30=pygame.font.Font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
+         self.font40=pygame.font.Font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
+         self.font50=pygame.font.Font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
+         self.font60=pygame.font.Font('data/AmaticSC-Bold.ttf', 60)# large
+         self.font100=pygame.font.Font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
+         self.font120=pygame.font.Font('data/AmaticSC-Bold.ttf', 120)# huge
+    def font(self,fontname):# call by key(string)
+         if fontname=='tiny':
+             return self.font15
+         elif fontname=='smaller':
+             return self.font30
+         elif fontname=='small':
+             return self.font40
+         elif fontname=='medium':
+             return self.font50
+         elif fontname=='large':
+             return self.font60
+         elif fontname=='big':
+             return self.font100
+         elif fontname=='huge':
+             return self.font120
+         else:
+             return self.font50# medium font         
 
 # Brushes used for drawing
 class obj_brushes:
@@ -74,17 +97,22 @@ class obj_brushes:
 # A drawing (image to edit interactively by the player)
 # *DRAWING
 class obj_drawing:
-    def __init__(self,name,xy,base=None):# start new drawing (load or new)
+    def __init__(self,name,xy,base=None,legend=None,borders=(True,True,True,True)):# start new drawing (load or new)
+        self.type='drawing'# object type
         self.name=name# drawing name
         self.xy=xy# drawing position on screen (x,y), CENTER OF THE DRAWING
         self.base=base# drawing base (drawn over, part of final drawing), must be other drawing object (same dimensions)
+        self.borders=borders# draw each border or not (west,east,north,south)
         # Load brush
         self.brush=share.brushes.pen# currently used brush (can be changed externally)
         # Load drawing function with mouse
         self.mousedrawing=obj_mousedrawing()
         self.eraseonareahover=True# erase only if mouse hovers drawing area (useful if multiple drawings on screen)
         # Load shadow (must exist)
-        self.imgbase=pygame.image.load('shadows/'+self.name+'.png')# drawing shadow image
+        if os.path.exists('shadows/'+self.name+'.png'):
+            self.imgbase=pygame.image.load('shadows/'+self.name+'.png')# drawing shadow image
+        else:
+            self.imgbase=pygame.image.load('data/error.png')# load error image
         self.size=self.imgbase.get_rect().size
         self.xytl=(self.xy[0]-int(self.size[0]/2), self.xy[1]-int(self.size[1]/2))# position of top left corner
         self.rect=(self.xytl[0],self.xytl[0]+self.size[0],self.xytl[1],self.xytl[1]+self.size[1])# drawing rectangle area
@@ -96,10 +124,11 @@ class obj_drawing:
             self.reset()
         self.drawing.set_colorkey((255,255,255))# set white as colorkey (that color will not be displayed) 
         # legend (displayed under drawing, optional)
-        self.legend=[]
+        self.legend=legend
         self.legend_surface=[]
         self.legend_xtl=0
         self.legend_ytl=0
+        if self.legend: self.makelegend(self.legend)
     def reset(self):
         self.drawing.fill((255,255,255))# erase drawing
         self.drawing.blit(self.imgbase,(0,0))# add shadow
@@ -108,9 +137,23 @@ class obj_drawing:
         if self.base:
             share.screen.blit(self.base.drawing,self.xytl)# display other drawing base at 
         # share.screen.blit(self.imgbase,self.xytl)# display shadow
-        share.screen.blit(self.drawing,self.xytl)
-        pygame.draw.rect(share.screen, (220,0,0), (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 3)# red borders (optional)
+        share.screen.blit(self.drawing,self.xytl)# display drawing
+        # pygame.draw.rect(share.screen, (220,0,0), (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 3)# borders (optional)
+        self.displayborders()
         self.displaylegend()
+    def displayborders(self):
+        if self.borders[0]:
+            pygame.draw.line(share.screen,share.colors.drawing,\
+                             (self.xytl[0],self.xytl[1]),(self.xytl[0],self.xytl[1]+self.size[1]),3)# left
+        if self.borders[1]:
+            pygame.draw.line(share.screen,share.colors.drawing,\
+                             (self.xytl[0]+self.size[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]),3)# right
+        if self.borders[2]:
+            pygame.draw.line(share.screen,share.colors.drawing,\
+                             (self.xytl[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]),3)# top
+        if self.borders[3]:
+            pygame.draw.line(share.screen,share.colors.drawing,\
+                             (self.xytl[0],self.xytl[1]+self.size[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]),3)# bottom
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
         self.legend_surface=share.fonts.font50.render(legend, True, (0, 0, 0))
@@ -178,7 +221,8 @@ class obj_mousedrawing:
 # A text input area
 # acts like a drawing (not moveable or scalable)
 class obj_textinput:
-    def __init__(self,key,nchar,xy,color=(0,0,0)):
+    def __init__(self,key,nchar,xy,color=(0,0,0),legend=None):
+        self.type='textinput'# object type
         # key in dictionary of written words
         self.key=key
         self.textfromdict()# get text value from dictionary
@@ -193,10 +237,11 @@ class obj_textinput:
         self.makeframe()# make frame for text
         #
         # legend (displayed under drawing, optional)
-        self.legend=[]
+        self.legend=legend
         self.legend_surface=[]
         self.legend_xtl=0
-        self.legend_ytl=0  
+        self.legend_ytl=0 
+        if self.legend: self.makelegend(self.legend)
     def textfromdict(self):# 
         if self.key in share.words.dict:# key exists
             self.text=share.words.dict[self.key]
@@ -220,13 +265,13 @@ class obj_textinput:
         termy=self.xytl[1]+self.ymargin
         share.screen.blit(word_surface,(termx,termy) )# display text
         # frame borders (red)
-        pygame.draw.rect(share.screen, (220,0,0), \
+        pygame.draw.rect(share.screen, share.colors.textinput, \
                          (self.xytl[0], self.xytl[1], self.size[0]+self.xmargin*2,self.size[1]+self.ymargin*2), 3)     
         # frame legend
         self.displaylegend()
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
-        self.legend_surface=share.fonts.font30.render(legend, True, (220, 0, 0))
+        self.legend_surface=share.fonts.font30.render(legend, True, (0,0,0))
         text_width, text_height=self.legend_surface.get_size()
         self.legend_xtl=int( self.xytl[0] + self.size[0]/2 +self.xmargin - text_width/2 )
         self.legend_ytl=int( self.xytl[1] + self.size[1] + text_height/2 )
@@ -240,7 +285,9 @@ class obj_textinput:
             share.words.dict[self.key]=self.text# update text value in dictionary         
     def update(self,controls):
         self.display()
-        self.changetext(controls)    
+        self.changetext(controls)
+    def finish(self):
+        share.words.save()# resave (entire) dictionary of words in file
         
         
 ####################################################################################################################
@@ -249,6 +296,7 @@ class obj_textinput:
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
     def __init__(self,text,xy,fontsize='medium',color=(0,0,0)):
+        self.type='textbox'# object type
         self.xini=xy[0]# initial position
         self.yini=xy[1]
         self.text=text
@@ -266,17 +314,10 @@ class obj_textbox:
         self.yc=0# 
         self.s= 1# scaling factor
         self.r= 0# rotation angle (degree) 
-        if self.fontsize=='tiny':# prerender text into image (avoid during updates, expensive)
-            self.img=share.fonts.font15.render(self.text, self.bold, self.color)
-        elif self.fontsize=='small':
-            self.img=share.fonts.font30.render(self.text, self.bold, self.color)
-        elif self.fontsize=='large':
-            self.img=share.fonts.font60.render(self.text, self.bold, self.color)
-        elif self.fontsize=='huge':
-            self.img=share.fonts.font120.render(self.text, self.bold, self.color)
-        else:
-            self.img=share.fonts.font50.render(self.text, self.bold, self.color)
-        self.imgsize=self.img.get_size()
+        self.replacetext(self.text)
+    def replacetext(self,text):   
+        self.img=share.fonts.font(self.fontsize).render(text, self.bold, self.color)
+        self.imgsize=self.img.get_size()        
     def movetox(self,x): # move to x
         self.x=x
     def movetoy(self,y): # move to y
@@ -334,51 +375,44 @@ class obj_textbox:
         share.crossdisplay((self.x,self.y),10,share.colors.devtextbox,3)
         termx,termy=self.img.get_rect().size
         pygame.draw.rect(share.screen,share.colors.devtextbox, (int(self.x-termx/2), int(self.y-termy/2), termx,termy), 3)  
-    def update(self,controls):
-        self.play(self,controls)
     def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
         self.display()
         if share.devmode: self.devtools()# dev tools
-        
+    def update(self,controls):
+        self.play(controls)        
         
 ####################################################################################################################
 
 # A simple image (from the drawings folder) to display at a given location
 class obj_image:
     def __init__(self,name,xy):
-        if os.path.exists('drawings/'+name+'.png'):
-            self.img_ini=pygame.image.load('drawings/'+name+'.png')# load drawing image
-        else:
-            self.img_ini=pygame.image.load('data/error.png')# load error image
+        self.type='image'# object type
+        self.name=name
         self.xini=xy[0]# xy is the CENTER of the image on screen
         self.yini=xy[1]
         self.setup()
     def setup(self):#
-        self.img=self.img_ini
+        self.img=self.readimage(self.name)
+        self.imgsize=self.img.get_rect().size
         self.x=self.xini# image correction
         self.y=self.yini
         self.s=1# scaling factor
         self.r=0# rotation angle (deg)
         self.xc=0# position correction (due to rotation)
         self.yc=0
-        self.imgsize=self.img.get_rect().size
-        self.img.set_colorkey((255,255,255))# set white as colorkey (that color will not be displayed)  
         self.fh=False# is image flipped horizontally (inverted) or not (original)
         self.fv=False# is image flipped vertically (inverted) or not (original)
         self.show=True# show the image or not (can be toggled on/off)
-        # legend (displayed under, optional)
-        self.legend=[]
-        self.legend_surface=[]
-        self.legend_xtl=0
-        self.legend_ytl=0
-    def replaceimage(self,newimgname):# replace existing image with new one
-        # Should have same dimensions as original (e.g. for correct rotations)
-        # load
-        if os.path.exists('drawings/'+newimgname+'.png'):
-            img=pygame.image.load('drawings/'+newimgname+'.png')# load drawing image
+    def readimage(self,name):
+        if os.path.exists('drawings/'+name+'.png'):
+            img=pygame.image.load('drawings/'+name+'.png')# load drawing image
         else:
-            img=pygame.image.load('data/error.png')# load error image
-        img.set_colorkey((255,255,255)) 
+            img=pygame.image.load('data/error.png')# load error image        
+        img.set_colorkey((255,255,255))# set white as colorkey (that color will not be displayed) 
+        return img
+    def replaceimage(self,newimgname):# replace existing image with new one
+        self.name=newimgname
+        img=self.readimage(self.name)
         # reapply reference transformations (fliph,flipv,scale, rotate...)
         if self.fh: img=pygame.transform.flip(img,True,False)
         if self.fv: img=pygame.transform.flip(img,False,True)
@@ -388,6 +422,7 @@ class obj_image:
         if self.r != 0: img=pygame.transform.rotate(img,self.r)
         # assign
         self.img=img
+        self.imgsize=self.img.get_rect().size
     def movetox(self,x): # move to x
         self.x=x
     def movetoy(self,y): # move to y
@@ -441,26 +476,15 @@ class obj_image:
             xtl=self.x-self.imgsize[0]/2 +self.xc
             ytl=self.y-self.imgsize[1]/2 +self.yc
             share.screen.blit(self.img,(int(xtl),int(ytl)))
-            self.displaylegend()
-    def makelegend(self,legend):# make legend (and prerender)
-        self.legend=legend
-        self.legend_surface=share.fonts.font50.render(legend, True, (0, 0, 0))
-        text_width, text_height=self.legend_surface.get_size()
-        self.legend_xtl=int( self.x - text_width/2 )
-        self.legend_ytl=int( self.y + self.imgsize[1]/2 - text_height/2 )
-    def displaylegend(self):# display prerendered legend
-        if self.legend:
-            share.screen.blit(self.legend_surface, (self.legend_xtl,self.legend_ytl))
     def devtools(self):
         share.crossdisplay((self.x,self.y),10,share.colors.devimage,3)
         termx,termy=self.img.get_rect().size
         pygame.draw.rect(share.screen,share.colors.devimage, (int(self.x-termx/2), int(self.y-termy/2), termx,termy), 3)            
-    def update(self,controls):
-        self.play(controls)
     def play(self,controls):# update,play,display kept for consistency and calls
         self.display()
         if share.devmode: self.devtools()
-
+    def update(self,controls):
+        self.play(controls)  
 
 ####################################################################################################################
 
@@ -468,11 +492,13 @@ class obj_image:
 # Consists of base image(s) (can be transformed permanently) + animation transformations(t) (applied each frame)
 #* ANIMATION  
 class obj_animation:      
-    def __init__(self,name,imgname,xy):# start new animation (load or new)
+    def __init__(self,name,imgname,xy,record=False):# start new animation (load or new)
+        self.type='animation'# object type
         self.name=name# animation name
         self.imgname=imgname# reference image (more can be added)
         self.xini=xy[0]# reference position of animation ( (0,0)=default or center of screen)
         self.yini=xy[1]
+        self.record=record# ability to record this animation
         self.setup()
     def setup(self):
         # Parameters (and permanent changes)
@@ -494,7 +520,7 @@ class obj_animation:
     ######
     # Part I: IMAGES (basis of animation)
     def setupimages(self): # setup images
-        self.img_ini=self.readimage(self.imgname)      
+        self.img_ini=self.readimage(self.imgname)
         self.imglist=[]# list of all available images
         self.imglist.append(self.img_ini)
     def readimage(self,imgname):# read image on file
@@ -542,9 +568,9 @@ class obj_animation:
         self.ia=0# index of image used (0=default, >0=next images) 
     def firstframe(self):# reset animation to first frame
         self.ta=0
-    def display_recordinfos(self):
+    def recorder_infos(self):
         # Display Informations for Record Mode (not prerendered but doesnt matter)
-        share.screen.blit(share.fonts.font15.render('- EDIT MODE -', True, (255, 0, 0)), (1180,135)) 
+        share.screen.blit(share.fonts.font15.render('- RECORD MODE -', True, (255, 0, 0)), (1180,135)) 
         share.screen.blit(share.fonts.font15.render('Space: Toggle Mode', True, (255, 0, 0)), (1180,155)) 
         share.screen.blit(share.fonts.font15.render('Backspace: Reset', True, (255, 0, 0)), (1180,175))        
         share.screen.blit(share.fonts.font15.render('LMouse: Record', True, (255, 0, 0)), (1180,195)) 
@@ -553,8 +579,8 @@ class obj_animation:
         share.screen.blit(share.fonts.font15.render('q-e: flip', True, (255, 0, 0)), (1180,255)) 
         share.screen.blit(share.fonts.font15.render('r: Save', True, (255, 0, 0)), (1180,275))
         share.screen.blit(share.fonts.font15.render('f: change image', True, (255, 0, 0)), (1180,295))
-    def record(self,controls):# record animation with dev controls
-        self.display_recordinfos()
+    def recorder(self,controls):# record animation with dev controls
+        self.recorder_infos()
         # Position
         self.xa=controls.mousex-self.xini# anomalies around reference
         self.ya=controls.mousey-self.yini
@@ -579,7 +605,7 @@ class obj_animation:
         if controls.backspace and controls.backspacec: self.eraseanimation()# Erase animation        
         if controls.r and controls.rc: self.save()# Save to file
         # Display
-        self.display()        
+        self.display()               
         # Show trajectories of image center for all frames (red)
         if self.animation and len(self.animation)>1: 
             for i in range(1,len(self.animation)): 
@@ -589,7 +615,7 @@ class obj_animation:
                 term4=self.animation[i][2]+self.yini
                 pygame.draw.line(share.screen,(255,0,0),(term1,term2),(term3,term4),3)
         # Show reference animation position with cross (xini, yini)
-        share.crossdisplay((self.xini,self.yini),10,(0,0,255),3)        
+        share.crossdisplay((self.xini,self.yini),10,(0,0,255),3) 
     def save(self):# save animation to file      
         f1=open(self.aniname, 'w+')
         f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
@@ -694,7 +720,7 @@ class obj_animation:
     #def rotate(self,r) not implemented (enlargens-memory issues and complex corrections to self.xa, self.ya)
     ######
     # Part VI: General
-    def playanim(self):# play animation (loop)
+    def playback(self):# play back animation (loop)
         self.ta +=1
         if self.ta > len(self.animation)-1: self.ta=0
         if self.animation:# read animation state at time
@@ -703,7 +729,10 @@ class obj_animation:
             self.display()
     def display(self):# display one animation frame (either when playing or recording)
         if self.show:
-            self.imgt=self.imglist[self.ia]# base image
+            if self.ia<len(self.imglist):
+                self.imgt=self.imglist[self.ia]# base image
+            else:
+                self.imgt=self.imglist[0]# error image frame out of range, take first image frame
             sizex,sizey=self.imgt.get_rect().size
             # Apply Transformations (reapplied each frame to base image)
             if self.fha: self.imgt=pygame.transform.flip(self.imgt,True,False)
@@ -758,20 +787,20 @@ class obj_animation:
             self.xt=termx
             self.yt=termy
             share.screen.blit(self.imgt,(int(termx),int(termy)))
-    def devtools(self):
-        share.crossdisplay((self.x,self.y),10,share.colors.devanimation,3)
+    def devtools(self):        
         termx,termy=self.imgt.get_rect().size
-        pygame.draw.rect(share.screen,share.colors.devanimation, (int(self.xt), int(self.yt), termx,termy), 3)  
-    def update(self,controls):# useful only for recording mode
-        if share.devmode and controls.space and controls.spacec: self.recording= not self.recording     
+        pygame.draw.rect(share.screen,share.colors.devanimation, (int(self.xt), int(self.yt), termx,termy), 3)          
+        if not self.recording: share.crossdisplay((self.x,self.y),10,share.colors.devanimation,3)
+    def play(self,controls):
+        if self.record:# ability to record 
+            if share.devmode and controls.space and controls.spacec: self.recording= not self.recording# switch mode  
         if self.recording: 
-            self.record(controls)
+            self.recorder(controls)# record mode
         else:
-            self.play(controls)
-    def play(self,controls):# useful in game
-        self.playanim()
+            self.playback()# playback mode
         if share.devmode: self.devtools()
-        
+    def update(self,controls):
+        self.play(controls)        
             
 
 ####################################################################################################################
@@ -788,6 +817,7 @@ class obj_animation:
 #  (rotation of elements not implemented due to issues with image size changes)
 class obj_dispgroup:
     def __init__(self,xy):
+        self.type='dispgroup'# object type
         self.xini=xy[0]# position center of group
         self.yini=xy[1]
         self.reset()
@@ -886,6 +916,7 @@ class obj_dispgroup:
     def play(self,controls): # play all animations and display all images (in order of append)
         for i in self.dict.values(): i.play(controls)
         if share.devmode: self.devtools()
-
+    def update(self,controls):
+        self.play(controls)  
 ####################################################################################################################
 

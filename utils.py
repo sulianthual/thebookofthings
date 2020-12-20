@@ -58,7 +58,8 @@ class obj_scenemanager:
         if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
         #
         # dev tests:
-        #if share.devmode and controls.mouse1: print(controls.mousex,controls.mousey)
+        if share.devmode and controls.mouse3 and controls.mouse3c: 
+            print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
         
 ####################################################################################################################
 # Function Quit Game
@@ -78,35 +79,68 @@ class obj_quit:
 # General Page class (base functions repeated for each page within a chapter)
 # *PAGE            
 
+
 class obj_page:
     def __init__(self,creator):
         self.creator=creator# created by scenemanager
+        self.presetup()# template
+        self.setup()# customized
+        self.postsetup()# template
+    def presetup(self):
         self.text=[]# displayed text 
-        self.setup()# setup on creation
-        share.textdisplay(self.text,rebuild=True)# rebuild text to display
+        self.textkeys={}# can add keys in setup (e.g. self.textkeys['xmin']=150)
+        self.to_update=[]# list of elements to update during page (includes everyone)
+        self.to_finish=[]# list of elements to finish on endpage (drawing, textinput)
+    def postsetup(self):
+        share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
         share.pagenumberdisplay(rebuild=True)# rebuild page display
+    def addpart(self,element):# add element (must have a self.type)
+        if element.type in ['drawing','textinput','textbox','image','animation','dispgroup','world']:
+            self.to_update.append(element)            
+        if element.type in ['drawing','textinput']:
+            self.to_finish.append(element)
+    def removepart(self,element):
+        for i in [self.to_update,self.to_finish]:
+            if element in i: i.remove(element)
     def update(self,controls):
-        self.base(controls)# general content (all pages)
-        self.page(controls)# specific content (each page)
-    def base(self,controls):
-        share.screen.fill((255,255,255))# fill with white
+        self.prepage(controls)# template
+        self.page(controls)# customized
+        self.postpage(controls)# template
+    def prepage(self,controls):
+        share.screen.fill((255,255,255))
+        self.callprevpage(controls)
+        self.callnextpage(controls)
+        self.callexitpage(controls)
+        for i in self.to_update: i.update(controls)# update elements
+    def postpage(self,controls):
         share.textdisplay(self.text)# display text
         share.pagenumberdisplay()# display page number
-        #
-        if controls.tab and controls.tabc: 
+    def callprevpage(self,controls):
+        if controls.tab and controls.tabc:
+            self.preendpage()# template
+            self.endpage()# customized
             share.ipage -= 1
             self.prevpage()# switch to prev page
+    def callnextpage(self,controls):
         if controls.enter and controls.enterc: 
+            self.preendpage()# template
+            self.endpage()# customized
             share.ipage += 1
             self.nextpage()# switch to next page
+    def callexitpage(self,controls):
         if controls.esc and controls.esc: # go back to main menu
+            self.preendpage()# template
+            self.endpage()# customized
             share.titlescreen.setup()
             self.creator.scene=share.titlescreen
-    #
+    def preendpage(self):
+        for i in self.to_finish: i.finish()# finish elements
     # This content to be edited for each page
-    def setup(self):# setup (replace here for specifics of each page)**
+    def setup(self):# page setup
         pass
-    def page(self,controls):# page (replace here)**
+    def page(self,controls):# page update
+        pass
+    def endpage(self):# when exit page 
         pass
     def prevpage(self):# actions to prev page (replace here)**
         share.titlescreen.setup()# refresh titlescreen content
@@ -189,22 +223,22 @@ class obj_windowicon:
 # *TEXT DISPLAY
 class obj_textdisplay:
     def __init__(self):
-        self.pos= (50, 30)# top left position 
         self.words_prerender=[]# list of word_surface and positions (pre-redendered)
-    def __call__(self,textmatrix,rebuild=False):# call text display
+    def __call__(self,textmatrix,rebuild=False, pos=(50,30),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):# call text display
+        # pos: starting xy of text, xmin/xmax: margins
         # rebuild=True: renders the text entirely (expensive, use for first call with new text)
         # rebuild=False: displays previous text surface (prefer for efficiency, skips font render)
         if rebuild: # expensive rebuild
             self.words_prerender=[]# reset prerender text
             if textmatrix: # if not empty text
-                self.ipos=self.pos# text cursor position
+                self.ipos=pos# text cursor position
                 for i in textmatrix:
                     if type(i) is str:# either text=string
                         text, color = i, (0,0,0)
                     else:
                         text, color = i# or tuple (text,color)
                     text=self.formattext(text,**share.words.dict)# FORMAT with written words from book 
-                    self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font50,color=color)
+                    self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)
         else:
             self.disptext()
     # Format text using the words written in the book of things
@@ -212,7 +246,7 @@ class obj_textdisplay:
         text=text.format(**kwargs)
         return text
     # Display text on surface with automatic return to line
-    def rebuildtext(self,text,pos,font,color=(0,0,0), xmin=50, xmax=1230, linespacing=55):
+    def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space
         x,y=pos# text position

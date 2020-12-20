@@ -29,8 +29,6 @@ class obj_scene_prologue(utils.obj_page):
     def setup(self):         
         self.text=['-----   Prologue   -----   ',\
                    '\nIn the Beginning, there was Nothing. Absolutely Nothing. \nBut one Could Press [Enter] to Continue.']
-    def page(self,controls):
-        pass
     def prevpage(self): 
         super().prevpage()# includes refresh titlescreen
     def nextpage(self): 
@@ -40,43 +38,36 @@ class obj_scene_ch0p1(utils.obj_page):
     def setup(self):       
         self.text=['One Could Press [Enter] to Continue, or [Tab] to go back. It was always like that.',\
                    '\n[Tab: Back]   [Enter: Continue]']
-    def page(self,controls):
-        pass
     def prevpage(self): 
         self.creator.scene=obj_scene_prologue(self.creator) 
     def nextpage(self): 
         self.creator.scene=obj_scene_ch0p2(self.creator) 
+
         
 # Scene: Draw Pen
 class obj_scene_ch0p2(utils.obj_page):
     def setup(self):       
         self.text=['There was going to be a pen, and the pen was going to be drawn. ',\
                    'The pen was to be drawn with a lot of emotions, even if it was just a pen.',\
-                   '\n \nThe pen was drawn with [Left Mouse] and erased with [Right Mouse].',\
-                       '\n[Tab: Back]   [Enter: Finish]']
-        self.drawing=draw.obj_drawing('pen',(600,440))# new drawing
-        self.drawing.makelegend('Pen')
-    def page(self,controls):
-        self.drawing.display()
-        self.drawing.update(controls)
+                   'The pen was drawn with [Left Mouse] and erased with [Right Mouse].',\
+                   '[Tab: Back]   [Enter: Finish]']
+        self.addpart( draw.obj_drawing('pen',(600,440),legend='Pen') )
     def prevpage(self):
-        self.drawing.finish()# save drawing
         self.creator.scene=obj_scene_ch0p1(self.creator)
     def nextpage(self):
-        self.drawing.finish()# save drawing
         self.creator.scene=obj_scene_ch0p3(self.creator)# next scene
+
 
 class obj_scene_ch0p3(utils.obj_page):
     def setup(self):      
         self.text=['The Pen liked to move around a little. it was a happy pen.',\
                    '\n[Tab: Back]   [Enter: Finish]']
-        self.animation=draw.obj_animation('penmove','pen',(640,360))# start animation
-    def page(self,controls):
-        self.animation.play(controls)
+        self.addpart( draw.obj_animation('penmove','pen',(640,360)) )
     def prevpage(self): 
         self.creator.scene=obj_scene_ch0p2(self.creator)
     def nextpage(self): 
         self.creator.scene=obj_scene_ch0p4(self.creator)            
+
 
 # Scene: Draw Eraser
 class obj_scene_ch0p4(utils.obj_page):
@@ -84,31 +75,24 @@ class obj_scene_ch0p4(utils.obj_page):
         self.text=['Along with the pen, there was going to be an eraser.',\
                    '\nThe eraser was drawn with [Left Mouse] and erased with [Right Mouse]',\
                        '\n[Tab: Back]   [Enter: Finish]']
-        self.drawing=draw.obj_drawing('eraser',(900,450))# new drawing
-        self.drawing.makelegend('Eraser')
-        self.animation=draw.obj_animation('penmove2','pen',(640,360))# start animation
-    def page(self,controls):
-        self.animation.play(controls)
-        self.drawing.display()
-        self.drawing.update(controls)
+        self.addpart( draw.obj_drawing('eraser',(900,450), legend='Eraser') )
+        self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
     def prevpage(self):
-        self.drawing.finish()# save drawing
         self.creator.scene=obj_scene_ch0p3(self.creator)
     def nextpage(self):
-        self.drawing.finish()# save drawing
         self.creator.scene=obj_scene_ch0p5(self.creator)# next scene
+
 
 class obj_scene_ch0p5(utils.obj_page):
     def setup(self):       
         self.text=['The Pen and Eraser looked like this, and they were very happy.',\
                    'They danced together all day.',\
                    '[Tab: Back]   [Enter: Continue]']
-        self.animation1=draw.obj_animation('penmove2','pen',(640,360))# start animation
-        self.animation2=draw.obj_animation('erasermove','eraser',(640,360))# start animation
-        self.animation2.ntmax=self.animation1.nt# same number of frames
-    def page(self,controls):
-        self.animation1.play(controls)# default
-        self.animation2.update(controls)
+        animation1=draw.obj_animation('penmove2','pen',(640,360))
+        animation2=draw.obj_animation('erasermove','eraser',(640,360))
+        animation2.ntmax=animation1.nt# same number of frames
+        self.addpart( animation1 )
+        self.addpart( animation2 )
     def prevpage(self): 
         self.creator.scene=obj_scene_ch0p4(self.creator)
     def nextpage(self): 
@@ -120,12 +104,11 @@ class obj_scene_ch0p6(utils.obj_page):
                    'And when there would be nothing again, it was unclear how the eraser would be erased.',\
                    ' But it didnt matter much right now because there were many more things to draw and erase.',\
                    '[Tab: Back]   [Enter: Continue]']
-        self.animation1=draw.obj_animation('penmove2a','pen',(640,360))# start animation
-        self.animation2=draw.obj_animation('erasermovea','eraser',(640,360))# start animation
-        self.animation2.ntmax=self.animation1.nt# same number of frames
-    def page(self,controls):
-        self.animation1.play(controls)
-        self.animation2.update(controls)
+        animation1=draw.obj_animation('penmove2a','pen',(640,360))# start animation
+        animation2=draw.obj_animation('erasermovea','eraser',(640,360))# start animation
+        animation2.ntmax=animation1.nt# same number of frames
+        self.addpart( animation1 )
+        self.addpart( animation2 )
     def prevpage(self): 
         self.creator.scene=obj_scene_ch0p5(self.creator)
     def nextpage(self): 
@@ -137,20 +120,12 @@ class obj_scene_ch0p7(utils.obj_page):
         self.text=['In the middle of the dancing, there was going to be a book. A very mysterious book [draw].',\
                    'It was drawn with [Left Mouse], and could be restarted with [Right Mouse]',\
                        '[Tab: Back]   [Enter: Finish]']
-        self.drawing=draw.obj_drawing('book',(640,420))# new drawing
-        self.drawing.makelegend('Mysterious Book')
-        self.animation1=draw.obj_animation('penmove3','pen',(640,360))# start animation
-        self.animation2=draw.obj_animation('erasermove3','eraser',(640,360))# start animation
-    def page(self,controls):
-        self.animation1.play(controls)# default
-        self.animation2.play(controls)
-        self.drawing.update(controls)
-        self.drawing.display()
+        self.addpart( draw.obj_drawing('book',(640,420), legend='Mysterious Book') )
+        self.addpart( draw.obj_animation('penmove3','pen',(640,360)) )
+        self.addpart( draw.obj_animation('erasermove3','eraser',(640,360)) )  
     def prevpage(self):
-        self.drawing.finish()# save drawing  
         self.creator.scene=obj_scene_ch0p6(self.creator)
     def nextpage(self):
-        self.drawing.finish()# save drawing            
         self.creator.scene=obj_scene_ch0p8(self.creator)# next scene
 
 class obj_scene_ch0p8(utils.obj_page):
@@ -158,9 +133,7 @@ class obj_scene_ch0p8(utils.obj_page):
         self.text=['It was the book of things. The book of all things were all things would be.',
                    'With the help of the pen and eraser, there would be many things to draw in the book.',\
                    '[Tab: Back]   [Enter: Continue]']
-        self.animation1=draw.obj_animation('bookmove','book',(640,360))# start animation
-    def page(self,controls):
-        self.animation1.update(controls)
+        self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
     def prevpage(self): 
         self.creator.scene=obj_scene_ch0p7(self.creator)
     def nextpage(self): 
@@ -170,8 +143,6 @@ class obj_scene_ch0p9(utils.obj_page):
     def setup(self):       
         self.text=['And so the book began...',\
                    '[Tab: Back]   [Enter: End Prologue]']
-    def page(self,controls):
-        pass
     def prevpage(self): 
         self.creator.scene=obj_scene_ch0p8(self.creator)
     def nextpage(self): 
