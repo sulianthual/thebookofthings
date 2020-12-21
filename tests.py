@@ -20,6 +20,7 @@ import share
 import draw
 import utils
 import actor
+import world
 import menu
 
 ##########################################################
@@ -59,12 +60,11 @@ class obj_scene_tests:
         self.list.append(obj_scene_testanimationplayback(self.creator)) 
         # group animations tests
         self.list.append(obj_scene_testdispgroup(self.creator))
-
         # world and actors tests
         self.list.append(obj_scene_testworld(self.creator))
         self.list.append(obj_scene_testworldgrandactor(self.creator))
-        # Side notes
-        self.list.append(obj_scene_testnotehero(self.creator))
+        self.list.append(obj_scene_testrigidbody(self.creator))
+        
         # quickdraft 
         self.list.append(obj_scene_testdraftanimation(self.creator))        
         #####
@@ -152,8 +152,10 @@ class obj_scene_testdevmodeinfo(obj_testpage):
                    ('dispgroup',share.colors.devdispgroup),', ',\
                    ('grand actor (hitbox)',share.colors.devactor),'. However ',\
                    ('drawing',share.colors.drawing),', ',\
-                   ('textinput',share.colors.textinput),' are not affected. ',\
-                   'You can also print mouse position with [Middle Mouse]. ',\
+                   ('textinput',share.colors.textinput),', ',\
+                   ('textchoice',share.colors.textchoice),\
+                   ' are not affected. ',\
+                   'You can also print mouse position in terminal with [Middle Mouse]. ',\
                    '[Tab: Back]']
         self.addpart( draw.obj_textinput('test1',20,(260,300),legend='textinput') )
         self.addpart( draw.obj_drawing('testimage1',(260,500),legend='drawing') )
@@ -161,7 +163,7 @@ class obj_scene_testdevmodeinfo(obj_testpage):
         self.addpart( draw.obj_image('testimage1',(1140,600)) )
         self.addpart( draw.obj_animation('testanimation1','testimage1',(940,360)) )
         #
-        self.world=actor.obj_world(self)
+        self.world=world.obj_world(self)
         self.hero=actor.obj_actor_hero_v3(self.world,(640,360))
         self.addpart( self.world )
 
@@ -202,7 +204,7 @@ class obj_scene_interactivetext(obj_testpage):
             ' For example, the regular chapter pages and the test pages have different fontsizes. '\
             '[Tab:Return]']
         # self.textkeys={}# default for pages
-        self.textkeys={'pos':(50,30),'xmin':50,'xmax':1230,'linespacing':55,'fontsize':'medium'}# same as ={}
+        self.textkeys={'pos':(50,50),'xmin':50,'xmax':1230,'linespacing':55,'fontsize':'medium'}# same as ={}
         # self.textkeys={'fontsize':'small','linespacing': 45}# modification for test pages (obj_testpage)
             
 
@@ -442,9 +444,9 @@ class obj_scene_testworld(obj_testpage):
                    'Each world update checks all rules and updates all actors. ',\
                    'Here the world has an actor=hero, an actor=boundaries, and a rule=collision between the two. ',\
                    '[Tab: Back]']
-        self.world=actor.obj_world(self)
-        self.world.addrule('rule_world_bdry', actor.obj_rule_world_bdry(self.world))# add rule: collision hero and bdry
-        self.bdry=actor.obj_actor_bdry(self.world)# actors are added to world upon creation
+        self.world=world.obj_world(self)
+        self.world.addrule('rule_world_bdry', world.obj_rule_world_bdry(self.world))# add rule: collision hero and bdry
+        self.bdry=actor.obj_actor_bdry(self.world)# actors adds themselves to world upon creation
         self.hero=actor.obj_actor_hero_v3(self.world,(640,360))
         self.hero.addpart("look at me",draw.obj_textbox('Move with [arrows] or [WASD]',(640,680),fontsize='large'))
         self.hero.scale(0.25)
@@ -461,28 +463,38 @@ class obj_scene_testworldgrandactor(obj_testpage):
                    'it has a hitbox (r,rx,ry), ',\
                    'it can have elements (textbox, image, animation or dispgroup), ',\
                    'and it can be transformed. ',\
-                   'Try permanent transformations here: move [WASD] or [arrows], scale [q,e]. ',\
+                   'Try permanent transformations here: move [arrows], scale [w,s], rotate90 [a,d], flip [q,e]. ',\
                    'Toggle Dev mode with [Ctrl] to see grand actors hit boxes.',\
                    '[Tab: Back]']
-        self.world=actor.obj_world(self)
-        self.hero=actor.obj_actor_hero_v3(self.world,(640,360))
+        self.world=world.obj_world_ch1(self)
+        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))
         self.hero.addpart("element1",draw.obj_textbox('textbox attached to actor',(640,640),fontsize='large'))
     def page(self,controls):
         self.world.update(controls)
-        if controls.e and controls.ec: self.hero.scale(2)
-        if controls.q and controls.qc: self.hero.scale(0.5)
+        if controls.w and controls.wc: self.hero.scale(2)
+        if controls.s and controls.sc: self.hero.scale(0.5)
+        if controls.a and controls.ac: self.hero.rotate90(90)
+        if controls.d and controls.dc: self.hero.rotate90(-90)
+        if controls.q and controls.qc: self.hero.fliph()
+        if controls.e and controls.ec: self.hero.flipv()
 
-
-# Scene: test drawing the hero
-class obj_scene_testnotehero(obj_testpage):
+class obj_scene_testrigidbody(obj_testpage):
     def setup(self):
-        self.name='Notes: Hero'        
-        self.text=['Notes: Hero. Only head and legs is easier and more functional.',\
-                   'Legs=360x200, Head=200x200, Strike=360x200, Overlap=40',\
+        self.name='Actors with Rigid Bodies'       
+        self.text=['Actors with Rigid Bodies: ',\
+                   'A grand actor can be made a rigid body for physics. It is optional tho. ',\
                    '[Tab: Back]']
-        self.addpart( draw.obj_image('herolegs_stand',(640,580)) )  
-        self.addpart( draw.obj_image('herostrike',(880,520)) )
-        self.addpart( draw.obj_image('herohead',(640,420)) )
+        self.world=world.obj_world(self)
+        bdry=actor.obj_actor_bdry(self.world,bounds=(100,1280-100,100,720-100))
+        # improved bdry conditions for rigidbodies
+        self.world.addrule('bdry_bounces_rigidbody',world.obj_rule_bdry_bounces_rigidbody(self.world) )
+        self.world.addrule('weapon_strikes_rigidbody',world.obj_rule_weapon_strikes_rigidbody(self.world) )
+        
+        furniture=actor.obj_actor_furniture_wide(self.world,(940,360),scale=0.5)
+        hero=actor.obj_actor_hero_v4(self.world,(340,360),scale=0.5)
+
+    def page(self,controls):
+        self.world.update(controls)
 
 
 ####################################################################################################################

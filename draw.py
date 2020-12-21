@@ -17,7 +17,7 @@ import share
 import utils
 
 ####################################################################################################################
-# Bank of parameters for drawing(colors, brushes etc)
+# Library of parameters for drawing
 
 # Colors (dictionary of RGB)
 # *COLOR
@@ -31,15 +31,13 @@ class obj_colors:
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
         #
-        # Specific colors for devtools
-        
+        # Specific colors for devtools        
         self.devtextbox=(225,225,25)# yellowish
         self.devimage=(250,150,0)# orange
-        self.devanimation=(250,50,50)# red
+        self.devanimation=(0,220,0)# green
         self.devdispgroup=(128,0,128)# purple
         self.devactor=(0,0,220)# blue (hitbox)
-        
-        
+        #
         # Specific colors for some game elements
         self.drawing=(220,0,0)# drawing
         self.textinput=(200,0,0)# text input box
@@ -54,7 +52,7 @@ class obj_colors:
         
 # Font
 # *FONT
-# $ a=share.fonts.font50# direct access to available ones
+# $ a=share.fonts.font50# direct access
 # $ a=share.fonts.font('medium')# by keyword
 class obj_fonts:
     def __init__(self):
@@ -84,6 +82,7 @@ class obj_fonts:
              return self.font50# medium font         
 
 # Brushes used for drawing
+# $ a=share.brushes.pen
 class obj_brushes:
     def __init__(self):
         self.pen=pygame.image.load('data/pen.png')
@@ -258,15 +257,13 @@ class obj_textinput:
         self.rect=(self.xytl[0],self.xytl[0]+self.size[0]+2*self.xmargin,self.xytl[1],self.xytl[1]+self.size[1]+2*self.ymargin)# drawing rectangle area        
     def display(self):
          # text (centered inside frame)
-        word_surface=self.font.render(self.text,True,self.color)
+        word_surface=self.font.render(self.text,True,self.color)# could prerender only on changetext
         text_width,text_height=word_surface.get_size()
         termx=self.xytl[0]+int(self.size[0]/2)+self.xmargin-int(text_width/2)
         termy=self.xytl[1]+self.ymargin
         share.screen.blit(word_surface,(termx,termy) )# display text
-        # frame borders (red)
         pygame.draw.rect(share.screen, share.colors.textinput, \
                          (self.xytl[0], self.xytl[1], self.size[0]+self.xmargin*2,self.size[1]+self.ymargin*2), 3)     
-        # frame legend
         self.displaylegend()
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
@@ -280,12 +277,13 @@ class obj_textinput:
     def changetext(self,controls):        
         if utils.isinrect(controls.mousex,controls.mousey,self.rect):# edit only if mouse in frame
             self.text=controls.edittext(self.text)# edit text
+            # Note: apparently no need to filter special characters ( \, ', ", {, }, etc )
             if len(self.text)>self.nchar: self.text=self.text[:self.nchar-1]# control max size
-            share.words.dict[self.key]=self.text# update text value in dictionary         
     def update(self,controls):
         self.display()
         self.changetext(controls)
     def finish(self):
+        share.words.dict[self.key]=self.text# update text value in dictionary
         share.words.save()# resave (entire) dictionary of words in file
 
 ####################################################################################################################
@@ -446,7 +444,7 @@ class obj_textbox:
             ytl=self.y-self.imgsize[1]/2 +self.yc
             share.screen.blit(self.img,(int(xtl),int(ytl)))
     def devtools(self):
-        share.crossdisplay((self.x,self.y),10,share.colors.devtextbox,3)
+        utils.crossdisplay((self.x,self.y),10,share.colors.devtextbox,3)
         termx,termy=self.img.get_rect().size
         pygame.draw.rect(share.screen,share.colors.devtextbox, (int(self.x-termx/2), int(self.y-termy/2), termx,termy), 3)  
     def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
@@ -552,7 +550,7 @@ class obj_image:
             ytl=self.y-self.imgsize[1]/2 +self.yc
             share.screen.blit(self.img,(int(xtl),int(ytl)))
     def devtools(self):
-        share.crossdisplay((self.x,self.y),10,share.colors.devimage,3)
+        utils.crossdisplay((self.x,self.y),10,share.colors.devimage,3)
         termx,termy=self.img.get_rect().size
         pygame.draw.rect(share.screen,share.colors.devimage, (int(self.x-termx/2), int(self.y-termy/2), termx,termy), 3)            
     def play(self,controls):# update,play,display kept for consistency and calls
@@ -691,7 +689,7 @@ class obj_animation:
                 term4=self.animation[i][2]+self.yini
                 pygame.draw.line(share.screen,(255,0,0),(term1,term2),(term3,term4),3)
         # Show reference animation position with cross (xini, yini)
-        share.crossdisplay((self.xini,self.yini),10,(0,0,255),3) 
+        utils.crossdisplay((self.xini,self.yini),10,(0,0,255),3) 
     def save(self):# save animation to file      
         f1=open(self.aniname, 'w+')
         f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
@@ -866,7 +864,7 @@ class obj_animation:
     def devtools(self):        
         termx,termy=self.imgt.get_rect().size
         pygame.draw.rect(share.screen,share.colors.devanimation, (int(self.xt), int(self.yt), termx,termy), 3)          
-        if not self.recording: share.crossdisplay((self.x,self.y),10,share.colors.devanimation,3)
+        if not self.recording: utils.crossdisplay((self.x,self.y),10,share.colors.devanimation,3)
     def play(self,controls):
         if self.record:# ability to record 
             if share.devmode and controls.space and controls.spacec: self.recording= not self.recording# switch mode  
@@ -904,8 +902,8 @@ class obj_dispgroup:
         self.dicty={}
         self.x=self.xini# x position of group (useful to track overall position, starts a xini, yini)
         self.y=self.yini
-        self.fh=False# are the images flipped horizontally (inverted) or not (original)
-        self.fv=False# are the images flipped vertically (inverted) or not (original)
+        self.fh=False# flipped horizontally (inverted) or not (original)
+        self.fv=False# flipped vertically (inverted) or not (original)
         self.s=1# group scale
         self.r=0# group rotation
     def addpart(self,name,element):# add element to dispgroup (element=textbox,image or animation)
@@ -989,7 +987,7 @@ class obj_dispgroup:
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
     def devtools(self):
-        share.crossdisplay((self.x,self.y),10,share.colors.devdispgroup,6,diagonal=True)            
+        utils.crossdisplay((self.x,self.y),10,share.colors.devdispgroup,6,diagonal=True)            
     def play(self,controls): # play all animations and display all images (in order of append)
         for i in self.dict.values(): i.play(controls)
         if share.devmode: self.devtools()

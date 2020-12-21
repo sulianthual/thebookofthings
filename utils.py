@@ -7,6 +7,7 @@
 # runs with pygame 1.9.4
 #
 # utils.py: General Tools (Display, GUI, general functions)
+#           import external libraries (math,os,sys) here and link functions to it
 #
 ##########################################################
 ##########################################################
@@ -14,6 +15,9 @@
 import sys
 import os
 import pygame
+from math import cos as linkcos
+from math import sin as linksin
+from math import atan2 as linkatan2
 #
 import share
 
@@ -93,7 +97,8 @@ class obj_page:
         self.to_finish=[]# list of elements to finish on endpage (drawing, textinput)
     def postsetup(self):
         share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
-        share.pagenumberdisplay(rebuild=True)# rebuild page display
+        share.pagenumberdisplay(rebuild=True)
+        share.pagenotedisplay('[Tab: Back]  [Enter: Continue]',rebuild=True)
     def addpart(self,element):# add element (must have a self.type)
         if element.type in ['drawing','textinput','textchoice','textbox','image','animation','dispgroup','world']:
             self.to_update.append(element)            
@@ -115,6 +120,7 @@ class obj_page:
     def postpage(self,controls):
         share.textdisplay(self.text)# display text
         share.pagenumberdisplay()# display page number
+        share.pagenotedisplay('')# display page number
     def callprevpage(self,controls):
         if controls.tab and controls.tabc:
             self.preendpage()# template
@@ -202,6 +208,7 @@ class obj_savewords:
 # Methods for GUIs
 # *GUI
 
+
 # Window icon
 class obj_windowicon:
     def __init__(self):
@@ -220,12 +227,13 @@ class obj_windowicon:
         else:
             pygame.display.set_icon(pygame.image.load('data/booknoicon.png').convert_alpha())# default            
            
+            
 # Game text display 
 # *TEXT DISPLAY
 class obj_textdisplay:
     def __init__(self):
         self.words_prerender=[]# list of word_surface and positions (pre-redendered)
-    def __call__(self,textmatrix,rebuild=False, pos=(50,30),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):# call text display
+    def __call__(self,textmatrix,rebuild=False, pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):# call text display
         # pos: starting xy of text, xmin/xmax: margins
         # rebuild=True: renders the text entirely (expensive, use for first call with new text)
         # rebuild=False: displays previous text surface (prefer for efficiency, skips font render)
@@ -277,39 +285,55 @@ class obj_textdisplay:
             word_surface, xy=i
             share.screen.blit(word_surface, xy)
         
+        
 # Page Number display
 class obj_pagenumberdisplay:
     def __init__(self):
         self.prerender=[]# prerender text
-    def __call__(self,rebuild=False):
+    def __call__(self,rebuild=False,fontsize='smaller'):
         if rebuild:
-            self.prerender=share.fonts.font30.render('Page '+str(share.ipage), True, (0, 0, 0))
+            self.prerender=share.fonts.font(fontsize).render('Page '+str(share.ipage), True, (0, 0, 0))
         else:
-            share.screen.blit(self.prerender, (1190,5))# fast display
+            share.screen.blit(self.prerender, (1190,680))# fast display
+
+
+# Page Note display (e.g. instructions)
+class obj_pagenotedisplay:
+    def __init__(self):
+        self.prerender=[]# prerender text
+        self.xy=(0,0)# position of text
+    def __call__(self,text,xy=(1020,5),rebuild=False,fontsize='smaller'):
+        if rebuild:
+            self.prerender=share.fonts.font(fontsize).render(text, True, (0, 0, 0))
+            self.xy=xy
+        else:
+            share.screen.blit(self.prerender, xy)# fast display        
+
         
-# FPS display
-class obj_fpsdisplay:
+# FPS display (could be a function)
+class obj_fpsdisplay: 
     def __init__(self):
         pass
     def __call__(self):
-        # annoying to prerender (must have all possible values): so no prerender for fps
-        share.screen.blit(share.fonts.font15.render('FPS='+str(int(share.clock.get_fps())), True, (0, 0, 0)), (30,5))# show fps 
+        share.screen.blit(share.fonts.font('smaller').render('FPS='+str(int(share.clock.get_fps())), True, (0, 0, 0)), (30,5))
 
-# Cross display
-class obj_crossdisplay:
-    def __init__(self):
-        pass
-    def __call__(self,xy,radius,color,thickness,diagonal=False):
-        if not diagonal:        
-            pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]),(xy[0]+radius,xy[1]),thickness)
-            pygame.draw.line(share.screen,color,(xy[0],xy[1]-radius),(xy[0],xy[1]+radius),thickness)
-        else:
-            pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]-radius),(xy[0]+radius,xy[1]+radius),thickness)
-            pygame.draw.line(share.screen,color,(xy[0]+radius,xy[1]-radius),(xy[0]-radius,xy[1]+radius),thickness)            
-        
+
+    
 ####################################################################################################################
 # General Functions and objects for All Uses
 # *FUNCTIONS
+
+# links to module math
+def cos(x):
+    return linkcos(x)
+def sin(x):
+    return linksin(x)
+def atan2(y,x):
+    return linkatan2(y,x)
+def angle(a_xy,b_xy):# angle between points a=(x,y) and b=(x,y)
+    return linkatan2(b_xy[1]-a_xy[1],b_xy[0]-a_xy[0])
+def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y)
+    return linkatan2(b.y-a.y,b.x-a.x)
 
 # check if a point x,y is in a given rectangle rect=(xmin,xmax,ymin,ymax)
 def isinrect(x,y,rect):
@@ -330,7 +354,18 @@ def checkcirclecollide(a,b):
 # check if two actors a,b (with attributes x,y,rx,ry) are colliding 
 def checkrectcollide(a,b):
     return abs(a.x-b.x)<a.rx+b.rx and abs(a.y-b.y)<a.ry+b.ry
+
     
+# Cross display       
+def crossdisplay(xy,radius,color,thickness,diagonal=False):
+        if not diagonal:        
+            pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]),(xy[0]+radius,xy[1]),thickness)
+            pygame.draw.line(share.screen,color,(xy[0],xy[1]-radius),(xy[0],xy[1]+radius),thickness)
+        else:
+            pygame.draw.line(share.screen,color,(xy[0]-radius,xy[1]-radius),(xy[0]+radius,xy[1]+radius),thickness)
+            pygame.draw.line(share.screen,color,(xy[0]+radius,xy[1]-radius),(xy[0]-radius,xy[1]+radius),thickness) 
+            
+
 # Timer for any purpose
 # *TIMER
 class obj_timer:
@@ -360,8 +395,6 @@ class obj_timer:
             self.off=True
             if self.cycle: self.start()# restart if cycled
                 
-                
-
         
         
 ####################################################################################################################
@@ -578,6 +611,7 @@ class obj_controls:
         self.getmouse()
         self.getkeys()
         self.getquit()
+
 
 ####################################################################################################################
 

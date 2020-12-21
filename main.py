@@ -16,9 +16,11 @@ import os# for knowing which level files are present
 import pygame
 
 # Initialize pygame (before import of file modules!)
-pygame.mixer.pre_init(22050, -16, 2, 1024)
-pygame.mixer.init()
-pygame.init()
+# pygame.mixer.pre_init(22050, -16, 2, 1024)
+# pygame.mixer.init()
+pygame.font.init()# can be slow to init
+pygame.init()# init of all modules (mixer,font...)
+pygame.time.wait(100)# wait 100 ms (to let pygame.font initialize entirely)
 
 import share# all shared objects, variables
         

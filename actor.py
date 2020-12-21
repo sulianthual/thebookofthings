@@ -6,8 +6,9 @@
 # Created Sept 2020
 # runs with pygame 1.9.4
 #
-# actor.py: all games actors (hero, enemies, obstacles, world...)
+# actor.py: all games actors (hero, enemies, obstacles)
 #
+# (actors are held in worlds that manages them)
 ##########################################################
 ##########################################################
 
@@ -20,165 +21,6 @@ import utils
 import draw
 
 ####################################################################################################################
-# World
-#* WORLD
-
-# World Template
-class obj_world:
-    def __init__(self,creator):
-        self.type='world'
-        self.creator=creator# created by scene
-        self.ruledict={}# dictionary of rules in the world (non-ordered)
-        self.actorlist=[]# list of actors in the world (ordered for updates)
-        self.setup()
-    def setup(self):# fill here for childs
-        pass
-    def addrule(self,name,rule):# add rule to the world
-        self.ruledict[name]=rule
-        for i in self.actorlist: self.addactortorule(rule,i)# add all actors to rule
-    def removerule(self,name):# remove rule from the world
-        self.ruledict.pop(name,None)# removes element if exists (returns None otherwise)        
-    def addactor(self,actor):# add actor to the world
-        self.actorlist.append(actor)
-        for i in self.ruledict.values(): self.addactortorule(i,actor)# add actor to all rules
-    def removeactor(self,actor):# remove actor from the world
-        if actor in self.actorlist:
-            self.actorlist.remove(actor)
-        for i in self.ruledict.values(): self.removeactorfromrule(i,actor)# remove actor from all rules
-    def addactortorule(self,rule,actor):# add an actor to a rule as a subject (if type matches)
-        for i,j in rule.subject_types.items():
-            if actor.actortype in j: # if actor type matches an accepted actor type
-                if actor not in rule.subjects[i]:# if actor not already a rule subject
-                    rule.subjects[i].append(actor)# add actor as subject to rule
-    def removeactorfromrule(self,rule,actor):# remove an actor from a rule (if type matches)
-        for i,j in rule.subject_types.items():
-            if actor.actortype in j: # if actor type matches an accepted actor type
-                if actor in rule.subjects[i]:# if actor a rule subject
-                    rule.subjects[i].remove(actor)# remove actor  
-    def update(self,controls):
-        for i in self.ruledict.values(): i.update(controls)# update rules
-        for j in self.actorlist: j.update(controls)# update actors
-
-# World with rule boundary conditions (for tutorials)
-class obj_world_v1(obj_world):
-    def setup(self):
-        super().setup()
-        bdry=obj_actor_bdry(self)# default boundaries
-        self.addrule('rule_world_bdry', obj_rule_world_bdry(self))# add rule collision with boundaries
-
-# version with rule hero collects items
-class obj_world_v2(obj_world_v1):
-    def setup(self):
-        super().setup()
-        self.addrule('rule_hero_collects_item', obj_rule_hero_collects_item(self))# rule collision hero loved item
-
-# version with rule weapon breaks stuff
-class obj_world_v3(obj_world_v2):
-    def setup(self):
-        super().setup()
-        self.addrule('rule_weapon_breaks_stuff', obj_rule_weapon_breaks_stuff(self))# rule collision hero loved item
-
-# version with weapon opens/closes door, where boundary needs to be specified
-class obj_world_v4(obj_world):
-    def setup(self):
-        super().setup()
-        self.addrule('rule_world_bdry', obj_rule_world_bdry(self))# add rule collision with boundaries
-        self.addrule('rule_hero_collects_item', obj_rule_hero_collects_item(self))# rule collision hero loved item
-        self.addrule('rule_weapon_breaks_stuff', obj_rule_weapon_breaks_stuff(self))# rule collision hero loved item
-        self.addrule('rule_weapon_door', obj_rule_weapon_opens_door(self))# weapon opens/closes door
-
-####################################################################################################################
-# World Rules
-# *RULES
-# Each update, a rule is applied to its subjects (that are actors from the world)
-# Subjects have different types:
-# rule.subject_types["subjects_heros"]=["hero"], actors with actor.actortype=hero become subjects with type "subjects_hero"
-# The rule checks interactions between subjects and modifies accordingly depending on their types
-# For example, a rule for collision between actors "hero" and actors "items": 
-# All subjects with type "hero" pick up all subjects with type "items", if they collide.
-
-# Rule Template
-class obj_rule:
-    def __init__(self,creator):
-        self.type='rule'
-        self.creator=creator# created by world
-        #
-        self.setupstart()
-        self.setup()# edit for childs
-        self.setupend()
-    def setupstart(self):
-        self.subject_types={}# subject types for the rule 
-    def setup(self):# edit for childrens
-        pass
-    def setupend(self):
-        self.subjects={key: [] for key in self.subject_types}# lists of subject ordered by key=subject type
-    def update(self,controls):# edit for childrens
-        pass
-
-# Rule: boundary conditions (pushes back actors)
-class obj_rule_world_bdry(obj_rule):
-    def setup(self):
-        # rule subjects 
-        self.subject_types["subjects_collider_with_bdry"]=["hero"]# actors that collide
-        self.subject_types["subjects_bdry"]=["bdry"]# boundaries
-    def update(self,controls):
-        for i in self.subjects["subjects_bdry"]:        
-            for j in self.subjects["subjects_collider_with_bdry"]:# subjects that collide with bdry
-                if j.x<i.bdry_lim[0]: 
-                    j.movex(i.bdry_push[0])
-                elif j.x>i.bdry_lim[1]:
-                    j.movex(i.bdry_push[1])
-                if j.y<i.bdry_lim[2]: 
-                    j.movey(i.bdry_push[2])
-                elif j.y>i.bdry_lim[3]:
-                    j.movey(i.bdry_push[3])              
-
-# Rule: hero collects items
-# when: collision loved, then: hero makes quickhappyface, picks up item
-# when: collision hated, then: hero makes angryface
-class obj_rule_hero_collects_item(obj_rule):
-    def setup(self):
-        # rule subjects 
-        self.subject_types["subjects_hero"]=["hero"]# hero
-        self.subject_types["subjects_item_loved"]=["item_loved"]# loved items
-        self.subject_types["subjects_item_hated"]=["item_hated"]# hated items
-    def update(self,controls):
-        for i in self.subjects["subjects_hero"]:
-            for j in self.subjects["subjects_item_loved"]:
-                if utils.checkrectcollide(i,j):
-                    i.quickhappyface()# hero happy briefly
-                    j.kill()# item disappears (pickup)
-            for j in self.subjects["subjects_item_hated"]:
-                if utils.checkrectcollide(i,j):
-                    i.quickangryface()# hero angry briefly
-
-# Rule: weapon breaks stuff
-# when: collision with item then: destroy item
-class obj_rule_weapon_breaks_stuff(obj_rule):
-    def setup(self):
-        # rule subjects 
-        self.subject_types["subjects_weapon"]=["sword"]# hero
-        self.subject_types["subjects_stuff"]=["item_loved","item_hated"]# loved items
-    def update(self,controls):
-        for i in self.subjects["subjects_weapon"]:
-            if i.striking0 or i.striking1:# if weapon is striking (first or second frame only)
-                for j in self.subjects["subjects_stuff"]:
-                    if utils.checkrectcollide(i,j):
-                        j.destroy()# item is destroyed (kill+possible effect e.g. smoke)
-
-# Rule: weapon opens door
-# when: collision with door then: opendoor
-class obj_rule_weapon_opens_door(obj_rule):
-    def setup(self):
-        # rule subjects 
-        self.subject_types["subjects_weapon"]=["sword"]# hero
-        self.subject_types["subjects_door"]=["door"]# loved items
-    def update(self,controls):
-        for i in self.subjects["subjects_weapon"]:
-            if i.striking0:# if weapon is striking (first frame only)
-                for j in self.subjects["subjects_door"]:
-                    if utils.checkrectcollide(i,j):
-                        j.hit()# door is hit
 
                         
 ####################################################################################################################
@@ -204,7 +46,7 @@ class obj_actor:
         
 # Template for grand actor in world (hero, items, enemies..., obstacles...)
 # A grand actor is more elaborate: 
-# - can have elements (textbox,image,animation or dispgroup) 
+# - can have display elements (textbox,image,animation or dispgroup) 
 # - can be transformed: 
 #   movex(),movetox()...
 #   scale()
@@ -223,21 +65,19 @@ class obj_grandactor():
         self.yini=xy[1]
         self.x=self.xini# actor position for tracking 
         self.y=self.yini
+        self.fh=False# flipped horizontally (inverted) or not (original)
+        self.fv=False# flipped vertically (inverted) or not (original)
         self.s=1# scaling factor
         self.r=0# rotation angle
         self.rx=0# radius width for rectangle collisions 
         self.ry=0# radius height for rectangle collisions 
         self.rd=0# radius for circle collisions
-        self.move_dx=5# movement amount
-        self.move_dy=5
         #
-        # Dictionary of actor elements (embedded actors, images/animations/dispgroups)
-        self.dict={}
+        # Dictionary of actor elements
+        self.dict={}# {elementkey: element object}
         self.dictx={}# relative position of element (conserved)
         self.dicty={}
-        #
-        # Booleans for behavior (must be defined)
-        self.show=True# show actor (can be toggled on/off)
+        self.show=True# display elements or not (can be toggled)
         #
         # Setup and Birth
         self.setup()
@@ -247,17 +87,17 @@ class obj_grandactor():
     def setup(self):# add here modifications for childs 
         pass
     def birth(self):# add to world
-        self.creator.addactor(self)# add self to world list of actors    
+        self.creator.addactor(self)
     def kill(self):# remove from world
         self.creator.removeactor(self)
     def destroy(self):# kill with additional funcionalities (e.g. leave trailing smoke)
         self.kill()
-    def addpart(self,name,element):# add element to actor dictionary (embedded actor, image,animation or dispgroup...)
+    def addpart(self,name,element):# add element
         self.dict[name]=element
         self.dictx[name]= int( element.xini - self.xini )# record relative difference
-        self.dicty[name]= int( element.yini - self.yini )# record relative difference        
+        self.dicty[name]= int( element.yini - self.yini )
     def removepart(self,name):# remove element
-        for i in [self.dict, self.dictx, self.dicty]: i.pop(name,None)# removes element if exists (returns None otherwise)
+        for i in [self.dict, self.dictx, self.dicty]: i.pop(name,None)
     def movetox(self,x):# 
         self.x=x
         for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
@@ -266,12 +106,50 @@ class obj_grandactor():
         for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
     def movex(self,dx):# displace actor by dx (as well as all actor elements)
         self.x += dx
-        # for i in self.dict.values(): i.movex(dx)# old translation
         for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
     def movey(self,dy):# displace actor by dy (as well as all actor elements)
         self.y += dy
-        # for i in self.dict.values(): i.movey(dy)# old translation
         for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
+    def symh(self,name): # shift element horizontally (relative to dispgroup)
+        self.dictx[name] *= -1
+        self.dict[name].movetox(self.x + self.dictx[name])
+    def symv(self,name): # shift element vertically (relative to dispgroup)
+        self.dicty[name] *= -1
+        self.dict[name].movetoy(self.y + self.dicty[name])
+    def fliph(self): # flip group horizontally
+        self.fh=not self.fh
+        for i in self.dict.keys(): 
+            self.dict[i].fliph()
+            self.symh(i)  
+    def ifliph(self):# flip group horizontally to inverted orientation
+        if not self.fh:
+            self.fh=True
+            for i in self.dict.keys(): 
+                self.dict[i].ifliph()
+                self.symh(i)                  
+    def ofliph(self):# flip group horizontally to original orientation
+        if self.fh:
+            self.fh=False
+            for i in self.dict.keys(): 
+                self.dict[i].ofliph()
+                self.symh(i)    
+    def flipv(self): # flip group vertically
+        self.fv=not self.fv
+        for i in self.dict.keys(): 
+            self.dict[i].flipv()
+            self.symv(i) 
+    def iflipv(self):# flip group vertically to inverted orientation
+        if not self.fv:
+            self.fv=True
+            for i in self.dict.keys(): 
+                self.dict[i].iflipv()
+                self.symv(i)   
+    def oflipv(self):# flip group vertically to original orientation
+        if self.fv:
+            self.fv=False
+            for i in self.dict.keys(): 
+                self.dict[i].oflipv()
+                self.symv(i)
     def scale(self,s):# scale actor elements (permanent)
         self.s *= s# update actor scale
         self.rx *= s# scale actorh hitbox (rectx)
@@ -283,55 +161,106 @@ class obj_grandactor():
             self.dicty[i] *= s
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
+    def rotate90(self,r):# rotate actor elements in 90 increments (permanent)
+        r=int(round(r%360/90,0)*90)# r in 0,90,180,270
+        self.r += r
+        for i in self.dict.keys():
+            self.dict[i].rotate90(r)
+            termx,termy=self.dictx[i],self.dicty[i]
+            if r==90:
+                self.dictx[i],self.dicty[i]=termy,-termx
+                self.rx,self.ry=self.ry,self.rx
+            elif r==180: 
+                self.dictx[i],self.dicty[i]=-termx,-termy
+            if r==270:
+                self.dictx[i],self.dicty[i]=-termy,termx
+                self.rx,self.ry=self.ry,self.rx             
+            self.dict[i].movetox(self.x+self.dictx[i])# update element position
+            self.dict[i].movetoy(self.y+self.dicty[i])
     def play(self,controls):
         for i in self.dict.values():  i.play(controls)   
-    def devtools(self):# display hit box
+    def devtools(self):# display grand actor hit box
         pygame.draw.rect(share.screen,share.colors.devactor, (self.x-self.rx, self.y-self.ry, 2*self.rx,2*self.ry), 3)
     def update(self,controls):
         if self.show: self.play(controls)  
         if share.devmode: self.devtools()
-        
-####################################################################################################################
-# Hero Actor
-# *ACTORS
-# Note: the creator for any actor is the world they are in
 
-#Template hero (no image)
-class obj_actor_hero(obj_grandactor):
+
+# A grand actor with rigidbody fonctionalities
+# The speed u,v are controlled by rigidbody dynamics and induce additional movement (movex,movey)
+# Actors with rigidbody can still be controlled directly using movex,movey,movetox,movetoy
+class obj_grandactor_rigidbody(obj_grandactor):
+    def __init__(self,*args,dissip=0.01,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.dt=1# update rate
+        self.u=0# rigid body speed
+        self.v=0
+        self.d=dissip# dissipation rate (=None omits)
+        self.uvmin=1# min speed for stalling
+    def forcex(self,force):# apply forcex (call externally)
+        self.u += force*self.dt
+    def forcey(self,force):# apply forcey (call externally)
+        self.v += force*self.dt
+    def stall(self):# stall rigidbody (call externally)
+        self.u,self.v=0,0
+    def friction(self,d):# apply dissipation internally
+        self.u -= d*self.u*self.dt
+        self.v -= d*self.v*self.dt        
+    def rigidbodyupdate(self):# move from speed
+        if self.u!=0 or self.v!=0:
+            if self.u**2+self.v**2>self.uvmin**2:
+                self.movex(self.u*self.dt)
+                self.movey(self.v*self.dt)
+                if self.d: self.friction(self.d)
+            else:
+                self.u,self.v=0,0
+    def update(self,controls):
+        super().update(controls)
+        self.rigidbodyupdate()
+
+
+####################################################################################################################
+# Hero actors
+
+#Template hero (image only)
+class obj_actor_hero(obj_grandactor_rigidbody):
     def setup(self):
         self.actortype='hero'# type=hero
-        self.apply_controls_move=True# actor can be moved with WASD or arrows
-        self.show=True# show actor images/anim (can be toggled on/off)
         self.weapon=None# attached weapon (must be an object= weapon actor)
         self.move_dx=5# movement amount
         self.move_dy=5
         self.rd=100# sphere collision radius
-        self.rx=100# rect collisions radius x
+        self.rx=120# rect collisions radius x
         self.ry=100
-    def controls_move(self,controls):
-        if controls.d or controls.right: self.movex(self.move_dx) 
-        if controls.a or controls.left: self.movex(-self.move_dx)  
-        if controls.w or controls.up: self.movey(-self.move_dy) 
-        if controls.s or controls.down: self.movey(self.move_dy)           
-    def update(self,controls):
-        super().update(controls)
-        if self.apply_controls_move: self.controls_move(controls)
-  
-    
-# Hero with only legs walking around
-class obj_actor_hero_v1(obj_actor_hero):
+        self.addpart('img_herolegs_stand',draw.obj_image('herolegs_stand',(self.xini,self.yini+160)))
+        self.addpart('img_herohead',draw.obj_image('herohead',(self.xini,self.yini)))
+
+
+# Hero with basic movement (arrows only) to do tests.
+class obj_actor_hero_v0(obj_actor_hero):
     def setup(self):
         super().setup()
-        #
-        self.s=1# scaling factor
+    def controls_move(self,controls):
+        if controls.right: self.movex(self.move_dx) 
+        if controls.left: self.movex(-self.move_dx)  
+        if controls.up: self.movey(-self.move_dy) 
+        if controls.down: self.movey(self.move_dy)           
+    def update(self,controls):
+        super().update(controls)
+        self.controls_move(controls)
+        
+        
+# Hero with only legs walking around (remove initial head and legs)
+class obj_actor_hero_v1(obj_actor_hero_v0):
+    def setup(self):
+        super().setup()
+        self.removepart('img_herolegs_stand')# remove initial head and legs
+        self.removepart('img_herohead')
         dispgroup=draw.obj_dispgroup((self.xini,self.yini))
         animation=draw.obj_animation('herolegs_walk','herolegs_stand',(self.xini,self.yini+160))# start animation
         animation.addimage('herolegs_walk')# add image to list
-        animation.scale(self.s)
         dispgroup.addpart("legs_walk",animation)
-        #
         animation=draw.obj_animation('herolegs_stand','herolegs_stand',(self.xini,self.yini+160))# standing
-        animation.scale(self.s)
         dispgroup.addpart("legs_stand",animation)
         self.addpart("hero_dispgroup",dispgroup)
         #
@@ -339,7 +268,7 @@ class obj_actor_hero_v1(obj_actor_hero):
         self.facingright=True# hero is facing to the right (False=to the left)
         self.turnright=False# hero is turning to the right
         self.turnleft=False
-    def controls_move(self,controls):# rewrite move function
+    def controls_move(self,controls):# overwritten
         if controls.d or controls.a or controls.w or controls.s \
             or controls.right or controls.left or controls.up or controls.down:
             self.walking=True
@@ -375,6 +304,7 @@ class obj_actor_hero_v1(obj_actor_hero):
             self.movey(self.move_dy)        
             if controls.sc or controls.downc: 
                 self.dict["hero_dispgroup"].dict["legs_walk"].firstframe()# reset to first frame      
+
 
 # Hero with only legs walking around, add head
 class obj_actor_hero_v2(obj_actor_hero_v1):
@@ -445,8 +375,11 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         self.weapon.xoff *= s# weapon offset to padre=hero
         self.weapon.yoff *= s
 
+
+####################################################################################################################
+
         
-# Weapon Actor: sword :
+# Sword actor
 # Always attached to a padre (e.g. a hero.)
 class obj_actor_sword(obj_grandactor):
     def __init__(self,padre,*args):# call sequence is obj_actor_sword(parent,creator,xy)
@@ -459,8 +392,8 @@ class obj_actor_sword(obj_grandactor):
         self.yoff=80
         self.rx=180# radius width for rectangle collisions 
         self.ry=100# radius height for rectangle collisions 
-        self.rd=0# radius for circle collisions 
-        self.s=1# scaling
+        self.rd=0# radius for circle collisions
+        self.knockback=10# force of knockback when striking rigidbodies
         term=draw.obj_image('herostrike',(self.xini,self.yini))
         term.show=False# show sword image
         term.scale(self.s)
@@ -494,14 +427,17 @@ class obj_actor_sword(obj_grandactor):
             elif self.striking1:
                 self.striking1=False
 
+
 ####################################################################################################################
 # Game Actors
+
 
 # A goal in the game (allows to reach next level, etc...)
 class obj_actor_goal(obj_actor):
     def setup(self):
         self.actortype='goal'
         self.reached=False# reached goal or not
+
 
 # Goal: collide two actors 
 # $ self.goal=actor.obj_actor_goal_collideactors(self.world,(self.hero,self.door),timer=50)
@@ -545,16 +481,49 @@ class obj_actor_goal_opendoor(obj_actor_goal_collideactors):
         super().resetcollide() 
         self.actor1.show=True# hide hero
 
+
 ####################################################################################################################
-# Collision Actors   
+# World 
 
 # Boundary (basic actor)
 class obj_actor_bdry(obj_actor):
+    def __init__(self,creator,bounds=(100,1180,0,560),push=(3,-3,3,-3)):
+        super().__init__(creator)
+        self.bdry_lim=bounds# limits (xmin,xmax,ymin,ymax). 
+        self.bdry_push=push# push rate at boundaries (if =0, boundary not applied)        
     def setup(self):
         self.actortype='bdry'
-        self.bdry_lim=(100,1180,0,560)# limits (xmin,xmax,ymin,ymax). 
-        self.bdry_push=(3,-3,3,-3)# push rate at boundaries (if =0, boundary not applied)
-    
+
+
+# Door: open with hit, shuts on a timer
+class obj_actor_door(obj_grandactor):
+    def setup(self):
+        self.actortype='door'
+        self.rd=8# small hitbox (must stand right on its)
+        self.rx=8
+        self.ry=8
+        dispgroup=draw.obj_dispgroup((self.xini,self.yini))
+        image=draw.obj_image('door_closed',(self.xini,self.yini))
+        dispgroup.addpart("image_closed",image)
+        image=draw.obj_image('door_open',(self.xini,self.yini))
+        image.show=False
+        dispgroup.addpart("image_open",image)
+        self.addpart("door_dispgroup",dispgroup)
+        self.open=False# door is open
+    def hit(self): # door is hit (open or close)
+        if self.open:
+            self.closedoor()
+        else:
+            self.opendoor()
+        self.open = not self.open
+    def opendoor(self):
+        self.dict["door_dispgroup"].dict["image_closed"].show=False
+        self.dict["door_dispgroup"].dict["image_open"].show=True
+    def closedoor(self):
+        self.dict["door_dispgroup"].dict["image_closed"].show=True
+        self.dict["door_dispgroup"].dict["image_open"].show=False  
+        
+        
 ####################################################################################################################
 # Effects Actors        
      
@@ -573,7 +542,7 @@ class obj_actor_effects_smoke(obj_grandactor):
             
         
 ####################################################################################################################
-# Environment Actors (Items, Doors...)
+# Stuff in world
         
 # loved item (static)
 class obj_actor_item_loved(obj_grandactor):
@@ -591,6 +560,7 @@ class obj_actor_item_loved(obj_grandactor):
     def destroy(self):# when destroyed, leave trailing smoke 
         self.kill()# remove from world
         term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
+
         
 # hated item (static)
 class obj_actor_item_hated(obj_actor_item_loved):
@@ -600,33 +570,36 @@ class obj_actor_item_hated(obj_actor_item_loved):
         self.dict["item_dispgroup"].dict["image"].replaceimage('herothings_hated')
         self.dict["item_dispgroup"].dict["textbox"].replacetext(share.words.dict["itemhated"])
 
-# Door: open with hit, shuts on a timer
-class obj_actor_door(obj_grandactor):
+
+# furniture (from chapter 2 hero house)
+class obj_actor_furniture_wide(obj_grandactor_rigidbody):
     def setup(self):
-        self.actortype='door'
-        self.rd=8# small hitbox (must stand right on its)
-        self.rx=8
-        self.ry=8
-        dispgroup=draw.obj_dispgroup((self.xini,self.yini))
-        image=draw.obj_image('housedoor_closed',(self.xini,self.yini))
-        dispgroup.addpart("image_closed",image)
-        image=draw.obj_image('housedoor_open',(self.xini,self.yini))
-        image.show=False
-        dispgroup.addpart("image_open",image)
-        self.addpart("door_dispgroup",dispgroup)
-        self.open=False# door is open
-    def hit(self): # door is hit (open or close)
-        if self.open:
-            self.closedoor()
-        else:
-            self.opendoor()
-        self.open = not self.open
-    def opendoor(self):
-        self.dict["door_dispgroup"].dict["image_closed"].show=False
-        self.dict["door_dispgroup"].dict["image_open"].show=True
-    def closedoor(self):
-        self.dict["door_dispgroup"].dict["image_closed"].show=True
-        self.dict["door_dispgroup"].dict["image_open"].show=False  
+        self.actortype='furniture'
+        self.rd=200# sphere collision radius
+        self.rx=500# rect collisions radius x
+        self.ry=100
+        self.addpart('img',draw.obj_image('furniture_wide',(self.xini,self.yini)))  
+        self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_wide_name"],(self.xini,self.yini+100),fontsize='big')) 
+
+
+class obj_actor_furniture_square(obj_grandactor_rigidbody):
+    def setup(self):
+        self.actortype='furniture'
+        self.rd=200# sphere collision radius
+        self.rx=200# rect collisions radius x
+        self.ry=200
+        self.addpart('img',draw.obj_image('furniture_square',(self.xini,self.yini)))
+        self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_square_name"],(self.xini,self.yini+150),fontsize='big'))       
+
+        
+class obj_actor_furniture_tall(obj_grandactor_rigidbody):
+    def setup(self):
+        self.actortype='furniture'
+        self.rd=200# sphere collision radius
+        self.rx=100# rect collisions radius x
+        self.ry=300
+        self.addpart('img',draw.obj_image('furniture_tall',(self.xini,self.yini)))
+        self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_tall_name"],(self.xini,self.yini+200),fontsize='big'))
     
     
     
