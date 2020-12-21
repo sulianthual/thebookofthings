@@ -43,7 +43,6 @@ textdisplay=utils.obj_textdisplay()# text display function
 colors=draw.obj_colors()# dictionary of colors
 words=utils.obj_savewords()# words written by player in the book
 
-
 fpsdisplay=utils.obj_fpsdisplay()# fps display function
 pagenumberdisplay=utils.obj_pagenumberdisplay()# page display function 
 crossdisplay=utils.obj_crossdisplay()#cross display function

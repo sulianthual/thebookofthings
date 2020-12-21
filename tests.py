@@ -45,7 +45,8 @@ class obj_scene_tests:
         self.list.append(obj_scene_testpagefunctions(self.creator))
         # text tests
         self.list.append(obj_scene_interactivetext(self.creator))
-        self.list.append(obj_scene_inputtext(self.creator))           
+        self.list.append(obj_scene_textinput(self.creator))     
+        self.list.append(obj_scene_textchoice(self.creator))              
         self.list.append(obj_scene_textbox(self.creator))       
         # drawings tests
         self.list.append(obj_scene_testdrawing(self.creator))
@@ -171,7 +172,8 @@ class obj_scene_testpagefunctions(obj_testpage):
         self.name='Page Basics'        
         self.text=['Pages Basics: Pages have default functionalities (see obj_page). ',\
                    'addpart(element) adds element to list of managed elements. ',\
-                   'Managed elements can be: drawing, textinput, textbox, image, animation, dispgroup, world. ',\
+                   'Managed elements can be: ',\
+                   'drawing, textinput, textchoice,textbox, image, animation, dispgroup, world. ',\
                    'Managed elements are updated in order they were added. ',\
                    'They are finished on endpage if necessary (drawings,textinput). ',\
                    ' Elements can alternatively be managed manually. ',\
@@ -204,19 +206,44 @@ class obj_scene_interactivetext(obj_testpage):
         # self.textkeys={'fontsize':'small','linespacing': 45}# modification for test pages (obj_testpage)
             
 
-class obj_scene_inputtext(obj_testpage):
+class obj_scene_textinput(obj_testpage):
     def setup(self):
         self.name='Text input'      
         self.text=[
             'textinput: Hover over the text box to input with keyboard. [Backspace] erases all.',\
             'This saves keywords in the game dictionary (words.txt) to be reused like:',\
             'Test1 name is',('{test1}',share.colors.gray),', '\
-            'and Test2 name is',('{test2}',share.colors.gray),'. '\
+            'and Test2 name is',('{test2}',share.colors.gray),' '\
+            '(refresh page to see those changes). ',\
             'Only use keywords that already exist, or formatting will return error. ',\
             '[Tab:Return]']
         self.addpart( draw.obj_textinput('test1',20,(640,300),legend='name of test1') )
         self.addpart( draw.obj_textinput('test2',20,(640,500),legend='name of test2') )
 
+
+class obj_scene_textchoice(obj_testpage):
+    def setup(self):
+        self.name='Text Choice'      
+        self.text=[
+            'textchoice: Hover with [Mouse] and click with [Left Mouse] to select among choices. ',\
+            'The current choice is the circled one. ',\
+            'This saves keywords (in words.txt) similar to textinput. ',\
+            'Refresh this page to see changes: \nThe test was a:',('{test_he}',share.colors.red),'. ',\
+            '\nA textchoice can have additional keys: ',\
+            'a choice for the base key determines the choices of the additional keys using analogies. ',\
+            'The test gender was: ',('{test_his}',share.colors.red),' choice. ',\
+            ]
+        self.addpart( draw.obj_textbox("The test gender was:",(200,360)) )
+        textchoice=draw.obj_textchoice('test_he')
+        textchoice.addchoice('1. A guy','he',(440,360))
+        textchoice.addchoice('2. A girl','she',(740,360))
+        textchoice.addchoice('3. A thing','it',(1040,360))
+        textchoice.addkey('test_his',{'he':'his','she':'her','it':'its'})# additional key and analogies
+        self.addpart( textchoice )
+    def page(self,controls):
+        pass
+        # print(share.words.dict['test_he'])# can access key value directly
+        
 
 class obj_scene_textbox(obj_testpage):
     def setup(self):
@@ -246,19 +273,20 @@ class obj_scene_textbox(obj_testpage):
         if controls.s and controls.sc: self.textbox.scale(0.5)
         if controls.space and controls.spacec: self.textbox.setup()
         if controls.f and controls.fc: self.textbox.rotate(45)
-
-
+        
+        
 # Scene: test draw something
 class obj_scene_testdrawing(obj_testpage):
     def setup(self):
         self.name='Drawing Basics'      
         self.text=['Drawing Basics: Draw with [Left Mouse], Erase with [Right Mouse] ',\
                    '(only when the mouse is in drawing area). ',\
+                   'It has optionally a legend and no borders. ',\
                    'A drawing needs a background of same name in folder ./shadows. ',\
                    'It is saved in folder ./drawings. ',\
                    'If replacing the shadow erase the drawing as well (or new drawing may glitch). ',\
                    '[Tab: Back]']
-        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me') )
+        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me',borders=(True,False,True,True)) )
 
 
 # Scene: test several drawings at the same time
@@ -282,7 +310,7 @@ class obj_scene_testimage(obj_testpage):
             'Test transformations here like move [Arrows], flip [q,e], scale [w,s], rotate90 [a,d], reset [space]. ',\
             'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
             '[Tab: Back]']
-        self.addpart( draw.obj_image('testimage1',(440,420)) )
+        self.addpart( draw.obj_image('testimage1',(440,420), scale=0.5) )# (can also scale at creation)
         self.image=draw.obj_image('testimage2',(840,420))
         self.dx=5# move rate with controls
         self.dy=5# move rate

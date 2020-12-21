@@ -29,6 +29,7 @@ class obj_colors:
         self.green=(0,220,0)
         self.gray=(150,150,150)
         self.brown=(165,42,42)
+        self.maroon=(128,0,0)
         #
         # Specific colors for devtools
         
@@ -41,13 +42,14 @@ class obj_colors:
         
         # Specific colors for some game elements
         self.drawing=(220,0,0)# drawing
-        self.textinput=(170,0,0)# text input box
+        self.textinput=(200,0,0)# text input box
+        self.textchoice=(180,0,0)# text input box
         self.book=self.blue# anything book of thing
         self.input=self.red# input color (in text)
         self.hero=self.red# hero text color
         self.weapon=self.brown# hero weapon text color
         self.itemloved=(220,50,50)
-        self.itemhated=(50,50,50)
+        self.itemhated=self.maroon
         self.house=self.red# hero house
         
 # Font
@@ -223,27 +225,24 @@ class obj_mousedrawing:
 class obj_textinput:
     def __init__(self,key,nchar,xy,color=(0,0,0),legend=None):
         self.type='textinput'# object type
-        # key in dictionary of written words
         self.key=key
-        self.textfromdict()# get text value from dictionary
-        #
-        self.xy=xy# center position
         self.nchar=nchar# max number of characters
-        #
-        self.font=share.fonts.font50# text font
+        self.xy=xy# center position
         self.color=color# text color
+        self.legend=legend
+        self.setup()
+    def setup(self):
+        self.texttodict()
+        self.font=share.fonts.font50# text font
         self.xmargin=20# margin left/right
         self.ymargin=10#margin top/bottom
         self.makeframe()# make frame for text
-        #
-        # legend (displayed under drawing, optional)
-        self.legend=legend
         self.legend_surface=[]
         self.legend_xtl=0
         self.legend_ytl=0 
         if self.legend: self.makelegend(self.legend)
-    def textfromdict(self):# 
-        if self.key in share.words.dict:# key exists
+    def texttodict(self):# get text value to/from dictionary
+        if self.key in share.words.dict:
             self.text=share.words.dict[self.key]
         else:# create key with empty text
             share.words.dict[self.key]=''
@@ -288,32 +287,107 @@ class obj_textinput:
         self.changetext(controls)
     def finish(self):
         share.words.save()# resave (entire) dictionary of words in file
-        
+
+####################################################################################################################
+#
+# A text choice: similar to textinput (saves keyword) but must select between choices      
+# $ textchoice=draw.obj_textchoice('herogender')
+# $ textchoice.addchoice('1. A guy','he',(340,360))
+# $ textchoice.addchoice('2. A girl','she',(640,360))
+# $ textchoice.addkey('hero_his',{'he':'his','she':'her'})
+class obj_textchoice:
+    def __init__(self,key):
+        self.type='textchoice'# object type
+        self.key=key# key from choice that will be saved (in words.txt)
+        self.setup()
+    def setup(self):
+        self.choices=[]# choices data
+        self.ichoice=0# selected choice
+        self.morekeys=[]# additional keys from choice
+        self.xmargin=20# margin left/right
+        self.ymargin=10# margin top/bottom
+        self.keytodict(self.key)
+    def keytodict(self,key):# write key in dictionary if not there
+        if not key in share.words.dict: share.words.dict[key]=''   
+    def addchoice(self,text,value,xy,fontsize='medium',bold=True,color=(0,0,0)):
+        img=share.fonts.font(fontsize).render(text, bold, color)
+        size=img.get_size()
+        area=( int(xy[0]-size[0]/2-self.xmargin), int(xy[0]+size[0]/2+self.xmargin),\
+              int(xy[1]-size[1]/2-self.ymargin),int(xy[1]+size[1]/2+self.ymargin) )
+        self.choices.append( (value,img,xy,size,area) )
+        self.checkchoice()
+    def checkchoice(self):# check current choice from possible value matches
+        for c,i in enumerate(self.choices): 
+            value,img,xy,size,area=i
+            if (self.key in share.words.dict) and share.words.dict[self.key]==value: 
+                self.ichoice=c
+                break
+    def changechoice(self,controls):
+        if controls.mouse1 and controls.mouse1c: 
+            for c,i in enumerate(self.choices):
+                value,img,xy,size,area=i
+                if utils.isinrect(controls.mousex,controls.mousey,area): 
+                    self.ichoice=c
+                    break# break for loop
+    def choicetodict(self):# write key choice in words dict
+        if self.choices:
+            value,img,xy,size,area=self.choices[self.ichoice]
+            share.words.dict[self.key]=value            
+    def addkey(self,key,analogies):# add a key affected by choice (with dict of analogies of values)
+        self.keytodict(key)
+        self.morekeys.append( (key,analogies) )
+    def morekeystodict(self):# write addictional key choices in words dict
+        for i in self.morekeys:
+            key,analogies=i# 'hero_his',{'he':'his','she':'her'}
+            for j in analogies.keys():
+                if j==share.words.dict[self.key]:
+                    share.words.dict[key]=analogies[j]
+                    break
+    def display(self):
+        for c,i in enumerate(self.choices): 
+            value,img,xy,size,area=i
+            termx=xy[0]-size[0]/2
+            termy=xy[1]-size[1]/2
+            share.screen.blit(img,(int(termx),int(termy)))  
+            if c==self.ichoice:
+                rect=(termx-self.xmargin, termy-self.ymargin, size[0]+2*self.xmargin,size[1]+2*self.ymargin)
+                pygame.draw.rect(share.screen,share.colors.textchoice,rect, 3)          
+    def play(self,controls):
+        self.display()
+        self.changechoice(controls)
+    def update(self,controls):
+        self.play(controls)
+    def finish(self):
+        self.choicetodict()
+        self.morekeystodict()
+        share.words.save()# save dictionary of words on file
+
         
 ####################################################################################################################
 #  
 # A text box
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
-    def __init__(self,text,xy,fontsize='medium',color=(0,0,0)):
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1):
         self.type='textbox'# object type
+        self.text=text
         self.xini=xy[0]# initial position
         self.yini=xy[1]
-        self.text=text
-        self.color=color# color of text (default=black)
         self.fontsize=fontsize# font size of text (default=medium)
-        self.bold=True#bold or not
-        self.fh=False# is image flipped horizontally (inverted) or not (original)
-        self.fv=False# is image flipped vertically (inverted) or not (original)
-        self.show=True# show the image or not (can be toggled on/off)
+        self.color=color# color of text (default=black)
         self.setup()
+        if scale != 1: self.scale(scale)
     def setup(self):
         self.x=self.xini# center of textbox
         self.y=self.yini
         self.xc=0# position correction (from rotation)
         self.yc=0# 
         self.s= 1# scaling factor
-        self.r= 0# rotation angle (degree) 
+        self.r= 0# rotation angle (degree)         
+        self.bold=True#bold or not
+        self.fh=False# is image flipped horizontally (inverted) or not (original)
+        self.fv=False# is image flipped vertically (inverted) or not (original)
+        self.show=True# show the image or not (can be toggled on/off)
         self.replacetext(self.text)
     def replacetext(self,text):   
         self.img=share.fonts.font(self.fontsize).render(text, self.bold, self.color)
@@ -385,12 +459,13 @@ class obj_textbox:
 
 # A simple image (from the drawings folder) to display at a given location
 class obj_image:
-    def __init__(self,name,xy):
+    def __init__(self,name,xy,scale=1):
         self.type='image'# object type
         self.name=name
         self.xini=xy[0]# xy is the CENTER of the image on screen
         self.yini=xy[1]
         self.setup()
+        if scale != 1: self.scale(scale)
     def setup(self):#
         self.img=self.readimage(self.name)
         self.imgsize=self.img.get_rect().size
@@ -489,10 +564,10 @@ class obj_image:
 ####################################################################################################################
 
 # Animate an image on screen
-# Consists of base image(s) (can be transformed permanently) + animation transformations(t) (applied each frame)
+# Consists of base image(s) (can be transformed permanently) + animation transformations(t) (reapplied each frame)
 #* ANIMATION  
 class obj_animation:      
-    def __init__(self,name,imgname,xy,record=False):# start new animation (load or new)
+    def __init__(self,name,imgname,xy,record=False,scale=1):
         self.type='animation'# object type
         self.name=name# animation name
         self.imgname=imgname# reference image (more can be added)
@@ -500,6 +575,7 @@ class obj_animation:
         self.yini=xy[1]
         self.record=record# ability to record this animation
         self.setup()
+        if scale != 1: self.scale(scale)
     def setup(self):
         # Parameters (and permanent changes)
         self.show=True# show the animation or not (can be toggled on/off)
@@ -813,14 +889,15 @@ class obj_animation:
 #  self.play(): display function
 #  self.fliph(): flip image function (also must have ofliph, ifliph, same for flipv)
 #  self.scale(): scale 
-#   self.rotate90(): rotation in increments of 90 degrees
+#  self.rotate90(): rotation in increments of 90 degrees
 #  (rotation of elements not implemented due to issues with image size changes)
 class obj_dispgroup:
-    def __init__(self,xy):
+    def __init__(self,xy,scale=1):
         self.type='dispgroup'# object type
         self.xini=xy[0]# position center of group
         self.yini=xy[1]
         self.reset()
+        if scale != 1: self.scale(scale)
     def reset(self): # reset all (and erase lists)
         self.dict={}# dictionary of elements
         self.dictx={}# relative positions of elements (relative to self.x when element is added)

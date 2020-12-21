@@ -95,9 +95,9 @@ class obj_page:
         share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
         share.pagenumberdisplay(rebuild=True)# rebuild page display
     def addpart(self,element):# add element (must have a self.type)
-        if element.type in ['drawing','textinput','textbox','image','animation','dispgroup','world']:
+        if element.type in ['drawing','textinput','textchoice','textbox','image','animation','dispgroup','world']:
             self.to_update.append(element)            
-        if element.type in ['drawing','textinput']:
+        if element.type in ['drawing','textinput','textchoice']:
             self.to_finish.append(element)
     def removepart(self,element):
         for i in [self.to_update,self.to_finish]:
@@ -176,7 +176,7 @@ class obj_savefile:
         for i in files: os.remove('drawings/'+i)
         self.load()# reload
 
-# Dictionary of keywords written in the book of things (by the player)
+# Dictionary of textinputs,textchoices written in the book of things (by the player)
 class obj_savewords:
     def __init__(self):# most entries are created during the game
         self.filename='drawings/words.txt'# save file for all keywords
@@ -196,6 +196,7 @@ class obj_savewords:
     def eraseall(self):
         self.dict={}
         self.save()# write empty dictionary
+
          
 ####################################################################################################################
 # Methods for GUIs
@@ -243,7 +244,10 @@ class obj_textdisplay:
             self.disptext()
     # Format text using the words written in the book of things
     def formattext(self,text,**kwargs):
-        text=text.format(**kwargs)
+        try:
+            text=text.format(**kwargs)
+        except:
+            pass
         return text
     # Display text on surface with automatic return to line
     def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):

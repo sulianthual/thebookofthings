@@ -212,7 +212,7 @@ class obj_actor:
 #   rotate90()... NOT DONE
 #   (rotate not done due to enlargen-memory issues)
 class obj_grandactor():
-    def __init__(self,creator,xy):
+    def __init__(self,creator,xy,scale=1):
         # Creation
         self.creator=creator# created by world
         self.type='actor'# type (overwritten for each specific actor)
@@ -242,6 +242,7 @@ class obj_grandactor():
         # Setup and Birth
         self.setup()
         self.birth()# add self to world ONLY ONCE setup finished
+        if scale != 1: self.scale(scale)
         #
     def setup(self):# add here modifications for childs 
         pass
@@ -562,10 +563,7 @@ class obj_actor_bdry(obj_actor):
 class obj_actor_effects_smoke(obj_grandactor):
     def setup(self):
         self.actortype='smoke'
-        image=draw.obj_image('smoke',(self.xini,self.yini))
-        self.s=0.5
-        image.scale(self.s)
-        self.addpart("image",image)
+        self.addpart("image",draw.obj_image('smoke',(self.xini,self.yini)) )
         self.timer=utils.obj_timer(30)# timer for existence
         self.timer.start()# start timer at creation
     def update(self,controls):
@@ -592,7 +590,7 @@ class obj_actor_item_loved(obj_grandactor):
         self.addpart("item_dispgroup",dispgroup)
     def destroy(self):# when destroyed, leave trailing smoke 
         self.kill()# remove from world
-        term=obj_actor_effects_smoke(self.creator,(self.x,self.y))# trailing smoke
+        term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
         
 # hated item (static)
 class obj_actor_item_hated(obj_actor_item_loved):
