@@ -3,27 +3,25 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# share.py: all shared (global) items, accessible by main and all file modules
+# share.py: shared (global) game elements (accessible by all modules)
 #
 # Note: the modules (draw,utils,world,actor...) import each other (cyclically)
 #       but it doesnt matter as long as we refer to them by name (e.g. $ a=draw.obj_image())
 #       however absolutely avoid partial imports (e.g. $ from draw import obj_image)
+# 
 ##########################################################
 ##########################################################
 
-import pygame
 import utils
-import draw
+import page
 import menu
-
 
 ##########################################################
 # Global variables 
 #
-fps= 60  # game frames per second
+fps =60 # (keep at 60 because game is fps based)
 devmode = True # developer mode on (toggle False at game release)
 
 itest=0# index of current text in test menu
@@ -33,29 +31,32 @@ ipage=1# current page within a chapter
 screen=None
 
 ##########################################################
-# Shared Objects (accessible by main and all file modules)
+# Initialize shared elements (order matters)
 
-# Initialize shared game objects (order matters)
-clock=pygame.time.Clock()# framerate
+# Game Core
+clock=utils.obj_clock()# game clock 
 display=utils.obj_display()# window display (pygame.display.update)
 windowicon=utils.obj_windowicon()# window icon
 controls=utils.obj_controls()# mouse/keyboard controls
-fonts=draw.obj_fonts()# text fonts 
-
-textdisplay=utils.obj_textdisplay()# text display function
-colors=draw.obj_colors()# dictionary of colors
-words=utils.obj_savewords()# words written by player in the book
-
-fpsdisplay=utils.obj_fpsdisplay()# fps display function
-pagenumberdisplay=utils.obj_pagenumberdisplay()# page number display object
-pagenotedisplay=utils.obj_pagenotedisplay()# page note display object
-# crossdisplay=utils.obj_crossdisplay()#cross display function
-brushes=draw.obj_brushes()# brushes used for drawing
-savefile=utils.obj_savefile()# save file manager
+#
+# Book page elements
+fonts=page.obj_fonts()# text fonts 
+colors=page.obj_colors()# dictionary of colors
+brushes=page.obj_brushes()# brushes used for drawing
+pagenumberdisplay=page.obj_pagenumberdisplay()# page number display object
+pagenotedisplay=page.obj_pagenotedisplay()# page note display object
+fpsdisplay=page.obj_fpsdisplay()# fps display function
+textdisplay=page.obj_textdisplay()# main body of text
+#
+# Utilities
+words=utils.obj_savewords()# save/load data (words)
+savefile=utils.obj_savefile()# save/load data
 quitgame=utils.obj_quit()# function quit game
 scenemanager=utils.obj_scenemanager()# game scene manager (switch scenes+quit...) 
-titlescreen=menu.obj_scene_titlescreen(scenemanager)# activate reference scene=titlescreen
-scenemanager.scene=titlescreen# set starting scene=titlescreen
+#
+# Game menu (as starting scene)
+titlescreen=menu.obj_scene_titlescreen(scenemanager)
+scenemanager.scene=titlescreen# set starting scene
 
 ##########################################################
 

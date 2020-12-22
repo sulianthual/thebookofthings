@@ -3,102 +3,18 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# drw.py: all tools for drawings, images, animations on screen
+# draw.py: game draws = main display objects that can be added to a page in the book
+#         (drawing,textinput,textchoice,textbox,image,animation,dispgroup)
 #
 ##########################################################
 ##########################################################
 
-import os
 import pygame
+#
 import share
 import utils
-
-####################################################################################################################
-# Library of parameters for drawing
-
-# Colors (dictionary of RGB)
-# *COLOR
-class obj_colors:
-    def __init__(self):
-        # base colors
-        self.white=(255,255,255)
-        self.black=(0,0,0)
-        self.red=(220,0,0)# bit darker
-        self.blue=(0,0,220)
-        self.green=(0,220,0)
-        self.gray=(150,150,150)
-        self.brown=(165,42,42)
-        self.maroon=(128,0,0)
-        #
-        # colorkey (unique color made transparent on all game images except background)
-        self.colorkey=self.white
-        #
-        # Specific colors for devtools        
-        self.devtextbox=(225,225,25)# yellowish
-        self.devimage=(250,150,0)# orange
-        self.devanimation=(0,220,0)# green
-        self.devdispgroup=(128,0,128)# purple
-        self.devactor=(0,0,220)# blue (hitbox)
-        #
-        # Specific colors for some game elements
-        self.drawing=(220,0,0)# drawing
-        self.textinput=(200,0,0)# text input box
-        self.textchoice=(180,0,0)# text input box
-        self.book=self.blue# anything book of thing
-        self.input=self.red# input color (in text)
-        self.hero=self.red# hero text color
-        self.weapon=self.brown# hero weapon text color
-        self.itemloved=(220,50,50)
-        self.itemhated=self.maroon
-        self.house=self.red# hero house
-        
-# Font
-# *FONT
-# $ a=share.fonts.font50# direct access
-# $ a=share.fonts.font('medium')# by keyword
-class obj_fonts:
-    def __init__(self):
-         self.font15=pygame.font.Font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
-         self.font30=pygame.font.Font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
-         self.font40=pygame.font.Font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
-         self.font50=pygame.font.Font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
-         self.font60=pygame.font.Font('data/AmaticSC-Bold.ttf', 60)# large
-         self.font100=pygame.font.Font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
-         self.font120=pygame.font.Font('data/AmaticSC-Bold.ttf', 120)# huge
-    def font(self,fontname):# call by key(string)
-         if fontname=='tiny':
-             return self.font15
-         elif fontname=='smaller':
-             return self.font30
-         elif fontname=='small':
-             return self.font40
-         elif fontname=='medium':
-             return self.font50
-         elif fontname=='large':
-             return self.font60
-         elif fontname=='big':
-             return self.font100
-         elif fontname=='huge':
-             return self.font120
-         else:
-             return self.font50# medium font         
-
-# Brushes used for drawing
-# $ a=share.brushes.pen
-class obj_brushes:
-    def __init__(self):        
-        self.pen=self.makebrush('data/pen.png',(8,8))
-        self.smallpen=self.makebrush('data/pen.png',(4,4))
-        self.tinypen=self.makebrush('data/pen.png',(2,2))
-    def makebrush(self,image,size):
-        img=pygame.image.load(image).convert()# always convert images for a faster pygame
-        img=pygame.transform.scale(img,size)
-        # img.set_colorkey(share.colors.colorkey)# (optional) set unique transparent color
-        return img
-        
         
 ####################################################################################################################
 
@@ -117,7 +33,7 @@ class obj_drawing:
         self.mousedrawing=obj_mousedrawing()
         self.eraseonareahover=True# erase only if mouse hovers drawing area (useful if multiple drawings on screen)
         # Load shadow (must exist)
-        if os.path.exists('shadows/'+self.name+'.png'):
+        if utils.pathexists('shadows/'+self.name+'.png'):
             self.imgbase=pygame.image.load('shadows/'+self.name+'.png')#do not convert!
         else:
             self.imgbase=pygame.image.load('data/error.png')#do not convert!
@@ -126,7 +42,7 @@ class obj_drawing:
         self.xytl=(self.xy[0]-int(self.size[0]/2), self.xy[1]-int(self.size[1]/2))# position of top left corner
         self.rect=(self.xytl[0],self.xytl[0]+self.size[0],self.xytl[1],self.xytl[1]+self.size[1])# drawing rectangle area
         # Load drawing (or create empty one)
-        if os.path.exists('book/'+self.name+'.png'):
+        if utils.pathexists('book/'+self.name+'.png'):
             self.drawing=pygame.image.load('book/'+self.name+'.png').convert()
         else:
             self.drawing=pygame.Surface(self.size)
@@ -485,7 +401,7 @@ class obj_image:
         self.fv=False# is image flipped vertically (inverted) or not (original)
         self.show=True# show the image or not (can be toggled on/off)
     def readimage(self,name):
-        if os.path.exists('book/'+name+'.png'):
+        if utils.pathexists('book/'+name+'.png'):
             img=pygame.image.load('book/'+name+'.png').convert()# load drawing image
         else:
             img=pygame.image.load('data/error.png').convert()# load error image        
@@ -606,7 +522,7 @@ class obj_animation:
         self.imglist=[]# list of all available images
         self.imglist.append(self.img_ini)
     def readimage(self,imgname):# read image on file
-        if os.path.exists('book/'+imgname+'.png'):# load  image
+        if utils.pathexists('book/'+imgname+'.png'):# load  image
             img=pygame.image.load('book/'+imgname+'.png').convert()
         else:
             img=pygame.image.load('data/error.png').convert()
@@ -634,7 +550,7 @@ class obj_animation:
         self.tstart=0# start time offset when playing animation (0=default)
         self.aniname='animations/'+self.name+'.txt'# animation name
         self.eraseanimation()# erase animation
-        if os.path.exists(self.aniname): self.load()# load animation (if exists)
+        if utils.pathexists(self.aniname): self.load()# load animation (if exists)
     def eraseanimation(self):# reset animation (=image transformations(t) )entirely
         # Animation transformations
         self.animation=[]# animation vector

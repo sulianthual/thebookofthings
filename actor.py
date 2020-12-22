@@ -3,17 +3,15 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# actor.py: all games actors (hero, enemies, obstacles)
+# actor.py: all game actors objects (hero, items, enemies...)
+#           (actors are held in world objects that manages them)
 #
-# (actors are held in worlds that manages them)
+# 
 ##########################################################
 ##########################################################
 
-import sys
-import os
 import pygame
 #
 import share

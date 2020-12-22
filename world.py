@@ -3,8 +3,7 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
 # world.py: all games worlds and rules
 #
@@ -12,8 +11,6 @@
 ##########################################################
 ##########################################################
 
-import sys
-import os
 import pygame
 #
 import share
@@ -38,26 +35,15 @@ class obj_world:
         pass
     def addrule(self,name,rule):# add rule to the world
         self.ruledict[name]=rule
-        for i in self.actorlist: self.addactortorule(rule,i)# add all actors to rule
+        for i in self.actorlist: rule.addactor(i)
     def removerule(self,name):# remove rule from the world
-        self.ruledict.pop(name,None)# removes element if exists (returns None otherwise)        
+        self.ruledict.pop(name,None)# removes element if exists (returns None otherwise)
     def addactor(self,actor):# add actor to the world
         self.actorlist.append(actor)
-        for i in self.ruledict.values(): self.addactortorule(i,actor)# add actor to all rules
+        for i in self.ruledict.values(): i.addactor(actor)
     def removeactor(self,actor):# remove actor from the world
-        if actor in self.actorlist:
-            self.actorlist.remove(actor)
-        for i in self.ruledict.values(): self.removeactorfromrule(i,actor)# remove actor from all rules
-    def addactortorule(self,rule,actor):# add an actor to a rule as a subject (if type matches)
-        for i,j in rule.subject_types.items():
-            if actor.actortype in j: # if actor type matches an accepted actor type
-                if actor not in rule.subjects[i]:# if actor not already a rule subject
-                    rule.subjects[i].append(actor)# add actor as subject to rule
-    def removeactorfromrule(self,rule,actor):# remove an actor from a rule (if type matches)
-        for i,j in rule.subject_types.items():
-            if actor.actortype in j: # if actor type matches an accepted actor type
-                if actor in rule.subjects[i]:# if actor a rule subject
-                    rule.subjects[i].remove(actor)# remove actor  
+        if actor in self.actorlist: self.actorlist.remove(actor)
+        for i in self.ruledict.values(): i.removeactor(actor)
     def update(self,controls):
         for i in self.ruledict.values(): i.update(controls)# update rules
         for j in self.actorlist: j.update(controls)# update actors
@@ -110,6 +96,18 @@ class obj_rule:
         pass
     def setupend(self):
         self.subjects={key: [] for key in self.subject_types}# lists of subject ordered by key=subject type
+    def isactive(self):# determine if rule needs to be checked on (edit for childrens)
+        return True
+    def addactor(self,actor):#add actor as potential subject
+        for i,j in self.subject_types.items():
+            if actor.actortype in j: # actor type matches an accepted actor type
+                if actor not in self.subjects[i]:# actor not already a subject
+                    self.subjects[i].append(actor)# add actor as subject to rule
+    def removeactor(self,actor):# remove actor from all subject lists
+        for i,j in self.subject_types.items():
+            if actor.actortype in j: # if actor type matches an accepted actor type
+                if actor in self.subjects[i]:# if actor a rule subject
+                    self.subjects[i].remove(actor)# remove actor          
     def update(self,controls):# edit for childrens
         pass
 
@@ -119,11 +117,11 @@ class obj_rule:
 class obj_rule_bdry_bounces_rigidbody(obj_rule):
     def setup(self):
         # rule subjects 
-        self.subject_types["subjects_collider_with_bdry"]=["hero","furniture","rbody"]# rigidbody actors only!
-        self.subject_types["subjects_bdry"]=["bdry"]# boundaries
+        self.subject_types["scolliders"]=["hero","furniture","rbody"]# rigidbody actors only!
+        self.subject_types["sbdry"]=["bdry"]# boundaries
     def update(self,controls):
-        for i in self.subjects["subjects_bdry"]:        
-            for j in self.subjects["subjects_collider_with_bdry"]:# subjects that collide with bdry
+        for i in self.subjects["sbdry"]:        
+            for j in self.subjects["scolliders"]:# subjects that collide with bdry
                 if j.x<i.bdry_lim[0]: 
                     j.movex(i.bdry_push[0])
                     if j.u<0: j.u *= -1
@@ -143,16 +141,16 @@ class obj_rule_bdry_bounces_rigidbody(obj_rule):
 class obj_rule_hero_collects_item(obj_rule):
     def setup(self):
         # rule subjects 
-        self.subject_types["subjects_hero"]=["hero"]# hero
-        self.subject_types["subjects_item_loved"]=["item_loved"]# loved items
-        self.subject_types["subjects_item_hated"]=["item_hated"]# hated items
+        self.subject_types["shero"]=["hero"]# hero
+        self.subject_types["sitem_loved"]=["item_loved"]# loved items
+        self.subject_types["sitem_hated"]=["item_hated"]# hated items
     def update(self,controls):
-        for i in self.subjects["subjects_hero"]:
-            for j in self.subjects["subjects_item_loved"]:
+        for i in self.subjects["shero"]:
+            for j in self.subjects["sitem_loved"]:
                 if utils.checkrectcollide(i,j):
                     i.quickhappyface()# hero happy briefly
                     j.kill()# item disappears (pickup)
-            for j in self.subjects["subjects_item_hated"]:
+            for j in self.subjects["sitem_hated"]:
                 if utils.checkrectcollide(i,j):
                     i.quickangryface()# hero angry briefly
 
@@ -162,12 +160,12 @@ class obj_rule_hero_collects_item(obj_rule):
 class obj_rule_weapon_breaks_stuff(obj_rule):
     def setup(self):
         # rule subjects 
-        self.subject_types["subjects_weapon"]=["sword"]# hero
-        self.subject_types["subjects_stuff"]=["item_loved","item_hated"]# loved items
+        self.subject_types["sweapon"]=["sword"]# hero
+        self.subject_types["sstuff"]=["item_loved","item_hated"]# loved items
     def update(self,controls):
-        for i in self.subjects["subjects_weapon"]:
+        for i in self.subjects["sweapon"]:
             if i.striking0 or i.striking1:# if weapon is striking (first or second frame only)
-                for j in self.subjects["subjects_stuff"]:
+                for j in self.subjects["sstuff"]:
                     if utils.checkrectcollide(i,j):
                         j.destroy()# item is destroyed (kill+possible effect e.g. smoke)
 
@@ -177,12 +175,12 @@ class obj_rule_weapon_breaks_stuff(obj_rule):
 class obj_rule_weapon_opens_door(obj_rule):
     def setup(self):
         # rule subjects 
-        self.subject_types["subjects_weapon"]=["sword"]# hero
-        self.subject_types["subjects_door"]=["door"]# loved items
+        self.subject_types["sweapon"]=["sword"]# hero
+        self.subject_types["sdoor"]=["door"]# loved items
     def update(self,controls):
-        for i in self.subjects["subjects_weapon"]:
+        for i in self.subjects["sweapon"]:
             if i.striking0:# if weapon is striking (first frame only)
-                for j in self.subjects["subjects_door"]:
+                for j in self.subjects["sdoor"]:
                     if utils.checkrectcollide(i,j):
                         j.hit()# door is hit
 
@@ -192,15 +190,13 @@ class obj_rule_weapon_opens_door(obj_rule):
 class obj_rule_weapon_strikes_rigidbody(obj_rule):
     def setup(self):
         # rule subjects 
-        self.subject_types["subjects_weapon"]=["sword"]
-        self.subject_types["subjects_rigidbody"]=["rbody","furniture"]
+        self.subject_types["sweapon"]=["sword"]
+        self.subject_types["srbody"]=["rbody","furniture"]
     def update(self,controls):
-        for i in self.subjects["subjects_weapon"]:
+        for i in self.subjects["sweapon"]:
             if i.striking0:# if weapon is striking (first frame only)
-                for j in self.subjects["subjects_rigidbody"]:
+                for j in self.subjects["srbody"]:
                     if utils.checkrectcollide(i,j):
-                        # theta=utils.atan2( j.y-i.y, j.x-i.x )
-                        # theta=utils.angle( (i.x,i.y),(j.x,j.y) )
                         theta=utils.actorsangle( i,j )
                         j.forcex(i.knockback*utils.cos(theta))
                         j.forcey(i.knockback*utils.sin(theta))

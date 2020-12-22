@@ -3,24 +3,23 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
 # chapter2.py: a house
 #
 ##########################################################
 ##########################################################
 
-import sys
-import os
 import pygame
 #
 import share
-import draw
 import utils
-import menu
+import draw
+import page
 import actor
 import world
+#
+import menu
 
 ##########################################################
 ##########################################################
@@ -29,7 +28,7 @@ import world
 # *CHAPTER II
 
 # name house
-class obj_scene_chapter2(utils.obj_page):
+class obj_scene_chapter2(page.obj_page):
     def setup(self):
         self.text=['-----   Chapter II: A House   -----   ',\
                    '\nIn the book of things, ',('{heroname}',share.colors.hero),' lived in a house, '\
@@ -42,7 +41,7 @@ class obj_scene_chapter2(utils.obj_page):
         
         
 # draw door
-class obj_scene_ch2p1(utils.obj_page):
+class obj_scene_ch2p1(page.obj_page):
     def setup(self):         
         self.text=[('{heroname}',share.colors.hero),"\'s house ",\
                    ('{housename}',share.colors.house),' had a door. '\
@@ -62,7 +61,7 @@ class obj_scene_ch2p1(utils.obj_page):
 
 
 # draw hero house
-class obj_scene_ch2p2(utils.obj_page):
+class obj_scene_ch2p2(page.obj_page):
     def setup(self):         
         self.text=[('{heroname}',share.colors.hero),"\'s house, ",\
                    'that was named',('{housename}',share.colors.house),\
@@ -81,7 +80,7 @@ class obj_scene_ch2p2(utils.obj_page):
 
 
 # hero opens door to enter house
-class obj_scene_ch2p3(utils.obj_page):
+class obj_scene_ch2p3(page.obj_page):
     def setup(self):         
         self.text=['To enter ',('{housename}',share.colors.house),', ',\
                    ('{heroname}',share.colors.hero),' needed to knock on the door with ',\
@@ -111,7 +110,7 @@ class obj_scene_ch2p3(utils.obj_page):
         self.creator.scene=obj_scene_ch2p4(self.creator)# next scene  
 
 # draw walls
-class obj_scene_ch2p4(utils.obj_page):
+class obj_scene_ch2p4(page.obj_page):
     def setup(self):         
         self.text=['Inside ',('{housename}',share.colors.house),' there were walls and they looked like this. ',\
                    'There were common walls that would be found elsewhere too. ',\
@@ -136,7 +135,7 @@ class obj_scene_ch2p4(utils.obj_page):
 
 
 # entrance, access first room
-class obj_scene_ch2p5(utils.obj_page):
+class obj_scene_ch2p5(page.obj_page):
     def setup(self):         
         self.text=['The Entrance in ',('{housename}',share.colors.house),' had several doors. ',\
                    'They were are locked for now except for ',\
@@ -173,7 +172,7 @@ class obj_scene_ch2p5(utils.obj_page):
 
 
 # draw furnitures
-class obj_scene_ch2p6(utils.obj_page):
+class obj_scene_ch2p6(page.obj_page):
     def setup(self):         
         self.text=['The bedroom had 3 furnitures that looked like this and were named like this. ',\
                    ]
@@ -192,7 +191,7 @@ class obj_scene_ch2p6(utils.obj_page):
 
 
 # push furnitures around
-class obj_scene_ch2p7(utils.obj_page):
+class obj_scene_ch2p7(page.obj_page):
     def setup(self):         
         self.text=[('{heroname}',share.colors.hero), ' could strike ',\
                    ('{hero_his}',share.colors.hero),' furnitures with ',\
@@ -230,7 +229,7 @@ class obj_scene_ch2p7(utils.obj_page):
 
 
 # back to entrance
-class obj_scene_ch2p8(utils.obj_page):
+class obj_scene_ch2p8(page.obj_page):
     def setup(self):         
         self.text=['back to entrance and to next room'
                    ]

@@ -3,28 +3,32 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# utils.py: General Tools (Display, GUI, general functions)
-#           import external libraries (math,os,sys) here and link functions to it
+# utils.py: utility tools and external libraries
+#
+# Any call to external libraries (math,os,sys) must be linked here.
+#
+# Why?
+# - If we want to change the external libraries it is much easier
 #
 ##########################################################
 ##########################################################
 
 import sys
 import os
-import pygame
 from math import cos as linkcos
 from math import sin as linksin
 from math import atan2 as linkatan2
+import pygame
 #
 import share
 
 ####################################################################################################################
+# Game Core
+
+
 # Display Manager
-#*DISPLAY
-# Manages display
 class obj_display:
     def __init__(self):
         self.setup()# initial setup (can be repeated on settings changes)
@@ -42,12 +46,10 @@ class obj_display:
         self.setup()
         #
     def update(self):
-        # Update display
         pygame.display.update()# (could also update only rects, less costly but need to keep track)
 
-####################################################################################################################               
+        
 # Scene Manager
-# *SCENE 
 # Creates/Deletes and switches between levels
 class obj_scenemanager:
     def __init__(self):
@@ -63,9 +65,8 @@ class obj_scenemanager:
         if share.devmode and controls.mouse3 and controls.mouse3c: 
             print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
         
-####################################################################################################################
-# Function Quit Game
-#*QUIT
+
+# Quit Game Procedure
 class obj_quit:
      def __init__(self):
          pass
@@ -77,86 +78,44 @@ class obj_quit:
          pygame.quit()
          sys.exit()# very important to properly quit game without crashing
 
+
+# Game Clock (delays game update to given fps)
+class obj_clock:
+    def __init__(self):
+        self.clock=pygame.time.Clock()
+        self.targetfps=share.fps
+    def getfps(self):
+        return self.clock.get_fps()
+    def update(self):
+        self.clock.tick(self.targetfps)
+
+        
+        
 ####################################################################################################################
-# General Page class (base functions repeated for each page within a chapter)
-# *PAGE            
 
 
-class obj_page:
-    def __init__(self,creator):
-        self.creator=creator# created by scenemanager
-        self.presetup()# template
-        self.setup()# customized
-        self.postsetup()# template
-    def presetup(self):
-        self.text=[]# displayed text 
-        self.textkeys={}# can add keys in setup (e.g. self.textkeys['xmin']=150)
-        self.to_update=[]# list of elements to update during page (includes everyone)
-        self.to_finish=[]# list of elements to finish on endpage (drawing, textinput)
-    def postsetup(self):
-        share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
-        share.pagenumberdisplay(rebuild=True)
-        share.pagenotedisplay('[Tab: Back]  [Enter: Continue]',rebuild=True)
-    def addpart(self,element):# add element (must have a self.type)
-        if element.type in ['drawing','textinput','textchoice','textbox','image','animation','dispgroup','world']:
-            self.to_update.append(element)            
-        if element.type in ['drawing','textinput','textchoice']:
-            self.to_finish.append(element)
-    def removepart(self,element):
-        for i in [self.to_update,self.to_finish]:
-            if element in i: i.remove(element)
-    def update(self,controls):
-        self.prepage(controls)# template
-        self.page(controls)# customized
-        self.postpage(controls)# template
-    def prepage(self,controls):
-        share.screen.fill((255,255,255))
-        self.callprevpage(controls)
-        self.callnextpage(controls)
-        self.callexitpage(controls)
-        for i in self.to_update: i.update(controls)# update elements
-    def postpage(self,controls):
-        share.textdisplay(self.text)# display text
-        share.pagenumberdisplay()# display page number
-        share.pagenotedisplay('')# display page number
-    def callprevpage(self,controls):
-        if controls.tab and controls.tabc:
-            self.preendpage()# template
-            self.endpage()# customized
-            share.ipage -= 1
-            self.prevpage()# switch to prev page
-    def callnextpage(self,controls):
-        if controls.enter and controls.enterc: 
-            self.preendpage()# template
-            self.endpage()# customized
-            share.ipage += 1
-            self.nextpage()# switch to next page
-    def callexitpage(self,controls):
-        if controls.esc and controls.esc: # go back to main menu
-            self.preendpage()# template
-            self.endpage()# customized
-            share.titlescreen.setup()
-            self.creator.scene=share.titlescreen
-    def preendpage(self):
-        for i in self.to_finish: i.finish()# finish elements
-    # This content to be edited for each page
-    def setup(self):# page setup
-        pass
-    def page(self,controls):# page update
-        pass
-    def endpage(self):# when exit page 
-        pass
-    def prevpage(self):# actions to prev page (replace here)**
-        share.titlescreen.setup()# refresh titlescreen content
-        self.creator.scene=share.titlescreen# default back to menu
-    def nextpage(self):# actions to next page (replace here)**
-        share.titlescreen.setup()# refresh titlescreen content
-        self.creator.scene=share.titlescreen# default back to menu
-
-         
-####################################################################################################################
-# Save Data into Files (also manages all drawings in folder /book)
-# *SAVE
+# Game Window icon
+class obj_windowicon:
+    def __init__(self):
+        self.reset()
+    def reset(self):
+        self.makeicon()
+        self.seticon()
+    def makeicon(self):# make window icon from a player drawing
+        if os.path.exists('book/book.png'):
+            img=pygame.image.load('book/book.png').convert()
+            img=pygame.transform.scale(img,(36,42))
+            pygame.image.save(img, 'book/bookicon.png')
+    def seticon(self):          
+        if os.path.exists('book/bookicon.png'):
+            img=pygame.image.load('book/bookicon.png').convert()
+        else:
+            img=pygame.image.load('data/booknoicon.png').convert()
+        img.set_colorkey((255,255,255))# white
+        share.display.seticon(img)#pygame.display.set_icon(img)
+        
+        
+# Handle data (save.txt and drawings)
 class obj_savefile:
     def __init__(self):
         self.filename='book/save.txt'# saved along with drawings
@@ -180,6 +139,7 @@ class obj_savefile:
         for i in files: os.remove('book/'+i)
         self.load()# reload
 
+
 # Dictionary of textinputs,textchoices written in the book of things (by the player)
 class obj_savewords:
     def __init__(self):# most entries are created during the game
@@ -201,128 +161,16 @@ class obj_savewords:
         self.dict={}
         self.save()# write empty dictionary
 
-         
-####################################################################################################################
-# Methods for GUIs
-# *GUI
 
-
-# Window icon
-class obj_windowicon:
-    def __init__(self):
-        self.reset()
-    def reset(self):
-        self.makeicon()
-        self.seticon()
-    def makeicon(self):# make window icon from a player drawing
-        if os.path.exists('book/book.png'):
-            img=pygame.image.load('book/book.png').convert()
-            img=pygame.transform.scale(img,(36,42))
-            pygame.image.save(img, 'book/bookicon.png')
-    def seticon(self):          
-        if os.path.exists('book/bookicon.png'):
-            img=pygame.image.load('book/bookicon.png').convert()
-        else:
-            img=pygame.image.load('data/booknoicon.png').convert()
-        img.set_colorkey((255,255,255))# white
-        share.display.seticon(img)#pygame.display.set_icon(img)
-            
-# Game text display 
-# *TEXT DISPLAY
-class obj_textdisplay:
-    def __init__(self):
-        self.words_prerender=[]# list of word_surface and positions (pre-redendered)
-    def __call__(self,textmatrix,rebuild=False, pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):# call text display
-        # pos: starting xy of text, xmin/xmax: margins
-        # rebuild=True: renders the text entirely (expensive, use for first call with new text)
-        # rebuild=False: displays previous text surface (prefer for efficiency, skips font render)
-        if rebuild: # expensive rebuild
-            self.words_prerender=[]# reset prerender text
-            if textmatrix: # if not empty text
-                self.ipos=pos# text cursor position
-                for i in textmatrix:
-                    if type(i) is str:# either text=string
-                        text, color = i, (0,0,0)
-                    else:
-                        text, color = i# or tuple (text,color)
-                    text=self.formattext(text,**share.words.dict)# FORMAT with written words from book 
-                    self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)
-        else:
-            self.disptext()
-    # Format text using the words written in the book of things
-    def formattext(self,text,**kwargs):
-        try:
-            text=text.format(**kwargs)
-        except:
-            pass
-        return text
-    # Display text on surface with automatic return to line
-    def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
-        wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
-        space_width=font.size(' ')[0]# width of a space
-        x,y=pos# text position
-        if x<xmin: x==xmin
-        for count,line in enumerate(wordmatrix):
-            for word in line:
-                word_surface=font.render(word,True,color)# Very expensive if redone each frame!
-                word_width, word_height = word_surface.get_size()
-                # return to line automated
-                if x + word_width >= xmax:
-                    x = xmin
-                    y += linespacing
-                # record prerendered text
-                # share.screen.blit(word_surface, (x,y))# old, display text on screen
-                self.words_prerender.append( (word_surface,(x,y)) )# record prerendered text
-                x += word_width + space_width
-            # return to line from user
-            if count<len(wordmatrix)-1:
-                x = xmin
-                y += linespacing        
-        return x,y# return position for next call  
-    def disptext(self):# display prerendered text
-        for i in self.words_prerender:
-            word_surface, xy=i
-            share.screen.blit(word_surface, xy)
-        
-        
-# Page Number display
-class obj_pagenumberdisplay:
-    def __init__(self):
-        self.prerender=[]# prerender text
-        self.xy=(0,0)# position of text
-    def __call__(self,rebuild=False,fontsize='smaller',xy=(1190,680),bold=True,color=(0,0,0)):
-        if rebuild:
-            self.prerender=share.fonts.font(fontsize).render('Page '+str(share.ipage), bold, color)
-            self.xy=xy
-        else:
-            share.screen.blit(self.prerender,self.xy)# fast display
-
-
-# Page Note display (e.g. instructions)
-class obj_pagenotedisplay:
-    def __init__(self):
-        self.prerender=[]# prerender text
-        self.xy=(0,0)# position of text
-    def __call__(self,text,xy=(1020,5),rebuild=False,fontsize='smaller',bold=True,color=(0,0,0)):
-        if rebuild:
-            self.prerender=share.fonts.font(fontsize).render(text,bold,color)
-            self.xy=xy
-        else:
-            share.screen.blit(self.prerender,self.xy)# fast display        
-
-        
-# FPS display (could be a function)
-class obj_fpsdisplay: 
-    def __init__(self):
-        pass
-    def __call__(self):
-        share.screen.blit(share.fonts.font('smaller').render('FPS='+str(int(share.clock.get_fps())), True, (0, 0, 0)), (30,5))
 
 
     
 ####################################################################################################################
-# General Functions and objects for All Uses
-# *FUNCTIONS
+# General Functions and objects for all uses
+
+# links to module os
+def pathexists(path):
+    return os.path.exists(path)
 
 # links to module math
 def cos(x):
@@ -396,7 +244,6 @@ class obj_timer:
             self.off=True
             if self.cycle: self.start()# restart if cycled
                 
-        
         
 ####################################################################################################################
 

@@ -3,14 +3,21 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# pyg.py: Handling of pygame functions
+# pyg.py: game engine module
 #
-# Ideally for any call to pygame procedure, link to call here
-# - May be able to clean some procedures, for example using dirty sprites
-#  
-#
+# Any call to the game engine must be linked here.
+# Currently the game engine is pygame (version 1.9.4)
+# 
+# Why?
+# - We may be able to improve the game engine more easily, for example using dirty sprites
+# - If we wanted to change the game engine we could do it more easily here.
+# 
+##########################################################
+##########################################################
+
+import pygame
+
 ##########################################################
 ##########################################################

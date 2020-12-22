@@ -3,26 +3,24 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# book_menu.py: main menu of book of things
+# menu.py: main menu
 #
 ##########################################################
 ##########################################################
 
-import sys
-import os
 import pygame
 #
 import share
 import draw
 import utils
+import page
 #
 import tests
-import chapter0
-import chapter1
-import chapter2
+import ch0
+import ch1
+import ch2
 
 
 ##########################################################
@@ -40,75 +38,82 @@ class obj_scene_titlescreen:
         self.ichapter=share.savefile.chapter# read current selected chapter (-1=Erase,0=Prologue,1=Hero,etc...)
         # page number reset
         share.ipage=1
-        # menu decorations (from book)
-        if os.path.exists('book/book.png'): 
+        # Reload window icon 
+        share.windowicon.reset()
+        # setup menu decorations (from book)
+        if utils.pathexists('book/book.png'): 
             self.imgbook=pygame.image.load('book/book.png').convert()
             self.imgbook=pygame.transform.scale(self.imgbook,(210,180))
             self.imgbook.set_colorkey(share.colors.colorkey)
         else:
             self.imgbook=[]
-        if os.path.exists('book/pen.png'): 
+        if utils.pathexists('book/pen.png'): 
             self.imgpen=pygame.image.load('book/pen.png').convert()
             self.imgpen=pygame.transform.scale(self.imgpen,(32,72))
             self.imgpen.set_colorkey(share.colors.colorkey)
         else:
             self.imgpen=[]        
-        if os.path.exists('book/eraser.png'): 
+        if utils.pathexists('book/eraser.png'): 
             self.imgeraser=pygame.image.load('book/eraser.png').convert()
             self.imgeraser=pygame.transform.scale(self.imgeraser,(54,54))
             self.imgeraser.set_colorkey(share.colors.colorkey)
         else:
-            self.imgeraser=[]  
-        # Reload game window icon=book image (if created/modified during prologue)
-        share.windowicon.reset()
-        #
-    def update(self,controls):
-        # Screen
+            self.imgeraser=[]
+        # Prerender text
+        self.textimg_startbook=share.fonts.font30.render('Start Book [Press Enter]',True,(0,0,0))
+        self.textimg_instructions=share.fonts.font30.render('[Up/Down: Select]  [Enter: Read]',True,(0,0,0))
+        self.textimg_erasebook=share.fonts.font30.render('Erase Book',True,(0,0,0))
+        self.textimg_prologue=share.fonts.font30.render('Prologue',True,(0,0,0))
+        self.textimg_chapt1=share.fonts.font30.render('Chapter I: The Hero',True,(0,0,0))
+        self.textimg_chapt2=share.fonts.font30.render('Chapter II: A House',True,(0,0,0))
+        self.textimg_cursor=share.fonts.font30.render('---',True,(0,0,0))
+    def selectchapter(self,controls):
+        if share.savefile.chapter<1:# new book
+            if controls.enter  and controls.enterc: self.creator.scene=ch0.obj_scene_prologue(self.creator)
+        else:
+            # Change Chapter
+            if (controls.s and controls.sc) or (controls.down and controls.downc): self.ichapter=min(self.ichapter+1,share.savefile.chapter)
+            if (controls.w and controls.wc) or (controls.up and controls.upc): self.ichapter=max(self.ichapter-1,-1)
+            # Go to Chapter
+            if controls.enter  and controls.enterc: 
+                if self.ichapter==-1: 
+                    self.creator.scene=obj_scene_erasebook(self.creator)
+                elif self.ichapter==0: 
+                    self.creator.scene=ch0.obj_scene_prologue(self.creator)
+                elif self.ichapter==1:
+                    self.creator.scene=ch1.obj_scene_chapter1(self.creator)
+                elif self.ichapter==2:
+                    self.creator.scene=ch2.obj_scene_chapter2(self.creator)        
+    def display(self):
+        # Main elements
         share.screen.fill((255,255,255))
         share.screen.blit(share.fonts.font100.render('The Book of Things',True,(0,0,0)),(400,30))
         share.screen.blit(share.fonts.font30.render('By Sul',True,(0,0,0)),(1180,650))
-        if self.imgbook: share.screen.blit(self.imgbook,(530,150))   
-        if self.imgeraser: share.screen.blit(self.imgeraser,(1180,600)) 
-        # Menu
-        if share.savefile.chapter<1:
-            self.startbook(controls)
-        else:
-            self.selectchapter(controls)
-        # Access Developer Tests
         share.screen.blit(share.fonts.font30.render('Toggle Dev Mode: (Press Ctrl)',True,(0,0,0)),(10,680))
-        if share.devmode: 
-            pygame.draw.rect(share.screen, (0,0,220), (5, 680, 250,40), 3)
-            share.screen.blit(share.fonts.font30.render('Appendix: Developer Tests (Press Space)',True,(0,0,0)),(970,680))
-            if controls.space and controls.spacec:
-                self.creator.scene=tests.obj_scene_tests(self.creator)
-    def startbook(self,controls):# first time playing (share.savefile.chapter=0)
-        share.screen.blit(share.fonts.font30.render('Start Book [Press Enter]',True,(0,0,0)),(550,350))
-        if controls.enter  and controls.enterc: self.creator.scene=chapter0.obj_scene_prologue(self.creator)
-    def selectchapter(self,controls):
-        share.screen.blit(share.fonts.font30.render('[Up/Down: Select]  [Enter: Read]',True,(0,0,0)),(550,350)) 
-        share.screen.blit(share.fonts.font30.render('Erase Book',True,(0,0,0)),(550,380))
-        share.screen.blit(share.fonts.font30.render('Prologue',True,(0,0,0)),(550,410))
-        if share.savefile.chapter>0: share.screen.blit(share.fonts.font30.render('Chapter I: The Hero',True,(0,0,0)),(550,440))  
-        if share.savefile.chapter>1: share.screen.blit(share.fonts.font30.render('Chapter II: A House',True,(0,0,0)),(550,470))                
-        # Select Chapter
-        share.screen.blit(share.fonts.font30.render('---',True,(0,0,0)),(510,410+self.ichapter*30))
+        # Menu text
+        if share.savefile.chapter<1: share.screen.blit(self.textimg_startbook,(550,350))# empty book
+        if share.savefile.chapter>0: 
+            share.screen.blit(self.textimg_instructions,(550,350)) 
+            share.screen.blit(self.textimg_erasebook,(550,380))
+            share.screen.blit(self.textimg_prologue,(550,410))
+            share.screen.blit(self.textimg_chapt1,(550,440))  
+            share.screen.blit(self.textimg_cursor,(510,410+self.ichapter*30))            
+            if share.savefile.chapter>1: share.screen.blit(self.textimg_chapt2,(550,470))          
+        # Decorations
+        if self.imgbook: share.screen.blit(self.imgbook,(530,150))   
+        if self.imgeraser: share.screen.blit(self.imgeraser,(1180,600))
         if self.imgpen: share.screen.blit(self.imgpen,(470,360+self.ichapter*30))
-        if (controls.s and controls.sc) or (controls.down and controls.downc): self.ichapter=min(self.ichapter+1,share.savefile.chapter)
-        if (controls.w and controls.wc) or (controls.up and controls.upc): self.ichapter=max(self.ichapter-1,-1)
-        # Go to Chapter
-        if controls.enter  and controls.enterc: 
-            if self.ichapter==-1: 
-                self.creator.scene=obj_scene_erasebook(self.creator)
-            elif self.ichapter==0: 
-                self.creator.scene=chapter0.obj_scene_prologue(self.creator)
-            elif self.ichapter==1:
-                self.creator.scene=chapter1.obj_scene_chapter1(self.creator)
-            elif self.ichapter==2:
-                self.creator.scene=chapter2.obj_scene_chapter2(self.creator)
-        # Quit Game with Esc
+        #        
+    def devtools(self,controls):
+        pygame.draw.rect(share.screen, (0,0,220), (5, 680, 250,40), 3)
+        share.screen.blit(share.fonts.font30.render('Appendix: Developer Tests (Press Space)',True,(0,0,0)),(970,680))
+        if controls.space and controls.spacec: self.creator.scene=tests.obj_scene_tests(self.creator)   
+    def update(self,controls):
+        self.display()
+        self.selectchapter(controls)      
+        if share.devmode: self.devtools(controls)
         if controls.esc and controls.escc: share.quitgame()
-            
-            
+       
 
             
 
@@ -116,7 +121,7 @@ class obj_scene_titlescreen:
 ####################################################################################################################
 # Erase Book
 # *ERASE
-class obj_scene_erasebook(utils.obj_page):
+class obj_scene_erasebook(page.obj_page):
     def setup(self):
         self.text=['It was decided to erase the book to start a new one. One had to be very sure.',\
                    'All drawings, all names would be erased, and everything would have to be created again.',\
@@ -126,7 +131,7 @@ class obj_scene_erasebook(utils.obj_page):
         self.creator.scene=obj_scene_erasebookconfirm(self.creator)
 
 
-class obj_scene_erasebookconfirm(utils.obj_page):
+class obj_scene_erasebookconfirm(page.obj_page):
     def setup(self):       
         self.text=['A ',('LAST WARNING',share.colors.red),' was issued. It was time to make a big decision.',\
                    '\n[Tab: Cancel]  [Enter+Space+Ctrl: ',('ERASE THE BOOK',share.colors.red),']']
@@ -142,14 +147,14 @@ class obj_scene_erasebookconfirm(utils.obj_page):
         self.creator.scene=obj_scene_erasebookconfirmed(self.creator)
 
 
-class obj_scene_erasebookconfirmed(utils.obj_page):
+class obj_scene_erasebookconfirmed(page.obj_page):
     def setup(self):      
         self.text=['Temporarily Unable to Erase the Book.',\
                    '\n Fix this in menu.py for final version [Tab: Back]']
 
 
 # In Final version replace with the correct one
-class obj_scene_erasebookconfirmed_BACKUP(utils.obj_page):
+class obj_scene_erasebookconfirmed_BACKUP(page.obj_page):
     def setup(self):      
         self.text=['The book vanished.',\
                    '[Tab: Back]']

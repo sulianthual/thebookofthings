@@ -3,22 +3,19 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
-# chaptertests.py: developer tests
+# tests.py: developer tests
 #
 ##########################################################
 ##########################################################
 
-import sys
-import os
 import pygame
-import inspect
 #
 import share
 import draw
 import utils
+import page
 import actor
 import world
 import menu
@@ -40,7 +37,8 @@ class obj_scene_tests:
         #####
         # ADD ALL TESTS FROM THIS MODULE HERE
         # message
-        self.list.append(obj_scene_testmessage(self.creator))
+        self.list.append(obj_scene_testmessage(self.creator))       
+        self.list.append(obj_scene_testdevnotes(self.creator))
         self.list.append(obj_scene_testdevmodeinfo(self.creator))
         # page tests
         self.list.append(obj_scene_testpagefunctions(self.creator))
@@ -102,7 +100,7 @@ class obj_scene_tests:
 
 
 # Template for test page = page with slightly modified functionalities
-class obj_testpage(utils.obj_page):  ### RENAME ME obj_testpage
+class obj_testpage(page.obj_page):
     def __init__(self,creator):
         self.name='Unamed'# needs name to display on test menu
         super().__init__(creator)
@@ -142,6 +140,28 @@ class obj_scene_testmessage(obj_testpage):
         self.textkeys={}# defaut text formatting
 
 
+class obj_scene_testdevnotes(obj_testpage):
+    def setup(self):
+        self.name='Developper Notes'      
+        self.text=[
+            'Developper Notes:',\
+            ('\n\nFile Structure: ',share.colors.red),\
+            'main=execute program. ',\
+            'share=store global variables. ',\
+            'utils=basic functions (link external libraries there like math,os...). ',\
+            'pyg=same as utils but for all pygame fonctions. ',\
+            'page=elements that build a page in the book. ',\
+            'draw=draws that can be displayed on a page. ',\
+            '(drawing, textinput, textchoice, textbox, image, animation, dispgroup). ',\
+            'world=worlds that can be displayed on a page (and their rules). ',\
+            'actor=actors that can be added to worlds. ',\
+            'menu=main menus pages. ',\
+            'ch0,ch1,ch2...=book chapters pages. ',\
+            'tests=developper tests menu and pages. ',\
+                   ]
+
+        
+
 class obj_scene_testdevmodeinfo(obj_testpage):
     def setup(self):
         self.name='Developper Mode'       
@@ -165,10 +185,11 @@ class obj_scene_testdevmodeinfo(obj_testpage):
         self.addpart( draw.obj_textbox('textbox',(1140,400)) )
         self.addpart( draw.obj_image('testimage1',(1140,600)) )
         self.addpart( draw.obj_animation('testanimation1','testimage1',(940,360)) )
-        #
-        self.world=world.obj_world(self)
-        self.hero=actor.obj_actor_hero_v3(self.world,(640,360))
-        self.addpart( self.world )
+        ww=world.obj_world(self)
+        self.addpart(ww)
+        test=actor.obj_grandactor(ww,(640,360))
+        test.addpart("image", draw.obj_image('testimage2',(640,360)) )
+
 
 
 # Scene: page basics
@@ -444,7 +465,7 @@ class obj_scene_testworld(obj_testpage):
         self.name='World Basics'       
         self.text=['World Basics: ',\
                    'A World has actors in it as well as rules that manage interaction between actors. ',\
-                   'Each world update checks all rules and updates all actors. ',\
+                   'The world checks all rules, and the rules may check and modify actors (but the actors dont check on rules). ',\
                    'Here the world has an actor=hero, an actor=boundaries, and a rule=collision between the two ',\
                    '(that pushes back the hero). ',\
                    '\nThere are several types of actors: simple actors (obj_actor), grand actors (obj_grandactor), ',\

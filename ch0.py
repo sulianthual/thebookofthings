@@ -3,21 +3,20 @@
 
 # The Book of Things
 # Game by sul
-# Created Sept 2020
-# runs with pygame 1.9.4
+# Started Sept 2020
 #
 # chapter0.py: prologue
 #
 ##########################################################
 ##########################################################
 
-import sys
-import os
 import pygame
 #
 import share
-import draw
 import utils
+import draw
+import page
+#
 import menu
 
 ##########################################################
@@ -25,7 +24,7 @@ import menu
 
 # Chapter: Game Prologue
 # *PROLOGUE 
-class obj_scene_prologue(utils.obj_page):
+class obj_scene_prologue(page.obj_page):
     def setup(self):         
         self.text=['-----   Prologue   -----   ',\
                    '\nIn the Beginning, there was Nothing. Absolutely Nothing. \nBut one Could Press [Enter] to Continue.']
@@ -37,7 +36,7 @@ class obj_scene_prologue(utils.obj_page):
     def nextpage(self): 
         self.creator.scene=obj_scene_ch0p1(self.creator)
 
-class obj_scene_ch0p1(utils.obj_page):
+class obj_scene_ch0p1(page.obj_page):
     def setup(self):       
         self.text=['One Could Press [Enter] to Continue, or [Tab] to go back. It was always like that.',\
                    '\n[Tab: Back]   [Enter: Continue]']
@@ -51,7 +50,7 @@ class obj_scene_ch0p1(utils.obj_page):
 
         
 # Scene: Draw Pen
-class obj_scene_ch0p2(utils.obj_page):
+class obj_scene_ch0p2(page.obj_page):
     def setup(self):       
         self.text=['There was going to be a pen, and the pen was going to be drawn. ',\
                    'The pen was to be drawn with a lot of emotions, even if it was just a pen.',\
@@ -64,7 +63,7 @@ class obj_scene_ch0p2(utils.obj_page):
         self.creator.scene=obj_scene_ch0p3(self.creator)# next scene
 
 
-class obj_scene_ch0p3(utils.obj_page):
+class obj_scene_ch0p3(page.obj_page):
     def setup(self):      
         self.text=['The Pen liked to move around a little. it was a happy pen.',\
                    ]
@@ -76,7 +75,7 @@ class obj_scene_ch0p3(utils.obj_page):
 
 
 # Scene: Draw Eraser
-class obj_scene_ch0p4(utils.obj_page):
+class obj_scene_ch0p4(page.obj_page):
     def setup(self):      
         self.text=['Along with the pen, there was going to be an eraser.',\
                    '\nThe eraser was drawn with [Left Mouse] and erased with [Right Mouse]',\
@@ -89,7 +88,7 @@ class obj_scene_ch0p4(utils.obj_page):
         self.creator.scene=obj_scene_ch0p5(self.creator)# next scene
 
 
-class obj_scene_ch0p5(utils.obj_page):
+class obj_scene_ch0p5(page.obj_page):
     def setup(self):       
         self.text=['The Pen and Eraser looked like this, and they were very happy.',\
                    'They danced together all day.',\
@@ -104,7 +103,7 @@ class obj_scene_ch0p5(utils.obj_page):
     def nextpage(self): 
         self.creator.scene=obj_scene_ch0p6(self.creator)
 
-class obj_scene_ch0p6(utils.obj_page):
+class obj_scene_ch0p6(page.obj_page):
     def setup(self):        
         self.text=['Because in the Beginning, there was Nothing, It was unclear how the pen had been drawn.',\
                    'And when there would be nothing again, it was unclear how the eraser would be erased.',\
@@ -121,7 +120,7 @@ class obj_scene_ch0p6(utils.obj_page):
         self.creator.scene=obj_scene_ch0p7(self.creator)
         
 # Scene: Draw Book
-class obj_scene_ch0p7(utils.obj_page):
+class obj_scene_ch0p7(page.obj_page):
     def setup(self):      
         self.text=['In the middle of the dancing, there was going to be a book. A very mysterious book [draw].',\
                    'It was drawn with [Left Mouse], and could be restarted with [Right Mouse]. ',\
@@ -134,7 +133,7 @@ class obj_scene_ch0p7(utils.obj_page):
     def nextpage(self):
         self.creator.scene=obj_scene_ch0p8(self.creator)# next scene
 
-class obj_scene_ch0p8(utils.obj_page):
+class obj_scene_ch0p8(page.obj_page):
     def setup(self):       
         self.text=['It was the book of things. The book of all things were all things would be.',
                    'With the help of the pen and eraser, there would be many things to draw in the book.',\
@@ -145,7 +144,7 @@ class obj_scene_ch0p8(utils.obj_page):
     def nextpage(self): 
         self.creator.scene=obj_scene_ch0p9(self.creator)
 
-class obj_scene_ch0p9(utils.obj_page):
+class obj_scene_ch0p9(page.obj_page):
     def setup(self):       
         self.text=['And so the book began...',\
                    ]
