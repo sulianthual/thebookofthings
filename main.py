@@ -10,25 +10,22 @@
 #
 ##########################################################
 ##########################################################
-# Import libraries and other files
 
 import pyg
-pyg.initialize()# initialize game engine
-import share# initialize shared objects
-
+import share
 
 ##########################################################
 # Game Loop
 
-while True:
-    
-    # Updates    
-    share.clock.update()
-    share.display.update()
-    share.controls.update()
-    share.scenemanager.update(share.controls)# everything happens here!
-    #
-    
+def main():
+    while True:
+        share.clock.update()
+        share.display.update()
+        share.controls.update()
+        share.scenemanager.update(share.controls)# (everything happens here)
+
+if __name__ == '__main__': main() 
+       
 ##########################################################
 ##########################################################
 ##########################################################

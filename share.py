@@ -19,6 +19,8 @@ import pyg
 import page
 import menu
 
+
+
 ##########################################################
 # Global variables 
 #
@@ -28,13 +30,12 @@ devmode = True # developer mode on (toggle False at game release)
 itest=0# index of current text in test menu
 ipage=1# current page within a chapter
 
-# Pygame Display Screen (used/modified by ALL modules very often)
-screen=utils.obj_screen()
-
 ##########################################################
 # Initialize shared elements (order matters)
 
 # Game Core
+pyg.initialize()# game engine (pygrame)
+screen=utils.obj_screen()# drawing screen
 clock=utils.obj_clock()# game clock 
 display=utils.obj_display()# window display (pygame.display.update)
 windowicon=utils.obj_windowicon()# window icon
