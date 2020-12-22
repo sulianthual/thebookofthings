@@ -290,11 +290,13 @@ class obj_textdisplay:
 class obj_pagenumberdisplay:
     def __init__(self):
         self.prerender=[]# prerender text
-    def __call__(self,rebuild=False,fontsize='smaller'):
+        self.xy=(0,0)# position of text
+    def __call__(self,rebuild=False,fontsize='smaller',xy=(1190,680),bold=True,color=(0,0,0)):
         if rebuild:
-            self.prerender=share.fonts.font(fontsize).render('Page '+str(share.ipage), True, (0, 0, 0))
+            self.prerender=share.fonts.font(fontsize).render('Page '+str(share.ipage), bold, color)
+            self.xy=xy
         else:
-            share.screen.blit(self.prerender, (1190,680))# fast display
+            share.screen.blit(self.prerender,self.xy)# fast display
 
 
 # Page Note display (e.g. instructions)
@@ -302,12 +304,12 @@ class obj_pagenotedisplay:
     def __init__(self):
         self.prerender=[]# prerender text
         self.xy=(0,0)# position of text
-    def __call__(self,text,xy=(1020,5),rebuild=False,fontsize='smaller'):
+    def __call__(self,text,xy=(1020,5),rebuild=False,fontsize='smaller',bold=True,color=(0,0,0)):
         if rebuild:
-            self.prerender=share.fonts.font(fontsize).render(text, True, (0, 0, 0))
+            self.prerender=share.fonts.font(fontsize).render(text,bold,color)
             self.xy=xy
         else:
-            share.screen.blit(self.prerender, xy)# fast display        
+            share.screen.blit(self.prerender,self.xy)# fast display        
 
         
 # FPS display (could be a function)

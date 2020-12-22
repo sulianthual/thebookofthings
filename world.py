@@ -62,12 +62,13 @@ class obj_world:
         for i in self.ruledict.values(): i.update(controls)# update rules
         for j in self.actorlist: j.update(controls)# update actors
 
+
 # world chapter I
 class obj_world_ch1(obj_world):
     def setup(self):
         super().setup()
         bdry=actor.obj_actor_bdry(self)# default boundaries
-        self.addrule('rule_world_bdry', obj_rule_world_bdry(self))# add rule collision with boundaries
+        self.addrule('rule_world_bdry', obj_rule_bdry_bounces_rigidbody(self))# add rule collision with boundaries
         self.addrule('rule_hero_collects_item', obj_rule_hero_collects_item(self))# rule collision hero loved item
         self.addrule('rule_weapon_breaks_stuff', obj_rule_weapon_breaks_stuff(self))# rule collision hero loved item
 
@@ -113,31 +114,12 @@ class obj_rule:
         pass
 
 
-# Rule: boundary conditions (pushes back any grand actor)
-class obj_rule_world_bdry(obj_rule):
-    def setup(self):
-        # rule subjects 
-        self.subject_types["subjects_collider_with_bdry"]=["hero","furniture"]# actors that collide
-        self.subject_types["subjects_bdry"]=["bdry"]# boundaries
-    def update(self,controls):
-        for i in self.subjects["subjects_bdry"]:        
-            for j in self.subjects["subjects_collider_with_bdry"]:# subjects that collide with bdry
-                if j.x<i.bdry_lim[0]: 
-                    j.movex(i.bdry_push[0])
-                elif j.x>i.bdry_lim[1]:
-                    j.movex(i.bdry_push[1])
-                if j.y<i.bdry_lim[2]: 
-                    j.movey(i.bdry_push[2])
-                elif j.y>i.bdry_lim[3]:
-                    j.movey(i.bdry_push[3])              
-
-
-# Rule: boundary conditions (inverts speed to inwards for any actor with rigidbody)
-# actors must have rigidbody fonctionalities!
+# Rule: boundary conditions on grand actors (that have rigidbodies)
+# when: collision then: pushes back and orients rigidbody speed inwards
 class obj_rule_bdry_bounces_rigidbody(obj_rule):
     def setup(self):
         # rule subjects 
-        self.subject_types["subjects_collider_with_bdry"]=["hero","furniture"]# rigidbody actors only!
+        self.subject_types["subjects_collider_with_bdry"]=["hero","furniture","rbody"]# rigidbody actors only!
         self.subject_types["subjects_bdry"]=["bdry"]# boundaries
     def update(self,controls):
         for i in self.subjects["subjects_bdry"]:        
@@ -211,7 +193,7 @@ class obj_rule_weapon_strikes_rigidbody(obj_rule):
     def setup(self):
         # rule subjects 
         self.subject_types["subjects_weapon"]=["sword"]
-        self.subject_types["subjects_rigidbody"]=["furniture"]
+        self.subject_types["subjects_rigidbody"]=["rbody","furniture"]
     def update(self,controls):
         for i in self.subjects["subjects_weapon"]:
             if i.striking0:# if weapon is striking (first frame only)

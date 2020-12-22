@@ -24,18 +24,17 @@ import draw
 
                         
 ####################################################################################################################
-# Actor
+# Actor Main Templates
 
-# Template for most basic actors (needs creator,update,birth and kill)
+# Template for most basic actors
 class obj_actor:
     def __init__(self,creator):
         self.creator=creator# created by world
-        self.type='actor'# type (overwritten for each specific actor)
-        self.actortype='None'
         self.setup()
         self.birth()
     def setup(self):# add here modifications for childs 
-        pass
+        self.type='actor'# type (overwritten for each specific actor)
+        self.actortype='None'        
     def birth(self):# add to world
         self.creator.addactor(self)# add self to world list of actors    
     def kill(self):# remove from world
@@ -44,48 +43,41 @@ class obj_actor:
         pass
         
         
-# Template for grand actor in world (hero, items, enemies..., obstacles...)
+# Template for grand actors in world (hero, items, enemies..., obstacles...)
 # A grand actor is more elaborate: 
+# - has a hitbox (rd,rx,ry)
 # - can have display elements (textbox,image,animation or dispgroup) 
-# - can be transformed: 
-#   movex(),movetox()...
-#   scale()
-#   fliph()... NOT DONE
-#   rotate90()... NOT DONE
-#   (rotate not done due to enlargen-memory issues)
+# - can be transformed: movex(),movetox(),scale(),fliph()...,rotate90()
+#                       (rotate not done due to enlargen-memory issues)   
 class obj_grandactor():
     def __init__(self,creator,xy,scale=1):
         # Creation
         self.creator=creator# created by world
-        self.type='actor'# type (overwritten for each specific actor)
-        self.actortype='None'
-        #
-        # Reference Values (must be defined for any actor)
         self.xini=xy[0]# initial position
         self.yini=xy[1]
+        # Setup and Birth
+        self.setup()
+        self.birth()# add self to world ONLY ONCE setup finished
+        if scale != 1: self.scale(scale)# scale ONCE setup finished
+    def setup(self):# add here modifications for childs 
+        self.type='actor'# type (overwritten for each specific actor)
+        self.actortype='grandactor'
+        # Reference Values (must be defined for any actor)
         self.x=self.xini# actor position for tracking 
         self.y=self.yini
         self.fh=False# flipped horizontally (inverted) or not (original)
         self.fv=False# flipped vertically (inverted) or not (original)
         self.s=1# scaling factor
         self.r=0# rotation angle
-        self.rx=0# radius width for rectangle collisions 
-        self.ry=0# radius height for rectangle collisions 
-        self.rd=0# radius for circle collisions
+        self.rx=50# radius width for rectangle collisions 
+        self.ry=50# radius height for rectangle collisions 
+        self.rd=50# radius for circle collisions
         #
         # Dictionary of actor elements
         self.dict={}# {elementkey: element object}
         self.dictx={}# relative position of element (conserved)
         self.dicty={}
         self.show=True# display elements or not (can be toggled)
-        #
-        # Setup and Birth
-        self.setup()
-        self.birth()# add self to world ONLY ONCE setup finished
-        if scale != 1: self.scale(scale)
-        #
-    def setup(self):# add here modifications for childs 
-        pass
     def birth(self):# add to world
         self.creator.addactor(self)
     def kill(self):# remove from world
@@ -186,49 +178,56 @@ class obj_grandactor():
         if share.devmode: self.devtools()
 
 
-# A grand actor with rigidbody fonctionalities
-# The speed u,v are controlled by rigidbody dynamics and induce additional movement (movex,movey)
-# Actors with rigidbody can still be controlled directly using movex,movey,movetox,movetoy
-class obj_grandactor_rigidbody(obj_grandactor):
-    def __init__(self,*args,dissip=0.01,**kwargs):
-        super().__init__(*args,**kwargs)
+# Template: grand actor with rigidbody fonctionalities
+# - rigidbody controls speed u,v inducing additional movement to x,y
+# - external forces must be applied to exit stalling. 
+# - rigidbody dynamics are not computed if actor is stalling
+# - friction slows any rigidbody untils stalls again. 
+# - if stalling the actor can still be controlled directly on x,y just like a non-rigidbody
+class obj_rbodyactor(obj_grandactor):
+    def setup(self):
+        super().setup()
+        self.actortype="rbody"   #### MUST BE DETERMINED BEFORE BIRTH WHEN ADDS TO WORLD
+        self.stalling=True# stalling or not
         self.dt=1# update rate
         self.u=0# rigid body speed
         self.v=0
-        self.d=dissip# dissipation rate (=None omits)
-        self.uvmin=1# min speed for stalling
+        self.m=1# mass (must be >0)
+        self.d=0.01# dissipation rate
+        self.umin2=1# min speed for stalling (squared)
     def forcex(self,force):# apply forcex (call externally)
-        self.u += force*self.dt
+        self.u += force*self.dt/self.m
+        self.stalling=False
     def forcey(self,force):# apply forcey (call externally)
-        self.v += force*self.dt
-    def stall(self):# stall rigidbody (call externally)
+        self.v += force*self.dt/self.m
+        self.stalling=False
+    def stall(self):# stall rigidbody (can be called externally)
+        self.stalling=True
         self.u,self.v=0,0
     def friction(self,d):# apply dissipation internally
         self.u -= d*self.u*self.dt
         self.v -= d*self.v*self.dt        
     def rigidbodyupdate(self):# move from speed
-        if self.u!=0 or self.v!=0:
-            if self.u**2+self.v**2>self.uvmin**2:
-                self.movex(self.u*self.dt)
-                self.movey(self.v*self.dt)
-                if self.d: self.friction(self.d)
-            else:
-                self.u,self.v=0,0
+        if self.u**2+self.v**2>self.umin2:
+            self.movex(self.u*self.dt)
+            self.movey(self.v*self.dt)
+            self.friction(self.d)
+        else:
+            self.stall()
     def update(self,controls):
         super().update(controls)
-        self.rigidbodyupdate()
+        if not self.stalling: self.rigidbodyupdate()
 
 
 ####################################################################################################################
 # Hero actors
 
 #Template hero (image only)
-class obj_actor_hero(obj_grandactor_rigidbody):
+class obj_actor_hero(obj_rbodyactor):
     def setup(self):
+        super().setup()
         self.actortype='hero'# type=hero
         self.weapon=None# attached weapon (must be an object= weapon actor)
-        self.move_dx=5# movement amount
-        self.move_dy=5
         self.rd=100# sphere collision radius
         self.rx=120# rect collisions radius x
         self.ry=100
@@ -240,6 +239,8 @@ class obj_actor_hero(obj_grandactor_rigidbody):
 class obj_actor_hero_v0(obj_actor_hero):
     def setup(self):
         super().setup()
+        self.move_dx=5# movement amount
+        self.move_dy=5
     def controls_move(self,controls):
         if controls.right: self.movex(self.move_dx) 
         if controls.left: self.movex(-self.move_dx)  
@@ -386,6 +387,7 @@ class obj_actor_sword(obj_grandactor):
         super().__init__(*args)# regular arguments
         self.padre=padre# Always attached to a parent=hero
     def setup(self):
+        super().setup()
         self.actortype="sword"
         self.show=True# show entire sword (supersedes show strike)
         self.xoff=240# sword offset respect to padre (if facing right)
@@ -393,7 +395,7 @@ class obj_actor_sword(obj_grandactor):
         self.rx=180# radius width for rectangle collisions 
         self.ry=100# radius height for rectangle collisions 
         self.rd=0# radius for circle collisions
-        self.knockback=10# force of knockback when striking rigidbodies
+        self.knockback=5# force of knockback when striking rigidbodies
         term=draw.obj_image('herostrike',(self.xini,self.yini))
         term.show=False# show sword image
         term.scale(self.s)
@@ -429,12 +431,13 @@ class obj_actor_sword(obj_grandactor):
 
 
 ####################################################################################################################
-# Game Actors
+# Basic Actors (not grandactors, no rigidbody)
 
 
 # A goal in the game (allows to reach next level, etc...)
 class obj_actor_goal(obj_actor):
     def setup(self):
+        super().setup()
         self.actortype='goal'
         self.reached=False# reached goal or not
 
@@ -482,22 +485,27 @@ class obj_actor_goal_opendoor(obj_actor_goal_collideactors):
         self.actor1.show=True# hide hero
 
 
-####################################################################################################################
-# World 
-
 # Boundary (basic actor)
-class obj_actor_bdry(obj_actor):
-    def __init__(self,creator,bounds=(100,1180,0,560),push=(3,-3,3,-3)):
+class obj_actor_bdry(obj_actor):# basic actor
+    def __init__(self,creator,bounds=(50,1280-50,50,720-50),push=(3,-3,3,-3)):
         super().__init__(creator)
         self.bdry_lim=bounds# limits (xmin,xmax,ymin,ymax). 
         self.bdry_push=push# push rate at boundaries (if =0, boundary not applied)        
     def setup(self):
+        super().setup()
         self.actortype='bdry'
 
 
+####################################################################################################################
+# World 
+
+
+
+
 # Door: open with hit, shuts on a timer
-class obj_actor_door(obj_grandactor):
+class obj_actor_door(obj_grandactor):# not a rigidbody
     def setup(self):
+        super().setup()
         self.actortype='door'
         self.rd=8# small hitbox (must stand right on its)
         self.rx=8
@@ -529,8 +537,9 @@ class obj_actor_door(obj_grandactor):
      
 # trail of smoke when something breaks/dies
 # (created by other actors upon kill)
-class obj_actor_effects_smoke(obj_grandactor):
+class obj_actor_effects_smoke(obj_grandactor):# grandactor because scaled
     def setup(self):
+        super().setup()
         self.actortype='smoke'
         self.addpart("image",draw.obj_image('smoke',(self.xini,self.yini)) )
         self.timer=utils.obj_timer(30)# timer for existence
@@ -545,8 +554,9 @@ class obj_actor_effects_smoke(obj_grandactor):
 # Stuff in world
         
 # loved item (static)
-class obj_actor_item_loved(obj_grandactor):
+class obj_actor_item_loved(obj_grandactor):# not a rigidbody
     def setup(self):
+        super().setup()
         self.actortype='item_loved'
         self.rd=100
         self.rx=100
@@ -563,7 +573,7 @@ class obj_actor_item_loved(obj_grandactor):
 
         
 # hated item (static)
-class obj_actor_item_hated(obj_actor_item_loved):
+class obj_actor_item_hated(obj_actor_item_loved):# not a rigidbody
     def setup(self):
         super().setup()
         self.actortype='item_hated'
@@ -572,8 +582,9 @@ class obj_actor_item_hated(obj_actor_item_loved):
 
 
 # furniture (from chapter 2 hero house)
-class obj_actor_furniture_wide(obj_grandactor_rigidbody):
+class obj_actor_furniture_wide(obj_rbodyactor):
     def setup(self):
+        super().setup()
         self.actortype='furniture'
         self.rd=200# sphere collision radius
         self.rx=500# rect collisions radius x
@@ -582,8 +593,9 @@ class obj_actor_furniture_wide(obj_grandactor_rigidbody):
         self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_wide_name"],(self.xini,self.yini+100),fontsize='big')) 
 
 
-class obj_actor_furniture_square(obj_grandactor_rigidbody):
+class obj_actor_furniture_square(obj_rbodyactor):
     def setup(self):
+        super().setup()
         self.actortype='furniture'
         self.rd=200# sphere collision radius
         self.rx=200# rect collisions radius x
@@ -592,8 +604,9 @@ class obj_actor_furniture_square(obj_grandactor_rigidbody):
         self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_square_name"],(self.xini,self.yini+150),fontsize='big'))       
 
         
-class obj_actor_furniture_tall(obj_grandactor_rigidbody):
+class obj_actor_furniture_tall(obj_rbodyactor):
     def setup(self):
+        super().setup()
         self.actortype='furniture'
         self.rd=200# sphere collision radius
         self.rx=100# rect collisions radius x
@@ -601,5 +614,5 @@ class obj_actor_furniture_tall(obj_grandactor_rigidbody):
         self.addpart('img',draw.obj_image('furniture_tall',(self.xini,self.yini)))
         self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_tall_name"],(self.xini,self.yini+200),fontsize='big'))
     
-    
+
     

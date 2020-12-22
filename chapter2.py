@@ -243,12 +243,13 @@ class obj_scene_ch2p8(utils.obj_page):
         self.addpart( draw.obj_textbox('Outside',(790,50+70),fontsize='small') )
         for i in [340,540,940]:
             self.addpart( draw.obj_image('door_closed',(i,460),scale=0.25) )
+        self.addpart( draw.obj_textbox('Bedroom',(940,460-70),fontsize='small') ) 
         self.addpart( draw.obj_textbox('Next room',(740,460-70),fontsize='small') )  
         #
         self.world=world.obj_world_ch2(self)
         bdry=actor.obj_actor_bdry(self.world,bounds=(100,1280-100,100-50,720-100-50))
         door=actor.obj_actor_door(self.world,(740,460),scale=0.25)
-        hero=actor.obj_actor_hero_v4(self.world,(240,680),scale=0.25)
+        hero=actor.obj_actor_hero_v4(self.world,(940+50,460),scale=0.25)
         self.goal=actor.obj_actor_goal_opendoor(self.world,(hero,door),timer=20)
     def page(self,controls):
         self.world.update(controls)

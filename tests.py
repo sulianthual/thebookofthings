@@ -109,6 +109,9 @@ class obj_testpage(utils.obj_page):  ### RENAME ME obj_testpage
     def presetup(self):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}
+    def postsetup(self):
+        super().postsetup()
+        share.pagenotedisplay('[Tab: Back]',xy=(1180,5),rebuild=True)
     def callprevpage(self,controls):# no browsing
         pass
     def callnextpage(self,controls):# no browsing
@@ -135,7 +138,7 @@ class obj_scene_testmessage(obj_testpage):
         self.text=['Message from the Developer: ',\
                    '\n\nThis is an appendix for tests by the Game Developer. ',\
                    'If you are not the Game Developer get out of here!',\
-                   '[Tab: Back]']
+                   ]
         self.textkeys={}# defaut text formatting
 
 
@@ -156,7 +159,7 @@ class obj_scene_testdevmodeinfo(obj_testpage):
                    ('textchoice',share.colors.textchoice),\
                    ' are not affected. ',\
                    'You can also print mouse position in terminal with [Middle Mouse]. ',\
-                   '[Tab: Back]']
+                   ]
         self.addpart( draw.obj_textinput('test1',20,(260,300),legend='textinput') )
         self.addpart( draw.obj_drawing('testimage1',(260,500),legend='drawing') )
         self.addpart( draw.obj_textbox('textbox',(1140,400)) )
@@ -179,7 +182,7 @@ class obj_scene_testpagefunctions(obj_testpage):
                    'Managed elements are updated in order they were added. ',\
                    'They are finished on endpage if necessary (drawings,textinput). ',\
                    ' Elements can alternatively be managed manually. ',\
-                   '[Tab: Back]']
+                   ]
         # managed elements can be: drawing,textinput,textbox,image,animation,dispgroup,world
         # element must have matching self.type to be managed by obj_page
         self.addpart(draw.obj_textbox('Managed elements here',(340,260),color=share.colors.red))
@@ -196,13 +199,12 @@ class obj_scene_testpagefunctions(obj_testpage):
 class obj_scene_interactivetext(obj_testpage):
     def setup(self):
         self.name='Text Basics'     
-        self.text=[
-            'Text Basics: self.text on page is displayed with automatic return to line (or with antislash-n). ',\
-            'It can have colors like : '\
-            ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'. ',\
-            '\n\nself.textkeys can be used for tuning text properties (like on this page). ',\
-            ' For example, the regular chapter pages and the test pages have different fontsizes. '\
-            '[Tab:Return]']
+        self.text=['Text Basics: self.text on page is displayed with automatic return to line (or with antislash-n). ',\
+                   'It can have colors like : '\
+                    ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'. ',\
+                    '\n\nself.textkeys can be used for tuning text properties (like on this page). ',\
+                    ' For example, the regular chapter pages and the test pages have different fontsizes. ',\
+                   ]
         # self.textkeys={}# default for pages
         self.textkeys={'pos':(50,50),'xmin':50,'xmax':1230,'linespacing':55,'fontsize':'medium'}# same as ={}
         # self.textkeys={'fontsize':'small','linespacing': 45}# modification for test pages (obj_testpage)
@@ -218,7 +220,8 @@ class obj_scene_textinput(obj_testpage):
             'and Test2 name is',('{test2}',share.colors.gray),' '\
             '(refresh page to see those changes). ',\
             'Only use keywords that already exist, or formatting will return error. ',\
-            '[Tab:Return]']
+            'Special characters can be included in inputs (no issues found). ',\
+                   ]
         self.addpart( draw.obj_textinput('test1',20,(640,300),legend='name of test1') )
         self.addpart( draw.obj_textinput('test2',20,(640,500),legend='name of test2') )
 
@@ -254,8 +257,7 @@ class obj_scene_textbox(obj_testpage):
             'Textbox Basics: Placed anywhere, can customize font and color. ',\
             'Acts like an image: Can reset[space], move [Arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
             'Can rotate[f] but use sparingly (enlargens-memory issues). ',\
-            '',\
-            ' [Tab:Return]']
+                   ]
         self.addpart(draw.obj_textbox('textbox',(340,360),color=share.colors.blue))#customize font and color
         self.addpart(draw.obj_textbox('smaller',(340,460),color=share.colors.blue, fontsize='tiny'))
         self.addpart(draw.obj_textbox('large',(340,560),color=share.colors.blue, fontsize='big'))
@@ -287,7 +289,7 @@ class obj_scene_testdrawing(obj_testpage):
                    'A drawing needs a background of same name in folder ./shadows. ',\
                    'It is saved in folder ./drawings. ',\
                    'If replacing the shadow erase the drawing as well (or new drawing may glitch). ',\
-                   '[Tab: Back]']
+                   ]
         self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me',borders=(True,False,True,True)) )
 
 
@@ -298,7 +300,7 @@ class obj_scene_testdrawingbase(obj_testpage):
         self.text=['Drawing Base: A drawing can be the base for other drawing ',\
                    '(of same dimensions). The other drawing should better have no shadows.',\
                    'Small glitches happen when coming back to existing drawings with base: in that case just erase and restart. ',\
-                   '[Tab: Back]']
+                   ]
         drawing=draw.obj_drawing('testimage1',(340,420),legend='base')
         self.addpart(drawing )
         self.addpart( draw.obj_drawing('testimage2',(940,420),base=drawing,legend='drawing with base'))
@@ -311,7 +313,7 @@ class obj_scene_testimage(obj_testpage):
         self.text=['Image Basics: ',\
             'Test transformations here like move [Arrows], flip [q,e], scale [w,s], rotate90 [a,d], reset [space]. ',\
             'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
-            '[Tab: Back]']
+                   ]
         self.addpart( draw.obj_image('testimage1',(440,420), scale=0.5) )# (can also scale at creation)
         self.image=draw.obj_image('testimage2',(840,420))
         self.dx=5# move rate with controls
@@ -340,7 +342,7 @@ class obj_scene_testanimation(obj_testpage):
         self.name='Animation Basics'    
         self.text=['Animation Basics: Animation has two modes, Record and Playback. Toggle Mode with [Space]. ',\
                    '\n(You must be in Dev Mode to do so, which is Toggled by [CTRL]). ',\
-                    '\n\n-- While in Record Mode:',\
+                    '\n-- While in Record Mode:',\
                     '\nRed Line tracks image center for all frames.',\
                     '\nBlue cross shows animation reference position.',\
                     '\n[BackSpace]: Erase all frames',\
@@ -350,7 +352,8 @@ class obj_scene_testanimation(obj_testpage):
                     '\n[Q-E]: Flip Horizontal/Vertical',\
                     '\n[F]: Change Image (if several exist)',\
                     '\n[R]: Save Animation to File (!)',\
-                   '\n\n-- While in Playback Mode: Animation loop-plays.  [Tab: Back]']
+                   '\n-- While in Playback Mode: Animation loop-plays.',\
+                   ]
         animation=draw.obj_animation('testanimation1','testimage1',(640,360),record=True) 
         animation.addimage('testimage2')
         animation.addimage('testimage3')
@@ -368,7 +371,7 @@ class obj_scene_testanimationanimation(obj_testpage):
                    'set max duration (ntmax=nt) and record for max duration ',\
                    '(then return to this page to see both animations in sync). ',\
                    'Can also set tstart=animation start offset in code',\
-                   '[Tab: Back]']
+                   ]
         animation1=draw.obj_animation('testanimation1','testimage1',(340,360))# cannot edit
         animation2=draw.obj_animation('testanimation2','testimage2',(940,360),record=True)# can edit
         animation2.ntmax=animation1.nt# set same length
@@ -386,7 +389,7 @@ class obj_scene_testanimationplayback(obj_testpage):
                    'Always record animation WITHOUT any permanent changes. ',\
                    'Test permanent changes here: [Arrows] Move, [w,s] scale, [a,d] rotate90, [q,e] flip. ',\
                    'The permanent changes modify animation movements too (with almost no errors)',\
-                   '[Tab: Back]']
+                   ]
         self.animation=draw.obj_animation('testanimation1','testimage1',(640,360))                    
         self.dx,self.dy=5,5
     def page(self,controls):
@@ -414,7 +417,7 @@ class obj_scene_testdispgroup(obj_testpage):
                    '[q] and [e] to flip. [w] and [s] to 2x scale (dont repeat, it degrades images). ',\
                    '[a] and [d] for rotate90. Reset this page with [space]. ',\
                    'rotate() is not implemented for dispgroup. ',\
-                   '[Tab: Back]']
+                   ]
         self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup.addpart( "key_element1", draw.obj_image('testimage1',(440,360)) )# add image
         self.dispgroup.addpart( "key_element2", draw.obj_textbox('Move this',(640,360)) )# add textbox
@@ -442,14 +445,18 @@ class obj_scene_testworld(obj_testpage):
         self.text=['World Basics: ',\
                    'A World has actors in it as well as rules that manage interaction between actors. ',\
                    'Each world update checks all rules and updates all actors. ',\
-                   'Here the world has an actor=hero, an actor=boundaries, and a rule=collision between the two. ',\
-                   '[Tab: Back]']
-        self.world=world.obj_world(self)
-        self.world.addrule('rule_world_bdry', world.obj_rule_world_bdry(self.world))# add rule: collision hero and bdry
+                   'Here the world has an actor=hero, an actor=boundaries, and a rule=collision between the two ',\
+                   '(that pushes back the hero). ',\
+                   '\nThere are several types of actors: simple actors (obj_actor), grand actors (obj_grandactor), ',\
+                   'rigidbody actors (obj_rbodyactor),etc. One can make new actors as childs from the templates ',\
+                   'but be careful with the init, setup, birth sequence (e.g. edit preferentially the setup). ',\
+                   ]
+        self.world=world.obj_world(self)# world template
+        self.world.addrule('rule_world_bdry', world.obj_rule_bdry_bounces_rigidbody(self.world))# add rule: collision hero and bdry
         self.bdry=actor.obj_actor_bdry(self.world)# actors adds themselves to world upon creation
-        self.hero=actor.obj_actor_hero_v3(self.world,(640,360))
-        self.hero.addpart("look at me",draw.obj_textbox('Move with [arrows] or [WASD]',(640,680),fontsize='large'))
-        self.hero.scale(0.25)
+        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))
+        self.hero.addpart("a textbox",draw.obj_textbox('Move with [arrows] or [WASD]',(640,680),fontsize='large'))
+        self.hero.scale(0.5)
     def page(self,controls):
         self.world.update(controls)
 
@@ -458,17 +465,18 @@ class obj_scene_testworldgrandactor(obj_testpage):
     def setup(self):
         self.name='World Grand Actor'       
         self.text=['World Grand Actor: ',\
-                   'A simple actor does basic functions (like boundaries). ',\
-                   'A grand actor (like hero, enemies, items...) is more elaborate: ',\
+                   'A simple actor (obj_actor) does basic functions. ',\
+                   'A grand actor (obj_grandactor) is more elaborate: ',\
                    'it has a hitbox (r,rx,ry), ',\
                    'it can have elements (textbox, image, animation or dispgroup), ',\
-                   'and it can be transformed. ',\
+                   'and it can be transformed.',\
                    'Try permanent transformations here: move [arrows], scale [w,s], rotate90 [a,d], flip [q,e]. ',\
                    'Toggle Dev mode with [Ctrl] to see grand actors hit boxes.',\
-                   '[Tab: Back]']
+                   ]
         self.world=world.obj_world_ch1(self)
-        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))
+        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))# a grand actor
         self.hero.addpart("element1",draw.obj_textbox('textbox attached to actor',(640,640),fontsize='large'))
+        self.hero.scale(0.5)
     def page(self,controls):
         self.world.update(controls)
         if controls.w and controls.wc: self.hero.scale(2)
@@ -482,20 +490,32 @@ class obj_scene_testrigidbody(obj_testpage):
     def setup(self):
         self.name='Actors with Rigid Bodies'       
         self.text=['Actors with Rigid Bodies: ',\
-                   'A grand actor can be made a rigid body for physics. It is optional tho. ',\
-                   '[Tab: Back]']
-        self.world=world.obj_world(self)
-        bdry=actor.obj_actor_bdry(self.world,bounds=(100,1280-100,100,720-100))
-        # improved bdry conditions for rigidbodies
-        self.world.addrule('bdry_bounces_rigidbody',world.obj_rule_bdry_bounces_rigidbody(self.world) )
-        self.world.addrule('weapon_strikes_rigidbody',world.obj_rule_weapon_strikes_rigidbody(self.world) )
-        
-        furniture=actor.obj_actor_furniture_wide(self.world,(940,360),scale=0.5)
-        hero=actor.obj_actor_hero_v4(self.world,(340,360),scale=0.5)
-
+                   'A grand actor can have a rigidbody dynamics that induce additional movement. ',\
+                   'External forces start rigidbody dynamics, and internal friction slows the actor ',\
+                   'back to stalling.  ',\
+                   'If stalling the actor can still be moved like a non rigidbody. '\
+                   'Test move with [arrows] (non-rigidbody), force with [WASD] (rigidbody), ',\
+                   'stall with [q,e]. ',\
+                   ]
+        self.world=world.obj_world(self)# world template
+        self.world.addrule('truc',world.obj_rule_bdry_bounces_rigidbody(self.world) )
+        bdry=actor.obj_actor_bdry(self.world)
+        self.rigidbody=actor.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
+        self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )        
     def page(self,controls):
         self.world.update(controls)
-
+        # non rigid-body
+        if controls.right: self.rigidbody.movex(5) 
+        if controls.left: self.rigidbody.movex(-5)  
+        if controls.up: self.rigidbody.movey(-5) 
+        if controls.down: self.rigidbody.movey(5)     
+        # rigid-body
+        if controls.w and controls.wc: self.rigidbody.forcey(-5)
+        if controls.s and controls.sc: self.rigidbody.forcey(5)
+        if controls.a and controls.ac: self.rigidbody.forcex(-5)
+        if controls.d and controls.dc: self.rigidbody.forcex(5)
+        if controls.q and controls.qc: self.rigidbody.stall()
+        if controls.e and controls.ec: self.rigidbody.stall()
 
 ####################################################################################################################
 
@@ -504,7 +524,7 @@ class obj_scene_testrigidbody(obj_testpage):
 class obj_scene_testdraftanimation(obj_testpage):
     def setup(self):
         self.name='QuickDraft Animation'       
-        self.text=['QuickDraft Animation: [Space] Toggle Record Mode. [Tab: Back]']
+        self.text=['QuickDraft Animation: [Space] Toggle Record Mode.']
         #
         if False:# hero legs stand (chapter 1)
             self.animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360),record=True)
