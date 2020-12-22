@@ -12,13 +12,10 @@
 ##########################################################
 # Import libraries and other files
 
-import pygame
+import pyg
+pyg.initialize()# initialize game engine
+import share# initialize shared objects
 
-# Initialize pygame
-pygame.init()# init all modules (we could select them if they are not all used)
-pygame.time.wait(200)# wait 200 ms (to let some modules like pygame.font initialize entirely)
-
-import share# all shared objects, variables
 
 ##########################################################
 # Game Loop

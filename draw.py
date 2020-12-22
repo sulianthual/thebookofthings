@@ -11,10 +11,9 @@
 ##########################################################
 ##########################################################
 
-import pygame
-#
 import share
 import utils
+import pyg
         
 ####################################################################################################################
 
@@ -34,18 +33,25 @@ class obj_drawing:
         self.eraseonareahover=True# erase only if mouse hovers drawing area (useful if multiple drawings on screen)
         # Load shadow (must exist)
         if utils.pathexists('shadows/'+self.name+'.png'):
-            self.imgbase=pygame.image.load('shadows/'+self.name+'.png')#do not convert!
+            self.imgbase=pyg.loadsurface('shadows/'+self.name+'.png',convert=False)
         else:
-            self.imgbase=pygame.image.load('data/error.png')#do not convert!
+            self.imgbase=pyg.loadsurface('data/error.png',convert=False)
         self.imgbase.set_colorkey(share.colors.colorkey)
         self.size=self.imgbase.get_rect().size
         self.xytl=(self.xy[0]-int(self.size[0]/2), self.xy[1]-int(self.size[1]/2))# position of top left corner
         self.rect=(self.xytl[0],self.xytl[0]+self.size[0],self.xytl[1],self.xytl[1]+self.size[1])# drawing rectangle area
+        #
+        # CLEANER
+        self.x=self.xy[0]
+        self.y=self.xy[1]
+        term=self.imgbase.get_rect().size
+        self.rx,self.ry=int(term[0]/2),int(term[1]/2)
+        
         # Load drawing (or create empty one)
         if utils.pathexists('book/'+self.name+'.png'):
-            self.drawing=pygame.image.load('book/'+self.name+'.png').convert()
+            self.drawing=pyg.loadsurface('book/'+self.name+'.png')
         else:
-            self.drawing=pygame.Surface(self.size)
+            self.drawing=pyg.newsurface(self.size)
             self.reset()
         self.drawing.set_colorkey(share.colors.colorkey)# set white as colorkey (that color will not be displayed) 
         # legend (displayed under drawing, optional)
@@ -58,27 +64,27 @@ class obj_drawing:
         self.drawing.fill(share.colors.colorkey)# erase drawing
         self.drawing.blit(self.imgbase,(0,0))# add shadow
     def display(self):
-        pygame.draw.rect(share.screen, share.colors.colorkey, (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 0)# white background
+        pyg.rectdisplay(share.screen,share.colors.colorkey,(self.x,self.y,2*self.rx,2*self.ry),fill=True)
         if self.base:
             share.screen.blit(self.base.drawing,self.xytl)# display other drawing base at 
         # share.screen.blit(self.imgbase,self.xytl)# display shadow
         share.screen.blit(self.drawing,self.xytl)# display drawing
-        # pygame.draw.rect(share.screen, (220,0,0), (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 3)# borders (optional)
+
         self.displayborders()
         self.displaylegend()
     def displayborders(self):
         if self.borders[0]:
-            pygame.draw.line(share.screen,share.colors.drawing,\
-                             (self.xytl[0],self.xytl[1]),(self.xytl[0],self.xytl[1]+self.size[1]),3)# left
+            pyg.linedisplay(share.screen,share.colors.drawing,\
+                             (self.xytl[0],self.xytl[1]),(self.xytl[0],self.xytl[1]+self.size[1]))# left
         if self.borders[1]:
-            pygame.draw.line(share.screen,share.colors.drawing,\
-                             (self.xytl[0]+self.size[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]),3)# right
+            pyg.linedisplay(share.screen,share.colors.drawing,\
+                             (self.xytl[0]+self.size[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]))# right
         if self.borders[2]:
-            pygame.draw.line(share.screen,share.colors.drawing,\
-                             (self.xytl[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]),3)# top
+            pyg.linedisplay(share.screen,share.colors.drawing,\
+                             (self.xytl[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]))# top
         if self.borders[3]:
-            pygame.draw.line(share.screen,share.colors.drawing,\
-                             (self.xytl[0],self.xytl[1]+self.size[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]),3)# bottom
+            pyg.linedisplay(share.screen,share.colors.drawing,\
+                             (self.xytl[0],self.xytl[1]+self.size[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]))# bottom
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
         self.legend_surface=share.fonts.font50.render(legend, True, (0, 0, 0))
@@ -104,7 +110,7 @@ class obj_drawing:
         term.fill((255,255,255))# erase drawing
         if self.base: term.blit(self.base.drawing,(0,0))# add base
         term.blit(self.drawing,(0,0))# add drawing
-        pygame.image.save(term, 'book/'+self.name+'.png')# save drawing
+        pyg.savesurface(term, 'book/'+self.name+'.png')# save drawing
 
 # Function for drawing with mouse on a drawing (using Left Mouse)
 # (Records Mouse Position to Draw Lines between Mouse Positions each frame)
@@ -153,17 +159,33 @@ class obj_textinput:
         self.xy=xy# center position
         self.color=color# text color
         self.legend=legend
+
+        # More clear
+        self.x=xy[0]
+        self.y=xy[1]
+        self.rx=0# size of rectangle area (not text image)
+        self.ry=0
+
         self.setup()
+
+
+
+
     def setup(self):
         self.texttodict()
         self.font=share.fonts.font50# text font
         self.xmargin=20# margin left/right
-        self.ymargin=10#margin top/bottom
+        self.ymargin=10# margin top/bottom
         self.makeframe()# make frame for text
         self.legend_surface=[]
         self.legend_xtl=0
         self.legend_ytl=0 
         if self.legend: self.makelegend(self.legend)
+        
+        
+
+        
+        
     def texttodict(self):# get text value to/from dictionary
         if self.key in share.words.dict:
             self.text=share.words.dict[self.key]
@@ -173,12 +195,23 @@ class obj_textinput:
     def makeframe(self):# make frame for text
         # estimate max text size
         char_surface=self.font.render('W',True,self.color)# largest character
+        #
+        # More clear:
+        term=char_surface.get_size()
+        termx = term[0]*self.nchar
+        termy = term[1]
+        self.rx = int( termx/2 + self.xmargin )
+        self.ry = int( termy/2 + self.ymargin )
+
+        
+        # FORGET THIS???
         self.size=char_surface.get_size()
         self.size= self.size[0]*self.nchar, self.size[1]# size of text (without margins)
-        # top left corner
         self.xytl=self.xy[0]-int(self.size[0]/2)-self.xmargin, self.xy[1]-int(self.size[1]/2)-self.ymargin
         # rectangle
-        self.rect=(self.xytl[0],self.xytl[0]+self.size[0]+2*self.xmargin,self.xytl[1],self.xytl[1]+self.size[1]+2*self.ymargin)# drawing rectangle area        
+        self.rect=(self.xytl[0],self.xytl[0]+self.size[0]+2*self.xmargin,self.xytl[1],self.xytl[1]+self.size[1]+2*self.ymargin)# drawing rectangle area 
+        
+        #
     def display(self):
          # text (centered inside frame)
         word_surface=self.font.render(self.text,True,self.color)# could prerender only on changetext
@@ -186,8 +219,11 @@ class obj_textinput:
         termx=self.xytl[0]+int(self.size[0]/2)+self.xmargin-int(text_width/2)
         termy=self.xytl[1]+self.ymargin
         share.screen.blit(word_surface,(termx,termy) )# display text
-        pygame.draw.rect(share.screen, share.colors.textinput, \
-                         (self.xytl[0], self.xytl[1], self.size[0]+self.xmargin*2,self.size[1]+self.ymargin*2), 3)     
+
+        pyg.rectdisplay(share.screen,share.colors.textinput,(self.x,self.y,2*self.rx,2*self.ry) )
+        
+        
+        
         self.displaylegend()
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
@@ -272,8 +308,9 @@ class obj_textchoice:
             termy=xy[1]-size[1]/2
             share.screen.blit(img,(int(termx),int(termy)))  
             if c==self.ichoice:
-                rect=(termx-self.xmargin, termy-self.ymargin, size[0]+2*self.xmargin,size[1]+2*self.ymargin)
-                pygame.draw.rect(share.screen,share.colors.textchoice,rect, 3)          
+                rect=(xy[0],xy[1],size[0]+self.xmargin,size[1]+self.ymargin)
+                pyg.rectdisplay(share.screen,share.colors.textchoice,rect)
+                
     def play(self,controls):
         self.display()
         self.changechoice(controls)
@@ -324,41 +361,41 @@ class obj_textbox:
         self.y += dy
     def fliph(self): # flip image horizontally
         self.fh= not self.fh
-        self.img=pygame.transform.flip(self.img,True,False)
+        self.img=pyg.flipsurface(self.img,True,False)
     def ifliph(self): # flip image horizontally to inverted
         if not self.fh:
-            self.img=pygame.transform.flip(self.img,True,False)
+            self.img=pyg.flipsurface(self.img,True,False)
             self.fh=True
     def ofliph(self): # flip image horizontally to original
         if self.fh:
-            self.img=pygame.transform.flip(self.img,True,False)
+            self.img=pyg.flipsurface(self.img,True,False)
             self.fh=False
     def flipv(self): # flip image vertically
         self.fv= not self.fv
-        self.img=pygame.transform.flip(self.img,False,True)
+        self.img=pyg.flipsurface(self.img,False,True)
     def iflipv(self): # flip image vertically to inverted
         if not self.fv:
-            self.img=pygame.transform.flip(self.img,False,True)
+            self.img=pyg.flipsurface(self.img,False,True)
             self.fv=True
     def oflipv(self): # flip image vertically to original
         if self.fv:
-            self.img=pygame.transform.flip(self.img,False,True)
+            self.img=pyg.flipsurface(self.img,False,True)
             self.fv=False
     def scale(self,s): # scale image by given factor s (permanent)
         self.s *= s
-        self.img=pygame.transform.scale(self.img,(int(self.imgsize[0]*s),int(self.imgsize[1]*s)))
+        self.img=pyg.scalesurface(self.img,(int(self.imgsize[0]*s),int(self.imgsize[1]*s)))
         self.imgsize=self.img.get_rect().size
     def rotate(self,r): # rotate image by given angle r (permanent)
         self.r += r# DO NOT OVERDO: ENLARGENS IMAGE WITH MEMORY ISSUES
         center1=self.img.get_rect().center
-        self.img=pygame.transform.rotate(self.img,r)
+        self.img=pyg.rotatesurface(self.img,r)
         center2= self.img.get_rect().center 
         self.xc +=center1[0]-center2[0]
         self.yc +=center1[1]-center2[1]
     def rotate90(self,r):# rotate image in 90 increments nonly
         self.r += int(round(r%360/90,0)*90)# find closest increment (in 0,90,180,270)
         center1=self.img.get_rect().center
-        self.img=pygame.transform.rotate(self.img,r)
+        self.img=pyg.rotatesurface(self.img,r)
         center2= self.img.get_rect().center 
         self.xc +=center1[0]-center2[0]
         self.yc +=center1[1]-center2[1]        
@@ -368,9 +405,9 @@ class obj_textbox:
             ytl=self.y-self.imgsize[1]/2 +self.yc
             share.screen.blit(self.img,(int(xtl),int(ytl)))
     def devtools(self):
-        utils.crossdisplay((self.x,self.y),10,share.colors.devtextbox,3)
+        pyg.crossdisplay(share.screen,share.colors.devtextbox,(self.x,self.y),10)
         termx,termy=self.img.get_rect().size
-        pygame.draw.rect(share.screen,share.colors.devtextbox, (int(self.x-termx/2), int(self.y-termy/2), termx,termy), 3)  
+        pyg.rectdisplay(share.screen,share.colors.devtextbox,(self.x,self.y,termx,termy))
     def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
         self.display()
         if share.devmode: self.devtools()# dev tools
@@ -402,21 +439,21 @@ class obj_image:
         self.show=True# show the image or not (can be toggled on/off)
     def readimage(self,name):
         if utils.pathexists('book/'+name+'.png'):
-            img=pygame.image.load('book/'+name+'.png').convert()# load drawing image
+            img=pyg.loadsurface('book/'+name+'.png')
         else:
-            img=pygame.image.load('data/error.png').convert()# load error image        
+            img=pyg.loadsurface('data/error.png')     
         img.set_colorkey(share.colors.colorkey)# set white as colorkey (that color will not be displayed) 
         return img
     def replaceimage(self,newimgname):# replace existing image with new one
         self.name=newimgname
         img=self.readimage(self.name)
         # reapply reference transformations (fliph,flipv,scale, rotate...)
-        if self.fh: img=pygame.transform.flip(img,True,False)
-        if self.fv: img=pygame.transform.flip(img,False,True)
+        if self.fh: img=pyg.flipsurface(img,True,False)
+        if self.fv: img=pyg.flipsurface(img,False,True)
         if self.s != 1: 
             imgsize=img.get_rect().size
-            img=pygame.transform.scale(img,(int(imgsize[0]*self.s),int(imgsize[1]*self.s)))
-        if self.r != 0: img=pygame.transform.rotate(img,self.r)
+            img=pyg.scalesurface(img,(int(imgsize[0]*self.s),int(imgsize[1]*self.s)))
+        if self.r != 0: img=pyg.rotatesurface(img,self.r)
         # assign
         self.img=img
         self.imgsize=self.img.get_rect().size
@@ -430,41 +467,41 @@ class obj_image:
         self.y += dy
     def fliph(self): # flip image horizontally
         self.fh= not self.fh
-        self.img=pygame.transform.flip(self.img,True,False)
+        self.img=pyg.flipsurface(self.img,True,False)
     def ifliph(self): # flip image horizontally to inverted
         if not self.fh:
-            self.img=pygame.transform.flip(self.img,True,False)
+            self.img=pyg.flipsurface(self.img,True,False)
             self.fh=True
     def ofliph(self): # flip image horizontally to original
         if self.fh:
-            self.img=pygame.transform.flip(self.img,True,False)
+            self.img=pyg.flipsurface(self.img,True,False)
             self.fh=False
     def flipv(self): # flip image vertically
         self.fv= not self.fv
-        self.img=pygame.transform.flip(self.img,False,True)
+        self.img=pyg.flipsurface(self.img,False,True)
     def iflipv(self): # flip image vertically to inverted
         if not self.fv:
-            self.img=pygame.transform.flip(self.img,False,True)
+            self.img=pyg.flipsurface(self.img,False,True)
             self.fv=True
     def oflipv(self): # flip image vertically to original
         if self.fv:
-            self.img=pygame.transform.flip(self.img,False,True)
+            self.img=pyg.flipsurface(self.img,False,True)
             self.fv=False
     def scale(self,s): # scale image by given factor s (permanent)
         self.s *= s
-        self.img=pygame.transform.scale(self.img,(int(self.imgsize[0]*s),int(self.imgsize[1]*s)))
+        self.img=pyg.scalesurface(self.img,(int(self.imgsize[0]*s),int(self.imgsize[1]*s)))
         self.imgsize=self.img.get_rect().size
     def rotate(self,r): # rotate image by given angle r (permanent)
         self.r += r# DO NOT OVERDO: ENLARGENS IMAGE WITH MEMORY ISSUES
         center1=self.img.get_rect().center
-        self.img=pygame.transform.rotate(self.img,r)
+        self.img=pyg.rotatesurface(self.img,r)
         center2= self.img.get_rect().center 
         self.xc +=center1[0]-center2[0]
         self.yc +=center1[1]-center2[1]
     def rotate90(self,r):# rotate image in 90 increments nonly
         self.r += int(round(r%360/90,0)*90)# find closest increment (in 0,90,180,270)
         center1=self.img.get_rect().center
-        self.img=pygame.transform.rotate(self.img,r)
+        self.img=pyg.rotatesurface(self.img,r)
         center2= self.img.get_rect().center 
         self.xc +=center1[0]-center2[0]
         self.yc +=center1[1]-center2[1]       
@@ -474,9 +511,9 @@ class obj_image:
             ytl=self.y-self.imgsize[1]/2 +self.yc
             share.screen.blit(self.img,(int(xtl),int(ytl)))
     def devtools(self):
-        utils.crossdisplay((self.x,self.y),10,share.colors.devimage,3)
-        termx,termy=self.img.get_rect().size
-        pygame.draw.rect(share.screen,share.colors.devimage, (int(self.x-termx/2), int(self.y-termy/2), termx,termy), 3)            
+        pyg.crossdisplay(share.screen,share.colors.devimage,(self.x,self.y),10)
+        termx,termy=self.img.get_rect().size        
+        pyg.rectdisplay(share.screen,share.colors.devimage,(self.x,self.y,termx,termy))          
     def play(self,controls):# update,play,display kept for consistency and calls
         self.display()
         if share.devmode: self.devtools()
@@ -523,9 +560,9 @@ class obj_animation:
         self.imglist.append(self.img_ini)
     def readimage(self,imgname):# read image on file
         if utils.pathexists('book/'+imgname+'.png'):# load  image
-            img=pygame.image.load('book/'+imgname+'.png').convert()
+            img=pyg.loadsurface('book/'+imgname+'.png')
         else:
-            img=pygame.image.load('data/error.png').convert()
+            img=pyg.loadsurface('data/error.png')
         img.set_colorkey(share.colors.colorkey)# set white to transparent
         return img
     def addimage(self,imgname):# add an image to list of available ones for animation
@@ -535,12 +572,12 @@ class obj_animation:
         if index >-1 and index<len(self.imglist):
             img=self.readimage(newimgname)
             # reapply permanent transformations (fliph,flipv,scale, rotate...)
-            if self.fh: img=pygame.transform.flip(img,True,False)
-            if self.fv: img=pygame.transform.flip(img,False,True)
+            if self.fh: img=pyg.flipsurface(img,True,False)
+            if self.fv: img=pyg.flipsurface(img,False,True)
             if self.s != 1: 
                 sizex,sizey=img.get_rect().size
-                img=pygame.transform.scale(img,(int(sizex*self.s),int(sizey*self.s)))
-            if self.r != 0: img=pygame.transform.rotate(img,self.r)
+                img=pyg.scalesurface(img,(int(sizex*self.s),int(sizey*self.s)))
+            if self.r != 0: img=pyg.rotatesurface(img,self.r)
             self.imglist[index]=img
     ######
     # PART II: ANIMATION (transformations reapplied each frame to images)
@@ -611,9 +648,10 @@ class obj_animation:
                 term2=self.animation[i-1][2]+self.yini
                 term3=self.animation[i][1]+self.xini
                 term4=self.animation[i][2]+self.yini
-                pygame.draw.line(share.screen,(255,0,0),(term1,term2),(term3,term4),3)
+                pyg.linedisplay(share.screen,(255,0,0),(term1,term2),(term3,term4))# left
+                    
         # Show reference animation position with cross (xini, yini)
-        utils.crossdisplay((self.xini,self.yini),10,(0,0,255),3) 
+        pyg.crossdisplay(share.screen,(0,0,255),(self.xini,self.yini),10)
     def save(self):# save animation to file      
         f1=open(self.aniname, 'w+')
         f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
@@ -677,41 +715,41 @@ class obj_animation:
     def fliph(self):# flip all animation images horizontally
         self.fh= not self.fh
         for i,value in enumerate(self.imglist):
-            self.imglist[i]=pygame.transform.flip(value,True,False)        
+            self.imglist[i]=pyg.flipsurface(value,True,False)        
     def flipv(self):# flip all animation images vertically
         self.fv= not self.fv
         for i,value in enumerate(self.imglist):
-            self.imglist[i]=pygame.transform.flip(value,False,True)           
+            self.imglist[i]=pyg.flipsurface(value,False,True)           
     def ifliph(self): # flip all animation images  horizontally (if not already flipped)
         if not self.fh:
             for i,value in enumerate(self.imglist):
-                self.imglist[i]=pygame.transform.flip(value,True,False)
+                self.imglist[i]=pyg.flipsurface(value,True,False)
             self.fh=True
     def ofliph(self): # unflip all animation images horizontally (if already flipped)
         if self.fh:
             for i,value in enumerate(self.imglist):
-                self.imglist[i]=pygame.transform.flip(value,True,False)
+                self.imglist[i]=pyg.flipsurface(value,True,False)
             self.fh=False    
     def iflipv(self): # flip all animation images  vertically (if not already flipped)
         if not self.fv:
             for i,value in enumerate(self.imglist):
-                self.imglist[i]=pygame.transform.flip(value,False,True)
+                self.imglist[i]=pyg.flipsurface(value,False,True)
             self.fv=True
     def oflipv(self): # unflip all animation images vertically (if already flipped)
         if self.fv:
             for i,value in enumerate(self.imglist):
-                self.imglist[i]=pygame.transform.flip(value,False,True)
+                self.imglist[i]=pyg.flipsurface(value,False,True)
             self.fv=False 
     def scale(self,s): # permanent scaling by factor s 
         self.s *= s
         for i,value in enumerate(self.imglist):
             sizex,sizey=value.get_rect().size
-            self.imglist[i]=pygame.transform.scale(value,(int(sizex*s),int(sizey*s)))
+            self.imglist[i]=pyg.scalesurface(value,(int(sizex*s),int(sizey*s)))
     def rotate90(self,r):# rotate image in 90 increments nonly 
         self.r += int(round(r%360/90,0)*90)# find closest increment (in 0,90,180,270)
         cx1,cy1=self.imglist[0].get_rect().center
         for i,value in enumerate(self.imglist):            
-            self.imglist[i]=pygame.transform.rotate(value,r)
+            self.imglist[i]=pyg.rotatesurface(value,r)
         cx2,cy2= self.imglist[0].get_rect().center 
         self.xc +=cx1-cx2# correction computed from first image
         self.yc +=cy1-cy2# (correction wrong if other images have different sizes)    
@@ -733,18 +771,18 @@ class obj_animation:
                 self.imgt=self.imglist[0]# error image frame out of range, take first image frame
             sizex,sizey=self.imgt.get_rect().size
             # Apply Transformations (reapplied each frame to base image)
-            if self.fha: self.imgt=pygame.transform.flip(self.imgt,True,False)
-            if self.fva: self.imgt=pygame.transform.flip(self.imgt,False,True)
+            if self.fha: self.imgt=pyg.flipsurface(self.imgt,True,False)
+            if self.fva: self.imgt=pyg.flipsurface(self.imgt,False,True)
             if self.sa != 0: # (scale before rotation)
                 ssa=self.bsa**self.sa# frame scaling
-                self.imgt=pygame.transform.scale(self.imgt,(int(sizex*ssa),int(sizey*ssa)))
+                self.imgt=pyg.scalesurface(self.imgt,(int(sizex*ssa),int(sizey*ssa)))
             else:
                 ssa=1
             if self.ra != 0: 
                 self.ra *= 1 - 2*int(self.fh)# rotation direction inverts with fh,fv!
                 self.ra *= 1 - 2*int(self.fv)# 
                 cx1,cy1=self.imgt.get_rect().center
-                self.imgt=pygame.transform.rotate(self.imgt,self.ra)
+                self.imgt=pyg.rotatesurface(self.imgt,self.ra)
                 cx2,cy2= self.imgt.get_rect().center 
                 rcdx=cx1-cx2# correction from frame rotation
                 rcdy=cy1-cy2
@@ -787,8 +825,9 @@ class obj_animation:
             share.screen.blit(self.imgt,(int(termx),int(termy)))
     def devtools(self):        
         termx,termy=self.imgt.get_rect().size
-        pygame.draw.rect(share.screen,share.colors.devanimation, (int(self.xt), int(self.yt), termx,termy), 3)          
-        if not self.recording: utils.crossdisplay((self.x,self.y),10,share.colors.devanimation,3)
+        pyg.rectdisplay(share.screen,share.colors.devanimation,(self.xt+termx/2,self.yt+termy/2,termx,termy))
+        if not self.recording: 
+            pyg.crossdisplay(share.screen,share.colors.devanimation,(self.x,self.y),10)
     def play(self,controls):
         if self.record:# ability to record 
             if share.devmode and controls.space and controls.spacec: self.recording= not self.recording# switch mode  
@@ -911,7 +950,7 @@ class obj_dispgroup:
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
     def devtools(self):
-        utils.crossdisplay((self.x,self.y),10,share.colors.devdispgroup,6,diagonal=True)            
+        pyg.crossdisplay(share.screen,share.colors.devdispgroup,(self.x,self.y),6,diagonal=True)            
     def play(self,controls): # play all animations and display all images (in order of append)
         for i in self.dict.values(): i.play(controls)
         if share.devmode: self.devtools()

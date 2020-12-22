@@ -10,11 +10,10 @@
 ##########################################################
 ##########################################################
 
-import pygame
-
 import share
 import draw
 import utils
+import pyg
 
 ##########################################################
 ##########################################################       
@@ -61,13 +60,13 @@ class obj_colors:
 # $ a=share.fonts.font('medium')# by keyword
 class obj_fonts:
     def __init__(self):
-         self.font15=pygame.font.Font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
-         self.font30=pygame.font.Font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
-         self.font40=pygame.font.Font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
-         self.font50=pygame.font.Font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
-         self.font60=pygame.font.Font('data/AmaticSC-Bold.ttf', 60)# large
-         self.font100=pygame.font.Font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
-         self.font120=pygame.font.Font('data/AmaticSC-Bold.ttf', 120)# huge
+         self.font15=pyg.newfont('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
+         self.font30=pyg.newfont('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
+         self.font40=pyg.newfont('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
+         self.font50=pyg.newfont('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
+         self.font60=pyg.newfont('data/AmaticSC-Bold.ttf', 60)# large
+         self.font100=pyg.newfont('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
+         self.font120=pyg.newfont('data/AmaticSC-Bold.ttf', 120)# huge
     def font(self,fontname):# call by key(string)
          if fontname=='tiny':
              return self.font15
@@ -95,8 +94,8 @@ class obj_brushes:
         self.smallpen=self.makebrush('data/pen.png',(4,4))
         self.tinypen=self.makebrush('data/pen.png',(2,2))
     def makebrush(self,image,size):
-        img=pygame.image.load(image).convert()# always convert images for a faster pygame
-        img=pygame.transform.scale(img,size)
+        img=pyg.loadsurface(image)
+        img=pyg.scalesurface(img,size)
         # img.set_colorkey(share.colors.colorkey)# (optional) set unique transparent color
         return img
     

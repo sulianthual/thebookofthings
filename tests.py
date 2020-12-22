@@ -10,8 +10,6 @@
 ##########################################################
 ##########################################################
 
-import pygame
-#
 import share
 import draw
 import utils
@@ -109,13 +107,14 @@ class obj_testpage(page.obj_page):
         self.textkeys={'fontsize':'small','linespacing': 45}
     def postsetup(self):
         super().postsetup()
-        share.pagenotedisplay('[Tab: Back]',xy=(1180,5),rebuild=True)
+        share.pagenotedisplay('[Tab: Back] [Enter: Back]',xy=(1060,5),rebuild=True)
     def callprevpage(self,controls):# no browsing
         pass
     def callnextpage(self,controls):# no browsing
         pass
     def callexitpage(self,controls):# back to test menu
-        if (controls.tab  and controls.tabc) or (controls.esc and controls.escc):
+        # Exit to test menu
+        if (controls.tab  and controls.tabc) or (controls.enter  and controls.enterc) or (controls.esc and controls.escc):
             self.preendpage() 
             self.endpage()
             self.creator.scene=obj_scene_tests(self.creator)

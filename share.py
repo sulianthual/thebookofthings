@@ -15,6 +15,7 @@
 ##########################################################
 
 import utils
+import pyg
 import page
 import menu
 
@@ -37,7 +38,7 @@ screen=None
 clock=utils.obj_clock()# game clock 
 display=utils.obj_display()# window display (pygame.display.update)
 windowicon=utils.obj_windowicon()# window icon
-controls=utils.obj_controls()# mouse/keyboard controls
+controls=pyg.obj_controls()# mouse/keyboard controls
 #
 # Book page elements
 fonts=page.obj_fonts()# text fonts 

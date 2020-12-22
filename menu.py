@@ -10,11 +10,12 @@
 ##########################################################
 ##########################################################
 
-import pygame
+
 #
 import share
 import draw
 import utils
+import pyg
 import page
 #
 import tests
@@ -42,20 +43,20 @@ class obj_scene_titlescreen:
         share.windowicon.reset()
         # setup menu decorations (from book)
         if utils.pathexists('book/book.png'): 
-            self.imgbook=pygame.image.load('book/book.png').convert()
-            self.imgbook=pygame.transform.scale(self.imgbook,(210,180))
+            self.imgbook=pyg.loadsurface('book/book.png')
+            self.imgbook=pyg.scalesurface(self.imgbook,(210,180))
             self.imgbook.set_colorkey(share.colors.colorkey)
         else:
             self.imgbook=[]
         if utils.pathexists('book/pen.png'): 
-            self.imgpen=pygame.image.load('book/pen.png').convert()
-            self.imgpen=pygame.transform.scale(self.imgpen,(32,72))
+            self.imgpen=pyg.loadsurface('book/pen.png')
+            self.imgpen=pyg.scalesurface(self.imgpen,(32,72))
             self.imgpen.set_colorkey(share.colors.colorkey)
         else:
             self.imgpen=[]        
         if utils.pathexists('book/eraser.png'): 
-            self.imgeraser=pygame.image.load('book/eraser.png').convert()
-            self.imgeraser=pygame.transform.scale(self.imgeraser,(54,54))
+            self.imgeraser=pyg.loadsurface('book/eraser.png')
+            self.imgeraser=pyg.scalesurface(self.imgeraser,(54,54))
             self.imgeraser.set_colorkey(share.colors.colorkey)
         else:
             self.imgeraser=[]
@@ -67,6 +68,7 @@ class obj_scene_titlescreen:
         self.textimg_chapt1=share.fonts.font30.render('Chapter I: The Hero',True,(0,0,0))
         self.textimg_chapt2=share.fonts.font30.render('Chapter II: A House',True,(0,0,0))
         self.textimg_cursor=share.fonts.font30.render('---',True,(0,0,0))
+        self.textimg_devtests=share.fonts.font30.render('Appendix: Developer Tests (Press Space)',True,(0,0,0))
     def selectchapter(self,controls):
         if share.savefile.chapter<1:# new book
             if controls.enter  and controls.enterc: self.creator.scene=ch0.obj_scene_prologue(self.creator)
@@ -105,8 +107,8 @@ class obj_scene_titlescreen:
         if self.imgpen: share.screen.blit(self.imgpen,(470,360+self.ichapter*30))
         #        
     def devtools(self,controls):
-        pygame.draw.rect(share.screen, (0,0,220), (5, 680, 250,40), 3)
-        share.screen.blit(share.fonts.font30.render('Appendix: Developer Tests (Press Space)',True,(0,0,0)),(970,680))
+        pyg.rectdisplay(share.screen,(0,0,220), (130,700,250,40)  )
+        share.screen.blit(self.textimg_devtests,(970,680))
         if controls.space and controls.spacec: self.creator.scene=tests.obj_scene_tests(self.creator)   
     def update(self,controls):
         self.display()
