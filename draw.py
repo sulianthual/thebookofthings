@@ -23,6 +23,8 @@ import utils
 # *COLOR
 class obj_colors:
     def __init__(self):
+        # base colors
+        self.white=(255,255,255)
         self.black=(0,0,0)
         self.red=(220,0,0)# bit darker
         self.blue=(0,0,220)
@@ -30,6 +32,9 @@ class obj_colors:
         self.gray=(150,150,150)
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
+        #
+        # colorkey (unique color made transparent on all game images except background)
+        self.colorkey=self.white
         #
         # Specific colors for devtools        
         self.devtextbox=(225,225,25)# yellowish
@@ -84,13 +89,15 @@ class obj_fonts:
 # Brushes used for drawing
 # $ a=share.brushes.pen
 class obj_brushes:
-    def __init__(self):
-        self.pen=pygame.image.load('data/pen.png')
-        self.pen=pygame.transform.scale(self.pen,(8,8))
-        self.smallpen=pygame.image.load('data/pen.png')
-        self.smallpen=pygame.transform.scale(self.smallpen,(4,4))
-        self.tinypen=pygame.image.load('data/pen.png')
-        self.tinypen=pygame.transform.scale(self.smallpen,(2,2))    
+    def __init__(self):        
+        self.pen=self.makebrush('data/pen.png',(8,8))
+        self.smallpen=self.makebrush('data/pen.png',(4,4))
+        self.tinypen=self.makebrush('data/pen.png',(2,2))
+    def makebrush(self,image,size):
+        img=pygame.image.load(image).convert()# always convert images for a faster pygame
+        img=pygame.transform.scale(img,size)
+        # img.set_colorkey(share.colors.colorkey)# (optional) set unique transparent color
+        return img
         
         
 ####################################################################################################################
@@ -111,19 +118,20 @@ class obj_drawing:
         self.eraseonareahover=True# erase only if mouse hovers drawing area (useful if multiple drawings on screen)
         # Load shadow (must exist)
         if os.path.exists('shadows/'+self.name+'.png'):
-            self.imgbase=pygame.image.load('shadows/'+self.name+'.png')# drawing shadow image
+            self.imgbase=pygame.image.load('shadows/'+self.name+'.png')#do not convert!
         else:
-            self.imgbase=pygame.image.load('data/error.png')# load error image
+            self.imgbase=pygame.image.load('data/error.png')#do not convert!
+        self.imgbase.set_colorkey(share.colors.colorkey)
         self.size=self.imgbase.get_rect().size
         self.xytl=(self.xy[0]-int(self.size[0]/2), self.xy[1]-int(self.size[1]/2))# position of top left corner
         self.rect=(self.xytl[0],self.xytl[0]+self.size[0],self.xytl[1],self.xytl[1]+self.size[1])# drawing rectangle area
         # Load drawing (or create empty one)
-        if os.path.exists('drawings/'+self.name+'.png'):
-            self.drawing=pygame.image.load('drawings/'+self.name+'.png')# load drawing image
+        if os.path.exists('book/'+self.name+'.png'):
+            self.drawing=pygame.image.load('book/'+self.name+'.png').convert()
         else:
-            self.drawing=pygame.Surface(self.size)# make empty drawing image
+            self.drawing=pygame.Surface(self.size)
             self.reset()
-        self.drawing.set_colorkey((255,255,255))# set white as colorkey (that color will not be displayed) 
+        self.drawing.set_colorkey(share.colors.colorkey)# set white as colorkey (that color will not be displayed) 
         # legend (displayed under drawing, optional)
         self.legend=legend
         self.legend_surface=[]
@@ -131,10 +139,10 @@ class obj_drawing:
         self.legend_ytl=0
         if self.legend: self.makelegend(self.legend)
     def reset(self):
-        self.drawing.fill((255,255,255))# erase drawing
+        self.drawing.fill(share.colors.colorkey)# erase drawing
         self.drawing.blit(self.imgbase,(0,0))# add shadow
     def display(self):
-        pygame.draw.rect(share.screen, (255,255,255), (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 0)# white background
+        pygame.draw.rect(share.screen, share.colors.colorkey, (self.xytl[0], self.xytl[1], self.size[0],self.size[1]), 0)# white background
         if self.base:
             share.screen.blit(self.base.drawing,self.xytl)# display other drawing base at 
         # share.screen.blit(self.imgbase,self.xytl)# display shadow
@@ -180,7 +188,7 @@ class obj_drawing:
         term.fill((255,255,255))# erase drawing
         if self.base: term.blit(self.base.drawing,(0,0))# add base
         term.blit(self.drawing,(0,0))# add drawing
-        pygame.image.save(term, 'drawings/'+self.name+'.png')# save drawing
+        pygame.image.save(term, 'book/'+self.name+'.png')# save drawing
 
 # Function for drawing with mouse on a drawing (using Left Mouse)
 # (Records Mouse Position to Draw Lines between Mouse Positions each frame)
@@ -455,7 +463,7 @@ class obj_textbox:
         
 ####################################################################################################################
 
-# A simple image (from the drawings folder) to display at a given location
+# A simple image (from the book folder) to display at a given location
 class obj_image:
     def __init__(self,name,xy,scale=1):
         self.type='image'# object type
@@ -477,11 +485,11 @@ class obj_image:
         self.fv=False# is image flipped vertically (inverted) or not (original)
         self.show=True# show the image or not (can be toggled on/off)
     def readimage(self,name):
-        if os.path.exists('drawings/'+name+'.png'):
-            img=pygame.image.load('drawings/'+name+'.png')# load drawing image
+        if os.path.exists('book/'+name+'.png'):
+            img=pygame.image.load('book/'+name+'.png').convert()# load drawing image
         else:
-            img=pygame.image.load('data/error.png')# load error image        
-        img.set_colorkey((255,255,255))# set white as colorkey (that color will not be displayed) 
+            img=pygame.image.load('data/error.png').convert()# load error image        
+        img.set_colorkey(share.colors.colorkey)# set white as colorkey (that color will not be displayed) 
         return img
     def replaceimage(self,newimgname):# replace existing image with new one
         self.name=newimgname
@@ -598,11 +606,11 @@ class obj_animation:
         self.imglist=[]# list of all available images
         self.imglist.append(self.img_ini)
     def readimage(self,imgname):# read image on file
-        if os.path.exists('drawings/'+imgname+'.png'):# load  image
-            img=pygame.image.load('drawings/'+imgname+'.png')
+        if os.path.exists('book/'+imgname+'.png'):# load  image
+            img=pygame.image.load('book/'+imgname+'.png').convert()
         else:
-            img=pygame.image.load('data/error.png')
-        img.set_colorkey((255,255,255))# set white to transparent
+            img=pygame.image.load('data/error.png').convert()
+        img.set_colorkey(share.colors.colorkey)# set white to transparent
         return img
     def addimage(self,imgname):# add an image to list of available ones for animation
         img=self.readimage(imgname)      

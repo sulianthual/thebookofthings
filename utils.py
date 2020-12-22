@@ -30,15 +30,13 @@ class obj_display:
         self.setup()# initial setup (can be repeated on settings changes)
         #    
     def setup(self):
-        # Create Game Screen (drawn on constantly)
-        share.screen.set_alpha(None) # Remove alpha (for increased performances ?)
-        pygame.display.set_caption("The Book of Things")# text on window banner
-        if os.path.exists('drawings/bookicon.png'):# this is created by the player
-            pygame.display.set_icon(pygame.image.load('drawings/bookicon.png').convert_alpha())# icon on window banner 
-        else:
-            pygame.display.set_icon(pygame.image.load('data/booknoicon.png').convert_alpha())# before exists
-        pygame.mouse.set_visible(True)# Show Mouse (needed to draw)
+        share.screen=pygame.display.set_mode((1280,720))
+        share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
+        pygame.display.set_caption("The Book of Things")# window banner
+        pygame.mouse.set_visible(True)# show mouse
         #
+    def seticon(self,image):# set window icon
+        pygame.display.set_icon(image)
     def reset(self):# reset display with new values 
         pygame.display.quit()
         self.setup()
@@ -157,15 +155,15 @@ class obj_page:
 
          
 ####################################################################################################################
-# Save Data into Files (also manages all drawings in folder /drawings)
+# Save Data into Files (also manages all drawings in folder /book)
 # *SAVE
 class obj_savefile:
     def __init__(self):
-        self.filename='drawings/save.txt'# saved along with drawings
+        self.filename='book/save.txt'# saved along with drawings
         self.chapter=0# current chapter
         self.load()
     def load(self):# load savefile (or set default parameters if doesnt exist)
-        if os.path.exists('drawings/save.txt'): 
+        if os.path.exists('book/save.txt'): 
             f1=open(self.filename,'r+')
             line=f1.readline()# chapter
             line=line.split(",")
@@ -178,14 +176,14 @@ class obj_savefile:
         f1.write('chapter,'+str(self.chapter)+'\n')# first line
         f1.close()
     def eraseall(self):# erase all progress + drawings
-        files = os.listdir('drawings')
-        for i in files: os.remove('drawings/'+i)
+        files = os.listdir('book')
+        for i in files: os.remove('book/'+i)
         self.load()# reload
 
 # Dictionary of textinputs,textchoices written in the book of things (by the player)
 class obj_savewords:
     def __init__(self):# most entries are created during the game
-        self.filename='drawings/words.txt'# save file for all keywords
+        self.filename='book/words.txt'# save file for all keywords
         self.dict={}
         self.load()# load savefile
     def save(self):# save keywords to file
@@ -216,17 +214,18 @@ class obj_windowicon:
     def reset(self):
         self.makeicon()
         self.seticon()
-    def makeicon(self):
-        if os.path.exists('drawings/book.png'):# this is created by the player
-            self.imgicon=pygame.image.load('drawings/book.png')
-            self.imgicon=pygame.transform.scale(self.imgicon,(36,42))
-            pygame.image.save(self.imgicon, 'drawings/bookicon.png')
-    def seticon(self):
-        if os.path.exists('drawings/bookicon.png'):# this is created by the player
-            pygame.display.set_icon(pygame.image.load('drawings/bookicon.png').convert_alpha())# icon on window banner 
+    def makeicon(self):# make window icon from a player drawing
+        if os.path.exists('book/book.png'):
+            img=pygame.image.load('book/book.png').convert()
+            img=pygame.transform.scale(img,(36,42))
+            pygame.image.save(img, 'book/bookicon.png')
+    def seticon(self):          
+        if os.path.exists('book/bookicon.png'):
+            img=pygame.image.load('book/bookicon.png').convert()
         else:
-            pygame.display.set_icon(pygame.image.load('data/booknoicon.png').convert_alpha())# default            
-           
+            img=pygame.image.load('data/booknoicon.png').convert()
+        img.set_colorkey((255,255,255))# white
+        share.display.seticon(img)#pygame.display.set_icon(img)
             
 # Game text display 
 # *TEXT DISPLAY

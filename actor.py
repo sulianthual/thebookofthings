@@ -487,7 +487,7 @@ class obj_actor_goal_opendoor(obj_actor_goal_collideactors):
 
 # Boundary (basic actor)
 class obj_actor_bdry(obj_actor):# basic actor
-    def __init__(self,creator,bounds=(50,1280-50,50,720-50),push=(3,-3,3,-3)):
+    def __init__(self,creator,bounds=(100,1280-100,100,720-100),push=(3,-3,3,-3)):
         super().__init__(creator)
         self.bdry_lim=bounds# limits (xmin,xmax,ymin,ymax). 
         self.bdry_push=push# push rate at boundaries (if =0, boundary not applied)        

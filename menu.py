@@ -40,23 +40,23 @@ class obj_scene_titlescreen:
         self.ichapter=share.savefile.chapter# read current selected chapter (-1=Erase,0=Prologue,1=Hero,etc...)
         # page number reset
         share.ipage=1
-        # menu decorations (from drawings)
-        if os.path.exists('drawings/book.png'): 
-            self.imgbook=pygame.image.load('drawings/book.png')
+        # menu decorations (from book)
+        if os.path.exists('book/book.png'): 
+            self.imgbook=pygame.image.load('book/book.png').convert()
             self.imgbook=pygame.transform.scale(self.imgbook,(210,180))
-            self.imgbook.set_colorkey((255,255,255))
+            self.imgbook.set_colorkey(share.colors.colorkey)
         else:
             self.imgbook=[]
-        if os.path.exists('drawings/pen.png'): 
-            self.imgpen=pygame.image.load('drawings/pen.png')
+        if os.path.exists('book/pen.png'): 
+            self.imgpen=pygame.image.load('book/pen.png').convert()
             self.imgpen=pygame.transform.scale(self.imgpen,(32,72))
-            self.imgpen.set_colorkey((255,255,255))
+            self.imgpen.set_colorkey(share.colors.colorkey)
         else:
             self.imgpen=[]        
-        if os.path.exists('drawings/eraser.png'): 
-            self.imgeraser=pygame.image.load('drawings/eraser.png')
+        if os.path.exists('book/eraser.png'): 
+            self.imgeraser=pygame.image.load('book/eraser.png').convert()
             self.imgeraser=pygame.transform.scale(self.imgeraser,(54,54))
-            self.imgeraser.set_colorkey((255,255,255))
+            self.imgeraser.set_colorkey(share.colors.colorkey)
         else:
             self.imgeraser=[]  
         # Reload game window icon=book image (if created/modified during prologue)

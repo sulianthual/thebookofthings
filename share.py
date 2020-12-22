@@ -28,21 +28,20 @@ devmode = True # developer mode on (toggle False at game release)
 
 itest=0# index of current text in test menu
 ipage=1# current page within a chapter
-##########################################################
-# Shared Modules
 
-# Pygame Global Screen (used/modified by ALL modules very often)
-screen=pygame.display.set_mode((1280,720))
+# Pygame Display Screen (used/modified by ALL modules very often)
+screen=None
 
 ##########################################################
 # Shared Objects (accessible by main and all file modules)
 
 # Initialize shared game objects (order matters)
-clock=pygame.time.Clock()# start clock (to control framerate)
-display=utils.obj_display()# display screen 
+clock=pygame.time.Clock()# framerate
+display=utils.obj_display()# window display (pygame.display.update)
+windowicon=utils.obj_windowicon()# window icon
 controls=utils.obj_controls()# mouse/keyboard controls
 fonts=draw.obj_fonts()# text fonts 
-windowicon=utils.obj_windowicon()# game window icon
+
 textdisplay=utils.obj_textdisplay()# text display function
 colors=draw.obj_colors()# dictionary of colors
 words=utils.obj_savewords()# words written by player in the book
