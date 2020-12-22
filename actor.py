@@ -15,7 +15,6 @@
 import share
 import utils
 import draw
-import pyg
 
 ####################################################################################################################
 
@@ -169,7 +168,7 @@ class obj_grandactor():
     def play(self,controls):
         for i in self.dict.values():  i.play(controls)   
     def devtools(self):# display grand actor hit box
-        pyg.rectdisplay(share.screen,share.colors.devactor,(self.x,self.y,2*self.rx,2*self.ry) )
+        share.screen.drawrect( share.colors.devactor,(self.x,self.y,2*self.rx,2*self.ry) )
     def update(self,controls):
         if self.show: self.play(controls)  
         if share.devmode: self.devtools()

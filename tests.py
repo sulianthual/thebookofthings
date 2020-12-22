@@ -80,18 +80,18 @@ class obj_scene_tests:
             self.creator.scene.__init__(self.creator)# reset scene
                  
     def update(self,controls):
-        share.screen.fill((255,255,255))
-        share.screen.blit(share.fonts.font50.render('-- Appendix -- Developer Tests: [Enter] to Read, [Tab] to Exit.',True,(0,0,0)),(50,30))
+        share.screen.fillsurf((255,255,255))
+        share.screen.drawsurf(share.fonts.font50.render('-- Appendix -- Developer Tests: [Enter] to Read, [Tab] to Exit.',True,(0,0,0)),(50,30))
         
         if share.itest<self.nrow-1:
-            share.screen.blit(share.fonts.font30.render('---',True,(0,0,0)),(60,130+share.itest*30))
+            share.screen.drawsurf(share.fonts.font30.render('---',True,(0,0,0)),(60,130+share.itest*30))
         else:
-            share.screen.blit(share.fonts.font30.render('---',True,(0,0,0)),(460,130+(share.itest-self.nrow+1)*30))
+            share.screen.drawsurf(share.fonts.font30.render('---',True,(0,0,0)),(460,130+(share.itest-self.nrow+1)*30))
         #
         for i,test in enumerate(self.list[:self.nrow-1]):
-            share.screen.blit(share.fonts.font30.render(test.name,True,(0,0,0)),(100,130+i*30))
+            share.screen.drawsurf(share.fonts.font30.render(test.name,True,(0,0,0)),(100,130+i*30))
         for i,test in enumerate(self.list[self.nrow-1:]):
-            share.screen.blit(share.fonts.font30.render(test.name,True,(0,0,0)),(500,130+i*30))
+            share.screen.drawsurf(share.fonts.font30.render(test.name,True,(0,0,0)),(500,130+i*30))
         self.selecttest(controls)
         # Quit Game with Esc
         if controls.esc and controls.escc: self.creator.scene=share.titlescreen        

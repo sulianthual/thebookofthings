@@ -70,6 +70,12 @@ def loadsurface(path,convert=True):
 def savesurface(img,path):
     pygame.image.save(img,path) 
 
+def fillsurface(surface,color):
+    return surface.fill(color)
+
+def blitsurface(surface,blitsurface,xy):
+    return surface.blit(blitsurface,xy)
+
 # flip a pygame surface object (returns modified surface object)
 # $ a=flipsurface(surface,True,False)
 def flipsurface(surface,fliph,flipv):
@@ -91,14 +97,19 @@ def rotatesurface(surface, angle):
 def mouse_set_visible(value):# value is bool
     pygame.mouse.set_visible(value)
     
-# new pygame clock object (returns clock object)
+# pygame clock object (returns clock object)
 def newclock():
     return pygame.time.Clock()
+def getclockfps(clock):
+    return clock.get_fps()# method: get_fps
+def clocktick(clock,fps):
+    clock.tick(fps)
 
 # new pygame font object (returns font object)
 # $ a=newfont('AmaticSC-Bold.ttf', 15)
 def newfont(filename,size):
     return pygame.font.Font(filename, size)
+
     
 
 # Cross display

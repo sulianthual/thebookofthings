@@ -34,7 +34,7 @@ class obj_display:
         self.setup()# initial setup (can be repeated on settings changes)
         #    
     def setup(self):
-        share.screen=pyg.newdisplay(1280,720)
+        share.screen.screen=pyg.newdisplay(1280,720)# initialize screen (?)
         share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
         pyg.display_set_caption("The Book of Things")# window banner
         pyg.mouse_set_visible(True)# show mouse
@@ -47,7 +47,24 @@ class obj_display:
     def update(self):
         pyg.display_update()# (could also update only rects, less costly but need to keep track)
 
-        
+# Screen Manager (draws on it)
+class obj_screen:
+    def __init__(self):
+        self.screen=None
+    def set_alpha(self,value):
+        self.screen.set_alpha(value)
+    def fillsurf(self,value):
+        self.screen.fill(value)
+    def drawsurf(self,surface,xy):
+        self.screen.blit(surface,xy)
+    def drawrect(self,color,rect,thickness=3,fill=False):
+        pyg.rectdisplay(self.screen,color,rect,thickness=thickness,fill=fill)
+    def drawcross(self,color,xy,radius,thickness=3,diagonal=False):
+        pyg.crossdisplay(self.screen,color,xy,radius,thickness=thickness,diagonal=diagonal)
+    def drawline(self,color,xy1,xy2,thickness=3):
+        pyg.linedisplay(self.screen,color,xy1,xy2,thickness=thickness)
+
+
 # Scene Manager
 # Creates/Deletes and switches between levels
 class obj_scenemanager:
@@ -80,9 +97,9 @@ class obj_clock:
         self.clock=pyg.newclock()
         self.targetfps=share.fps
     def getfps(self):
-        return self.clock.get_fps()
+        return pyg.getclockfps(self.clock)
     def update(self):
-        self.clock.tick(self.targetfps)
+        pyg.clocktick(self.clock,self.targetfps)
 
         
         

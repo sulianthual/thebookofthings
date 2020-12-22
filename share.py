@@ -29,7 +29,7 @@ itest=0# index of current text in test menu
 ipage=1# current page within a chapter
 
 # Pygame Display Screen (used/modified by ALL modules very often)
-screen=None
+screen=utils.obj_screen()
 
 ##########################################################
 # Initialize shared elements (order matters)

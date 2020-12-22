@@ -132,7 +132,7 @@ class obj_page:
         self.page(controls)# customized
         self.postpage(controls)# template
     def prepage(self,controls):
-        share.screen.fill((255,255,255))
+        share.screen.fillsurf((255,255,255))
         self.callprevpage(controls)
         self.callnextpage(controls)
         self.callexitpage(controls)
@@ -190,7 +190,7 @@ class obj_pagenumberdisplay:
             self.prerender=share.fonts.font(fontsize).render('Page '+str(share.ipage), bold, color)
             self.xy=xy
         else:
-            share.screen.blit(self.prerender,self.xy)# fast display
+            share.screen.drawsurf(self.prerender,self.xy)# fast display
 
 
 # Page Note display (e.g. instructions)
@@ -203,7 +203,7 @@ class obj_pagenotedisplay:
             self.prerender=share.fonts.font(fontsize).render(text,bold,color)
             self.xy=xy
         else:
-            share.screen.blit(self.prerender,self.xy)# fast display        
+            share.screen.drawsurf(self.prerender,self.xy)# fast display        
 
         
 # FPS display (could be a function)
@@ -211,7 +211,7 @@ class obj_fpsdisplay:
     def __init__(self):
         pass
     def __call__(self):
-        share.screen.blit(share.fonts.font('smaller').render('FPS='+str(int(share.clock.getfps())), True, (0, 0, 0)), (30,5))
+        share.screen.drawsurf(share.fonts.font('smaller').render('FPS='+str(int(share.clock.getfps())), True, (0, 0, 0)), (30,5))
         
         
 # Main body of text on a story page
@@ -257,7 +257,6 @@ class obj_textdisplay:
                     x = xmin
                     y += linespacing
                 # record prerendered text
-                # share.screen.blit(word_surface, (x,y))# old, display text on screen
                 self.words_prerender.append( (word_surface,(x,y)) )# record prerendered text
                 x += word_width + space_width
             # return to line from user
@@ -268,7 +267,7 @@ class obj_textdisplay:
     def disptext(self):# display prerendered text
         for i in self.words_prerender:
             word_surface, xy=i
-            share.screen.blit(word_surface, xy)
+            share.screen.drawsurf(word_surface, xy)
 
 
 ####################################################################################################################

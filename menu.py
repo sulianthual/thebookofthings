@@ -88,27 +88,27 @@ class obj_scene_titlescreen:
                     self.creator.scene=ch2.obj_scene_chapter2(self.creator)        
     def display(self):
         # Main elements
-        share.screen.fill((255,255,255))
-        share.screen.blit(share.fonts.font100.render('The Book of Things',True,(0,0,0)),(400,30))
-        share.screen.blit(share.fonts.font30.render('By Sul',True,(0,0,0)),(1180,650))
-        share.screen.blit(share.fonts.font30.render('Toggle Dev Mode: (Press Ctrl)',True,(0,0,0)),(10,680))
+        share.screen.fillsurf((255,255,255))
+        share.screen.drawsurf(share.fonts.font100.render('The Book of Things',True,(0,0,0)),(400,30))
+        share.screen.drawsurf(share.fonts.font30.render('By Sul',True,(0,0,0)),(1180,650))
+        share.screen.drawsurf(share.fonts.font30.render('Toggle Dev Mode: (Press Ctrl)',True,(0,0,0)),(10,680))
         # Menu text
-        if share.savefile.chapter<1: share.screen.blit(self.textimg_startbook,(550,350))# empty book
+        if share.savefile.chapter<1: share.screen.drawsurf(self.textimg_startbook,(550,350))# empty book
         if share.savefile.chapter>0: 
-            share.screen.blit(self.textimg_instructions,(550,350)) 
-            share.screen.blit(self.textimg_erasebook,(550,380))
-            share.screen.blit(self.textimg_prologue,(550,410))
-            share.screen.blit(self.textimg_chapt1,(550,440))  
-            share.screen.blit(self.textimg_cursor,(510,410+self.ichapter*30))            
-            if share.savefile.chapter>1: share.screen.blit(self.textimg_chapt2,(550,470))          
+            share.screen.drawsurf(self.textimg_instructions,(550,350)) 
+            share.screen.drawsurf(self.textimg_erasebook,(550,380))
+            share.screen.drawsurf(self.textimg_prologue,(550,410))
+            share.screen.drawsurf(self.textimg_chapt1,(550,440))  
+            share.screen.drawsurf(self.textimg_cursor,(510,410+self.ichapter*30))            
+            if share.savefile.chapter>1: share.screen.drawsurf(self.textimg_chapt2,(550,470))          
         # Decorations
-        if self.imgbook: share.screen.blit(self.imgbook,(530,150))   
-        if self.imgeraser: share.screen.blit(self.imgeraser,(1180,600))
-        if self.imgpen: share.screen.blit(self.imgpen,(470,360+self.ichapter*30))
+        if self.imgbook: share.screen.drawsurf(self.imgbook,(530,150))   
+        if self.imgeraser: share.screen.drawsurf(self.imgeraser,(1180,600))
+        if self.imgpen: share.screen.drawsurf(self.imgpen,(470,360+self.ichapter*30))
         #        
     def devtools(self,controls):
-        pyg.rectdisplay(share.screen,(0,0,220), (130,700,250,40)  )
-        share.screen.blit(self.textimg_devtests,(970,680))
+        share.screen.drawrect((0,0,220), (130,700,250,40))
+        share.screen.drawsurf(self.textimg_devtests,(970,680))
         if controls.space and controls.spacec: self.creator.scene=tests.obj_scene_tests(self.creator)   
     def update(self,controls):
         self.display()

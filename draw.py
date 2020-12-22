@@ -61,29 +61,30 @@ class obj_drawing:
         self.legend_ytl=0
         if self.legend: self.makelegend(self.legend)
     def reset(self):
-        self.drawing.fill(share.colors.colorkey)# erase drawing
-        self.drawing.blit(self.imgbase,(0,0))# add shadow
+        self.drawing.fill(share.colors.colorkey)
+        self.drawing.blit(self.imgbase,(0,0))
+        # self.drawing=pyg.fillsurface(self.drawing,share.colors.colorkey)
+        # self.drawing=pyg.blitsurface(self.drawing,self.imgbase,(0,0))# add shadow
     def display(self):
-        pyg.rectdisplay(share.screen,share.colors.colorkey,(self.x,self.y,2*self.rx,2*self.ry),fill=True)
+        share.screen.drawrect(share.colors.colorkey,(self.x,self.y,2*self.rx,2*self.ry),fill=True)
         if self.base:
-            share.screen.blit(self.base.drawing,self.xytl)# display other drawing base at 
-        # share.screen.blit(self.imgbase,self.xytl)# display shadow
-        share.screen.blit(self.drawing,self.xytl)# display drawing
+            share.screen.drawsurf(self.base.drawing,self.xytl)# display other drawing base at 
+        share.screen.drawsurf(self.drawing,self.xytl)# display drawing
 
         self.displayborders()
         self.displaylegend()
     def displayborders(self):
         if self.borders[0]:
-            pyg.linedisplay(share.screen,share.colors.drawing,\
+            share.screen.drawline(share.colors.drawing,\
                              (self.xytl[0],self.xytl[1]),(self.xytl[0],self.xytl[1]+self.size[1]))# left
         if self.borders[1]:
-            pyg.linedisplay(share.screen,share.colors.drawing,\
+            share.screen.drawline(share.colors.drawing,\
                              (self.xytl[0]+self.size[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]))# right
         if self.borders[2]:
-            pyg.linedisplay(share.screen,share.colors.drawing,\
+            share.screen.drawline(share.colors.drawing,\
                              (self.xytl[0],self.xytl[1]),(self.xytl[0]+self.size[0],self.xytl[1]))# top
         if self.borders[3]:
-            pyg.linedisplay(share.screen,share.colors.drawing,\
+            share.screen.drawline(share.colors.drawing,\
                              (self.xytl[0],self.xytl[1]+self.size[1]),(self.xytl[0]+self.size[0],self.xytl[1]+self.size[1]))# bottom
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
@@ -93,7 +94,7 @@ class obj_drawing:
         self.legend_ytl=self.xytl[1]+self.size[1]
     def displaylegend(self):# display prerendered legend
         if self.legend:
-            share.screen.blit(self.legend_surface, (self.legend_xtl,self.legend_ytl))
+            share.screen.drawsurf(self.legend_surface, (self.legend_xtl,self.legend_ytl))
     def draw(self,controls):
         if controls.mouse1:# draw
             self.drawing=self.mousedrawing(controls,self.drawing,self.brush,self.xytl)# use drawing function                      
@@ -218,9 +219,8 @@ class obj_textinput:
         text_width,text_height=word_surface.get_size()
         termx=self.xytl[0]+int(self.size[0]/2)+self.xmargin-int(text_width/2)
         termy=self.xytl[1]+self.ymargin
-        share.screen.blit(word_surface,(termx,termy) )# display text
-
-        pyg.rectdisplay(share.screen,share.colors.textinput,(self.x,self.y,2*self.rx,2*self.ry) )
+        share.screen.drawsurf(word_surface,(termx,termy) )# display text
+        share.screen.drawrect(share.colors.textinput,(self.x,self.y,2*self.rx,2*self.ry))
         
         
         
@@ -233,7 +233,7 @@ class obj_textinput:
         self.legend_ytl=int( self.xytl[1] + self.size[1] + text_height/2 )
     def displaylegend(self):# display prerendered legend
         if self.legend:
-            share.screen.blit(self.legend_surface, (self.legend_xtl,self.legend_ytl))
+            share.screen.drawsurf(self.legend_surface, (self.legend_xtl,self.legend_ytl))
     def changetext(self,controls):        
         if utils.isinrect(controls.mousex,controls.mousey,self.rect):# edit only if mouse in frame
             self.text=controls.edittext(self.text)# edit text
@@ -306,10 +306,10 @@ class obj_textchoice:
             value,img,xy,size,area=i
             termx=xy[0]-size[0]/2
             termy=xy[1]-size[1]/2
-            share.screen.blit(img,(int(termx),int(termy)))  
+            share.screen.drawsurf(img,(int(termx),int(termy)))  
             if c==self.ichoice:
                 rect=(xy[0],xy[1],size[0]+self.xmargin,size[1]+self.ymargin)
-                pyg.rectdisplay(share.screen,share.colors.textchoice,rect)
+                share.screen.drawrect(share.colors.textchoice,rect)
                 
     def play(self,controls):
         self.display()
@@ -403,11 +403,13 @@ class obj_textbox:
         if self.show:
             xtl=self.x-self.imgsize[0]/2 +self.xc# top left corner position
             ytl=self.y-self.imgsize[1]/2 +self.yc
-            share.screen.blit(self.img,(int(xtl),int(ytl)))
+            share.screen.drawsurf(self.img,(int(xtl),int(ytl)))
     def devtools(self):
-        pyg.crossdisplay(share.screen,share.colors.devtextbox,(self.x,self.y),10)
+        share.screen.drawcross(share.colors.devtextbox,(self.x,self.y),10)
         termx,termy=self.img.get_rect().size
-        pyg.rectdisplay(share.screen,share.colors.devtextbox,(self.x,self.y,termx,termy))
+        share.screen.drawrect(share.colors.devtextbox,(self.x,self.y,termx,termy))
+        
+        
     def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
         self.display()
         if share.devmode: self.devtools()# dev tools
@@ -509,11 +511,12 @@ class obj_image:
         if self.show:
             xtl=self.x-self.imgsize[0]/2 +self.xc
             ytl=self.y-self.imgsize[1]/2 +self.yc
-            share.screen.blit(self.img,(int(xtl),int(ytl)))
+            share.screen.drawsurf(self.img,(int(xtl),int(ytl)))
     def devtools(self):
-        pyg.crossdisplay(share.screen,share.colors.devimage,(self.x,self.y),10)
+        share.screen.drawcross(share.colors.devimage,(self.x,self.y),10)
         termx,termy=self.img.get_rect().size        
-        pyg.rectdisplay(share.screen,share.colors.devimage,(self.x,self.y,termx,termy))          
+        share.screen.drawrect(share.colors.devimage,(self.x,self.y,termx,termy)) 
+         
     def play(self,controls):# update,play,display kept for consistency and calls
         self.display()
         if share.devmode: self.devtools()
@@ -605,15 +608,15 @@ class obj_animation:
         self.ta=0
     def recorder_infos(self):
         # Display Informations for Record Mode (not prerendered but doesnt matter)
-        share.screen.blit(share.fonts.font15.render('- RECORD MODE -', True, (255, 0, 0)), (1180,135)) 
-        share.screen.blit(share.fonts.font15.render('Space: Toggle Mode', True, (255, 0, 0)), (1180,155)) 
-        share.screen.blit(share.fonts.font15.render('Backspace: Reset', True, (255, 0, 0)), (1180,175))        
-        share.screen.blit(share.fonts.font15.render('LMouse: Record', True, (255, 0, 0)), (1180,195)) 
-        share.screen.blit(share.fonts.font15.render('a-d: rotate', True, (255, 0, 0)), (1180,215)) 
-        share.screen.blit(share.fonts.font15.render('w-s: scale', True, (255, 0, 0)), (1180,235)) 
-        share.screen.blit(share.fonts.font15.render('q-e: flip', True, (255, 0, 0)), (1180,255)) 
-        share.screen.blit(share.fonts.font15.render('r: Save', True, (255, 0, 0)), (1180,275))
-        share.screen.blit(share.fonts.font15.render('f: change image', True, (255, 0, 0)), (1180,295))
+        share.screen.drawsurf(share.fonts.font15.render('- RECORD MODE -', True, (255, 0, 0)), (1180,135)) 
+        share.screen.drawsurf(share.fonts.font15.render('Space: Toggle Mode', True, (255, 0, 0)), (1180,155)) 
+        share.screen.drawsurf(share.fonts.font15.render('Backspace: Reset', True, (255, 0, 0)), (1180,175))        
+        share.screen.drawsurf(share.fonts.font15.render('LMouse: Record', True, (255, 0, 0)), (1180,195)) 
+        share.screen.drawsurf(share.fonts.font15.render('a-d: rotate', True, (255, 0, 0)), (1180,215)) 
+        share.screen.drawsurf(share.fonts.font15.render('w-s: scale', True, (255, 0, 0)), (1180,235)) 
+        share.screen.drawsurf(share.fonts.font15.render('q-e: flip', True, (255, 0, 0)), (1180,255)) 
+        share.screen.drawsurf(share.fonts.font15.render('r: Save', True, (255, 0, 0)), (1180,275))
+        share.screen.drawsurf(share.fonts.font15.render('f: change image', True, (255, 0, 0)), (1180,295))
     def recorder(self,controls):# record animation with dev controls
         self.recorder_infos()
         # Position
@@ -648,10 +651,10 @@ class obj_animation:
                 term2=self.animation[i-1][2]+self.yini
                 term3=self.animation[i][1]+self.xini
                 term4=self.animation[i][2]+self.yini
-                pyg.linedisplay(share.screen,(255,0,0),(term1,term2),(term3,term4))# left
+                share.screen.drawline((255,0,0),(term1,term2),(term3,term4))
                     
         # Show reference animation position with cross (xini, yini)
-        pyg.crossdisplay(share.screen,(0,0,255),(self.xini,self.yini),10)
+        share.screen.drawcross((0,0,255),(self.xini,self.yini),10)
     def save(self):# save animation to file      
         f1=open(self.aniname, 'w+')
         f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
@@ -822,12 +825,12 @@ class obj_animation:
             termy += self.y# movey, movetoy
             self.xt=termx
             self.yt=termy
-            share.screen.blit(self.imgt,(int(termx),int(termy)))
+            share.screen.drawsurf(self.imgt,(int(termx),int(termy)))
     def devtools(self):        
         termx,termy=self.imgt.get_rect().size
-        pyg.rectdisplay(share.screen,share.colors.devanimation,(self.xt+termx/2,self.yt+termy/2,termx,termy))
+        share.screen.drawrect(share.colors.devanimation,(self.xt+termx/2,self.yt+termy/2,termx,termy))
         if not self.recording: 
-            pyg.crossdisplay(share.screen,share.colors.devanimation,(self.x,self.y),10)
+            share.screen.drawcross(share.colors.devanimation,(self.x,self.y),10)
     def play(self,controls):
         if self.record:# ability to record 
             if share.devmode and controls.space and controls.spacec: self.recording= not self.recording# switch mode  
@@ -950,7 +953,7 @@ class obj_dispgroup:
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
     def devtools(self):
-        pyg.crossdisplay(share.screen,share.colors.devdispgroup,(self.x,self.y),6,diagonal=True)            
+        share.screen.drawcross(share.colors.devdispgroup,(self.x,self.y),6,diagonal=True)            
     def play(self,controls): # play all animations and display all images (in order of append)
         for i in self.dict.values(): i.play(controls)
         if share.devmode: self.devtools()
