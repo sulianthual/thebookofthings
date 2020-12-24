@@ -15,7 +15,6 @@
 import share
 import draw
 import utils
-import pyg
 import page
 #
 import tests
