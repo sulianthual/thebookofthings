@@ -13,7 +13,6 @@
 import share
 import draw
 import utils
-import pyg
 
 ##########################################################
 ##########################################################       
@@ -32,22 +31,22 @@ class obj_colors:
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
         #
-        # colorkey (unique color made transparent on all game images except background)
-        self.colorkey=self.white
-        #
-        # Specific colors for devtools        
-        self.devtextbox=(225,225,25)# yellowish
+        # Colors devmode
+        self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
         self.devanimation=(0,220,0)# green
         self.devdispgroup=(128,0,128)# purple
         self.devactor=(0,0,220)# blue (hitbox)
         #
-        # Specific colors for some game elements
+        # Colors game elements
+        self.colorkey=self.white# transparent color (all sprites except background)
+        self.background=self.white# game background
         self.drawing=(220,0,0)# drawing
-        self.textinput=(200,0,0)# text input box
-        self.textchoice=(180,0,0)# text input box
+        self.input=self.red# text input (in text)
+        self.textinput=(200,0,0)# text input (box)
+        self.textchoice=(180,0,0)# text input box        
+        # Colors for story
         self.book=self.blue# anything book of thing
-        self.input=self.red# input color (in text)
         self.hero=self.red# hero text color
         self.weapon=self.brown# hero weapon text color
         self.itemloved=(220,50,50)
@@ -60,30 +59,30 @@ class obj_colors:
 # $ a=share.fonts.font('medium')# by keyword
 class obj_fonts:
     def __init__(self):
-         self.font15=pyg.newfont('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
-         self.font30=pyg.newfont('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
-         self.font40=pyg.newfont('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
-         self.font50=pyg.newfont('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
-         self.font60=pyg.newfont('data/AmaticSC-Bold.ttf', 60)# large
-         self.font100=pyg.newfont('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
-         self.font120=pyg.newfont('data/AmaticSC-Bold.ttf', 120)# huge
+         self.font15=utils.obj_font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
+         self.font30=utils.obj_font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
+         self.font40=utils.obj_font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
+         self.font50=utils.obj_font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
+         self.font60=utils.obj_font('data/AmaticSC-Bold.ttf', 60)# large
+         self.font100=utils.obj_font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
+         self.font120=utils.obj_font('data/AmaticSC-Bold.ttf', 120)# huge
     def font(self,fontname):# call by key(string)
-         if fontname=='tiny':
-             return self.font15
-         elif fontname=='smaller':
-             return self.font30
-         elif fontname=='small':
-             return self.font40
-         elif fontname=='medium':
-             return self.font50
-         elif fontname=='large':
-             return self.font60
-         elif fontname=='big':
-             return self.font100
-         elif fontname=='huge':
-             return self.font120
+         if fontname=='tiny' or fontname==15:
+             return self.font15.font
+         elif fontname=='smaller' or fontname==30:
+             return self.font30.font
+         elif fontname=='small' or fontname==40:
+             return self.font40.font
+         elif fontname=='medium' or fontname==50:
+             return self.font50.font
+         elif fontname=='large' or fontname==60:
+             return self.font60.font
+         elif fontname=='big' or fontname==100:
+             return self.font100.font
+         elif fontname=='huge' or fontname==120:
+             return self.font120.font
          else:
-             return self.font50# medium font  
+             return self.font50.font# medium font  
 
 
 # Brushes used for drawing
@@ -97,45 +96,74 @@ class obj_brushes:
     
 ####################################################################################################################
 
-
-# Page Template: a story page in the book of things
-class obj_page:
+# Template for any game scene
+class obj_pagetemplate: # rename to obj_page later
     def __init__(self,creator):
         self.creator=creator# created by scenemanager
-        self.presetup()# template
-        self.setup()# customized
-        self.postsetup()# template
+        self.presetup()# 
+        self.setup()
+        self.postsetup()
     def presetup(self):
-        self.text=[]# displayed text 
-        self.textkeys={}# can add keys in setup (e.g. self.textkeys['xmin']=150)
-        self.to_update=[]# list of elements to update during page (includes everyone)
-        self.to_finish=[]# list of elements to finish on endpage (drawing, textinput)
+        # background sprite
+        self.background=utils.obj_sprite_background()
+        self.background.setcolor(share.colors.background)  
+        # elements
+        self.to_update=[]
+        self.to_finish=[]
+    def setup(self):# page setup
+        pass
     def postsetup(self):
-        share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
-        share.pagenumberdisplay(rebuild=True)
-        share.pagenotedisplay('[Tab: Back]  [Enter: Continue]',rebuild=True)
-    def addpart(self,element):# add element (must have a self.type)
+        pass
+    def addpart(self,element):
         if element.type in ['drawing','textinput','textchoice','textbox','image','animation','dispgroup','world']:
             self.to_update.append(element)            
         if element.type in ['drawing','textinput','textchoice']:
-            self.to_finish.append(element)
+            self.to_finish.append(element)        
     def removepart(self,element):
         for i in [self.to_update,self.to_finish]:
             if element in i: i.remove(element)
     def update(self,controls):
-        self.prepage(controls)# template
-        self.page(controls)# customized
-        self.postpage(controls)# template
+        self.prepage(controls)# background and elements
+        self.page(controls)# 
+        self.postpage(controls)# foreground
     def prepage(self,controls):
-        share.screen.fillsurf((255,255,255))
+        self.background.display()
+        for i in self.to_update: i.update(controls)
+    def page(self,controls):
+        pass
+    def postpage(self,controls):
+        share.fpsdisplay()
+    def preendpage(self):# before exiting page
+        for i in self.to_finish: i.finish()     
+
+
+
+# chapter page template: a page in a chapter of the book
+class obj_page(obj_pagetemplate):  ### rename to obj_chapterpage later
+    def __init__(self,creator):
+        super().__init__(creator)
+    def presetup(self):
+        super().presetup()
+        # Main body of text
+        self.text=[]
+        self.textkeys={}
+    def postsetup(self):
+        super().postsetup()
+        share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
+        share.pagenumberdisplay(rebuild=True)
+        share.pagenotedisplay('[Tab: Back]  [Enter: Continue]',rebuild=True)
+    def prepage(self,controls):
+        super().prepage(controls)
         self.callprevpage(controls)
         self.callnextpage(controls)
         self.callexitpage(controls)
-        for i in self.to_update: i.update(controls)# update elements
+    def page(self,controls):# page update
+        pass
     def postpage(self,controls):
-        share.textdisplay(self.text)# display text
-        share.pagenumberdisplay()# display page number
-        share.pagenotedisplay('')# display page number
+        super().postpage(controls)
+        share.textdisplay(self.text)
+        share.pagenumberdisplay()
+        share.pagenotedisplay('')
     def callprevpage(self,controls):
         if controls.tab and controls.tabc:
             self.preendpage()# template
@@ -154,22 +182,20 @@ class obj_page:
             self.endpage()# customized
             share.titlescreen.setup()
             self.creator.scene=share.titlescreen
-    def preendpage(self):
-        for i in self.to_finish: i.finish()# finish elements
-    # This content to be edited for each page
-    def setup(self):# page setup
-        pass
-    def page(self,controls):# page update
-        pass
+            # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
     def endpage(self):# when exit page 
         pass
     def prevpage(self):# actions to prev page (replace here)**
         share.titlescreen.setup()# refresh titlescreen content
         self.creator.scene=share.titlescreen# default back to menu
+        # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
     def nextpage(self):# actions to next page (replace here)**
         share.titlescreen.setup()# refresh titlescreen content
         self.creator.scene=share.titlescreen# default back to menu
+        # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
+        
 
+        
         
 ####################################################################################################################
 # Page utilities

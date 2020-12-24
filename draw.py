@@ -60,7 +60,7 @@ class obj_drawing:
         self.rect=(self.x-self.rx,self.x+self.rx,self.y-self.ry,self.y+self.ry)
     def makelegend(self,legend):
         self.legend=legend
-        self.sprite_legend.make(legend,share.fonts.font50,(0,0,0),bold=True)
+        self.sprite_legend.make(legend,share.fonts.font('medium'),(0,0,0),bold=True)
         termx,termy=self.sprite_legend.getrxry()
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
@@ -115,7 +115,7 @@ class obj_textinput:
         self.setup()
     def setup(self):
         self.texttodict()
-        self.font=share.fonts.font50# text font
+        self.font=share.fonts.font('medium')# text font
         self.xm,self.ym=20,10# margins
         # sprite
         self.sprite=utils.obj_sprite_text()
@@ -144,7 +144,7 @@ class obj_textinput:
         self.rect=(self.x-self.rx-self.xm,self.x+self.rx+self.xm,self.y-self.ry-self.ym,self.y+self.ry+self.ym)
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
-        self.sprite_legend.make(legend,share.fonts.font30,(0,0,0),bold=True)
+        self.sprite_legend.make(legend,share.fonts.font('smaller'),(0,0,0),bold=True)
         termx,termy=self.sprite_legend.getrxry()
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
@@ -264,7 +264,7 @@ class obj_textbox:
         self.devcross=utils.obj_sprite_cross()
         self.devrect=utils.obj_sprite_rect()
     def replacetext(self,text):   
-        self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color,bold=True)  
+        self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color)  
     def movetox(self,x):
         self.x=x
     def movetoy(self,y):
@@ -315,6 +315,7 @@ class obj_textbox:
         if share.devmode: self.devtools()# dev tools
     def update(self,controls):
         self.play(controls)        
+        
         
 ####################################################################################################################
 
@@ -398,6 +399,7 @@ class obj_image:
         if share.devmode: self.devtools()
     def update(self,controls):
         self.play(controls)  
+
 
 ####################################################################################################################
 
@@ -537,7 +539,6 @@ class obj_animation:
         if share.devmode: self.devtools()
     def update(self,controls):
         self.play(controls)        
-            
 
 
 # Animation sequence (vector of time-transformations)
@@ -781,11 +782,13 @@ class obj_dispgroup:
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])            
     def devtools(self):
-        self.devcross.display(share.colors.devdispgroup,(self.x,self.y),6,diagonal=True)          
+        self.devcross.display(share.colors.devdispgroup,(self.x,self.y),20,diagonal=True,thickness=6)          
     def play(self,controls):
         for i in self.dict.values(): i.play(controls)
         if share.devmode: self.devtools()
     def update(self,controls):
         self.play(controls)  
+        
+        
 ####################################################################################################################
 

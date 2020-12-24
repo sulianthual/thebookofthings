@@ -25,6 +25,7 @@ from math import pi as math_pi
 import share
 import pyg
 
+
 ####################################################################################################################
 # Game Core
 
@@ -82,23 +83,39 @@ class obj_screen:
 class obj_sprite:
     def __init__(self):
         self.type='sprite'
-        self.spritetype=None#image,text,etc...        
+        self.spritetype=None#image,text,etc...
+
+# background (entire screen)
+class obj_sprite_background(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.spritetype='background'
+        self.surf=None
+        self.color=None
+    def make(self):
+        pass
+    def setcolor(self,color):
+        self.color=color
+    def display(self):
+        share.screen.fillsurf(self.color)
+        
 
 # line sprite
 class obj_sprite_line(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.surf=None
+        self.spritetype='line' 
     def make(self):
         pass
     def display(self,color,xy1,xy2):
         share.screen.drawline(color,xy1,xy2)
 
+
 # line sequence sprite (from list of points)
 class obj_sprite_linesequence(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.surf=None
+        self.spritetype='lineseq' 
     def make(self):
         pass
     def display(self,color,xylist):#xylist=[xy1,xy2,...]
@@ -106,23 +123,24 @@ class obj_sprite_linesequence(obj_sprite):
             for i,j in zip( range(0,len(xylist)-2) , range(1,len(xylist)-1) ):
                 xy1,xy2=xylist[i],xylist[j]
                 share.screen.drawline(color,xy1,xy2)
+
         
 # cross sprite
 class obj_sprite_cross(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.surf=None
+        self.spritetype='cross' 
     def make(self):
         pass
-    def display(self,color,xy,radius,diagonal=False):
-        share.screen.drawcross(color,xy,radius,diagonal=diagonal)
-        
-        
+    def display(self,color,xy,radius,thickness=3,diagonal=False):
+        share.screen.drawcross(color,xy,radius,thickness=thickness,diagonal=diagonal)
+
+                
 # rectangle sprite
 class obj_sprite_rect(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.surf=None
+        self.spritetype='rect'     
     def make(self):
         pass
     def display(self,color,rect):
@@ -211,6 +229,7 @@ class obj_sprite_image(obj_sprite):
 class obj_sprite_brush(obj_sprite_image):
     def __init__(self):  
         super().__init__()
+        self.spritetype='brush'     
     def makebrush(self,pen):
         self.load(pen[0])
         self.scale(pen[1],target=True)
@@ -221,9 +240,17 @@ class obj_sprite_text(obj_sprite_image):
     def __init__(self):
         super().__init__()
         self.spritetype='text'
-    def make(self,text,font,color,bold=False):
+    def make(self,text,font,color,bold=True):
         self.surf=font.render(text,bold,color)
         self.rx,self.ry=self.getrxry()
+
+####################################################################################################################
+
+# Single Font
+class obj_font:
+    def __init__(self,name,size):
+        self.font=pyg.newfont(name,size)
+
 
 ####################################################################################################################
 
@@ -235,11 +262,8 @@ class obj_scenemanager:
         self.page=0# current story page
     def update(self,controls):
         self.scene.update(controls)# Update current scene
-        share.fpsdisplay()# display fps on top 
         if controls.quit: share.quitgame()# Quit game (close window)
         if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
-        #
-        # dev tests:
         if share.devmode and controls.mouse3 and controls.mouse3c: 
             print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
         

@@ -28,9 +28,14 @@ import menu
 class obj_scene_tests:
     def __init__(self,creator):
         self.creator=creator# created by scenemanager
+        self.setup()
+    def setup(self):
         self.list=[]# list of modules
         self.loadtests()
         self.nrow=17# number of rows one column
+        # sprite background
+        self.background=utils.obj_sprite_background()
+        self.background.setcolor(share.colors.background)
     def loadtests(self):# load all tests 
         #####
         # ADD ALL TESTS FROM THIS MODULE HERE
@@ -74,27 +79,31 @@ class obj_scene_tests:
             # share.itest=max(share.itest-1,0)
             share.itest -= 1
             if share.itest == -1: share.itest=self.listlen-1
-        if controls.tab  and controls.tabc: self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
+        if controls.tab  and controls.tabc: 
+            # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
+            self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
         if (controls.enter and controls.enterc): 
             self.creator.scene=self.list[share.itest]
             self.creator.scene.__init__(self.creator)# reset scene
                  
     def update(self,controls):
-        share.screen.fillsurf((255,255,255))
-        share.screen.drawsurf(share.fonts.font50.render('-- Appendix -- Developer Tests: [Enter] to Read, [Tab] to Exit.',True,(0,0,0)),(50,30))
+        self.background.display()
+        share.screen.drawsurf(share.fonts.font('medium').render('-- Appendix -- Developer Tests: [Enter] to Read, [Tab] to Exit.',True,(0,0,0)),(50,30))
         
         if share.itest<self.nrow-1:
-            share.screen.drawsurf(share.fonts.font30.render('---',True,(0,0,0)),(60,130+share.itest*30))
+            share.screen.drawsurf(share.fonts.font('smaller').render('---',True,(0,0,0)),(60,130+share.itest*30))
         else:
-            share.screen.drawsurf(share.fonts.font30.render('---',True,(0,0,0)),(460,130+(share.itest-self.nrow+1)*30))
+            share.screen.drawsurf(share.fonts.font('smaller').render('---',True,(0,0,0)),(460,130+(share.itest-self.nrow+1)*30))
         #
         for i,test in enumerate(self.list[:self.nrow-1]):
-            share.screen.drawsurf(share.fonts.font30.render(test.name,True,(0,0,0)),(100,130+i*30))
+            share.screen.drawsurf(share.fonts.font('smaller').render(test.name,True,(0,0,0)),(100,130+i*30))
         for i,test in enumerate(self.list[self.nrow-1:]):
-            share.screen.drawsurf(share.fonts.font30.render(test.name,True,(0,0,0)),(500,130+i*30))
+            share.screen.drawsurf(share.fonts.font('smaller').render(test.name,True,(0,0,0)),(500,130+i*30))
         self.selecttest(controls)
         # Quit Game with Esc
-        if controls.esc and controls.escc: self.creator.scene=share.titlescreen        
+        if controls.esc and controls.escc: 
+            # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager) 
+            self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
 
 
 # Template for test page = page with slightly modified functionalities
@@ -184,6 +193,9 @@ class obj_scene_testdevmodeinfo(obj_testpage):
         self.addpart( draw.obj_textbox('textbox',(1140,400)) )
         self.addpart( draw.obj_image('testimage1',(1140,600)) )
         self.addpart( draw.obj_animation('testanimation1','testimage1',(940,360)) )
+        dg=draw.obj_dispgroup((640,600))
+        self.addpart(dg)
+        dg.addpart("key_element1",draw.obj_textbox('dispgroup',(640,650)) )
         ww=world.obj_world(self)
         self.addpart(ww)
         test=actor.obj_grandactor(ww,(640,360))
