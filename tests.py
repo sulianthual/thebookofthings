@@ -21,24 +21,42 @@ import menu
 ##########################################################
 ##########################################################
 
-# Chapter Developer Tests
-# *TESTS
-# 
 # Test Menu
-class obj_scene_tests:
+class obj_scene_tests(page.obj_pagetemplate):
     def __init__(self,creator):
-        self.creator=creator# created by scenemanager
-        self.setup()
+        super().__init__(creator)
     def setup(self):
-        self.list=[]# list of modules
-        self.loadtests()
         self.nrow=17# number of rows one column
-        # sprite background
-        self.background=utils.obj_sprite_background()
-        self.background.setcolor(share.colors.background)
+        self.list=[]# list of tests
+        self.loadtests()
+        self.addpart(draw.obj_textbox('-- Appendix -- Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
+        for i,test in enumerate(self.list[:self.nrow-1]):
+            self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
+        for i,test in enumerate(self.list[self.nrow-1:]):
+            self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))            
+        self.sprite_pointer=draw.obj_textbox('---',(640,360),fontsize='smaller')# moved around
+        self.addpart(self.sprite_pointer)
+    def selecttest(self,controls):
+        if (controls.s and controls.sc) or (controls.down and controls.downc): 
+            share.itest += 1
+            if share.itest == self.listlen: share.itest=0
+        if (controls.w and controls.wc) or (controls.up and controls.upc): 
+            share.itest -= 1
+            if share.itest == -1: share.itest=self.listlen-1
+        if controls.tab  and controls.tabc: self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
+        if (controls.enter and controls.enterc): 
+            self.creator.scene=self.list[share.itest]
+            self.creator.scene.__init__(self.creator)# reset scene                 
+    def page(self,controls):
+        if share.itest<self.nrow-1:
+            self.sprite_pointer.movetox(60)
+            self.sprite_pointer.movetoy(130+share.itest*30)
+        else:
+            self.sprite_pointer.movetox(460)
+            self.sprite_pointer.movetoy(130+(share.itest-self.nrow+1)*30)
+        self.selecttest(controls)
+        if controls.esc and controls.escc: self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
     def loadtests(self):# load all tests 
-        #####
-        # ADD ALL TESTS FROM THIS MODULE HERE
         # message
         self.list.append(obj_scene_testmessage(self.creator))       
         self.list.append(obj_scene_testdevnotes(self.creator))
@@ -64,46 +82,10 @@ class obj_scene_tests:
         # world and actors tests
         self.list.append(obj_scene_testworld(self.creator))
         self.list.append(obj_scene_testworldgrandactor(self.creator))
-        self.list.append(obj_scene_testrigidbody(self.creator))
-        
+        self.list.append(obj_scene_testrigidbody(self.creator))        
         # quickdraft 
         self.list.append(obj_scene_testdraftanimation(self.creator))        
-        #####
         self.listlen=len(self.list)
-    def selecttest(self,controls):
-        if (controls.s and controls.sc) or (controls.down and controls.downc): 
-            # share.itest=min(share.itest+1,self.listlen-1)
-            share.itest += 1
-            if share.itest == self.listlen: share.itest=0
-        if (controls.w and controls.wc) or (controls.up and controls.upc): 
-            # share.itest=max(share.itest-1,0)
-            share.itest -= 1
-            if share.itest == -1: share.itest=self.listlen-1
-        if controls.tab  and controls.tabc: 
-            # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
-            self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
-        if (controls.enter and controls.enterc): 
-            self.creator.scene=self.list[share.itest]
-            self.creator.scene.__init__(self.creator)# reset scene
-                 
-    def update(self,controls):
-        self.background.display()
-        share.screen.drawsurf(share.fonts.font('medium').render('-- Appendix -- Developer Tests: [Enter] to Read, [Tab] to Exit.',True,(0,0,0)),(50,30))
-        
-        if share.itest<self.nrow-1:
-            share.screen.drawsurf(share.fonts.font('smaller').render('---',True,(0,0,0)),(60,130+share.itest*30))
-        else:
-            share.screen.drawsurf(share.fonts.font('smaller').render('---',True,(0,0,0)),(460,130+(share.itest-self.nrow+1)*30))
-        #
-        for i,test in enumerate(self.list[:self.nrow-1]):
-            share.screen.drawsurf(share.fonts.font('smaller').render(test.name,True,(0,0,0)),(100,130+i*30))
-        for i,test in enumerate(self.list[self.nrow-1:]):
-            share.screen.drawsurf(share.fonts.font('smaller').render(test.name,True,(0,0,0)),(500,130+i*30))
-        self.selecttest(controls)
-        # Quit Game with Esc
-        if controls.esc and controls.escc: 
-            # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager) 
-            self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
 
 
 # Template for test page = page with slightly modified functionalities
