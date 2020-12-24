@@ -66,7 +66,7 @@ class obj_scene_ch2p2(page.obj_page):
                    'looked like this from the outside. ',\
                    ]
         drawing=draw.obj_drawing('house',(640,400),legend='House from outside')
-        drawing.brush=share.brushes.smallpen# draw with smaller pen
+        drawing.brush.makebrush(share.brushes.smallpen)# draw with smaller pen
         self.addpart( drawing )
         self.addpart( draw.obj_image('door_closed',(640,500),scale=0.25) )
         self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(240,500+40),scale=0.25) )
@@ -120,7 +120,7 @@ class obj_scene_ch2p4(page.obj_page):
         self.drawlist.append(draw.obj_drawing('wall_south',(640,720-50)))
         self.drawlist.append(draw.obj_drawing('wall_north',(640,50)))
         for i in self.drawlist: 
-            i.brush=share.brushes.smallpen
+            i.brush.makebrush(share.brushes.smallpen)
             self.addpart( i )               
         self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(240,560-60+40),scale=0.25) )
         self.addpart( draw.obj_animation('herohead_lookaround','herohead',(240,560-60),scale=0.25) )

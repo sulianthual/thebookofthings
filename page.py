@@ -87,17 +87,12 @@ class obj_fonts:
 
 
 # Brushes used for drawing
-# $ a=share.brushes.pen
 class obj_brushes:
     def __init__(self):        
-        self.pen=self.makebrush('data/pen.png',(8,8))
-        self.smallpen=self.makebrush('data/pen.png',(4,4))
-        self.tinypen=self.makebrush('data/pen.png',(2,2))
-    def makebrush(self,image,size):
-        img=pyg.loadsurface(image)
-        img=pyg.scalesurface(img,size)
-        # img.set_colorkey(share.colors.colorkey)# (optional) set unique transparent color
-        return img
+        self.pen=('data/pen.png',(8,8))
+        self.smallpen=('data/pen.png',(4,4))
+        self.tinypen=('data/pen.png',(2,2))
+
     
     
 ####################################################################################################################

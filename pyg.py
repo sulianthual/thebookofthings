@@ -74,7 +74,8 @@ def fillsurface(surface,color):
     return surface.fill(color)
 
 def blitsurface(surface,blitsurface,xy):
-    return surface.blit(blitsurface,xy)
+    termx,termy=xy
+    return surface.blit( blitsurface,(int(termx),int(termy)) )
 
 # flip a pygame surface object (returns modified surface object)
 # $ a=flipsurface(surface,True,False)
@@ -176,6 +177,7 @@ class obj_controls:
         self.e=False
         self.r=False
         self.f=False
+        self.g=False
         # booleans to detect if change on frame
         self.mouse1c=False# changed or not
         self.mouse2c=False        
@@ -200,7 +202,8 @@ class obj_controls:
         self.qc=False
         self.ec=False
         self.rc=False
-        self.fc=False 
+        self.fc=False
+        self.gc=False
     def edittext(self,text):# edit existing text with keyboard inputs
         for event in self.events:
             if event.type==pygame.KEYDOWN:
@@ -268,6 +271,7 @@ class obj_controls:
         self.ec=False
         self.rc=False
         self.fc=False
+        self.gc=False
         for event in self.events:
             if event.type==pygame.KEYDOWN:                 
                 if event.key==pygame.K_ESCAPE: 
@@ -306,6 +310,8 @@ class obj_controls:
                     self.r, self.rc = True, True
                 elif event.key==pygame.K_f: 
                     self.f, self.fc = True, True
+                elif event.key==pygame.K_g: 
+                    self.g, self.gc = True, True
             elif event.type==pygame.KEYUP:
                 if event.key==pygame.K_ESCAPE: 
                     self.esc, self.escc = False, True
@@ -343,7 +349,8 @@ class obj_controls:
                     self.r, self.rc = False, True
                 elif event.key==pygame.K_f: 
                     self.f, self.fc = False, True
-                        
+                elif event.key==pygame.K_g: 
+                    self.g, self.gc = False, True
     def getquit(self):
         for event in self.events:
             if event.type==pygame.QUIT:

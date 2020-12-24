@@ -20,6 +20,7 @@ import os
 from math import cos as math_cos
 from math import sin as math_sin
 from math import atan2 as math_atan2
+from math import pi as math_pi
 #
 import share
 import pyg
@@ -47,6 +48,9 @@ class obj_display:
     def update(self):
         pyg.display_update()# (could also update only rects, less costly but need to keep track)
 
+
+####################################################################################################################
+
 # Screen Manager (draws on it)
 class obj_screen:
     def __init__(self):
@@ -55,7 +59,7 @@ class obj_screen:
         self.screen.set_alpha(value)
     def fillsurf(self,value):
         self.screen.fill(value)
-    def drawsurf(self,surface,xy):
+    def drawsurf(self,surface,xy):# xy is not the center!!!!
         self.screen.blit(surface,xy)
     def drawrect(self,color,rect,thickness=3,fill=False):
         pyg.rectdisplay(self.screen,color,rect,thickness=thickness,fill=fill)
@@ -64,6 +68,164 @@ class obj_screen:
     def drawline(self,color,xy1,xy2,thickness=3):
         pyg.linedisplay(self.screen,color,xy1,xy2,thickness=thickness)
 
+
+
+
+
+# Game Sprite: manages any 2d surface to be rendered on screen
+#              any image but also text, line, cross, rectangle (all treated as surfaces)
+# Sprite doesnt have a position x,y!!!!! (that is managed elsewhere)
+#$ sprite=obj_sprite()
+#$ sprite.load('test.png')
+#$ sprite.flip(True,False)
+# sprite.display()# display on screen
+class obj_sprite:
+    def __init__(self):
+        self.type='sprite'
+        self.spritetype=None#image,text,etc...        
+
+# line sprite
+class obj_sprite_line(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.surf=None
+    def make(self):
+        pass
+    def display(self,color,xy1,xy2):
+        share.screen.drawline(color,xy1,xy2)
+
+# line sequence sprite (from list of points)
+class obj_sprite_linesequence(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.surf=None
+    def make(self):
+        pass
+    def display(self,color,xylist):#xylist=[xy1,xy2,...]
+        if xylist and len(xylist)>1:
+            for i,j in zip( range(0,len(xylist)-2) , range(1,len(xylist)-1) ):
+                xy1,xy2=xylist[i],xylist[j]
+                share.screen.drawline(color,xy1,xy2)
+        
+# cross sprite
+class obj_sprite_cross(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.surf=None
+    def make(self):
+        pass
+    def display(self,color,xy,radius,diagonal=False):
+        share.screen.drawcross(color,xy,radius,diagonal=diagonal)
+        
+        
+# rectangle sprite
+class obj_sprite_rect(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.surf=None
+    def make(self):
+        pass
+    def display(self,color,rect):
+        share.screen.drawrect(color,rect)      
+
+        
+class obj_sprite_image(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.spritetype='image'       
+        self.surf=None# associated pygame surface
+        self.rx=None# half-width
+        self.ry=None# half-heigth
+        self.colorkey=share.colors.colorkey# transparent color
+    def makefrompygamesurface(self,pygamesurface):# Should be unecessary eventually once every surface is made an obj_sprite
+        self.surf=pygamesurface
+        self.addtransparency()
+    def make(self):# create empty
+        pass
+    def makeempty(self,rx,ry):
+        self.surf=pyg.newsurface((2*rx,2*ry))
+        self.addtransparency()
+        self.fill(self.colorkey)
+    def load(self,path,convert=True,failsafe=True):
+        if os.path.exists(path):
+            self.surf=pyg.loadsurface(path,convert=convert)
+            self.addtransparency()
+            self.rx,self.ry=self.getrxry()
+        elif failsafe:
+            self.surf=pyg.loadsurface('data/error.png',convert=convert)
+            self.addtransparency()
+            self.rx,self.ry=self.getrxry()
+        else:
+            self.surf,self.rx,self.ry=None,None,None
+    def save(self,name):
+        pyg.savesurface(self.surf,name)
+    def addtransparency(self):
+        self.surf.set_colorkey(self.colorkey)
+    def getrx(self):
+        return self.surf.get_rect().size[0]/2
+    def getry(self):
+        return self.surf.get_rect().size[1]/2
+    def getrxry(self):
+        term=self.surf.get_rect().size
+        return (term[0]/2,term[1]/2)
+    def blitfrom(self,sprite_source,xoffset,yoffset): # blit from OTHER sprite_image object
+        self.surf.blit(sprite_source.surf,(xoffset,yoffset))
+    def copyfrom(self,sprite_source):# not really a copy but a link?
+        self.surf=sprite_source.surf
+    def fill(self,color):
+        self.surf.fill(color)
+    def flip(self,fliph,flipv):
+        if fliph or flipv:
+            self.surf=pyg.flipsurface(self.surf,fliph,flipv)
+    def scale(self,scaling,target=False):# scaling factor or target size
+        if not target:            
+            if scaling !=1: 
+                termx=self.getrx()*2*scaling
+                termy=self.getry()*2*scaling
+                self.surf=pyg.scalesurface(self.surf,(termx,termy))
+                self.rx,self.ry=self.getrxry()
+        else:
+                self.surf=pyg.scalesurface(self.surf,scaling)
+                self.rx,self.ry=self.getrxry()            
+    def rotate(self,angle):# returns position offset from rotation
+        if angle !=0:
+            xold,yold=self.surf.get_rect().center
+            self.surf=pyg.rotatesurface(self.surf,angle)
+            xnew,ynew=self.surf.get_rect().center
+            self.rx,self.ry=self.getrxry()
+            return xold-xnew,yold-ynew
+        else:
+            return 0,0
+    def rotate90(self,angle):#rotate by closest increment
+        angle= int(round(angle%360/90,0)*90)# (in 0,90,180,270)
+        if angle !=0:
+            self.surf=pyg.rotatesurface(self.surf,angle)
+            self.rx,self.ry=self.getrxry()
+    def display(self,x,y):# xy=(x,y) center of display
+        xd,yd=x-self.getrx(),y-self.getry()# recompute        
+        # xd,yd=x-self.rx,y-self.ry# no need to recompute if always up-to-date
+        share.screen.drawsurf(self.surf,(int(xd),int(yd)))
+        
+        
+# brush used for drawing
+class obj_sprite_brush(obj_sprite_image):
+    def __init__(self):  
+        super().__init__()
+    def makebrush(self,pen):
+        self.load(pen[0])
+        self.scale(pen[1],target=True)
+    
+    
+# text=like an image but with prerender
+class obj_sprite_text(obj_sprite_image):          
+    def __init__(self):
+        super().__init__()
+        self.spritetype='text'
+    def make(self,text,font,color,bold=False):
+        self.surf=font.render(text,bold,color)
+        self.rx,self.ry=self.getrxry()
+
+####################################################################################################################
 
 # Scene Manager
 # Creates/Deletes and switches between levels
@@ -101,9 +263,6 @@ class obj_clock:
     def update(self):
         pyg.clocktick(self.clock,self.targetfps)
 
-        
-        
-####################################################################################################################
 
 
 # Game Window icon
@@ -183,6 +342,8 @@ def pathexists(path):
 
 
 # links to module math
+def pi():
+    return math_pi
 def cos(x):
     return math_cos(x)
 def sin(x):

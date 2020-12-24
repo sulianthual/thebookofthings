@@ -11,21 +11,23 @@
 ##########################################################
 ##########################################################
 
-import pyg
 import share
 
 ##########################################################
 # Game Loop
+# ttterm1=21
 
 def main():
+
     while True:
         share.clock.update()
         share.display.update()
         share.controls.update()
         share.scenemanager.update(share.controls)# (everything happens here)
 
-if __name__ == '__main__': main() 
-       
+
+if __name__ == '__main__': main()#tesresr
+
 ##########################################################
 ##########################################################
 ##########################################################

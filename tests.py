@@ -163,7 +163,7 @@ class obj_scene_testdevnotes(obj_testpage):
 
 class obj_scene_testdevmodeinfo(obj_testpage):
     def setup(self):
-        self.name='Developper Mode'       
+        self.name='Devmode'       
         self.text=['Developper Mode (devmode): ',\
                    'Toggle devmode with [CTRL]. ',\
                    'While in devmode additional information is displayed on screen, like centers and edges. ',\
@@ -310,7 +310,7 @@ class obj_scene_testdrawing(obj_testpage):
                    'It is saved in folder ./drawings. ',\
                    'If replacing the shadow erase the drawing as well (or new drawing may glitch). ',\
                    ]
-        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me',borders=(True,False,True,True)) )
+        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me') )
 
 
 # Scene: test several drawings at the same time
@@ -388,13 +388,12 @@ class obj_scene_testanimationanimation(obj_testpage):
                    'But if animation is alongside drawing it should not be editable. ',\
                    'If two animations are alongside only one should be editable. ',\
                    'To ensure both animations have same duration: ',\
-                   'set max duration (ntmax=nt) and record for max duration ',\
+                   'set sequence maxlength to length of other, and record for that duration. ',\
                    '(then return to this page to see both animations in sync). ',\
-                   'Can also set tstart=animation start offset in code',\
                    ]
         animation1=draw.obj_animation('testanimation1','testimage1',(340,360))# cannot edit
         animation2=draw.obj_animation('testanimation2','testimage2',(940,360),record=True)# can edit
-        animation2.ntmax=animation1.nt# set same length
+        animation2.sequence.maxlength=animation1.sequence.length# set same length
         self.addpart(animation1)
         self.addpart(animation2)
 
@@ -404,11 +403,11 @@ class obj_scene_testanimationplayback(obj_testpage):
     def setup(self):
         self.name='Animation Playback'       
         self.text=['Animation Playback: ',\
-                   'During playback, animation accepts permanent changes: move,flip, scale, rotate90. ',\
-                   'rotate() is not implemented (cf enlargen-memory issues). ',\
+                   'During playback, animation accepts permanent changes: move,flip, scale, rotate90,rotate. ',\
+                   'use rotate sparingly (enlargens leading to potential memory issues). ',\
                    'Always record animation WITHOUT any permanent changes. ',\
-                   'Test permanent changes here: [Arrows] Move, [w,s] scale, [a,d] rotate90, [q,e] flip. ',\
-                   'The permanent changes modify animation movements too (with almost no errors)',\
+                   'Test permanent changes here: [Arrows] Move, [w,s] scale, [a,d] rotate90, [f,g] rotate45, [q,e] flip. ',\
+                   'The permanent changes modify animation movements too',\
                    ]
         self.animation=draw.obj_animation('testanimation1','testimage1',(640,360))                    
         self.dx,self.dy=5,5
@@ -422,9 +421,13 @@ class obj_scene_testanimationplayback(obj_testpage):
         if controls.q and controls.qc: self.animation.flipv()# tests        
         if controls.a and controls.ac: self.animation.rotate90(90)
         if controls.d and controls.dc: self.animation.rotate90(-90)
+        if controls.f and controls.fc: self.animation.rotate(45)
+        if controls.g and controls.gc: self.animation.rotate(-45)
         if controls.w and controls.wc: self.animation.scale(2)
         if controls.s and controls.sc: self.animation.scale(0.5)
         if controls.space and controls.spacec: self.animation.setup()
+        #
+
             
 
 # Scene: test animation group move
@@ -435,8 +438,8 @@ class obj_scene_testdispgroup(obj_testpage):
                    'accepted elements are: textbox, image, animation. ',\
                    'Test here applying permanent changes to the dispgroup: [arrow keys] to move. ',\
                    '[q] and [e] to flip. [w] and [s] to 2x scale (dont repeat, it degrades images). ',\
-                   '[a] and [d] for rotate90. Reset this page with [space]. ',\
-                   'rotate() is not implemented for dispgroup. ',\
+                   '[a] and [d] for rotate90. [f] [g] to rotate 45 (dont repeat, it enlargens images).',\
+                   ' Reset this page with [space]. ',\
                    ]
         self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup.addpart( "key_element1", draw.obj_image('testimage1',(440,360)) )# add image
@@ -454,6 +457,8 @@ class obj_scene_testdispgroup(obj_testpage):
         if controls.s and controls.sc: self.dispgroup.scale(0.5)
         if controls.a and controls.ac: self.dispgroup.rotate90(90)
         if controls.d and controls.dc: self.dispgroup.rotate90(-90)
+        if controls.f and controls.fc: self.dispgroup.rotate(45)
+        if controls.g and controls.gc: self.dispgroup.rotate(-45)
         if controls.e and controls.ec: self.dispgroup.fliph()
         if controls.q and controls.qc: self.dispgroup.flipv()
         if controls.space  and controls.space: self.setup()
