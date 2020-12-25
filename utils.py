@@ -34,7 +34,6 @@ import pyg
 class obj_display:
     def __init__(self):
         self.setup()# initial setup (can be repeated on settings changes)
-        #    
     def setup(self):
         share.screen.screen=pyg.newdisplay(1280,720)# initialize screen (?)
         share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
@@ -42,17 +41,48 @@ class obj_display:
         pyg.mouse_set_visible(True)# show mouse
     def seticon(self,image):# set window icon
         pyg.display_set_icon(image)
-    def reset(self):# reset display with new values 
+    def reset(self):# reset display with new values
         pyg.display_quit()
         self.setup()
         #
     def update(self):
-        pyg.display_update()# (could also update only rects, less costly but need to keep track)
+        pyg.display_update()# (could also update only rects with dirty sprites system)
 
 
-####################################################################################################################
+# Scene Manager
+# Creates/Deletes and switches between levels
+class obj_scenemanager:
+    def __init__(self):
+        self.scene=None# current scene being played (must initialize object externally)
+    def update(self,controls):
+        self.scene.update(controls)# Update current scene
+        if controls.quit: share.quitgame()# Quit game (close window)
+        if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
+        if share.devmode and controls.mouse3 and controls.mouse3c:
+            print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
 
-# Screen Manager (draws on it)
+
+# Quit Game Procedure
+class obj_quit:
+     def __init__(self):
+         pass
+     def __call__(self):
+         pyg.shutdown()
+         sys.exit()
+
+
+# Game Clock (delays game update to given fps)
+class obj_clock:
+    def __init__(self):
+        self.clock=pyg.newclock()
+        self.targetfps=share.fps
+    def getfps(self):
+        return pyg.getclockfps(self.clock)
+    def update(self):
+        pyg.clocktick(self.clock,self.targetfps)
+
+
+# Game Screen (sprites draw on it)
 class obj_screen:
     def __init__(self):
         self.screen=None
@@ -70,16 +100,12 @@ class obj_screen:
         pyg.linedisplay(self.screen,color,xy1,xy2,thickness=thickness)
 
 
+####################################################################################################################
+# Sprites (basis for any on-screen display)
 
 
-
-# Game Sprite: manages any 2d surface to be rendered on screen
-#              any image but also text, line, cross, rectangle (all treated as surfaces)
-# Sprite doesnt have a position x,y!!!!! (that is managed elsewhere)
-#$ sprite=obj_sprite()
-#$ sprite.load('test.png')
-#$ sprite.flip(True,False)
-# sprite.display()# display on screen
+# Sprite Template:
+# sprites dont have an on-screen position xy (position is determined elsewhere)
 class obj_sprite:
     def __init__(self):
         self.type='sprite'
@@ -98,13 +124,13 @@ class obj_sprite_background(obj_sprite):
         self.color=color
     def display(self):
         share.screen.fillsurf(self.color)
-        
+
 
 # line sprite
 class obj_sprite_line(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.spritetype='line' 
+        self.spritetype='line'
     def make(self):
         pass
     def display(self,color,xy1,xy2):
@@ -115,7 +141,7 @@ class obj_sprite_line(obj_sprite):
 class obj_sprite_linesequence(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.spritetype='lineseq' 
+        self.spritetype='lineseq'
     def make(self):
         pass
     def display(self,color,xylist):#xylist=[xy1,xy2,...]
@@ -124,33 +150,42 @@ class obj_sprite_linesequence(obj_sprite):
                 xy1,xy2=xylist[i],xylist[j]
                 share.screen.drawline(color,xy1,xy2)
 
-        
+
 # cross sprite
 class obj_sprite_cross(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.spritetype='cross' 
+        self.spritetype='cross'
     def make(self):
         pass
     def display(self,color,xy,radius,thickness=3,diagonal=False):
         share.screen.drawcross(color,xy,radius,thickness=thickness,diagonal=diagonal)
 
-                
+
 # rectangle sprite
 class obj_sprite_rect(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.spritetype='rect'     
+        self.spritetype='rect'
     def make(self):
         pass
     def display(self,color,rect):
-        share.screen.drawrect(color,rect)      
+        share.screen.drawrect(color,rect)
 
-        
+# font sprite (doesnt display directly but returns rendered sprite)
+class obj_sprite_font:
+    def __init__(self,name,size):
+        self.font=pyg.newfont(name,size)# pygame font
+    def render(self,text,bold,color):
+        return self.font.render(text,bold,color)
+    def size(self,text):
+        return self.font.size(text)
+    
+# image sprite
 class obj_sprite_image(obj_sprite):
     def __init__(self):
         super().__init__()
-        self.spritetype='image'       
+        self.spritetype='image'
         self.surf=None# associated pygame surface
         self.rx=None# half-width
         self.ry=None# half-heigth
@@ -196,15 +231,15 @@ class obj_sprite_image(obj_sprite):
         if fliph or flipv:
             self.surf=pyg.flipsurface(self.surf,fliph,flipv)
     def scale(self,scaling,target=False):# scaling factor or target size
-        if not target:            
-            if scaling !=1: 
+        if not target:
+            if scaling !=1:
                 termx=self.getrx()*2*scaling
                 termy=self.getry()*2*scaling
                 self.surf=pyg.scalesurface(self.surf,(termx,termy))
                 self.rx,self.ry=self.getrxry()
         else:
                 self.surf=pyg.scalesurface(self.surf,scaling)
-                self.rx,self.ry=self.getrxry()            
+                self.rx,self.ry=self.getrxry()
     def rotate(self,angle):# returns position offset from rotation
         if angle !=0:
             xold,yold=self.surf.get_rect().center
@@ -220,23 +255,13 @@ class obj_sprite_image(obj_sprite):
             self.surf=pyg.rotatesurface(self.surf,angle)
             self.rx,self.ry=self.getrxry()
     def display(self,x,y):# xy=(x,y) center of display
-        xd,yd=x-self.getrx(),y-self.getry()# recompute        
+        xd,yd=x-self.getrx(),y-self.getry()# recompute
         # xd,yd=x-self.rx,y-self.ry# no need to recompute if always up-to-date
         share.screen.drawsurf(self.surf,(int(xd),int(yd)))
-        
-        
-# brush used for drawing
-class obj_sprite_brush(obj_sprite_image):
-    def __init__(self):  
-        super().__init__()
-        self.spritetype='brush'     
-    def makebrush(self,pen):
-        self.load(pen[0])
-        self.scale(pen[1],target=True)
-    
-    
+
+
 # text=like an image but with prerender
-class obj_sprite_text(obj_sprite_image):          
+class obj_sprite_text(obj_sprite_image):
     def __init__(self):
         super().__init__()
         self.spritetype='text'
@@ -244,50 +269,17 @@ class obj_sprite_text(obj_sprite_image):
         self.surf=font.render(text,bold,color)
         self.rx,self.ry=self.getrxry()
 
-####################################################################################################################
-
-# Single Font
-class obj_font:
-    def __init__(self,name,size):
-        self.font=pyg.newfont(name,size)
-
-
-####################################################################################################################
-
-# Scene Manager
-# Creates/Deletes and switches between levels
-class obj_scenemanager:
+# brush used for drawing
+class obj_sprite_brush(obj_sprite_image):
     def __init__(self):
-        self.scene=[]# current scene being played (must initialize object externally)
-        self.page=0# current story page
-    def update(self,controls):
-        self.scene.update(controls)# Update current scene
-        if controls.quit: share.quitgame()# Quit game (close window)
-        if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
-        if share.devmode and controls.mouse3 and controls.mouse3c: 
-            print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
-        
+        super().__init__()
+        self.spritetype='brush'
+    def makebrush(self,pen):
+        self.load(pen[0])
+        self.scale(pen[1],target=True)
 
-# Quit Game Procedure
-class obj_quit:
-     def __init__(self):
-         pass
-     def __call__(self):
-         pyg.shutdown()
-         sys.exit()
-
-
-# Game Clock (delays game update to given fps)
-class obj_clock:
-    def __init__(self):
-        self.clock=pyg.newclock()
-        self.targetfps=share.fps
-    def getfps(self):
-        return pyg.getclockfps(self.clock)
-    def update(self):
-        pyg.clocktick(self.clock,self.targetfps)
-
-
+####################################################################################################################
+# Other game core elements
 
 # Game Window icon
 class obj_windowicon:
@@ -301,15 +293,15 @@ class obj_windowicon:
             img=pyg.loadsurface('book/book.png')
             img=pyg.scalesurface(img,(36,42))
             pyg.savesurface(img, 'book/bookicon.png')
-    def seticon(self):          
+    def seticon(self):
         if os.path.exists('book/bookicon.png'):
             img=pyg.loadsurface('book/bookicon.png')
         else:
             img=pyg.loadsurface('data/booknoicon.png')
         img.set_colorkey((255,255,255))# white
         share.display.seticon(img)
-        
-        
+
+
 # Handle data (save.txt and drawings)
 class obj_savefile:
     def __init__(self):
@@ -317,7 +309,7 @@ class obj_savefile:
         self.chapter=0# current chapter
         self.load()
     def load(self):# load savefile (or set default parameters if doesnt exist)
-        if os.path.exists('book/save.txt'): 
+        if os.path.exists('book/save.txt'):
             f1=open(self.filename,'r+')
             line=f1.readline()# chapter
             line=line.split(",")
@@ -347,11 +339,11 @@ class obj_savewords:
                 f1.write(str(i[0])+'\n')#key
                 f1.write(str(i[1])+'\n')#value
     def load(self):# load keywords from file
-        if os.path.exists(self.filename): 
+        if os.path.exists(self.filename):
             with open(self.filename,'r') as f1:
                 matrix=f1.read().splitlines()
                 for i in range(int(len(matrix)/2)):# read alternated key,value on lines
-                    self.dict[matrix[i*2]]=matrix[i*2+1]                
+                    self.dict[matrix[i*2]]=matrix[i*2+1]
     def eraseall(self):
         self.dict={}
         self.save()# write empty dictionary
@@ -396,11 +388,11 @@ def isinrect(x,y,rect):
 def checkdotscollide(a,b,r):
     return (a.x-b.x)**2+(a.y-b.y)**2<r**2
 
-# check if two actors a,b (with attributes x,y,rd) are colliding 
+# check if two actors a,b (with attributes x,y,rd) are colliding
 def checkcirclecollide(a,b):
     return (a.x-b.x)**2+(a.y-b.y)**2<(a.rd+b.rd)**2
 
-# check if two actors a,b (with attributes x,y,rx,ry) are colliding 
+# check if two actors a,b (with attributes x,y,rx,ry) are colliding
 def checkrectcollide(a,b):
     return abs(a.x-b.x)<a.rx+b.rx and abs(a.y-b.y)<a.ry+b.ry
 
@@ -423,7 +415,7 @@ class obj_timer:
         self.t=int(self.amount)
     def run(self):# run timer (without restarting)
         if not self.on: self.start()
-    def update(self):# update timer 
+    def update(self):# update timer
         if self.on:
             self.t -= 1
             if self.t <0:
@@ -433,7 +425,6 @@ class obj_timer:
             self.ring=False
             self.off=True
             if self.cycle: self.start()# restart if cycled
-                
-        
-####################################################################################################################
 
+
+####################################################################################################################

@@ -24,8 +24,8 @@ import menu
 ##########################################################
 # Global variables 
 #
-fps =60 # (keep at 60 because game is fps based)
-devmode = True # developer mode on (toggle False at game release)
+fps=60 # (keep at 60 because game is fps based)
+devmode=False # developer mode toggle
 
 itest=0# index of current text in test menu
 ipage=1# current page within a chapter
@@ -35,28 +35,24 @@ ipage=1# current page within a chapter
 
 # Game Core
 pyg.initialize()# game engine (pygrame)
-screen=utils.obj_screen()# drawing screen
 clock=utils.obj_clock()# game clock 
+screen=utils.obj_screen()# drawing screen
 display=utils.obj_display()# window display (pygame.display.update)
-windowicon=utils.obj_windowicon()# window icon
 controls=pyg.obj_controls()# mouse/keyboard controls
+windowicon=utils.obj_windowicon()# window icon
 #
-# Book page elements
+# Databases
 fonts=page.obj_fonts()# text fonts 
 colors=page.obj_colors()# dictionary of colors
 brushes=page.obj_brushes()# brushes used for drawing
-pagenumberdisplay=page.obj_pagenumberdisplay()# page number display object
-pagenotedisplay=page.obj_pagenotedisplay()# page note display object
-fpsdisplay=page.obj_fpsdisplay()# fps display function
-textdisplay=page.obj_textdisplay()# main body of text
 #
 # Utilities
 words=utils.obj_savewords()# save/load data (words)
-savefile=utils.obj_savefile()# save/load data
+savefile=utils.obj_savefile()# save/load data 
 quitgame=utils.obj_quit()# function quit game
-scenemanager=utils.obj_scenemanager()# game scene manager (switch scenes+quit...) 
 #
-# Game menu (as starting scene)
+# Scenes
+scenemanager=utils.obj_scenemanager()# game scene manager (switch scenes+quit...) 
 titlescreen=menu.obj_scene_titlescreen(scenemanager)
 scenemanager.scene=titlescreen# set starting scene
 

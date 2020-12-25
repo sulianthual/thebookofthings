@@ -27,7 +27,7 @@ import ch2
 ##########################################################
 
 # Main Menu
-class obj_scene_titlescreen(page.obj_pagetemplate):
+class obj_scene_titlescreen(page.obj_page):
     def __init__(self,creator):
         super().__init__(creator)
     def presetup(self):
@@ -58,14 +58,13 @@ class obj_scene_titlescreen(page.obj_pagetemplate):
         self.addpart(self.sprite_book)
         self.addpart(self.sprite_eraser)
         # devtools
-        self.addpart(draw.obj_textbox('Toggle Dev Mode: (Press Ctrl)',(130,700),fontsize='smaller'))
-        self.addpart(draw.obj_textbox('Appendix: Developer Tests (Press Space)',(1120,700),fontsize='smaller'))
+        self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
+        self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
 
     def setup(self):
         super().setup()
         self.ichapter=share.savefile.chapter# current chapter
-        share.ipage=1# current page number
-        
+        share.ipage=1# current page number        
         # update menu (chapter dependent)
         self.sprite_author.show=self.ichapter>0
         self.sprite_pointer.show=self.ichapter>0
@@ -83,7 +82,7 @@ class obj_scene_titlescreen(page.obj_pagetemplate):
         self.sprite_book.show=self.ichapter>0
         self.sprite_pen.show=self.ichapter>0
         self.sprite_eraser.show=self.ichapter>0
-        #
+        
     def selectchapter(self,controls):
         self.sprite_pointer.movetoy(410+self.ichapter*30)
         self.sprite_pen.movetoy(360+self.ichapter*30)
@@ -100,10 +99,11 @@ class obj_scene_titlescreen(page.obj_pagetemplate):
                 elif self.ichapter==1:
                     self.creator.scene=ch1.obj_scene_chapter1(self.creator)
                 elif self.ichapter==2:
-                    self.creator.scene=ch2.obj_scene_chapter2(self.creator)          
+                    self.creator.scene=ch2.obj_scene_chapter2(self.creator)     
+                    
     def page(self,controls):
         self.selectchapter(controls)      
-        if share.devmode and controls.space and controls.spacec: self.creator.scene=tests.obj_scene_tests(self.creator)  
+        if controls.space and controls.spacec: self.creator.scene=tests.obj_scene_testmenu(self.creator)  
         if controls.esc and controls.escc: share.quitgame()
             
 

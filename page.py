@@ -16,9 +16,9 @@ import utils
 
 ##########################################################
 ##########################################################       
-# Libraries
+# Databases
 
-# Colors (dictionary of RGB)
+# colors database (RGB)
 class obj_colors:
     def __init__(self):
         # base colors
@@ -30,14 +30,12 @@ class obj_colors:
         self.gray=(150,150,150)
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
-        #
         # Colors devmode
         self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
         self.devanimation=(0,220,0)# green
         self.devdispgroup=(128,0,128)# purple
         self.devactor=(0,0,220)# blue (hitbox)
-        #
         # Colors game elements
         self.colorkey=self.white# transparent color (all sprites except background)
         self.background=self.white# game background
@@ -54,56 +52,53 @@ class obj_colors:
         self.house=self.red# hero house
 
 
-# Fonts
-# $ a=share.fonts.font50# direct access
-# $ a=share.fonts.font('medium')# by keyword
+# fonts database
 class obj_fonts:
     def __init__(self):
-         self.font15=utils.obj_font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
-         self.font30=utils.obj_font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
-         self.font40=utils.obj_font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
-         self.font50=utils.obj_font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
-         self.font60=utils.obj_font('data/AmaticSC-Bold.ttf', 60)# large
-         self.font100=utils.obj_font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
-         self.font120=utils.obj_font('data/AmaticSC-Bold.ttf', 120)# huge
+         self.font15=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
+         self.font30=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
+         self.font40=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
+         self.font50=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
+         self.font60=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 60)# large
+         self.font100=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
+         self.font120=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 120)# huge
     def font(self,fontname):# call by key(string)
          if fontname=='tiny' or fontname==15:
-             return self.font15.font
+             return self.font15
          elif fontname=='smaller' or fontname==30:
-             return self.font30.font
+             return self.font30
          elif fontname=='small' or fontname==40:
-             return self.font40.font
+             return self.font40
          elif fontname=='medium' or fontname==50:
-             return self.font50.font
+             return self.font50
          elif fontname=='large' or fontname==60:
-             return self.font60.font
+             return self.font60
          elif fontname=='big' or fontname==100:
-             return self.font100.font
+             return self.font100
          elif fontname=='huge' or fontname==120:
-             return self.font120.font
+             return self.font120
          else:
-             return self.font50.font# medium font  
+             return self.font50# medium font  
 
 
-# Brushes used for drawing
+# brushes  database (used for drawing)
 class obj_brushes:
     def __init__(self):        
         self.pen=('data/pen.png',(8,8))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))
-
     
     
 ####################################################################################################################
 
 # Template for any game scene
-class obj_pagetemplate: # rename to obj_page later
+class obj_page: 
     def __init__(self,creator):
         self.creator=creator# created by scenemanager
         self.presetup()# 
         self.setup()
         self.postsetup()
-    def presetup(self):
+    def presetup(self):# background
         # background sprite
         self.background=utils.obj_sprite_background()
         self.background.setcolor(share.colors.background)  
@@ -112,8 +107,8 @@ class obj_pagetemplate: # rename to obj_page later
         self.to_finish=[]
     def setup(self):# page setup
         pass
-    def postsetup(self):
-        pass
+    def postsetup(self):# foreground
+        self.pagedisplay_fps=obj_pagedisplay_fps()
     def addpart(self,element):
         if element.type in ['drawing','textinput','textchoice','textbox','image','animation','dispgroup','world']:
             self.to_update.append(element)            
@@ -123,47 +118,53 @@ class obj_pagetemplate: # rename to obj_page later
         for i in [self.to_update,self.to_finish]:
             if element in i: i.remove(element)
     def update(self,controls):
-        self.prepage(controls)# background and elements
-        self.page(controls)# 
-        self.postpage(controls)# foreground
-    def prepage(self,controls):
+        self.prepage(controls)
+        self.page(controls) 
+        self.postpage(controls)
+    def prepage(self,controls):# background
         self.background.display()
         for i in self.to_update: i.update(controls)
     def page(self,controls):
         pass
-    def postpage(self,controls):
-        share.fpsdisplay()
+    def postpage(self,controls):# foreground
+        self.pagedisplay_fps.update()
     def preendpage(self):# before exiting page
         for i in self.to_finish: i.finish()     
 
 
 
 # chapter page template: a page in a chapter of the book
-class obj_page(obj_pagetemplate):  ### rename to obj_chapterpage later
+class obj_chapterpage(obj_page):  
     def __init__(self,creator):
         super().__init__(creator)
+    ###
     def presetup(self):
-        super().presetup()
-        # Main body of text
-        self.text=[]
+        super().presetup() 
+        self.text=[]# Main body of text
         self.textkeys={}
+    def setup(self):
+        super().setup()
     def postsetup(self):
         super().postsetup()
-        share.textdisplay(self.text,rebuild=True,**self.textkeys)# rebuild text to display
-        share.pagenumberdisplay(rebuild=True)
-        share.pagenotedisplay('[Tab: Back]  [Enter: Continue]',rebuild=True)
-    def prepage(self,controls):
+        self.pagenumber=obj_pagedisplay_number()
+        self.pagenote=obj_pagedisplay_note()
+        self.pagenote.make('[Tab: Back]  [Enter: Continue]')
+        self.pagetext=obj_pagedisplay_text()
+        self.pagetext.make(self.text,**self.textkeys)# rebuild main text
+    ###
+    def prepage(self,controls):# background
         super().prepage(controls)
         self.callprevpage(controls)
         self.callnextpage(controls)
         self.callexitpage(controls)
-    def page(self,controls):# page update
-        pass
-    def postpage(self,controls):
+    def page(self,controls):
+        super().page(controls)
+    def postpage(self,controls):# foreground
         super().postpage(controls)
-        share.textdisplay(self.text)
-        share.pagenumberdisplay()
-        share.pagenotedisplay('')
+        self.pagenumber.display()
+        self.pagenote.display()
+        self.pagetext.display()
+    ###
     def callprevpage(self,controls):
         if controls.tab and controls.tabc:
             self.preendpage()# template
@@ -183,6 +184,7 @@ class obj_page(obj_pagetemplate):  ### rename to obj_chapterpage later
             share.titlescreen.setup()
             self.creator.scene=share.titlescreen
             # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
+    ###
     def endpage(self):# when exit page 
         pass
     def prevpage(self):# actions to prev page (replace here)**
@@ -193,102 +195,98 @@ class obj_page(obj_pagetemplate):  ### rename to obj_chapterpage later
         share.titlescreen.setup()# refresh titlescreen content
         self.creator.scene=share.titlescreen# default back to menu
         # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
-        
-
-        
-        
+    
+    
 ####################################################################################################################
-# Page utilities
+# page display: game UI elements on a book page (usually in the foreground)
 
-
-# Page Number display
-class obj_pagenumberdisplay:
+# display fps
+class obj_pagedisplay_fps: 
     def __init__(self):
-        self.prerender=[]# prerender text
-        self.xy=(0,0)# position of text
-    def __call__(self,rebuild=False,fontsize='smaller',xy=(1190,680),bold=True,color=(0,0,0)):
-        if rebuild:
-            self.prerender=share.fonts.font(fontsize).render('Page '+str(share.ipage), bold, color)
-            self.xy=xy
-        else:
-            share.screen.drawsurf(self.prerender,self.xy)# fast display
+        self.sprite=utils.obj_sprite_text()
+        self.make()
+    def make(self):
+        text='FPS='+str(int(share.clock.getfps()))
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
+    def display(self):
+        self.sprite.display(50,20)
+    def update(self):
+        self.make()# rebuild sprite every update
+        self.display()
 
-
-# Page Note display (e.g. instructions)
-class obj_pagenotedisplay:
+ 
+# display page number        
+class obj_pagedisplay_number:
     def __init__(self):
-        self.prerender=[]# prerender text
-        self.xy=(0,0)# position of text
-    def __call__(self,text,xy=(1020,5),rebuild=False,fontsize='smaller',bold=True,color=(0,0,0)):
-        if rebuild:
-            self.prerender=share.fonts.font(fontsize).render(text,bold,color)
-            self.xy=xy
-        else:
-            share.screen.drawsurf(self.prerender,self.xy)# fast display        
+        self.sprite=utils.obj_sprite_text()
+        self.make()
+    def make(self):
+        text='Page '+str(share.ipage)
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))    
+    def display(self):
+        self.sprite.display(1190,680)
+    def update(self):
+        self.display()
 
-        
-# FPS display (could be a function)
-class obj_fpsdisplay: 
+# display recurrent page note        
+class obj_pagedisplay_note:
     def __init__(self):
-        pass
-    def __call__(self):
-        share.screen.drawsurf(share.fonts.font('smaller').render('FPS='+str(int(share.clock.getfps())), True, (0, 0, 0)), (30,5))
-        
-        
+        self.sprite=utils.obj_sprite_text()
+    def make(self,text):
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
+    def display(self):
+        self.sprite.display(1140,30)
+    def update(self):
+        self.display()
+
+
 # Main body of text on a story page
-class obj_textdisplay:
+class obj_pagedisplay_text:
     def __init__(self):
-        self.words_prerender=[]# list of word_surface and positions (pre-redendered)
-    def __call__(self,textmatrix,rebuild=False, pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):# call text display
-        # pos: starting xy of text, xmin/xmax: margins
-        # rebuild=True: renders the text entirely (expensive, use for first call with new text)
-        # rebuild=False: displays previous text surface (prefer for efficiency, skips font render)
-        if rebuild: # expensive rebuild
-            self.words_prerender=[]# reset prerender text
-            if textmatrix: # if not empty text
-                self.ipos=pos# text cursor position
-                for i in textmatrix:
-                    if type(i) is str:# either text=string
-                        text, color = i, (0,0,0)
-                    else:
-                        text, color = i# or tuple (text,color)
-                    text=self.formattext(text,**share.words.dict)# FORMAT with written words from book 
-                    self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)
-        else:
-            self.disptext()
-    # Format text using the words written in the book of things
-    def formattext(self,text,**kwargs):
+        self.words_prerender=[]# list of words (sprites and positions)        
+    def make(self,textmatrix,pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
+        self.words_prerender=[]       
+        if textmatrix: 
+            self.ipos=pos# text cursor position
+            for i in textmatrix:
+                if type(i) is str:
+                    text, color = i, (0,0,0)# input: text
+                else:
+                    text, color = i# input: (text,color)
+                text=self.formattext(text,**share.words.dict)
+                self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)    
+    def formattext(self,text,**kwargs):# Format text using the keywords written in the book of things (words.txt)
         try:
             text=text.format(**kwargs)
         except:
             pass
-        return text
-    # Display text on surface with automatic return to line
+        return text    
     def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space
-        x,y=pos# text position
+        x,y=pos# text position (top left corner)
         if x<xmin: x==xmin
         for count,line in enumerate(wordmatrix):
-            for word in line:
-                word_surface=font.render(word,True,color)# Very expensive if redone each frame!
-                word_width, word_height = word_surface.get_size()
-                # return to line automated
+            for word in line:                
+                word_surface=utils.obj_sprite_text()# New sprite_text object for each word
+                word_surface.make(word,font,color)
+                word_width, word_height = 2*word_surface.getrx(),2*word_surface.getry()
                 if x + word_width >= xmax:
                     x = xmin
                     y += linespacing
-                # record prerendered text
-                self.words_prerender.append( (word_surface,(x,y)) )# record prerendered text
+                self.words_prerender.append( (word_surface,(x+word_width/2,y+word_height/2)) )# record prerendered text
                 x += word_width + space_width
             # return to line from user
             if count<len(wordmatrix)-1:
                 x = xmin
                 y += linespacing        
         return x,y# return position for next call  
-    def disptext(self):# display prerendered text
+    def display(self):
         for i in self.words_prerender:
             word_surface, xy=i
-            share.screen.drawsurf(word_surface, xy)
+            word_surface.display(xy[0],xy[1])
+    def update(self):
+        self.display()
 
 
 ####################################################################################################################

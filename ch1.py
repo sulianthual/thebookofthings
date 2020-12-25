@@ -29,7 +29,7 @@ import menu
 # Proportions: 360x200 for head, for body, for legs, with 160 vertical spacing (40 overlap) between each
 # head draws over body, body draws over legs
 # 
-class obj_scene_chapter1(page.obj_page):
+class obj_scene_chapter1(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Chapter I: The Hero   -----   ',\
                    '\nOnce upon a time in the book of things, there was a ',('hero',share.colors.hero),' ',\
@@ -51,7 +51,7 @@ class obj_scene_chapter1(page.obj_page):
         
 
 
-class obj_scene_ch1p1(page.obj_page):
+class obj_scene_ch1p1(page.obj_chapterpage):
     def setup(self):         
         self.text=['In the beginning, ',('{heroname}',share.colors.hero),\
                    ' the hero was only a mere pair of legs because ',('{hero_he}',share.colors.hero),' was built from the ground up.',\
@@ -65,7 +65,7 @@ class obj_scene_ch1p1(page.obj_page):
         self.creator.scene=obj_scene_ch1p2(self.creator)# next scene  
 
 
-class obj_scene_ch1p2(page.obj_page):
+class obj_scene_ch1p2(page.obj_chapterpage):
     def setup(self):         
         self.text=['and when going to the right, ',('{heroname}',share.colors.hero),"\'s legs looked like this. ",\
                    'When put together, this was how ',('{heroname}',share.colors.hero),' walked. ',\
@@ -78,7 +78,7 @@ class obj_scene_ch1p2(page.obj_page):
         self.creator.scene=obj_scene_ch1p3(self.creator)# next scene 
                      
 
-class obj_scene_ch1p3(page.obj_page):
+class obj_scene_ch1p3(page.obj_chapterpage):
     def setup(self):       
         self.text=['the legs of ',('{heroname}',share.colors.hero),\
                    ' could walk around with the [arrows] or [WASD] keys.',\
@@ -97,7 +97,7 @@ class obj_scene_ch1p3(page.obj_page):
         self.creator.scene=obj_scene_ch1p4(self.creator)  
             
         
-class obj_scene_ch1p4(page.obj_page):
+class obj_scene_ch1p4(page.obj_chapterpage):
     def setup(self):       
         self.text=['Soon ',('{heroname}',share.colors.hero),' remembered ',\
                    ('{hero_he}',share.colors.hero),' had forgotten ',('{hero_his}',share.colors.hero),' head somewhere. ',\
@@ -117,7 +117,7 @@ class obj_scene_ch1p4(page.obj_page):
         self.creator.scene=obj_scene_ch1p5(self.creator)# next scene   
 
 
-class obj_scene_ch1p5(page.obj_page):
+class obj_scene_ch1p5(page.obj_chapterpage):
     def setup(self):       
         self.text=['The head and legs attached together, and could walk around with the [arrows] or [WASD] keys.',\
                    ('{heroname}',share.colors.hero),' was wondering why ',\
@@ -137,7 +137,7 @@ class obj_scene_ch1p5(page.obj_page):
         self.creator.scene=obj_scene_ch1p6(self.creator)   
                         
 
-class obj_scene_ch1p6(page.obj_page):
+class obj_scene_ch1p6(page.obj_chapterpage):
     def setup(self):       
         self.text=[('{heroname}',share.colors.hero),' had a ',('favorite thing',share.colors.itemloved),' in the world',\
                    ' and a ',('most hated thing',share.colors.itemhated),' in the world. ',\
@@ -153,7 +153,7 @@ class obj_scene_ch1p6(page.obj_page):
         self.creator.scene=obj_scene_ch1p7(self.creator)# next scene 
 
 
-class obj_scene_ch1p7(page.obj_page):
+class obj_scene_ch1p7(page.obj_chapterpage):
     def setup(self):        
         self.text=[('{heroname}',share.colors.hero), ' could walk around with the [arrows] or [WASD] keys.',\
                    'Collecting ',('{itemloved}',share.colors.itemloved),\
@@ -179,7 +179,7 @@ class obj_scene_ch1p7(page.obj_page):
         self.creator.scene=obj_scene_ch1p8(self.creator) 
 
         
-class obj_scene_ch1p8(page.obj_page):
+class obj_scene_ch1p8(page.obj_chapterpage):
     def setup(self):        
         self.text=[('{heroname}',share.colors.hero),' was a fierce fighter. ',\
                    ('{hero_his}',share.colors.hero),' ',('weapon',share.colors.weapon),\
@@ -197,7 +197,7 @@ class obj_scene_ch1p8(page.obj_page):
         self.creator.scene=obj_scene_ch1p9(self.creator)# next scene 
         
         
-class obj_scene_ch1p9(page.obj_page):
+class obj_scene_ch1p9(page.obj_chapterpage):
     def setup(self):        
         self.text=['With ',('{hero_his}',share.colors.hero),' weapon ',('{weaponname}',share.colors.weapon),', ',\
                    ('{heroname}',share.colors.hero),' could strike in the direction ',('{hero_he}',share.colors.hero),\
@@ -218,7 +218,7 @@ class obj_scene_ch1p9(page.obj_page):
     def nextpage(self): 
         self.creator.scene=obj_scene_ch1p10(self.creator)# next scene
             
-class obj_scene_ch1p10(page.obj_page):
+class obj_scene_ch1p10(page.obj_chapterpage):
     def setup(self):        
         self.text=['That was what, in the book of things, ',('{heroname}',share.colors.hero),' the hero was, ',\
                    'and ',('{heroname}',share.colors.hero),' the hero was going to do a lot of things in the book of things. ',\

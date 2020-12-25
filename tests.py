@@ -22,14 +22,14 @@ import menu
 ##########################################################
 
 # Test Menu
-class obj_scene_tests(page.obj_pagetemplate):
+class obj_scene_testmenu(page.obj_page):
     def __init__(self,creator):
         super().__init__(creator)
     def setup(self):
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
-        self.addpart(draw.obj_textbox('-- Appendix -- Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
+        self.addpart(draw.obj_textbox('Appendix Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
@@ -88,31 +88,36 @@ class obj_scene_tests(page.obj_pagetemplate):
         self.listlen=len(self.list)
 
 
-# Template for test page = page with slightly modified functionalities
-class obj_testpage(page.obj_page):
+# Template for test page = chapter page with slightly modified functionalities
+class obj_testpage(page.obj_chapterpage):
     def __init__(self,creator):
         self.name='Unamed'# needs name to display on test menu
         super().__init__(creator)
     def presetup(self):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}
+    def setup(self):
+        super().setup()
     def postsetup(self):
         super().postsetup()
-        share.pagenotedisplay('[Tab: Back] [Enter: Back]',xy=(1060,5),rebuild=True)
+        self.pagenote.make('[Tab: Back]  [Enter: Back]')
+    def postpage(self,controls):# foreground
+        self.pagedisplay_fps.update()
+        self.pagenote.display()
+        self.pagetext.display()
     def callprevpage(self,controls):# no browsing
         pass
     def callnextpage(self,controls):# no browsing
         pass
-    def callexitpage(self,controls):# back to test menu
-        # Exit to test menu
+    def callexitpage(self,controls):
         if (controls.tab  and controls.tabc) or (controls.enter  and controls.enterc) or (controls.esc and controls.escc):
             self.preendpage() 
             self.endpage()
-            self.creator.scene=obj_scene_tests(self.creator)
+            self.creator.scene=obj_scene_testmenu(self.creator)
     def prevpage(self):# no browsing
         pass
     def nextpage(self):# no browsing
-        pass
+        pass     
 
         
 #########################################################################
