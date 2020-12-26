@@ -11,11 +11,12 @@
 ##########################################################
 
 import share
+import tool
 import draw
-import utils
 import page
 import actor
 import world
+#
 import menu
 
 ##########################################################
@@ -143,8 +144,8 @@ class obj_scene_testdevnotes(obj_testpage):
             ('\n\nFile Structure: ',share.colors.red),\
             'main=execute program. ',\
             'share=store global variables. ',\
-            'utils=basic functions (link external libraries there like math,os...). ',\
-            'pyg=same as utils but for all pygame fonctions. ',\
+            'core=game engine (all pygame elements there)',\
+            'tool=basic functions (link external libraries there like math,os...). ',\
             'page=elements that build a page in the book. ',\
             'draw=draws that can be displayed on a page. ',\
             '(drawing, textinput, textchoice, textbox, image, animation, dispgroup). ',\

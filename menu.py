@@ -13,9 +13,11 @@
 
 #
 import share
+import tool
 import draw
-import utils
 import page
+import actor
+import world
 #
 import tests
 import ch0
@@ -111,7 +113,7 @@ class obj_scene_titlescreen(page.obj_page):
 ####################################################################################################################
 # Erase Book
 # *ERASE
-class obj_scene_erasebook(page.obj_page):
+class obj_scene_erasebook(page.obj_chapterpage):
     def setup(self):
         self.text=['It was decided to erase the book to start a new one. One had to be very sure.',\
                    'All drawings, all names would be erased, and everything would have to be created again.',\
@@ -121,7 +123,7 @@ class obj_scene_erasebook(page.obj_page):
         self.creator.scene=obj_scene_erasebookconfirm(self.creator)
 
 
-class obj_scene_erasebookconfirm(page.obj_page):
+class obj_scene_erasebookconfirm(page.obj_chapterpage):
     def setup(self):       
         self.text=['A ',('LAST WARNING',share.colors.red),' was issued. It was time to make a big decision.',\
                    '\n[Tab: Cancel]  [Enter+Space+Ctrl: ',('ERASE THE BOOK',share.colors.red),']']
@@ -137,7 +139,7 @@ class obj_scene_erasebookconfirm(page.obj_page):
 
 
 # In Final version replace with the correct one
-class obj_scene_erasebookconfirmed(page.obj_page):
+class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def setup(self):      
         self.text=['The book vanished.',\
                    '[Tab: Back]']

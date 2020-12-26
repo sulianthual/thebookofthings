@@ -12,7 +12,7 @@
 ##########################################################
 
 import share
-import utils
+import tool
 import draw
 import actor
 
@@ -78,6 +78,12 @@ class obj_world_ch2(obj_world):
 # $ rule.subject_types["subjects_items"]=["item"]
 # Then All subjects with type "hero" pick up all subjects with type "items", if they collide.
 
+
+# WARNING !
+# checkrectcollide is ran for each active rule to chekc collision between actors. 
+# This can lead to performance issues if many calls (in 2**N where N is the number of actors)
+# Avoid duplicate calls:  
+# -write rules that are always for the ENTIRE interaction between a pair of actors.
 
 # Rule Template
 class obj_rule:
@@ -145,11 +151,11 @@ class obj_rule_hero_collects_item(obj_rule):
     def update(self,controls):
         for i in self.subjects["shero"]:
             for j in self.subjects["sitem_loved"]:
-                if utils.checkrectcollide(i,j):
+                if tool.checkrectcollide(i,j):
                     i.quickhappyface()# hero happy briefly
                     j.kill()# item disappears (pickup)
             for j in self.subjects["sitem_hated"]:
-                if utils.checkrectcollide(i,j):
+                if tool.checkrectcollide(i,j):
                     i.quickangryface()# hero angry briefly
 
 
@@ -164,7 +170,7 @@ class obj_rule_weapon_breaks_stuff(obj_rule):
         for i in self.subjects["sweapon"]:
             if i.striking0 or i.striking1:# if weapon is striking (first or second frame only)
                 for j in self.subjects["sstuff"]:
-                    if utils.checkrectcollide(i,j):
+                    if tool.checkrectcollide(i,j):
                         j.destroy()# item is destroyed (kill+possible effect e.g. smoke)
 
 
@@ -179,7 +185,7 @@ class obj_rule_weapon_opens_door(obj_rule):
         for i in self.subjects["sweapon"]:
             if i.striking0:# if weapon is striking (first frame only)
                 for j in self.subjects["sdoor"]:
-                    if utils.checkrectcollide(i,j):
+                    if tool.checkrectcollide(i,j):
                         j.hit()# door is hit
 
 
@@ -194,10 +200,10 @@ class obj_rule_weapon_strikes_rigidbody(obj_rule):
         for i in self.subjects["sweapon"]:
             if i.striking0:# if weapon is striking (first frame only)
                 for j in self.subjects["srbody"]:
-                    if utils.checkrectcollide(i,j):
-                        theta=utils.actorsangle( i,j )
-                        j.forcex(i.knockback*utils.cos(theta))
-                        j.forcey(i.knockback*utils.sin(theta))
+                    if tool.checkrectcollide(i,j):
+                        theta=tool.actorsangle( i,j )
+                        j.forcex(i.knockback*tool.cos(theta))
+                        j.forcey(i.knockback*tool.sin(theta))
                     
                     
                     

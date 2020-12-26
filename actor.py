@@ -13,7 +13,8 @@
 ##########################################################
 
 import share
-import utils
+import tool
+import core
 import draw
 
 ####################################################################################################################
@@ -74,7 +75,7 @@ class obj_grandactor():
         self.dictx={}# relative position
         self.dicty={}        
         # devtools
-        self.devrect=utils.obj_sprite_rect()
+        self.devrect=core.obj_sprite_rect()
     def birth(self):# add to world
         self.creator.addactor(self)
     def kill(self):# remove from world
@@ -317,7 +318,7 @@ class obj_actor_hero_v2(obj_actor_hero_v1):
 class obj_actor_hero_v3(obj_actor_hero_v2):
     def setup(self):
         super().setup()
-        self.timer_quickface=utils.obj_timer(20)# time amount for making face expressions
+        self.timer_quickface=tool.obj_timer(20)# time amount for making face expressions
     def update(self,controls):# add timer and autoresetface to update
         super().update(controls)
         self.autoresetface()
@@ -343,8 +344,8 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         super().setup()
         self.weapon=obj_actor_sword(self,self.creator,(self.xini,self.yini))# attach sword (padre=self)
         # timers for strike
-        self.timer_strikeshow=utils.obj_timer(20)# time amount strike on screen
-        self.timer_strikereload=utils.obj_timer(30)# time amount to reload a strike
+        self.timer_strikeshow=tool.obj_timer(20)# time amount strike on screen
+        self.timer_strikereload=tool.obj_timer(30)# time amount to reload a strike
     def update(self,controls):# add timer and autoresetface to update
         super().update(controls)
         self.controls_strike(controls)
@@ -459,7 +460,7 @@ class obj_actor_goal_collideactors(obj_actor_goal):
             self.reached=False
     def update(self,controls):
         super().update(controls)
-        if utils.checkrectcollide(self.actor1,self.actor2):
+        if tool.checkrectcollide(self.actor1,self.actor2):
             self.updatecollide()
         else:
             self.resetcollide()
@@ -495,8 +496,6 @@ class obj_actor_bdry(obj_actor):# basic actor
 
 ####################################################################################################################
 # World
-
-
 
 
 # Door: open with hit, shuts on a timer
@@ -539,7 +538,7 @@ class obj_actor_effects_smoke(obj_grandactor):# grandactor because scaled
         super().setup()
         self.actortype='smoke'
         self.addpart("image",draw.obj_image('smoke',(self.xini,self.yini)) )
-        self.timer=utils.obj_timer(30)# timer for existence
+        self.timer=tool.obj_timer(30)# timer for existence
         self.timer.start()# start timer at creation
     def update(self,controls):
         super().update(controls)

@@ -12,86 +12,27 @@
 
 import share
 import draw
-import utils
+import core
+import tool
 
 ##########################################################
 ##########################################################       
-# Databases
 
-# colors database (RGB)
-class obj_colors:
+# Scene Manager: switches between scenes (called pages in the book of things)
+class obj_scenemanager:
     def __init__(self):
-        # base colors
-        self.white=(255,255,255)
-        self.black=(0,0,0)
-        self.red=(220,0,0)# bit darker
-        self.blue=(0,0,220)
-        self.green=(0,220,0)
-        self.gray=(150,150,150)
-        self.brown=(165,42,42)
-        self.maroon=(128,0,0)
-        # Colors devmode
-        self.devtextbox=(233,222,100)# yellow
-        self.devimage=(250,150,0)# orange
-        self.devanimation=(0,220,0)# green
-        self.devdispgroup=(128,0,128)# purple
-        self.devactor=(0,0,220)# blue (hitbox)
-        # Colors game elements
-        self.colorkey=self.white# transparent color (all sprites except background)
-        self.background=self.white# game background
-        self.drawing=(220,0,0)# drawing
-        self.input=self.red# text input (in text)
-        self.textinput=(200,0,0)# text input (box)
-        self.textchoice=(180,0,0)# text input box        
-        # Colors for story
-        self.book=self.blue# anything book of thing
-        self.hero=self.red# hero text color
-        self.weapon=self.brown# hero weapon text color
-        self.itemloved=(220,50,50)
-        self.itemhated=self.maroon
-        self.house=self.red# hero house
+        self.scene=None# current scene being played (must initialize object externally)
+    def update(self,controls):
+        self.scene.update(controls)# Update current scene
+        if controls.quit: share.quitgame()# Quit game (close window)
+        if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
+        if share.devmode and controls.mouse3 and controls.mouse3c:
+            print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
 
 
-# fonts database
-class obj_fonts:
-    def __init__(self):
-         self.font15=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
-         self.font30=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
-         self.font40=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
-         self.font50=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
-         self.font60=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 60)# large
-         self.font100=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
-         self.font120=utils.obj_sprite_font('data/AmaticSC-Bold.ttf', 120)# huge
-    def font(self,fontname):# call by key(string)
-         if fontname=='tiny' or fontname==15:
-             return self.font15
-         elif fontname=='smaller' or fontname==30:
-             return self.font30
-         elif fontname=='small' or fontname==40:
-             return self.font40
-         elif fontname=='medium' or fontname==50:
-             return self.font50
-         elif fontname=='large' or fontname==60:
-             return self.font60
-         elif fontname=='big' or fontname==100:
-             return self.font100
-         elif fontname=='huge' or fontname==120:
-             return self.font120
-         else:
-             return self.font50# medium font  
+####################################################################################################################    
 
-
-# brushes  database (used for drawing)
-class obj_brushes:
-    def __init__(self):        
-        self.pen=('data/pen.png',(8,8))
-        self.smallpen=('data/pen.png',(4,4))
-        self.tinypen=('data/pen.png',(2,2))
-    
-    
-####################################################################################################################
-
-# Template for any game scene
+# Template for any game scene (called a page in the book of things)
 class obj_page: 
     def __init__(self,creator):
         self.creator=creator# created by scenemanager
@@ -100,7 +41,7 @@ class obj_page:
         self.postsetup()
     def presetup(self):# background
         # background sprite
-        self.background=utils.obj_sprite_background()
+        self.background=core.obj_sprite_background()
         self.background.setcolor(share.colors.background)  
         # elements
         self.to_update=[]
@@ -203,7 +144,7 @@ class obj_chapterpage(obj_page):
 # display fps
 class obj_pagedisplay_fps: 
     def __init__(self):
-        self.sprite=utils.obj_sprite_text()
+        self.sprite=core.obj_sprite_text()
         self.make()
     def make(self):
         text='FPS='+str(int(share.clock.getfps()))
@@ -218,7 +159,7 @@ class obj_pagedisplay_fps:
 # display page number        
 class obj_pagedisplay_number:
     def __init__(self):
-        self.sprite=utils.obj_sprite_text()
+        self.sprite=core.obj_sprite_text()
         self.make()
     def make(self):
         text='Page '+str(share.ipage)
@@ -231,7 +172,7 @@ class obj_pagedisplay_number:
 # display recurrent page note        
 class obj_pagedisplay_note:
     def __init__(self):
-        self.sprite=utils.obj_sprite_text()
+        self.sprite=core.obj_sprite_text()
     def make(self,text):
         self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
     def display(self):
@@ -268,7 +209,7 @@ class obj_pagedisplay_text:
         if x<xmin: x==xmin
         for count,line in enumerate(wordmatrix):
             for word in line:                
-                word_surface=utils.obj_sprite_text()# New sprite_text object for each word
+                word_surface=core.obj_sprite_text()# New sprite_text object for each word
                 word_surface.make(word,font,color)
                 word_width, word_height = 2*word_surface.getrx(),2*word_surface.getry()
                 if x + word_width >= xmax:

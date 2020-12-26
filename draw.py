@@ -12,7 +12,8 @@
 ##########################################################
 
 import share
-import utils
+import tool
+import core
 
 
 ####################################################################################################################
@@ -30,21 +31,21 @@ class obj_drawing:
     def setup(self):
         # drawing tools
         self.mousedraw=obj_mousedraw()# mouse drawing tool
-        self.brush=utils.obj_sprite_brush()
+        self.brush=core.obj_sprite_brush()
         self.brush.makebrush(share.brushes.pen)
         # shadow
-        self.sprite_shadow=utils.obj_sprite_image()
+        self.sprite_shadow=core.obj_sprite_image()
         self.sprite_shadow.load('shadows/'+self.name+'.png',convert=False)
         self.rx,self.ry=self.sprite_shadow.getrxry()
         # drawing
-        self.sprite=utils.obj_sprite_image()
+        self.sprite=core.obj_sprite_image()
         self.sprite.load('book/'+self.name+'.png',failsafe=False)
         if not self.sprite.surf: self.resetdrawing()# drawing not found
         # frame
-        self.sprite_frame=utils.obj_sprite_rect()
+        self.sprite_frame=core.obj_sprite_rect()
         self.makeframe()
         # legend
-        self.sprite_legend=utils.obj_sprite_text()
+        self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
     def resetdrawing(self):
         self.sprite.makeempty(self.rx,self.ry)
@@ -54,7 +55,7 @@ class obj_drawing:
             self.sprite.blitfrom(self.sprite_shadow,0,0)
     def draw(self,controls):
         if controls.mouse1: self.mousedraw(controls,self.sprite,self.brush,self.x,self.y)
-        if controls.mouse2 and utils.isinrect(controls.mousex,controls.mousey,self.rect): self.resetdrawing()
+        if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect): self.resetdrawing()
     def makeframe(self):
         self.sprite_frame.make()
         self.rect=(self.x-self.rx,self.x+self.rx,self.y-self.ry,self.y+self.ry)
@@ -118,12 +119,12 @@ class obj_textinput:
         self.font=share.fonts.font('medium')# text font
         self.xm,self.ym=20,10# margins
         # sprite
-        self.sprite=utils.obj_sprite_text()
+        self.sprite=core.obj_sprite_text()
         # frame
-        self.sprite_frame=utils.obj_sprite_rect()
+        self.sprite_frame=core.obj_sprite_rect()
         self.makeframe()# make frame for text
         # legend
-        self.sprite_legend=utils.obj_sprite_text()
+        self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
     def texttodict(self):# text to/from dictionary
         if self.key in share.words.dict:
@@ -132,7 +133,7 @@ class obj_textinput:
             share.words.dict[self.key]=''
             self.text=''
     def changetext(self,controls):
-        if utils.isinrect(controls.mousex,controls.mousey,self.rect):
+        if tool.isinrect(controls.mousex,controls.mousey,self.rect):
             self.text=controls.edittext(self.text)# edit text
             # Note: apparently no need to filter special characters ( \, ', ", {, }, etc )
             if len(self.text)>self.nchar: self.text=self.text[:self.nchar-1]# control max size
@@ -182,12 +183,12 @@ class obj_textchoice:
     def keytodict(self,key):# write key in dictionary if not there
         if not key in share.words.dict: share.words.dict[key]=''
     def addchoice(self,text,value,xy,fontsize='medium',bold=True,color=(0,0,0)):
-        sprite=utils.obj_sprite_text()
+        sprite=core.obj_sprite_text()
         sprite.make(text,share.fonts.font(fontsize),color,bold=bold)
         size=sprite.getrx()*2,sprite.getry()*2
         area=( int(xy[0]-size[0]/2-self.xmargin), int(xy[0]+size[0]/2+self.xmargin),\
               int(xy[1]-size[1]/2-self.ymargin),int(xy[1]+size[1]/2+self.ymargin) )
-        spriterect=utils.obj_sprite_rect()
+        spriterect=core.obj_sprite_rect()
         self.choices.append( (value,sprite,spriterect,xy,size,area) )
         self.checkchoice()
     def checkchoice(self):# check current choice from possible value matches
@@ -200,7 +201,7 @@ class obj_textchoice:
         if controls.mouse1 and controls.mouse1c:
             for c,i in enumerate(self.choices):
                 value,sprite,spriterect,xy,size,area=i
-                if utils.isinrect(controls.mousex,controls.mousey,area):
+                if tool.isinrect(controls.mousex,controls.mousey,area):
                     self.ichoice=c
                     break
     def choicetodict(self):# write key choice in words dict
@@ -258,11 +259,11 @@ class obj_textbox:
         self.r=0# rotation angle (deg)
         self.show=True# show or not (can be toggled)
         # sprite
-        self.sprite=utils.obj_sprite_text()# sprite
+        self.sprite=core.obj_sprite_text()# sprite
         self.replacetext(self.text)
         # devtools
-        self.devcross=utils.obj_sprite_cross()
-        self.devrect=utils.obj_sprite_rect()
+        self.devcross=core.obj_sprite_cross()
+        self.devrect=core.obj_sprite_rect()
     def replacetext(self,text):
         self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color)
     def movetox(self,x):
@@ -337,11 +338,11 @@ class obj_image:
         self.r=0# rotation angle (deg)
         self.show=True# show or not (can be toggled)
         # sprite
-        self.sprite=utils.obj_sprite_image()# sprite
+        self.sprite=core.obj_sprite_image()# sprite
         self.sprite.load('book/'+self.name+'.png')
         # devtools
-        self.devcross=utils.obj_sprite_cross()
-        self.devrect=utils.obj_sprite_rect()
+        self.devcross=core.obj_sprite_cross()
+        self.devrect=core.obj_sprite_rect()
     def replaceimage(self,name):
         self.name=name
         self.sprite.load('book/'+name+'.png')
@@ -428,17 +429,17 @@ class obj_animation:
         self.addimage(self.imgname)
         self.rx,self.ry=self.spritelist[0].getrxry()
         # sprite
-        self.sprite=utils.obj_sprite_image()# the one that is played
+        self.sprite=core.obj_sprite_image()# the one that is played
         self.sprite.makeempty(self.rx,self.ry)
         # sequence
         self.sequence=obj_animationsequence(self,self.name,(self.xini,self.yini),self.record)
         # devtools
-        self.devcross=utils.obj_sprite_cross()
-        self.devrect=utils.obj_sprite_rect()
-        self.devcrossref=utils.obj_sprite_cross()
-        self.devlineseq=utils.obj_sprite_linesequence()
+        self.devcross=core.obj_sprite_cross()
+        self.devrect=core.obj_sprite_rect()
+        self.devcrossref=core.obj_sprite_cross()
+        self.devlineseq=core.obj_sprite_linesequence()
     def addimage(self,imgname):# add sprite ### RENAME TO addsprite LATER
-        sprite=utils.obj_sprite_image()
+        sprite=core.obj_sprite_image()
         sprite.load('book/'+imgname+'.png')
         self.spritelist.append(sprite)
     def replaceimage(self,imgname,index): ### RENAME TO replacesprite LATER
@@ -501,7 +502,6 @@ class obj_animation:
             if ia<0: ia=len(self.spritelist)-1
             self.sprite.makeempty(self.rx,self.ry)
             self.sprite.blitfrom(self.spritelist[ia],0,0)
-            # self.sprite.copyfrom(self.spritelist[term])
             # transformations
             self.sprite.flip(fha,fva)
             ssa=bscal**sa
@@ -511,8 +511,8 @@ class obj_animation:
             self.sprite.rotate(ra)
             # Display position
             xd,yd=xa*self.s,ya*self.s
-            angle=self.r/180*utils.pi()
-            coo,soo=utils.cos(angle),utils.sin(angle)
+            angle=self.r/180*tool.pi()
+            coo,soo=tool.cos(angle),tool.sin(angle)
             xd,yd=coo*xd+soo*yd,coo*yd-soo*xd
             xd,yd=xd*(1-2*int(self.fh)),yd*(1-2*int(self.fv))
             xd,yd=xd+self.x,yd+self.y
@@ -631,7 +631,7 @@ class obj_animationsequence:
                 f1.write(line)
     def loadsequence(self):
         self.data=[]
-        if utils.pathexists('animations/'+self.name+'.txt'):
+        if tool.pathexists('animations/'+self.name+'.txt'):
             with open('animations/'+self.name+'.txt','r+') as f1:
                 line=f1.readline()# first line skip
                 while line:
@@ -689,7 +689,7 @@ class obj_dispgroup:
         self.dictx={}# relative position
         self.dicty={}
         # devtools
-        self.devcross=utils.obj_sprite_cross()
+        self.devcross=core.obj_sprite_cross()
     def addpart(self,name,element):
         self.dict[name]=element
         self.dictx[name]= int( element.xini - self.xini )# record relative difference
@@ -775,8 +775,8 @@ class obj_dispgroup:
         for i in self.dict.keys():
             self.dict[i].rotate(r)
             xd,yd=self.dictx[i],self.dicty[i]
-            angle=r/180*utils.pi()
-            coo,soo=utils.cos(angle),utils.sin(angle)
+            angle=r/180*tool.pi()
+            coo,soo=tool.cos(angle),tool.sin(angle)
             xd,yd=coo*xd+soo*yd,coo*yd-soo*xd
             self.dictx[i],self.dicty[i]=xd,yd
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
