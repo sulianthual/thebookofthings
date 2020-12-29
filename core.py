@@ -186,12 +186,14 @@ class obj_sprite_image(obj_sprite):
                 self.surf=pygame.image.load(path)
             self.addtransparency()
             self.rx,self.ry=self.getrxry()
+            return True# load succeeded
         elif failsafe:
             self.surf=pygame.image.load('data/error.png').convert()
             self.addtransparency()
             self.rx,self.ry=self.getrxry()
+            return True
         else:
-            self.surf,self.rx,self.ry=None,None,None
+            return False# load failed
     def save(self,name):        
         pygame.image.save(self.surf,name) 
     def addtransparency(self):
@@ -204,7 +206,6 @@ class obj_sprite_image(obj_sprite):
         term=self.surf.get_rect().size
         return (term[0]/2,term[1]/2)
     def clear(self):
-        self.addtransparency()
         self.surf.fill(self.colorkey)
     def blitfrom(self,sprite_source,xoffset,yoffset):
         self.surf.blit(sprite_source.surf,( int(xoffset),int(yoffset)) )

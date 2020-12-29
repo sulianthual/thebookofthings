@@ -30,6 +30,7 @@ class obj_colors:
         self.gray=(150,150,150)
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
+        self.purple=(128,0,128)
         # Colors devmode
         self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
@@ -37,7 +38,7 @@ class obj_colors:
         self.devdispgroup=(128,0,128)# purple
         self.devactor=(0,0,220)# blue (hitbox)
         # Colors game elements
-        self.colorkey=self.white# transparent color (all sprites except background)
+        self.colorkey=self.purple# transparent color (all drawings,sprites)
         self.background=self.white# game background
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)

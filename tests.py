@@ -201,20 +201,20 @@ class obj_scene_testdevmodeinfo(obj_testpage):
 class obj_scene_testpagefunctions(obj_testpage):
     def setup(self):
         self.name='Page Basics'        
-        self.text=['Pages Basics: Pages have default functionalities (see obj_page). ',\
-                   'addpart(element) adds element to list of managed elements. ',\
-                   'Managed elements can be: ',\
-                   'drawing, textinput, textchoice,textbox, image, animation, dispgroup, world. ',\
-                   'Managed elements are updated in order they were added. ',\
-                   'They are finished on endpage if necessary (drawings,textinput). ',\
-                   ' Elements can alternatively be managed manually. ',\
+        self.text=['Pages Basics: each page in the book is a scene from a template (see obj_page). ',\
+                   'In \"setup\", addpart(element) adds element to list of managed elements. ',\
+                   'Managed elements are updated and displayed by the page in the order they were added,',\
+                   ' which determines their layering, ',\
+                   'and finished (=saved) on page exit if necessary. ',\
+                   'In \"page\" one can add additional update commands for an element. '
+                   ' Elements can be managed manually but is is not recommended ',\
                    ]
         # managed elements can be: drawing,textinput,textbox,image,animation,dispgroup,world
         # element must have matching self.type to be managed by obj_page
-        self.addpart(draw.obj_textbox('Managed elements here',(340,260),color=share.colors.red))
-        self.addpart(draw.obj_drawing('testimage1',(340,520)))
-        self.textbox=draw.obj_textbox('Non Managed elements here',(940,260),color=share.colors.blue)
-        self.drawing=draw.obj_drawing('testimage2',(940,520))# new drawing
+        self.addpart(draw.obj_textbox('Managed elements here',(340,360),color=share.colors.red))
+        self.addpart(draw.obj_drawing('testimage1',(340,560)))
+        self.textbox=draw.obj_textbox('Non Managed elements here',(940,360),color=share.colors.blue)
+        self.drawing=draw.obj_drawing('testimage2',(940,560))# new drawing
     def page(self,controls):
         self.textbox.update(controls)# non-managed elements must be updated here
         self.drawing.update(controls)
@@ -345,13 +345,15 @@ class obj_scene_testimage(obj_testpage):
         self.text=['Image Basics: ',\
             'Test transformations here like move [Arrows], flip [q,e], scale [w,s], rotate90 [a,d], reset [space]. ',\
             'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
+            'An image fill is an image of single color (preferentially the background) used to make layering. ',\
                    ]
-        self.addpart( draw.obj_image('testimage1',(440,420), scale=0.5) )# (can also scale at creation)
+        self.addpart( draw.obj_image('testimage1',(440,420), scale=2) )# (can also scale at creation)
         self.image=draw.obj_image('testimage2',(840,420))
+        self.addpart(self.image)
+        self.addpart(draw.obj_imagefill((share.colors.background,200,300),(260,360)))# filler on top
         self.dx=5# move rate with controls
         self.dy=5# move rate
     def page(self,controls):
-        self.image.update(controls)
         if controls.right: self.image.movex(self.dx)
         if controls.left: self.image.movex(-self.dx)
         if controls.up: self.image.movey(-self.dy)
@@ -364,6 +366,9 @@ class obj_scene_testimage(obj_testpage):
         if controls.s and controls.sc: self.image.scale(0.5)
         if controls.space and controls.spacec: self.image.setup()
         if controls.f and controls.fc: self.image.rotate(45)
+
+
+
             
 #########################################################################
 # Tests Animations

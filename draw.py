@@ -155,8 +155,8 @@ class obj_drawing:
             self.sprite_base.blitfrom(self.base.sprite,0,0)        
         # drawing
         self.sprite=core.obj_sprite_image()
-        self.sprite.load('book/'+self.name+'.png',failsafe=False)
-        if not self.sprite.surf: self.resetdrawing()# drawing not found
+        term=self.sprite.load('book/'+self.name+'.png',failsafe=False)
+        if not term: self.resetdrawing()# drawing did not load
         # frame
         self.sprite_frame=core.obj_sprite_rect()
         self.makeframe()
@@ -164,6 +164,7 @@ class obj_drawing:
         self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
     def resetdrawing(self):
+        self.sprite.makeempty(self.rx,self.ry)
         self.sprite.clear()
         self.sprite.blitfrom(self.sprite_shadow,0,0)  
     def draw(self,controls):
@@ -472,10 +473,12 @@ class obj_image:
         self.show=True# show or not (can be toggled)
         # sprite
         self.sprite=core.obj_sprite_image()# sprite
-        self.sprite.load('book/'+self.name+'.png')
+        self.makesprite()
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
+    def makesprite(self):
+        self.sprite.load('book/'+self.name+'.png')
     def replaceimage(self,name):
         self.name=name
         self.sprite.load('book/'+name+'.png')
@@ -534,6 +537,20 @@ class obj_image:
     def update(self,controls):
         self.play(controls)
 
+
+# An image filler with a single color
+class obj_imagefill(obj_image):
+    def __init__(self,data,xy,scale=1):
+        self.color,self.rx,self.ry=data
+        super().__init__('imagefill',xy,scale=scale)
+    def makesprite(self):
+        self.sprite.makeempty(self.rx,self.ry)
+        self.sprite.fill(self.color)
+    def replaceimage(self,name):# cant replace
+        pass
+
+
+    
 
 ####################################################################################################################
 
