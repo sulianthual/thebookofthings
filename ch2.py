@@ -16,8 +16,6 @@ import draw
 import page
 import actor
 import world
-#
-import menu
 
 ##########################################################
 ##########################################################
@@ -35,7 +33,7 @@ class obj_scene_chapter2(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_textinput('housename',25,(650,360),color=share.colors.house,legend='House Name') )
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p1(self.creator)# next scene
+        share.scenemanager.switchscene(obj_scene_ch2p1())
         
         
 # draw door
@@ -53,9 +51,9 @@ class obj_scene_ch2p1(page.obj_chapterpage):
         self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(640,460-60+160)) )
         self.addpart( draw.obj_animation('herohead_lookaround','herohead',(640,460-60)) )
     def prevpage(self):
-        self.creator.scene=obj_scene_chapter2(self.creator)
+        share.scenemanager.switchscene(obj_scene_chapter2())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p2(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch2p2())
 
 
 # draw hero house
@@ -72,9 +70,9 @@ class obj_scene_ch2p2(page.obj_chapterpage):
         self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(240,500+40),scale=0.25) )
         self.addpart( draw.obj_animation('herohead_lookaround','herohead',(240,500),scale=0.25) )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p1(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p1())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p3(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch2p3())
 
 
 # hero opens door to enter house
@@ -103,9 +101,9 @@ class obj_scene_ch2p3(page.obj_chapterpage):
     def page(self,controls):        
         self.world.update(controls)
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p2(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p2())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p4(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch2p4())
 
 # draw walls
 class obj_scene_ch2p4(page.obj_chapterpage):
@@ -127,9 +125,9 @@ class obj_scene_ch2p4(page.obj_chapterpage):
         for i in [340,540,740,940]:
             self.addpart( draw.obj_image('door_closed',(i,460),scale=0.25) )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p3(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p3())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p5(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch2p5())
 
 
 # entrance, access first room
@@ -164,9 +162,9 @@ class obj_scene_ch2p5(page.obj_chapterpage):
             share.ipage += 1
             self.nextpage()# switch to next page   
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p4(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p4())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p6(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch2p6())
 
 
 # draw furnitures
@@ -182,9 +180,9 @@ class obj_scene_ch2p6(page.obj_chapterpage):
         self.addpart( draw.obj_textinput('furniture_square_name',15,(820,200),color=share.colors.hero, legend='square furniture name') )
         self.addpart( draw.obj_textinput('furniture_tall_name',10,(1120,100),color=share.colors.hero, legend='tall furniture name') )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p5(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p5())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p7(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch2p7())
 
 
 
@@ -220,9 +218,9 @@ class obj_scene_ch2p7(page.obj_chapterpage):
             share.ipage += 1
             self.nextpage()# switch to next page  
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p6(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p6())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch2p8(self.creator)# next scene 
+        share.scenemanager.switchscene(obj_scene_ch2p8())
 
 
 
@@ -255,9 +253,9 @@ class obj_scene_ch2p8(page.obj_chapterpage):
             share.ipage += 1
             self.nextpage()# switch to next page   
     def prevpage(self):
-        self.creator.scene=obj_scene_ch2p7(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch2p7())
     # def nextpage(self):
-    #     self.creator.scene=obj_scene_ch2p9(self.creator)# next scene 
+    #     share.scenemanager.switchscene(obj_scene_ch2p9()) 
 
 
 

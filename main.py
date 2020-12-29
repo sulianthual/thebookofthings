@@ -20,10 +20,10 @@ import share
 def main():
 
     while True:
-        share.clock.update()
+        share.scenemanager.update(share.controls)# (everything happens here)
         share.display.update()
         share.controls.update()
-        share.scenemanager.update(share.controls)# (everything happens here)
+        share.clock.update()
 
 
 if __name__ == '__main__': main()#tesresr

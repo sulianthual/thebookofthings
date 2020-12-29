@@ -37,6 +37,11 @@ class obj_drawing:
         self.sprite_shadow=core.obj_sprite_image()
         self.sprite_shadow.load('shadows/'+self.name+'.png',convert=False)
         self.rx,self.ry=self.sprite_shadow.getrxry()
+        # base
+        if self.base: 
+            self.sprite_base=core.obj_sprite_image()
+            self.sprite_base.makeempty(self.rx,self.ry)
+            self.sprite_base.blitfrom(self.base.sprite,0,0)        
         # drawing
         self.sprite=core.obj_sprite_image()
         self.sprite.load('book/'+self.name+'.png',failsafe=False)
@@ -48,31 +53,39 @@ class obj_drawing:
         self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
     def resetdrawing(self):
-        self.sprite.makeempty(self.rx,self.ry)
-        if self.base:# start from basis or shadow
-            self.sprite.blitfrom(self.base.sprite,0,0)
-        else:
-            self.sprite.blitfrom(self.sprite_shadow,0,0)
+        self.sprite.clear()
+        self.sprite.blitfrom(self.sprite_shadow,0,0)  
     def draw(self,controls):
         if controls.mouse1: self.mousedraw(controls,self.sprite,self.brush,self.x,self.y)
         if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect): self.resetdrawing()
+    def basedraw(self):
+        if self.base: 
+            self.sprite_base.clear()
+            self.sprite_base.blitfrom(self.base.sprite,0,0)
     def makeframe(self):
         self.sprite_frame.make()
         self.rect=(self.x-self.rx,self.x+self.rx,self.y-self.ry,self.y+self.ry)
     def makelegend(self,legend):
         self.legend=legend
-        self.sprite_legend.make(legend,share.fonts.font('medium'),(0,0,0),bold=True)
+        formattextkwargs=share.datamanager.getwords()
+        self.legend=tool.formattext(self.legend,**formattextkwargs)# replace with book of things keywords
+        self.sprite_legend.make(self.legend,share.fonts.font('medium'),(0,0,0),bold=True)
         termx,termy=self.sprite_legend.getrxry()
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
-        self.sprite_shadow.display(self.x,self.y)
+        if self.base: self.sprite_base.display(self.x,self.y)
         self.sprite.display(self.x,self.y)
         self.sprite_frame.display(share.colors.drawing,(self.x,self.y,2*self.rx,2*self.ry))
         if self.legend: self.sprite_legend.display(self.xl,self.yl)
     def update(self,controls):
         self.draw(controls)
+        self.basedraw()
         self.display()
     def finish(self):
+        if self.base: 
+            self.sprite_base.blitfrom(self.sprite,0,0)# to base
+            self.sprite.clear()
+            self.sprite.blitfrom(self.sprite_base,0,0)# back        
         self.sprite.save('book/'+self.name+'.png')
 
 
@@ -127,11 +140,11 @@ class obj_textinput:
         self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
     def texttodict(self):# text to/from dictionary
-        if self.key in share.words.dict:
-            self.text=share.words.dict[self.key]
+        if self.key in share.datamanager.getwordkeys():
+            self.text=share.datamanager.getword(self.key)
         else:# create key with empty text
-            share.words.dict[self.key]=''
-            self.text=''
+            share.datamanager.writeword(self.key,'')
+            self.text=''    
     def changetext(self,controls):
         if tool.isinrect(controls.mousex,controls.mousey,self.rect):
             self.text=controls.edittext(self.text)# edit text
@@ -145,7 +158,9 @@ class obj_textinput:
         self.rect=(self.x-self.rx-self.xm,self.x+self.rx+self.xm,self.y-self.ry-self.ym,self.y+self.ry+self.ym)
     def makelegend(self,legend):# make legend (and prerender)
         self.legend=legend
-        self.sprite_legend.make(legend,share.fonts.font('smaller'),(0,0,0),bold=True)
+        formattextkwargs=share.datamanager.getwords()
+        self.legend=tool.formattext(self.legend,**formattextkwargs)# replace with book of things keywords
+        self.sprite_legend.make(self.legend,share.fonts.font('smaller'),(0,0,0),bold=True)
         termx,termy=self.sprite_legend.getrxry()
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
@@ -157,8 +172,9 @@ class obj_textinput:
         self.display()
         self.changetext(controls)
     def finish(self):
-        share.words.dict[self.key]=self.text# update text value in dictionary
-        share.words.save()# resave (entire) dictionary of words in file
+        share.datamanager.writeword(self.key,self.text)
+        share.datamanager.savewords()
+
 
 
 ####################################################################################################################
@@ -181,8 +197,11 @@ class obj_textchoice:
         self.ymargin=10
         self.keytodict(self.key)
     def keytodict(self,key):# write key in dictionary if not there
-        if not key in share.words.dict: share.words.dict[key]=''
+        if not key in share.datamanager.getwordkeys():
+            share.datamanager.writeword(key,'')
     def addchoice(self,text,value,xy,fontsize='medium',bold=True,color=(0,0,0)):
+        formattextkwargs=share.datamanager.getwords()
+        text=tool.formattext(text,**formattextkwargs)# replace with book of things keywords
         sprite=core.obj_sprite_text()
         sprite.make(text,share.fonts.font(fontsize),color,bold=bold)
         size=sprite.getrx()*2,sprite.getry()*2
@@ -194,7 +213,7 @@ class obj_textchoice:
     def checkchoice(self):# check current choice from possible value matches
         for c,i in enumerate(self.choices):
             value,sprite,spriterect,xy,size,area=i
-            if (self.key in share.words.dict) and share.words.dict[self.key]==value:
+            if (self.key in share.datamanager.getwordkeys()) and share.datamanager.getword(self.key)==value:
                 self.ichoice=c
                 break
     def changechoice(self,controls):
@@ -207,7 +226,7 @@ class obj_textchoice:
     def choicetodict(self):# write key choice in words dict
         if self.choices:
             value,img,sprite,spriterect,size,area=self.choices[self.ichoice]
-            share.words.dict[self.key]=value
+            share.datamanager.writeword(self.key,value)
     def addkey(self,key,analogies):# add a key affected by choice (using value analogies)
         self.keytodict(key)
         self.morekeys.append( (key,analogies) )
@@ -215,8 +234,8 @@ class obj_textchoice:
         for i in self.morekeys:
             key,analogies=i# 'hero_his',{'he':'his','she':'her'}
             for j in analogies.keys():
-                if j==share.words.dict[self.key]:
-                    share.words.dict[key]=analogies[j]
+                if j==share.datamanager.getword(self.key):
+                    share.datamanager.writeword(key,analogies[j])
                     break
     def display(self):
         for c,i in enumerate(self.choices):
@@ -233,7 +252,7 @@ class obj_textchoice:
     def finish(self):
         self.choicetodict()
         self.morekeystodict()
-        share.words.save()# save dictionary of words on file
+        share.datamanager.savewords()
 
 
 ####################################################################################################################
@@ -265,6 +284,9 @@ class obj_textbox:
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
     def replacetext(self,text):
+        self.text=text
+        formattextkwargs=share.datamanager.getwords()
+        self.text=tool.formattext(self.text,**formattextkwargs)# replace with book of things keywords
         self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color)
     def movetox(self,x):
         self.x=x
@@ -438,11 +460,11 @@ class obj_animation:
         self.devrect=core.obj_sprite_rect()
         self.devcrossref=core.obj_sprite_cross()
         self.devlineseq=core.obj_sprite_linesequence()
-    def addimage(self,imgname):# add sprite ### RENAME TO addsprite LATER
+    def addimage(self,imgname):
         sprite=core.obj_sprite_image()
         sprite.load('book/'+imgname+'.png')
         self.spritelist.append(sprite)
-    def replaceimage(self,imgname,index): ### RENAME TO replacesprite LATER
+    def replaceimage(self,imgname,index): 
         if index >=0 and index<len(self.spritelist):
             self.spritelist[index].load('book/'+imgname+'.png')
             self.spritelist[index].flip(self.fh,self.fv)
@@ -631,7 +653,7 @@ class obj_animationsequence:
                 f1.write(line)
     def loadsequence(self):
         self.data=[]
-        if tool.pathexists('animations/'+self.name+'.txt'):
+        if tool.ospathexists('animations/'+self.name+'.txt'):
             with open('animations/'+self.name+'.txt','r+') as f1:
                 line=f1.readline()# first line skip
                 while line:

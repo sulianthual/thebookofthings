@@ -30,8 +30,8 @@ import ch2
 
 # Main Menu
 class obj_scene_titlescreen(page.obj_page):
-    def __init__(self,creator):
-        super().__init__(creator)
+    def __init__(self):
+        super().__init__()
     def presetup(self):
         super().presetup()
         # menu
@@ -65,17 +65,18 @@ class obj_scene_titlescreen(page.obj_page):
 
     def setup(self):
         super().setup()
-        self.ichapter=share.savefile.chapter# current chapter
-        share.ipage=1# current page number        
+        self.maxchapter=share.datamanager.getprogress()# last chapter unlocked
+        self.ichapter=self.maxchapter# pointer position
+        share.ipage=1# current page number in chapter        
         # update menu (chapter dependent)
-        self.sprite_author.show=self.ichapter>0
-        self.sprite_pointer.show=self.ichapter>0
-        self.sprite_start.show=self.ichapter==0
-        self.sprite_info.show=self.ichapter>0
-        self.sprite_erase.show=self.ichapter>0
-        self.sprite_prologue.show=self.ichapter>0
-        self.sprite_ch1.show=self.ichapter>0
-        self.sprite_ch2.show=self.ichapter>1
+        self.sprite_author.show=self.maxchapter>0
+        self.sprite_pointer.show=self.maxchapter>0
+        self.sprite_start.show=self.maxchapter==0
+        self.sprite_info.show=self.maxchapter>0
+        self.sprite_erase.show=self.maxchapter>0
+        self.sprite_prologue.show=self.maxchapter>0
+        self.sprite_ch1.show=self.maxchapter>0
+        self.sprite_ch2.show=self.maxchapter>1
         # update decorations (chapter dependent)
         share.windowicon.reset()# window icon  
         self.sprite_pen.replaceimage('pen')
@@ -85,28 +86,30 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_pen.show=self.ichapter>0
         self.sprite_eraser.show=self.ichapter>0
         
-    def selectchapter(self,controls):
+    def page(self,controls):
         self.sprite_pointer.movetoy(410+self.ichapter*30)
         self.sprite_pen.movetoy(360+self.ichapter*30)
-        if share.savefile.chapter<1:# new book
-            if controls.enter  and controls.enterc: self.creator.scene=ch0.obj_scene_prologue(self.creator)
+        if self.maxchapter<1:# new book
+            if controls.enter  and controls.enterc: 
+                share.scenemanager.switchscene(ch0.obj_scene_prologue())
         else:
-            if (controls.s and controls.sc) or (controls.down and controls.downc): self.ichapter=min(self.ichapter+1,share.savefile.chapter)
-            if (controls.w and controls.wc) or (controls.up and controls.upc): self.ichapter=max(self.ichapter-1,-1)
+            if (controls.s and controls.sc) or (controls.down and controls.downc): 
+                self.ichapter=min(self.ichapter+1,self.maxchapter)
+            if (controls.w and controls.wc) or (controls.up and controls.upc): 
+                self.ichapter=max(self.ichapter-1,-1)
             if controls.enter  and controls.enterc: 
                 if self.ichapter==-1: 
-                    self.creator.scene=obj_scene_erasebook(self.creator)
+                    share.scenemanager.switchscene(obj_scene_erasebook())
                 elif self.ichapter==0: 
-                    self.creator.scene=ch0.obj_scene_prologue(self.creator)
+                    share.scenemanager.switchscene(ch0.obj_scene_prologue())
                 elif self.ichapter==1:
-                    self.creator.scene=ch1.obj_scene_chapter1(self.creator)
+                    share.scenemanager.switchscene(ch1.obj_scene_chapter1())
                 elif self.ichapter==2:
-                    self.creator.scene=ch2.obj_scene_chapter2(self.creator)     
-                    
-    def page(self,controls):
-        self.selectchapter(controls)      
-        if controls.space and controls.spacec: self.creator.scene=tests.obj_scene_testmenu(self.creator)  
-        if controls.esc and controls.escc: share.quitgame()
+                    share.scenemanager.switchscene(ch2.obj_scene_chapter2())     
+        if controls.space and controls.spacec: 
+            share.scenemanager.switchscene(tests.obj_scene_testmenu())
+        if controls.esc and controls.escc: 
+            share.quitgame()
             
 
 ####################################################################################################################
@@ -120,7 +123,7 @@ class obj_scene_erasebook(page.obj_chapterpage):
                    '[Tab: Cancel]  [Enter: ',('Erase the Book',share.colors.red),']']
         self.addpart( draw.obj_animation('bookerase','book',(640,360)) )      
     def nextpage(self):
-        self.creator.scene=obj_scene_erasebookconfirm(self.creator)
+        share.scenemanager.switchscene(obj_scene_erasebookconfirm())  
 
 
 class obj_scene_erasebookconfirm(page.obj_chapterpage):
@@ -135,7 +138,7 @@ class obj_scene_erasebookconfirm(page.obj_chapterpage):
             share.ipage += 1
             self.nextpage()# switch to next page
     def nextpage(self):
-        self.creator.scene=obj_scene_erasebookconfirmed(self.creator)
+        share.scenemanager.switchscene(obj_scene_erasebookconfirmed())  
 
 
 # In Final version replace with the correct one
@@ -143,8 +146,7 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def setup(self):      
         self.text=['The book vanished.',\
                    '[Tab: Back]']
-        share.savefile.eraseall()# erase all drawings and savefile
-        share.words.eraseall()# erase all words written
+        share.datamanager.erasebook()
 
 
 ####################################################################################################################

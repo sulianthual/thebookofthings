@@ -16,8 +16,6 @@ import draw
 import page
 import actor
 import world
-#
-import menu
 
 ##########################################################
 ##########################################################
@@ -34,7 +32,8 @@ class obj_scene_prologue(page.obj_chapterpage):
     def prevpage(self):
         super().prevpage()# includes refresh titlescreen
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p1(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p1())
+
 
 class obj_scene_ch0p1(page.obj_chapterpage):
     def setup(self):
@@ -44,9 +43,9 @@ class obj_scene_ch0p1(page.obj_chapterpage):
         super().postsetup()
         self.pagenote.make(' ')# no page note
     def prevpage(self):
-        self.creator.scene=obj_scene_prologue(self.creator)
+        share.scenemanager.switchscene(obj_scene_prologue())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p2(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p2())
 
 
 # Scene: Draw Pen
@@ -58,9 +57,9 @@ class obj_scene_ch0p2(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('pen',(600,440),legend='Pen') )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p1(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p1())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p3(self.creator)# next scene
+        share.scenemanager.switchscene(obj_scene_ch0p3())
 
 
 class obj_scene_ch0p3(page.obj_chapterpage):
@@ -69,9 +68,9 @@ class obj_scene_ch0p3(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_animation('penmove','pen',(640,360)) )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p2(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p2())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p4(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p4())
 
 
 # Scene: Draw Eraser
@@ -83,9 +82,9 @@ class obj_scene_ch0p4(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('eraser',(900,450), legend='Eraser') )
         self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p3(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p3())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p5(self.creator)# next scene
+        share.scenemanager.switchscene(obj_scene_ch0p5())
 
 
 class obj_scene_ch0p5(page.obj_chapterpage):
@@ -99,9 +98,10 @@ class obj_scene_ch0p5(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( animation2 )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p4(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p4())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p6(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p6())
+
 
 class obj_scene_ch0p6(page.obj_chapterpage):
     def setup(self):
@@ -115,11 +115,11 @@ class obj_scene_ch0p6(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( animation2 )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p5(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p5())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p7(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p7())
 
-# Scene: Draw Book
+
 class obj_scene_ch0p7(page.obj_chapterpage):
     def setup(self):
         self.text=['In the middle of the dancing, there was going to be a book. A very mysterious book [draw].',\
@@ -129,9 +129,10 @@ class obj_scene_ch0p7(page.obj_chapterpage):
         self.addpart( draw.obj_animation('penmove3','pen',(640,360)) )
         self.addpart( draw.obj_animation('erasermove3','eraser',(640,360)) )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p6(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p6())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p8(self.creator)# next scene
+        share.scenemanager.switchscene(obj_scene_ch0p8())
+
 
 class obj_scene_ch0p8(page.obj_chapterpage):
     def setup(self):
@@ -140,19 +141,20 @@ class obj_scene_ch0p8(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p7(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p7())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch0p9(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p9())
+
 
 class obj_scene_ch0p9(page.obj_chapterpage):
     def setup(self):
         self.text=['And so the book began...',\
                    ]
     def prevpage(self):
-        self.creator.scene=obj_scene_ch0p8(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch0p8())
     def nextpage(self):
-        share.savefile.chapter=max(share.savefile.chapter,1)# update progress to chapter 1
-        share.savefile.save()# save progress in file
+        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
         super().nextpage()
+
 
 ####################################################################################################################

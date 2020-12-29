@@ -10,6 +10,8 @@
 ##########################################################
 ##########################################################
 
+import core
+
 import share
 import tool
 import draw
@@ -24,8 +26,8 @@ import menu
 
 # Test Menu
 class obj_scene_testmenu(page.obj_page):
-    def __init__(self,creator):
-        super().__init__(creator)
+    def __init__(self):
+        super().__init__()
     def setup(self):
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
@@ -36,18 +38,7 @@ class obj_scene_testmenu(page.obj_page):
         for i,test in enumerate(self.list[self.nrow-1:]):
             self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))            
         self.sprite_pointer=draw.obj_textbox('---',(640,360),fontsize='smaller')# moved around
-        self.addpart(self.sprite_pointer)
-    def selecttest(self,controls):
-        if (controls.s and controls.sc) or (controls.down and controls.downc): 
-            share.itest += 1
-            if share.itest == self.listlen: share.itest=0
-        if (controls.w and controls.wc) or (controls.up and controls.upc): 
-            share.itest -= 1
-            if share.itest == -1: share.itest=self.listlen-1
-        if controls.tab  and controls.tabc: self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
-        if (controls.enter and controls.enterc): 
-            self.creator.scene=self.list[share.itest]
-            self.creator.scene.__init__(self.creator)# reset scene                 
+        self.addpart(self.sprite_pointer)                
     def page(self,controls):
         if share.itest<self.nrow-1:
             self.sprite_pointer.movetox(60)
@@ -55,45 +46,54 @@ class obj_scene_testmenu(page.obj_page):
         else:
             self.sprite_pointer.movetox(460)
             self.sprite_pointer.movetoy(130+(share.itest-self.nrow+1)*30)
-        self.selecttest(controls)
-        if controls.esc and controls.escc: self.creator.scene=menu.obj_scene_titlescreen(self.creator) 
+        if (controls.s and controls.sc) or (controls.down and controls.downc): 
+            share.itest += 1
+            if share.itest == self.listlen: share.itest=0
+        if (controls.w and controls.wc) or (controls.up and controls.upc): 
+            share.itest -= 1
+            if share.itest == -1: share.itest=self.listlen-1
+        if (controls.tab  and controls.tabc) or (controls.esc and controls.escc): 
+            share.scenemanager.switchscene(share.titlescreen,init=True)
+        if (controls.enter and controls.enterc):
+            share.scenemanager.switchscene(self.list[share.itest],init=True)
     def loadtests(self):# load all tests 
-        # message
-        self.list.append(obj_scene_testmessage(self.creator))       
-        self.list.append(obj_scene_testdevnotes(self.creator))
-        self.list.append(obj_scene_testdevmodeinfo(self.creator))
-        # page tests
-        self.list.append(obj_scene_testpagefunctions(self.creator))
-        # text tests
-        self.list.append(obj_scene_interactivetext(self.creator))
-        self.list.append(obj_scene_textinput(self.creator))     
-        self.list.append(obj_scene_textchoice(self.creator))              
-        self.list.append(obj_scene_textbox(self.creator))       
-        # drawings tests
-        self.list.append(obj_scene_testdrawing(self.creator))
-        self.list.append(obj_scene_testdrawingbase(self.creator))
-        # image test
-        self.list.append(obj_scene_testimage(self.creator))        
-        # animations tests        
-        self.list.append(obj_scene_testanimation(self.creator))    
-        self.list.append(obj_scene_testanimationanimation(self.creator))
-        self.list.append(obj_scene_testanimationplayback(self.creator)) 
-        # group animations tests
-        self.list.append(obj_scene_testdispgroup(self.creator))
-        # world and actors tests
-        self.list.append(obj_scene_testworld(self.creator))
-        self.list.append(obj_scene_testworldgrandactor(self.creator))
-        self.list.append(obj_scene_testrigidbody(self.creator))        
-        # quickdraft 
-        self.list.append(obj_scene_testdraftanimation(self.creator))        
+        # developper
+        self.list.append(obj_scene_testmessage())       
+        self.list.append(obj_scene_testdevnotes())
+        self.list.append(obj_scene_testdevmodeinfo())
+        # page
+        self.list.append(obj_scene_testpagefunctions())
+        # text
+        self.list.append(obj_scene_interactivetext())
+        self.list.append(obj_scene_textinput())     
+        self.list.append(obj_scene_textchoice())              
+        self.list.append(obj_scene_textbox())       
+        # drawing
+        self.list.append(obj_scene_testdrawing())
+        self.list.append(obj_scene_testdrawingbase())
+        # image
+        self.list.append(obj_scene_testimage())        
+        # animation      
+        self.list.append(obj_scene_testanimation())    
+        self.list.append(obj_scene_testanimationanimation())
+        self.list.append(obj_scene_testanimationplayback()) 
+        #dispgroup
+        self.list.append(obj_scene_testdispgroup())
+        #world
+        self.list.append(obj_scene_testworld())
+        self.list.append(obj_scene_testworldgrandactor())
+        self.list.append(obj_scene_testrigidbody())        
+        #quickdraft
+        self.list.append(obj_scene_testdraftanimation())          
+        #
         self.listlen=len(self.list)
 
 
 # Template for test page = chapter page with slightly modified functionalities
 class obj_testpage(page.obj_chapterpage):
-    def __init__(self,creator):
+    def __init__(self):
         self.name='Unamed'# needs name to display on test menu
-        super().__init__(creator)
+        super().__init__()
     def presetup(self):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}
@@ -114,7 +114,7 @@ class obj_testpage(page.obj_chapterpage):
         if (controls.tab  and controls.tabc) or (controls.enter  and controls.enterc) or (controls.esc and controls.escc):
             self.preendpage() 
             self.endpage()
-            self.creator.scene=obj_scene_testmenu(self.creator)
+            share.scenemanager.switchscene(obj_scene_testmenu())
     def prevpage(self):# no browsing
         pass
     def nextpage(self):# no browsing
@@ -125,6 +125,21 @@ class obj_testpage(page.obj_chapterpage):
 #########################################################################
 # All Tests Here
 
+# quickdraft animations (do it quickly here)
+class obj_scene_testdraftanimation(obj_testpage):
+    def setup(self):
+        self.name='QuickDraft Animation'       
+        self.text=['QuickDraft Animation: [Space] Toggle Record Mode.']
+        #
+        animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
+        # animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360),record=True)
+        # animation=draw.obj_animation('herolegs_walk','herolegs_stand',(640,360),record=True)
+        # animation.addimage('herolegs_walk')
+        ###
+        
+        ###
+        self.addpart(animation)
+        
 
 class obj_scene_testmessage(obj_testpage):
     def setup(self):
@@ -236,14 +251,16 @@ class obj_scene_textinput(obj_testpage):
         self.text=[
             'textinput: Hover over the text box to input with keyboard. [Backspace] erases all.',\
             'This saves keywords in the game dictionary (words.txt) to be reused like:',\
-            'Test1 name is',('{test1}',share.colors.gray),', '\
+            'Test1 name 1 is',('{test1}',share.colors.gray),', '\
             'and Test2 name is',('{test2}',share.colors.gray),' '\
             '(refresh page to see those changes). ',\
-            'Only use keywords that already exist, or formatting will return error. ',\
-            'Special characters can be included in inputs (no issues found). ',\
+            'Special characters can be included in inputs (no issues were found). ',\
+            'The textinput legend itself accepts keywords (but not colors). ',\
+            '\nNote: the keywords themselves are formatted and can point to keywords. ',\
+            'Try inputing test2={_test1_} without the underscores (test2 name will become test1 name). ',\
                    ]
-        self.addpart( draw.obj_textinput('test1',20,(640,300),legend='name of test1') )
-        self.addpart( draw.obj_textinput('test2',20,(640,500),legend='name of test2') )
+        self.addpart( draw.obj_textinput('test1',20,(640,400),legend='name of test 1') )
+        self.addpart( draw.obj_textinput('test2',20,(640,600),legend='name of test 2. keyword value: {test2}') )
 
 
 class obj_scene_textchoice(obj_testpage):
@@ -258,12 +275,13 @@ class obj_scene_textchoice(obj_testpage):
             'a choice for the base key determines the choices of the additional keys using analogies. ',\
             'The test gender was: ',('{test_his}',share.colors.red),' choice. ',\
             ]
-        self.addpart( draw.obj_textbox("The test gender was:",(200,360)) )
+        self.addpart( draw.obj_textbox("The test gender was:",(200,460)) )
         textchoice=draw.obj_textchoice('test_he')
-        textchoice.addchoice('1. A guy','he',(440,360))
-        textchoice.addchoice('2. A girl','she',(740,360))
-        textchoice.addchoice('3. A thing','it',(1040,360))
-        textchoice.addkey('test_his',{'he':'his','she':'her','it':'its'})# additional key and analogies
+        textchoice.addchoice('1. A guy','he',(440,460))
+        textchoice.addchoice('2. A girl','she',(740,460))
+        textchoice.addchoice('3. A thing','it',(1040,460))
+        textchoice.addchoice('4. The keyword: {test1}','{test1}',(640,560))
+        textchoice.addkey('test_his',{'he':'his','she':'her','it':'its','{test1}':'{test1}ss'})# additional key and analogies
         self.addpart( textchoice )
     def page(self,controls):
         pass
@@ -275,12 +293,14 @@ class obj_scene_textbox(obj_testpage):
         self.name='Textbox Basics'    
         self.text=[
             'Textbox Basics: Placed anywhere, can customize font and color. ',\
+            'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
             'Acts like an image: Can reset[space], move [Arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
             'Can rotate[f] but use sparingly (enlargens-memory issues). ',\
                    ]
-        self.addpart(draw.obj_textbox('textbox',(340,360),color=share.colors.blue))#customize font and color
-        self.addpart(draw.obj_textbox('smaller',(340,460),color=share.colors.blue, fontsize='tiny'))
-        self.addpart(draw.obj_textbox('large',(340,560),color=share.colors.blue, fontsize='big'))
+        self.addpart(draw.obj_textbox('textbox',(340,260),color=share.colors.blue))#customize font and color
+        self.addpart(draw.obj_textbox('small',(340,360),color=share.colors.blue, fontsize='tiny'))
+        self.addpart(draw.obj_textbox('large',(340,460),color=share.colors.blue, fontsize='big'))
+        self.addpart(draw.obj_textbox('from keyword: {test1}',(340,660),color=share.colors.green))
         self.textbox=draw.obj_textbox('textbox:move me',(840,460),color=share.colors.red)
         self.dx,self.dy=5,5
     def page(self,controls):
@@ -305,12 +325,13 @@ class obj_scene_testdrawing(obj_testpage):
         self.name='Drawing Basics'      
         self.text=['Drawing Basics: Draw with [Left Mouse], Erase with [Right Mouse] ',\
                    '(only when the mouse is in drawing area). ',\
-                   'It has optionally a legend and no borders. ',\
+                   'It has optionally a legend, that accepts keywords like ',\
+                   ('{test1}',share.colors.green),' (but not colors). ',\
                    'A drawing needs a background of same name in folder ./shadows. ',\
                    'It is saved in folder ./drawings. ',\
                    'If replacing the shadow erase the drawing as well (or new drawing may glitch). ',\
                    ]
-        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me') )
+        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me. Keyword:{test1}') )
 
 
 # Scene: test several drawings at the same time
@@ -543,24 +564,6 @@ class obj_scene_testrigidbody(obj_testpage):
         if controls.e and controls.ec: self.rigidbody.stall()
 
 ####################################################################################################################
-
-
-# quickdraft animations (do it quickly here)
-class obj_scene_testdraftanimation(obj_testpage):
-    def setup(self):
-        self.name='QuickDraft Animation'       
-        self.text=['QuickDraft Animation: [Space] Toggle Record Mode.']
-        #
-        if False:# hero legs stand (chapter 1)
-            self.animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360),record=True)
-        elif False:# hero legs walk (chapter 1)
-            self.animation=draw.obj_animation('herolegs_walk','herolegs_stand',(640,360),record=True)
-            self.animation.addimage('herolegs_walk')
-        else:# hero head (chapter 1)
-            self.animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
-
-    def page(self,controls):
-        self.animation.update(controls)# this means animation can be edited
 
 
 ####################################################################################################################

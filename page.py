@@ -10,39 +10,28 @@
 ##########################################################
 ##########################################################
 
+import core# for sprites
+#
 import share
 import draw
-import core
 import tool
 
 ##########################################################
 ##########################################################       
 
-# Scene Manager: switches between scenes (called pages in the book of things)
-class obj_scenemanager:
-    def __init__(self):
-        self.scene=None# current scene being played (must initialize object externally)
-    def update(self,controls):
-        self.scene.update(controls)# Update current scene
-        if controls.quit: share.quitgame()# Quit game (close window)
-        if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
-        if share.devmode and controls.mouse3 and controls.mouse3c:
-            print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
-
-
-####################################################################################################################    
 
 # Template for any game scene (called a page in the book of things)
 class obj_page: 
-    def __init__(self,creator):
-        self.creator=creator# created by scenemanager
+    def __init__(self):
         self.presetup()# 
         self.setup()
         self.postsetup()
+    # def __del__(self):
+        # print('deleted: '+str(self))# pages are consistently deleted when no longer in use by scenemanager
     def presetup(self):# background
         # background sprite
-        self.background=core.obj_sprite_background()
-        self.background.setcolor(share.colors.background)  
+        self.background=core.obj_sprite_background(color=share.colors.background)
+        self.background.make()
         # elements
         self.to_update=[]
         self.to_finish=[]
@@ -50,6 +39,7 @@ class obj_page:
         pass
     def postsetup(self):# foreground
         self.pagedisplay_fps=obj_pagedisplay_fps()
+        
     def addpart(self,element):
         if element.type in ['drawing','textinput','textchoice','textbox','image','animation','dispgroup','world']:
             self.to_update.append(element)            
@@ -62,6 +52,7 @@ class obj_page:
         self.prepage(controls)
         self.page(controls) 
         self.postpage(controls)
+        
     def prepage(self,controls):# background
         self.background.display()
         for i in self.to_update: i.update(controls)
@@ -76,8 +67,8 @@ class obj_page:
 
 # chapter page template: a page in a chapter of the book
 class obj_chapterpage(obj_page):  
-    def __init__(self,creator):
-        super().__init__(creator)
+    def __init__(self):
+        super().__init__()
     ###
     def presetup(self):
         super().presetup() 
@@ -122,20 +113,13 @@ class obj_chapterpage(obj_page):
         if controls.esc and controls.esc: # go back to main menu
             self.preendpage()# template
             self.endpage()# customized
-            share.titlescreen.setup()
-            self.creator.scene=share.titlescreen
-            # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
-    ###
+            share.scenemanager.switchscene(share.titlescreen,init=True)
     def endpage(self):# when exit page 
         pass
     def prevpage(self):# actions to prev page (replace here)**
-        share.titlescreen.setup()# refresh titlescreen content
-        self.creator.scene=share.titlescreen# default back to menu
-        # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
+        share.scenemanager.switchscene(share.titlescreen,init=True)
     def nextpage(self):# actions to next page (replace here)**
-        share.titlescreen.setup()# refresh titlescreen content
-        self.creator.scene=share.titlescreen# default back to menu
-        # self.creator.scene=menu.obj_scene_titlescreen(share.scenemanager)
+        share.scenemanager.switchscene(share.titlescreen,init=True)
     
     
 ####################################################################################################################
@@ -186,7 +170,8 @@ class obj_pagedisplay_text:
     def __init__(self):
         self.words_prerender=[]# list of words (sprites and positions)        
     def make(self,textmatrix,pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
-        self.words_prerender=[]       
+        self.words_prerender=[]
+        formattextkwargs=share.datamanager.getwords()
         if textmatrix: 
             self.ipos=pos# text cursor position
             for i in textmatrix:
@@ -194,14 +179,8 @@ class obj_pagedisplay_text:
                     text, color = i, (0,0,0)# input: text
                 else:
                     text, color = i# input: (text,color)
-                text=self.formattext(text,**share.words.dict)
+                text=tool.formattext(text,**formattextkwargs)
                 self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)    
-    def formattext(self,text,**kwargs):# Format text using the keywords written in the book of things (words.txt)
-        try:
-            text=text.format(**kwargs)
-        except:
-            pass
-        return text    
     def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space

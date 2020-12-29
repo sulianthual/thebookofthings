@@ -17,7 +17,6 @@
 import core
 import datb
 #
-import page
 import menu
 
 
@@ -43,17 +42,17 @@ controls=core.obj_controls()# mouse/keyboard controls
 windowicon=core.obj_windowicon()# window icon
 quitgame=core.obj_quit()# function quit game
 #
-# Databases and File Utilities
+# Databases with quick access
 fonts=datb.obj_fonts()# text fonts 
 colors=datb.obj_colors()# dictionary of colors
 brushes=datb.obj_brushes()# brushes used for drawing
-words=datb.obj_savewords()# save/load data (words)
-savefile=datb.obj_savefile()# save/load data (progress)
+# Data Manager
+datamanager=datb.obj_datamanager()
 #
 # Scenes
-scenemanager=page.obj_scenemanager()# game scene manager (switch scenes+quit...) 
-titlescreen=menu.obj_scene_titlescreen(scenemanager)
-scenemanager.scene=titlescreen# set starting scene
+scenemanager=core.obj_scenemanager()# game scene manager (switch scenes+quit...) 
+titlescreen=menu.obj_scene_titlescreen()# menu object has only ONE instance
+scenemanager.switchscene(titlescreen)# set starting scene
 
 ##########################################################
 

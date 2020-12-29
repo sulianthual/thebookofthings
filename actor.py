@@ -559,7 +559,7 @@ class obj_actor_item_loved(obj_grandactor):# not a rigidbody
         self.ry=100
         dispgroup=draw.obj_dispgroup((self.xini,self.yini))
         image=draw.obj_image('herothings_loved',(self.xini,self.yini))
-        textbox=draw.obj_textbox(share.words.dict["itemloved"],(self.xini,self.yini+100),fontsize='big')
+        textbox=draw.obj_textbox("{itemloved}",(self.xini,self.yini+100),fontsize='big')
         dispgroup.addpart("image",image)
         dispgroup.addpart("textbox",textbox)
         self.addpart("item_dispgroup",dispgroup)
@@ -574,7 +574,7 @@ class obj_actor_item_hated(obj_actor_item_loved):# not a rigidbody
         super().setup()
         self.actortype='item_hated'
         self.dict["item_dispgroup"].dict["image"].replaceimage('herothings_hated')
-        self.dict["item_dispgroup"].dict["textbox"].replacetext(share.words.dict["itemhated"])
+        self.dict["item_dispgroup"].dict["textbox"].replacetext("{itemhated}")
 
 
 # furniture (from chapter 2 hero house)
@@ -586,7 +586,7 @@ class obj_actor_furniture_wide(obj_rbodyactor):
         self.rx=500# rect collisions radius x
         self.ry=100
         self.addpart('img',draw.obj_image('furniture_wide',(self.xini,self.yini)))
-        self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_wide_name"],(self.xini,self.yini+100),fontsize='big'))
+        self.addpart('textbox',draw.obj_textbox('{furniture_wide_name}',(self.xini,self.yini+100),fontsize='big'))
 
 
 class obj_actor_furniture_square(obj_rbodyactor):
@@ -597,7 +597,7 @@ class obj_actor_furniture_square(obj_rbodyactor):
         self.rx=200# rect collisions radius x
         self.ry=200
         self.addpart('img',draw.obj_image('furniture_square',(self.xini,self.yini)))
-        self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_square_name"],(self.xini,self.yini+150),fontsize='big'))
+        self.addpart('textbox',draw.obj_textbox('{furniture_square_name}',(self.xini,self.yini+150),fontsize='big'))
 
 
 class obj_actor_furniture_tall(obj_rbodyactor):
@@ -608,4 +608,4 @@ class obj_actor_furniture_tall(obj_rbodyactor):
         self.rx=100# rect collisions radius x
         self.ry=300
         self.addpart('img',draw.obj_image('furniture_tall',(self.xini,self.yini)))
-        self.addpart('textbox',draw.obj_textbox(share.words.dict["furniture_tall_name"],(self.xini,self.yini+200),fontsize='big'))
+        self.addpart('textbox',draw.obj_textbox('{furniture_tall_name}',(self.xini,self.yini+200),fontsize='big'))

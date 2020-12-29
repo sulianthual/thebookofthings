@@ -5,45 +5,49 @@
 # Game by sul
 # Started Sept 2020
 #
-# tool.py: basic utility tools and external libraries
+# tool.py: basic utility tools and external modules
 #
-# Any call to external libraries (math,os,sys) is linked here.
+# Any call to external modules (sys,os,math...) is made here.
 #
 # Why?
-# - If we want to change the external libraries it is much easier
+# - It it easier to manage the external modules this way
 #
 ##########################################################
 ##########################################################
 
-import sys
-import os
+from sys import exit as sys_exit
+from os import path as os_path
+from os import listdir as os_listdir
+from os import remove as os_remove
+from math import pi as math_pi
 from math import cos as math_cos
 from math import sin as math_sin
 from math import atan2 as math_atan2
-from math import pi as math_pi
+
 
 ##########################################################
 ##########################################################
-# Links to external libraries
+# Calls to external modules
 
-
-# links to module os
-def pathexists(path):
-    return os.path.exists(path)
+# module sys
+def sysexit():
+    sys_exit()
+    
+# module os
+def ospathexists(path):
+    return os_path.exists(path)
 def oslistdir(path):
-    return os.listdir(path)
+    return os_listdir(path)
 def osremove(path):
-    os.remove(path)
+    os_remove(path)
 
-# links to module math
+# module math
 def pi():
     return math_pi
 def cos(x):
     return math_cos(x)
 def sin(x):
     return math_sin(x)
-def atan2(y,x):
-    return math_atan2(y,x)
 def angle(a_xy,b_xy):# angle between points a=(x,y) and b=(x,y)
     return math_atan2(b_xy[1]-a_xy[1],b_xy[0]-a_xy[0])
 def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y)
@@ -53,6 +57,23 @@ def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y)
 ####################################################################################################################
 # General Functions and objects for all uses
 
+
+# Format text using dictionary of keywords 
+# $ text='{heroname} was happy'
+# $ dict={'heroname':'link'}
+# $ a=formattext(text,dict) => 'link was happy' 
+def formattext(text,**kwargs):# Format text using the keywords written in the book of things (words.txt)
+    try:
+        text=text.format(**kwargs)# **kwargs is wordkey=wordvalue
+        # Format a second time if the value was itself a keyword (e.g. '{marco}' instead of 'link' )
+        try:
+            text=text.format(**kwargs)
+        except:
+            pass
+    except:
+        pass
+    return text 
+    
 # check if a point x,y is in a given rectangle rect=(xmin,xmax,ymin,ymax)
 def isinrect(x,y,rect):
     (xmin,xmax,ymin,ymax)=rect
@@ -75,16 +96,15 @@ def checkrectcollide(a,b):
 
 
 # Timer for any purpose
-# *TIMER
 class obj_timer:
     def __init__(self,amount,cycle=False):
-        self.amount=amount# integer, amount of time from timer
+        self.amount=amount# countdown duraction (int)
         # 3 states for the timer: on, ring, off
-        self.on=False
-        self.ring=False# timer rings (happens once when countdown finishes)
-        self.off=True# timer done or not, check it here
-        self.t=0# time count
-        self.cycle=cycle# optional, timer cycles (restarts automatically when done)
+        self.on=False# countdown happens
+        self.ring=False# (once when countdown finishes)
+        self.off=True
+        self.t=0# countdown time
+        self.cycle=cycle# timer cycles (restarts automatically when done)
     def start(self):# start (or restart) timer
         self.on=True
         self.ring=False

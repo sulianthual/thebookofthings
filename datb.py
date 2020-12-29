@@ -89,52 +89,66 @@ class obj_brushes:
         self.tinypen=('data/pen.png',(2,2))
 
 ####################################################################################################################
-# File Utilities
 
-class obj_savefile:
+# Data Manager: manages all data files
+# flieprogress: last unlocked chapter
+# filewords: dictionary of textinputs,textchoices written in the book of things (by the player)
+class obj_datamanager:
     def __init__(self):
-        self.filename='book/save.txt'# saved along with drawings
-        self.chapter=0# current chapter
-        self.load()
-    def save(self):
-        f1=open(self.filename,'w+')
-        f1.write('chapter,'+str(self.chapter)+'\n')# first line
-        f1.close()
-    def load(self):# load savefile (or set default parameters if doesnt exist)
-        if tool.pathexists('book/save.txt'):
-            f1=open(self.filename,'r+')
-            line=f1.readline()# chapter
-            line=line.split(",")
-            self.chapter=int(line[1])
-            f1.close()
-        else:
-            self.chapter=0
-    def eraseall(self):# erase all progress + drawings
+        self.fileprogress='book/progress.txt'
+        self.loadprogress()
+        self.filewords='book/words.txt'
+        self.loadwords()
+    def erasebook(self):
         files = tool.oslistdir('book')
         for i in files: tool.osremove('book/'+i)
-        self.load()# reload
-
-
-# Dictionary of textinputs,textchoices written in the book of things (by the player)
-class obj_savewords:
-    def __init__(self):# most entries are created during the game
-        self.filename='book/words.txt'# save file for all keywords
-        self.dict={}
-        self.load()# load savefile
-    def save(self):# save keywords to file
-        with open(self.filename,'w') as f1:
-            for i in self.dict.items():# iterate over tuples =(key,value)
+        self.chapter=0
+        self.dictwords={}
+        self.saveprogress()
+        self.savewords()
+    def getprogress(self):
+        return self.chapter# last chapter unlocked
+    def saveprogress(self):
+        with open(self.fileprogress,'w+') as f1:
+            f1.write('chapter,'+str(self.chapter)+'\n')# first line       
+    def loadprogress(self):
+        if tool.ospathexists(self.fileprogress):
+            with open(self.fileprogress,'r+') as f1:
+                line=f1.readline()# chapter
+                line=line.split(",")
+                self.chapter=int(line[1])
+        else:
+            self.chapter=0  
+    def updateprogress(self,chapter=None):
+        if chapter:
+            self.chapter=max(self.chapter,chapter)
+        self.saveprogress() 
+    def getwords(self):
+        return self.dictwords# dictionary of words=(key,value)
+    def getwordkeys(self):
+        return self.dictwords.keys()
+    def getword(self,wordkey):
+        return self.dictwords[wordkey]
+    def writeword(self,wordkey,wordvalue):
+        self.dictwords[wordkey]=wordvalue
+    def savewords(self):# save keywords to file
+        with open(self.filewords,'w') as f1:
+            for i in self.dictwords.items():# iterate over tuples =(key,value)
                 f1.write(str(i[0])+'\n')#key
                 f1.write(str(i[1])+'\n')#value
-    def load(self):# load keywords from file
-        if tool.pathexists(self.filename):
-            with open(self.filename,'r') as f1:
+    def loadwords(self):# load keywords from file
+        if tool.ospathexists(self.filewords):
+            self.dictwords={}
+            with open(self.filewords,'r') as f1:
                 matrix=f1.read().splitlines()
                 for i in range(int(len(matrix)/2)):# read alternated key,value on lines
-                    self.dict[matrix[i*2]]=matrix[i*2+1]
-    def eraseall(self):
-        self.dict={}
-        self.save()# write empty dictionary
+                    self.dictwords[matrix[i*2]]=matrix[i*2+1]
+        else:
+            self.dictwords={}
+            
+    
+
+
 
 ####################################################################################################################
 

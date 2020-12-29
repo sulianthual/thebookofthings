@@ -17,7 +17,6 @@
 ##########################################################
 
 import pygame
-# print(pygame.__file__)# file location
 #
 import share
 import tool
@@ -28,7 +27,7 @@ import tool
 # initialize game engine
 def initialize():
     pygame.init()# init all modules (we could select them if they are not all used)
-    # pygame.time.wait(200)# wait 200 ms (to let some modules like pygame.font initialize entirely)
+    pygame.time.wait(200)# wait 200 ms (to let some modules like pygame.font initialize entirely)
 
 # Quit Game Procedure
 class obj_quit:
@@ -69,31 +68,15 @@ class obj_windowicon:
         if tool.ospathexists('book/bookicon.png'):
             img=pygame.image.load('book/bookicon.png').convert()
         else:
-            img=pygame.image.load('data/booknoicon.png').convert()
+            img=pygame.image.load('book/booknoicon.png').convert()
         img.set_colorkey((255,255,255))# white
         share.display.seticon(img)    
-
-
-# Scene Manager: update current scene and switches between scenes 
-class obj_scenemanager:
-    def __init__(self):
-        self.scene=None# a scene object (called page in the book of things)
-    def switchscene(self,newscene,init=False):
-        self.scene=newscene
-        if init: self.scene.__init__()
-    def update(self,controls):
-        self.scene.update(controls)# Update current scene
-        if controls.quit: share.quitgame()
-        if controls.lctrl and controls.lctrlc: 
-            share.devmode = not share.devmode# toggle dev mode
-        if share.devmode and controls.mouse3 and controls.mouse3c:# print coordinates
-            print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
 
 
 # Display Manager
 class obj_display:
     def __init__(self):
-        self.setup()# initial setup (can be repeated on settings changes)        
+        self.setup()# initial setup (can be repeated on settings changes)
     def setup(self):
         share.screen.screen=pygame.display.set_mode((1280,720))# initialize display and buffer screen
         share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
@@ -105,17 +88,13 @@ class obj_display:
         pygame.display.quit()
         self.setup()
     def update(self):
-        pygame.display.update()# always refresh entire display
-        # pygame.display.update(share.screen.areas)# only refresh parts of the display
-        
+        pygame.display.update()# (could also update only rects with dirty sprites system)
 
-# Game buffer screen (sprites draw on it)
-# draws sprites and determines which display areas (rects) are updated 
-# (this is akin to the dirty sprites system from pygame)
+
+# Game Screen (sprites draw on it)
 class obj_screen:
     def __init__(self):
         self.screen=None
-        self.areas=[]# list of areas for display refresh (rectangles (x,y,width,heigth))
     def set_alpha(self,value):
         self.screen.set_alpha(value)
     def fillsurf(self,value):
@@ -138,14 +117,12 @@ class obj_screen:
             pygame.draw.line(self.screen,color,(xy[0]-radius,xy[1]-radius),(xy[0]+radius,xy[1]+radius),thickness)
             pygame.draw.line(self.screen,color,(xy[0]+radius,xy[1]-radius),(xy[0]-radius,xy[1]+radius),thickness) 
 
-
 ####################################################################################################################
-# Sprites 
+# Sprites (basis for any on-screen display)
+# a sprite object here is not directly a pygame sprite, although it can contain one
 
 # Sprite Template:
-# sprites are the basis for any on-screen display
 # sprites dont have an on-screen position xy (position is determined elsewhere)
-# sprites are NOT pygame sprites (although they may contain a pygame.surface)
 class obj_sprite:
     def __init__(self):
         self.type='sprite'
@@ -153,16 +130,18 @@ class obj_sprite:
 
 # background (entire screen)
 class obj_sprite_background(obj_sprite):
-    def __init__(self,color=(255,255,255)):
+    def __init__(self,color):
         super().__init__()
         self.spritetype='background'
         self.surf=None
         self.color=color
     def make(self):
-        self.surf=pygame.Surface(share.screen.screen.get_size())
-        self.surf.fill(self.color)
+        pass
     def display(self):
-        share.screen.fillsurf(self.color)    
+        share.screen.fillsurf(self.color)
+
+
+    
     
 # image sprite
 class obj_sprite_image(obj_sprite):
@@ -204,9 +183,6 @@ class obj_sprite_image(obj_sprite):
     def getrxry(self):
         term=self.surf.get_rect().size
         return (term[0]/2,term[1]/2)
-    def clear(self):
-        self.addtransparency()
-        self.surf.fill(self.colorkey)
     def blitfrom(self,sprite_source,xoffset,yoffset):
         self.surf.blit(sprite_source.surf,( int(xoffset),int(yoffset)) )
     def fill(self,color):
@@ -240,6 +216,7 @@ class obj_sprite_image(obj_sprite):
             self.rx,self.ry=self.getrxry()
     def display(self,x,y):# xy=(x,y) center of display
         xd,yd=x-self.getrx(),y-self.getry()# recompute
+        # xd,yd=x-self.rx,y-self.ry# no need to recompute if always up-to-date
         share.screen.drawsurf(self.surf,(int(xd),int(yd)))
 
 

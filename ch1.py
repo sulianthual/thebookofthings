@@ -16,8 +16,6 @@ import draw
 import page
 import actor
 import world
-#
-import menu
 
 ##########################################################
 ##########################################################
@@ -47,7 +45,7 @@ class obj_scene_chapter1(page.obj_chapterpage):
         textchoice.addkey('hero_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p1(self.creator)# next scene
+        share.scenemanager.switchscene(obj_scene_ch1p1())
         
 
 
@@ -60,9 +58,9 @@ class obj_scene_ch1p1(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('herolegs_stand',(640,360), legend='Hero Legs (Standing)') )
     def prevpage(self):
-        self.creator.scene=obj_scene_chapter1(self.creator)
+        share.scenemanager.switchscene(obj_scene_chapter1())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p2(self.creator)# next scene  
+        share.scenemanager.switchscene(obj_scene_ch1p2())
 
 
 class obj_scene_ch1p2(page.obj_chapterpage):
@@ -73,9 +71,9 @@ class obj_scene_ch1p2(page.obj_chapterpage):
         self.addpart( draw.obj_image('herolegs_stand',(340,360))  ) 
         self.addpart( draw.obj_drawing('herolegs_walk',(940,360),legend='Hero Legs (Walking)') )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p1(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch1p1())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p3(self.creator)# next scene 
+        share.scenemanager.switchscene(obj_scene_ch1p3())
                      
 
 class obj_scene_ch1p3(page.obj_chapterpage):
@@ -92,9 +90,9 @@ class obj_scene_ch1p3(page.obj_chapterpage):
     def page(self,controls):
         self.world.update(controls)
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p2(self.creator) 
+        share.scenemanager.switchscene(obj_scene_ch1p2())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p4(self.creator)  
+        share.scenemanager.switchscene(obj_scene_ch1p4())
             
         
 class obj_scene_ch1p4(page.obj_chapterpage):
@@ -112,9 +110,9 @@ class obj_scene_ch1p4(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('herohead_happy',(790,460),base=drawing,legend='Happy Face') )
         self.addpart( draw.obj_drawing('herohead_angry',(1090,460),base=drawing,legend='Angry Face') )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p3(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch1p3())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p5(self.creator)# next scene   
+        share.scenemanager.switchscene(obj_scene_ch1p5()) 
 
 
 class obj_scene_ch1p5(page.obj_chapterpage):
@@ -132,9 +130,9 @@ class obj_scene_ch1p5(page.obj_chapterpage):
     def page(self,controls):
         self.world.update(controls)
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p4(self.creator) 
+        share.scenemanager.switchscene(obj_scene_ch1p4())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p6(self.creator)   
+        share.scenemanager.switchscene(obj_scene_ch1p6())
                         
 
 class obj_scene_ch1p6(page.obj_chapterpage):
@@ -148,9 +146,9 @@ class obj_scene_ch1p6(page.obj_chapterpage):
         self.addpart( draw.obj_textinput('itemloved',15,(340,260),color=share.colors.itemloved,legend='Favorite Thing Name') )
         self.addpart( draw.obj_textinput('itemhated',15,(940,260),color=share.colors.itemhated,legend='Hated Thing Name') )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p5(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch1p5())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p7(self.creator)# next scene 
+        share.scenemanager.switchscene(obj_scene_ch1p7())
 
 
 class obj_scene_ch1p7(page.obj_chapterpage):
@@ -174,9 +172,9 @@ class obj_scene_ch1p7(page.obj_chapterpage):
     def page(self,controls):           
         self.world.update(controls)
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p6(self.creator) 
+        share.scenemanager.switchscene(obj_scene_ch1p6())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p8(self.creator) 
+        share.scenemanager.switchscene(obj_scene_ch1p8())
 
         
 class obj_scene_ch1p8(page.obj_chapterpage):
@@ -192,9 +190,9 @@ class obj_scene_ch1p8(page.obj_chapterpage):
         self.addpart( draw.obj_image('herolegs_stand',(240-100,570)) )
         self.addpart( draw.obj_textinput('weaponname',25,(650,260),color=share.colors.hero,legend='Weapon Name') )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p7(self.creator)
+        share.scenemanager.switchscene(obj_scene_ch1p7())
     def nextpage(self):
-        self.creator.scene=obj_scene_ch1p9(self.creator)# next scene 
+        share.scenemanager.switchscene(obj_scene_ch1p9())
         
         
 class obj_scene_ch1p9(page.obj_chapterpage):
@@ -214,9 +212,9 @@ class obj_scene_ch1p9(page.obj_chapterpage):
     def page(self,controls):
         self.world.update(controls)
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p8(self.creator) 
+        share.scenemanager.switchscene(obj_scene_ch1p8())
     def nextpage(self): 
-        self.creator.scene=obj_scene_ch1p10(self.creator)# next scene
+        share.scenemanager.switchscene(obj_scene_ch1p10())
             
 class obj_scene_ch1p10(page.obj_chapterpage):
     def setup(self):        
@@ -227,8 +225,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         animation.addimage('herohead_happy')
         self.addpart( animation )
     def prevpage(self):
-        self.creator.scene=obj_scene_ch1p9(self.creator) 
+        share.scenemanager.switchscene(obj_scene_ch1p9())
     def nextpage(self): 
-        share.savefile.chapter=max(share.savefile.chapter,2)# update progress to chapter 2
-        share.savefile.save()# save progress in file
+        share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
         super().nextpage()
