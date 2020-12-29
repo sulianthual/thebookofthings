@@ -96,16 +96,7 @@ class obj_testpage(page.obj_chapterpage):
         super().__init__()
     def presetup(self):
         super().presetup()
-        self.textkeys={'fontsize':'small','linespacing': 45}
-    def setup(self):
-        super().setup()
-    def postsetup(self):
-        super().postsetup()
-        self.pagenote.make('[Tab: Back]  [Enter: Back]')
-    def postpage(self,controls):# foreground
-        self.pagedisplay_fps.update()
-        self.pagenote.display()
-        self.pagetext.display()
+        self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def callprevpage(self,controls):# no browsing
         pass
     def callnextpage(self,controls):# no browsing
@@ -493,14 +484,15 @@ class obj_scene_testworld(obj_testpage):
                    'The world checks all rules, and the rules may check and modify actors (but the actors dont check on rules). ',\
                    'Here the world has an actor=hero, an actor=boundaries, and a rule=collision between the two ',\
                    '(that pushes back the hero). ',\
+                   'Move the hero around with [arrows] to test. ',\
                    '\nThere are several types of actors: simple actors (obj_actor), grand actors (obj_grandactor), ',\
                    'rigidbody actors (obj_rbodyactor),etc. One can make new actors as childs from the templates ',\
                    'but be careful with the init, setup, birth sequence (e.g. edit preferentially the setup). ',\
                    ]
         self.world=world.obj_world(self)# world template
         self.world.addrule('rule_world_bdry', world.obj_rule_bdry_bounces_rigidbody(self.world))# add rule: collision hero and bdry
-        self.bdry=actor.obj_actor_bdry(self.world)# actors adds themselves to world upon creation
-        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))
+        self.bdry=actor.obj_actor_bdry(self.world)# actors adds themselves to world upon creation   
+        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))# hero template
         self.hero.addpart("a textbox",draw.obj_textbox('Move with [arrows] or [WASD]',(640,680),fontsize='large'))
         self.hero.scale(0.5)
     def page(self,controls):

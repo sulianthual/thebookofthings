@@ -483,6 +483,8 @@ class obj_actor_goal_opendoor(obj_actor_goal_collideactors):
         self.actor1.show=True# hide hero
 
 
+####################################################################################################################
+
 # Boundary (basic actor)
 class obj_actor_bdry(obj_actor):# basic actor
     def __init__(self,creator,bounds=(100,1280-100,100,720-100),push=(3,-3,3,-3)):
@@ -492,12 +494,7 @@ class obj_actor_bdry(obj_actor):# basic actor
     def setup(self):
         super().setup()
         self.actortype='bdry'
-
-
-####################################################################################################################
-# World
-
-
+        
 # Door: open with hit, shuts on a timer
 class obj_actor_door(obj_grandactor):# not a rigidbody
     def setup(self):

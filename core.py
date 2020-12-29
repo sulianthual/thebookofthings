@@ -84,8 +84,7 @@ class obj_scenemanager:
     def update(self,controls):
         self.scene.update(controls)# Update current scene
         if controls.quit: share.quitgame()
-        if controls.lctrl and controls.lctrlc: 
-            share.devmode = not share.devmode# toggle dev mode
+        if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
         if share.devmode and controls.mouse3 and controls.mouse3c:# print coordinates
             print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
 
@@ -110,14 +109,14 @@ class obj_display:
         
 
 # Game buffer screen (sprites draw on it)
-# draws sprites and determines which display areas (rects) are updated 
-# (this is akin to the dirty sprites system from pygame)
+# draws sprites and determines which display areas (rects) are updated (WIP)
 class obj_screen:
     def __init__(self):
         self.screen=None
         self.areas=[]# list of areas for display refresh (rectangles (x,y,width,heigth))
     def set_alpha(self,value):
         self.screen.set_alpha(value)
+    ### draw calls
     def fillsurf(self,value):
         self.screen.fill(value)
     def drawsurf(self,surface,xy):#xy=top left
@@ -153,12 +152,12 @@ class obj_sprite:
 
 # background (entire screen)
 class obj_sprite_background(obj_sprite):
-    def __init__(self,color=(255,255,255)):
+    def __init__(self):
         super().__init__()
         self.spritetype='background'
         self.surf=None
+    def make(self,color):
         self.color=color
-    def make(self):
         self.surf=pygame.Surface(share.screen.screen.get_size())
         self.surf.fill(self.color)
     def display(self):
@@ -298,7 +297,6 @@ class obj_sprite_rect(obj_sprite):
         pass
     def display(self,color,rect):
         share.screen.drawrect(color,rect)
-
 
 
 # brush used for drawing (not rendered directly on screen)

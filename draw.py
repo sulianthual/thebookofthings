@@ -5,9 +5,10 @@
 # Game by sul
 # Started Sept 2020
 #
-# draw.py: game draws = main display objects that can be added to a page in the book
+# draw.py: game draws = any display object on a page in the book
 #         (drawing,textinput,textchoice,textbox,image,animation,dispgroup)
-#
+#         (pagebackground,pagefps,pagenumber,pagenote,pagetext)
+#         (only one not included here is the hitbox from actors)
 ##########################################################
 ##########################################################
 
@@ -15,7 +16,117 @@ import share
 import tool
 import core
 
+####################################################################################################################
+# page background
 
+class obj_pagebackground:
+    def __init__(self):
+        self.type='pagebackground'
+        self.sprite=core.obj_sprite_background()
+        self.color=(255,255,255)
+        self.make()
+    def make(self):
+        self.sprite.make(self.color)
+    def display(self):
+        self.sprite.display()
+    def update(self,controls):
+        self.display()
+
+
+####################################################################################################################
+# UI elements
+
+# display fps
+class obj_pagedisplay_fps: 
+    def __init__(self):
+        self.type='pagefps'
+        self.sprite=core.obj_sprite_text()
+        self.make()
+    def make(self):
+        text='FPS='+str(int(share.clock.getfps()))
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
+    def display(self):
+        self.sprite.display(50,20)
+    def update(self,controls):
+        self.make()# rebuild sprite every update
+        self.display()
+
+ 
+# display page number        
+class obj_pagedisplay_number:
+    def __init__(self):
+        self.type='pagenumber'
+        self.sprite=core.obj_sprite_text()
+        self.make()
+    def make(self):
+        text='Page '+str(share.ipage)
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))    
+    def display(self):
+        self.sprite.display(1190,680)
+    def update(self,controls):
+        self.display()
+
+# display recurrent page note        
+class obj_pagedisplay_note:
+    def __init__(self,text):
+        self.type='pagenote'
+        self.sprite=core.obj_sprite_text()
+        self.make(text)
+    def make(self,text):
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
+    def display(self):
+        self.sprite.display(1140,30)
+    def update(self,controls):
+        self.display()
+
+####################################################################################################################
+
+
+# Main body of text on a story page
+class obj_pagedisplay_text:
+    def __init__(self):
+        self.type='pagetext'
+        self.words_prerender=[]# list of words (sprites and positions)        
+    def make(self,textmatrix,pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
+        self.words_prerender=[]
+        formattextkwargs=share.datamanager.getwords()
+        if textmatrix: 
+            self.ipos=pos# text cursor position
+            for i in textmatrix:
+                if type(i) is str:
+                    text, color = i, (0,0,0)# input: text
+                else:
+                    text, color = i# input: (text,color)
+                text=tool.formattext(text,**formattextkwargs)
+                self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)    
+    def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
+        wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
+        space_width=font.size(' ')[0]# width of a space
+        x,y=pos# text position (top left corner)
+        if x<xmin: x==xmin
+        for count,line in enumerate(wordmatrix):
+            for word in line:                
+                word_surface=core.obj_sprite_text()# New sprite_text object for each word
+                word_surface.make(word,font,color)
+                word_width, word_height = 2*word_surface.getrx(),2*word_surface.getry()
+                if x + word_width >= xmax:
+                    x = xmin
+                    y += linespacing
+                self.words_prerender.append( (word_surface,(x+word_width/2,y+word_height/2)) )# record prerendered text
+                x += word_width + space_width
+            # return to line from user
+            if count<len(wordmatrix)-1:
+                x = xmin
+                y += linespacing        
+        return x,y# return position for next call  
+    def display(self):
+        for i in self.words_prerender:
+            word_surface, xy=i
+            word_surface.display(xy[0],xy[1])
+    def update(self,controls):
+        self.display()
+        
+        
 ####################################################################################################################
 
 # A drawing (image to edit interactively by the player)
