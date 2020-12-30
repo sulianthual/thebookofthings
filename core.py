@@ -185,12 +185,12 @@ class obj_sprite_image(obj_sprite):
             else:
                 self.surf=pygame.image.load(path)
             self.addtransparency()
-            self.rx,self.ry=self.getrxry()
+            # self.rx,self.ry=self.getrxry()
             return True# load succeeded
         elif failsafe:
             self.surf=pygame.image.load('data/error.png').convert()
             self.addtransparency()
-            self.rx,self.ry=self.getrxry()
+            # self.rx,self.ry=self.getrxry()
             return True
         else:
             return False# load failed
@@ -220,16 +220,16 @@ class obj_sprite_image(obj_sprite):
                 termx=self.getrx()*2*scaling
                 termy=self.getry()*2*scaling
                 self.surf=pygame.transform.scale(self.surf, (int(termx),int(termy)) )
-                self.rx,self.ry=self.getrxry()
+                # self.rx,self.ry=self.getrxry()
         else:
                 self.surf=pygame.transform.scale(self.surf, (int(scaling[0]),int(scaling[1])) )
-                self.rx,self.ry=self.getrxry()
+                # self.rx,self.ry=self.getrxry()
     def rotate(self,angle):# returns position offset from rotation
         if angle !=0:
             xold,yold=self.surf.get_rect().center
             self.surf=pygame.transform.rotate(self.surf,int(angle))
             xnew,ynew=self.surf.get_rect().center
-            self.rx,self.ry=self.getrxry()
+            # self.rx,self.ry=self.getrxry()
             return xold-xnew,yold-ynew
         else:
             return 0,0
@@ -237,10 +237,11 @@ class obj_sprite_image(obj_sprite):
         angle= int(round(angle%360/90,0)*90)# (in 0,90,180,270)
         if angle !=0:
             self.surf=pygame.transform.rotate(self.surf,int(angle))
-            self.rx,self.ry=self.getrxry()
+            # self.rx,self.ry=self.getrxry()
     def display(self,x,y):# xy=(x,y) center of display
         xd,yd=x-self.getrx(),y-self.getry()# recompute
-        share.screen.drawsurf(self.surf,(int(xd),int(yd)))
+        # xd,yd=x-self.rx,y-self.ry# if always up to date
+        share.screen.drawsurf(self.surf,(int(xd),int(yd)))# top left needed (CHANGE IT?)
 
 
 # text=like an image but with prerender

@@ -375,6 +375,36 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         self.weapon.yoff *= s
 
 
+# Hero can face one of four directions, including up or down (only one at a time)
+class obj_actor_hero_v5(obj_actor_hero_v4):
+    def setup(self):
+        super().setup()
+        self.facingup=False
+        self.facingdown=False
+        self.turningup=False
+        self.turningdown=False
+        # term=draw.obj_image('herohead',(640,360))
+        # term.rotate(45)
+        # term.save('herohead_up')
+        # term=draw.obj_image('herohead',(640,360))
+        # term.rotate(-45)
+        # term.save('herohead_down')
+
+    def update(self,controls):
+        super().update(controls)
+        self.controls_moveupdown(controls)
+    def controls_moveupdown(self,controls):
+    
+        if (controls.a and controls.ac) or (controls.d and controls.dc)\
+            or (controls.left and controls.leftc) or (controls.right and controls.rightc): 
+            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead',0)  
+        
+        # up down should be overwritten by left/right
+        if (controls.w and controls.wc) or (controls.up and controls.upc): 
+            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_up',0)
+        if (controls.s and controls.sc) or (controls.down and controls.downc): 
+            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_down',0)                
+
 ####################################################################################################################
 
 

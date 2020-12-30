@@ -345,27 +345,31 @@ class obj_scene_testimage(obj_testpage):
         self.text=['Image Basics: ',\
             'Test transformations here like move [Arrows], flip [q,e], scale [w,s], rotate90 [a,d], reset [space]. ',\
             'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
-            'An image fill is an image of single color (preferentially the background) used to make layering. ',\
+            'An imagefill is an image of single color (preferentially the background) used to make layering. ',\
+            'Press [r]: Image can quickly be saved and loaded which includes the transformations. ',\
                    ]
-        self.addpart( draw.obj_image('testimage1',(440,420), scale=2) )# (can also scale at creation)
-        self.image=draw.obj_image('testimage2',(840,420))
-        self.addpart(self.image)
+        self.image1=draw.obj_image('testimage1',(440,420), scale=2)# (can scale at creation)
+        self.image2=draw.obj_image('testimage2',(840,420))
+        # layering
+        self.addpart(self.image2)
         self.addpart(draw.obj_imagefill((share.colors.background,200,300),(260,360)))# filler on top
-        self.dx=5# move rate with controls
-        self.dy=5# move rate
+        self.addpart(self.image1)
     def page(self,controls):
-        if controls.right: self.image.movex(self.dx)
-        if controls.left: self.image.movex(-self.dx)
-        if controls.up: self.image.movey(-self.dy)
-        if controls.down: self.image.movey(self.dy)
-        if controls.e and controls.ec: self.image.fliph()# tests
-        if controls.q and controls.qc: self.image.flipv()# tests        
-        if controls.a and controls.ac: self.image.rotate90(90)
-        if controls.d and controls.dc: self.image.rotate90(-90)
-        if controls.w and controls.wc: self.image.scale(2)
-        if controls.s and controls.sc: self.image.scale(0.5)
-        if controls.space and controls.spacec: self.image.setup()
-        if controls.f and controls.fc: self.image.rotate(45)
+        if controls.right: self.image2.movex(5)
+        if controls.left: self.image2.movex(-5)
+        if controls.up: self.image2.movey(-5)
+        if controls.down: self.image2.movey(5)
+        if controls.e and controls.ec: self.image2.fliph()# tests
+        if controls.q and controls.qc: self.image2.flipv()# tests        
+        if controls.a and controls.ac: self.image2.rotate90(90)
+        if controls.d and controls.dc: self.image2.rotate90(-90)
+        if controls.w and controls.wc: self.image2.scale(2)
+        if controls.s and controls.sc: self.image2.scale(0.5)
+        if controls.space and controls.spacec: self.image2.setup()
+        if controls.f and controls.fc: self.image2.rotate(45)
+        if controls.r and controls.rc: # save and load
+            self.image2.save('testimage1')
+            self.image1.load('testimage1')
 
 
 

@@ -201,16 +201,15 @@ class obj_scene_ch1p9(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' could strike in the direction ',('{hero_he}',share.colors.hero),\
                    ' was facing, by using [Left Mouse] or [Space]. ',\
                    ]
-        self.world=world.obj_world_ch1(self)
-        hero=actor.obj_actor_hero_v4(self.world,(640,360))
+        ww=world.obj_world_ch1(self)
+        hero=actor.obj_actor_hero_v4(ww,(640,360))
         hero.addpart("instructions", draw.obj_textbox('Strike with [Left Mouse] or [Space]',(640,680)) )
         hero.scale(0.5)# scale actor hero
         for i in [150,350]:
             for j in [240,440,640]:
-                term=actor.obj_actor_item_loved(self.world,(i,j),scale=0.5)
-                term=actor.obj_actor_item_hated(self.world,(1280-i,j),scale=0.5)# 
-    def page(self,controls):
-        self.world.update(controls)
+                term=actor.obj_actor_item_loved(ww,(i,j),scale=0.5)
+                term=actor.obj_actor_item_hated(ww,(1280-i,j),scale=0.5)
+        self.addpart( ww )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p8())
     def nextpage(self): 

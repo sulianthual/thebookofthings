@@ -58,6 +58,7 @@ class obj_scene_ideamenu(page.obj_page):
             
     def loadtests(self):# load all tests 
         # developper
+        self.list.append(obj_scene_ideatodo())    
         self.list.append(obj_scene_idea1())    
         self.list.append(obj_scene_idea2())     
         self.list.append(obj_scene_idea3())    
@@ -90,18 +91,34 @@ class obj_ideapage(page.obj_chapterpage):
 #########################################################################
 #########################################################################
 
+class obj_scene_ideatodo(obj_ideapage):
+    def setup(self):       
+        self.name='Todo List'  
+        self.text=['Todo List:',\
+                   '\nx) Hero house=museum (artifact recurrent in world), laboratory (critters reccurent in world), no bedroom, no outside view. ',\
+                   '\nx) Combat and enemies should follow simple game style like zelda lttp',\
+                   '\nx) Ability to make drawings without shadows (just give the dimensions)',\
+                   '\nx) Make custom critters in the lab: use classmethods to build from template what methods they have',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   ] 
+        self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
 
 class obj_scene_idea1(obj_ideapage):
     def setup(self):       
-        self.name='Sunrise p1'  
+        self.name='Sunrise'  
         self.text=['draw',\
                    ] 
         self.addpart( draw.obj_drawing('sun',(640,210),legend='The Sun') )
         self.addpart( draw.obj_drawing('horizon',(640,560),legend='The Horizon') )
-
-
-    
-class obj_scene_idea2(obj_ideapage):
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_idea1p2())  
+class obj_scene_idea1p2(obj_ideapage):
     def setup(self):         
         self.name='Sunrise p2'
         self.text=['sunrise (using an imagefill)',\
@@ -109,11 +126,10 @@ class obj_scene_idea2(obj_ideapage):
         self.addpart( draw.obj_animation('sunrise','sun',(640,210),record=True) )
         
         self.addpart(draw.obj_imagefill((share.colors.background,630,100),(640,670)))# filler
-        self.addpart( draw.obj_image('horizon',(640,560)) )
-    
+        self.addpart( draw.obj_image('horizon',(640,560)) )  
     
 
-class obj_scene_idea3(obj_ideapage):
+class obj_scene_idea2(obj_ideapage):
     def setup(self):       
         self.name='Talking '  
         self.text=['Hero talks',\
@@ -123,34 +139,53 @@ class obj_scene_idea3(obj_ideapage):
         self.addpart(animation)
     
 
+class obj_scene_idea3(obj_ideapage):
+    def setup(self):       
+        self.name='Critter'  
+        self.text=['create a critter',\
+                   ] 
+        self.addpart( draw.obj_drawing('critter1',(340,360),legend='Critter') )
+        self.addpart( draw.obj_drawing('critter1_strike',(940,360),legend='Critter Strike') )
+
+
 class obj_scene_idea4(obj_ideapage):
     def setup(self):       
-        self.name='Critter 1'  
-        self.text=['comment here',\
+        self.name='Critter behavior'  
+        self.text=['what critter does',\
                    ] 
-        self.addpart( draw.obj_drawing('critter1',(640,360),legend='Critter') )
-    
+        self.addpart( draw.obj_image('critter1',(640,560)) )
+
 
 class obj_scene_idea5(obj_ideapage):
     def setup(self):       
-        self.name='Todo'  
-        self.text=['animation sync. what if sync to existing without recording?',\
+        self.name='Hero hits up and down too'  
+        self.text=['could hero hit up and down like ZLTTP.',\
+                   'it should then have 4 facing directions (and ability to stay in them). ',\
+                   'and we should be able to tell when facing up or down (maybe rotate the head?). ',\
+                   'not working because replace image in animation with different size ',\
                    ] 
-        self.addpart( draw.obj_image('horizon',(640,560)) )
-    
+        ww=world.obj_world_ch1(self)
+        hero=actor.obj_actor_hero_v5(ww,(640,360))# with up and down
+        hero.addpart("instructions", draw.obj_textbox('Strike with [Left Mouse] or [Space]',(640,680)) )
+        hero.scale(0.5)# scale actor hero
+        self.addpart( ww ) 
 
 class obj_scene_idea6(obj_ideapage):
     def setup(self):       
-        self.name='Idea'  
-        self.text=['comment here',\
+        self.name='Save new image'  
+        self.text=['save image from existing one (works)',\
+                   '. ',\
                    ] 
-        self.addpart( draw.obj_image('horizon',(640,560)) )
+        a=draw.obj_image('herohead',(640,360))
+        a.rotate(45)
+        a.save('herohead_r45')
     
 
 class obj_scene_idea7(obj_ideapage):
     def setup(self):       
         self.name='Idea'  
         self.text=['comment here',\
+                   '. ',\
                    ] 
         self.addpart( draw.obj_image('horizon',(640,560)) )
     
@@ -159,6 +194,7 @@ class obj_scene_idea8(obj_ideapage):
     def setup(self):       
         self.name='Idea'  
         self.text=['comment here',\
+                   '. ',\
                    ] 
         self.addpart( draw.obj_image('horizon',(640,560)) )
     
@@ -167,6 +203,7 @@ class obj_scene_idea9(obj_ideapage):
     def setup(self):       
         self.name='Idea'  
         self.text=['comment here',\
+                   '. ',\
                    ] 
         self.addpart( draw.obj_image('horizon',(640,560)) )
     
@@ -175,6 +212,7 @@ class obj_scene_idea10(obj_ideapage):
     def setup(self):       
         self.name='Idea'  
         self.text=['comment here',\
+                   '. ',\
                    ] 
         self.addpart( draw.obj_image('horizon',(640,560)) )
         

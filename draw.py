@@ -473,12 +473,14 @@ class obj_image:
         self.show=True# show or not (can be toggled)
         # sprite
         self.sprite=core.obj_sprite_image()# sprite
-        self.makesprite()
+        self.load(self.name)
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
-    def makesprite(self):
-        self.sprite.load('book/'+self.name+'.png')
+    def load(self,name):
+        self.sprite.load('book/'+name+'.png')
+    def save(self,name):
+        self.sprite.save('book/'+name+'.png')
     def replaceimage(self,name):
         self.name=name
         self.sprite.load('book/'+name+'.png')
@@ -541,14 +543,16 @@ class obj_image:
 # An image filler with a single color
 class obj_imagefill(obj_image):
     def __init__(self,data,xy,scale=1):
-        self.color,self.rx,self.ry=data
+        color,termx,termy=data
         super().__init__('imagefill',xy,scale=scale)
-    def makesprite(self):
-        self.sprite.makeempty(self.rx,self.ry)
-        self.sprite.fill(self.color)
+        self.sprite.makeempty(termx,termy)
+        self.sprite.fill(color)
+    def load(self,name):# cant load
+        pass
+    def save(self,name):# cant save
+        pass
     def replaceimage(self,name):# cant replace
         pass
-
 
     
 
@@ -654,7 +658,8 @@ class obj_animation:
             self.isprite = ia
             if ia>len(self.spritelist)-1: ia=0
             if ia<0: ia=len(self.spritelist)-1
-            self.sprite.makeempty(self.rx,self.ry)
+            termx,termy=self.spritelist[ia].getrxry()
+            self.sprite.makeempty(termx,termy)
             self.sprite.blitfrom(self.spritelist[ia],0,0)
             # transformations
             self.sprite.flip(fha,fva)
