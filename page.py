@@ -88,20 +88,23 @@ class obj_chapterpage(obj_page):
             self.endpage()# customized
             share.ipage -= 1
             self.prevpage()# switch to prev page
+    def callexitpage(self,controls):
+        if controls.esc and controls.esc: # go back to main menu
+            self.preendpage()# template
+            self.endpage()# customized
+            share.ipage = 1
+            self.exitpage()
     def callnextpage(self,controls):
         if controls.enter and controls.enterc: 
             self.preendpage()# template
             self.endpage()# customized
             share.ipage += 1
             self.nextpage()# switch to next page
-    def callexitpage(self,controls):
-        if controls.esc and controls.esc: # go back to main menu
-            self.preendpage()# template
-            self.endpage()# customized
-            share.scenemanager.switchscene(share.titlescreen,init=True)
     def endpage(self):# when exit page 
         pass
     def prevpage(self):# actions to prev page (replace here)**
+        share.scenemanager.switchscene(share.titlescreen,init=True)
+    def exitpage(self):
         share.scenemanager.switchscene(share.titlescreen,init=True)
     def nextpage(self):# actions to next page (replace here)**
         share.scenemanager.switchscene(share.titlescreen,init=True)

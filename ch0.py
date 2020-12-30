@@ -85,8 +85,7 @@ class obj_scene_ch0p5(page.obj_chapterpage):
                    'They danced together all day.',\
                    ]
         animation1=draw.obj_animation('penmove2','pen',(640,360))
-        animation2=draw.obj_animation('erasermove','eraser',(640,360))
-        animation2.sequence.maxlength=animation1.sequence.length# same length
+        animation2=draw.obj_animation('erasermove','eraser',(640,360),sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
     def prevpage(self):
@@ -101,9 +100,8 @@ class obj_scene_ch0p6(page.obj_chapterpage):
                    'And when there would be nothing again, it was unclear how the eraser would be erased.',\
                    ' But it didnt matter much right now because there were many more things to draw and erase.',\
                    ]
-        animation1=draw.obj_animation('penmove2a','pen',(640,360))# start animation
-        animation2=draw.obj_animation('erasermovea','eraser',(640,360))# start animation
-        animation2.sequence.maxlength=animation1.sequence.length# same length
+        animation1=draw.obj_animation('penmove2a','pen',(640,360))
+        animation2=draw.obj_animation('erasermovea','eraser',(640,360),sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
     def prevpage(self):

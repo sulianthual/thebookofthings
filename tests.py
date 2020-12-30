@@ -19,7 +19,7 @@ import page
 import actor
 import world
 #
-import menu
+import ideas
 
 ##########################################################
 ##########################################################
@@ -29,10 +29,13 @@ class obj_scene_testmenu(page.obj_page):
     def __init__(self):
         super().__init__()
     def setup(self):
+        super().setup()  
+        share.ipage=1# current page number in chapter     
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
         self.addpart(draw.obj_textbox('Appendix Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
+        self.addpart(draw.obj_textbox('[Space: Appendix Ideas]',(1120,700),fontsize='smaller'))
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
@@ -52,10 +55,14 @@ class obj_scene_testmenu(page.obj_page):
         if (controls.w and controls.wc) or (controls.up and controls.upc): 
             share.itest -= 1
             if share.itest == -1: share.itest=self.listlen-1
-        if (controls.tab  and controls.tabc) or (controls.esc and controls.escc): 
-            share.scenemanager.switchscene(share.titlescreen,init=True)
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.itest],init=True)
+        if controls.esc and controls.escc: 
+            share.scenemanager.switchscene(share.titlescreen)   
+        if controls.space and controls.spacec: 
+            share.scenemanager.switchscene(ideas.obj_scene_ideamenu())
+
+
     def loadtests(self):# load all tests 
         # developper
         self.list.append(obj_scene_testmessage())       
@@ -97,19 +104,12 @@ class obj_testpage(page.obj_chapterpage):
     def presetup(self):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
-    def callprevpage(self,controls):# no browsing
-        pass
-    def callnextpage(self,controls):# no browsing
-        pass
-    def callexitpage(self,controls):
-        if (controls.tab  and controls.tabc) or (controls.enter  and controls.enterc) or (controls.esc and controls.escc):
-            self.preendpage() 
-            self.endpage()
-            share.scenemanager.switchscene(obj_scene_testmenu())
     def prevpage(self):# no browsing
-        pass
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def exitpage(self):
+        share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):# no browsing
-        pass     
+        share.scenemanager.switchscene(obj_scene_testmenu())  
 
         
 #########################################################################
@@ -119,8 +119,9 @@ class obj_testpage(page.obj_chapterpage):
 # quickdraft animations (do it quickly here)
 class obj_scene_testdraftanimation(obj_testpage):
     def setup(self):
-        self.name='QuickDraft Animation'       
-        self.text=['QuickDraft Animation: [Space] Toggle Record Mode.']
+        self.name='QuickDraft Animation'   
+        self.text=[(self.name,share.colors.red),': ',\
+                   '[Space] Toggle Record Mode.']
         #
         animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
         # animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360),record=True)
@@ -134,8 +135,8 @@ class obj_scene_testdraftanimation(obj_testpage):
 
 class obj_scene_testmessage(obj_testpage):
     def setup(self):
-        self.name='Message from the Developer'       
-        self.text=['Message from the Developer: ',\
+        self.name='Message from the Developer' 
+        self.text=[(self.name,share.colors.red),': ',\
                    '\n\nThis is an appendix for tests by the Game Developer. ',\
                    'If you are not the Game Developer get out of here!',\
                    ]
@@ -144,22 +145,21 @@ class obj_scene_testmessage(obj_testpage):
 
 class obj_scene_testdevnotes(obj_testpage):
     def setup(self):
-        self.name='Developper Notes'      
-        self.text=[
-            'Developper Notes:',\
-            ('\n\nFile Structure: ',share.colors.red),\
-            'main=execute program. ',\
-            'share=store global variables. ',\
-            'core=game engine (all pygame elements there)',\
-            'tool=basic functions (link external libraries there like math,os...). ',\
-            'page=elements that build a page in the book. ',\
-            'draw=draws that can be displayed on a page. ',\
-            '(drawing, textinput, textchoice, textbox, image, animation, dispgroup). ',\
-            'world=worlds that can be displayed on a page (and their rules). ',\
-            'actor=actors that can be added to worlds. ',\
-            'menu=main menus pages. ',\
-            'ch0,ch1,ch2...=book chapters pages. ',\
-            'tests=developper tests menu and pages. ',\
+        self.name='Developper Notes' 
+        self.text=[(self.name,share.colors.red),': ',\
+                   ('\n\nFile Structure: ',share.colors.red),\
+                    'main=execute program. ',\
+                    'share=store global variables. ',\
+                    'core=game engine (all pygame elements there)',\
+                    'tool=basic functions (link external libraries there like math,os...). ',\
+                    'page=elements that build a page in the book. ',\
+                    'draw=draws that can be displayed on a page. ',\
+                    '(drawing, textinput, textchoice, textbox, image, animation, dispgroup). ',\
+                    'world=worlds that can be displayed on a page (and their rules). ',\
+                    'actor=actors that can be added to worlds. ',\
+                    'menu=main menus pages. ',\
+                    'ch0,ch1,ch2...=book chapters pages. ',\
+                    'tests=developper tests menu and pages. ',\
                    ]
 
         
@@ -400,17 +400,17 @@ class obj_scene_testanimation(obj_testpage):
 # Scene: test animation alongside animation
 class obj_scene_testanimationanimation(obj_testpage):
     def setup(self):
-        self.name='Animation alongside'      
-        self.text=['Animation alongside: An animation can be alongside anything. ',\
-                   'But if animation is alongside drawing it should not be editable. ',\
-                   'If two animations are alongside only one should be editable. ',\
-                   'To ensure both animations have same duration: ',\
-                   'set sequence maxlength to length of other, and record for that duration. ',\
-                   '(then return to this page to see both animations in sync). ',\
+        self.name='Animation Sync'  
+        self.text=[(self.name,share.colors.red),': ',\
+                   'Only one animation per page should be recordable. ',\
+                   'Use \"sync\" to ensure an animation has the same duration as a reference one. ',\
+                   'If a new animation, the recording will stop once reference length has been reached ',\
+                   '(try it here and refresh the page to see the correct sync). ',\
+                   'If an existing animation, it will load only up to the reference length ',\
+                   '(try recording a shorter reference animation then come back to this page). ',\
                    ]
         animation1=draw.obj_animation('testanimation1','testimage1',(340,360))# cannot edit
-        animation2=draw.obj_animation('testanimation2','testimage2',(940,360),record=True)# can edit
-        animation2.sequence.maxlength=animation1.sequence.length# set same length
+        animation2=draw.obj_animation('testanimation2','testimage2',(940,360),record=True,sync=animation1)# can edit
         self.addpart(animation1)
         self.addpart(animation2)
 
@@ -418,8 +418,8 @@ class obj_scene_testanimationanimation(obj_testpage):
 # Scene: test create/show animation
 class obj_scene_testanimationplayback(obj_testpage):
     def setup(self):
-        self.name='Animation Playback'       
-        self.text=['Animation Playback: ',\
+        self.name='Animation Playback' 
+        self.text=[(self.name,share.colors.red),': ',\
                    'During playback, animation accepts permanent changes: move,flip, scale, rotate90,rotate. ',\
                    'use rotate sparingly (enlargens leading to potential memory issues). ',\
                    'Always record animation WITHOUT any permanent changes. ',\

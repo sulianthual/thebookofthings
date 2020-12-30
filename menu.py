@@ -20,7 +20,6 @@ import actor
 import world
 #
 import tests
-import chi
 import ch0
 import ch1
 import ch2
@@ -63,7 +62,6 @@ class obj_scene_titlescreen(page.obj_page):
         # devtools
         self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
         self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
-        self.addpart(draw.obj_textbox('[Tab: Chapter What -- Ideas]',(640,700),fontsize='smaller'))
 
     def setup(self):
         super().setup()
@@ -108,12 +106,11 @@ class obj_scene_titlescreen(page.obj_page):
                     share.scenemanager.switchscene(ch1.obj_scene_chapter1())
                 elif self.ichapter==2:
                     share.scenemanager.switchscene(ch2.obj_scene_chapter2())     
-        if controls.space and controls.spacec: 
-            share.scenemanager.switchscene(tests.obj_scene_testmenu())
-        if controls.tab and controls.tabc: 
-            share.scenemanager.switchscene(chi.obj_scene_chapterideas())
         if controls.esc and controls.escc: 
             share.quitgame()
+        if controls.space and controls.spacec: 
+            share.scenemanager.switchscene(tests.obj_scene_testmenu())
+
             
 
 ####################################################################################################################

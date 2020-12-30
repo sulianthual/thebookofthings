@@ -557,13 +557,17 @@ class obj_imagefill(obj_image):
 # Animate an image on screen
 # Animation=base sprite  + temporal sequence of transformations (cyclic)
 class obj_animation:
-    def __init__(self,name,imgname,xy,record=False,scale=1):
+    def __init__(self,name,imgname,xy,record=False,scale=1,sync=None):
         self.type='animation'
         self.name=name# animation name
         self.imgname=imgname# reference image (more can be added)
         self.xini=xy[0]
         self.yini=xy[1]
         self.record=record# ability to record sequence
+        if sync:# sync sequence length to other animation object
+            self.maxlength=sync.sequence.length
+        else:
+            self.maxlength=None
         self.setup()
         if scale != 1: self.scale(scale)
     def setup(self):
@@ -582,7 +586,7 @@ class obj_animation:
         self.sprite=core.obj_sprite_image()# the one that is played
         self.sprite.makeempty(self.rx,self.ry)
         # sequence
-        self.sequence=obj_animationsequence(self,self.name,(self.xini,self.yini),self.record)
+        self.sequence=obj_animationsequence(self,self.name,(self.xini,self.yini),self.record,maxlength=self.maxlength)
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
@@ -693,23 +697,23 @@ class obj_animation:
 
 # Animation sequence (vector of time-transformations)
 class obj_animationsequence:
-    def __init__(self,creator,name,xy,record):
+    def __init__(self,creator,name,xy,record,maxlength=None):
         self.type='animationsequence'
         self.creator=creator# created by obj_animation
         self.name=name# sequence name (same as animation)
         self.xini=xy[0]# reference position (needed to track mouse)
         self.yini=xy[1]
         self.record=record# ability to record sequence (bool)
+        self.maxlength=maxlength# sequence max number of frames (None=unlimited)
         self.setup()
     def setup(self):
         self.recording=False# record or playback mode
-        self.maxlength=None# sequence max number of frames (None=unlimited)
         self.bscal=1.01# base for scaling = bscal**sa
         # sequence data
         self.data=[]
         self.length=0
         self.clearsequence()
-        self.loadsequence()
+        self.loadsequence(maxlength=self.maxlength)
     def clearsequence(self):
         self.data=[]# sequence data
         self.length=0
@@ -779,8 +783,9 @@ class obj_animationsequence:
                 line +=','+str(self.data[i][7])# ia
                 line +='\n'
                 f1.write(line)
-    def loadsequence(self):
+    def loadsequence(self,maxlength=None):
         self.data=[]
+        term=0
         if tool.ospathexists('animations/'+self.name+'.txt'):
             with open('animations/'+self.name+'.txt','r+') as f1:
                 line=f1.readline()# first line skip
@@ -805,6 +810,9 @@ class obj_animationsequence:
                         vect.append(float(line[6]))# sa
                         vect.append(int(line[7]))# ia
                         self.data.append(vect)
+                        term += 1
+                        if maxlength and term>maxlength-1: 
+                            break
         self.length=len(self.data)
 
 

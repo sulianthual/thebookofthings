@@ -36,7 +36,7 @@ class obj_actor:
         self.creator.addactor(self)# add self to world list of actors
     def kill(self):# remove from world
         self.creator.removeactor(self)
-    def update(self,controls):
+    def update( self ,controls):
         pass
 
 
@@ -73,7 +73,7 @@ class obj_grandactor():
         # elements
         self.dict={}
         self.dictx={}# relative position
-        self.dicty={}        
+        self.dicty={}
         # devtools
         self.devrect=core.obj_sprite_rect()
     def birth(self):# add to world
@@ -88,10 +88,10 @@ class obj_grandactor():
         self.dicty[name]= int( element.yini - self.yini )
     def removepart(self,name):# remove element
         for i in [self.dict, self.dictx, self.dicty]: i.pop(name,None)
-    def movetox(self,x): 
+    def movetox(self,x):
         self.x=x
         for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
-    def movetoy(self,y): 
+    def movetoy(self,y):
         self.y=y
         for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
     def movex(self,dx):
@@ -108,36 +108,36 @@ class obj_grandactor():
         self.dict[name].movetoy(self.y + self.dicty[name])
     def fliph(self):# horizontal
         self.fh=not self.fh
-        for i in self.dict.keys(): 
+        for i in self.dict.keys():
             self.dict[i].fliph()
-            self.symh(i)  
-    def ifliph(self):# to inverted    
+            self.symh(i)
+    def ifliph(self):# to inverted
         if not self.fh:
             self.fh=True
-            for i in self.dict.keys(): 
+            for i in self.dict.keys():
                 self.dict[i].ifliph()
-                self.symh(i)                  
+                self.symh(i)
     def ofliph(self):# to original
         if self.fh:
             self.fh=False
-            for i in self.dict.keys(): 
+            for i in self.dict.keys():
                 self.dict[i].ofliph()
-                self.symh(i)    
+                self.symh(i)
     def flipv(self):# vertical
         self.fv=not self.fv
-        for i in self.dict.keys(): 
+        for i in self.dict.keys():
             self.dict[i].flipv()
-            self.symv(i) 
-    def iflipv(self):# to inverted    
+            self.symv(i)
+    def iflipv(self):# to inverted
         if not self.fv:
             self.fv=True
-            for i in self.dict.keys(): 
+            for i in self.dict.keys():
                 self.dict[i].iflipv()
-                self.symv(i)   
+                self.symv(i)
     def oflipv(self):# to original
         if self.fv:
             self.fv=False
-            for i in self.dict.keys(): 
+            for i in self.dict.keys():
                 self.dict[i].oflipv()
                 self.symv(i)
     def scale(self,s):
@@ -494,7 +494,7 @@ class obj_actor_bdry(obj_actor):# basic actor
     def setup(self):
         super().setup()
         self.actortype='bdry'
-        
+
 # Door: open with hit, shuts on a timer
 class obj_actor_door(obj_grandactor):# not a rigidbody
     def setup(self):

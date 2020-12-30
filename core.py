@@ -8,11 +8,11 @@
 # core.py: game core (most essential elements)
 #
 # Any direct call to the pygame module (currently version 1.9.4) must be here.
-# 
+#
 # Why?
 # - We can improve the game engine more easily (e.g. switch to dirty sprites)
 # - If we wanted to change the game engine from pygame we could do it more easily here.
-# 
+#
 ##########################################################
 ##########################################################
 
@@ -64,17 +64,17 @@ class obj_windowicon:
         if tool.ospathexists('book/book.png'):
             img=pygame.image.load('book/book.png').convert()
             img=pygame.transform.scale(img,(36,42))
-            pygame.image.save(img,'book/bookicon.png') 
+            pygame.image.save(img,'book/bookicon.png')
     def seticon(self):
         if tool.ospathexists('book/bookicon.png'):
             img=pygame.image.load('book/bookicon.png').convert()
         else:
             img=pygame.image.load('data/booknoicon.png').convert()
         img.set_colorkey((255,255,255))# white
-        share.display.seticon(img)    
+        share.display.seticon(img)
 
 
-# Scene Manager: update current scene and switches between scenes 
+# Scene Manager: update current scene and switches between scenes
 class obj_scenemanager:
     def __init__(self):
         self.scene=None# a scene object (called page in the book of things)
@@ -92,7 +92,7 @@ class obj_scenemanager:
 # Display Manager
 class obj_display:
     def __init__(self):
-        self.setup()# initial setup (can be repeated on settings changes)        
+        self.setup()# initial setup (can be repeated on settings changes)
     def setup(self):
         share.screen.screen=pygame.display.set_mode((1280,720))# initialize display and buffer screen
         share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
@@ -106,7 +106,7 @@ class obj_display:
     def update(self):
         pygame.display.update()# always refresh entire display
         # pygame.display.update(share.screen.areas)# only refresh parts of the display
-        
+
 
 # Game buffer screen (sprites draw on it)
 # draws sprites and determines which display areas (rects) are updated (WIP)
@@ -123,23 +123,23 @@ class obj_screen:
         self.screen.blit(surface, (int(xy[0]),int(xy[1])) )
     def drawline(self,color,xy1,xy2,thickness=3):
         pygame.draw.line(self.screen,color,xy1,xy2,thickness)
-    def drawrect(self,color,rect,thickness=3,fill=False):        
+    def drawrect(self,color,rect,thickness=3,fill=False):
         x,y,width,height=rect
         if fill:
             pygame.draw.rect(self.screen, color, (int(x-width/2), int(y-height/2), int(width), int(height)), 0)
         else:
-            pygame.draw.rect(self.screen, color, (int(x-width/2), int(y-height/2), int(width), int(height)), thickness)                    
+            pygame.draw.rect(self.screen, color, (int(x-width/2), int(y-height/2), int(width), int(height)), thickness)
     def drawcross(self,color,xy,radius,thickness=3,diagonal=False):
-        if not diagonal:        
+        if not diagonal:
             pygame.draw.line(self.screen,color,(xy[0]-radius,xy[1]),(xy[0]+radius,xy[1]),thickness)
             pygame.draw.line(self.screen,color,(xy[0],xy[1]-radius),(xy[0],xy[1]+radius),thickness)
         else:
             pygame.draw.line(self.screen,color,(xy[0]-radius,xy[1]-radius),(xy[0]+radius,xy[1]+radius),thickness)
-            pygame.draw.line(self.screen,color,(xy[0]+radius,xy[1]-radius),(xy[0]-radius,xy[1]+radius),thickness) 
+            pygame.draw.line(self.screen,color,(xy[0]+radius,xy[1]-radius),(xy[0]-radius,xy[1]+radius),thickness)
 
 
 ####################################################################################################################
-# Sprites 
+# Sprites
 
 # Sprite Template:
 # sprites are the basis for any on-screen display
@@ -161,8 +161,8 @@ class obj_sprite_background(obj_sprite):
         self.surf=pygame.Surface(share.screen.screen.get_size())
         self.surf.fill(self.color)
     def display(self):
-        share.screen.fillsurf(self.color)    
-    
+        share.screen.fillsurf(self.color)
+
 # image sprite
 class obj_sprite_image(obj_sprite):
     def __init__(self):
@@ -194,8 +194,8 @@ class obj_sprite_image(obj_sprite):
             return True
         else:
             return False# load failed
-    def save(self,name):        
-        pygame.image.save(self.surf,name) 
+    def save(self,name):
+        pygame.image.save(self.surf,name)
     def addtransparency(self):
         self.surf.set_colorkey(self.colorkey)
     def getrx(self):
@@ -318,19 +318,19 @@ class obj_sprite_font:
         return self.font.render(text,bold,color)
     def size(self,text):
         return self.font.size(text)
-    
+
 
 
 ####################################################################################################################
 
-# Controls 
+# Controls
 # *CONTROLS
 # Manages Input controls
 class obj_controls:
     def __init__(self):
         # special
         self.events=pygame.event.get()
-        self.quit=False       
+        self.quit=False
         # mouse
         self.mousex=0
         self.mousey=0
@@ -361,7 +361,7 @@ class obj_controls:
         self.g=False
         # booleans to detect if change on frame
         self.mouse1c=False# changed or not
-        self.mouse2c=False        
+        self.mouse2c=False
         self.mouse3c=False
         self.mouse4c=False
         self.mouse5c=False
@@ -379,7 +379,7 @@ class obj_controls:
         self.ac=False
         self.dc=False
         self.wc=False
-        self.sc=False        
+        self.sc=False
         self.qc=False
         self.ec=False
         self.rc=False
@@ -400,8 +400,8 @@ class obj_controls:
                     text += event.unicode# record text
         return text
     def getevents(self):
-        self.events=pygame.event.get()           
-    def getmouse(self):        
+        self.events=pygame.event.get()
+    def getmouse(self):
         self.mouse1c=False# left click
         self.mouse2c=False# right click
         self.mouse3c=False# middle click
@@ -412,28 +412,28 @@ class obj_controls:
         self.mousey=int(self.mousey)
         for event in self.events:
             if event.type==pygame.MOUSEBUTTONDOWN:
-                if event.button==1: 
-                    self.mouse1, self.mouse1c = True, True 
-                elif event.button==3: 
-                    self.mouse2, self.mouse2c = True, True                  
-                elif event.button==2: 
-                    self.mouse3, self.mouse3c = True, True 
-                elif event.button==4: 
-                    self.mouse4, self.mouse4c = True, True 
-                elif event.button==5: 
-                    self.mouse5, self.mouse5c = True, True 
+                if event.button==1:
+                    self.mouse1, self.mouse1c = True, True
+                elif event.button==3:
+                    self.mouse2, self.mouse2c = True, True
+                elif event.button==2:
+                    self.mouse3, self.mouse3c = True, True
+                elif event.button==4:
+                    self.mouse4, self.mouse4c = True, True
+                elif event.button==5:
+                    self.mouse5, self.mouse5c = True, True
             elif event.type==pygame.MOUSEBUTTONUP:
-                if event.button==1: 
-                    self.mouse1, self.mouse1c = False, True 
-                elif event.button==3: 
-                    self.mouse2, self.mouse2c = False, True                  
-                elif event.button==2: 
-                    self.mouse3, self.mouse3c = False, True 
-                elif event.button==4: 
-                    self.mouse4, self.mouse4c = False, True 
-                elif event.button==5: 
-                    self.mouse5, self.mouse5c = False, True   
-    def getkeys(self):        
+                if event.button==1:
+                    self.mouse1, self.mouse1c = False, True
+                elif event.button==3:
+                    self.mouse2, self.mouse2c = False, True
+                elif event.button==2:
+                    self.mouse3, self.mouse3c = False, True
+                elif event.button==4:
+                    self.mouse4, self.mouse4c = False, True
+                elif event.button==5:
+                    self.mouse5, self.mouse5c = False, True
+    def getkeys(self):
         self.escc=False
         self.enterc=False
         self.backspacec=False
@@ -447,95 +447,95 @@ class obj_controls:
         self.ac=False
         self.dc=False
         self.wc=False
-        self.sc=False   
+        self.sc=False
         self.qc=False
         self.ec=False
         self.rc=False
         self.fc=False
         self.gc=False
         for event in self.events:
-            if event.type==pygame.KEYDOWN:                 
-                if event.key==pygame.K_ESCAPE: 
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_ESCAPE:
                     self.esc, self.escc = True, True
-                elif event.key==pygame.K_RETURN: 
+                elif event.key==pygame.K_RETURN:
                     self.enter, self.enterc = True, True
-                elif event.key==pygame.K_BACKSPACE: 
+                elif event.key==pygame.K_BACKSPACE:
                     self.backspace, self.backspacec = True, True
-                elif event.key==pygame.K_TAB: 
+                elif event.key==pygame.K_TAB:
                     self.tab, self.tabc = True, True
-                elif event.key==pygame.K_SPACE: 
+                elif event.key==pygame.K_SPACE:
                     self.space, self.spacec = True, True
-                elif event.key==pygame.K_LCTRL: 
+                elif event.key==pygame.K_LCTRL:
                     self.lctrl, self.lctrlc = True, True
-                elif event.key==pygame.K_LEFT: 
+                elif event.key==pygame.K_LEFT:
                     self.left, self.leftc = True, True
-                elif event.key==pygame.K_RIGHT: 
+                elif event.key==pygame.K_RIGHT:
                     self.right, self.rightc = True, True
-                elif event.key==pygame.K_UP: 
+                elif event.key==pygame.K_UP:
                     self.up, self.upc = True, True
-                elif event.key==pygame.K_DOWN: 
+                elif event.key==pygame.K_DOWN:
                     self.down, self.downc = True, True
-                elif event.key==pygame.K_d: 
+                elif event.key==pygame.K_d:
                     self.d, self.dc = True, True
-                elif event.key==pygame.K_s: 
+                elif event.key==pygame.K_s:
                     self.s, self.sc = True, True
-                elif event.key==pygame.K_a: 
+                elif event.key==pygame.K_a:
                     self.a, self.ac = True, True
-                elif event.key==pygame.K_w: 
+                elif event.key==pygame.K_w:
                     self.w, self.wc = True, True
-                elif event.key==pygame.K_q: 
+                elif event.key==pygame.K_q:
                     self.q, self.qc = True, True
-                elif event.key==pygame.K_e: 
+                elif event.key==pygame.K_e:
                     self.e, self.ec = True, True
-                elif event.key==pygame.K_r: 
+                elif event.key==pygame.K_r:
                     self.r, self.rc = True, True
-                elif event.key==pygame.K_f: 
+                elif event.key==pygame.K_f:
                     self.f, self.fc = True, True
-                elif event.key==pygame.K_g: 
+                elif event.key==pygame.K_g:
                     self.g, self.gc = True, True
             elif event.type==pygame.KEYUP:
-                if event.key==pygame.K_ESCAPE: 
+                if event.key==pygame.K_ESCAPE:
                     self.esc, self.escc = False, True
-                elif event.key==pygame.K_RETURN: 
+                elif event.key==pygame.K_RETURN:
                     self.enter, self.enterc = False, True
-                elif event.key==pygame.K_BACKSPACE: 
+                elif event.key==pygame.K_BACKSPACE:
                     self.backspace, self.backspacec = False, True
-                elif event.key==pygame.K_TAB: 
+                elif event.key==pygame.K_TAB:
                     self.tab, self.tabc = False, True
-                elif event.key==pygame.K_SPACE: 
+                elif event.key==pygame.K_SPACE:
                     self.space, self.spacec = False, True
-                elif event.key==pygame.K_LCTRL: 
+                elif event.key==pygame.K_LCTRL:
                     self.lctrl, self.lctrlc = False, True
-                elif event.key==pygame.K_LEFT: 
+                elif event.key==pygame.K_LEFT:
                     self.left, self.leftc = False, True
-                elif event.key==pygame.K_RIGHT: 
+                elif event.key==pygame.K_RIGHT:
                     self.right, self.rightc = False, True
-                elif event.key==pygame.K_UP: 
+                elif event.key==pygame.K_UP:
                     self.up, self.upc = False, True
-                elif event.key==pygame.K_DOWN: 
+                elif event.key==pygame.K_DOWN:
                     self.down, self.downc = False, True
-                elif event.key==pygame.K_d: 
+                elif event.key==pygame.K_d:
                     self.d, self.dc = False, True
-                elif event.key==pygame.K_s: 
+                elif event.key==pygame.K_s:
                     self.s, self.sc = False, True
-                elif event.key==pygame.K_a: 
+                elif event.key==pygame.K_a:
                     self.a, self.ac = False, True
-                elif event.key==pygame.K_w: 
+                elif event.key==pygame.K_w:
                     self.w, self.wc = False, True
-                elif event.key==pygame.K_q: 
+                elif event.key==pygame.K_q:
                     self.q, self.qc = False, True
-                elif event.key==pygame.K_e: 
+                elif event.key==pygame.K_e:
                     self.e, self.ec = False, True
-                elif event.key==pygame.K_r: 
+                elif event.key==pygame.K_r:
                     self.r, self.rc = False, True
-                elif event.key==pygame.K_f: 
+                elif event.key==pygame.K_f:
                     self.f, self.fc = False, True
-                elif event.key==pygame.K_g: 
+                elif event.key==pygame.K_g:
                     self.g, self.gc = False, True
     def getquit(self):
         for event in self.events:
             if event.type==pygame.QUIT:
-                self.quit=True          
+                self.quit=True
     def update(self):
         self.getevents()# Important: only get events once per frame!
         self.getmouse()
@@ -544,10 +544,3 @@ class obj_controls:
 
 
 ####################################################################################################################
-    
-    
-
-    
-    
-    
-    

@@ -27,8 +27,10 @@ import menu
 fps=60 # (keep at 60 because game is fps based)
 devmode=False # developer mode toggle
 
-itest=0# index of current text in test menu
+
 ipage=1# current page within a chapter
+itest=0# index of current text in test menu
+iidea=0# index of current idea in idea menu
 
 ##########################################################
 # Initialize shared elements (order matters)
