@@ -32,10 +32,13 @@ class obj_actor:
     def setup(self):# add here modifications for childs
         self.type='actor'# type (overwritten for each specific actor)
         self.actortype='None'
+        self.alive=False# actor is alive in world
     def birth(self):# add to world
         self.creator.addactor(self)# add self to world list of actors
+        self.alive=True
     def kill(self):# remove from world
         self.creator.removeactor(self)
+        self.alive=False
     def update( self ,controls):
         pass
 
@@ -66,6 +69,7 @@ class obj_grandactor():
         self.s=1# scaling factor
         self.r=0# rotation angle (deg)
         self.show=True# show or not (can be toggled)
+        self.alive=False# actor is alive in world
         # hitbox
         self.rx=50# radius width for rectangle collisions
         self.ry=50# radius height for rectangle collisions
@@ -78,10 +82,14 @@ class obj_grandactor():
         self.devrect=core.obj_sprite_rect()
     def birth(self):# add to world
         self.creator.addactor(self)
+        self.alive=True
     def kill(self):# remove from world
         self.creator.removeactor(self)
+        self.alive=False
     def destroy(self):# kill with additional funcionalities (e.g. leave trailing smoke)
         self.kill()
+    def hit(self):# hit by something
+        pass
     def addpart(self,name,element):# add element
         self.dict[name]=element
         self.dictx[name]= int( element.xini - self.xini )# record relative difference
@@ -111,6 +119,11 @@ class obj_grandactor():
         for i in self.dict.keys():
             self.dict[i].fliph()
             self.symh(i)
+    def bfliph(self,boolflip):# boolean flip
+        if boolflip:
+            self.ofliph()
+        else:
+            self.ifliph()
     def ifliph(self):# to inverted
         if not self.fh:
             self.fh=True
@@ -128,6 +141,11 @@ class obj_grandactor():
         for i in self.dict.keys():
             self.dict[i].flipv()
             self.symv(i)
+    def bflipv(self,boolflip):# boolean flip
+        if boolflip:
+            self.oflipv()
+        else:
+            self.iflipv()
     def iflipv(self):# to inverted
         if not self.fv:
             self.fv=True
@@ -185,14 +203,20 @@ class obj_grandactor():
 class obj_rbodyactor(obj_grandactor):
     def setup(self):
         super().setup()
-        self.actortype="rbody"   #### MUST BE DETERMINED BEFORE BIRTH WHEN ADDS TO WORLD
+        self.actortype="rbody" 
         self.stalling=True# stalling or not
-        self.dt=1# update rate
+        self.dt=share.dtf# timestep (depends on game fps)
         self.u=0# rigid body speed
         self.v=0
         self.m=1# mass (must be >0)
         self.d=0.01# dissipation rate
         self.umin2=1# min speed for stalling (squared)
+    def movex(self,u):# rewritten to not be game fps dependent
+        self.x += round(u*self.dt)
+        for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
+    def movey(self,v):
+        self.y += round(v*self.dt)
+        for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
     def forcex(self,force):# apply forcex (call externally)
         self.u += force*self.dt/self.m
         self.stalling=False
@@ -237,13 +261,12 @@ class obj_actor_hero(obj_rbodyactor):
 class obj_actor_hero_v0(obj_actor_hero):
     def setup(self):
         super().setup()
-        self.move_dx=5# movement amount
-        self.move_dy=5
+        self.move_u,self.move_v=5,5# movement amount
     def controls_move(self,controls):
-        if controls.right: self.movex(self.move_dx)
-        if controls.left: self.movex(-self.move_dx)
-        if controls.up: self.movey(-self.move_dy)
-        if controls.down: self.movey(self.move_dy)
+        if controls.right: self.movex(self.move_u)
+        if controls.left: self.movex(-self.move_u)
+        if controls.up: self.movey(-self.move_v)
+        if controls.down: self.movey(self.move_v)
     def update(self,controls):
         super().update(controls)
         self.controls_move(controls)
@@ -282,25 +305,25 @@ class obj_actor_hero_v1(obj_actor_hero_v0):
             self.dict["hero_dispgroup"].dict["legs_walk"].show=False
             self.dict["hero_dispgroup"].dict["legs_stand"].show=True
         if controls.d or controls.right:
-            self.movex(self.move_dx)
+            self.movex(self.move_u)
             if controls.dc or controls.rightc:
                 self.turnright=True
                 self.facingright= True
                 self.dict["hero_dispgroup"].ofliph()
                 self.dict["hero_dispgroup"].dict["legs_walk"].sequence.rewindsequence()
         if controls.a or controls.left:
-            self.movex(-self.move_dx)
+            self.movex(-self.move_u)
             if controls.ac or controls.leftc:
                 self.turnleft= True
                 self.facingright= False
                 self.dict["hero_dispgroup"].ifliph()
                 self.dict["hero_dispgroup"].dict["legs_walk"].sequence.rewindsequence()
         if controls.w or controls.up:
-            self.movey(-self.move_dy)
+            self.movey(-self.move_v)
             if controls.wc or controls.upc:
                 self.dict["hero_dispgroup"].dict["legs_walk"].sequence.rewindsequence()
         if controls.s or controls.down:
-            self.movey(self.move_dy)
+            self.movey(self.move_v)
             if controls.sc or controls.downc:
                 self.dict["hero_dispgroup"].dict["legs_walk"].sequence.rewindsequence()
 
@@ -333,10 +356,15 @@ class obj_actor_hero_v3(obj_actor_hero_v2):
         if self.timer_quickface.ring: self.makenormalface()
     def quickhappyface(self):# make happy face (temporary)
         self.makehappyface()
-        self.timer_quickface.start()# could be run instead
+        self.timer_quickface.run()# could be run instead
     def quickangryface(self):# make angry face (temporary)
         self.makeangryface()
-        self.timer_quickface.start()
+        self.timer_quickface.run()
+    def longangryface(self):
+        self.makeangryface()
+        self.timer_quickface.start(amount=100)# with different amount
+    def hit(self):
+        self.longangryface()
 
 # Hero ... above, add sword with strike
 class obj_actor_hero_v4(obj_actor_hero_v3):
@@ -361,7 +389,7 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         if (controls.mouse1 and controls.mouse1c) or (controls.space and controls.spacec):
             if self.timer_strikereload.off: # reloaded
                 self.startstrike()
-                self.quickangryface()
+                # self.quickangryface()
                 self.timer_strikereload.start()
     def startstrike(self):
         self.weapon.startstrike()# weapon strikes
@@ -374,7 +402,7 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         self.weapon.xoff *= s# weapon offset to padre=hero
         self.weapon.yoff *= s
 
-
+# TESTS
 # Hero can face one of four directions, including up or down (only one at a time)
 class obj_actor_hero_v5(obj_actor_hero_v4):
     def setup(self):
@@ -393,12 +421,10 @@ class obj_actor_hero_v5(obj_actor_hero_v4):
     def update(self,controls):
         super().update(controls)
         self.controls_moveupdown(controls)
-    def controls_moveupdown(self,controls):
-    
+    def controls_moveupdown(self,controls):    
         if (controls.a and controls.ac) or (controls.d and controls.dc)\
             or (controls.left and controls.leftc) or (controls.right and controls.rightc): 
-            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead',0)  
-        
+            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead',0)          
         # up down should be overwritten by left/right
         if (controls.w and controls.wc) or (controls.up and controls.upc): 
             self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_up',0)
@@ -457,6 +483,134 @@ class obj_actor_sword(obj_grandactor):
             elif self.striking1:
                 self.striking1=False
 
+####################################################################################################################
+# Enemy
+
+# Enemy that spits
+class obj_actor_critterspit(obj_rbodyactor):
+    def setup(self):
+        super().setup()
+        self.actortype="critter"
+        self.addpart('image_critter', draw.obj_image('critterspit',(self.xini,self.yini)) )
+        self.addpart('image_alert', draw.obj_image('alert',(self.xini+100,self.yini-100)) )
+        self.dict['image_alert'].show=False
+        self.addpart('animation_critterspit', draw.obj_animation('critterspit_strike','critterspit_strike',(self.xini,self.yini)) )
+        self.dict['animation_critterspit'].show=False
+        self.addpart('textbox_name',draw.obj_textbox("{critterspitname}",(self.xini,self.yini+150),fontsize='huge'))
+        # parameters
+        self.rd=100
+        self.rx=100
+        self.ry=100
+        self.visionrd=500#None# vision radius (None=infinite)
+        self.health=3# health points
+        self.throwspeed=10
+        # variables
+        self.state={'patrol':True,'alert':False,\
+                    'prespit':False,'spit':False,'postspit':False,\
+                    "follow":False}# faces right, follows the hero
+        self.aimr=0# aim angle
+        # timers
+        self.timer_patrol=tool.obj_timer(150,cycle=True)
+        self.timer_patrol.start(amount=tool.randint(0,150))
+        self.timer_alert=tool.obj_timer(100)
+        self.timer_prespit=tool.obj_timer(100)
+        self.timer_postspit=tool.obj_timer(100)
+        # devtools
+        self.devcircle=core.obj_sprite_circle()        
+    def patrol(self):
+        self.timer_patrol.update()
+        if self.timer_patrol.ring:
+            term=tool.randint(0,359)
+            self.forcex(2*tool.cos(-term))
+            self.forcey(2*tool.sin(-term))
+            if term>90 and term<270: 
+                self.ifliph()
+            else:
+                self.ofliph()
+    def startalert(self):# called externally (world rule)
+        self.state.update({"patrol":False,"alert":True,"follow":True})
+        self.dict['image_alert'].show=True
+        self.timer_alert.start()        
+    def alert(self):
+        self.timer_alert.update()
+        if self.timer_alert.ring: 
+            self.startprespit()
+    def startprespit(self):
+        self.state.update({"prespit":True,"alert":False})
+        self.dict['image_alert'].show=False
+        self.dict['image_critter'].replaceimage('critterspit_strike')
+        self.timer_prespit.start()     
+    def prespit(self):
+        self.timer_prespit.update()
+        if self.timer_prespit.ring: self.spit()
+    def spit(self):
+        term=obj_actor_critterspit_spit(self.creator,(self.x,self.y),scale=self.s)# create spit
+        term.throw(self.throwspeed*tool.cos(self.aimr),self.throwspeed*tool.sin(self.aimr),self.aimr)
+        self.startpostspit()        
+    def startpostspit(self):
+        self.dict['image_critter'].show=False
+        self.dict['animation_critterspit'].show=True
+        self.state.update({"postspit":True,"prespit":False})
+        self.timer_postspit.start()     
+    def postspit(self):
+        self.timer_postspit.update()
+        if self.timer_postspit.ring: self.startpatrol()
+    def startpatrol(self):
+        self.dict['image_critter'].replaceimage('critterspit')
+        self.dict['image_critter'].show=True
+        self.dict['animation_critterspit'].show=False
+        self.state.update({"patrol":True,"postspit":False,"follow":False})
+    def hit(self):
+        self.health -= 1
+        if self.health==0: self.destroy()
+        term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
+    def destroy(self):# when destroyed, leave trailing smoke
+        self.kill()# remove from world
+        term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
+    def scale(self,s):
+        super().scale(s)
+        if self.visionrd: 
+            self.visionrd *= s
+        self.throwspeed *= s
+    def devtools(self):
+        super().devtools()
+        if self.visionrd: self.devcircle.display(share.colors.devactor,(self.x,self.y),self.visionrd)# vision circle
+    def update(self,controls):
+        super().update(controls)
+        if self.state["patrol"]: 
+            self.patrol()
+        elif self.state["alert"]: 
+            self.alert()
+        elif self.state["prespit"]: 
+            self.prespit()    
+        elif self.state["postspit"]: 
+            self.postspit()
+
+    
+# spit
+class obj_actor_critterspit_spit(obj_grandactor):# not a rigidbody
+    def setup(self):
+        super().setup()
+        self.actortype='critterspit'
+        self.addpart('image_spit', draw.obj_image('critterspit_spit',(self.xini,self.yini)) )
+        # parameters
+        self.rd=25
+        self.rx=25
+        self.ry=25
+        self.knockback=8# force of knockback when striking rigidbodies
+        # variables
+        self.move_u=0# travel speed
+        self.move_v=0
+    def throw(self,u,v,r):# need to call on creation
+        self.move_u,self.move_v=u,v
+        self.dict['image_spit'].rotate(-r)
+    def travel(self):
+        self.movex(self.move_u)
+        self.movey(self.move_v)        
+    def update(self,controls):
+        super().update(controls)
+        self.travel()
+
 
 ####################################################################################################################
 # Basic Actors (not grandactors, no rigidbody)
@@ -481,7 +635,7 @@ class obj_actor_goal_collideactors(obj_actor_goal):
         self.timer=timer# actors must collide for >timer to reach goal
     def setup(self):
         super().setup()
-        self.t=0# time increment
+        self.t=0# time increment ############## use OBJ_TIMER instead for consistency
     def updatecollide(self):
         self.t += 1
         if self.t>self.timer: self.reached=True
@@ -512,6 +666,21 @@ class obj_actor_goal_opendoor(obj_actor_goal_collideactors):
         super().resetcollide()
         self.actor1.show=True# hide hero
 
+# goal: all actors from initial list must be dead
+class obj_actor_goal_alldead(obj_actor_goal):
+    def setup(self):
+        super().setup()
+        self.actorlist=[]# list of actors that must be dead
+    def addactor(self,actor):
+        self.actorlist.append(actor)
+    def update(self,controls):
+        super().update(controls)
+        if not self.reached:
+            for i in self.actorlist:
+                if i.alive:
+                    break
+            else:# end of loop
+                self.reached=True
 
 ####################################################################################################################
 
@@ -584,12 +753,16 @@ class obj_actor_item_loved(obj_grandactor):# not a rigidbody
         self.rd=100
         self.rx=100
         self.ry=100
+        self.health=1
         dispgroup=draw.obj_dispgroup((self.xini,self.yini))
         image=draw.obj_image('herothings_loved',(self.xini,self.yini))
         textbox=draw.obj_textbox("{itemloved}",(self.xini,self.yini+100),fontsize='big')
         dispgroup.addpart("image",image)
         dispgroup.addpart("textbox",textbox)
         self.addpart("item_dispgroup",dispgroup)
+    def hit(self):
+        self.health -= 1
+        if self.health==0: self.destroy()
     def destroy(self):# when destroyed, leave trailing smoke
         self.kill()# remove from world
         term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke

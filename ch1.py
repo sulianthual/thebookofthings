@@ -186,7 +186,7 @@ class obj_scene_ch1p8(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('herostrike',(480,490),legend='Weapon Strike') )
         self.addpart( draw.obj_drawing('smoke',(880,490),legend='Smoke') )
-        self.addpart( draw.obj_image('herohead_angry',(240-100,410)) )
+        self.addpart( draw.obj_image('herohead',(240-100,410)) )
         self.addpart( draw.obj_image('herolegs_stand',(240-100,570)) )
         self.addpart( draw.obj_textinput('weaponname',25,(650,260),color=share.colors.hero,legend='Weapon Name') )
     def prevpage(self):

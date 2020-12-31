@@ -21,6 +21,7 @@ import tool
 # colors database (RGB)
 class obj_colors:
     def __init__(self):
+        # NB: colorkey is defined in share (as global variable)
         # base colors
         self.white=(255,255,255)
         self.black=(0,0,0)
@@ -38,7 +39,6 @@ class obj_colors:
         self.devdispgroup=(128,0,128)# purple
         self.devactor=(0,0,220)# blue (hitbox)
         # Colors game elements
-        self.colorkey=self.purple# transparent color (all drawings,sprites)
         self.background=self.white# game background
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)
@@ -88,6 +88,8 @@ class obj_brushes:
         self.pen=('data/pen.png',(8,8))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))
+        self.shadowpen=('data/shadowpen.png',(64,64))
+
 
 ####################################################################################################################
 

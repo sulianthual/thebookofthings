@@ -22,18 +22,25 @@ import menu
 
 
 ##########################################################
-# Global variables 
+# Global parameters
 #
-fps=60 # (keep at 60 because game is fps based)
+fps=60# game fps (only supports 60, 30 and 20 fps)
+dtf=60/fps# timestep multiplicator (for game physics originally designed at 60 fps)
+colorkey=(128,0,128)# color used for transparency on images (purple)
+
+
+# Global variables
+#
 devmode=False # developer mode toggle
-
-
-ipage=1# current page within a chapter
-itest=0# index of current text in test menu
-iidea=0# index of current idea in idea menu
+dt=1# elapsed time since last frame (updated by game clock each frame)
+ipage=1# current page within a chapter (PUT THOSE IN a datb.pointers object or something)
+itest=0# test menu index
+iidea=0# idea menu index
 
 ##########################################################
 # Initialize shared elements (order matters)
+
+
 
 # Game Core
 core.initialize()# start game engine (pygame)
@@ -51,6 +58,8 @@ brushes=datb.obj_brushes()# brushes used for drawing
 # Data Manager
 datamanager=datb.obj_datamanager()
 #
+
+
 # Scenes
 scenemanager=core.obj_scenemanager()# game scene manager (switch scenes+quit...) 
 titlescreen=menu.obj_scene_titlescreen()# menu object has only ONE instance

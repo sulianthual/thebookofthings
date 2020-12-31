@@ -50,28 +50,7 @@ class obj_clock:
     def getfps(self):
         return self.clock.get_fps()
     def update(self):
-        self.clock.tick(self.targetfps)
-
-
-# Game Window icon
-class obj_windowicon:
-    def __init__(self):
-        self.reset()
-    def reset(self):
-        self.makeicon()
-        self.seticon()
-    def makeicon(self):# make window icon from a player drawing
-        if tool.ospathexists('book/book.png'):
-            img=pygame.image.load('book/book.png').convert()
-            img=pygame.transform.scale(img,(36,42))
-            pygame.image.save(img,'book/bookicon.png')
-    def seticon(self):
-        if tool.ospathexists('book/bookicon.png'):
-            img=pygame.image.load('book/bookicon.png').convert()
-        else:
-            img=pygame.image.load('data/booknoicon.png').convert()
-        img.set_colorkey((255,255,255))# white
-        share.display.seticon(img)
+        share.dt=self.clock.tick(self.targetfps)
 
 
 # Scene Manager: update current scene and switches between scenes
@@ -123,6 +102,11 @@ class obj_screen:
         self.screen.blit(surface, (int(xy[0]),int(xy[1])) )
     def drawline(self,color,xy1,xy2,thickness=3):
         pygame.draw.line(self.screen,color,xy1,xy2,thickness)
+    def drawcircle(self,color,xy,radius,thickness=3,fill=False):
+        if fill:
+            pygame.draw.circle(self.screen, color, xy, int(radius), 0)
+        else:
+            pygame.draw.circle(self.screen, color, xy, int(radius), thickness)
     def drawrect(self,color,rect,thickness=3,fill=False):
         x,y,width,height=rect
         if fill:
@@ -171,7 +155,7 @@ class obj_sprite_image(obj_sprite):
         self.surf=None# associated pygame surface
         self.rx=None# half-width
         self.ry=None# half-heigth
-        self.colorkey=share.colors.colorkey# transparent color
+        self.colorkey=share.colorkey# transparent color
     def make(self):# create empty
         pass
     def makeempty(self,rx,ry):
@@ -185,17 +169,15 @@ class obj_sprite_image(obj_sprite):
             else:
                 self.surf=pygame.image.load(path)
             self.addtransparency()
-            # self.rx,self.ry=self.getrxry()
             return True# load succeeded
         elif failsafe:
             self.surf=pygame.image.load('data/error.png').convert()
             self.addtransparency()
-            # self.rx,self.ry=self.getrxry()
             return True
         else:
             return False# load failed
     def save(self,name):
-        pygame.image.save(self.surf,name)
+        pygame.image.save(self.surf,name)        
     def addtransparency(self):
         self.surf.set_colorkey(self.colorkey)
     def getrx(self):
@@ -220,16 +202,13 @@ class obj_sprite_image(obj_sprite):
                 termx=self.getrx()*2*scaling
                 termy=self.getry()*2*scaling
                 self.surf=pygame.transform.scale(self.surf, (int(termx),int(termy)) )
-                # self.rx,self.ry=self.getrxry()
         else:
                 self.surf=pygame.transform.scale(self.surf, (int(scaling[0]),int(scaling[1])) )
-                # self.rx,self.ry=self.getrxry()
     def rotate(self,angle):# returns position offset from rotation
         if angle !=0:
             xold,yold=self.surf.get_rect().center
             self.surf=pygame.transform.rotate(self.surf,int(angle))
             xnew,ynew=self.surf.get_rect().center
-            # self.rx,self.ry=self.getrxry()
             return xold-xnew,yold-ynew
         else:
             return 0,0
@@ -237,10 +216,8 @@ class obj_sprite_image(obj_sprite):
         angle= int(round(angle%360/90,0)*90)# (in 0,90,180,270)
         if angle !=0:
             self.surf=pygame.transform.rotate(self.surf,int(angle))
-            # self.rx,self.ry=self.getrxry()
     def display(self,x,y):# xy=(x,y) center of display
         xd,yd=x-self.getrx(),y-self.getry()# recompute
-        # xd,yd=x-self.rx,y-self.ry# if always up to date
         share.screen.drawsurf(self.surf,(int(xd),int(yd)))# top left needed (CHANGE IT?)
 
 
@@ -289,7 +266,16 @@ class obj_sprite_cross(obj_sprite):
     def display(self,color,xy,radius,thickness=3,diagonal=False):
         share.screen.drawcross(color,xy,radius,thickness=thickness,diagonal=diagonal)
 
-
+# circle sprite
+class obj_sprite_circle(obj_sprite):
+    def __init__(self):
+        super().__init__()
+        self.spritetype='circle'
+    def make(self):
+        pass
+    def display(self,color,xy,radius):
+        share.screen.drawcircle(color,xy,radius)
+        
 # rectangle sprite
 class obj_sprite_rect(obj_sprite):
     def __init__(self):
@@ -321,7 +307,29 @@ class obj_sprite_font:
         return self.font.size(text)
 
 
+####################################################################################################################
 
+# Game Window icon
+class obj_windowicon:
+    def __init__(self):
+        self.reset()
+    def reset(self):
+        self.makeicon()
+        self.seticon()
+    def makeicon(self):# make window icon from a player drawing
+        if tool.ospathexists('book/book.png'):
+            img=pygame.image.load('book/book.png').convert()
+            img=pygame.transform.scale(img,(42,36))
+            pygame.image.save(img,'book/bookicon.png')
+    def seticon(self):
+        if tool.ospathexists('book/bookicon.png'):
+            img=pygame.image.load('book/bookicon.png').convert()
+        else:
+            img=pygame.image.load('data/booknoicon.png').convert()
+        img.set_colorkey(share.colorkey)
+        share.display.seticon(img)
+        
+        
 ####################################################################################################################
 
 # Controls

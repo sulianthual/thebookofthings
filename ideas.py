@@ -58,11 +58,14 @@ class obj_scene_ideamenu(page.obj_page):
             
     def loadtests(self):# load all tests 
         # developper
+
+        self.list.append(obj_scene_idea4()) 
+
         self.list.append(obj_scene_ideatodo())    
         self.list.append(obj_scene_idea1())    
         self.list.append(obj_scene_idea2())     
         self.list.append(obj_scene_idea3())    
-        self.list.append(obj_scene_idea4())    
+   
         self.list.append(obj_scene_idea5())    
         self.list.append(obj_scene_idea6())    
         self.list.append(obj_scene_idea7())    
@@ -96,13 +99,11 @@ class obj_scene_ideatodo(obj_ideapage):
         self.name='Todo List'  
         self.text=['Todo List:',\
                    '\nx) Hero house=museum (artifact recurrent in world), laboratory (critters reccurent in world), no bedroom, no outside view. ',\
-                   '\nx) Combat and enemies should follow simple game style like zelda lttp',\
-                   '\nx) Ability to make drawings without shadows (just give the dimensions)',\
+                   '\nx) Allow hero to strike up or down (but only face left or right)',\
                    '\nx) Make custom critters in the lab: use classmethods to build from template what methods they have',\
-                   '\nx)',\
-                   '\nx)',\
-                   '\nx)',\
-                   '\nx)',\
+                   '\nx) Game now supports 60,30 or 20 fps but many movement (based on 60 fps) becomes incorrect. ',\
+                   'Correct this eventually (look at movex,movey, obj_timer, share.dtf..., animation load and save). ',\
+                   '\nx) split actor file into multiple files ',\
                    '\nx)',\
                    '\nx)',\
                    '\nx)',\
@@ -142,18 +143,24 @@ class obj_scene_idea2(obj_ideapage):
 class obj_scene_idea3(obj_ideapage):
     def setup(self):       
         self.name='Critter'  
-        self.text=['create a critter',\
+        self.text=['create a critter that spit/throws',\
                    ] 
-        self.addpart( draw.obj_drawing('critter1',(340,360),legend='Critter') )
-        self.addpart( draw.obj_drawing('critter1_strike',(940,360),legend='Critter Strike') )
+        self.addpart( draw.obj_drawing('alert',(400,350),legend='Alert',shadow=(50,50)) )
+        self.addpart( draw.obj_drawing('critterspit',(200,450),legend='Critter',shadow=(100,100)) )
+        self.addpart( draw.obj_drawing('critterspit_strike',(800,450),legend='Critter Strike',shadow=(100,100)) )
+        self.addpart( draw.obj_drawing('critterspit_spit',(1000,450),legend='Spit',shadow=(50,50)) )
 
 
 class obj_scene_idea4(obj_ideapage):
     def setup(self):       
         self.name='Critter behavior'  
-        self.text=['what critter does',\
+        self.text=['Takes 3 hits to kill',\
                    ] 
-        self.addpart( draw.obj_image('critter1',(640,560)) )
+        ww=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(ww)
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
+        critter=actor.obj_actor_critterspit(ww,(tool.randint(100,1180),tool.randint(100,620)),scale=0.5 )
+        self.addpart( ww )
 
 
 class obj_scene_idea5(obj_ideapage):
@@ -217,5 +224,54 @@ class obj_scene_idea10(obj_ideapage):
         self.addpart( draw.obj_image('horizon',(640,560)) )
         
         
+
+# draw hero house
+class obj_scene_ch2p2(page.obj_chapterpage):
+    def setup(self):         
+        self.text=[('{heroname}',share.colors.hero),"\'s house, ",\
+                   'that was named',('{housename}',share.colors.house),\
+                   'looked like this from the outside. ',\
+                   ]
+        drawing=draw.obj_drawing('house',(640,400),legend='House from outside')
+        drawing.brush.makebrush(share.brushes.smallpen)# draw with smaller pen
+        self.addpart( drawing )
+        self.addpart( draw.obj_image('door_closed',(640,500),scale=0.25) )
+        self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(240,500+40),scale=0.25) )
+        self.addpart( draw.obj_animation('herohead_lookaround','herohead',(240,500),scale=0.25) )
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p1())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p3())
+
+
+# hero opens door to enter house
+class obj_scene_ch2p3(page.obj_chapterpage):
+    def setup(self):         
+        self.text=['To enter ',('{housename}',share.colors.house),', ',\
+                   ('{heroname}',share.colors.hero),' needed to knock on the door with ',\
+                   ('{weaponname}',share.colors.weapon),\
+                   ', then stand in front of the door. ',\
+                   ]
+        self.addpart( draw.obj_image('house',(640,400)) )
+        self.world=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(self.world,bounds=(50,1280-50,500,720-50))
+        door=actor.obj_actor_door(self.world,(640,500),scale=0.25)
+        # some items (use middle mouse to quickly get mouse coordinates in dev mode)
+        for i in [j+940+25 for j in [0,50,100,150,200,250]]:
+            term=actor.obj_actor_item_loved(self.world,(i,500+40),scale=0.25)
+        for i in [-j+340-25 for j in [150,200,250]]:
+            term=actor.obj_actor_item_loved(self.world,(i,500+40),scale=0.25)
+        hero=actor.obj_actor_hero_v4(self.world,(240,500),scale=0.25)# Hero in world
+        self.goal=actor.obj_actor_goal_opendoor(self.world,(hero,door),timer=20)
+    def callnextpage(self,controls):# must reach goal
+        if self.goal.reached or (controls.enter and controls.enterc):
+            share.ipage += 1
+            self.nextpage()# switch to next page      
+    def page(self,controls):        
+        self.world.update(controls)
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p2())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p4())
         
         

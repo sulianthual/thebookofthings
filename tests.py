@@ -123,10 +123,11 @@ class obj_scene_testdraftanimation(obj_testpage):
         self.text=[(self.name,share.colors.red),': ',\
                    '[Space] Toggle Record Mode.']
         #
-        animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
+        # animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
         # animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360),record=True)
         # animation=draw.obj_animation('herolegs_walk','herolegs_stand',(640,360),record=True)
         # animation.addimage('herolegs_walk')
+        animation=draw.obj_animation('critterspit_strike','critterspit_strike',(640,360),record=True)
         ###
         
         ###
@@ -175,11 +176,11 @@ class obj_scene_testdevmodeinfo(obj_testpage):
                    ('image',share.colors.devimage),', ',\
                    ('animation',share.colors.devanimation),', ',\
                    ('dispgroup',share.colors.devdispgroup),', ',\
-                   ('grand actor (hitbox)',share.colors.devactor),'. However ',\
+                   ('grand actor (hitbox)',share.colors.devactor),', and ',\
                    ('drawing',share.colors.drawing),', ',\
-                   ('textinput',share.colors.textinput),', ',\
+                   ('textinput',share.colors.textinput),', except for ',\
                    ('textchoice',share.colors.textchoice),\
-                   ' are not affected. ',\
+                   'not affected. ',\
                    'You can also print mouse position in terminal with [Middle Mouse]. ',\
                    ]
         self.addpart( draw.obj_textinput('test1',20,(260,300),legend='textinput') )
@@ -316,13 +317,16 @@ class obj_scene_testdrawing(obj_testpage):
         self.name='Drawing Basics'      
         self.text=['Drawing Basics: Draw with [Left Mouse], Erase with [Right Mouse] ',\
                    '(only when the mouse is in drawing area). ',\
-                   'It has optionally a legend, that accepts keywords like ',\
+                   'You can draw shadows with [Middle Mouse] too. ',\
+                   'Drawing can have a legend, that accepts keywords like ',\
                    ('{test1}',share.colors.green),' (but not colors). ',\
-                   'A drawing needs a background of same name in folder ./shadows. ',\
-                   'It is saved in folder ./drawings. ',\
-                   'If replacing the shadow erase the drawing as well (or new drawing may glitch). ',\
+                   'Drawings are saved in folder ./book. ',\
+                   '\nA standard drawing needs a shadow (grayed areas) of same name in folder ./shadows. ',\
+                   'Drawing and shadow should be of same size. ',\
+                   '\nOr one can make a drawing without shadow file if specifying the half-width and half-height (\"shadow=\"). ',\
                    ]
-        self.addpart( draw.obj_drawing('testimage1',(640,360),legend='draw me. Keyword:{test1}') )
+        self.addpart( draw.obj_drawing('testimage1',(340,460),legend='draw me. Keyword:{test1}') )
+        self.addpart( draw.obj_drawing('testimage3',(940,460),legend='Drawing without shadow file',shadow=(100,100)) )
 
 
 # Scene: test several drawings at the same time
@@ -333,9 +337,11 @@ class obj_scene_testdrawingbase(obj_testpage):
                    '(of same dimensions). The other drawing should better have no shadows.',\
                    'Small glitches happen when coming back to existing drawings with base: in that case just erase and restart. ',\
                    ]
-        drawing=draw.obj_drawing('testimage1',(340,420),legend='base')
-        self.addpart(drawing )
-        self.addpart( draw.obj_drawing('testimage2',(940,420),base=drawing,legend='drawing with base'))
+        drawing1=draw.obj_drawing('testimage1',(340,420),legend='base')
+        self.addpart(drawing1)
+        drawing2=draw.obj_drawing('testimage2',(940,420),base=drawing1,legend='drawing with base')
+        # drawing2.clear()# clear it
+        self.addpart(drawing2)
 
 
 # Scene: test show image
@@ -348,8 +354,8 @@ class obj_scene_testimage(obj_testpage):
             'An imagefill is an image of single color (preferentially the background) used to make layering. ',\
             'Press [r]: Image can quickly be saved and loaded which includes the transformations. ',\
                    ]
-        self.image1=draw.obj_image('testimage1',(440,420), scale=2)# (can scale at creation)
-        self.image2=draw.obj_image('testimage2',(840,420))
+        self.image1=draw.obj_image('testimage3',(440,420), scale=2)# (can scale at creation)
+        self.image2=draw.obj_image('testimage3',(840,420))
         # layering
         self.addpart(self.image2)
         self.addpart(draw.obj_imagefill((share.colors.background,200,300),(260,360)))# filler on top

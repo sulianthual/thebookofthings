@@ -132,22 +132,29 @@ class obj_pagedisplay_text:
 # A drawing (image to edit interactively by the player)
 # *DRAWING
 class obj_drawing:
-    def __init__(self,name,xy,base=None,legend=None):# start new drawing (load or new)
+    def __init__(self,name,xy,base=None,legend=None,shadow=None):# start new drawing (load or new)
         self.type='drawing'
         self.name=name# drawing name
         self.x,self.y = xy
         self.base=base# basis (other drawing object)
         self.legend=legend
+        self.shadow=shadow# =None (use file) or =(rx,ry) (use empty canvas) 
         self.setup()
     def setup(self):
         # drawing tools
         self.mousedraw=obj_mousedraw()# mouse drawing tool
         self.brush=core.obj_sprite_brush()
         self.brush.makebrush(share.brushes.pen)
-        # shadow
+        self.shadowbrush=core.obj_sprite_brush()
+        self.shadowbrush.makebrush(share.brushes.shadowpen)
+        # shadow (start of the drawing)
         self.sprite_shadow=core.obj_sprite_image()
-        self.sprite_shadow.load('shadows/'+self.name+'.png',convert=False)
-        self.rx,self.ry=self.sprite_shadow.getrxry()
+        if self.shadow:
+            self.sprite_shadow.makeempty(self.shadow[0],self.shadow[1])
+            self.rx,self.ry=self.shadow
+        else:
+            self.sprite_shadow.load('shadows/'+self.name+'.png',convert=False)
+            self.rx,self.ry=self.sprite_shadow.getrxry()
         # base
         if self.base: 
             self.sprite_base=core.obj_sprite_image()
@@ -156,20 +163,26 @@ class obj_drawing:
         # drawing
         self.sprite=core.obj_sprite_image()
         term=self.sprite.load('book/'+self.name+'.png',failsafe=False)
-        if not term: self.resetdrawing()# drawing did not load
+        if not term: self.clear()# drawing did not load
         # frame
         self.sprite_frame=core.obj_sprite_rect()
         self.makeframe()
         # legend
         self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
-    def resetdrawing(self):
+        # devtools
+        self.devcross=core.obj_sprite_cross()
+    def clear(self):
         self.sprite.makeempty(self.rx,self.ry)
         self.sprite.clear()
         self.sprite.blitfrom(self.sprite_shadow,0,0)  
     def draw(self,controls):
-        if controls.mouse1: self.mousedraw(controls,self.sprite,self.brush,self.x,self.y)
-        if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect): self.resetdrawing()
+        if controls.mouse1:
+            self.mousedraw(controls,controls.mouse1,controls.mouse1c,self.sprite,self.brush,self.x,self.y)
+        if controls.mouse3:
+            self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)        
+        if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect): 
+            self.clear()    
     def basedraw(self):
         if self.base: 
             self.sprite_base.clear()
@@ -189,10 +202,13 @@ class obj_drawing:
         self.sprite.display(self.x,self.y)
         self.sprite_frame.display(share.colors.drawing,(self.x,self.y,2*self.rx,2*self.ry))
         if self.legend: self.sprite_legend.display(self.xl,self.yl)
+    def devtools(self):
+        self.devcross.display(share.colors.drawing,(self.x,self.y),10,diagonal=True,thickness=6)
     def update(self,controls):
         self.draw(controls)
         self.basedraw()
         self.display()
+        if share.devmode: self.devtools()
     def finish(self):
         if self.base: 
             self.sprite_base.blitfrom(self.sprite,0,0)# to base
@@ -206,15 +222,15 @@ class obj_mousedraw:
     def __init__(self):
         self.mousexr=0
         self.mouseyr=0
-    def __call__(self,controls,sprite,sprite_brush,x,y):
-        if controls.mouse1:
+    def __call__(self,controls,controlhold,controlclick,sprite,sprite_brush,x,y):
+        if controlhold:# button held or just pressed
             xoff=int(x-sprite.getrx()+sprite_brush.getrx())
             yoff=int(y-sprite.getry()+sprite_brush.getry())
             sprite.blitfrom(sprite_brush,controls.mousex-xoff,controls.mousey-yoff)
-            if controls.mouse1c:# mouse just pressed
+            if controlclick:# button just pressed
                 self.mousexr=controls.mousex# record mouse position
                 self.mouseyr=controls.mousey
-            else:# mouse held
+            else:# button held
                 # draw line between current and last mouse position
                 dx=controls.mousex-self.mousexr
                 dy=controls.mousey-self.mouseyr
@@ -251,6 +267,8 @@ class obj_textinput:
         # legend
         self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
+        # devtools
+        self.devcross=core.obj_sprite_cross()
     def texttodict(self):# text to/from dictionary
         if self.key in share.datamanager.getwordkeys():
             self.text=share.datamanager.getword(self.key)
@@ -280,9 +298,12 @@ class obj_textinput:
         self.sprite.display(self.x,self.y)
         self.sprite_frame.display(share.colors.textinput,(self.x,self.y,2*self.rx,2*self.ry))
         if self.legend: self.sprite_legend.display(self.xl,self.yl)
+    def devtools(self):
+        self.devcross.display(share.colors.textinput,(self.x,self.y),10,diagonal=True,thickness=6)
     def update(self,controls):
-        self.display()
         self.changetext(controls)
+        self.display()
+        if share.devmode: self.devtools()
     def finish(self):
         share.datamanager.writeword(self.key,self.text)
         share.datamanager.savewords()
@@ -411,6 +432,11 @@ class obj_textbox:
     def fliph(self):# horizontal
         self.sprite.flip(True,False)
         self.fh= not self.fh
+    def bfliph(self,boolflip):# boolean flip
+        if boolflip:
+            self.ofliph()
+        else:
+            self.ifliph()
     def ifliph(self):# to inverted
         if not self.fh:
             self.sprite.flip(True,False)
@@ -422,6 +448,11 @@ class obj_textbox:
     def flipv(self):# vertical
         self.fv= not self.fv
         self.sprite.flip(False,True)
+    def bflipv(self,boolflip):# boolean flip
+        if boolflip:
+            self.oflipv()
+        else:
+            self.iflipv()
     def iflipv(self):# to inverted
         if not self.fv:
             self.sprite.flip(False,True)
@@ -499,6 +530,11 @@ class obj_image:
     def fliph(self):# horizontal
         self.sprite.flip(True,False)
         self.fh= not self.fh
+    def bfliph(self,boolflip):# boolean flip
+        if boolflip:
+            self.ofliph()
+        else:
+            self.ifliph()
     def ifliph(self):# to inverted
         if not self.fh:
             self.sprite.flip(True,False)
@@ -510,6 +546,11 @@ class obj_image:
     def flipv(self):# vertical
         self.fv= not self.fv
         self.sprite.flip(False,True)
+    def bflipv(self,boolflip):# boolean flip
+        if boolflip:
+            self.oflipv()
+        else:
+            self.iflipv()
     def iflipv(self):# to inverted
         if not self.fv:
             self.sprite.flip(False,True)
@@ -596,6 +637,8 @@ class obj_animation:
         self.devrect=core.obj_sprite_rect()
         self.devcrossref=core.obj_sprite_cross()
         self.devlineseq=core.obj_sprite_linesequence()
+        self.devxy=(self.x,self.y)
+        self.devarea=(self.x,self.y, 2*self.rx, 2*self.ry )
     def addimage(self,imgname):
         sprite=core.obj_sprite_image()
         sprite.load('book/'+imgname+'.png')
@@ -617,6 +660,11 @@ class obj_animation:
     def fliph(self):# horizontal
         self.fh= not self.fh
         for i in self.spritelist: i.flip(True,False)
+    def bfliph(self,boolflip):# boolean flip
+        if boolflip:
+            self.ofliph()
+        else:
+            self.ifliph()
     def ifliph(self):# to inverted
         if not self.fh:
             for i in self.spritelist: i.flip(True,False)
@@ -628,6 +676,11 @@ class obj_animation:
     def flipv(self):# vertical
         self.fv= not self.fv
         for i in self.spritelist: i.flip(False,True)
+    def bflipv(self,boolflip):# boolean flip
+        if boolflip:
+            self.oflipv()
+        else:
+            self.iflipv()
     def iflipv(self):# to inverted
         if not self.fv:
             for i in self.spritelist: i.flip(False,True)
@@ -670,7 +723,7 @@ class obj_animation:
             self.sprite.rotate(ra)
             # Display position
             xd,yd=xa*self.s,ya*self.s
-            angle=self.r/180*tool.pi()
+            angle=self.r
             coo,soo=tool.cos(angle),tool.sin(angle)
             xd,yd=coo*xd+soo*yd,coo*yd-soo*xd
             xd,yd=xd*(1-2*int(self.fh)),yd*(1-2*int(self.fv))
@@ -680,6 +733,8 @@ class obj_animation:
             # devtools
             self.devxy=(xd,yd)
             self.devarea=(xd,yd, 2*self.sprite.getrx(), 2*self.sprite.getry() )
+
+            
     def devtools(self):
         if self.sequence.recording:
             if self.sequence.data and len(self.sequence.data)>1:
@@ -701,6 +756,7 @@ class obj_animation:
 
 
 # Animation sequence (vector of time-transformations)
+# Only recorded at 60 fps, and can only be read at 60,30 or 20 fps
 class obj_animationsequence:
     def __init__(self,creator,name,xy,record,maxlength=None):
         self.type='animationsequence'
@@ -769,56 +825,72 @@ class obj_animationsequence:
                 self.data.append(self.frame)
                 self.ta += 1
     def savesequence(self):
-        with open('animations/'+self.name+'.txt', 'w+') as f1:
-            f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
-            for i in range(0,len(self.data)):
-                line=str(self.data[i][0])# ta
-                line +=','+str(self.data[i][1])# xa
-                line +=','+str(self.data[i][2])# ya
-                if self.data[i][3]: # fha (boolean to 0-1)
-                    line +=','+'1'
-                else:
-                    line +=','+'0'
-                if self.data[i][4]: # fva (boolean to 0-1)
-                    line +=','+'1'
-                else:
-                    line +=','+'0'
-                line +=','+str(self.data[i][5])# ra
-                line +=','+str(self.data[i][6])# sa
-                line +=','+str(self.data[i][7])# ia
-                line +='\n'
-                f1.write(line)
+        if not share.fps==60:
+            print('WARNING: Animation sequence not recorded, can only record at 60 fps')  
+        else:
+            with open('animations/'+self.name+'.txt', 'w+') as f1:
+                f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
+                for i in range(0,len(self.data)):
+                    line=str(self.data[i][0])# ta
+                    line +=','+str(self.data[i][1])# xa
+                    line +=','+str(self.data[i][2])# ya
+                    if self.data[i][3]: # fha (boolean to 0-1)
+                        line +=','+'1'
+                    else:
+                        line +=','+'0'
+                    if self.data[i][4]: # fva (boolean to 0-1)
+                        line +=','+'1'
+                    else:
+                        line +=','+'0'
+                    line +=','+str(self.data[i][5])# ra
+                    line +=','+str(self.data[i][6])# sa
+                    line +=','+str(self.data[i][7])# ia
+                    line +='\n'
+                    f1.write(line)
     def loadsequence(self,maxlength=None):
-        self.data=[]
-        term=0
-        if tool.ospathexists('animations/'+self.name+'.txt'):
-            with open('animations/'+self.name+'.txt','r+') as f1:
-                line=f1.readline()# first line skip
-                while line:
-                    line=f1.readline()
-                    if line:
-                        line = line.rstrip("\n")
-                        line=line.split(",")
-                        vect=[]
-                        vect.append(int(line[0]))# ta
-                        vect.append(int(line[1]))# xa
-                        vect.append(int(line[2]))# ya
-                        if int(line[3]) == 1:# fha
-                            vect.append(True)
-                        else:
-                            vect.append(False)
-                        if int(line[4]) == 1:# fva
-                            vect.append(True)
-                        else:
-                            vect.append(False)
-                        vect.append(int(line[5]))# ra
-                        vect.append(float(line[6]))# sa
-                        vect.append(int(line[7]))# ia
-                        self.data.append(vect)
-                        term += 1
-                        if maxlength and term>maxlength-1: 
-                            break
-        self.length=len(self.data)
+        if share.fps==60: 
+            lineinc=1# read every frame (sequences are recorded at 60 fps)
+        elif share.fps==30:
+            lineinc=2# read 1 out of 2 frames
+        elif share.fps==20:
+            lineinc=3# read 1 out of 3 frames
+        else:
+            lineinc=None
+        if not lineinc:
+            print('WARNING: Animation sequence not loaded, only supports 20, 30 or 60 fps')
+        else:
+            self.data=[]
+            term=0
+            linenumber=0
+            if tool.ospathexists('animations/'+self.name+'.txt'):
+                with open('animations/'+self.name+'.txt','r+') as f1:
+                    line=f1.readline()# first line skip
+                    while line:
+                        line=f1.readline()
+                        if line and linenumber%lineinc==0:
+                            line = line.rstrip("\n")
+                            line=line.split(",")
+                            vect=[]
+                            vect.append(int(line[0]))# ta
+                            vect.append(int(line[1]))# xa
+                            vect.append(int(line[2]))# ya
+                            if int(line[3]) == 1:# fha
+                                vect.append(True)
+                            else:
+                                vect.append(False)
+                            if int(line[4]) == 1:# fva
+                                vect.append(True)
+                            else:
+                                vect.append(False)
+                            vect.append(int(line[5]))# ra
+                            vect.append(float(line[6]))# sa
+                            vect.append(int(line[7]))# ia
+                            self.data.append(vect)
+                            term += 1
+                            if maxlength and term>maxlength-1: 
+                                break
+                        linenumber +=1
+            self.length=len(self.data)
 
 
 ####################################################################################################################
@@ -882,6 +954,11 @@ class obj_dispgroup:
         for i in self.dict.keys():
             self.dict[i].fliph()
             self.symh(i)
+    def bfliph(self,boolflip):# boolean flip
+        if boolflip:
+            self.ofliph()
+        else:
+            self.ifliph()
     def ifliph(self):# to inverted
         if not self.fh:
             self.fh=True
@@ -899,6 +976,11 @@ class obj_dispgroup:
         for i in self.dict.keys():
             self.dict[i].flipv()
             self.symv(i)
+    def bflipv(self,boolflip):# boolean flip
+        if boolflip:
+            self.oflipv()
+        else:
+            self.iflipv()
     def iflipv(self):# to inverted
         if not self.fv:
             self.fv=True
@@ -945,7 +1027,7 @@ class obj_dispgroup:
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
     def devtools(self):
-        self.devcross.display(share.colors.devdispgroup,(self.x,self.y),20,diagonal=True,thickness=6)
+        self.devcross.display(share.colors.devdispgroup,(self.x,self.y),10,diagonal=True,thickness=6)
     def play(self,controls):
         for i in self.dict.values(): i.play(controls)
         if share.devmode: self.devtools()
