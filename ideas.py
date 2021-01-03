@@ -59,6 +59,9 @@ class obj_scene_ideamenu(page.obj_page):
     def loadtests(self):# load all tests 
         # developper
 
+        self.list.append(obj_scene_idea6())    
+        self.list.append(obj_scene_idea7())    
+
         self.list.append(obj_scene_idea4()) 
 
         self.list.append(obj_scene_ideatodo())    
@@ -67,11 +70,12 @@ class obj_scene_ideamenu(page.obj_page):
         self.list.append(obj_scene_idea3())    
    
         self.list.append(obj_scene_idea5())    
-        self.list.append(obj_scene_idea6())    
-        self.list.append(obj_scene_idea7())    
+
         self.list.append(obj_scene_idea8())    
         self.list.append(obj_scene_idea9())    
-        self.list.append(obj_scene_idea10()) 
+        self.list.append(obj_scene_idea10())     
+        self.list.append(obj_scene_ch2p2())     
+        self.list.append(obj_scene_ch2p3()) 
         #
         self.listlen=len(self.list)
 
@@ -98,13 +102,14 @@ class obj_scene_ideatodo(obj_ideapage):
     def setup(self):       
         self.name='Todo List'  
         self.text=['Todo List:',\
-                   '\nx) Hero house=museum (artifact recurrent in world), laboratory (critters reccurent in world), no bedroom, no outside view. ',\
-                   '\nx) Allow hero to strike up or down (but only face left or right)',\
-                   '\nx) Make custom critters in the lab: use classmethods to build from template what methods they have',\
-                   '\nx) Game now supports 60,30 or 20 fps but many movement (based on 60 fps) becomes incorrect. ',\
+                   '\nx) Watch Zelda LTTP longplay to get idea of game elements',\
+                   '\nx) chapt2 should only be level elements: door keys, levers, inner walls, decorations... ',\
+                   '\nx) chapt3 should be critters only (with possibly a classmethod to create and customize as many as wanted)',\
+                   '\nx) Allow hero to strike up or down ? Difficult because we only draw him facing left or right',\
+                   '\nx) Game now supports 60,30 or 20 fps but many movement (based on 60 fps) are incorrect at 30 or 20. ',\
                    'Correct this eventually (look at movex,movey, obj_timer, share.dtf..., animation load and save). ',\
+                   '\nx) chapt1 add hero chest (later or not)',\
                    '\nx) split actor file into multiple files ',\
-                   '\nx)',\
                    '\nx)',\
                    '\nx)',\
                    ] 
@@ -132,35 +137,28 @@ class obj_scene_idea1p2(obj_ideapage):
 
 class obj_scene_idea2(obj_ideapage):
     def setup(self):       
-        self.name='Talking '  
-        self.text=['Hero talks',\
+        self.name='Idea '  
+        self.text=['...',\
                    ] 
-        animation=draw.obj_animation('herotalks1','herohead',(640,360),record=True) 
-        animation.addimage('herohead_happy')
-        self.addpart(animation)
+
     
 
 class obj_scene_idea3(obj_ideapage):
     def setup(self):       
-        self.name='Critter'  
-        self.text=['create a critter that spit/throws',\
+        self.name='Critter charge'  
+        self.text=['create a critter that charges and hits',\
                    ] 
-        self.addpart( draw.obj_drawing('alert',(400,350),legend='Alert',shadow=(50,50)) )
-        self.addpart( draw.obj_drawing('critterspit',(200,450),legend='Critter',shadow=(100,100)) )
-        self.addpart( draw.obj_drawing('critterspit_strike',(800,450),legend='Critter Strike',shadow=(100,100)) )
-        self.addpart( draw.obj_drawing('critterspit_spit',(1000,450),legend='Spit',shadow=(50,50)) )
+        self.addpart( draw.obj_drawing('crittercharge',(200,450),legend='Critter',shadow=(100,100)) )
+        self.addpart( draw.obj_drawing('crittercharge_strike',(800,450),legend='Critter charge',shadow=(100,100)) )
+        self.addpart( draw.obj_drawing('crittercharge_weapon',(1000,450),legend='attack',shadow=(50,50)) )
 
 
 class obj_scene_idea4(obj_ideapage):
     def setup(self):       
-        self.name='Critter behavior'  
-        self.text=['Takes 3 hits to kill',\
+        self.name='Idea'  
+        self.text=['...',\
                    ] 
-        ww=world.obj_world_ch2(self)
-        bdry=actor.obj_actor_bdry(ww)
-        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
-        critter=actor.obj_actor_critterspit(ww,(tool.randint(100,1180),tool.randint(100,620)),scale=0.5 )
-        self.addpart( ww )
+
 
 
 class obj_scene_idea5(obj_ideapage):
@@ -179,22 +177,51 @@ class obj_scene_idea5(obj_ideapage):
 
 class obj_scene_idea6(obj_ideapage):
     def setup(self):       
-        self.name='Save new image'  
-        self.text=['save image from existing one (works)',\
-                   '. ',\
+        self.name='Hero Chest '  
+        self.text=['draw the hero chest (standing or striking)',\
                    ] 
-        a=draw.obj_image('herohead',(640,360))
-        a.rotate(45)
-        a.save('herohead_r45')
+        # hero no chest mini
+        xref,yref=300,200
+        dispgroup=draw.obj_dispgroup((xref,yref))
+        dispgroup.addpart('image_strike', draw.obj_image('herostrike',(xref+240,yref+80)) )
+        dispgroup.addpart('image_legs', draw.obj_image('herolegs_stand',(xref,yref+160)) )
+        dispgroup.addpart('image_head', draw.obj_image('herohead',(xref,yref)) )
+        dispgroup.scale(0.5)
+        self.addpart(dispgroup)
+        # hero chest mini
+        xref,yref=1280-300,200
+        dispgroup=draw.obj_dispgroup((xref,yref))
+        
+        dispgroup.addpart('image_legs', draw.obj_image('herolegs_stand',(xref,yref+160)) )
+        dispgroup.addpart('image_arml', draw.obj_image('heroarml',(xref-150,yref)) )
+        dispgroup.addpart('image_armr', draw.obj_image('heroarmr',(xref+150,yref)) )
+        dispgroup.addpart('image_chest', draw.obj_image('herochest',(xref,yref)) )
+        dispgroup.addpart('image_head', draw.obj_image('herohead',(xref,yref-160)) )
+        dispgroup.addpart('image_strike', draw.obj_image('herostrike',(xref+240,yref)) )
+        dispgroup.scale(0.5)
+        self.addpart(dispgroup)
+
+
+        # hero draw chest 
+        xref,yref=640,440
+        self.addpart(draw.obj_image('herolegs_stand',(xref,yref+160)) )
+        self.addpart( draw.obj_drawing('herochest',(xref,yref),shadow=(180,100)) )
+        self.addpart(draw.obj_image('herohead',(xref,yref-160)) )
+        # self.addpart(draw.obj_image('herostrike',(xref+240,yref)) )
+        self.addpart( draw.obj_drawing('heroarml',(xref-300,yref),shadow=(100,100)) )
+        self.addpart( draw.obj_drawing('heroarmr',(xref+300,yref),shadow=(100,100)) )
+        
     
 
 class obj_scene_idea7(obj_ideapage):
     def setup(self):       
-        self.name='Idea'  
-        self.text=['comment here',\
-                   '. ',\
+        self.name='Hero Actor with Chest'  
+        self.text=['...',\
                    ] 
-        self.addpart( draw.obj_image('horizon',(640,560)) )
+        ww=world.obj_world_ch1(self)
+        hero=actor.obj_actor_hero_v4_chest(ww,(640,360))
+        hero.scale(0.5)# scale actor hero
+        self.addpart( ww )
     
 
 class obj_scene_idea8(obj_ideapage):
@@ -226,8 +253,9 @@ class obj_scene_idea10(obj_ideapage):
         
 
 # draw hero house
-class obj_scene_ch2p2(page.obj_chapterpage):
-    def setup(self):         
+class obj_scene_ch2p2(obj_ideapage):
+    def setup(self):        
+        self.name='house from outside'       
         self.text=[('{heroname}',share.colors.hero),"\'s house, ",\
                    'that was named',('{housename}',share.colors.house),\
                    'looked like this from the outside. ',\
@@ -238,15 +266,13 @@ class obj_scene_ch2p2(page.obj_chapterpage):
         self.addpart( draw.obj_image('door_closed',(640,500),scale=0.25) )
         self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(240,500+40),scale=0.25) )
         self.addpart( draw.obj_animation('herohead_lookaround','herohead',(240,500),scale=0.25) )
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p1())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p3())
+
 
 
 # hero opens door to enter house
-class obj_scene_ch2p3(page.obj_chapterpage):
+class obj_scene_ch2p3(obj_ideapage):
     def setup(self):         
+        self.name='house from outside enter'
         self.text=['To enter ',('{housename}',share.colors.house),', ',\
                    ('{heroname}',share.colors.hero),' needed to knock on the door with ',\
                    ('{weaponname}',share.colors.weapon),\
@@ -263,15 +289,65 @@ class obj_scene_ch2p3(page.obj_chapterpage):
             term=actor.obj_actor_item_loved(self.world,(i,500+40),scale=0.25)
         hero=actor.obj_actor_hero_v4(self.world,(240,500),scale=0.25)# Hero in world
         self.goal=actor.obj_actor_goal_opendoor(self.world,(hero,door),timer=20)
+        self.addpart (self.world )
     def callnextpage(self,controls):# must reach goal
         if self.goal.reached or (controls.enter and controls.enterc):
             share.ipage += 1
             self.nextpage()# switch to next page      
-    def page(self,controls):        
-        self.world.update(controls)
+
+
+        
+# draw furnitures
+class obj_scene_ch2p6(page.obj_chapterpage):
+    def setup(self):         
+        self.text=['The bedroom had 3 furnitures that looked like this and were named like this. ',\
+                   ]
+        self.textkeys={'xmax':640}
+        self.addpart( draw.obj_drawing('furniture_wide',(320,500),legend='wide furniture') )
+        self.addpart( draw.obj_drawing('furniture_square',(820,450),legend='square furniture') )
+        self.addpart( draw.obj_drawing('furniture_tall',(1120,400),legend='tall furniture') )
+        self.addpart( draw.obj_textinput('furniture_wide_name',25,(320,300),color=share.colors.hero, legend='wide furniture name') )
+        self.addpart( draw.obj_textinput('furniture_square_name',15,(820,200),color=share.colors.hero, legend='square furniture name') )
+        self.addpart( draw.obj_textinput('furniture_tall_name',10,(1120,100),color=share.colors.hero, legend='tall furniture name') )
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p2())
+        share.scenemanager.switchscene(obj_scene_ch2p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p4())
-        
-        
+        share.scenemanager.switchscene(obj_scene_ch2p7())
+
+
+
+# push furnitures around
+class obj_scene_ch2p7(page.obj_chapterpage):
+    def setup(self):         
+        self.text=[('{heroname}',share.colors.hero), ' could strike ',\
+                   ('{hero_his}',share.colors.hero),' furnitures with ',\
+                   ('{weaponname}',share.colors.weapon),' to put ',\
+                   ('{hero_his}',share.colors.hero),' room in order. When finished, ',\
+                   ('{hero_he}',share.colors.hero),' could return to the entrance. '\
+                   ]
+        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format        
+        self.addpart(draw.obj_image('wall_west',(50,360)))
+        self.addpart(draw.obj_image('wall_east',(1280-50,360)))
+        self.addpart(draw.obj_image('wall_south',(640,720-50)))
+        self.addpart(draw.obj_image('wall_north',(640,50))) 
+        textbox=draw.obj_textbox('Entrance',(120,360),fontsize='small')
+        textbox.rotate90(90)
+        self.addpart( textbox )        
+        ww=world.obj_world_ch2(self)
+        self.addpart(ww)
+        bdry=actor.obj_actor_bdry(ww,bounds=(50,1280-50,100,720-100))
+        door=actor.obj_actor_door(ww,(50,360),scale=0.25)
+        door.rotate90(90)
+        furniture=actor.obj_actor_furniture_wide(ww,(820,450),scale=0.5)
+        furniture=actor.obj_actor_furniture_square(ww,(860,380),scale=0.5)
+        furniture=actor.obj_actor_furniture_tall(ww,(940,360),scale=0.5)  
+        hero=actor.obj_actor_hero_v4(ww,(150,450),scale=0.25)
+        self.goal=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
+    def callnextpage(self,controls):# must reach goal
+        if self.goal.reached or (controls.enter and controls.enterc):
+            share.ipage += 1
+            self.nextpage()# switch to next page  
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p6())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p8())        

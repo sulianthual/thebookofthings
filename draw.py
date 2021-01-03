@@ -925,12 +925,21 @@ class obj_dispgroup:
         self.dicty={}
         # devtools
         self.devcross=core.obj_sprite_cross()
-    def addpart(self,name,element):
+    def addpart(self,name,element,index=None):
         self.dict[name]=element
         self.dictx[name]= int( element.xini - self.xini )# record relative difference
         self.dicty[name]= int( element.yini - self.yini )
     def removepart(self,name):
         for i in [self.dict, self.dictx, self.dicty]: i.pop(name,None)
+    # transform a part within the dispgroup
+    def movexwithin(self,name,dx):# move an existing part within the dispgroup
+        self.dictx[name] += dx
+        self.movetox(self.x)#
+    def moveywithin(self,name,dy):# move an existing part within the dispgroup
+        self.dicty[name] += dy        
+        self.movetoy(self.y)#
+
+    # transform the entire dispgroup
     def movetox(self,x):
         self.x=x
         for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])

@@ -22,6 +22,7 @@ import draw
 
 ####################################################################################################################
 # Actor Main Templates
+# *TEMPLATE *ACTOR *GRANDACTOR *RIGIDBODY
 
 # Template for most basic actors
 class obj_actor:
@@ -41,6 +42,7 @@ class obj_actor:
         self.alive=False
     def update( self ,controls):
         pass
+
 
 
 # Template for grand actors in world (hero, items, enemies..., obstacles...)
@@ -243,6 +245,7 @@ class obj_rbodyactor(obj_grandactor):
 
 ####################################################################################################################
 # Hero actors
+# *HERO
 
 #Template hero (image only)
 class obj_actor_hero(obj_rbodyactor):
@@ -431,6 +434,26 @@ class obj_actor_hero_v5(obj_actor_hero_v4):
         if (controls.s and controls.sc) or (controls.down and controls.downc): 
             self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_down',0)                
 
+
+# hero actor with chest
+class obj_actor_hero_v4_chest(obj_actor_hero_v4):
+    def setup(self):
+        super().setup()
+        
+        self.dict["hero_dispgroup"].addpart('heroarml',draw.obj_image('heroarml',(self.xini-150,self.yini)))
+        self.dict["hero_dispgroup"].addpart('heroarmr',draw.obj_image('heroarmr',(self.xini+150,self.yini)))
+        self.dict["hero_dispgroup"].addpart('herochest',draw.obj_image('herochest',(self.xini,self.yini)))
+        # remove and reput head (to place it at foreground layer)
+        term=self.dict["hero_dispgroup"].dict["head"]# head animation object
+        self.dict["hero_dispgroup"].removepart("head")
+        self.dict["hero_dispgroup"].addpart("head",term)
+        self.dict["hero_dispgroup"].moveywithin("head",-160)# move head up within hero
+        self.weapon.yoff=0# this should not be done manually!
+        #
+        # Shortcomings here:
+        # 1) we should be able to easily changes the layering (not removing/readding)
+        # 2) the sword cant even be removed/readded in foreground. actors should accept other actors as parts.
+        
 ####################################################################################################################
 
 
@@ -485,6 +508,7 @@ class obj_actor_sword(obj_grandactor):
 
 ####################################################################################################################
 # Enemy
+# *CRITTER *ENEMY
 
 # Enemy that spits
 class obj_actor_critterspit(obj_rbodyactor):
@@ -492,7 +516,7 @@ class obj_actor_critterspit(obj_rbodyactor):
         super().setup()
         self.actortype="critter"
         self.addpart('image_critter', draw.obj_image('critterspit',(self.xini,self.yini)) )
-        self.addpart('image_alert', draw.obj_image('alert',(self.xini+100,self.yini-100)) )
+        self.addpart('image_alert', draw.obj_image('alert',(self.xini+200,self.yini-200)) )
         self.dict['image_alert'].show=False
         self.addpart('animation_critterspit', draw.obj_animation('critterspit_strike','critterspit_strike',(self.xini,self.yini)) )
         self.dict['animation_critterspit'].show=False
@@ -597,7 +621,7 @@ class obj_actor_critterspit_spit(obj_grandactor):# not a rigidbody
         self.rd=25
         self.rx=25
         self.ry=25
-        self.knockback=8# force of knockback when striking rigidbodies
+        self.knockback=5# force of knockback when striking rigidbodies
         # variables
         self.move_u=0# travel speed
         self.move_v=0
@@ -611,6 +635,13 @@ class obj_actor_critterspit_spit(obj_grandactor):# not a rigidbody
         super().update(controls)
         self.travel()
 
+
+
+# Enemy that charges
+class obj_actor_crittercharge(obj_rbodyactor):
+    def setup(self):
+        super().setup()
+        self.actortype="critter"
 
 ####################################################################################################################
 # Basic Actors (not grandactors, no rigidbody)
