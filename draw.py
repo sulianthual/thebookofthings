@@ -37,7 +37,7 @@ class obj_pagebackground:
 # UI elements
 
 # display fps
-class obj_pagedisplay_fps: 
+class obj_pagedisplay_fps:
     def __init__(self):
         self.type='pagefps'
         self.sprite=core.obj_sprite_text()
@@ -51,8 +51,8 @@ class obj_pagedisplay_fps:
         self.make()# rebuild sprite every update
         self.display()
 
- 
-# display page number        
+
+# display page number
 class obj_pagedisplay_number:
     def __init__(self):
         self.type='pagenumber'
@@ -60,13 +60,13 @@ class obj_pagedisplay_number:
         self.make()
     def make(self):
         text='Page '+str(share.ipage)
-        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))    
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
     def display(self):
         self.sprite.display(1190,680)
     def update(self,controls):
         self.display()
 
-# display recurrent page note        
+# display recurrent page note
 class obj_pagedisplay_note:
     def __init__(self,text):
         self.type='pagenote'
@@ -86,11 +86,11 @@ class obj_pagedisplay_note:
 class obj_pagedisplay_text:
     def __init__(self):
         self.type='pagetext'
-        self.words_prerender=[]# list of words (sprites and positions)        
+        self.words_prerender=[]# list of words (sprites and positions)
     def make(self,textmatrix,pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
         self.words_prerender=[]
         formattextkwargs=share.datamanager.getwords()
-        if textmatrix: 
+        if textmatrix:
             self.ipos=pos# text cursor position
             for i in textmatrix:
                 if type(i) is str:
@@ -98,14 +98,14 @@ class obj_pagedisplay_text:
                 else:
                     text, color = i# input: (text,color)
                 text=tool.formattext(text,**formattextkwargs)
-                self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)    
+                self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)
     def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space
         x,y=pos# text position (top left corner)
         if x<xmin: x==xmin
         for count,line in enumerate(wordmatrix):
-            for word in line:                
+            for word in line:
                 word_surface=core.obj_sprite_text()# New sprite_text object for each word
                 word_surface.make(word,font,color)
                 word_width, word_height = 2*word_surface.getrx(),2*word_surface.getry()
@@ -117,16 +117,16 @@ class obj_pagedisplay_text:
             # return to line from user
             if count<len(wordmatrix)-1:
                 x = xmin
-                y += linespacing        
-        return x,y# return position for next call  
+                y += linespacing
+        return x,y# return position for next call
     def display(self):
         for i in self.words_prerender:
             word_surface, xy=i
             word_surface.display(xy[0],xy[1])
     def update(self,controls):
         self.display()
-        
-        
+
+
 ####################################################################################################################
 
 # A drawing (image to edit interactively by the player)
@@ -138,7 +138,7 @@ class obj_drawing:
         self.x,self.y = xy
         self.base=base# basis (other drawing object)
         self.legend=legend
-        self.shadow=shadow# =None (use file) or =(rx,ry) (use empty canvas) 
+        self.shadow=shadow# =None (use file) or =(rx,ry) (use empty canvas)
         self.setup()
     def setup(self):
         # drawing tools
@@ -156,10 +156,10 @@ class obj_drawing:
             self.sprite_shadow.load('shadows/'+self.name+'.png',convert=False)
             self.rx,self.ry=self.sprite_shadow.getrxry()
         # base
-        if self.base: 
+        if self.base:
             self.sprite_base=core.obj_sprite_image()
             self.sprite_base.makeempty(self.rx,self.ry)
-            self.sprite_base.blitfrom(self.base.sprite,0,0)        
+            self.sprite_base.blitfrom(self.base.sprite,0,0)
         # drawing
         self.sprite=core.obj_sprite_image()
         term=self.sprite.load('book/'+self.name+'.png',failsafe=False)
@@ -175,16 +175,16 @@ class obj_drawing:
     def clear(self):
         self.sprite.makeempty(self.rx,self.ry)
         self.sprite.clear()
-        self.sprite.blitfrom(self.sprite_shadow,0,0)  
+        self.sprite.blitfrom(self.sprite_shadow,0,0)
     def draw(self,controls):
         if controls.mouse1:
             self.mousedraw(controls,controls.mouse1,controls.mouse1c,self.sprite,self.brush,self.x,self.y)
         if controls.mouse3:
-            self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)        
-        if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect): 
-            self.clear()    
+            self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)
+        if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect):
+            self.clear()
     def basedraw(self):
-        if self.base: 
+        if self.base:
             self.sprite_base.clear()
             self.sprite_base.blitfrom(self.base.sprite,0,0)
     def makeframe(self):
@@ -210,10 +210,10 @@ class obj_drawing:
         self.display()
         if share.devmode: self.devtools()
     def finish(self):
-        if self.base: 
+        if self.base:
             self.sprite_base.blitfrom(self.sprite,0,0)# to base
             self.sprite.clear()
-            self.sprite.blitfrom(self.sprite_base,0,0)# back        
+            self.sprite.blitfrom(self.sprite_base,0,0)# back
         self.sprite.save('book/'+self.name+'.png')
 
 
@@ -274,7 +274,7 @@ class obj_textinput:
             self.text=share.datamanager.getword(self.key)
         else:# create key with empty text
             share.datamanager.writeword(self.key,'')
-            self.text=''    
+            self.text=''
     def changetext(self,controls):
         if tool.isinrect(controls.mousex,controls.mousey,self.rect):
             self.text=controls.edittext(self.text)# edit text
@@ -487,13 +487,21 @@ class obj_textbox:
 
 # A simple image (from the book folder) to display at a given location
 class obj_image:
-    def __init__(self,name,xy,scale=1):
+    def __init__(self,name,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False,show=True,path='book'):
         self.type='image'# object type
         self.name=name
         self.xini=xy[0]# xy is the CENTER of the image on screen
         self.yini=xy[1]
+        self.show=show# show or not (can be toggled)
+        self.path=path
         self.setup()
         if scale != 1: self.scale(scale)
+        if rotate !=0: self.rotate(rotate)
+        if fliph: self.fliph()
+        if flipv: self.flipv()
+        if fliphv:
+            self.fliph()
+            self.flipv()
     def setup(self):#
         self.x=self.xini# position
         self.y=self.yini
@@ -501,7 +509,6 @@ class obj_image:
         self.fv=False# is flipped vertically
         self.s=1# scaling factor
         self.r=0# rotation angle (deg)
-        self.show=True# show or not (can be toggled)
         # sprite
         self.sprite=core.obj_sprite_image()# sprite
         self.load(self.name)
@@ -509,12 +516,14 @@ class obj_image:
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
     def load(self,name):
-        self.sprite.load('book/'+name+'.png')
+        self.sprite.load(self.path+'/'+name+'.png')
+
     def save(self,name):
-        self.sprite.save('book/'+name+'.png')
+        if not self.path:
+            self.sprite.save(self.path+'/'+name+'.png')
     def replaceimage(self,name):
         self.name=name
-        self.sprite.load('book/'+name+'.png')
+        self.sprite.load(self.path+'/'+name+'.png')
         # reapply historial of transformations
         self.sprite.flip(self.fh,self.fv)
         self.sprite.scale(self.s)
@@ -595,7 +604,7 @@ class obj_imagefill(obj_image):
     def replaceimage(self,name):# cant replace
         pass
 
-    
+
 
 ####################################################################################################################
 
@@ -643,7 +652,7 @@ class obj_animation:
         sprite=core.obj_sprite_image()
         sprite.load('book/'+imgname+'.png')
         self.spritelist.append(sprite)
-    def replaceimage(self,imgname,index): 
+    def replaceimage(self,imgname,index):
         if index >=0 and index<len(self.spritelist):
             self.spritelist[index].load('book/'+imgname+'.png')
             self.spritelist[index].flip(self.fh,self.fv)
@@ -734,7 +743,7 @@ class obj_animation:
             self.devxy=(xd,yd)
             self.devarea=(xd,yd, 2*self.sprite.getrx(), 2*self.sprite.getry() )
 
-            
+
     def devtools(self):
         if self.sequence.recording:
             if self.sequence.data and len(self.sequence.data)>1:
@@ -826,7 +835,7 @@ class obj_animationsequence:
                 self.ta += 1
     def savesequence(self):
         if not share.fps==60:
-            print('WARNING: Animation sequence not recorded, can only record at 60 fps')  
+            print('WARNING: Animation sequence not recorded, can only record at 60 fps')
         else:
             with open('animations/'+self.name+'.txt', 'w+') as f1:
                 f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
@@ -848,7 +857,7 @@ class obj_animationsequence:
                     line +='\n'
                     f1.write(line)
     def loadsequence(self,maxlength=None):
-        if share.fps==60: 
+        if share.fps==60:
             lineinc=1# read every frame (sequences are recorded at 60 fps)
         elif share.fps==30:
             lineinc=2# read 1 out of 2 frames
@@ -887,7 +896,7 @@ class obj_animationsequence:
                             vect.append(int(line[7]))# ia
                             self.data.append(vect)
                             term += 1
-                            if maxlength and term>maxlength-1: 
+                            if maxlength and term>maxlength-1:
                                 break
                         linenumber +=1
             self.length=len(self.data)
@@ -936,7 +945,7 @@ class obj_dispgroup:
         self.dictx[name] += dx
         self.movetox(self.x)#
     def moveywithin(self,name,dy):# move an existing part within the dispgroup
-        self.dicty[name] += dy        
+        self.dicty[name] += dy
         self.movetoy(self.y)#
 
     # transform the entire dispgroup

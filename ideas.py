@@ -25,8 +25,8 @@ class obj_scene_ideamenu(page.obj_page):
     def __init__(self):
         super().__init__()
     def setup(self):
-        super().setup() 
-        share.ipage=1# current page number in chapter    
+        super().setup()
+        share.ipage=1# current page number in chapter
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
@@ -35,9 +35,9 @@ class obj_scene_ideamenu(page.obj_page):
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
-            self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))            
+            self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))
         self.sprite_pointer=draw.obj_textbox('---',(640,360),fontsize='smaller')# moved around
-        self.addpart(self.sprite_pointer)                
+        self.addpart(self.sprite_pointer)
     def page(self,controls):
         if share.iidea<self.nrow-1:
             self.sprite_pointer.movetox(60)
@@ -45,37 +45,41 @@ class obj_scene_ideamenu(page.obj_page):
         else:
             self.sprite_pointer.movetox(460)
             self.sprite_pointer.movetoy(130+(share.iidea-self.nrow+1)*30)
-        if (controls.s and controls.sc) or (controls.down and controls.downc): 
+        if (controls.s and controls.sc) or (controls.down and controls.downc):
             share.iidea += 1
             if share.iidea == self.listlen: share.iidea=0
-        if (controls.w and controls.wc) or (controls.up and controls.upc): 
+        if (controls.w and controls.wc) or (controls.up and controls.upc):
             share.iidea -= 1
             if share.iidea == -1: share.iidea=self.listlen-1
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.iidea],init=True)
-        if controls.esc and controls.escc: 
-            share.scenemanager.switchscene(share.titlescreen)            
-            
-    def loadtests(self):# load all tests 
+        if controls.esc and controls.escc:
+            share.scenemanager.switchscene(share.titlescreen)
+
+    def loadtests(self):# load all tests
         # developper
+        self.list.append(obj_scene_idea9())
+        self.list.append(obj_scene_idea2())
 
-        self.list.append(obj_scene_idea6())    
-        self.list.append(obj_scene_idea7())    
+        self.list.append(obj_scene_idea8())
 
-        self.list.append(obj_scene_idea4()) 
 
-        self.list.append(obj_scene_ideatodo())    
-        self.list.append(obj_scene_idea1())    
-        self.list.append(obj_scene_idea2())     
-        self.list.append(obj_scene_idea3())    
-   
-        self.list.append(obj_scene_idea5())    
+        self.list.append(obj_scene_idea6())
+        self.list.append(obj_scene_idea7())
 
-        self.list.append(obj_scene_idea8())    
-        self.list.append(obj_scene_idea9())    
-        self.list.append(obj_scene_idea10())     
-        self.list.append(obj_scene_ch2p2())     
-        self.list.append(obj_scene_ch2p3()) 
+        self.list.append(obj_scene_idea4())
+
+        self.list.append(obj_scene_ideatodo())
+        self.list.append(obj_scene_idea1())
+
+        self.list.append(obj_scene_idea3())
+
+        self.list.append(obj_scene_idea5())
+
+
+        self.list.append(obj_scene_idea10())
+        self.list.append(obj_scene_ch2p2())
+        self.list.append(obj_scene_ch2p3())
         #
         self.listlen=len(self.list)
 
@@ -93,93 +97,103 @@ class obj_ideapage(page.obj_chapterpage):
     def exitpage(self):
         share.scenemanager.switchscene(obj_scene_ideamenu())
     def nextpage(self):# no browsing
-        share.scenemanager.switchscene(obj_scene_ideamenu())  
+        share.scenemanager.switchscene(obj_scene_ideamenu())
 
 #########################################################################
 #########################################################################
 
 class obj_scene_ideatodo(obj_ideapage):
-    def setup(self):       
-        self.name='Todo List'  
+    def setup(self):
+        self.name='Todo List'
         self.text=['Todo List:',\
                    '\nx) Watch Zelda LTTP longplay to get idea of game elements',\
                    '\nx) chapt2 should only be level elements: door keys, levers, inner walls, decorations... ',\
                    '\nx) chapt3 should be critters only (with possibly a classmethod to create and customize as many as wanted)',\
-                   '\nx) Allow hero to strike up or down ? Difficult because we only draw him facing left or right',\
+                   '\nx) Allow her to strike up or down ? Difficult because we only draw him facing left or right',\
                    '\nx) Game now supports 60,30 or 20 fps but many movement (based on 60 fps) are incorrect at 30 or 20. ',\
                    'Correct this eventually (look at movex,movey, obj_timer, share.dtf..., animation load and save). ',\
                    '\nx) chapt1 add hero chest (later or not)',\
                    '\nx) split actor file into multiple files ',\
                    '\nx)',\
                    '\nx)',\
-                   ] 
+                   ]
         self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
 
 class obj_scene_idea1(obj_ideapage):
-    def setup(self):       
-        self.name='Sunrise'  
+    def setup(self):
+        self.name='Sunrise'
         self.text=['draw',\
-                   ] 
+                   ]
         self.addpart( draw.obj_drawing('sun',(640,210),legend='The Sun') )
         self.addpart( draw.obj_drawing('horizon',(640,560),legend='The Horizon') )
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_idea1p2())  
+        share.scenemanager.switchscene(obj_scene_idea1p2())
 class obj_scene_idea1p2(obj_ideapage):
-    def setup(self):         
+    def setup(self):
         self.name='Sunrise p2'
         self.text=['sunrise (using an imagefill)',\
-                   ] 
+                   ]
         self.addpart( draw.obj_animation('sunrise','sun',(640,210),record=True) )
-        
+
         self.addpart(draw.obj_imagefill((share.colors.background,630,100),(640,670)))# filler
-        self.addpart( draw.obj_image('horizon',(640,560)) )  
-    
+        self.addpart( draw.obj_image('horizon',(640,560)) )
+
 
 class obj_scene_idea2(obj_ideapage):
-    def setup(self):       
-        self.name='Idea '  
-        self.text=['...',\
-                   ] 
+    def setup(self):
+        self.name='Hero picks up key '
+        self.text=['hero picks up key',\
+                   ]
+        ww=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(ww,bounds=(100,1280-100,100-50,720-100-50))
+        key=actor.obj_actor_doorkey(ww,(640,360),scale=0.5)
+        key=actor.obj_actor_doorkey(ww,(640,160),scale=0.5)
+        term=actor.obj_actor_item_loved(ww,(150,150),scale=0.5)
+        term=actor.obj_actor_item_loved(ww,(150,350),scale=0.5)
+        door=actor.obj_actor_doorwithlock(ww,(940,360),scale=0.5)
 
-    
+
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
+        self.addpart( ww )
+
 
 class obj_scene_idea3(obj_ideapage):
-    def setup(self):       
-        self.name='Critter charge'  
+    def setup(self):
+        self.name='Critter charge'
         self.text=['create a critter that charges and hits',\
-                   ] 
+                   ]
         self.addpart( draw.obj_drawing('crittercharge',(200,450),legend='Critter',shadow=(100,100)) )
         self.addpart( draw.obj_drawing('crittercharge_strike',(800,450),legend='Critter charge',shadow=(100,100)) )
         self.addpart( draw.obj_drawing('crittercharge_weapon',(1000,450),legend='attack',shadow=(50,50)) )
 
 
 class obj_scene_idea4(obj_ideapage):
-    def setup(self):       
-        self.name='Idea'  
+    def setup(self):
+        self.name='Idea'
         self.text=['...',\
-                   ] 
+                   ]
 
 
 
 class obj_scene_idea5(obj_ideapage):
-    def setup(self):       
-        self.name='Hero hits up and down too'  
+    def setup(self):
+        self.name='Hero hits up and down too'
         self.text=['could hero hit up and down like ZLTTP.',\
                    'it should then have 4 facing directions (and ability to stay in them). ',\
                    'and we should be able to tell when facing up or down (maybe rotate the head?). ',\
                    'not working because replace image in animation with different size ',\
-                   ] 
+                   ]
         ww=world.obj_world_ch1(self)
         hero=actor.obj_actor_hero_v5(ww,(640,360))# with up and down
         hero.addpart("instructions", draw.obj_textbox('Strike with [Left Mouse] or [Space]',(640,680)) )
         hero.scale(0.5)# scale actor hero
-        self.addpart( ww ) 
+        self.addpart( ww )
 
 class obj_scene_idea6(obj_ideapage):
-    def setup(self):       
-        self.name='Hero Chest '  
+    def setup(self):
+        self.name='Hero Chest '
         self.text=['draw the hero chest (standing or striking)',\
-                   ] 
+                   ]
         # hero no chest mini
         xref,yref=300,200
         dispgroup=draw.obj_dispgroup((xref,yref))
@@ -191,7 +205,7 @@ class obj_scene_idea6(obj_ideapage):
         # hero chest mini
         xref,yref=1280-300,200
         dispgroup=draw.obj_dispgroup((xref,yref))
-        
+
         dispgroup.addpart('image_legs', draw.obj_image('herolegs_stand',(xref,yref+160)) )
         dispgroup.addpart('image_arml', draw.obj_image('heroarml',(xref-150,yref)) )
         dispgroup.addpart('image_armr', draw.obj_image('heroarmr',(xref+150,yref)) )
@@ -202,7 +216,7 @@ class obj_scene_idea6(obj_ideapage):
         self.addpart(dispgroup)
 
 
-        # hero draw chest 
+        # hero draw chest
         xref,yref=640,440
         self.addpart(draw.obj_image('herolegs_stand',(xref,yref+160)) )
         self.addpart( draw.obj_drawing('herochest',(xref,yref),shadow=(180,100)) )
@@ -210,52 +224,121 @@ class obj_scene_idea6(obj_ideapage):
         # self.addpart(draw.obj_image('herostrike',(xref+240,yref)) )
         self.addpart( draw.obj_drawing('heroarml',(xref-300,yref),shadow=(100,100)) )
         self.addpart( draw.obj_drawing('heroarmr',(xref+300,yref),shadow=(100,100)) )
-        
-    
+
+
 
 class obj_scene_idea7(obj_ideapage):
-    def setup(self):       
-        self.name='Hero Actor with Chest'  
+    def setup(self):
+        self.name='Hero Actor with Chest'
         self.text=['...',\
-                   ] 
+                   ]
         ww=world.obj_world_ch1(self)
         hero=actor.obj_actor_hero_v4_chest(ww,(640,360))
         hero.scale(0.5)# scale actor hero
         self.addpart( ww )
-    
+
+#
+# class obj_scene_idea8(obj_ideapage):
+#     def setup(self):
+#         self.name='Draw walls'
+#         self.text=['draw house walls and items',\
+#                    '. ']
+#         drawing=draw.obj_drawing('wall_ext',(640,260),legend='Wall',shadow=(540,100))
+#         # drawing.brush.makebrush(share.brushes.smallpen)
+#         self.addpart( drawing )
+#         drawing=draw.obj_drawing('wall_in',(640,460),legend='Panel',shadow=(135,25))
+#         drawing.brush.makebrush(share.brushes.smallpen)
+#         self.addpart( drawing )
+#         drawing=draw.obj_drawing('wall_corner',(340,560),legend='CornerStone',shadow=(100,100))
+#         # drawing.brush.makebrush(share.brushes.smallpen)
+#         self.addpart( drawing )
+#
+#         drawing=draw.obj_drawing('pot',(940,560),legend='Pot',shadow=(100,100))
+#         self.addpart( drawing )
+#
+# class obj_scene_idea9(obj_ideapage):
+#     def setup(self):
+#         self.name='Use walls'
+#         self.text=['comment here',\
+#                    '. ',\
+#                    ]
+#         self.addpart( draw.obj_image('wall_ext',(50,360),rotate=90,fliph=True,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_ext',(1280-50,360),rotate=90,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_ext',(100+270,50),scale=0.5) )
+#         self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),fliph=True,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_ext',(100+270,720-50),flipv=True,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),fliph=True,flipv=True,scale=0.5) )
+#         #
+#         self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True,scale=0.5) )
+#         self.addpart( draw.obj_image('wall_corner',(1280-50,720-50),scale=0.5) )
+#         # #
+#         # self.addpart( draw.obj_image('wall_in',(370,100+260/2)) )
+#         # self.addpart( draw.obj_image('wall_in',(640,720-100-260/2)) )
+#         # self.addpart( draw.obj_image('wall_in',(640+270/2,360-260/2),rotate=90) )
+#         # self.addpart( draw.obj_image('wall_in',(640+270+270/2,360-260/2),rotate=90) )
+#         #
+#         self.addpart( draw.obj_image('pot',(1280-100-50,100+50),scale=0.5) )
 
 class obj_scene_idea8(obj_ideapage):
-    def setup(self):       
-        self.name='Idea'  
-        self.text=['comment here',\
-                   '. ',\
-                   ] 
-        self.addpart( draw.obj_image('horizon',(640,560)) )
-    
+    def setup(self):
+        self.name='Draw walls'
+        self.text=['draw house walls and items',\
+                   '. ']
+        drawing=draw.obj_drawing('wall_ext',(840,360),legend='Wall')#,shadow=(50,270))
+        drawing.brush.makebrush(share.brushes.smallpen)
+        self.addpart( drawing )
+        drawing=draw.obj_drawing('wall_corner',(1040,360+270-50),legend='CornerStone')#,shadow=(50,50))
+        drawing.brush.makebrush(share.brushes.smallpen)
+        self.addpart( drawing )
+        drawing=draw.obj_drawing('wall_in',(640,360+270-130),legend='Panel',shadow=(25,135))
+        drawing.brush.makebrush(share.brushes.smallpen)
+        self.addpart( drawing )
+        drawing=draw.obj_drawing('pot',(340,360+270-100),legend='Pot')#,shadow=(100,100))
+        self.addpart( drawing )
 
 class obj_scene_idea9(obj_ideapage):
-    def setup(self):       
-        self.name='Idea'  
+    def setup(self):
+        self.name='Use walls'
         self.text=['comment here',\
                    '. ',\
-                   ] 
-        self.addpart( draw.obj_image('horizon',(640,560)) )
-    
+                   ]
+        self.addpart( draw.obj_image('wall_ext',(50,360),fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-50,360)) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,50),rotate=90) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),rotate=90,fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,720-50),rotate=90,flipv=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),rotate=90,fliph=True,flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
+        #
+        ww=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(ww,bounds=(100,1280-100,100-50,720-100-50))
+        panel=actor.obj_actor_wall(ww,(640,360))
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
+        self.addpart( ww )
+
+        #
+        self.addpart( draw.obj_image('pot',(1280-100-50,100+50),scale=0.5) )
+
 
 class obj_scene_idea10(obj_ideapage):
-    def setup(self):       
-        self.name='Idea'  
+    def setup(self):
+        self.name='Idea'
         self.text=['comment here',\
                    '. ',\
-                   ] 
+                   ]
         self.addpart( draw.obj_image('horizon',(640,560)) )
-        
-        
+
+
 
 # draw hero house
 class obj_scene_ch2p2(obj_ideapage):
-    def setup(self):        
-        self.name='house from outside'       
+    def setup(self):
+        self.name='house from outside'
         self.text=[('{heroname}',share.colors.hero),"\'s house, ",\
                    'that was named',('{housename}',share.colors.house),\
                    'looked like this from the outside. ',\
@@ -271,7 +354,7 @@ class obj_scene_ch2p2(obj_ideapage):
 
 # hero opens door to enter house
 class obj_scene_ch2p3(obj_ideapage):
-    def setup(self):         
+    def setup(self):
         self.name='house from outside enter'
         self.text=['To enter ',('{housename}',share.colors.house),', ',\
                    ('{heroname}',share.colors.hero),' needed to knock on the door with ',\
@@ -293,13 +376,13 @@ class obj_scene_ch2p3(obj_ideapage):
     def callnextpage(self,controls):# must reach goal
         if self.goal.reached or (controls.enter and controls.enterc):
             share.ipage += 1
-            self.nextpage()# switch to next page      
+            self.nextpage()# switch to next page
 
 
-        
+
 # draw furnitures
 class obj_scene_ch2p6(page.obj_chapterpage):
-    def setup(self):         
+    def setup(self):
         self.text=['The bedroom had 3 furnitures that looked like this and were named like this. ',\
                    ]
         self.textkeys={'xmax':640}
@@ -318,21 +401,21 @@ class obj_scene_ch2p6(page.obj_chapterpage):
 
 # push furnitures around
 class obj_scene_ch2p7(page.obj_chapterpage):
-    def setup(self):         
+    def setup(self):
         self.text=[('{heroname}',share.colors.hero), ' could strike ',\
                    ('{hero_his}',share.colors.hero),' furnitures with ',\
                    ('{weaponname}',share.colors.weapon),' to put ',\
                    ('{hero_his}',share.colors.hero),' room in order. When finished, ',\
                    ('{hero_he}',share.colors.hero),' could return to the entrance. '\
                    ]
-        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format        
+        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
         self.addpart(draw.obj_image('wall_west',(50,360)))
         self.addpart(draw.obj_image('wall_east',(1280-50,360)))
         self.addpart(draw.obj_image('wall_south',(640,720-50)))
-        self.addpart(draw.obj_image('wall_north',(640,50))) 
+        self.addpart(draw.obj_image('wall_north',(640,50)))
         textbox=draw.obj_textbox('Entrance',(120,360),fontsize='small')
         textbox.rotate90(90)
-        self.addpart( textbox )        
+        self.addpart( textbox )
         ww=world.obj_world_ch2(self)
         self.addpart(ww)
         bdry=actor.obj_actor_bdry(ww,bounds=(50,1280-50,100,720-100))
@@ -340,14 +423,14 @@ class obj_scene_ch2p7(page.obj_chapterpage):
         door.rotate90(90)
         furniture=actor.obj_actor_furniture_wide(ww,(820,450),scale=0.5)
         furniture=actor.obj_actor_furniture_square(ww,(860,380),scale=0.5)
-        furniture=actor.obj_actor_furniture_tall(ww,(940,360),scale=0.5)  
+        furniture=actor.obj_actor_furniture_tall(ww,(940,360),scale=0.5)
         hero=actor.obj_actor_hero_v4(ww,(150,450),scale=0.25)
         self.goal=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
     def callnextpage(self,controls):# must reach goal
         if self.goal.reached or (controls.enter and controls.enterc):
             share.ipage += 1
-            self.nextpage()# switch to next page  
+            self.nextpage()# switch to next page
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p6())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p8())        
+        share.scenemanager.switchscene(obj_scene_ch2p8())

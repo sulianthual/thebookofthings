@@ -33,94 +33,142 @@ class obj_scene_chapter2(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_textinput('housename',25,(650,360),color=share.colors.house,legend='House Name') )
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p4())
-        
-        
-
-
-## skipped two pages
-
-# draw walls
-class obj_scene_ch2p4(page.obj_chapterpage):
-    def setup(self):         
-        self.text=['Inside ',('{housename}',share.colors.house),' there were walls and they looked like this. ',\
-                   'There were common walls that would be found elsewhere too. ',\
-                   ]
-        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format        
-        self.drawlist=[]
-        self.drawlist.append(draw.obj_drawing('wall_west',(50,360)))
-        self.drawlist.append(draw.obj_drawing('wall_east',(1280-50,360)))
-        self.drawlist.append(draw.obj_drawing('wall_south',(640,720-50)))
-        self.drawlist.append(draw.obj_drawing('wall_north',(640,50)))
-        for i in self.drawlist: 
-            i.brush.makebrush(share.brushes.smallpen)
-            self.addpart( i )               
-        self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(240,560-60+40),scale=0.25) )
-        self.addpart( draw.obj_animation('herohead_lookaround','herohead',(240,560-60),scale=0.25) )
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter2())
-    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p1())
 
 
 
 # draw door
 class obj_scene_ch2p1(page.obj_chapterpage):
-    def setup(self):         
-        self.text=[('{heroname}',share.colors.hero),"\'s house ",\
-                   ('{housename}',share.colors.house),' had a door. '\
-                   'It was a common door that would be found elsewhere too. '
-                   'It would open when ',('{heroname}',share.colors.hero), ' entered, '\
-                   'and close the rest of the time. ',\
+    def setup(self):
+        self.text=['To build ',('{heroname}',share.colors.hero),"\'s house ",\
+                   ('{housename}',share.colors.house),', one first needed doors. ',\
+                   'Doors that could be opened by ',('{heroname}',share.colors.hero),', ',\
+                   'that could be closed, and that could be locked with keys. ',\
                    ]
-        # 
-        self.addpart( draw.obj_drawing('door_closed',(340,460),legend='Door Closed') )
-        self.addpart( draw.obj_drawing('door_open',(940,460),legend='Door Open') )
-        self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(640,460-60+160)) )
-        self.addpart( draw.obj_animation('herohead_lookaround','herohead',(640,460-60)) )
+        #
+        self.addpart( draw.obj_drawing('door_closed',(240,460),legend='Door Closed') )
+        self.addpart( draw.obj_drawing('door_open',(1040,460),legend='Door Open') )
+        # self.addpart( draw.obj_animation('herolegs_stand','herolegs_stand',(640,460-60+160)) )
+        # self.addpart( draw.obj_animation('herohead_lookaround','herohead',(640,460-60)) )
+        self.addpart( draw.obj_drawing('door_lock',(530,460),legend='Door Lock'))#,shadow=(100,100)) )
+        self.addpart( draw.obj_drawing('door_key',(750,460),legend='Door Key'))#,shadow=(100,100)) )
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p4())
+        share.scenemanager.switchscene(obj_scene_chapter2())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p5())
+        share.scenemanager.switchscene(obj_scene_ch2p2())
 
 
 # entrance, access first room
-class obj_scene_ch2p5(page.obj_chapterpage):
-    def setup(self):         
+class obj_scene_ch2p2(page.obj_chapterpage):
+    def setup(self):
         self.text=[\
-                   'To enter a regular door the hero would knock on it then stand by it. ',\
+                   'To enter a regular door, ',('{heroname}',share.colors.hero),\
+                   ' would knock on it then stand just in front of it. ',\
                    ]
-        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format        
-        self.addpart(draw.obj_image('wall_west',(50,360)))
-        self.addpart(draw.obj_image('wall_east',(1280-50,360)))
-        self.addpart(draw.obj_image('wall_south',(640,720-50)))
-        self.addpart(draw.obj_image('wall_north',(640,50))) 
- 
+        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
         #
-        self.world=world.obj_world_ch2(self)
-        bdry=actor.obj_actor_bdry(self.world,bounds=(100,1280-100,100-50,720-100-50))
-        door=actor.obj_actor_door(self.world,(940,360),scale=0.5)
-        hero=actor.obj_actor_hero_v4(self.world,(340,360),scale=0.5)
-        self.goal=actor.obj_actor_goal_opendoor(self.world,(hero,door),timer=20)
-    def page(self,controls):
-        self.world.update(controls)
+        ww=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(ww,bounds=(100,1280-100,100-50,720-100-50))
+        door=actor.obj_actor_door(ww,(940,360),scale=0.5)
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
+        self.goal=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
+        self.addpart( ww )
+
     def callnextpage(self,controls):# must reach goal
         if self.goal.reached or (controls.enter and controls.enterc):
             share.ipage += 1
-            self.nextpage()# switch to next page   
+            self.nextpage()# switch to next page
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p1())
     def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p3())
+
+# draw door lock
+class obj_scene_ch2p3(page.obj_chapterpage):
+    def setup(self):
+        self.text=[\
+                   'To enter a locked door, ',('{heroname}',share.colors.hero),\
+                    ' would first have to find the key. ',\
+                   ]
+        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
+        #
+        ww=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(ww,bounds=(100,1280-100,100-50,720-100-50))
+        door=actor.obj_actor_doorwithlock(ww,(940,360),scale=0.5)
+        key=actor.obj_actor_doorkey(ww,(640,360),scale=0.5)
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
+        self.goal=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
+        self.addpart( ww )
+    def callnextpage(self,controls):# must reach goal
+        if self.goal.reached or (controls.enter and controls.enterc):
+            share.ipage += 1
+            self.nextpage()# switch to next page
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p2())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p4())
+
+
+## skipped two pages
+
+# draw walls
+class obj_scene_ch2p4(page.obj_chapterpage):
+    def setup(self):
+        self.text=['Next, to build ',('{housename}',share.colors.house),' some walls were needed. ',\
+                   'Walls that would not be penetrated. And panels. And pots. ',\
+                   ]
+        drawing=draw.obj_drawing('wall_ext',(840,360),legend='Wall')#,shadow=(50,270))
+        drawing.brush.makebrush(share.brushes.smallpen)
+        self.addpart( drawing )
+        drawing=draw.obj_drawing('wall_corner',(1040,360+270-50),legend='CornerStone')#,shadow=(50,50))
+        drawing.brush.makebrush(share.brushes.smallpen)
+        self.addpart( drawing )
+        drawing=draw.obj_drawing('wall_in',(640,360+270-130),legend='Panel',shadow=(25,135))
+        drawing.brush.makebrush(share.brushes.smallpen)
+        self.addpart( drawing )
+        drawing=draw.obj_drawing('pot',(340,360+270-100),legend='Pot')#,shadow=(100,100))
+        self.addpart( drawing )
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p3())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p5())
+
+# room with walls
+class obj_scene_ch2p5(page.obj_chapterpage):
+    def setup(self):
+        self.text=['Going through the rooms looked like this. ',\
+                   ]
+        self.addpart( draw.obj_image('wall_ext',(50,360),fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-50,360)) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,50),rotate=90) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),rotate=90,fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,720-50),rotate=90,flipv=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),rotate=90,fliph=True,flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
+        #
+        ww=world.obj_world_ch2(self)
+        bdry=actor.obj_actor_bdry(ww,bounds=(100,1280-100,100-50,720-100-50))
+        panel=actor.obj_actor_wall(ww,(640,360))
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
+        self.addpart( ww )
+
+        #
+        self.addpart( draw.obj_image('pot',(1280-100-50,100+50),scale=0.5) )
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p4())
+    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p9())
 
-        
 
 class obj_scene_ch2p9(page.obj_chapterpage):
-    def setup(self):        
+    def setup(self):
         self.text=['In the laboratory, ',('{heroname}',share.colors.hero),' studied critters. ',\
                    ('{hero_his}',share.colors.hero),' first critter looked like this when facing right. ',\
                    'When alerted, would get very angry and throw something. ',\
-                   ] 
+                   ]
         self.addpart( draw.obj_textinput('critterspitname',25,(640,220),color=share.colors.hero, legend='Critter Name') )
         self.addpart( draw.obj_drawing('critterspit',(200,500),legend='Critter'))#,shadow=(150,150)) )
         self.addpart( draw.obj_drawing('alert',(450,350),legend='Alert',shadow=(50,50)) )
@@ -129,25 +177,31 @@ class obj_scene_ch2p9(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p10()) 
+        share.scenemanager.switchscene(obj_scene_ch2p10())
 
 
 class obj_scene_ch2p10(page.obj_chapterpage):
-    def setup(self): 
+    def setup(self):
         self.text=['Most of the time, the critters would leave ',('{heroname}',share.colors.hero),' alone. ',\
                    'But if ',('{hero_he}',share.colors.hero),' got too close, ',\
                    'then the critters would throw and throw at ',('{hero_him}',share.colors.hero),'. ',\
                    'Luckily, ',('{heroname}',share.colors.hero),'could hit the critters several time with ',\
                   ('{weaponname}',share.colors.weapon),' until they vanished. ',\
                    ('{hero_he}',share.colors.hero),' needed to do so to exit the room. '
-                   ] 
+                   ]
 
-        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format        
-        self.addpart(draw.obj_image('wall_west',(50,360)))
-        self.addpart(draw.obj_image('wall_east',(1280-50,360)))
-        self.addpart(draw.obj_image('wall_south',(640,720-50)))
-        self.addpart(draw.obj_image('wall_north',(640,50))) 
-        textbox=draw.obj_textbox('Exit',(1280-120,360),fontsize='small') 
+        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
+        self.addpart( draw.obj_image('wall_ext',(50,360),fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-50,360)) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,50),rotate=90) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),rotate=90,fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,720-50),rotate=90,flipv=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),rotate=90,fliph=True,flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
+        textbox=draw.obj_textbox('Exit',(1280-120,360),fontsize='small')
         textbox.rotate90(-90)
         self.addpart(textbox)
         ww=world.obj_world_ch2(self)
@@ -163,27 +217,33 @@ class obj_scene_ch2p10(page.obj_chapterpage):
     def callnextpage(self,controls):# must reach goal
         if (self.goalkill.reached and self.goaldoor.reached) or (controls.enter and controls.enterc):
             share.ipage += 1
-            self.nextpage()# switch to next page   
+            self.nextpage()# switch to next page
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p9())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p11())         
-        
-        
+        share.scenemanager.switchscene(obj_scene_ch2p11())
+
+
 class obj_scene_ch2p11(page.obj_chapterpage):
-    def setup(self): 
+    def setup(self):
         self.text=[('{heroname}',share.colors.hero),\
                    'needed to clear the room to progress. '
-                   ] 
+                   ]
 
-        self.textkeys={'pos':(150,5),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format        
-        self.addpart(draw.obj_image('wall_west',(50,360)))
-        self.addpart(draw.obj_image('wall_east',(1280-50,360)))
-        self.addpart(draw.obj_image('wall_south',(640,720-50)))
-        self.addpart(draw.obj_image('wall_north',(640,50))) 
-        textbox=draw.obj_textbox('Exit',(1280-120,360),fontsize='small') 
+        self.textkeys={'pos':(150,5),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
+        self.addpart( draw.obj_image('wall_ext',(50,360),fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-50,360)) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,50),rotate=90) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),rotate=90,fliph=True) )
+        self.addpart( draw.obj_image('wall_ext',(100+270,720-50),rotate=90,flipv=True) )
+        self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),rotate=90,fliph=True,flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
+        self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
+        self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
+        textbox=draw.obj_textbox('Exit',(1280-120,360),fontsize='small')
         textbox.rotate90(-90)
-        self.addpart(textbox)    
+        self.addpart(textbox)
         #
         ww=world.obj_world_ch2(self)
         bdry=actor.obj_actor_bdry(ww,bounds=(50,1280-50,100,720-100))
@@ -199,10 +259,8 @@ class obj_scene_ch2p11(page.obj_chapterpage):
     def callnextpage(self,controls):# must reach goal
         if (self.goalkill.reached and self.goaldoor.reached) or (controls.enter and controls.enterc):
             share.ipage += 1
-            self.nextpage()# switch to next page   
+            self.nextpage()# switch to next page
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p10())
     # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch2p11())          
-        
-        
+    #     share.scenemanager.switchscene(obj_scene_ch2p11())

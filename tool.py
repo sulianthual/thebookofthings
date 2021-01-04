@@ -32,7 +32,7 @@ from random import randint as random_randint
 # module sys
 def sysexit():
     sys_exit()
-    
+
 # module os
 def ospathexists(path):
     return os_path.exists(path)
@@ -49,22 +49,22 @@ def cos(x):
 def sin(x):
     return math_sin(x*pi()/180)
 def angle(a_xy,b_xy):# angle between points a=(x,y) and b=(x,y)
-    return math_atan2(b_xy[1]-a_xy[1],b_xy[0]-a_xy[0])*180/pi()# in DEG 
+    return math_atan2(b_xy[1]-a_xy[1],b_xy[0]-a_xy[0])*180/pi()# in DEG
 def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y) in radian
     return math_atan2(b.y-a.y,b.x-a.x)*180/pi()# in DEG
 
 # module random
 def randint(minrange,maxrange):
     return random_randint(minrange,maxrange)
-        
+
 ####################################################################################################################
 # General Functions and objects for all uses
 
 
-# Format text using dictionary of keywords 
+# Format text using dictionary of keywords
 # $ text='{heroname} was happy'
 # $ dict={'heroname':'link'}
-# $ a=formattext(text,dict) => 'link was happy' 
+# $ a=formattext(text,dict) => 'link was happy'
 def formattext(text,**kwargs):# Format text using the keywords written in the book of things (words.txt)
     try:
         text=text.format(**kwargs)# **kwargs is wordkey=wordvalue
@@ -75,8 +75,8 @@ def formattext(text,**kwargs):# Format text using the keywords written in the bo
             pass
     except:
         pass
-    return text 
-    
+    return text
+
 # check if a point x,y is in a given rectangle rect=(xmin,xmax,ymin,ymax)
 def isinrect(x,y,rect):
     (xmin,xmax,ymin,ymax)=rect
@@ -88,7 +88,6 @@ def isinrect(x,y,rect):
 # check if two actors a,b (with attributes x,y) are within given distance r
 def checkdistance(a,b,r):
     return (a.x-b.x)**2+(a.y-b.y)**2<r**2
-
 
 # check if two actors a,b (with attributes x,y,rd) are colliding
 def checkcirclecollide(a,b):
@@ -134,10 +133,6 @@ class obj_timer:
 
 
 
-# BETTER: do timer manager with queries? (creates a new timer object here for each query)          
-            
+# BETTER: do timer manager with queries? (creates a new timer object here for each query)
+
 ####################################################################################################################
-
-
-
-

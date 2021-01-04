@@ -40,7 +40,7 @@ class obj_actor:
     def kill(self):# remove from world
         self.creator.removeactor(self)
         self.alive=False
-    def update( self ,controls):
+    def update(self ,controls):
         pass
 
 
@@ -51,6 +51,7 @@ class obj_actor:
 # - can have display elements (textbox,image,animation or dispgroup)
 # - can be transformed: movex(),movetox(),scale(),fliph()...,rotate90()
 #                       (rotate not done due to enlargen-memory issues)
+
 class obj_grandactor():
     def __init__(self,creator,xy,scale=1):
         # Creation
@@ -90,7 +91,7 @@ class obj_grandactor():
         self.alive=False
     def destroy(self):# kill with additional funcionalities (e.g. leave trailing smoke)
         self.kill()
-    def hit(self):# hit by something
+    def hit(self,hitter):# hit by something
         pass
     def addpart(self,name,element):# add element
         self.dict[name]=element
@@ -205,7 +206,7 @@ class obj_grandactor():
 class obj_rbodyactor(obj_grandactor):
     def setup(self):
         super().setup()
-        self.actortype="rbody" 
+        self.actortype="rbody"
         self.stalling=True# stalling or not
         self.dt=share.dtf# timestep (depends on game fps)
         self.u=0# rigid body speed
@@ -276,9 +277,11 @@ class obj_actor_hero_v0(obj_actor_hero):
 
 
 # Hero with only legs walking around (remove initial head and legs)
+# and with inventory
 class obj_actor_hero_v1(obj_actor_hero_v0):
     def setup(self):
         super().setup()
+        self.inventory=obj_actor_inventory(self,self.creator)
         self.removepart('img_herolegs_stand')# remove initial head and legs
         self.removepart('img_herohead')
         dispgroup=draw.obj_dispgroup((self.xini,self.yini))
@@ -366,7 +369,7 @@ class obj_actor_hero_v3(obj_actor_hero_v2):
     def longangryface(self):
         self.makeangryface()
         self.timer_quickface.start(amount=100)# with different amount
-    def hit(self):
+    def hit(self,hitter):
         self.longangryface()
 
 # Hero ... above, add sword with strike
@@ -392,7 +395,7 @@ class obj_actor_hero_v4(obj_actor_hero_v3):
         if (controls.mouse1 and controls.mouse1c) or (controls.space and controls.spacec):
             if self.timer_strikereload.off: # reloaded
                 self.startstrike()
-                # self.quickangryface()
+                self.quickangryface()
                 self.timer_strikereload.start()
     def startstrike(self):
         self.weapon.startstrike()# weapon strikes
@@ -424,22 +427,22 @@ class obj_actor_hero_v5(obj_actor_hero_v4):
     def update(self,controls):
         super().update(controls)
         self.controls_moveupdown(controls)
-    def controls_moveupdown(self,controls):    
+    def controls_moveupdown(self,controls):
         if (controls.a and controls.ac) or (controls.d and controls.dc)\
-            or (controls.left and controls.leftc) or (controls.right and controls.rightc): 
-            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead',0)          
+            or (controls.left and controls.leftc) or (controls.right and controls.rightc):
+            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead',0)
         # up down should be overwritten by left/right
-        if (controls.w and controls.wc) or (controls.up and controls.upc): 
+        if (controls.w and controls.wc) or (controls.up and controls.upc):
             self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_up',0)
-        if (controls.s and controls.sc) or (controls.down and controls.downc): 
-            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_down',0)                
+        if (controls.s and controls.sc) or (controls.down and controls.downc):
+            self.dict["hero_dispgroup"].dict["head"].replaceimage('herohead_down',0)
 
 
 # hero actor with chest
 class obj_actor_hero_v4_chest(obj_actor_hero_v4):
     def setup(self):
         super().setup()
-        
+
         self.dict["hero_dispgroup"].addpart('heroarml',draw.obj_image('heroarml',(self.xini-150,self.yini)))
         self.dict["hero_dispgroup"].addpart('heroarmr',draw.obj_image('heroarmr',(self.xini+150,self.yini)))
         self.dict["hero_dispgroup"].addpart('herochest',draw.obj_image('herochest',(self.xini,self.yini)))
@@ -453,8 +456,64 @@ class obj_actor_hero_v4_chest(obj_actor_hero_v4):
         # Shortcomings here:
         # 1) we should be able to easily changes the layering (not removing/readding)
         # 2) the sword cant even be removed/readded in foreground. actors should accept other actors as parts.
-        
+
 ####################################################################################################################
+# Hero stuff
+
+# Inventory actor
+class obj_actor_inventory(obj_actor):
+    def __init__(self,padre,creator):# call sequence is obj_actor_sword(parent,creator)
+        super().__init__(creator)# regular arguments
+        self.padre=padre# Always attached to a parent=hero
+    def setup(self):
+        self.actortype='inventory'
+        self.items_count={}# dictionary: key=item name, value= (count of item,image)
+        self.items_icon={}# hold obj_image
+        self.items_imgcount={}# hold obj_textbox for counts
+        self.backimg=draw.obj_image('inventoryshade',(0,0),path='data')
+    def additem(self,itemname,itemimage):
+        if itemname in self.items_count:
+            self.items_count[itemname] += 1
+            term=self.items_count[itemname]
+            self.items_imgcount[itemname].replacetext('x'+str(term))
+        else:
+            self.items_count[itemname] = 1
+            self.items_icon[itemname] = itemimage# image
+            self.items_imgcount[itemname] = draw.obj_textbox('x'+str(1),(0,0),fontsize='small')
+    def removeitem(self,itemname):# may remove several instances of same item
+        if itemname in self.items_count:
+            self.items_count[itemname] = max(self.items_count[itemname]-1,0)
+        else:
+            self.items_count[itemname] = 0
+    def getitemcount(self,itemname):
+        if itemname in self.items_count:
+            return self.items_count[itemname]
+        else:
+            return 0
+    def display(self):
+        for c,i in enumerate(self.items_icon):# keys
+            if self.items_count[i]>0:# holds one
+                self.backimg.show=True
+                self.items_icon[i].y=650
+                self.items_icon[i].show=True
+                self.backimg.x=50+c*50
+                self.backimg.y=650+25
+                self.backimg.display()
+                self.items_icon[i].x=50+c*50
+                self.items_icon[i].y=650
+                self.items_icon[i].display()
+                self.items_imgcount[i].show=True
+                self.items_imgcount[i].x=50+c*50
+                self.items_imgcount[i].y=650+50
+                self.items_imgcount[i].display()
+            else:
+                self.backimg.show=False
+                self.items_icon[i].show=False
+                self.items_imgcount[i].show=False
+
+    def update(self ,controls):
+        super().update(controls)
+        self.display()
 
 
 # Sword actor
@@ -540,42 +599,42 @@ class obj_actor_critterspit(obj_rbodyactor):
         self.timer_prespit=tool.obj_timer(100)
         self.timer_postspit=tool.obj_timer(100)
         # devtools
-        self.devcircle=core.obj_sprite_circle()        
+        self.devcircle=core.obj_sprite_circle()
     def patrol(self):
         self.timer_patrol.update()
         if self.timer_patrol.ring:
             term=tool.randint(0,359)
             self.forcex(2*tool.cos(-term))
             self.forcey(2*tool.sin(-term))
-            if term>90 and term<270: 
+            if term>90 and term<270:
                 self.ifliph()
             else:
                 self.ofliph()
     def startalert(self):# called externally (world rule)
         self.state.update({"patrol":False,"alert":True,"follow":True})
         self.dict['image_alert'].show=True
-        self.timer_alert.start()        
+        self.timer_alert.start()
     def alert(self):
         self.timer_alert.update()
-        if self.timer_alert.ring: 
+        if self.timer_alert.ring:
             self.startprespit()
     def startprespit(self):
         self.state.update({"prespit":True,"alert":False})
         self.dict['image_alert'].show=False
         self.dict['image_critter'].replaceimage('critterspit_strike')
-        self.timer_prespit.start()     
+        self.timer_prespit.start()
     def prespit(self):
         self.timer_prespit.update()
         if self.timer_prespit.ring: self.spit()
     def spit(self):
         term=obj_actor_critterspit_spit(self.creator,(self.x,self.y),scale=self.s)# create spit
         term.throw(self.throwspeed*tool.cos(self.aimr),self.throwspeed*tool.sin(self.aimr),self.aimr)
-        self.startpostspit()        
+        self.startpostspit()
     def startpostspit(self):
         self.dict['image_critter'].show=False
         self.dict['animation_critterspit'].show=True
         self.state.update({"postspit":True,"prespit":False})
-        self.timer_postspit.start()     
+        self.timer_postspit.start()
     def postspit(self):
         self.timer_postspit.update()
         if self.timer_postspit.ring: self.startpatrol()
@@ -584,7 +643,7 @@ class obj_actor_critterspit(obj_rbodyactor):
         self.dict['image_critter'].show=True
         self.dict['animation_critterspit'].show=False
         self.state.update({"patrol":True,"postspit":False,"follow":False})
-    def hit(self):
+    def hit(self,hitter):
         self.health -= 1
         if self.health==0: self.destroy()
         term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
@@ -593,7 +652,7 @@ class obj_actor_critterspit(obj_rbodyactor):
         term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
     def scale(self,s):
         super().scale(s)
-        if self.visionrd: 
+        if self.visionrd:
             self.visionrd *= s
         self.throwspeed *= s
     def devtools(self):
@@ -601,16 +660,16 @@ class obj_actor_critterspit(obj_rbodyactor):
         if self.visionrd: self.devcircle.display(share.colors.devactor,(self.x,self.y),self.visionrd)# vision circle
     def update(self,controls):
         super().update(controls)
-        if self.state["patrol"]: 
+        if self.state["patrol"]:
             self.patrol()
-        elif self.state["alert"]: 
+        elif self.state["alert"]:
             self.alert()
-        elif self.state["prespit"]: 
-            self.prespit()    
-        elif self.state["postspit"]: 
+        elif self.state["prespit"]:
+            self.prespit()
+        elif self.state["postspit"]:
             self.postspit()
 
-    
+
 # spit
 class obj_actor_critterspit_spit(obj_grandactor):# not a rigidbody
     def setup(self):
@@ -630,7 +689,9 @@ class obj_actor_critterspit_spit(obj_grandactor):# not a rigidbody
         self.dict['image_spit'].rotate(-r)
     def travel(self):
         self.movex(self.move_u)
-        self.movey(self.move_v)        
+        self.movey(self.move_v)
+    def hit(self,hitter):# hit something
+        self.kill()
     def update(self,controls):
         super().update(controls)
         self.travel()
@@ -714,7 +775,7 @@ class obj_actor_goal_alldead(obj_actor_goal):
                 self.reached=True
 
 ####################################################################################################################
-
+# Environment actors
 # Boundary (basic actor)
 class obj_actor_bdry(obj_actor):# basic actor
     def __init__(self,creator,bounds=(100,1280-100,100,720-100),push=(3,-3,3,-3)):
@@ -725,11 +786,22 @@ class obj_actor_bdry(obj_actor):# basic actor
         super().setup()
         self.actortype='bdry'
 
+# wall (acts like a local boundary, cannot be moved)
+class obj_actor_wall(obj_grandactor):# not a rigidbody
+    def setup(self):
+        super().setup()
+        self.actortype='wall'
+        self.rd=10# hitbox used as boundary
+        self.rx=25
+        self.ry=135
+        self.addpart('image',draw.obj_image('wall_in',(self.xini,self.yini)) )# 100x100
+
 # Door: open with hit, shuts on a timer
 class obj_actor_door(obj_grandactor):# not a rigidbody
     def setup(self):
         super().setup()
         self.actortype='door'
+        self.keylocked=False# door is locked with a key
         self.rd=8# small hitbox (must stand right on its)
         self.rx=8
         self.ry=8
@@ -741,7 +813,7 @@ class obj_actor_door(obj_grandactor):# not a rigidbody
         dispgroup.addpart("image_open",image)
         self.addpart("door_dispgroup",dispgroup)
         self.open=False# door is open
-    def hit(self): # door is hit (open or close)
+    def hit(self,hitter): # door is hit (open or close)
         if self.open:
             self.closedoor()
         else:
@@ -755,26 +827,52 @@ class obj_actor_door(obj_grandactor):# not a rigidbody
         self.dict["door_dispgroup"].dict["image_open"].show=False
 
 
-####################################################################################################################
-# Effects Actors
-
-# trail of smoke when something breaks/dies
-# (created by other actors upon kill)
-class obj_actor_effects_smoke(obj_grandactor):# grandactor because scaled
+# door with a lock
+class obj_actor_doorwithlock(obj_actor_door):
     def setup(self):
         super().setup()
-        self.actortype='smoke'
-        self.addpart("image",draw.obj_image('smoke',(self.xini,self.yini)) )
-        self.timer=tool.obj_timer(30)# timer for existence
-        self.timer.start()# start timer at creation
-    def update(self,controls):
-        super().update(controls)
-        self.timer.update()
-        if self.timer.ring: self.kill()# kill upon timer end
+        self.actortype='doorwithlock'
+        self.rd=50
+        self.rx=50
+        self.ry=50
+        self.addpart('image_doorlock',draw.obj_image('door_lock',(self.xini,self.yini)) )# 100x100
+    def hit(self,hitter): # door open if hero uses key
+        # weapon hits door, hero is weapon padre, hero has inventory, key must be in inventory
+        if not self.open:
+            if 'key' in hitter.padre.inventory.items_count:
+                if hitter.padre.inventory.items_count['key']>0:
+                    hitter.padre.inventory.removeitem('key')
+                    self.opendoor()
+                    self.open = True
+            # door cannot be closed again
+    def opendoor(self):
+        self.dict["door_dispgroup"].dict["image_closed"].show=False
+        self.dict["door_dispgroup"].dict["image_open"].show=True
+        self.dict["image_doorlock"].show=False
+
+
+
+
+
+
+
 
 
 ####################################################################################################################
 # Stuff in world
+
+# door key
+class obj_actor_doorkey(obj_grandactor):
+    def setup(self):
+        super().setup()
+        self.actortype='doorkey'
+        self.rd=50
+        self.rx=50
+        self.ry=50
+        self.addpart('image',draw.obj_image('door_key',(self.xini,self.yini)) )# 100x100
+        self.inventoryicon=draw.obj_image('door_key',(0,0),scale=0.25,show=False)# icon for inventories
+        self.inventoryname='key'# name in inventories
+
 
 # loved item (static)
 class obj_actor_item_loved(obj_grandactor):# not a rigidbody
@@ -791,7 +889,10 @@ class obj_actor_item_loved(obj_grandactor):# not a rigidbody
         dispgroup.addpart("image",image)
         dispgroup.addpart("textbox",textbox)
         self.addpart("item_dispgroup",dispgroup)
-    def hit(self):
+        #
+        self.inventoryicon=draw.obj_image('herothings_loved',(0,0),scale=0.25,show=False)# icon for inventories
+        self.inventoryname='{itemloved}'# name in inventories
+    def hit(self,hitter):
         self.health -= 1
         if self.health==0: self.destroy()
     def destroy(self):# when destroyed, leave trailing smoke
@@ -806,6 +907,10 @@ class obj_actor_item_hated(obj_actor_item_loved):# not a rigidbody
         self.actortype='item_hated'
         self.dict["item_dispgroup"].dict["image"].replaceimage('herothings_hated')
         self.dict["item_dispgroup"].dict["textbox"].replacetext("{itemhated}")
+        image=draw.obj_image('herothings_hated',(self.xini,self.yini))
+        #
+        self.inventoryicon=draw.obj_image('herothings_hated',(0,0),scale=0.25,show=False)# icon for inventories
+        self.inventoryname='{itemhated}'# name in inventories
 
 
 # furniture (from chapter 2 hero house)
@@ -840,3 +945,22 @@ class obj_actor_furniture_tall(obj_rbodyactor):
         self.ry=300
         self.addpart('img',draw.obj_image('furniture_tall',(self.xini,self.yini)))
         self.addpart('textbox',draw.obj_textbox('{furniture_tall_name}',(self.xini,self.yini+200),fontsize='big'))
+
+####################################################################################################################
+# Effects Actors
+
+# trail of smoke when something breaks/dies
+# (created by other actors upon kill)
+class obj_actor_effects_smoke(obj_grandactor):# grandactor because scaled
+    def setup(self):
+        super().setup()
+        self.actortype='smoke'
+        self.addpart("image",draw.obj_image('smoke',(self.xini,self.yini)) )
+        self.timer=tool.obj_timer(30)# timer for existence
+        self.timer.start()# start timer at creation
+    def update(self,controls):
+        super().update(controls)
+        self.timer.update()
+        if self.timer.ring: self.kill()# kill upon timer end
+
+####################################################################################################################

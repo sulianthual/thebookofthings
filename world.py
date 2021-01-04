@@ -68,9 +68,12 @@ class obj_world_ch2(obj_world):
         self.addrule('weapon_strikes_rigidbody', obj_rule_weapon_strikes_rigidbody(self) )
         self.addrule('hero_alerts_critter', obj_rule_hero_alerts_critter(self) )
         self.addrule('rule_critter_follows_hero', obj_rule_critter_follows_hero(self) )
-        
-        
-        
+        self.addrule('obj_rule_wall_cant_through', obj_rule_wall_cant_through(self) )
+
+
+
+
+
 
 
 ####################################################################################################################
@@ -85,9 +88,9 @@ class obj_world_ch2(obj_world):
 
 
 # WARNING !
-# checkrectcollide is ran for each active rule to chekc collision between actors. 
+# checkrectcollide is ran for each active rule to chekc collision between actors.
 # This can lead to performance issues if many calls (in 2**N where N is the number of actors)
-# Avoid duplicate calls:  
+# Avoid duplicate calls:
 # -write rules that are always for the ENTIRE interaction between a pair of actors.
 
 # Rule Template
@@ -100,7 +103,7 @@ class obj_rule:
         self.setup()# edit for childs
         self.setupend()
     def setupstart(self):
-        self.subject_types={}# subject types for the rule 
+        self.subject_types={}# subject types for the rule
     def setup(self):# edit for childrens
         pass
     def setupend(self):
@@ -116,82 +119,106 @@ class obj_rule:
         for i,j in self.subject_types.items():
             if actor.actortype in j: # if actor type matches an accepted actor type
                 if actor in self.subjects[i]:# if actor a rule subject
-                    self.subjects[i].remove(actor)# remove actor          
+                    self.subjects[i].remove(actor)# remove actor
     def update(self,controls):# edit for childrens
         pass
 
-#################################################################################################################### 
+####################################################################################################################
 # Physics Rules
 
 # Rule: boundary conditions on grand actors (that have rigidbodies)
 # when: collision then: pushes back and orients rigidbody speed inwards
 class obj_rule_bdry_bounces_rigidbody(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["scolliders"]=["hero","furniture","rbody","critter"]# rigidbody actors only!
         self.subject_types["sbdry"]=["bdry"]# boundaries
     def update(self,controls):
-        for i in self.subjects["sbdry"]:        
+        for i in self.subjects["sbdry"]:
             for j in self.subjects["scolliders"]:# subjects that collide with bdry
-                if j.x<i.bdry_lim[0]: 
+                if j.x<i.bdry_lim[0]:
                     j.movex(i.bdry_push[0])
                     if j.u<0: j.u *= -1
                 elif j.x>i.bdry_lim[1]:
                     j.movex(i.bdry_push[1])
                     if j.u>0: j.u *= -1
-                if j.y<i.bdry_lim[2]: 
+                if j.y<i.bdry_lim[2]:
                     j.movey(i.bdry_push[2])
                     if j.v<0: j.v *= -1
                 elif j.y>i.bdry_lim[3]:
                     j.movey(i.bdry_push[3])
                     if j.v>0: j.v *= -1
 
-#################################################################################################################### 
+# cant go through walls
+class obj_rule_wall_cant_through(obj_rule):
+    def setup(self):
+        # rule subjects
+        self.subject_types["scolliders"]=["hero","furniture","rbody","critter"]
+        self.subject_types["swall"]=["wall"]
+    def update(self,controls):
+        for i in self.subjects["swall"]:
+            for j in self.subjects["scolliders"]:# subjects that collide with bdry
+                if tool.checkrectcollide(i,j):
+                    if j.x>i.x:
+                        j.movex(i.x+i.rx-j.x+j.rx)
+                    else:
+                        j.movex(i.x-i.rx-j.x-j.rx)
+                    if j.y>i.y:
+                        j.movey(i.y+i.ry-j.y+j.ry)
+                    else:
+                        j.movey(i.y-i.ry-j.y-j.ry)
+
+####################################################################################################################
 # Item Rules
 
 # Rule: hero collects items
-# when: collision loved, then: hero makes quickhappyface, picks up item
-# when: collision hated, then: hero makes angryface
+# hero: self.inventory (=obj_actor_inventory)
+# item: self.kill(), self.inventoryicon (image), self.inventoryname(text)
 class obj_rule_hero_collects_item(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["shero"]=["hero"]# hero
-        self.subject_types["sitem_loved"]=["item_loved"]# loved items
-        self.subject_types["sitem_hated"]=["item_hated"]# hated items
+        self.subject_types["sitem_happy"]=["item_loved","doorkey"]# items
+        self.subject_types["sitem_angry"]=["item_hated"]# items
     def update(self,controls):
         for i in self.subjects["shero"]:
-            for j in self.subjects["sitem_loved"]:
+            for j in self.subjects["sitem_happy"]:
                 if tool.checkrectcollide(i,j):
                     i.quickhappyface()# hero happy briefly
                     j.kill()# item disappears (pickup)
-            for j in self.subjects["sitem_hated"]:
+                    i.inventory.additem(j.inventoryname,j.inventoryicon)
+            for j in self.subjects["sitem_angry"]:
                 if tool.checkrectcollide(i,j):
                     i.quickangryface()# hero angry briefly
+                    j.kill()# item disappears (pickup)
+                    i.inventory.additem(j.inventoryname,j.inventoryicon)
 
 
-#################################################################################################################### 
+
+
+####################################################################################################################
 # Weapon Rules
 
 # Rule: weapon hits stuff
-# when: collision with item then: calls hit function 
+# when: collision with item then: calls hit function
 class obj_rule_weapon_hits_stuff(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["sweapon"]=["sword"]# hero
-        self.subject_types["sstuff"]=["door","item_loved","item_hated","critter"]
+        self.subject_types["sstuff"]=["door","doorwithlock","item_loved","item_hated","critter"]
     def update(self,controls):
         for i in self.subjects["sweapon"]:
             if i.striking0:# if weapon is striking (first frame only)
                 for j in self.subjects["sstuff"]:
                     if tool.checkrectcollide(i,j):
-                        j.hit()
+                        j.hit(i)
 
 
-# Rule: hero weapon strikes rigidbody 
+# Rule: hero weapon strikes rigidbody
 # when: collision weapon with rigidbody then: apply knockback force to rigidbody
 class obj_rule_weapon_strikes_rigidbody(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["sweapon"]=["sword"]
         self.subject_types["srbody"]=["rbody","furniture","critter"]
     def update(self,controls):
@@ -206,10 +233,10 @@ class obj_rule_weapon_strikes_rigidbody(obj_rule):
 
 # Rule: critter weapons strike rigidbody (and is destroyed in the process)
 # when: collision weapon with rigidbody then: apply knockback force to rigidbody
-# Needs: i.knockback i.hitbox j.hitbox 
+# Needs: i.knockback i.hitbox j.hitbox
 class obj_rule_critterweapon_strikes_rigidbody(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["sweapon"]=["critterspit"]
         self.subject_types["srbody"]=["hero","furniture"]
     def update(self,controls):
@@ -218,56 +245,48 @@ class obj_rule_critterweapon_strikes_rigidbody(obj_rule):
                 if tool.checkrectcollide(i,j):
                     theta=tool.actorsangle( i,j )
                     j.forcex(i.knockback*tool.cos(theta))
-                    j.forcey(i.knockback*tool.sin(theta)) 
-                    j.hit()
-                    i.kill()
+                    j.forcey(i.knockback*tool.sin(theta))
+                    j.hit(i)
+                    i.hit(j)
                     break
 
 
-        
 
-                    
-                    
-####################################################################################################################   
+
+
+
+####################################################################################################################
 # Critter Rules
 
-# Rule: hero in the world alerts critters if in their vision field 
+# Rule: hero in the world alerts critters if in their vision field
 # when critter state=patrol and within radius, critter starts alert state
 class obj_rule_hero_alerts_critter(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["shero"]=["hero"]
         self.subject_types["scritter"]=["critter"]
     def update(self,controls):
         if self.subjects["shero"] and self.subjects["scritter"]:
             for i in self.subjects["shero"]:
-                for j in self.subjects["scritter"]: 
+                for j in self.subjects["scritter"]:
                     if j.state["patrol"]:
                         if not j.visionrd or tool.checkdistance(i,j,j.visionrd):
                             j.startalert()
-               
+
 # Rule: critters follow the hero (unless they patrol)
 class obj_rule_critter_follows_hero(obj_rule):
     def setup(self):
-        # rule subjects 
+        # rule subjects
         self.subject_types["shero"]=["hero"]
         self.subject_types["scritter"]=["critter"]
     def update(self,controls):
         if self.subjects["shero"] and self.subjects["scritter"]:
             for i in self.subjects["shero"]:
-                for j in self.subjects["scritter"]: 
+                for j in self.subjects["scritter"]:
                     if j.state["follow"]:
                         j.bfliph(i.x>j.x)
                         j.aimr=tool.actorsangle(j,i)# aims at hero
-                    
-                    
-
-####################################################################################################################                    
-                    
 
 
 
-
-
-
-
+####################################################################################################################
