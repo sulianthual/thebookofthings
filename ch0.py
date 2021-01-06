@@ -133,10 +133,10 @@ class obj_scene_ch0p8(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p7())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p9())
+        share.scenemanager.switchscene(obj_scene_ch0end())
 
 
-class obj_scene_ch0p9(page.obj_chapterpage):
+class obj_scene_ch0end(page.obj_chapterpage):
     def setup(self):
         self.text=['And so the book began...',\
                    ]

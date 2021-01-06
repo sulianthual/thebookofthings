@@ -182,7 +182,7 @@ class obj_scene_ch1p8(page.obj_chapterpage):
         self.text=[('{heroname}',share.colors.hero),' was a fierce fighter. ',\
                    ('{hero_his}',share.colors.hero),' ',('weapon',share.colors.weapon),\
                    ' could strike things to the right like this [Draw]. '\
-                   'When destroyed things would leave behind a trail of ',('smoke',share.colors.weapon),'. ',\
+                  'When destroyed, things would leave behind a trail of smoke. '
                    ]
         self.addpart( draw.obj_drawing('herostrike',(480,490),legend='Weapon Strike') )
         self.addpart( draw.obj_drawing('smoke',(880,490),legend='Smoke') )
@@ -206,17 +206,46 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         hero=actor.obj_actor_hero_v4(ww,(640,360))
         hero.addpart("instructions", draw.obj_textbox('Strike with [Left Mouse] or [Space]',(640,680)) )
         hero.scale(0.5)# scale actor hero
-        for i in [150,350]:
-            for j in [240,440,640]:
-                term=actor.obj_actor_item_loved(ww,(i,j),scale=0.5)
-                term=actor.obj_actor_item_hated(ww,(1280-i,j),scale=0.5)
         self.addpart( ww )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p8())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p10())
 
+
 class obj_scene_ch1p10(page.obj_chapterpage):
+    def setup(self):
+        self.text=['The thing ',('{heroname}',share.colors.hero),' liked to strike the most in the world ',\
+                    ' with ',('{weaponname}',share.colors.weapon),\
+                    ' was a type of pot that was called like this and looked like this. '\
+                   'Sometimes it could even contain some valuables. ',\
+                   ]
+        self.addpart( draw.obj_textinput('potname',25,(640,260),color=share.colors.hero,legend='Pot Name') )
+        self.addpart( draw.obj_drawing('pot',(640,490),legend='Pot') )
+
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p9())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p11())
+
+
+class obj_scene_ch1p11(page.obj_chapterpage):
+    def setup(self):
+        self.text=['With ',('{hero_his}',share.colors.hero),' weapon ',('{weaponname}',share.colors.weapon),', ',\
+                   ('{heroname}',share.colors.hero),' could strike in the direction ',('{hero_he}',share.colors.hero),\
+                   ' was facing, by using [Left Mouse] or [Space]. ',\
+                   ]
+        ww=world.obj_world_ch1(self)
+        for i in [150,350,550,1280-550,1280-350,1280-150]:
+            term=actor.obj_actor_pot(ww,(i,550),scale=0.5,holds="item_loved")
+        hero=actor.obj_actor_hero_v4(ww,(640,360),scale=0.5)
+        self.addpart( ww )
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p10())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1end())
+
+class obj_scene_ch1end(page.obj_chapterpage):
     def setup(self):
         self.text=['That was what, in the book of things, ',('{heroname}',share.colors.hero),' the hero was, ',\
                    'and ',('{heroname}',share.colors.hero),' the hero was going to do a lot of things in the book of things. ',\
@@ -225,7 +254,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         animation.addimage('herohead_happy')
         self.addpart( animation )
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p9())
+        share.scenemanager.switchscene(obj_scene_ch1p11())
     def nextpage(self):
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
         super().nextpage()

@@ -157,16 +157,18 @@ class obj_rule_wall_cant_through(obj_rule):
         self.subject_types["swall"]=["wall"]
     def update(self,controls):
         for i in self.subjects["swall"]:
-            for j in self.subjects["scolliders"]:# subjects that collide with bdry
+            for j in self.subjects["scolliders"]:
                 if tool.checkrectcollide(i,j):
-                    if j.x>i.x:
-                        j.movex(i.x+i.rx-j.x+j.rx)
-                    else:
-                        j.movex(i.x-i.rx-j.x-j.rx)
-                    if j.y>i.y:
-                        j.movey(i.y+i.ry-j.y+j.ry)
-                    else:
-                        j.movey(i.y-i.ry-j.y-j.ry)
+                    if i.rx==0:# (a wall is a line with rx or ry=0)
+                        if j.x>i.x:
+                            j.movex(i.x+i.rx-j.x+j.rx)
+                        else:
+                            j.movex(i.x-i.rx-j.x-j.rx)
+                    elif i.ry==0:
+                        if j.y>i.y:
+                            j.movey(i.y+i.ry-j.y+j.ry)
+                        else:
+                            j.movey(i.y-i.ry-j.y-j.ry)
 
 ####################################################################################################################
 # Item Rules
@@ -205,7 +207,7 @@ class obj_rule_weapon_hits_stuff(obj_rule):
     def setup(self):
         # rule subjects
         self.subject_types["sweapon"]=["sword"]# hero
-        self.subject_types["sstuff"]=["door","doorwithlock","item_loved","item_hated","critter"]
+        self.subject_types["sstuff"]=["door","doorwithlock","pot","critter"]
     def update(self,controls):
         for i in self.subjects["sweapon"]:
             if i.striking0:# if weapon is striking (first frame only)

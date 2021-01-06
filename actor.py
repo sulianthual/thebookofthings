@@ -53,7 +53,7 @@ class obj_actor:
 #                       (rotate not done due to enlargen-memory issues)
 
 class obj_grandactor():
-    def __init__(self,creator,xy,scale=1):
+    def __init__(self,creator,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False):
         # Creation
         self.creator=creator# created by world
         self.xini=xy[0]# initial position
@@ -62,6 +62,12 @@ class obj_grandactor():
         self.setup()
         self.birth()# add self to world ONLY ONCE setup finished
         if scale != 1: self.scale(scale)# scale ONCE setup finished
+        if rotate !=0: self.rotate90(rotate)
+        if fliph: self.fliph()
+        if flipv: self.flipv()
+        if fliphv:
+            self.fliph()
+            self.flipv()
     def setup(self):# add here modifications for childs
         self.type='actor'# type (overwritten for each specific actor)
         self.actortype='grandactor'
@@ -786,15 +792,29 @@ class obj_actor_bdry(obj_actor):# basic actor
         super().setup()
         self.actortype='bdry'
 
-# wall (acts like a local boundary, cannot be moved)
+# wall (acts like a local boundary, has no image)
 class obj_actor_wall(obj_grandactor):# not a rigidbody
+    def __init__(self,*args,size=None,**kwargs):
+        super().__init__(*args,**kwargs)
+        if size:# overwrite other transformations
+            self.rx,self.ry=size
     def setup(self):
         super().setup()
         self.actortype='wall'
-        self.rd=10# hitbox used as boundary
-        self.rx=25
+        self.rd=0
+        self.rx=10
+        self.ry=0
+
+
+# wall with image
+class obj_actor_wall_panel(obj_actor_wall):
+    def setup(self):
+        super().setup()
+        self.rd=0
+        self.rx=0
         self.ry=135
         self.addpart('image',draw.obj_image('wall_in',(self.xini,self.yini)) )# 100x100
+
 
 # Door: open with hit, shuts on a timer
 class obj_actor_door(obj_grandactor):# not a rigidbody
@@ -854,12 +874,35 @@ class obj_actor_doorwithlock(obj_actor_door):
 
 
 
-
-
-
-
 ####################################################################################################################
 # Stuff in world
+
+# pot (breakable)
+class obj_actor_pot(obj_grandactor):
+    def __init__(self,*args,holds=None,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.holds=holds
+    def setup(self):
+        super().setup()
+        self.actortype='pot'
+        self.rd=50
+        self.rx=50
+        self.ry=50
+        self.health=1
+        self.addpart('image',draw.obj_image('pot',(self.xini,self.yini)) )# 100x100
+    def hit(self,hitter):
+        self.health -= 1
+        if self.health==0: self.destroy()
+    def destroy(self):
+        self.kill()
+        if self.holds:# pot holds something
+            if self.holds=='doorkey':
+                term=obj_actor_doorkey(self.creator,(self.x,self.y),scale=self.s)
+            elif self.holds=='item_loved':
+                term=obj_actor_item_loved(self.creator,(self.x,self.y),scale=self.s)
+            elif self.holds=='item_hated':
+                term=obj_actor_item_hated(self.creator,(self.x,self.y),scale=self.s)
+        term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)
 
 # door key
 class obj_actor_doorkey(obj_grandactor):
@@ -879,25 +922,23 @@ class obj_actor_item_loved(obj_grandactor):# not a rigidbody
     def setup(self):
         super().setup()
         self.actortype='item_loved'
-        self.rd=100
-        self.rx=100
-        self.ry=100
+        self.rd=50
+        self.rx=50
+        self.ry=50
         self.health=1
+        #
+
+        # display
         dispgroup=draw.obj_dispgroup((self.xini,self.yini))
         image=draw.obj_image('herothings_loved',(self.xini,self.yini))
         textbox=draw.obj_textbox("{itemloved}",(self.xini,self.yini+100),fontsize='big')
         dispgroup.addpart("image",image)
         dispgroup.addpart("textbox",textbox)
         self.addpart("item_dispgroup",dispgroup)
-        #
+        # inventory
         self.inventoryicon=draw.obj_image('herothings_loved',(0,0),scale=0.25,show=False)# icon for inventories
         self.inventoryname='{itemloved}'# name in inventories
-    def hit(self,hitter):
-        self.health -= 1
-        if self.health==0: self.destroy()
-    def destroy(self):# when destroyed, leave trailing smoke
-        self.kill()# remove from world
-        term=obj_actor_effects_smoke(self.creator,(self.x,self.y),scale=self.s)# trailing smoke
+        #
 
 
 # hated item (static)

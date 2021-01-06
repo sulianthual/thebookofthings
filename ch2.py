@@ -115,19 +115,18 @@ class obj_scene_ch2p3(page.obj_chapterpage):
 class obj_scene_ch2p4(page.obj_chapterpage):
     def setup(self):
         self.text=['Next, to build ',('{housename}',share.colors.house),' some walls were needed. ',\
-                   'Walls that would not be penetrated. And panels. And pots. ',\
+                   'Walls and panels that would not be penetrated. ',\
                    ]
         drawing=draw.obj_drawing('wall_ext',(840,360),legend='Wall')#,shadow=(50,270))
         drawing.brush.makebrush(share.brushes.smallpen)
         self.addpart( drawing )
-        drawing=draw.obj_drawing('wall_corner',(1040,360+270-50),legend='CornerStone')#,shadow=(50,50))
+        drawing=draw.obj_drawing('wall_corner',(1040,360+270-50),legend='Pillar')#,shadow=(50,50))
         drawing.brush.makebrush(share.brushes.smallpen)
         self.addpart( drawing )
         drawing=draw.obj_drawing('wall_in',(640,360+270-130),legend='Panel',shadow=(25,135))
         drawing.brush.makebrush(share.brushes.smallpen)
         self.addpart( drawing )
-        drawing=draw.obj_drawing('pot',(340,360+270-100),legend='Pot')#,shadow=(100,100))
-        self.addpart( drawing )
+
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p3())
     def nextpage(self):
@@ -148,119 +147,51 @@ class obj_scene_ch2p5(page.obj_chapterpage):
         self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
         self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
         self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
-        #
-        ww=world.obj_world_ch2(self)
-        bdry=actor.obj_actor_bdry(ww,bounds=(100,1280-100,100-50,720-100-50))
-        panel=actor.obj_actor_wall(ww,(640,360))
-        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
-        self.addpart( ww )
 
         #
-        self.addpart( draw.obj_image('pot',(1280-100-50,100+50),scale=0.5) )
+        ww=world.obj_world_ch2(self)
+        wall=actor.obj_actor_wall(ww,(640,50),size=(540+50,0))
+        wall=actor.obj_actor_wall(ww,(640,720-50),size=(540+50,0))
+        wall=actor.obj_actor_wall(ww,(50,360),size=(0,360-50))
+        wall=actor.obj_actor_wall(ww,(1280-50,360),size=(0,360-50))
+        #
+        panel=actor.obj_actor_wall_panel(ww,(640,100+260/2))
+        panel=actor.obj_actor_wall_panel(ww,(640+540/4,360),rotate=90)
+        panel=actor.obj_actor_wall_panel(ww,(50+320/2,50+310/2),rotate=90)
+        panel=actor.obj_actor_wall_panel(ww,(50+320,360))
+        #
+        pot=actor.obj_actor_pot(ww,(150,150),scale=0.25,holds='doorkey')
+        pot=actor.obj_actor_pot(ww,(250,150),scale=0.25,holds='item_loved')
+        pot=actor.obj_actor_pot(ww,(150,250),scale=0.25,holds='item_loved')
+        pot=actor.obj_actor_pot(ww,(250,250),scale=0.25,holds='item_hated')
+        pot=actor.obj_actor_pot(ww,(710,310),scale=0.25,holds='item_hated')
+        pot=actor.obj_actor_pot(ww,(810,310),scale=0.25,holds='item_loved')
+        pot=actor.obj_actor_pot(ww,(600,620),scale=0.25,holds='item_loved')
+        pot=actor.obj_actor_pot(ww,(680,620),scale=0.25,holds='item_hated')
+        #
+        door=actor.obj_actor_doorwithlock(ww,(1130,570),scale=0.25)
+        #
+        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.25)
+        self.goal=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
+        self.addpart( ww )
+        #
+    def callnextpage(self,controls):# must reach goal
+        if self.goal.reached or (controls.enter and controls.enterc):
+            share.ipage += 1
+            self.nextpage()# switch to next page
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p4())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p9())
+        share.scenemanager.switchscene(obj_scene_ch2end())
 
 
-class obj_scene_ch2p9(page.obj_chapterpage):
+class obj_scene_ch2end(page.obj_chapterpage):
     def setup(self):
-        self.text=['In the laboratory, ',('{heroname}',share.colors.hero),' studied critters. ',\
-                   ('{hero_his}',share.colors.hero),' first critter looked like this when facing right. ',\
-                   'When alerted, would get very angry and throw something. ',\
+        self.text=['That was what, in the book of things, ',('{housename}',share.colors.house),\
+                    'the house of ',('{heroname}',share.colors.hero),' the hero was. ',\
                    ]
-        self.addpart( draw.obj_textinput('critterspitname',25,(640,220),color=share.colors.hero, legend='Critter Name') )
-        self.addpart( draw.obj_drawing('critterspit',(200,500),legend='Critter'))#,shadow=(150,150)) )
-        self.addpart( draw.obj_drawing('alert',(450,350),legend='Alert',shadow=(50,50)) )
-        self.addpart( draw.obj_drawing('critterspit_strike',(800,500),legend='Angry Critter'))#,shadow=(150,150)) )
-        self.addpart( draw.obj_drawing('critterspit_spit',(1100,500),legend='Throw'))#,shadow=(100,100)) )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p10())
-
-
-class obj_scene_ch2p10(page.obj_chapterpage):
-    def setup(self):
-        self.text=['Most of the time, the critters would leave ',('{heroname}',share.colors.hero),' alone. ',\
-                   'But if ',('{hero_he}',share.colors.hero),' got too close, ',\
-                   'then the critters would throw and throw at ',('{hero_him}',share.colors.hero),'. ',\
-                   'Luckily, ',('{heroname}',share.colors.hero),'could hit the critters several time with ',\
-                  ('{weaponname}',share.colors.weapon),' until they vanished. ',\
-                   ('{hero_he}',share.colors.hero),' needed to do so to exit the room. '
-                   ]
-
-        self.textkeys={'pos':(150,150),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
-        self.addpart( draw.obj_image('wall_ext',(50,360),fliph=True) )
-        self.addpart( draw.obj_image('wall_ext',(1280-50,360)) )
-        self.addpart( draw.obj_image('wall_ext',(100+270,50),rotate=90) )
-        self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),rotate=90,fliph=True) )
-        self.addpart( draw.obj_image('wall_ext',(100+270,720-50),rotate=90,flipv=True) )
-        self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),rotate=90,fliph=True,flipv=True) )
-        self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True) )
-        self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
-        self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
-        self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
-        textbox=draw.obj_textbox('Exit',(1280-120,360),fontsize='small')
-        textbox.rotate90(-90)
-        self.addpart(textbox)
-        ww=world.obj_world_ch2(self)
-        bdry=actor.obj_actor_bdry(ww,bounds=(50,1280-50,100,720-100))
-        door=actor.obj_actor_door(ww,(1280-50,360),scale=0.25)
-        door.rotate90(-90)
-        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.5)
-        self.goaldoor=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
-        self.goalkill=actor.obj_actor_goal_alldead(ww)# all critters must be dead
-        critter=actor.obj_actor_critterspit(ww,(940,360),scale=0.5 )
-        self.goalkill.addactor(critter)
-        self.addpart( ww )
-    def callnextpage(self,controls):# must reach goal
-        if (self.goalkill.reached and self.goaldoor.reached) or (controls.enter and controls.enterc):
-            share.ipage += 1
-            self.nextpage()# switch to next page
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p9())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p11())
-
-
-class obj_scene_ch2p11(page.obj_chapterpage):
-    def setup(self):
-        self.text=[('{heroname}',share.colors.hero),\
-                   'needed to clear the room to progress. '
-                   ]
-
-        self.textkeys={'pos':(150,5),'xmin':150,'xmax':1280-150,'fontsize':'small'}# change text format
-        self.addpart( draw.obj_image('wall_ext',(50,360),fliph=True) )
-        self.addpart( draw.obj_image('wall_ext',(1280-50,360)) )
-        self.addpart( draw.obj_image('wall_ext',(100+270,50),rotate=90) )
-        self.addpart( draw.obj_image('wall_ext',(1280-100-270,50),rotate=90,fliph=True) )
-        self.addpart( draw.obj_image('wall_ext',(100+270,720-50),rotate=90,flipv=True) )
-        self.addpart( draw.obj_image('wall_ext',(1280-100-270,720-50),rotate=90,fliph=True,flipv=True) )
-        self.addpart( draw.obj_image('wall_corner',(50,50),fliphv=True) )
-        self.addpart( draw.obj_image('wall_corner',(1280-50,50),flipv=True) )
-        self.addpart( draw.obj_image('wall_corner',(50,720-50),fliph=True) )
-        self.addpart( draw.obj_image('wall_corner',(1280-50,720-50)) )
-        textbox=draw.obj_textbox('Exit',(1280-120,360),fontsize='small')
-        textbox.rotate90(-90)
-        self.addpart(textbox)
-        #
-        ww=world.obj_world_ch2(self)
-        bdry=actor.obj_actor_bdry(ww,bounds=(50,1280-50,100,720-100))
-        door=actor.obj_actor_door(ww,(1280-50,360),scale=0.25)
-        door.rotate90(-90)
-        hero=actor.obj_actor_hero_v4(ww,(340,360),scale=0.25)
-        self.goaldoor=actor.obj_actor_goal_opendoor(ww,(hero,door),timer=20)
-        self.goalkill=actor.obj_actor_goal_alldead(ww)# all critters must be dead
-        for i in range(7):
-            critter=actor.obj_actor_critterspit(ww,(tool.randint(100,1180),tool.randint(100,620)),scale=0.25 )
-            self.goalkill.addactor(critter)
-        self.addpart( ww )
-    def callnextpage(self,controls):# must reach goal
-        if (self.goalkill.reached and self.goaldoor.reached) or (controls.enter and controls.enterc):
-            share.ipage += 1
-            self.nextpage()# switch to next page
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p10())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch2p11())
+        share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
+        super().nextpage()
