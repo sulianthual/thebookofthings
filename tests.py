@@ -29,8 +29,8 @@ class obj_scene_testmenu(page.obj_page):
     def __init__(self):
         super().__init__()
     def setup(self):
-        super().setup()  
-        share.ipage=1# current page number in chapter     
+        super().setup()
+        share.ipage=1# current page number in chapter
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
@@ -39,9 +39,9 @@ class obj_scene_testmenu(page.obj_page):
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
-            self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))            
+            self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))
         self.sprite_pointer=draw.obj_textbox('---',(640,360),fontsize='smaller')# moved around
-        self.addpart(self.sprite_pointer)                
+        self.addpart(self.sprite_pointer)
     def page(self,controls):
         if share.itest<self.nrow-1:
             self.sprite_pointer.movetox(60)
@@ -49,49 +49,47 @@ class obj_scene_testmenu(page.obj_page):
         else:
             self.sprite_pointer.movetox(460)
             self.sprite_pointer.movetoy(130+(share.itest-self.nrow+1)*30)
-        if (controls.s and controls.sc) or (controls.down and controls.downc): 
+        if (controls.s and controls.sc) or (controls.down and controls.downc):
             share.itest += 1
             if share.itest == self.listlen: share.itest=0
-        if (controls.w and controls.wc) or (controls.up and controls.upc): 
+        if (controls.w and controls.wc) or (controls.up and controls.upc):
             share.itest -= 1
             if share.itest == -1: share.itest=self.listlen-1
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.itest],init=True)
-        if controls.esc and controls.escc: 
-            share.scenemanager.switchscene(share.titlescreen)   
-        if controls.space and controls.spacec: 
+        if controls.esc and controls.escc:
+            share.scenemanager.switchscene(share.titlescreen)
+        if controls.space and controls.spacec:
             share.scenemanager.switchscene(ideas.obj_scene_ideamenu())
 
 
-    def loadtests(self):# load all tests 
+    def loadtests(self):# load all tests
         # developper
-        self.list.append(obj_scene_testmessage())       
+        self.list.append(obj_scene_testmessage())
         self.list.append(obj_scene_testdevnotes())
         self.list.append(obj_scene_testdevmodeinfo())
         # page
         self.list.append(obj_scene_testpagefunctions())
         # text
         self.list.append(obj_scene_interactivetext())
-        self.list.append(obj_scene_textinput())     
-        self.list.append(obj_scene_textchoice())              
-        self.list.append(obj_scene_textbox())       
+        self.list.append(obj_scene_textinput())
+        self.list.append(obj_scene_textchoice())
+        self.list.append(obj_scene_textbox())
         # drawing
         self.list.append(obj_scene_testdrawing())
         self.list.append(obj_scene_testdrawingbase())
         # image
-        self.list.append(obj_scene_testimage())        
-        # animation      
-        self.list.append(obj_scene_testanimation())    
+        self.list.append(obj_scene_testimage())
+        # animation
+        self.list.append(obj_scene_testanimation())
         self.list.append(obj_scene_testanimationanimation())
-        self.list.append(obj_scene_testanimationplayback()) 
+        self.list.append(obj_scene_testanimationplayback())
         #dispgroup
         self.list.append(obj_scene_testdispgroup())
         #world
         self.list.append(obj_scene_testworld())
         self.list.append(obj_scene_testworldgrandactor())
-        self.list.append(obj_scene_testrigidbody())        
-        #quickdraft
-        self.list.append(obj_scene_testdraftanimation())          
+        self.list.append(obj_scene_testrigidbody())
         #
         self.listlen=len(self.list)
 
@@ -109,34 +107,16 @@ class obj_testpage(page.obj_chapterpage):
     def exitpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):# no browsing
-        share.scenemanager.switchscene(obj_scene_testmenu())  
+        share.scenemanager.switchscene(obj_scene_testmenu())
 
-        
+
 #########################################################################
 #########################################################################
 # All Tests Here
 
-# quickdraft animations (do it quickly here)
-class obj_scene_testdraftanimation(obj_testpage):
-    def setup(self):
-        self.name='QuickDraft Animation'   
-        self.text=[(self.name,share.colors.red),': ',\
-                   '[Space] Toggle Record Mode.']
-        #
-        # animation=draw.obj_animation('herohead_lookaround','herohead',(640,360))
-        # animation=draw.obj_animation('herolegs_stand','herolegs_stand',(640,360),record=True)
-        # animation=draw.obj_animation('herolegs_walk','herolegs_stand',(640,360),record=True)
-        # animation.addimage('herolegs_walk')
-        animation=draw.obj_animation('critterspit_strike','critterspit_strike',(640,360),record=True)
-        ###
-        
-        ###
-        self.addpart(animation)
-        
-
 class obj_scene_testmessage(obj_testpage):
     def setup(self):
-        self.name='Message from the Developer' 
+        self.name='Message from the Developer'
         self.text=[(self.name,share.colors.red),': ',\
                    '\n\nThis is an appendix for tests by the Game Developer. ',\
                    'If you are not the Game Developer get out of here!',\
@@ -146,7 +126,7 @@ class obj_scene_testmessage(obj_testpage):
 
 class obj_scene_testdevnotes(obj_testpage):
     def setup(self):
-        self.name='Developper Notes' 
+        self.name='Developper Notes'
         self.text=[(self.name,share.colors.red),': ',\
                    ('\n\nFile Structure: ',share.colors.red),\
                     'main=execute program. ',\
@@ -163,11 +143,11 @@ class obj_scene_testdevnotes(obj_testpage):
                     'tests=developper tests menu and pages. ',\
                    ]
 
-        
+
 
 class obj_scene_testdevmodeinfo(obj_testpage):
     def setup(self):
-        self.name='Devmode'       
+        self.name='Devmode'
         self.text=['Developper Mode (devmode): ',\
                    'Toggle devmode with [CTRL]. ',\
                    'While in devmode additional information is displayed on screen, like centers and edges. ',\
@@ -201,7 +181,7 @@ class obj_scene_testdevmodeinfo(obj_testpage):
 # Scene: page basics
 class obj_scene_testpagefunctions(obj_testpage):
     def setup(self):
-        self.name='Page Basics'        
+        self.name='Page Basics'
         self.text=['Pages Basics: each page in the book is a scene from a template (see obj_page). ',\
                    'In \"setup\", addpart(element) adds element to list of managed elements. ',\
                    'Managed elements are updated and displayed by the page in the order they were added,',\
@@ -221,11 +201,11 @@ class obj_scene_testpagefunctions(obj_testpage):
         self.drawing.update(controls)
     def endpage(self):
         self.drawing.finish()# non-managed elements must be finished here (textinput and drawings...)
-        
-        
+
+
 class obj_scene_interactivetext(obj_testpage):
     def setup(self):
-        self.name='Text Basics'     
+        self.name='Text Basics'
         self.text=['Text Basics: self.text on page is displayed with automatic return to line (or with antislash-n). ',\
                    'It can have colors like : '\
                     ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'. ',\
@@ -235,11 +215,11 @@ class obj_scene_interactivetext(obj_testpage):
         # self.textkeys={}# default for pages
         self.textkeys={'pos':(50,50),'xmin':50,'xmax':1230,'linespacing':55,'fontsize':'medium'}# same as ={}
         # self.textkeys={'fontsize':'small','linespacing': 45}# modification for test pages (obj_testpage)
-            
+
 
 class obj_scene_textinput(obj_testpage):
     def setup(self):
-        self.name='Text input'      
+        self.name='Text input'
         self.text=[
             'textinput: Hover over the text box to input with keyboard. [Backspace] erases all.',\
             'This saves keywords in the game dictionary (words.txt) to be reused like:',\
@@ -257,7 +237,7 @@ class obj_scene_textinput(obj_testpage):
 
 class obj_scene_textchoice(obj_testpage):
     def setup(self):
-        self.name='Text Choice'      
+        self.name='Text Choice'
         self.text=[
             'textchoice: Hover with [Mouse] and click with [Left Mouse] to select among choices. ',\
             'The current choice is the circled one. ',\
@@ -278,11 +258,11 @@ class obj_scene_textchoice(obj_testpage):
     def page(self,controls):
         pass
         # print(share.words.dict['test_he'])# can access key value directly
-        
+
 
 class obj_scene_textbox(obj_testpage):
     def setup(self):
-        self.name='Textbox Basics'    
+        self.name='Textbox Basics'
         self.text=[
             'Textbox Basics: Placed anywhere, can customize font and color. ',\
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
@@ -302,19 +282,19 @@ class obj_scene_textbox(obj_testpage):
         if controls.up: self.textbox.movey(-self.dy)
         if controls.down: self.textbox.movey(self.dy)
         if controls.e and controls.ec: self.textbox.fliph()# tests
-        if controls.q and controls.qc: self.textbox.flipv()# tests        
+        if controls.q and controls.qc: self.textbox.flipv()# tests
         if controls.a and controls.ac: self.textbox.rotate90(90)
         if controls.d and controls.dc: self.textbox.rotate90(-90)
         if controls.w and controls.wc: self.textbox.scale(2)
         if controls.s and controls.sc: self.textbox.scale(0.5)
         if controls.space and controls.spacec: self.textbox.setup()
         if controls.f and controls.fc: self.textbox.rotate(45)
-        
-        
+
+
 # Scene: test draw something
 class obj_scene_testdrawing(obj_testpage):
     def setup(self):
-        self.name='Drawing Basics'      
+        self.name='Drawing Basics'
         self.text=['Drawing Basics: Draw with [Left Mouse], Erase with [Right Mouse] ',\
                    '(only when the mouse is in drawing area). ',\
                    'You can draw shadows with [Middle Mouse] too. ',\
@@ -332,7 +312,7 @@ class obj_scene_testdrawing(obj_testpage):
 # Scene: test several drawings at the same time
 class obj_scene_testdrawingbase(obj_testpage):
     def setup(self):
-        self.name='Drawing Base'      
+        self.name='Drawing Base'
         self.text=['Drawing Base: A drawing can be the base for other drawing ',\
                    '(of same dimensions). The other drawing should better have no shadows.',\
                    'Small glitches happen when coming back to existing drawings with base: in that case just erase and restart. ',\
@@ -347,7 +327,7 @@ class obj_scene_testdrawingbase(obj_testpage):
 # Scene: test show image
 class obj_scene_testimage(obj_testpage):
     def setup(self):
-        self.name='Image Basics'      
+        self.name='Image Basics'
         self.text=['Image Basics: ',\
             'Test transformations here like move [Arrows], flip [q,e], scale [w,s], rotate90 [a,d], reset [space]. ',\
             'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
@@ -366,7 +346,7 @@ class obj_scene_testimage(obj_testpage):
         if controls.up: self.image2.movey(-5)
         if controls.down: self.image2.movey(5)
         if controls.e and controls.ec: self.image2.fliph()# tests
-        if controls.q and controls.qc: self.image2.flipv()# tests        
+        if controls.q and controls.qc: self.image2.flipv()# tests
         if controls.a and controls.ac: self.image2.rotate90(90)
         if controls.d and controls.dc: self.image2.rotate90(-90)
         if controls.w and controls.wc: self.image2.scale(2)
@@ -379,14 +359,14 @@ class obj_scene_testimage(obj_testpage):
 
 
 
-            
+
 #########################################################################
 # Tests Animations
-            
+
 # Scene: test create/show animation
 class obj_scene_testanimation(obj_testpage):
     def setup(self):
-        self.name='Animation Basics'    
+        self.name='Animation Basics'
         self.text=['Animation Basics: Animation has two modes, Record and Playback. Toggle Mode with [Space]. ',\
                    '\n(You must be in Dev Mode to do so, which is Toggled by [CTRL]). ',\
                     '\n-- While in Record Mode:',\
@@ -401,7 +381,7 @@ class obj_scene_testanimation(obj_testpage):
                     '\n[R]: Save Animation to File (!)',\
                    '\n-- While in Playback Mode: Animation loop-plays.',\
                    ]
-        animation=draw.obj_animation('testanimation1','testimage1',(640,360),record=True) 
+        animation=draw.obj_animation('testanimation1','testimage1',(640,360),record=True)
         animation.addimage('testimage2')
         animation.addimage('testimage3')
         self.addpart(animation)
@@ -410,7 +390,7 @@ class obj_scene_testanimation(obj_testpage):
 # Scene: test animation alongside animation
 class obj_scene_testanimationanimation(obj_testpage):
     def setup(self):
-        self.name='Animation Sync'  
+        self.name='Animation Sync'
         self.text=[(self.name,share.colors.red),': ',\
                    'Only one animation per page should be recordable. ',\
                    'Use \"sync\" to ensure an animation has the same duration as a reference one. ',\
@@ -428,7 +408,7 @@ class obj_scene_testanimationanimation(obj_testpage):
 # Scene: test create/show animation
 class obj_scene_testanimationplayback(obj_testpage):
     def setup(self):
-        self.name='Animation Playback' 
+        self.name='Animation Playback'
         self.text=[(self.name,share.colors.red),': ',\
                    'During playback, animation accepts permanent changes: move,flip, scale, rotate90,rotate. ',\
                    'use rotate sparingly (enlargens leading to potential memory issues). ',\
@@ -436,7 +416,7 @@ class obj_scene_testanimationplayback(obj_testpage):
                    'Test permanent changes here: [Arrows] Move, [w,s] scale, [a,d] rotate90, [f,g] rotate45, [q,e] flip. ',\
                    'The permanent changes modify animation movements too',\
                    ]
-        self.animation=draw.obj_animation('testanimation1','testimage1',(640,360))                    
+        self.animation=draw.obj_animation('testanimation1','testimage1',(640,360))
         self.dx,self.dy=5,5
     def page(self,controls):
         self.animation.update(controls)# manual update
@@ -445,7 +425,7 @@ class obj_scene_testanimationplayback(obj_testpage):
         if controls.up: self.animation.movey(-self.dy)
         if controls.down: self.animation.movey(self.dy)
         if controls.e and controls.ec: self.animation.fliph()# tests
-        if controls.q and controls.qc: self.animation.flipv()# tests        
+        if controls.q and controls.qc: self.animation.flipv()# tests
         if controls.a and controls.ac: self.animation.rotate90(90)
         if controls.d and controls.dc: self.animation.rotate90(-90)
         if controls.f and controls.fc: self.animation.rotate(45)
@@ -455,12 +435,12 @@ class obj_scene_testanimationplayback(obj_testpage):
         if controls.space and controls.spacec: self.animation.setup()
         #
 
-            
+
 
 # Scene: test animation group move
 class obj_scene_testdispgroup(obj_testpage):
     def setup(self):
-        self.name='Display group'        
+        self.name='Display group'
         self.text=['Display Group (or dispgroup): A group of elements that can be transformed while conserving its structure. ',\
                    'accepted elements are: textbox, image, animation. ',\
                    'Test here applying permanent changes to the dispgroup: [arrow keys] to move. ',\
@@ -489,34 +469,36 @@ class obj_scene_testdispgroup(obj_testpage):
         if controls.e and controls.ec: self.dispgroup.fliph()
         if controls.q and controls.qc: self.dispgroup.flipv()
         if controls.space  and controls.space: self.setup()
-          
+
 
 class obj_scene_testworld(obj_testpage):
     def setup(self):
-        self.name='World Basics'       
+        self.name='World Basics'
         self.text=['World Basics: ',\
                    'A World has actors in it as well as rules that manage interaction between actors. ',\
                    'The world checks all rules, and the rules may check and modify actors (but the actors dont check on rules). ',\
-                   'Here the world has an actor=hero, an actor=boundaries, and a rule=collision between the two ',\
-                   '(that pushes back the hero). ',\
-                   'Move the hero around with [arrows] to test. ',\
+                   'Here the world has an actor=rigidbody, an actor=boundaries, and a rule=collision between the two. ',\
+                   'Move the rigidbody around with [arrows] to test. ',\
                    '\nThere are several types of actors: simple actors (obj_actor), grand actors (obj_grandactor), ',\
                    'rigidbody actors (obj_rbodyactor),etc. One can make new actors as childs from the templates ',\
                    'but be careful with the init, setup, birth sequence (e.g. edit preferentially the setup). ',\
                    ]
         self.world=world.obj_world(self)# world template
-        self.world.addrule('rule_world_bdry', world.obj_rule_bdry_bounces_rigidbody(self.world))# add rule: collision hero and bdry
-        self.bdry=actor.obj_actor_bdry(self.world)# actors adds themselves to world upon creation   
-        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))# hero template
-        self.hero.addpart("a textbox",draw.obj_textbox('Move with [arrows] or [WASD]',(640,680),fontsize='large'))
-        self.hero.scale(0.5)
+        self.world.addrule('rule_rigidbody_bdry',world.obj_rule_bdry_bounces_rigidbody(self.world) )
+        bdry=actor.obj_actor_bdry(self.world)
+        self.rigidbody=actor.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
+        self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )
     def page(self,controls):
         self.world.update(controls)
-
+        # non rigid-body
+        if controls.right: self.rigidbody.movex(5)
+        if controls.left: self.rigidbody.movex(-5)
+        if controls.up: self.rigidbody.movey(-5)
+        if controls.down: self.rigidbody.movey(5)
 
 class obj_scene_testworldgrandactor(obj_testpage):
     def setup(self):
-        self.name='World Grand Actor'       
+        self.name='World Grand Actor'
         self.text=['World Grand Actor: ',\
                    'A simple actor (obj_actor) does basic functions. ',\
                    'A grand actor (obj_grandactor) is more elaborate: ',\
@@ -526,12 +508,17 @@ class obj_scene_testworldgrandactor(obj_testpage):
                    'Try permanent transformations here: move [arrows], scale [w,s], rotate90 [a,d], flip [q,e]. ',\
                    'Toggle Dev mode with [Ctrl] to see grand actors hit boxes.',\
                    ]
-        self.world=world.obj_world_ch1(self)
-        self.hero=actor.obj_actor_hero_v0(self.world,(640,360))# a grand actor
-        self.hero.addpart("element1",draw.obj_textbox('textbox attached to actor',(640,640),fontsize='large'))
+        self.world=world.obj_world(self)# world template
+        self.hero=actor.obj_grandactor(self.world,(640,360))# a grand actor
+        self.hero.addpart("element1",draw.obj_image('testimage1',(640,640),scale=2))
+        self.hero.addpart("element2",draw.obj_textbox('textbox attached to actor',(640,840),fontsize='large'))
         self.hero.scale(0.5)
     def page(self,controls):
         self.world.update(controls)
+        if controls.right: self.hero.movex(5)
+        if controls.left: self.hero.movex(-5)
+        if controls.down: self.hero.movey(5)
+        if controls.up: self.hero.movey(-5)
         if controls.w and controls.wc: self.hero.scale(2)
         if controls.s and controls.sc: self.hero.scale(0.5)
         if controls.a and controls.ac: self.hero.rotate90(90)
@@ -541,7 +528,7 @@ class obj_scene_testworldgrandactor(obj_testpage):
 
 class obj_scene_testrigidbody(obj_testpage):
     def setup(self):
-        self.name='Actors with Rigid Bodies'       
+        self.name='Actors with Rigid Bodies'
         self.text=['Actors with Rigid Bodies: ',\
                    'A grand actor can have a rigidbody dynamics that induce additional movement. ',\
                    'External forces start rigidbody dynamics, and internal friction slows the actor ',\
@@ -551,17 +538,17 @@ class obj_scene_testrigidbody(obj_testpage):
                    'stall with [q,e]. ',\
                    ]
         self.world=world.obj_world(self)# world template
-        self.world.addrule('truc',world.obj_rule_bdry_bounces_rigidbody(self.world) )
+        self.world.addrule('rule_rigidbody_bdry',world.obj_rule_bdry_bounces_rigidbody(self.world) )
         bdry=actor.obj_actor_bdry(self.world)
         self.rigidbody=actor.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
-        self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )        
+        self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )
     def page(self,controls):
         self.world.update(controls)
         # non rigid-body
-        if controls.right: self.rigidbody.movex(5) 
-        if controls.left: self.rigidbody.movex(-5)  
-        if controls.up: self.rigidbody.movey(-5) 
-        if controls.down: self.rigidbody.movey(5)     
+        if controls.right: self.rigidbody.movex(5)
+        if controls.left: self.rigidbody.movex(-5)
+        if controls.up: self.rigidbody.movey(-5)
+        if controls.down: self.rigidbody.movey(5)
         # rigid-body
         if controls.w and controls.wc: self.rigidbody.forcey(-5)
         if controls.s and controls.sc: self.rigidbody.forcey(5)
@@ -574,6 +561,3 @@ class obj_scene_testrigidbody(obj_testpage):
 
 
 ####################################################################################################################
-
-
-
