@@ -5,9 +5,10 @@
 # Game by sul
 # Started Sept 2020
 #
-# world.py: all games worlds and rules
+# world.py: worlds and rules for mini-games
 #
 # (every world can hold rules and actors that it manages)
+# add a world with actors to a page if complex interactions between actors are necessary
 ##########################################################
 ##########################################################
 

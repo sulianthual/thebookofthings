@@ -43,20 +43,15 @@ class obj_colors:
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)
         self.textinput=(200,0,0)# text input (box)
-        self.textchoice=(180,0,0)# text input box        
+        self.textchoice=(180,0,0)# text input box
         # Colors for story
-        self.book=self.blue# anything book of thing
         self.hero=self.red# hero text color
-        self.weapon=self.brown# hero weapon text color
-        self.itemloved=(220,50,50)
-        self.itemhated=self.maroon
-        self.house=self.red# hero house
 
 
 # fonts database
 class obj_fonts:
     def __init__(self):
-         self.font15=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS) 
+         self.font15=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 15)# tiny (for FPS)
          self.font30=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 30)# small indicators,textbox
          self.font40=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
          self.font50=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
@@ -79,12 +74,12 @@ class obj_fonts:
          elif fontname=='huge' or fontname==120:
              return self.font120
          else:
-             return self.font50# medium font  
+             return self.font50# medium font
 
 
 # brushes  database (used for drawing)
 class obj_brushes:
-    def __init__(self):        
+    def __init__(self):
         self.pen=('data/pen.png',(8,8))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))
@@ -98,9 +93,9 @@ class obj_brushes:
 # filewords: dictionary of textinputs,textchoices written in the book of things (by the player)
 class obj_datamanager:
     def __init__(self):
-        self.fileprogress='book/progress.txt'
+        self.fileprogress='book/progress.txt'# current game progress for unlocks
         self.loadprogress()
-        self.filewords='book/words.txt'
+        self.filewords='book/words.txt'# current written words for things
         self.loadwords()
     def erasebook(self):
         files = tool.oslistdir('book')
@@ -113,7 +108,7 @@ class obj_datamanager:
         return self.chapter# last chapter unlocked
     def saveprogress(self):
         with open(self.fileprogress,'w+') as f1:
-            f1.write('chapter,'+str(self.chapter)+'\n')# first line       
+            f1.write('chapter,'+str(self.chapter)+'\n')# first line
     def loadprogress(self):
         if tool.ospathexists(self.fileprogress):
             with open(self.fileprogress,'r+') as f1:
@@ -121,11 +116,11 @@ class obj_datamanager:
                 line=line.split(",")
                 self.chapter=int(line[1])
         else:
-            self.chapter=0  
+            self.chapter=0
     def updateprogress(self,chapter=None):
         if chapter:
             self.chapter=max(self.chapter,chapter)
-        self.saveprogress() 
+        self.saveprogress()
     def getwords(self):
         return self.dictwords# dictionary of words=(key,value)
     def getwordkeys(self):
@@ -148,11 +143,9 @@ class obj_datamanager:
                     self.dictwords[matrix[i*2]]=matrix[i*2+1]
         else:
             self.dictwords={}
-            
-    
+
+
 
 
 
 ####################################################################################################################
-
-

@@ -177,7 +177,7 @@ class obj_sprite_image(obj_sprite):
         else:
             return False# load failed
     def save(self,name):
-        pygame.image.save(self.surf,name)        
+        pygame.image.save(self.surf,name)
     def addtransparency(self):
         self.surf.set_colorkey(self.colorkey)
     def getrx(self):
@@ -275,7 +275,7 @@ class obj_sprite_circle(obj_sprite):
         pass
     def display(self,color,xy,radius):
         share.screen.drawcircle(color,xy,radius)
-        
+
 # rectangle sprite
 class obj_sprite_rect(obj_sprite):
     def __init__(self):
@@ -328,8 +328,8 @@ class obj_windowicon:
             img=pygame.image.load('data/booknoicon.png').convert()
         img.set_colorkey(share.colorkey)
         share.display.seticon(img)
-        
-        
+
+
 ####################################################################################################################
 
 # Controls
@@ -417,7 +417,7 @@ class obj_controls:
         self.mouse4c=False#middle up
         self.mouse5c=False# middle down
         (self.mousex,self.mousey)=pygame.mouse.get_pos()
-        self.mousex=int(self.mousex)# very important if screen is stretched
+        self.mousex=int(self.mousex)# add factor if screen is stretched
         self.mousey=int(self.mousey)
         for event in self.events:
             if event.type==pygame.MOUSEBUTTONDOWN:
