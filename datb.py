@@ -29,6 +29,7 @@ class obj_colors:
         self.blue=(0,0,220)
         self.green=(0,220,0)
         self.gray=(150,150,150)
+        self.darkgray=(100,100,100)
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
         self.purple=(128,0,128)
@@ -40,12 +41,17 @@ class obj_colors:
         self.devactor=(0,0,220)# blue (hitbox)
         # Colors game elements
         self.background=self.white# game background
+        self.instructions=self.darkgray# any instruction text/element
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)
         self.textinput=(200,0,0)# text input (box)
         self.textchoice=(180,0,0)# text input box
         # Colors for story
+        self.story=self.gray# the official story
         self.hero=self.red# hero text color
+        self.item=self.blue# items (bed, fish,etc...)
+        self.action=self.green# actions text (fishing, etc...)
+
 
 
 # fonts database

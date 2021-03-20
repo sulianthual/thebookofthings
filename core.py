@@ -66,6 +66,10 @@ class obj_scenemanager:
         if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
         if share.devmode and controls.mouse3 and controls.mouse3c:# print coordinates
             print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
+        #
+        #
+        #
+        if controls.esc: share.quitgame()# QUICK QUIT: REMOVE ME IN FINAL VERSION
 
 
 # Display Manager

@@ -86,6 +86,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testanimationplayback())
         #dispgroup
         self.list.append(obj_scene_testdispgroup())
+        self.list.append(obj_scene_testdispgroupsnapshot())
         #world
         self.list.append(obj_scene_testworld())
         self.list.append(obj_scene_testworldgrandactor())
@@ -268,6 +269,7 @@ class obj_scene_textbox(obj_testpage):
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
             'Acts like an image: Can reset[space], move [Arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
             'Can rotate[f] but use sparingly (enlargens-memory issues). ',\
+            'Save an image of textbox[g] (useful to animate it). ',\
                    ]
         self.addpart(draw.obj_textbox('textbox',(340,260),color=share.colors.blue))#customize font and color
         self.addpart(draw.obj_textbox('small',(340,360),color=share.colors.blue, fontsize='tiny'))
@@ -289,7 +291,7 @@ class obj_scene_textbox(obj_testpage):
         if controls.s and controls.sc: self.textbox.scale(0.5)
         if controls.space and controls.spacec: self.textbox.setup()
         if controls.f and controls.fc: self.textbox.rotate(45)
-
+        if controls.g and controls.gc: self.textbox.snapshot('testimagetextbox',path='book')
 
 # Scene: test draw something
 class obj_scene_testdrawing(obj_testpage):
@@ -333,10 +335,13 @@ class obj_scene_testimage(obj_testpage):
             'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
             'An imagefill is an image of single color (preferentially the background) used to make layering. ',\
             'Press [r]: Image can quickly be saved and loaded which includes the transformations. ',\
+            'Image drawn by player are in folder /book, but one can also read from /data or from /premade. ',\
                    ]
-        self.image1=draw.obj_image('testimage3',(440,420), scale=2)# (can scale at creation)
-        self.image2=draw.obj_image('testimage3',(840,420))
+        self.image1=draw.obj_image('testimage1',(440,520), scale=2)# (can scale at creation)
+        self.image2=draw.obj_image('testimage2',(840,520))
+        self.image3=draw.obj_image('error',(1040,520),path='data')# read from other folder than /book
         # layering
+        self.addpart(self.image3)
         self.addpart(self.image2)
         self.addpart(draw.obj_imagefill((share.colors.background,200,300),(260,360)))# filler on top
         self.addpart(self.image1)
@@ -435,9 +440,7 @@ class obj_scene_testanimationplayback(obj_testpage):
         if controls.space and controls.spacec: self.animation.setup()
         #
 
-
-
-# Scene: test animation group move
+# Scene: test dispgroup move
 class obj_scene_testdispgroup(obj_testpage):
     def setup(self):
         self.name='Display group'
@@ -470,6 +473,36 @@ class obj_scene_testdispgroup(obj_testpage):
         if controls.q and controls.qc: self.dispgroup.flipv()
         if controls.space  and controls.space: self.setup()
 
+
+# Scene: test dispgroup snapshot
+class obj_scene_testdispgroupsnapshot(obj_testpage):
+    def setup(self):
+        self.name='Display group Snapshot'
+        self.text=['Display group Snapshot: saves an image of a dispgroup (in designated area of screen). ',\
+                   'Only works for images (useful to combine them). ',\
+                   'Move dispgroup with [arrows]. Take a snapshot with [f] (prints the center area).',\
+                   ]
+        self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
+        self.dispgroup.addpart( "key_element1", draw.obj_image('testimage1',(440,360)) )# add image
+        self.dispgroup.addpart( "key_element2", draw.obj_image('testimage2',(840,360)) )# add image
+        self.dispgroup.addpart( "key_element3", draw.obj_textbox('textbox not saved',(640,360)) )# add textbox
+        # dispgroup snapshot
+        self.snaprect=640,360,300,200# center and radius of snapshot area on screen
+        self.snapimage='testsnapshot'# name of snapshot image (saved in folder book)
+        # image of snapshot
+        self.snapshot=draw.obj_image('testsnapshot',(640,360))
+        self.addpart(self.snapshot)
+    def page(self,controls):
+        self.dispgroup.update(controls)
+        if controls.right: self.dispgroup.movex(5)
+        if controls.left: self.dispgroup.movex(-5)
+        if controls.up: self.dispgroup.movey(-5)
+        if controls.down: self.dispgroup.movey(5)
+        if controls.f  and controls.fc:
+            self.dispgroup.snapshot(self.snaprect,self.snapimage)# take snapshot
+            self.removepart(self.snapshot)# refresh image of snapshot on page
+            self.snapshot=draw.obj_image('testsnapshot',(640,360))
+            self.addpart(self.snapshot)
 
 class obj_scene_testworld(obj_testpage):
     def setup(self):

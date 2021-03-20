@@ -470,6 +470,11 @@ class obj_textbox:
     def rotate90(self,r):# rotate image in 90 increments nonly
         self.r += int(round(r%360/90,0)*90)# (in 0,90,180,270)
         self.sprite.rotate90(r)
+    def snapshot(self,filename,path='book'):# save image of textbox
+        snap=core.obj_sprite_image()
+        snap.makeempty(self.sprite.getrx(),self.sprite.getry())
+        snap.blitfrom(self.sprite,0,0)
+        snap.save(path+'/'+filename+'.png')
     def display(self):
         if self.show: self.sprite.display(self.x,self.y)
     def devtools(self):
@@ -493,7 +498,7 @@ class obj_image:
         self.xini=xy[0]# xy is the CENTER of the image on screen
         self.yini=xy[1]
         self.show=show# show or not (can be toggled)
-        self.path=path
+        self.path=path# folder where image is found
         self.setup()
         if scale != 1: self.scale(scale)
         if rotate !=0: self.rotate(rotate)
@@ -517,7 +522,6 @@ class obj_image:
         self.devrect=core.obj_sprite_rect()
     def load(self,name):
         self.sprite.load(self.path+'/'+name+'.png')
-
     def save(self,name):
         if not self.path:
             self.sprite.save(self.path+'/'+name+'.png')
@@ -611,10 +615,10 @@ class obj_imagefill(obj_image):
 # Animate an image on screen
 # Animation=base sprite  + temporal sequence of transformations (cyclic)
 class obj_animation:
-    def __init__(self,name,imgname,xy,record=False,scale=1,sync=None):
+    def __init__(self,name,imgname,xy,record=False,scale=1,imgscale=1,sync=None,path='book'):
         self.type='animation'
         self.name=name# animation name
-        self.imgname=imgname# reference image (more can be added)
+        self.imgname=imgname# reference image (more can be added). Or can be text if textbox=True
         self.xini=xy[0]
         self.yini=xy[1]
         self.record=record# ability to record sequence
@@ -622,6 +626,8 @@ class obj_animation:
             self.maxlength=sync.sequence.length
         else:
             self.maxlength=None
+        self.path=path# folder where images are found
+        self.imgscale=imgscale# scale of ref image
         self.setup()
         if scale != 1: self.scale(scale)
     def setup(self):
@@ -634,7 +640,7 @@ class obj_animation:
         self.show=True# show the animation or not (can be toggled on/off)
         # sprite list
         self.spritelist=[]
-        self.addimage(self.imgname)
+        self.addimage(self.imgname,scale=self.imgscale)
         self.rx,self.ry=self.spritelist[0].getrxry()
         # sprite
         self.sprite=core.obj_sprite_image()# the one that is played
@@ -648,13 +654,14 @@ class obj_animation:
         self.devlineseq=core.obj_sprite_linesequence()
         self.devxy=(self.x,self.y)
         self.devarea=(self.x,self.y, 2*self.rx, 2*self.ry )
-    def addimage(self,imgname):
+    def addimage(self,imgname,scale=1):
         sprite=core.obj_sprite_image()
-        sprite.load('book/'+imgname+'.png')
+        sprite.load(self.path+'/'+imgname+'.png')
+        if scale != 1: sprite.scale(scale)
         self.spritelist.append(sprite)
     def replaceimage(self,imgname,index):
         if index >=0 and index<len(self.spritelist):
-            self.spritelist[index].load('book/'+imgname+'.png')
+            self.spritelist[index].load(self.path+'/'+imgname+'.png')
             self.spritelist[index].flip(self.fh,self.fv)
             self.spritelist[index].scale(self.s)
             self.spritelist[index].rotate(self.r)
@@ -711,6 +718,8 @@ class obj_animation:
         self.r += r
         for i in self.spritelist: i.rotate(r)
         self.rx,self.ry=self.spritelist[0].getrxry()
+    def rewind(self):
+        self.sequence.rewindsequence()# to first frame
     def display(self):
         if self.show:
             # read sequence
@@ -742,8 +751,6 @@ class obj_animation:
             # devtools
             self.devxy=(xd,yd)
             self.devarea=(xd,yd, 2*self.sprite.getrx(), 2*self.sprite.getry() )
-
-
     def devtools(self):
         if self.sequence.recording:
             if self.sequence.data and len(self.sequence.data)>1:
@@ -817,7 +824,7 @@ class obj_animationsequence:
     def recordsequence(self,controls):
         if controls.backspace and controls.backspacec: self.clearsequence()
         if controls.r and controls.rc: self.savesequence()
-        self.xa,self.ya=controls.mousex-self.xini,controls.mousey-self.yini
+        self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
         if controls.a: self.ra += 1
@@ -947,7 +954,6 @@ class obj_dispgroup:
     def moveywithin(self,name,dy):# move an existing part within the dispgroup
         self.dicty[name] += dy
         self.movetoy(self.y)#
-
     # transform the entire dispgroup
     def movetox(self,x):
         self.x=x
@@ -1044,6 +1050,18 @@ class obj_dispgroup:
             self.dictx[i],self.dicty[i]=xd,yd
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
+    def snapshot(self,rect,filename,path='book'):# print a snapshot of dispgroup (images only)
+        xsnap,ysnap,rxsnap,rysnap=rect# snapshot area x,y center on screen, radx and rady
+        snap=core.obj_sprite_image()# make new sprite image object
+        snap.makeempty(rxsnap,rysnap)# empty with desired dimensions
+        for i in self.dict.keys():# iterate dispgroup elements
+            if self.dict[i].type=='image':
+                # offset from comparing snapshot/image topleft corner positions on screen
+                xoff=(self.dict[i].x-self.dict[i].sprite.getrx()) - (xsnap - rxsnap)
+                yoff=(self.dict[i].y-self.dict[i].sprite.getry()) - (ysnap - rysnap)
+                snap.blitfrom(self.dict[i].sprite,xoff,yoff)# blit image to snapshot
+        snap.save(path+'/'+filename+'.png')# save snapshot (folder book by default)
+
     def devtools(self):
         self.devcross.display(share.colors.devdispgroup,(self.x,self.y),10,diagonal=True,thickness=6)
     def play(self,controls):

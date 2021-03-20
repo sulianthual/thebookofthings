@@ -6,3 +6,11 @@ test_he
 he
 test_his
 his
+heroname
+archimedes
+hero_he
+he
+hero_his
+his
+hero_him
+him

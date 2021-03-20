@@ -31,7 +31,7 @@ class obj_scene_ideamenu(page.obj_page):
         self.list=[]# list of tests
         self.loadtests()
         self.addpart(draw.obj_textbox('Appendix Ideas [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
-        self.addpart(draw.obj_textbox('[Esc: Main Menu]',(1120,700),fontsize='smaller'))
+        self.addpart(draw.obj_textbox('[Space: Main Menu]',(1120,700),fontsize='smaller'))
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
@@ -53,7 +53,7 @@ class obj_scene_ideamenu(page.obj_page):
             if share.iidea == -1: share.iidea=self.listlen-1
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.iidea],init=True)
-        if controls.esc and controls.escc:
+        if controls.space and controls.spacec:
             share.scenemanager.switchscene(share.titlescreen)
 
     def loadtests(self):# load all tests

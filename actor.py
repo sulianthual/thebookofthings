@@ -213,7 +213,7 @@ class obj_rbodyactor(obj_grandactor):
         super().setup()
         self.actortype="rbody"
         self.stalling=True# stalling or not
-        self.dt=share.dtf# timestep (depends on game fps)
+        self.dt=1#(could make it depend on game fps)
         self.u=0# rigid body speed
         self.v=0
         self.m=1# mass (must be >0)
@@ -250,24 +250,6 @@ class obj_rbodyactor(obj_grandactor):
 
 
 ####################################################################################################################
-# Characters actors
-# *CHARACTERS
-
-#Template hero (image only)
-class obj_actor_hero(obj_rbodyactor):
-    def setup(self):
-        super().setup()
-        self.actortype='hero'# type=hero
-        self.weapon=None# attached weapon (must be an object= weapon actor)
-        self.rd=100# sphere collision radius
-        self.rx=120# rect collisions radius x
-        self.ry=100
-        self.addpart('img_herolegs_stand',draw.obj_image('herolegs_stand',(self.xini,self.yini+160)))
-        self.addpart('img_herohead',draw.obj_image('herohead',(self.xini,self.yini)))
-
-
-
-####################################################################################################################
 # Logic Actors (allows to end a page)
 
 # Goal actor (allows to terminate page if reached=True)
@@ -285,3 +267,8 @@ class obj_actor_bdry(obj_actor):# basic actor
 
 
 ####################################################################################################################
+
+
+
+
+#

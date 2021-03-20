@@ -101,7 +101,6 @@ def checkrectcollide(a,b):
 # Timer for any purpose
 class obj_timer:
     def __init__(self,amount,cycle=False):
-        # self.amount=round(amount/share.dtf)# countdown duraction (integer)# CORRECT THING HERE
         self.amount=round(amount)
         # 3 states for the timer: on, ring, off
         self.on=False# countdown happens
@@ -111,7 +110,6 @@ class obj_timer:
         self.cycle=cycle# timer cycles (restarts automatically when done)
     def start(self,amount=None):# start (or restart) timer
         if amount:
-            # self.t=round(amount/share.dtf)# CORRECT THING HERE
             self.t=round(amount)# change duration only for this countdown
         else:
             self.t=self.amount# use default duration
