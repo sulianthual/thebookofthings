@@ -121,11 +121,11 @@ class obj_scene_ch1p2(page.obj_chapterpage):
 
 class obj_scene_ch1p3(page.obj_chapterpage):
     def setup(self):
-        self.text=['Draw the face of ',('{heroname}',share.colors.hero),', said the book of things, ',\
+        self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', said the book of things, ',\
                    'and make ', ('{hero_him}',share.colors.hero),' look slightly to the right. ',\
-                   'Draw with [Left Mouse] and erase with [Right Mouse], but you should know this by now.',\
+                   ('Draw with [Left Mouse] and erase with [Right Mouse]',share.colors.instructions),', but you should know this by now.',\
                    ]
-        drawing=draw.obj_drawing('herohead',(640,400),legend='Hero Head')
+        drawing=draw.obj_drawing('herohead',(640,400),legend='Happy Face')
         self.addpart( drawing )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p2())
@@ -188,9 +188,9 @@ class obj_scene_ch1p6(page.obj_chapterpage):
 class obj_scene_ch1p7(page.obj_chapterpage):
     def setup(self):
         self.text=[\
-                  '... Well, you actually need to hold [W] to wake',('{heroname}',share.colors.hero),\
+                  '... Huh...well, you actually need to hold [W] to wake',('{heroname}',share.colors.hero),\
                   'from ',('bed',share.colors.item),', said the book of things. ',\
-                  'That is because ',('{hero_he}',share.colors.hero),' is a little lazy. ',\
+                  ('{hero_he}',share.colors.hero),' is quite lazy you know. ',\
                   ' And dont release [W] too soon or ',('{hero_he}',share.colors.hero),\
                   ' will go straight back to sleep. ',\
                   ' When',('{hero_he}',share.colors.hero),' is fully awake, we will move on. ',\
@@ -287,7 +287,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
                     ' Moving on, said the book of things. Lets write down: ',\
                     ' "The ',('hero',share.colors.hero),' ate the ',
                     ('fish',share.colors.item),' for dinner." ',\
-                    'Just do it by pounding [A] and [D] quickly. ',\
+                    'Do it by ',('alternating [A][D]',share.colors.black),'. ',\
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
@@ -314,7 +314,8 @@ class obj_scene_ch1p13(page.obj_chapterpage):
                     'Nicely done, said the book of things. ',\
                     'That wraps it up for our first day. Now, lets put the ',\
                     ('hero',share.colors.hero),' back to sleep. ',\
-                    ' Hold [S], but dont release or this procrastinator will stay awake all night. ',\
+                    ' Hold [S], and dont release',\
+                    ' or this procrastinator will stay awake all night. ',\
                    ]
         self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
         self.addpart(self.world)
@@ -336,9 +337,28 @@ class obj_scene_ch1p14(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'And we finish with: "At night, the ',('hero',share.colors.hero),' went to back to bed". ',\
-                   'That wraps it up for today, says the book of things. Now, lets read again our story to summarize. ',\
-                   'This time, try to complete it as quickly as possible! Press [S] to start. ',\
+                   'That wraps it nicely, says the book of things. ',\
+                   'One last thing, lets draw the sun and the moon so we know when it is day and night. ',\
                    ]
+        self.addpart(draw.obj_drawing('sun',(340,450),legend='Sun',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('moon',(940,450),legend='Moon',shadow=(200,200)))
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p13())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1play())
+
+##########################################################
+##########################################################
+# PLAY CHAPTER
+
+
+class obj_scene_ch1play(page.obj_chapterpage):
+    def setup(self):
+        self.text=[\
+                   'Now, lets read again our story to summarize, said the book of things. ',\
+                   'This time, try to complete it as quickly as possible! Press [A] and [D] together to start. ',\
+                   ]
+        self.addpart(draw.obj_textbox('Press [A]+[D] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
         animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
@@ -346,20 +366,15 @@ class obj_scene_ch1p14(page.obj_chapterpage):
         self.addpart(animation2)
         self.addpart(animation3)
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p13())
+        share.scenemanager.switchscene(obj_scene_ch1p14())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1play())
+        share.scenemanager.switchscene(obj_scene_ch1play1())
     def triggernextpage(self,controls):
-        return (controls.s and controls.sc)
-
-##########################################################
-##########################################################
-# PLAY CHAPTER
+        return (controls.a and controls.d)
 
 
 
-# mini game wake up
-class obj_scene_ch1play(page.obj_chapterpage):
+class obj_scene_ch1play1(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"Once upon a Time, there was a ',('Hero',share.colors.hero),' ',\
@@ -367,11 +382,13 @@ class obj_scene_ch1play(page.obj_chapterpage):
                 'It was morning when',('{hero_he}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),'." ',\
                    ]
+        self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),record=False,scale=0.5))
         self.world=world.obj_world_wakeup(self)# Wake up hero mini-game
         self.addpart(self.world)
         self.world.timerend.amount=50
+
     def prevpage(self):
-        pass
+        share.scenemanager.switchscene(obj_scene_ch1play())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play2())
     def triggernextpage(self,controls):
@@ -388,7 +405,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         self.addpart(self.world)
         self.world.timerend.amount=50
     def prevpage(self):
-        pass
+        share.scenemanager.switchscene(obj_scene_ch1play1())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play3())
     def triggernextpage(self,controls):
@@ -406,7 +423,7 @@ class obj_scene_ch1play3(page.obj_chapterpage):
         self.addpart(self.world)
         self.world.timerend.amount=50
     def prevpage(self):
-        pass
+        share.scenemanager.switchscene(obj_scene_ch1play2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play4())
     def triggernextpage(self,controls):
@@ -417,11 +434,14 @@ class obj_scene_ch1play3(page.obj_chapterpage):
 class obj_scene_ch1play4(page.obj_chapterpage):
     def setup(self):
         self.text=[\
-                   '"And finally, at night, the ',('hero',share.colors.hero),' went to back to bed". ',\
+                   '"And finally, at night, ',('{hero_he}',share.colors.hero),' went to back to bed". ',\
                    ]
+        self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),record=True,scale=0.5))
         self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
         self.addpart(self.world)
         self.world.timerend.amount=50
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1play3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1playend())
     def triggernextpage(self,controls):
@@ -434,7 +454,11 @@ class obj_scene_ch1playend(page.obj_chapterpage):
                    'But tomorrow we will make it even better! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
-
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1play4())
+    def nextpage(self):
+        share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
+        super().nextpage()
 
 
 

@@ -86,9 +86,12 @@ class obj_scene_ideatodo(obj_ideapage):
     def setup(self):
         self.name='Todo List'
         self.text=['Todo List:',\
-                   '\nx) No more advanced physics! Only simple minigames',\
-                   '\nx) From simple story hero-princess, make alterations each day ',\
+                   '\nx) No more advanced physics! Only simple goofy minigames',\
+                   '\nx) No more advanced drawings, only simple and goofy. Like same face on everything',\
+                   '\nx) Basis=3 chapter story: Hero, Partner, Villain.',\
+                   '\nx) Then make alterations (Partner=He,She, Pet. Relation=love,friends,its complicated) ',\
                    '\nx) Use mise en abime where book, pen and eraser discuss new changes each day',\
+                   '\nx) book=instructions/critic, pen=new content, eraser=modify content',\
                    '\nx) Open new alterations with simple puzzles (get item from previous choice, etc...)',\
                    '\nx)',\
                    '\nx)',\

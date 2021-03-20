@@ -26,6 +26,7 @@ class obj_scene_prologue(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Prologue   -----   ',\
                    '\nIn the Beginning, there was Nothing. Absolutely Nothing. \nBut one Could Press [Enter] to Continue.']
+        self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
 
@@ -33,7 +34,9 @@ class obj_scene_prologue(page.obj_chapterpage):
 class obj_scene_ch0p1(page.obj_chapterpage):
     def setup(self):
         self.text=['One Could Press [Enter] to Continue, or [Tab] to go back. It was always like that.',\
-                   '\n[Tab: Back]   [Enter: Continue]']
+                   '\n']
+        self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Tab] to Go Back',(640,600),color=share.colors.instructions))
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_prologue())
     def nextpage(self):
@@ -48,6 +51,8 @@ class obj_scene_ch0p2(page.obj_chapterpage):
                    'The pen was drawn with [Left Mouse] and erased with [Right Mouse].',\
                    ]
         self.addpart( draw.obj_drawing('pen',(600,440),legend='Pen') )
+        self.addpart(draw.obj_textbox('Hold [Left Mouse] to Draw',(940,500),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Right Mouse] to Erase',(940,600),color=share.colors.instructions))
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
     def nextpage(self):
