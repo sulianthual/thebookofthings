@@ -33,7 +33,7 @@ class obj_colors:
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
         self.purple=(128,0,128)
-        self.pink=(255,192,203)
+        self.pink=(231,84,128)
         # Colors devmode
         self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
@@ -49,7 +49,7 @@ class obj_colors:
         self.textchoice=(180,0,0)# text input box
         # Colors for story
         self.hero=self.red# hero text color
-        self.princess=self.pink#princess text color
+        self.partner=self.pink#partner text color
         self.item=self.blue# items (bed, fish,etc...)
         self.action=self.green# actions text (fishing, etc...)
 

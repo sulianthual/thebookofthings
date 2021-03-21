@@ -418,6 +418,127 @@ class obj_world_eatfish(obj_world):
 
 
 
+####################################################################################################################
+
+
+# Mini Game: play a serenade
+class obj_world_serenade(obj_world):
+    def setup(self):
+        self.done=False# mini game is finished
+        self.doneplaying=False# done playing serenade
+        # hero on left
+        self.hero=actor.obj_grandactor(self,(640,360))
+        # self.hero.addpart( 'img_hero',draw.obj_image('herobase',(200,450), scale=0.7) )# bit messy
+        self.hero.addpart( 'img_herohead',draw.obj_image('herohead',(200,354), scale=0.35) )
+        self.hero.addpart( 'img_guitar',draw.obj_image('guitar',(200,500), scale=0.6) )
+        # partner on right
+        self.partner=actor.obj_grandactor(self,(640,360))
+        self.partner.addpart( 'img_partner',draw.obj_image('partnerbase',(1280-200,450), scale=0.7,fliph=True) )
+        # melody score
+        if True:
+            self.score=actor.obj_grandactor(self,(640,380))
+            self.score.addpart( 'img',draw.obj_image('musicscore',(640,380),path='premade') )
+        ### melody to reproduce
+        self.melody=actor.obj_grandactor(self,(640,360))
+        self.melody.melodylength=8# number of notes to play
+        melodyx=[-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5]# x positions (scaled)
+        melodydx=50# x-spacing notes
+        melodydy=30#y-spacing notes
+        self.melody.melodynotes=[]
+        for i in range(self.melody.melodylength):
+            inote=tool.randint(1,4)
+            if inote==1:
+                note='W'
+                ynote=1.5
+            elif inote==2:
+                note='A'
+                ynote=-0.5
+            elif inote==3:
+                note='S'
+                ynote=-1.5
+            elif inote==4:
+                note='D'
+                ynote=0.5
+            self.melody.melodynotes.append(note)
+            position=(640+melodyx[i]*melodydx,380-ynote*melodydy)
+            self.melody.addpart("imgnotebase_"+str(i), draw.obj_image('musicnotesquare',position,path='premade') )
+            self.melody.addpart("imgnoteplay_"+str(i), draw.obj_image('musicnotesquare_played',position,path='premade') )
+            self.melody.dict["imgnoteplay_"+str(i)].show=False
+            self.melody.addpart("textboxnote_"+str(i), draw.obj_textbox(note,position) )
+        self.melody.melodyi=0# index of completed note (must reach melodylength)
+        # floating notes
+        self.floatingnotes=actor.obj_grandactor(self,(640,360))
+        self.floatingnotes.addpart('anim1', draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3))
+        self.floatingnotes.addpart('anim2',draw.obj_animation('ch2_musicnote1','musicnote',(480,500),scale=0.3))
+        self.floatingnotes.addpart('anim3',draw.obj_animation('ch2_musicnote1','musicnote',(800,500),scale=0.3))
+        self.floatingnotes.addpart('anim4',draw.obj_animation('ch2_musicnote1','musicnote',(640,180),scale=0.3))
+        self.floatingnotes.addpart('anim5',draw.obj_animation('ch2_musicnote1','musicnote',(480,180),scale=0.3))
+        self.floatingnotes.addpart('anim6',draw.obj_animation('ch2_musicnote1','musicnote',(800,180),scale=0.3))
+        # floating hearts
+        self.floatinglove=actor.obj_grandactor(self,(640,360))
+        self.floatinglove.addpart('anim1', draw.obj_animation('ch2_musicnote1','love',(640,500),scale=0.3))
+        self.floatinglove.addpart('anim2',draw.obj_animation('ch2_musicnote1','love',(480,500),scale=0.3))
+        self.floatinglove.addpart('anim3',draw.obj_animation('ch2_musicnote1','love',(800,500),scale=0.3))
+        self.floatinglove.addpart('anim4',draw.obj_animation('ch2_musicnote1','love',(640,180),scale=0.3))
+        self.floatinglove.addpart('anim5',draw.obj_animation('ch2_musicnote1','love',(480,180),scale=0.3))
+        self.floatinglove.addpart('anim6',draw.obj_animation('ch2_musicnote1','love',(800,180),scale=0.3))
+        self.floatingnotes.show=True
+        self.floatinglove.show=False
+        # textbox under
+        self.text1=actor.obj_grandactor(self,(640,360))
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Play Melody with [W][A][S][D]',(640,660),color=share.colors.instructions) )
+        self.text2=actor.obj_grandactor(self,(640,360))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Beautiful!',(640,660)) )
+        self.text1.show=True
+        self.text2.show=False
+        # short timer after done playing
+        self.timerend=tool.obj_timer(100)
+    def update(self,controls):
+        super().update(controls)
+        if not self.doneplaying:
+            # current note played
+            if controls.w and controls.wc:
+                playednote='W'
+            elif controls.a and controls.ac:
+                playednote='A'
+            elif controls.s and controls.sc:
+                playednote='S'
+            elif controls.d and controls.dc:
+                playednote='D'
+            else:
+                playednote=False
+            # current melody
+            cnote=self.melody.melodynotes[self.melody.melodyi]# current note to play
+            if playednote==cnote:
+                self.melody.dict["imgnotebase_"+str(self.melody.melodyi)].show=False
+                self.melody.dict["imgnoteplay_"+str(self.melody.melodyi)].show=True
+                self.melody.melodyi += 1
+                if self.melody.melodyi > self.melody.melodylength-1:# completed melody
+                    self.doneplaying=True
+                    self.timerend.start()
+        else:# done playing
+            self.text1.show=False
+            self.text2.show=True
+            self.floatingnotes.show=False
+            self.floatinglove.show=True
+            self.timerend.update()
+            if self.timerend.ring: self.done=True
+
+
+####################################################################################################################
+
+# hero/partner are on left/right side of screen. hero goes up/down cyclically, and partner does opposite.
+# Hold [A] (or [D]) to pull both towards center of screen.
+# if release, pull back both to edges of screen
+# however, if holds too long, both pass the screen center, then are pulled the opposite way.
+# (like opposite magnets)
+# then one has to hold [D] to pull again
+# game ends when they touch each others head
+#
+# Mini Game: kiss
+class obj_world_kiss(obj_world):
+    def setup(self):
+        self.done=False
 
 
 

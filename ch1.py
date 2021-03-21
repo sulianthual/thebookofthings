@@ -23,7 +23,7 @@ import world
 # Chapter I: ...
 # *CHAPTER I
 
-# name house
+
 class obj_scene_chapter1(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Chapter I: The Hero   -----   ',\
@@ -379,7 +379,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         self.text=[\
                 '"Once upon a Time, there was a ',('Hero',share.colors.hero),' ',\
                 'named  ',('{heroname}',share.colors.hero),'. ',\
-                'It was morning when',('{hero_he}',share.colors.hero),' ',\
+                'It was morning when ',('{hero_he}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),'." ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),record=False,scale=0.5))

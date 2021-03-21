@@ -89,7 +89,10 @@ class obj_scene_ideatodo(obj_ideapage):
                    '\nx) No more advanced physics! Only simple goofy minigames',\
                    '\nx) No more advanced drawings, only simple and goofy. Like same face on everything',\
                    '\nx) Basis=3 chapter story: Hero, Partner, Villain.',\
-                   '\nx) Then make alterations (Partner=He,She, Pet. Relation=love,friends,its complicated) ',\
+                   '\nx) Beware not to put choices (except gender/basic stuff) in the basis? ',\
+                   '\nx) Each new choice must be introduced and requires new drawings.',\
+                   '\nx) Then make alterations in Part II, Part III (Partner=He,She, Pet. Relation=love,friends,its complicated) ',\
+                   '\nx) In Subsequent Parts on can add alterations to the basic story (choose from list at beginning of the day)',\
                    '\nx) Use mise en abime where book, pen and eraser discuss new changes each day',\
                    '\nx) book=instructions/critic, pen=new content, eraser=modify content',\
                    '\nx) Open new alterations with simple puzzles (get item from previous choice, etc...)',\
@@ -100,19 +103,29 @@ class obj_scene_ideatodo(obj_ideapage):
 
 class obj_scene_idea1(obj_ideapage):
     def setup(self):
-        self.name='Sunrise'
-        self.text=['draw',\
+        self.name='Mini Games Ideas'
+        self.text=['Mini Games Ideas:',\
+                   '\nx) Game Mechanics: ',\
+                   '\nx) Waking up=Hold [W]',\
+                   '\nx) Fishing=Lower Hook [S]',\
+                   '\nx) Eating=Mash [A][D]',\
+                   '\nx) Shoot arrow=Parabolic Arc [A][D] then [W]',\
+                   '\nx) Fight = Play Pong [W][S]',\
+                   '\nx) Fight = Mash [A][D]',\
+                   '\nx) Fight = Rock Paper Scissors (choose quickly on beat [A][W][D])',\
+                   '\nx) Flappy Bird=One tap to stay level',\
+                   '\nx) Serenade=[W][A][S][D] random sequence on music sheet to reproduce (draw guitare and musical note)',\
+                   '\nx) Mario level= move [A][D] and jump [W]',\
+                   '\nx) avoid falling boulders=[A][D]',\
+                   '\nx) Kissing=[S] at right time for Hero/Princess moving opposite up down on left/right side of screen',\
+                   '\nx) Basketball=jump and shoot Holding [S] in moving hoop laterally ',\
+                   '\nx) Bait=guide monster to trap [WASD]. It charges straigth',\
+                   '\nx) Shooter=Cannon on fast rotating wheel, shoot stuff with [W]',\
+                   '\nx) Indiana jones ball behind=[A][D] to avoid obstacles',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
+                   '\nx)',\
                    ]
-        self.addpart( draw.obj_drawing('sun',(640,210),legend='The Sun') )
-        self.addpart( draw.obj_drawing('horizon',(640,560),legend='The Horizon') )
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_idea1p2())
-class obj_scene_idea1p2(obj_ideapage):
-    def setup(self):
-        self.name='Sunrise p2'
-        self.text=['sunrise (using an imagefill)',\
-                   ]
-        self.addpart( draw.obj_animation('sunrise','sun',(640,210),record=True) )
-
-        self.addpart(draw.obj_imagefill((share.colors.background,630,100),(640,670)))# filler
-        self.addpart( draw.obj_image('horizon',(640,560)) )
