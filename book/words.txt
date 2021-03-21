@@ -1,18 +1,24 @@
+test1
+testst
+test2
+
+test_he
+
+test_his
+
 heroname
-heroooooo
+mooch
 hero_he
 he
 hero_his
 his
 hero_him
 him
-partnername
-princess peachy the first
 partner_he
 she
 partner_his
 her
 partner_him
 her
-the_princess
-the princess
+partnername
+verra

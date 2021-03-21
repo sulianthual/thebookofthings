@@ -16,7 +16,6 @@ import share
 import tool
 import draw
 import page
-import actor
 import world
 #
 import tests

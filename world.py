@@ -14,8 +14,9 @@
 
 import share
 import tool
+import core
 import draw
-import actor
+
 
 ####################################################################################################################
 # World
@@ -95,8 +96,6 @@ class obj_rule:
     def update(self,controls):# edit for childrens
         pass
 
-####################################################################################################################
-# Physics Rules
 
 # Rule: boundary conditions on grand actors (that have rigidbodies)
 # when: collision then: pushes back and orients rigidbody speed inwards
@@ -122,6 +121,246 @@ class obj_rule_bdry_bounces_rigidbody(obj_rule):
                     if j.v>0: j.v *= -1
 
 
+
+####################################################################################################################
+# Actor Main Templates
+# *TEMPLATE *ACTOR *GRANDACTOR *RIGIDBODY
+
+# Template for most basic actors
+class obj_actor:
+    def __init__(self,creator):
+        self.creator=creator# created by world
+        self.setup()
+        self.birth()
+    def setup(self):# add here modifications for childs
+        self.type='actor'# type (overwritten for each specific actor)
+        self.actortype='None'
+        self.alive=False# actor is alive in world
+    def birth(self):# add to world
+        self.creator.addactor(self)# add self to world list of actors
+        self.alive=True
+    def kill(self):# remove from world
+        self.creator.removeactor(self)
+        self.alive=False
+    def update(self ,controls):
+        pass
+
+
+# Template for grand actors in world (hero, items, enemies..., obstacles...)
+# A grand actor is more elaborate:
+# - has a hitbox (rd,rx,ry)
+# - can have display elements (textbox,image,animation or dispgroup)
+# - can be transformed: movex(),movetox(),scale(),fliph()...,rotate90()
+#                       (rotate not done due to enlargen-memory issues)
+class obj_grandactor():
+    def __init__(self,creator,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False):
+        # Creation
+        self.creator=creator# created by world
+        self.xini=xy[0]# initial position
+        self.yini=xy[1]
+        # Setup and Birth
+        self.setup()
+        self.birth()# add self to world ONLY ONCE setup finished
+        if scale != 1: self.scale(scale)# scale ONCE setup finished
+        if rotate !=0: self.rotate90(rotate)
+        if fliph: self.fliph()
+        if flipv: self.flipv()
+        if fliphv:
+            self.fliph()
+            self.flipv()
+    def setup(self):# add here modifications for childs
+        self.type='actor'# type (overwritten for each specific actor)
+        self.actortype='grandactor'
+        self.x=self.xini# position
+        self.y=self.yini
+        self.fh=False# is flipped horizontally
+        self.fv=False# is flipped vertically
+        self.s=1# scaling factor
+        self.r=0# rotation angle (deg)
+        self.show=True# show or not (can be toggled)
+        self.alive=False# actor is alive in world
+        # hitbox
+        self.rx=50# radius width for rectangle collisions
+        self.ry=50# radius height for rectangle collisions
+        self.rd=50# radius for circle collisions
+        # elements
+        self.dict={}
+        self.dictx={}# relative position
+        self.dicty={}
+        # devtools
+        self.devrect=core.obj_sprite_rect()
+    def birth(self):# add to world
+        self.creator.addactor(self)
+        self.alive=True
+    def kill(self):# remove from world
+        self.creator.removeactor(self)
+        self.alive=False
+    def destroy(self):# kill with additional funcionalities (e.g. leave trailing smoke)
+        self.kill()
+    def hit(self,hitter):# hit by something
+        pass
+    def addpart(self,name,element):# add element
+        self.dict[name]=element
+        self.dictx[name]= int( element.xini - self.xini )# record relative difference
+        self.dicty[name]= int( element.yini - self.yini )
+    def removepart(self,name):# remove element
+        for i in [self.dict, self.dictx, self.dicty]: i.pop(name,None)
+    def movetox(self,x):
+        self.x=x
+        for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
+    def movetoy(self,y):
+        self.y=y
+        for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
+    def movex(self,dx):
+        self.x += dx
+        for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
+    def movey(self,dy):
+        self.y += dy
+        for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
+    def symh(self,name):# shift element symmetrically (horizontal)
+        self.dictx[name] *= -1
+        self.dict[name].movetox(self.x + self.dictx[name])
+    def symv(self,name):# shift element symmetrically (vertical)
+        self.dicty[name] *= -1
+        self.dict[name].movetoy(self.y + self.dicty[name])
+    def fliph(self):# horizontal
+        self.fh=not self.fh
+        for i in self.dict.keys():
+            self.dict[i].fliph()
+            self.symh(i)
+    def bfliph(self,boolflip):# boolean flip
+        if boolflip:
+            self.ofliph()
+        else:
+            self.ifliph()
+    def ifliph(self):# to inverted
+        if not self.fh:
+            self.fh=True
+            for i in self.dict.keys():
+                self.dict[i].ifliph()
+                self.symh(i)
+    def ofliph(self):# to original
+        if self.fh:
+            self.fh=False
+            for i in self.dict.keys():
+                self.dict[i].ofliph()
+                self.symh(i)
+    def flipv(self):# vertical
+        self.fv=not self.fv
+        for i in self.dict.keys():
+            self.dict[i].flipv()
+            self.symv(i)
+    def bflipv(self,boolflip):# boolean flip
+        if boolflip:
+            self.oflipv()
+        else:
+            self.iflipv()
+    def iflipv(self):# to inverted
+        if not self.fv:
+            self.fv=True
+            for i in self.dict.keys():
+                self.dict[i].iflipv()
+                self.symv(i)
+    def oflipv(self):# to original
+        if self.fv:
+            self.fv=False
+            for i in self.dict.keys():
+                self.dict[i].oflipv()
+                self.symv(i)
+    def scale(self,s):
+        self.s *= s
+        self.rx *= s# scale hitbox
+        self.ry *= s
+        self.rd *= s
+        for i in self.dict.keys():
+            self.dict[i].scale(s)
+            self.dictx[i] *= s
+            self.dicty[i] *= s
+            self.dict[i].movetox(self.x+self.dictx[i])
+            self.dict[i].movetoy(self.y+self.dicty[i])
+    def rotate90(self,r):
+        r=int(round(r%360/90,0)*90)# in 0,90,180,270
+        self.r += r
+        for i in self.dict.keys():
+            self.dict[i].rotate90(r)
+            termx,termy=self.dictx[i],self.dicty[i]
+            if r==90:
+                self.dictx[i],self.dicty[i]=termy,-termx
+                self.rx,self.ry=self.ry,self.rx# rotate hitbox
+            elif r==180:
+                self.dictx[i],self.dicty[i]=-termx,-termy
+            if r==270:
+                self.dictx[i],self.dicty[i]=-termy,termx
+                self.rx,self.ry=self.ry,self.rx# rotate hitbox
+            self.dict[i].movetox(self.x+self.dictx[i])
+            self.dict[i].movetoy(self.y+self.dicty[i])
+    def play(self,controls):
+        for i in self.dict.values():  i.play(controls)
+    def devtools(self):
+        self.devrect.display(share.colors.devactor,(self.x,self.y,2*self.rx,2*self.ry))# hitbox
+    def update(self,controls):
+        if self.show: self.play(controls)
+        if share.devmode: self.devtools()
+
+
+# Template: grand actor with rigidbody fonctionalities
+# - rigidbody controls speed u,v inducing additional movement to x,y
+# - external forces must be applied to exit stalling.
+# - rigidbody dynamics are not computed if actor is stalling
+# - friction slows any rigidbody untils stalls again.
+# - if stalling the actor can still be controlled directly on x,y just like a non-rigidbody
+class obj_rbodyactor(obj_grandactor):
+    def setup(self):
+        super().setup()
+        self.actortype="rbody"
+        self.stalling=True# stalling or not
+        self.dt=1#(could make it depend on game fps)
+        self.u=0# rigid body speed
+        self.v=0
+        self.m=1# mass (must be >0)
+        self.d=0.01# dissipation rate
+        self.umin2=1# min speed for stalling (squared)
+    def movex(self,u):# rewritten to not be game fps dependent
+        self.x += round(u*self.dt)
+        for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
+    def movey(self,v):
+        self.y += round(v*self.dt)
+        for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
+    def forcex(self,force):# apply forcex (call externally)
+        self.u += force*self.dt/self.m
+        self.stalling=False
+    def forcey(self,force):# apply forcey (call externally)
+        self.v += force*self.dt/self.m
+        self.stalling=False
+    def stall(self):# stall rigidbody (can be called externally)
+        self.stalling=True
+        self.u,self.v=0,0
+    def friction(self,d):# apply dissipation internally
+        self.u -= d*self.u*self.dt
+        self.v -= d*self.v*self.dt
+    def rigidbodyupdate(self):# move from speed
+        if self.u**2+self.v**2>self.umin2:
+            self.movex(self.u*self.dt)
+            self.movey(self.v*self.dt)
+            self.friction(self.d)
+        else:
+            self.stall()
+    def update(self,controls):
+        super().update(controls)
+        if not self.stalling: self.rigidbodyupdate()
+
+# Boundary (basic actor)
+class obj_actor_bdry(obj_actor):# basic actor
+    def __init__(self,creator,bounds=(100,1280-100,100,720-100),push=(3,-3,3,-3)):
+        super().__init__(creator)
+        self.bdry_lim=bounds# limits (xmin,xmax,ymin,ymax).
+        self.bdry_push=push# push rate at boundaries (if =0, boundary not applied)
+    def setup(self):
+        super().setup()
+        self.actortype='bdry'
+
+
+####################################################################################################################
 ####################################################################################################################
 
 # Mini Game: Wake Up Hero
@@ -129,21 +368,21 @@ class obj_world_wakeup(obj_world):
     def setup(self):
         self.done=False# mini game is finished
         # bed frame
-        bed=actor.obj_grandactor(self,(440,500))
+        bed=obj_grandactor(self,(440,500))
         bed.addpart( 'img',draw.obj_image('bed',(440,500),scale=0.75) )
         # text
-        self.text1=actor.obj_grandactor(self,(840,500))
+        self.text1=obj_grandactor(self,(840,500))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [W] to Wake up',(1100,480),color=share.colors.instructions) )
-        self.text2=actor.obj_grandactor(self,(840,500))
+        self.text2=obj_grandactor(self,(840,500))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Good Morning!',(1100,480)) )
         # three actors for hero: sleep, wake, awake (toggle show between each)
         self.herostate='sleep'
         self.timer=tool.obj_timer(100)
-        self.hero_sleep=actor.obj_grandactor(self,(640,360))
+        self.hero_sleep=obj_grandactor(self,(640,360))
         self.hero_sleep.addpart( 'img_asleep',draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
-        self.hero_wake=actor.obj_grandactor(self,(640,360))
+        self.hero_wake=obj_grandactor(self,(640,360))
         self.hero_wake.addpart( 'anim_awakes',draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7) )
-        self.hero_awake=actor.obj_grandactor(self,(640,360))
+        self.hero_awake=obj_grandactor(self,(640,360))
         self.hero_awake.addpart( 'img_awake',draw.obj_image('herobase',(903,452),scale=0.7) )
         #
         self.hero_sleep.show=True
@@ -195,23 +434,23 @@ class obj_world_gotobed(obj_world):
     def setup(self):
         self.done=False# mini game is finished
         # bed frame
-        bed=actor.obj_grandactor(self,(440,500))
+        bed=obj_grandactor(self,(440,500))
         bed.addpart( 'img',draw.obj_image('bed',(440,500),scale=0.75) )
         # text
-        self.text1=actor.obj_grandactor(self,(840,500))
+        self.text1=obj_grandactor(self,(840,500))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [S] to go to Sleep',(1100,480),color=share.colors.instructions) )
-        self.text2=actor.obj_grandactor(self,(840,500))
+        self.text2=obj_grandactor(self,(840,500))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Sweet Dreams!',(1100,480)) )
         # three actors for hero: sleep, wake, awake (toggle show between each)
         self.herostate='sleep'
         self.timer=tool.obj_timer(80)
-        self.hero_sleep=actor.obj_grandactor(self,(640,360))
+        self.hero_sleep=obj_grandactor(self,(640,360))
         # self.hero_sleep.addpart( 'img_asleep',draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
         # self.hero_sleep.addpart( 'img_asleep',draw.obj_image('herobase',(903,452),scale=0.7) )# actually awake
         self.hero_sleep.addpart( 'img_asleep', draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7))# actually awake
-        self.hero_wake=actor.obj_grandactor(self,(640,360))
+        self.hero_wake=obj_grandactor(self,(640,360))
         self.hero_wake.addpart( 'anim_awakes',draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7) )
-        self.hero_awake=actor.obj_grandactor(self,(640,360))
+        self.hero_awake=obj_grandactor(self,(640,360))
         # self.hero_awake.addpart( 'img_awake',draw.obj_image('herobase',(903,452),scale=0.7) )
         self.hero_awake.addpart( 'img_awake',draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )# actually asleep
         #
@@ -262,7 +501,7 @@ class obj_world_fishing(obj_world):
     def setup(self):
         self.done=False# mini game is finished
         # hook
-        self.hook=actor.obj_grandactor(self,(640,100))
+        self.hook=obj_grandactor(self,(640,100))
         self.hook.actortype='hook'
         self.hook.rx=30
         self.hook.ry=30
@@ -276,10 +515,10 @@ class obj_world_fishing(obj_world):
         # fish status
         self.fishfree=True# fish not caugth (yet)
         # fish animation
-        self.fish=actor.obj_grandactor(self,(640,360))
+        self.fish=obj_grandactor(self,(640,360))
         self.fish.addpart( 'anim_fish',draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25) )
         # fish hit box
-        self.fishbox=actor.obj_grandactor(self,(340,360))
+        self.fishbox=obj_grandactor(self,(340,360))
         self.fishbox.actortype='fish'
         self.fishbox.rx=30
         self.fishbox.ry=30
@@ -287,9 +526,9 @@ class obj_world_fishing(obj_world):
         # short timer at end
         self.timerend=tool.obj_timer(100)
         # textbox when caught
-        self.text1=actor.obj_grandactor(self,(840,500))
+        self.text1=obj_grandactor(self,(840,500))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [S] to lower Hook',(1100,480),color=share.colors.instructions) )
-        self.text2=actor.obj_grandactor(self,(840,500))
+        self.text2=obj_grandactor(self,(840,500))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,480)) )
         self.text1.show=True
         self.text2.show=False
@@ -333,26 +572,26 @@ class obj_world_eatfish(obj_world):
         self.alternate_LR=True# alternate Left-Right pattern to eat
         self.eating=False
         # fish
-        self.fish=actor.obj_grandactor(self,(640,360))
+        self.fish=obj_grandactor(self,(640,360))
         self.fishscale=1# initial size of fish
         self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
         # hero eating or not eating
-        self.herostand=actor.obj_grandactor(self,(640,360))
+        self.herostand=obj_grandactor(self,(640,360))
         self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
-        self.heroeat=actor.obj_grandactor(self,(640,360))
+        self.heroeat=obj_grandactor(self,(640,360))
         self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
         self.heroeat.addpart('anim_eat', self.animation1)
         self.herostand.show=True
         self.heroeat.show=False
         # text
-        self.text1=actor.obj_grandactor(self,(640,360))
+        self.text1=obj_grandactor(self,(640,360))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] [D] to Eat',(640,660),color=share.colors.instructions) )
-        self.text2=actor.obj_grandactor(self,(640,360))
+        self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390)) )
         self.text1.show=True
         self.text2.show=False
         # textbox images
-        self.text3=actor.obj_grandactor(self,(640,360))
+        self.text3=obj_grandactor(self,(640,360))
         if False:
             textbox=draw.obj_textbox("crunch",(640,360))
             textbox.snapshot('says_crunch',path='premade')
@@ -427,19 +666,19 @@ class obj_world_serenade(obj_world):
         self.done=False# mini game is finished
         self.doneplaying=False# done playing serenade
         # hero on left
-        self.hero=actor.obj_grandactor(self,(640,360))
+        self.hero=obj_grandactor(self,(640,360))
         # self.hero.addpart( 'img_hero',draw.obj_image('herobase',(200,450), scale=0.7) )# bit messy
         self.hero.addpart( 'img_herohead',draw.obj_image('herohead',(200,354), scale=0.35) )
         self.hero.addpart( 'img_guitar',draw.obj_image('guitar',(200,500), scale=0.6) )
         # partner on right
-        self.partner=actor.obj_grandactor(self,(640,360))
+        self.partner=obj_grandactor(self,(640,360))
         self.partner.addpart( 'img_partner',draw.obj_image('partnerbase',(1280-200,450), scale=0.7,fliph=True) )
         # melody score
         if True:
-            self.score=actor.obj_grandactor(self,(640,380))
+            self.score=obj_grandactor(self,(640,380))
             self.score.addpart( 'img',draw.obj_image('musicscore',(640,380),path='premade') )
         ### melody to reproduce
-        self.melody=actor.obj_grandactor(self,(640,360))
+        self.melody=obj_grandactor(self,(640,360))
         self.melody.melodylength=8# number of notes to play
         melodyx=[-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5]# x positions (scaled)
         melodydx=50# x-spacing notes
@@ -467,7 +706,7 @@ class obj_world_serenade(obj_world):
             self.melody.addpart("textboxnote_"+str(i), draw.obj_textbox(note,position) )
         self.melody.melodyi=0# index of completed note (must reach melodylength)
         # floating notes
-        self.floatingnotes=actor.obj_grandactor(self,(640,360))
+        self.floatingnotes=obj_grandactor(self,(640,360))
         self.floatingnotes.addpart('anim1', draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3))
         self.floatingnotes.addpart('anim2',draw.obj_animation('ch2_musicnote1','musicnote',(480,500),scale=0.3))
         self.floatingnotes.addpart('anim3',draw.obj_animation('ch2_musicnote1','musicnote',(800,500),scale=0.3))
@@ -475,7 +714,7 @@ class obj_world_serenade(obj_world):
         self.floatingnotes.addpart('anim5',draw.obj_animation('ch2_musicnote1','musicnote',(480,180),scale=0.3))
         self.floatingnotes.addpart('anim6',draw.obj_animation('ch2_musicnote1','musicnote',(800,180),scale=0.3))
         # floating hearts
-        self.floatinglove=actor.obj_grandactor(self,(640,360))
+        self.floatinglove=obj_grandactor(self,(640,360))
         self.floatinglove.addpart('anim1', draw.obj_animation('ch2_musicnote1','love',(640,500),scale=0.3))
         self.floatinglove.addpart('anim2',draw.obj_animation('ch2_musicnote1','love',(480,500),scale=0.3))
         self.floatinglove.addpart('anim3',draw.obj_animation('ch2_musicnote1','love',(800,500),scale=0.3))
@@ -485,9 +724,9 @@ class obj_world_serenade(obj_world):
         self.floatingnotes.show=True
         self.floatinglove.show=False
         # textbox under
-        self.text1=actor.obj_grandactor(self,(640,360))
+        self.text1=obj_grandactor(self,(640,360))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Play Melody with [W][A][S][D]',(640,660),color=share.colors.instructions) )
-        self.text2=actor.obj_grandactor(self,(640,360))
+        self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Beautiful!',(640,660)) )
         self.text1.show=True
         self.text2.show=False

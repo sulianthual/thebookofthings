@@ -10,13 +10,11 @@
 ##########################################################
 ##########################################################
 
-import core
-
+# import core
 import share
 import tool
 import draw
 import page
-import actor
 import world
 #
 import ideas
@@ -174,7 +172,7 @@ class obj_scene_testdevmodeinfo(obj_testpage):
         dg.addpart("key_element1",draw.obj_textbox('dispgroup',(640,650)) )
         ww=world.obj_world(self)
         self.addpart(ww)
-        test=actor.obj_grandactor(ww,(640,360))
+        test=world.obj_grandactor(ww,(640,360))
         test.addpart("image", draw.obj_image('testimage2',(640,360)) )
 
 
@@ -518,8 +516,8 @@ class obj_scene_testworld(obj_testpage):
                    ]
         self.world=world.obj_world(self)# world template
         self.world.addrule('rule_rigidbody_bdry',world.obj_rule_bdry_bounces_rigidbody(self.world) )
-        bdry=actor.obj_actor_bdry(self.world)
-        self.rigidbody=actor.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
+        bdry=world.obj_actor_bdry(self.world)
+        self.rigidbody=world.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
         self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )
     def page(self,controls):
         self.world.update(controls)
@@ -542,7 +540,7 @@ class obj_scene_testworldgrandactor(obj_testpage):
                    'Toggle Dev mode with [Ctrl] to see grand actors hit boxes.',\
                    ]
         self.world=world.obj_world(self)# world template
-        self.hero=actor.obj_grandactor(self.world,(640,360))# a grand actor
+        self.hero=world.obj_grandactor(self.world,(640,360))# a grand actor
         self.hero.addpart("element1",draw.obj_image('testimage1',(640,640),scale=2))
         self.hero.addpart("element2",draw.obj_textbox('textbox attached to actor',(640,840),fontsize='large'))
         self.hero.scale(0.5)
@@ -572,8 +570,8 @@ class obj_scene_testrigidbody(obj_testpage):
                    ]
         self.world=world.obj_world(self)# world template
         self.world.addrule('rule_rigidbody_bdry',world.obj_rule_bdry_bounces_rigidbody(self.world) )
-        bdry=actor.obj_actor_bdry(self.world)
-        self.rigidbody=actor.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
+        bdry=world.obj_actor_bdry(self.world)
+        self.rigidbody=world.obj_rbodyactor(self.world,(640,360))# actor rigidbody template
         self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )
     def page(self,controls):
         self.world.update(controls)

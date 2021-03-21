@@ -14,7 +14,6 @@ import share
 import tool
 import draw
 import page
-import actor
 import world
 
 ##########################################################
@@ -253,10 +252,10 @@ class obj_scene_ch2p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p11())
     def setup(self):
         self.text=[\
-                   'Well, these guys are totally clumsy so Hold[S] at the right time to make them kiss.  ',\
+                   'Well, these guys are totally clumsy so hold [S] at the right time to make them kiss.  ',\
                    ' '\
                    ]
-        self.world=world.obj_world_kiss(self)# serenade mini-game
+        self.world=world.obj_world_kiss(self)# kiss mini-game
         self.addpart(self.world)
     def triggernextpage(self,controls):
         return (controls.enter and controls.enterc) or self.world.done# quick skip
