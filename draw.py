@@ -181,7 +181,7 @@ class obj_drawing:
             self.mousedraw(controls,controls.mouse1,controls.mouse1c,self.sprite,self.brush,self.x,self.y)
         if controls.mouse3:
             self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)
-        if controls.mouse2 and tool.isinrect(controls.mousex,controls.mousey,self.rect):
+        if controls.backspace and controls.backspacec and tool.isinrect(controls.mousex,controls.mousey,self.rect):
             self.clear()
     def basedraw(self):
         if self.base:

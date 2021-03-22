@@ -47,11 +47,11 @@ class obj_scene_ch0p2(page.obj_chapterpage):
     def setup(self):
         self.text=['There was going to be a pen, and the pen was going to be drawn. ',\
                    'The pen was to be drawn with a lot of emotions, even if it was just a pen.',\
-                   'The pen was drawn with [Left Mouse] and erased with [Right Mouse].',\
+                   'The pen was drawn with [Left Mouse] and erased with [Backspace].',\
                    ]
         self.addpart( draw.obj_drawing('pen',(600,440),legend='Pen') )
         self.addpart(draw.obj_textbox('Hold [Left Mouse] to Draw',(940,500),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('Press [Right Mouse] to Erase',(940,600),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Backspace] to Erase',(940,600),color=share.colors.instructions))
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
     def nextpage(self):
@@ -73,7 +73,7 @@ class obj_scene_ch0p3(page.obj_chapterpage):
 class obj_scene_ch0p4(page.obj_chapterpage):
     def setup(self):
         self.text=['Along with the pen, there was going to be an eraser.',\
-                   '\nThe eraser was drawn with [Left Mouse] and erased with [Right Mouse]',\
+                   '\nThe eraser was drawn with [Left Mouse] and erased with [Backspace]',\
                    ]
         self.addpart( draw.obj_drawing('eraser',(900,450), legend='Eraser') )
         self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
@@ -117,7 +117,7 @@ class obj_scene_ch0p6(page.obj_chapterpage):
 class obj_scene_ch0p7(page.obj_chapterpage):
     def setup(self):
         self.text=['In the middle of the dancing, there was going to be a book. A very mysterious book [draw].',\
-                   'It was drawn with [Left Mouse], and could be restarted with [Right Mouse]. ',\
+                   'It was drawn with [Left Mouse], and could be restarted with [Backspace]. ',\
                    ]
         self.addpart( draw.obj_drawing('book',(640,420), legend='Mysterious Book') )
         self.addpart( draw.obj_animation('penmove3','pen',(640,360)) )

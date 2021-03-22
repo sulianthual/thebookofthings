@@ -766,20 +766,88 @@ class obj_world_serenade(obj_world):
 
 ####################################################################################################################
 
-# hero/partner are on left/right side of screen. hero goes up/down cyclically, and partner does opposite.
-# Hold [A] (or [D]) to pull both towards center of screen.
-# if release, pull back both to edges of screen
-# however, if holds too long, both pass the screen center, then are pulled the opposite way.
-# (like opposite magnets)
-# then one has to hold [D] to pull again
-# game ends when they touch each others head
-#
-# Mini Game: kiss
+# Mini Game: kiss (very similar to wake up)
 class obj_world_kiss(obj_world):
     def setup(self):
         self.done=False
-
-
+        self.donekissing=False
+        self.kissing=False# if not donekissing: is standing or kissing
+        # standing ones
+        self.herostand=obj_grandactor(self,(640,360))
+        self.herostand.addpart('img', draw.obj_image('herobase',(240,400),scale=0.7))
+        self.partnerstand=obj_grandactor(self,(640,360))
+        self.partnerstand.addpart('img', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7))
+        self.herostand.show=True
+        self.partnerstand.show=True
+        # kissing ones
+        self.herokiss=obj_grandactor(self,(640,360))
+        animation1=draw.obj_animation('ch2_kiss1','herobase',(640,360))
+        self.herokiss.addpart('anim', animation1 )
+        self.partnerkiss=obj_grandactor(self,(640,360))
+        animation2=draw.obj_animation('ch2_kiss2','partnerbase',(640,360),sync=animation1)
+        self.partnerkiss.addpart('anim', animation2 )
+        self.herokiss.show=False
+        self.partnerkiss.show=False
+        # final position
+        self.partnerend=obj_grandactor(self,(640,360))
+        self.partnerend.addpart('img', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15))
+        self.heroend=obj_grandactor(self,(640,360))
+        self.heroend.addpart('img', draw.obj_image('herobase',(580,400),scale=0.7,rotate=-15))
+        self.heroend.show=False
+        self.partnerend.show=False
+        # final heart
+        self.love=obj_grandactor(self,(640,360))
+        self.love.addpart('anim1', draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
+        self.love.addpart('anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
+        self.love.show=False
+        # text
+        self.text1=obj_grandactor(self,(640,360))
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [A]+[D] to kiss',(640,660),color=share.colors.instructions) )
+        self.text2=obj_grandactor(self,(640,360))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('So Much Tongue!',(640,660)) )
+        self.text1.show=True
+        self.text2.show=False
+        # kiss
+        self.timer=tool.obj_timer(180)
+        # short timer to finish game
+        self.timerend=tool.obj_timer(80)
+    def update(self,controls):
+        super().update(controls)
+        if not self.donekissing:
+            # undone state
+            if not self.kissing:
+                # standing substate
+                if controls.a and controls.d:
+                    self.kissing=True
+                    self.herostand.show=False
+                    self.partnerstand.show=False
+                    self.herokiss.show=True
+                    self.partnerkiss.show=True
+                    self.timer.start()# reset timer
+            else:
+                # kissing substate
+                self.timer.update()
+                if not (controls.a and controls.d):
+                    self.kissing=False
+                    self.herostand.show=True
+                    self.partnerstand.show=True
+                    self.herokiss.show=False
+                    self.partnerkiss.show=False
+                if self.timer.ring:
+                    self.donekissing=True
+                    self.text1.show=False
+                    self.text2.show=True
+                    self.herokiss.show=False
+                    self.partnerkiss.show=False
+                    self.heroend.show=True
+                    self.partnerend.show=True
+                    self.love.show=True
+                    self.timerend.start()
+        else:
+            # done state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
 
 ####################################################################################################################
 

@@ -129,7 +129,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
     def setup(self):
         self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', said the book of things, ',\
                    'and make ', ('{hero_him}',share.colors.hero),' look slightly to the right. ',\
-                   ('Draw with [Left Mouse] and erase with [Right Mouse]',share.colors.instructions),', but you should know this by now.',\
+                   ('Draw with [Left Mouse] and erase with [Backspace]',share.colors.instructions),', but you should know this by now.',\
                    ]
         drawing=draw.obj_drawing('herohead',(640,400),legend='Happy Face')
         self.addpart( drawing )
@@ -370,7 +370,7 @@ class obj_scene_ch1play(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'Now, lets read again our story to summarize, said the book of things. ',\
-                   'This time, try to complete it as quickly as possible! Press [A] and [D] together to start. ',\
+                   'This time, try to complete it as quickly as possible! Press [A]+[D] together to start. ',\
                    ]
         self.addpart(draw.obj_textbox('Press [A]+[D] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

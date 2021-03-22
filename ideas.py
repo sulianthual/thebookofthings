@@ -104,24 +104,21 @@ class obj_scene_idea1(obj_ideapage):
     def setup(self):
         self.name='Mini Games Ideas'
         self.text=['Mini Games Ideas:',\
-                   '\nx) Game Mechanics: ',\
-                   '\nx) Waking up=Hold [W]',\
-                   '\nx) Fishing=Lower Hook [S]',\
-                   '\nx) Eating=Mash [A][D]',\
-                   '\nx) Shoot arrow=Parabolic Arc [A][D] then [W]',\
+                   '\nx) Hunt = Arrow Parabolic Arc [A][D] then [W]',\
+                   '\nx) Situation? = Flappy Bird [W]',\
                    '\nx) Fight = Play Pong [W][S]',\
+                   '\nx)',\
                    '\nx) Fight = Mash [A][D]',\
                    '\nx) Fight = Rock Paper Scissors (choose quickly on beat [A][W][D])',\
-                   '\nx) Flappy Bird=One tap to stay level',\
-                   '\nx) Serenade=[W][A][S][D] random sequence on music sheet to reproduce (draw guitare and musical note)',\
                    '\nx) Mario level= move [A][D] and jump [W]',\
                    '\nx) avoid falling boulders=[A][D]',\
+                   '\nx) space invaders=[A][D]',\
                    '\nx) Kissing=[S] at right time for Hero/Princess moving opposite up down on left/right side of screen',\
                    '\nx) Basketball=jump and shoot Holding [S] in moving hoop laterally ',\
                    '\nx) Bait=guide monster to trap [WASD]. It charges straigth',\
                    '\nx) Shooter=Cannon on fast rotating wheel, shoot stuff with [W]',\
                    '\nx) Indiana jones ball behind=[A][D] to avoid obstacles',\
-                   '\nx)',\
+                   '\nx) breakout game (pad, ball and horizontal layers of bricks)',\
                    '\nx)',\
                    '\nx)',\
                    '\nx)',\
