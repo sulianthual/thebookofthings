@@ -50,6 +50,7 @@ class obj_colors:
         # Colors for story
         self.hero=self.red# hero text color
         self.partner=self.pink#partner text color
+        self.villain=self.pink#partner text color
         self.item=self.blue# items (bed, fish,etc...)
         self.action=self.green# actions text (fishing, etc...)
 
@@ -88,6 +89,7 @@ class obj_fonts:
 class obj_brushes:
     def __init__(self):
         self.bigpen=('data/pen.png',(16,16))
+        self.pen12=('data/pen.png',(12,12))
         self.pen=('data/pen.png',(8,8))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))

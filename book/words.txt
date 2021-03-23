@@ -1,13 +1,5 @@
-test1
-testst
-test2
-
-test_he
-
-test_his
-
 heroname
-mooch
+stanislas
 hero_he
 he
 hero_his
@@ -21,4 +13,4 @@ her
 partner_him
 her
 partnername
-venus
+athenas

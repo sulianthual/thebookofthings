@@ -203,7 +203,7 @@ class obj_scene_ch2p7(page.obj_chapterpage):
                    ]
 
         drawing=draw.obj_drawing('guitar',(340,450),legend='guitar',shadow=(300,200))
-        # drawing.brush.makebrush(share.brushes.smallpen)
+        drawing.brush.makebrush(share.brushes.smallpen)
         self.addpart( drawing )
         self.addpart(draw.obj_drawing('musicnote',(1040,450),legend='Music Note',shadow=(200,200)))
 
@@ -273,8 +273,8 @@ class obj_scene_ch2p11(page.obj_chapterpage):
                    'That wraps it up nicely, said the book of things. ',\
                    'One last thing, lets draw a house with trees where they live happily together. ',\
                    ]
-        self.addpart(draw.obj_drawing('house',(340,450),legend='House',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('tree',(940,450),legend='Tree',shadow=(200,200)))
+        self.addpart( draw.obj_drawing('house',(340,450),legend='House',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('tree',(940,450),legend='Tree',shadow=(200,200)) )
 
 
 ##########################################################
@@ -442,7 +442,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                   '"Then, ',\
+                   '"',\
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
                    ' went to back to bed". ',\
                    ]
@@ -457,7 +457,7 @@ class obj_scene_ch2playend(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play6())
     def nextpage(self):
-        share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
+        share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
         super().nextpage()
     def setup(self):
         self.text=['And thats all the story for today, said the book of things. ',

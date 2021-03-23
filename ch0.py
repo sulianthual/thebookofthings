@@ -22,68 +22,87 @@ import world
 # Chapter: Game Prologue
 # *PROLOGUE
 class obj_scene_prologue(page.obj_chapterpage):
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p1())
     def setup(self):
         self.text=['-----   Prologue   -----   ',\
                    '\nIn the Beginning, there was Nothing. Absolutely Nothing. \nBut one Could Press [Enter] to Continue.']
         self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p1())
+
 
 
 class obj_scene_ch0p1(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_prologue())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
         self.text=['One Could Press [Enter] to Continue, or [Tab] to go back. It was always like that.',\
                    '\n']
         self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
         self.addpart(draw.obj_textbox('Press [Tab] to Go Back',(640,600),color=share.colors.instructions))
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_prologue())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p2())
+
 
 
 # Scene: Draw Pen
 class obj_scene_ch0p2(page.obj_chapterpage):
-    def setup(self):
-        self.text=['There was going to be a pen, and the pen was going to be drawn. ',\
-                   'The pen was to be drawn with a lot of emotions, even if it was just a pen.',\
-                   'The pen was drawn with [Left Mouse] and erased with [Backspace].',\
-                   ]
-        self.addpart( draw.obj_drawing('pen',(600,440),legend='Pen') )
-        self.addpart(draw.obj_textbox('Hold [Left Mouse] to Draw',(940,500),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('Press [Backspace] to Erase',(940,600),color=share.colors.instructions))
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p3())
+    def setup(self):
+        self.text=['There was going to be a pen. ',\
+                   'The pen was drawn with [Left Mouse] and erased with [Backspace].',\
+                   ]
+        self.textkeys={'pos':(50,50),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
+        self.addpart( draw.obj_drawing('pendraw',(940,360),legend='Pen') )
+        self.addpart(draw.obj_textbox('Hold [Left Mouse] to Draw',(420,500),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Backspace] to Erase',(420,600),color=share.colors.instructions))
+    def endpage(self):
+        super().endpage()
+        # image pen is actually 66% scale of drawing
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('pendraw',(640,360),scale=0.666))
+        dispgroup1.snapshot((640,360,100,200),'pen')
 
 
 class obj_scene_ch0p3(page.obj_chapterpage):
-    def setup(self):
-        self.text=['The Pen liked to move around a little. it was a happy pen.',\
-                   ]
-        self.addpart( draw.obj_animation('penmove','pen',(640,360)) )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p4())
+    def setup(self):
+        self.text=['The Pen liked to move around a little. it was a happy pen.',\
+                   ]
+        self.addpart( draw.obj_animation('penmove','pen',(640,360)) )
+
 
 
 # Scene: Draw Eraser
 class obj_scene_ch0p4(page.obj_chapterpage):
-    def setup(self):
-        self.text=['Along with the pen, there was going to be an eraser.',\
-                   '\nThe eraser was drawn with [Left Mouse] and erased with [Backspace]',\
-                   ]
-        self.addpart( draw.obj_drawing('eraser',(900,450), legend='Eraser') )
-        self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p5())
+    def setup(self):
+        self.text=['Along with the pen, there was going to be an eraser.',\
+                   '\nThe eraser was drawn with [Left Mouse] and erased with [Backspace]',\
+                   ]
+        self.addpart( draw.obj_drawing('eraserdraw',(900,450), legend='Eraser') )
+        self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
 
+    def endpage(self):
+        super().endpage()
+        # image eraser is actually 66% scale of drawing
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('eraserdraw',(640,360),scale=0.666))
+        dispgroup1.snapshot((640,360,135,135),'eraser')
 
 class obj_scene_ch0p5(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p4())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p6())
     def setup(self):
         self.text=['The Pen and Eraser looked like this, and they were very happy.',\
                    'They danced together all day.',\
@@ -92,13 +111,14 @@ class obj_scene_ch0p5(page.obj_chapterpage):
         animation2=draw.obj_animation('erasermove','eraser',(640,360),sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p4())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p6())
+
 
 
 class obj_scene_ch0p6(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p5())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p7())
     def setup(self):
         self.text=['Because in the Beginning, there was Nothing, It was unclear how the pen had been drawn.',\
                    'And when there would be nothing again, it was unclear how the eraser would be erased.',\
@@ -108,47 +128,60 @@ class obj_scene_ch0p6(page.obj_chapterpage):
         animation2=draw.obj_animation('erasermovea','eraser',(640,360),sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p5())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p7())
+
 
 
 class obj_scene_ch0p7(page.obj_chapterpage):
-    def setup(self):
-        self.text=['In the middle of the dancing, there was going to be a book. A very mysterious book [draw].',\
-                   'It was drawn with [Left Mouse], and could be restarted with [Backspace]. ',\
-                   ]
-        self.addpart( draw.obj_drawing('book',(640,420), legend='Mysterious Book') )
-        self.addpart( draw.obj_animation('penmove3','pen',(640,360)) )
-        self.addpart( draw.obj_animation('erasermove3','eraser',(640,360)) )
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
+    def setup(self):
+        self.text=['There was going to be a book. A very mysterious book [draw].',\
+                   ]
+        self.addpart( draw.obj_drawing('bookdraw',(640,390), legend='Mysterious Book') )
+        self.addpart( draw.obj_animation('penmove3','pen',(640-100,360)) )
+        self.addpart( draw.obj_animation('erasermove3','eraser',(640+100,360)) )
+    def endpage(self):
+        super().endpage()
+        # image book is actually 66% scale of drawing
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('bookdraw',(640,360),scale=0.666))
+        dispgroup1.snapshot((640,360,210,180),'book')
 
 
 class obj_scene_ch0p8(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p7())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
         self.text=['It was the book of things. The book of all things were all things would be.',
                    'With the help of the pen and eraser, there would be many things to draw in the book.',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p7())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0end())
 
 
 class obj_scene_ch0end(page.obj_chapterpage):
-    def setup(self):
-        self.text=['And so the book began...',\
-                   ]
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def nextpage(self):
         share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
         super().nextpage()
+    def setup(self):
+        self.text=['And so the book began...',\
+                   ]
+
+
+
+
+
+
+
+
+
+
+
 
 
 ####################################################################################################################

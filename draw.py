@@ -132,13 +132,14 @@ class obj_pagedisplay_text:
 # A drawing (image to edit interactively by the player)
 # *DRAWING
 class obj_drawing:
-    def __init__(self,name,xy,base=None,legend=None,shadow=None):# start new drawing (load or new)
+    def __init__(self,name,xy,base=None,legend=None,shadow=None,scale=1):# start new drawing (load or new)
         self.type='drawing'
         self.name=name# drawing name
         self.x,self.y = xy
         self.base=base# basis (other drawing object)
         self.legend=legend
         self.shadow=shadow# =None (use file) or =(rx,ry) (use empty canvas)
+        self.scale=scale# scale drawing area on screen
         self.setup()
     def setup(self):
         # drawing tools

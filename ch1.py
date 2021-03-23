@@ -94,29 +94,28 @@ class obj_scene_ch1p2(page.obj_chapterpage):
         #
         animation1=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
         self.addpart(animation1)
-        self.addpart(draw.obj_animation('ch1_book3','book',(360,360),record=False,scale=0.5,sync=animation1))
-        self.addpart(draw.obj_animation('ch1_pen3','pen',(960,360),record=False,scale=0.25,sync=animation1))
-        self.addpart(draw.obj_animation('ch1_eraser3','eraser',(960,560),record=False,scale=0.25,sync=animation1))
-        #
+        # self.addpart(draw.obj_animation('ch1_book3','book',(360,360),record=False,scale=0.5,sync=animation1))
+        # self.addpart(draw.obj_animation('ch1_pen3','pen',(960,360),record=False,scale=0.25,sync=animation1))
+        # self.addpart(draw.obj_animation('ch1_eraser3','eraser',(960,560),record=False,scale=0.25,sync=animation1))
         # textbox images
-        if True:
-            textbox=draw.obj_textbox("Peak Performance",(640,360))
-            textbox.snapshot('says_peakperformance',path='premade')
-            textbox=draw.obj_textbox(" ",(640,360))
-            textbox.snapshot('says_empty',path='premade')
-            textbox=draw.obj_textbox("wow",(640,360))
-            textbox.snapshot('says_wow',path='premade')
-            textbox=draw.obj_textbox("awesome",(640,360))
-            textbox.snapshot('says_awesome',path='premade')
-        animation2=draw.obj_animation('ch1_booksays1','says_peakperformance',(360,360),record=False,sync=animation1,path='premade')
-        animation2.addimage('says_empty')
-        self.addpart(animation2)
-        animation2=draw.obj_animation('ch1_pensays1','says_wow',(360,360),record=False,sync=animation1,path='premade')
-        animation2.addimage('says_empty')
-        self.addpart(animation2)
-        animation2=draw.obj_animation('ch1_erasersays1','says_awesome',(360,360),record=True,sync=animation1,path='premade')
-        animation2.addimage('says_empty')
-        self.addpart(animation2)
+        # if False:
+        #     textbox=draw.obj_textbox("Peak Performance",(640,360))
+        #     textbox.snapshot('says_peakperformance',path='premade')
+        #     textbox=draw.obj_textbox(" ",(640,360))
+        #     textbox.snapshot('says_empty',path='premade')
+        #     textbox=draw.obj_textbox("wow",(640,360))
+        #     textbox.snapshot('says_wow',path='premade')
+        #     textbox=draw.obj_textbox("awesome",(640,360))
+        #     textbox.snapshot('says_awesome',path='premade')
+        # animation2=draw.obj_animation('ch1_booksays1','says_peakperformance',(360,360),record=False,sync=animation1,path='premade')
+        # animation2.addimage('says_empty')
+        # self.addpart(animation2)
+        # animation2=draw.obj_animation('ch1_pensays1','says_wow',(360,360),record=False,sync=animation1,path='premade')
+        # animation2.addimage('says_empty')
+        # self.addpart(animation2)
+        # animation2=draw.obj_animation('ch1_erasersays1','says_awesome',(360,360),record=True,sync=animation1,path='premade')
+        # animation2.addimage('says_empty')
+        # self.addpart(animation2)
 
 
 
@@ -238,7 +237,7 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         self.text=['Since it is the first day, today we will have ',('{heroname}',share.colors.hero), \
                   'take it easy, said the book of things. Lets just go  ',('fishing',share.colors.action),'. ',\
                 'All you need is to draw a ',('fish',share.colors.item),\
-                ' and a ',('hook',share.colors.item),' with the [MOUSE], ',\
+                ' and a ',('hook',share.colors.item),', ',\
                 ' and we will be on our way. ',\
                    ]
         self.addpart(draw.obj_drawing('hook',(240,450),legend='Hook',shadow=(200,200)))
@@ -370,7 +369,7 @@ class obj_scene_ch1play(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'Now, lets read again our story to summarize, said the book of things. ',\
-                   'This time, try to complete it as quickly as possible! Press [A]+[D] together to start. ',\
+                   'You can try to complete it as quickly as possible. Press [A]+[D] together to start. ',\
                    ]
         self.addpart(draw.obj_textbox('Press [A]+[D] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
