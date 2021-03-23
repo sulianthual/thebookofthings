@@ -25,13 +25,13 @@ import draw
 
 # World Template
 class obj_world:
-    def __init__(self,creator):
+    def __init__(self,creator,**kwargs):
         self.type='world'
         self.creator=creator# created by scene
         self.ruledict={}# dictionary of rules in the world (non-ordered)
         self.actorlist=[]# list of actors in the world (ordered for updates)
-        self.setup()
-    def setup(self):# fill here for childs
+        self.setup(**kwargs)
+    def setup(self,**kwargs):# fill here for childs
         pass
     def addrule(self,name,rule):# add rule to the world (name must match object name!)
         self.ruledict[name]=rule
@@ -180,9 +180,9 @@ class obj_grandactor():
         self.show=True# show or not (can be toggled)
         self.alive=False# actor is alive in world
         # hitbox
-        self.rx=50# radius width for rectangle collisions
-        self.ry=50# radius height for rectangle collisions
-        self.rd=50# radius for circle collisions
+        self.rx=5# radius width for rectangle collisions
+        self.ry=5# radius height for rectangle collisions
+        self.rd=5# radius for circle collisions
         # elements
         self.dict={}
         self.dictx={}# relative position
@@ -359,7 +359,6 @@ class obj_actor_bdry(obj_actor):# basic actor
         super().setup()
         self.actortype='bdry'
 
-
 ####################################################################################################################
 ####################################################################################################################
 ####################################################################################################################
@@ -400,20 +399,21 @@ class obj_world_sunrise(obj_world):
         self.finishactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to rise the sun',(1000,620),color=share.colors.instructions) )
-        self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1000,620)) )
-
-
-
+        self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
         self.timerend=tool.obj_timer(80)# goal to done
+    def triggerungoing(self,controls):
+        return controls.w and controls.wc
+    def triggerstart(self,controls):
+        return not controls.w
     def update(self,controls):
         super().update(controls)
         if not self.goal:
             # goal unreached state
             if not self.ungoing:
                 # start substate
-                if controls.w and controls.wc:# flip to ungoing
+                if self.triggerungoing(controls):# flip to ungoing
                     self.ungoing=True
                     self.startactor.show=False
                     self.ungoingactor.show=True
@@ -423,7 +423,7 @@ class obj_world_sunrise(obj_world):
             else:
                 # ungoing substate
                 self.timer.update()
-                if not (controls.w):# flip to start
+                if self.triggerstart(controls):# flip to start
                     self.ungoing=False
                     self.startactor.show=True
                     self.ungoingactor.show=False
@@ -444,136 +444,93 @@ class obj_world_sunrise(obj_world):
 
 ####################################################################################################################
 
-# Mini Game: Wake Up Hero
+# Mini Game: wakeup
 class obj_world_wakeup(obj_world):
-    def setup(self):
-        self.done=False# mini game is finished
-        # bed frame
-        bed=obj_grandactor(self,(440,500))
-        bed.addpart( 'img',draw.obj_image('bed',(440,500),scale=0.75) )
-        # text
-        self.text1=obj_grandactor(self,(840,500))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [W] to Wake up',(1100,480),color=share.colors.instructions) )
-        self.text2=obj_grandactor(self,(840,500))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('Good Morning!',(1100,480)) )
-        # three actors for hero: sleep, wake, awake (toggle show between each)
-        self.herostate='sleep'
-        self.timer=tool.obj_timer(100)
-        self.hero_sleep=obj_grandactor(self,(640,360))
-        self.hero_sleep.addpart( 'img_asleep',draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
-        self.hero_wake=obj_grandactor(self,(640,360))
-        self.hero_wake.addpart( 'anim_awakes',draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7) )
-        self.hero_awake=obj_grandactor(self,(640,360))
-        self.hero_awake.addpart( 'img_awake',draw.obj_image('herobase',(903,452),scale=0.7) )
+    def setup(self,**kwargs):
+        # default options
+        self.partner=False
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
         #
-        self.hero_sleep.show=True
-        self.hero_wake.show=False
-        self.hero_awake.show=False
-        self.text1.show=True
-        self.text2.show=False
-        # short timer to finish game
-        self.timerend=tool.obj_timer(80)
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.startactor=obj_grandactor(self,(640,360))
+        self.ungoingactor=obj_grandactor(self,(640,360))
+        self.finishactor=obj_grandactor(self,(640,360))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.staticactor.show=True
+        self.startactor.show=True
+        self.ungoingactor.show=False
+        self.finishactor.show=False
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static actor
+        self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75) )
+        # start actor
+        if self.partner == 'inlove':# add partner in love
+            self.startactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(420+100,490-50),scale=0.7,rotate=80) )
+        self.startactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
+        # ungoing actor
+        if self.partner == 'inlove':# add partner in love
+            self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes','partnerbase',(640+100,360-50),scale=0.7) )
+        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7) )
+        # finish actor
+        if self.partner == 'inlove':# add partner in love
+            self.finishactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(903+100,452-50),scale=0.7) )
+        self.finishactor.addpart( 'img1', draw.obj_image('herobase',(903,452),scale=0.7) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [D] to Wake up',(1100,480),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
+        # timer for ungoing part
+        self.timer=tool.obj_timer(100)# ungoing part
+        self.timerend=tool.obj_timer(80)# goal to done
+    def triggerungoing(self,controls):
+        return controls.d and controls.dc
+    def triggerstart(self,controls):
+        return not controls.d
     def update(self,controls):
         super().update(controls)
-        if self.herostate=='sleep':
-            self.hero_sleep.show=True
-            self.hero_wake.show=False
-            self.hero_awake.show=False
-            self.text1.show=True
-            self.text2.show=False
-            if controls.w:
-                self.herostate='wake'
-                self.hero_wake.dict['anim_awakes'].rewind()
-                self.timer.start()# reset timer
-        elif self.herostate=='wake':
-            self.hero_sleep.show=False
-            self.hero_wake.show=True
-            self.hero_awake.show=False
-            self.text1.show=True
-            self.text2.show=False
-            self.timer.update()
-            if not controls.w: self.herostate='sleep'
-            if self.timer.ring:
-                self.herostate='awake'
-                self.timerend.start()
-        elif self.herostate=='awake':
-            self.hero_sleep.show=False
-            self.hero_wake.show=False
-            self.hero_awake.show=True
-            self.text1.show=False
-            self.text2.show=True
+        if not self.goal:
+            # goal unreached state
+            if not self.ungoing:
+                # start substate
+                if self.triggerungoing(controls):# flip to ungoing
+                    self.ungoing=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=True
+                    self.finishactor.show=False
+                    self.timer.start()# reset ungoing timer
+                    self.ungoingactor.dict["anim1"].rewind()
+                    if self.partner == 'inlove':
+                        self.ungoingactor.dict["animadd1"].rewind()
+            else:
+                # ungoing substate
+                self.timer.update()
+                if self.triggerstart(controls):# flip to start
+                    self.ungoing=False
+                    self.startactor.show=True
+                    self.ungoingactor.show=False
+                    self.finishactor.show=False
+                if self.timer.ring:# flip to goal reached
+                    self.goal=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=False
+                    self.finishactor.show=True
+                    self.text_undone.show=False
+                    self.text_done.show=True
+                    self.timerend.start()
+        else:
+            # goal reached state
             self.timerend.update()
             if self.timerend.ring:
                 self.done=True# end of minigame
 
-####################################################################################################################
 
-
-# Mini Game: Put Hero back to bed
-# (We have just inverted the images and animations from wake up, not the code)
-class obj_world_gotobed(obj_world):
-    def setup(self):
-        self.done=False# mini game is finished
-        # bed frame
-        bed=obj_grandactor(self,(440,500))
-        bed.addpart( 'img',draw.obj_image('bed',(440,500),scale=0.75) )
-        # text
-        self.text1=obj_grandactor(self,(840,500))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [S] to go to Sleep',(1100,480),color=share.colors.instructions) )
-        self.text2=obj_grandactor(self,(840,500))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('Sweet Dreams!',(1100,480)) )
-        # three actors for hero: sleep, wake, awake (toggle show between each)
-        self.herostate='sleep'
-        self.timer=tool.obj_timer(80)
-        self.hero_sleep=obj_grandactor(self,(640,360))
-        # self.hero_sleep.addpart( 'img_asleep',draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
-        # self.hero_sleep.addpart( 'img_asleep',draw.obj_image('herobase',(903,452),scale=0.7) )# actually awake
-        self.hero_sleep.addpart( 'img_asleep', draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7))# actually awake
-        self.hero_wake=obj_grandactor(self,(640,360))
-        self.hero_wake.addpart( 'anim_awakes',draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7) )
-        self.hero_awake=obj_grandactor(self,(640,360))
-        # self.hero_awake.addpart( 'img_awake',draw.obj_image('herobase',(903,452),scale=0.7) )
-        self.hero_awake.addpart( 'img_awake',draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )# actually asleep
-        #
-        self.hero_sleep.show=True
-        self.hero_wake.show=False
-        self.hero_awake.show=False
-        self.text1.show=True
-        self.text2.show=False
-        # short timer to finish game
-        self.timerend=tool.obj_timer(100)
-    def update(self,controls):
-        super().update(controls)
-        if self.herostate=='sleep':
-            self.hero_sleep.show=True
-            self.hero_wake.show=False
-            self.hero_awake.show=False
-            self.text1.show=True
-            self.text2.show=False
-            if controls.s:
-                self.herostate='wake'
-                self.hero_wake.dict['anim_awakes'].rewind()
-                self.timer.start()# reset timer
-        elif self.herostate=='wake':
-            self.hero_sleep.show=False
-            self.hero_wake.show=True
-            self.hero_awake.show=False
-            self.text1.show=True
-            self.text2.show=False
-            self.timer.update()
-            if not controls.s: self.herostate='sleep'
-            if self.timer.ring:
-                self.herostate='awake'
-                self.timerend.start()
-        elif self.herostate=='awake':
-            self.hero_sleep.show=False
-            self.hero_wake.show=False
-            self.hero_awake.show=True
-            self.text1.show=False
-            self.text2.show=True
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
 
 ####################################################################################################################
 
@@ -646,20 +603,31 @@ class obj_world_fishing(obj_world):
 
 # Mini Game: Eat Fish
 class obj_world_eatfish(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.partner=False
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
+        #
         self.done=False# mini game is finished
         self.doneeating=False# done eating
         self.bites=20# total number of bites
         self.alternate_LR=True# alternate Left-Right pattern to eat
         self.eating=False
+
         # fish
         self.fish=obj_grandactor(self,(640,360))
         self.fishscale=1# initial size of fish
         self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
         # hero eating or not eating
         self.herostand=obj_grandactor(self,(640,360))
+        if self.partner == 'inlove':# add partner in love
+            self.herostand.addpart( 'imgadd1', draw.obj_image('partnerbase',(340-100,400-50), scale=0.7) )
         self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
         self.heroeat=obj_grandactor(self,(640,360))
+        if self.partner == 'inlove':# add partner in love
+            self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-50),imgscale=0.7) )
         self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
         self.heroeat.addpart('anim_eat', self.animation1)
         self.herostand.show=True
@@ -847,85 +815,254 @@ class obj_world_serenade(obj_world):
 
 ####################################################################################################################
 
-# Mini Game: kiss (very similar to wake up)
+# Mini Game: kiss
 class obj_world_kiss(obj_world):
     def setup(self):
-        self.done=False
-        self.donekissing=False
-        self.kissing=False# if not donekissing: is standing or kissing
-        # standing ones
-        self.herostand=obj_grandactor(self,(640,360))
-        self.herostand.addpart('img', draw.obj_image('herobase',(240,400),scale=0.7))
-        self.partnerstand=obj_grandactor(self,(640,360))
-        self.partnerstand.addpart('img', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7))
-        self.herostand.show=True
-        self.partnerstand.show=True
-        # kissing ones
-        self.herokiss=obj_grandactor(self,(640,360))
-        animation1=draw.obj_animation('ch2_kiss1','herobase',(640,360))
-        self.herokiss.addpart('anim', animation1 )
-        self.partnerkiss=obj_grandactor(self,(640,360))
-        animation2=draw.obj_animation('ch2_kiss2','partnerbase',(640,360),sync=animation1)
-        self.partnerkiss.addpart('anim', animation2 )
-        self.herokiss.show=False
-        self.partnerkiss.show=False
-        # final position
-        self.partnerend=obj_grandactor(self,(640,360))
-        self.partnerend.addpart('img', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15))
-        self.heroend=obj_grandactor(self,(640,360))
-        self.heroend.addpart('img', draw.obj_image('herobase',(580,400),scale=0.7,rotate=-15))
-        self.heroend.show=False
-        self.partnerend.show=False
-        # final heart
-        self.love=obj_grandactor(self,(640,360))
-        self.love.addpart('anim1', draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
-        self.love.addpart('anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
-        self.love.show=False
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.startactor=obj_grandactor(self,(640,360))
+        self.ungoingactor=obj_grandactor(self,(640,360))
+        self.finishactor=obj_grandactor(self,(640,360))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.staticactor.show=True
+        self.startactor.show=True
+        self.ungoingactor.show=False
+        self.finishactor.show=False
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static actor
+        # self.staticactor.addpart( 'img1',   )
+        # start actor
+        self.startactor.addpart( 'img1', draw.obj_image('herobase',(240,400),scale=0.7) )
+        self.startactor.addpart( 'img2', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7) )
+        # ungoing actor)
+        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch2_kiss1','herobase',(640,360)) )
+        self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','partnerbase',(640,360)) )
+        # finish actor
+        self.finishactor.addpart( 'img1', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
+        self.finishactor.addpart( 'img2', draw.obj_image('herobase',(580,400),scale=0.7,rotate=-15) )
+        self.finishactor.addpart( 'anim1', draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
+        self.finishactor.addpart( 'anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
         # text
-        self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [A]+[D] to kiss',(640,660),color=share.colors.instructions) )
-        self.text2=obj_grandactor(self,(640,360))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('So Much Tongue!',(640,660)) )
-        self.text1.show=True
-        self.text2.show=False
-        # kiss
-        self.timer=tool.obj_timer(180)
-        # short timer to finish game
-        self.timerend=tool.obj_timer(80)
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [A]+[D] to kiss',(640,660),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
+        # timer for ungoing part
+        self.timer=tool.obj_timer(180)# ungoing part
+        self.timerend=tool.obj_timer(80)# goal to done
+    def triggerungoing(self,controls):
+        return (controls.a and controls.d) and (controls.ac or controls.dc)
+    def triggerstart(self,controls):
+        return not (controls.a and controls.d)
     def update(self,controls):
         super().update(controls)
-        if not self.donekissing:
-            # undone state
-            if not self.kissing:
-                # standing substate
-                if controls.a and controls.d:
-                    self.kissing=True
-                    self.herostand.show=False
-                    self.partnerstand.show=False
-                    self.herokiss.show=True
-                    self.partnerkiss.show=True
-                    self.timer.start()# reset timer
+        if not self.goal:
+            # goal unreached state
+            if not self.ungoing:
+                # start substate
+                if self.triggerungoing(controls):# flip to ungoing
+                    self.ungoing=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=True
+                    self.finishactor.show=False
+                    self.timer.start()# reset ungoing timer
+                    self.ungoingactor.dict["anim1"].rewind()
+                    self.ungoingactor.dict["anim2"].rewind()
             else:
-                # kissing substate
+                # ungoing substate
                 self.timer.update()
-                if not (controls.a and controls.d):
-                    self.kissing=False
-                    self.herostand.show=True
-                    self.partnerstand.show=True
-                    self.herokiss.show=False
-                    self.partnerkiss.show=False
-                if self.timer.ring:
-                    self.donekissing=True
-                    self.text1.show=False
-                    self.text2.show=True
-                    self.herokiss.show=False
-                    self.partnerkiss.show=False
-                    self.heroend.show=True
-                    self.partnerend.show=True
-                    self.love.show=True
+                if self.triggerstart(controls):# flip to start
+                    self.ungoing=False
+                    self.startactor.show=True
+                    self.ungoingactor.show=False
+                    self.finishactor.show=False
+                if self.timer.ring:# flip to goal reached
+                    self.goal=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=False
+                    self.finishactor.show=True
+                    self.text_undone.show=False
+                    self.text_done.show=True
                     self.timerend.start()
         else:
-            # done state
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+####################################################################################################################
+
+# Mini Game: sunrise
+class obj_world_sunset(obj_world):
+    def setup(self):
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        # layering
+        self.startactor=obj_grandactor(self,(640,360))
+        self.ungoingactor=obj_grandactor(self,(640,360))
+        self.finishactor=obj_grandactor(self,(640,360))
+        self.staticactor=obj_grandactor(self,(640,360))# static in front here
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.staticactor.show=True
+        self.startactor.show=True
+        self.ungoingactor.show=False
+        self.finishactor.show=False
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static actor
+        self.staticactor.addpart( 'img1', draw.obj_image('tree',(1029,449),scale=0.5) )
+        self.staticactor.addpart( 'img2', draw.obj_image('tree',(81,434),scale=0.5) )
+        self.staticactor.addpart( 'img3', draw.obj_image('horizon',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'img4', draw.obj_image('house',(296,443),scale=0.5) )
+        self.staticactor.addpart( 'img5', draw.obj_image('tree',(826,466),scale=0.5) )
+        self.staticactor.addpart( 'img6', draw.obj_image('tree',(671,590),scale=0.5) )
+        self.staticactor.addpart( 'img7', draw.obj_image('tree',(441,642),scale=0.5) )
+        self.staticactor.addpart( 'img8', draw.obj_image('tree',(116,584),scale=0.5) )
+        # start actor
+        self.startactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )
+        # ungoing actor
+        animation1=draw.obj_animation('ch2_sunset','sun',(640,360))
+        animation1.addimage('moon')
+        self.ungoingactor.addpart( 'anim1', animation1 )
+        # finish actor
+        self.finishactor.addpart( 'img1', draw.obj_image('moon',(660,270),scale=0.5) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [S] to lower the sun',(1000,620),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
+        # timer for ungoing part
+        self.timer=tool.obj_timer(80)# ungoing part
+        self.timerend=tool.obj_timer(80)# goal to done
+    def triggerungoing(self,controls):
+        return controls.s and controls.sc
+    def triggerstart(self,controls):
+        return not controls.s
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            if not self.ungoing:
+                # start substate
+                if self.triggerungoing(controls):# flip to ungoing
+                    self.ungoing=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=True
+                    self.finishactor.show=False
+                    self.timer.start()# reset ungoing timer
+                    self.ungoingactor.dict["anim1"].rewind()
+            else:
+                # ungoing substate
+                self.timer.update()
+                if self.triggerstart(controls):# flip to start
+                    self.ungoing=False
+                    self.startactor.show=True
+                    self.ungoingactor.show=False
+                    self.finishactor.show=False
+                if self.timer.ring:# flip to goal reached
+                    self.goal=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=False
+                    self.finishactor.show=True
+                    self.text_undone.show=False
+                    self.text_done.show=True
+                    self.timerend.start()
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+####################################################################################################################
+
+# Mini Game: go to bed
+class obj_world_gotobed(obj_world):
+    def setup(self,**kwargs):
+        # default options
+        self.partner=False
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
+        #
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.startactor=obj_grandactor(self,(640,360))
+        self.ungoingactor=obj_grandactor(self,(640,360))
+        self.finishactor=obj_grandactor(self,(640,360))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.staticactor.show=True
+        self.startactor.show=True
+        self.ungoingactor.show=False
+        self.finishactor.show=False
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static actor
+        self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75)  )
+        # start actor
+        if self.partner == 'inlove':# add partner in love
+            self.startactor.addpart( 'animadd1', draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7) )
+        self.startactor.addpart( 'anim1', draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7) )
+        # ungoing actor
+        if self.partner == 'inlove':# add partner in love
+            self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_herotosleep','partnerbase',(640+100,360),scale=0.7) )
+        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7) )
+        # finish actor
+        if self.partner == 'inlove':# add partner in love
+            self.finishactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(420+100,490),scale=0.7,rotate=80) )
+        self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [A] to go to Sleep',(1100,480),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )
+        # timer for ungoing part
+        self.timer=tool.obj_timer(80)# ungoing part
+        self.timerend=tool.obj_timer(80)# goal to done
+    def triggerungoing(self,controls):
+        return controls.a and controls.ac
+    def triggerstart(self,controls):
+        return not controls.a
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            if not self.ungoing:
+                # start substate
+                if self.triggerungoing(controls):# flip to ungoing
+                    self.ungoing=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=True
+                    self.finishactor.show=False
+                    self.timer.start()# reset ungoing timer
+                    self.ungoingactor.dict["anim1"].rewind()
+                    if self.partner == 'inlove':
+                        self.ungoingactor.dict["animadd1"].rewind()
+            else:
+                # ungoing substate
+                self.timer.update()
+                if self.triggerstart(controls):# flip to start
+                    self.ungoing=False
+                    self.startactor.show=True
+                    self.ungoingactor.show=False
+                    self.finishactor.show=False
+                    self.startactor.dict["anim1"].rewind()
+                    if self.partner == 'inlove':
+                        self.startactor.dict["animadd1"].rewind()
+                if self.timer.ring:# flip to goal reached
+                    self.goal=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=False
+                    self.finishactor.show=True
+                    self.text_undone.show=False
+                    self.text_done.show=True
+                    self.timerend.start()
+        else:
+            # goal reached state
             self.timerend.update()
             if self.timerend.ring:
                 self.done=True# end of minigame

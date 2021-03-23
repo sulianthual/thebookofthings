@@ -72,7 +72,9 @@ class obj_scene_ch2p2(page.obj_chapterpage):
                  'This will certainly make the story more interesting. ',\
                  'Lets start by drawing a heart for ',('love',share.colors.partner),'. ',\
                    ]
-        self.addpart(draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200)))
+
+        drawing=draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200))
+        self.addpart( drawing)
 
 
 class obj_scene_ch2p3(page.obj_chapterpage):
@@ -331,11 +333,12 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                'It was morning when ',('{hero_he}',share.colors.hero),' ',\
-                'woke up from ',('bed',share.colors.item),'." ',\
+                ('{heroname}',share.colors.hero),' ',\
+                'woke up from ',('bed',share.colors.item),' ',\
+                'with his partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
-        self.world=world.obj_world_wakeup(self)# Wake up hero mini-game
+        self.world=world.obj_world_wakeup(self,partner='inlove')# Wake up hero mini-game
         self.addpart(self.world)
         self.world.timerend.amount=50
 
@@ -345,14 +348,14 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
 
 class obj_scene_ch2play2(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play1())
+        share.scenemanager.switchscene(obj_scene_ch2play1a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero),\
                      ' went to the river and caught a fish."',\
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
@@ -375,7 +378,7 @@ class obj_scene_ch2play3(page.obj_chapterpage):
                     ('{partnername}',share.colors.partner),' ate the ',\
                     ('fish',share.colors.item),'." ',\
                    ]
-        self.world=world.obj_world_eatfish(self)
+        self.world=world.obj_world_eatfish(self,partner='inlove')
         self.addpart(self.world)
         self.world.timerend.amount=50
 
@@ -401,7 +404,7 @@ class obj_scene_ch2play5(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play4())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play6())
+        share.scenemanager.switchscene(obj_scene_ch2play5a())
     def triggernextpage(self,controls):
         return (controls.enter and controls.enterc) or self.world.done# quick skip
     def setup(self):
@@ -413,19 +416,38 @@ class obj_scene_ch2play5(page.obj_chapterpage):
         self.world.timerend.amount=50
 
 
-class obj_scene_ch2play6(page.obj_chapterpage):
+class obj_scene_ch2play5a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play6())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                '"It was already night".',\
+                   ]
+        self.world=world.obj_world_sunset(self)# Wake up hero mini-game
+        self.addpart(self.world)
+        # animation1=draw.obj_animation('ch2_sunset','sun',(640,360),record=True)
+        # animation1.addimage('moon')
+        # self.addpart( animation1 )
+
+class obj_scene_ch2play6(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play5a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                   '"And finally, at night, ',('{hero_he}',share.colors.hero),' went to back to bed". ',\
+                   '"Then, ',\
+                   ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
+                   ' went to back to bed". ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5))
-        self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
+        self.world=world.obj_world_gotobed(self,partner='inlove')# Wake up hero mini-game
         self.addpart(self.world)
         self.world.timerend.amount=50
 
@@ -433,12 +455,12 @@ class obj_scene_ch2play6(page.obj_chapterpage):
 
 class obj_scene_ch2playend(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play4())
+        share.scenemanager.switchscene(obj_scene_ch2play6())
     def nextpage(self):
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
         super().nextpage()
     def setup(self):
-        self.text=['And thats all the story for today, say the book of things. ',
+        self.text=['And thats all the story for today, said the book of things. ',
                    'But tomorrow we will make it even better! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )

@@ -87,6 +87,7 @@ class obj_fonts:
 # brushes  database (used for drawing)
 class obj_brushes:
     def __init__(self):
+        self.bigpen=('data/pen.png',(16,16))
         self.pen=('data/pen.png',(8,8))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))

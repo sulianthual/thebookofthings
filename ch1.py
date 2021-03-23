@@ -200,10 +200,10 @@ class obj_scene_ch1p7(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                  '... Huh...well, you actually need to hold [W] to wake',('{heroname}',share.colors.hero),\
+                  '... Huh...well, you actually need to hold [D] to wake',('{heroname}',share.colors.hero),\
                   'from ',('bed',share.colors.item),', said the book of things. ',\
                   ('{hero_he}',share.colors.hero),' is quite lazy you know. ',\
-                  ' And dont release [W] too soon or ',('{hero_he}',share.colors.hero),\
+                  ' And dont release [D] too soon or ',('{hero_he}',share.colors.hero),\
                   ' will go straight back to sleep. ',\
                   ' When',('{hero_he}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
@@ -329,7 +329,7 @@ class obj_scene_ch1p13(page.obj_chapterpage):
                     'Nicely done, said the book of things. ',\
                     'That wraps it up for our first day. Now, lets put the ',\
                     ('hero',share.colors.hero),' back to sleep. ',\
-                    ' Hold [S], and dont release',\
+                    ' Hold [A], and dont release',\
                     ' or this procrastinator will stay awake all night. ',\
                    ]
         self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
@@ -468,7 +468,7 @@ class obj_scene_ch1playend(page.obj_chapterpage):
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
         super().nextpage()
     def setup(self):
-        self.text=['And thats all the story for today, say the book of things. ',
+        self.text=['And thats all the story for today, said the book of things. ',
                    'But tomorrow we will make it even better! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
