@@ -279,7 +279,6 @@ class obj_scene_ch2p11(page.obj_chapterpage):
 ##########################################################
 # PLAY CHAPTER
 
-
 class obj_scene_ch2play(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p11())
@@ -289,8 +288,9 @@ class obj_scene_ch2play(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or (controls.a and controls.d)
     def setup(self):
         self.text=[\
-                   'Now, lets read again our story to summarize, said the book of things. ',\
-                   'Try to complete it as quickly as possible! Press [A]+[D] together to start. ',\
+                   'Now thats quite a few changes to our story, said the book of things. ',\
+                  'Lets read it again to summarize, ',\
+                   'and try to complete it as quickly as possible! Press [A]+[D] together to start. ',\
                    ]
         self.addpart(draw.obj_textbox('Press [A]+[D] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
@@ -301,17 +301,36 @@ class obj_scene_ch2play(page.obj_chapterpage):
         self.addpart(animation3)
 
 
+
 class obj_scene_ch2play1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play1a())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+                'called  ',('{heroname}',share.colors.hero),' ',\
+                'that lived in a  ',('house',share.colors.item),' ',\
+                'with ',('trees',share.colors.item),'. ',\
+                'It was morning and the sun was rising". ',\
+                   ]
+        self.world=world.obj_world_sunrise(self)# Wake up hero mini-game
+        self.addpart(self.world)
+        # self.addpart( draw.obj_animation('ch2_sunrise','sun',(640,360),record=True) )
+
+
+class obj_scene_ch2play1a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play1())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play2())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"Once upon a Time, there was a ',('Hero',share.colors.hero),' ',\
-                'named  ',('{heroname}',share.colors.hero),'. ',\
                 'It was morning when ',('{hero_he}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),'." ',\
                    ]

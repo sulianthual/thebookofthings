@@ -362,6 +362,87 @@ class obj_actor_bdry(obj_actor):# basic actor
 
 ####################################################################################################################
 ####################################################################################################################
+####################################################################################################################
+
+# Mini Game: sunrise
+class obj_world_sunrise(obj_world):
+    def setup(self):
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        # layering
+        self.startactor=obj_grandactor(self,(640,360))
+        self.ungoingactor=obj_grandactor(self,(640,360))
+        self.finishactor=obj_grandactor(self,(640,360))
+        self.staticactor=obj_grandactor(self,(640,360))# static in front here
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.staticactor.show=True
+        self.startactor.show=True
+        self.ungoingactor.show=False
+        self.finishactor.show=False
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static actor
+        self.staticactor.addpart( 'img1', draw.obj_image('tree',(1029,449),scale=0.5) )
+        self.staticactor.addpart( 'img2', draw.obj_image('tree',(81,434),scale=0.5) )
+        self.staticactor.addpart( 'img3', draw.obj_image('horizon',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'img4', draw.obj_image('house',(296,443),scale=0.5) )
+        self.staticactor.addpart( 'img5', draw.obj_image('tree',(826,466),scale=0.5) )
+        self.staticactor.addpart( 'img6', draw.obj_image('tree',(671,590),scale=0.5) )
+        self.staticactor.addpart( 'img7', draw.obj_image('tree',(441,642),scale=0.5) )
+        self.staticactor.addpart( 'img8', draw.obj_image('tree',(116,584),scale=0.5) )
+        # start actor
+        self.startactor.addpart( 'img1', draw.obj_image('sun',(660,530),scale=0.5) )
+        # ungoing actor
+        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch2_sunrise','sun',(640,360)) )
+        # finish actor
+        self.finishactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to rise the sun',(1000,620),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1000,620)) )
+
+
+
+        # timer for ungoing part
+        self.timer=tool.obj_timer(100)# ungoing part
+        self.timerend=tool.obj_timer(80)# goal to done
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            if not self.ungoing:
+                # start substate
+                if controls.w and controls.wc:# flip to ungoing
+                    self.ungoing=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=True
+                    self.finishactor.show=False
+                    self.timer.start()# reset ungoing timer
+                    self.ungoingactor.dict["anim1"].rewind()
+            else:
+                # ungoing substate
+                self.timer.update()
+                if not (controls.w):# flip to start
+                    self.ungoing=False
+                    self.startactor.show=True
+                    self.ungoingactor.show=False
+                    self.finishactor.show=False
+                if self.timer.ring:# flip to goal reached
+                    self.goal=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=False
+                    self.finishactor.show=True
+                    self.text_undone.show=False
+                    self.text_done.show=True
+                    self.timerend.start()
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+####################################################################################################################
 
 # Mini Game: Wake Up Hero
 class obj_world_wakeup(obj_world):

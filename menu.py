@@ -63,6 +63,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(self.sprite_eraser)
         # devtools
         self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
+        self.addpart(draw.obj_textbox('[Ctrl+Space: Access WIP]',(640,700),fontsize='smaller'))
         self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
 
     def setup(self):
@@ -115,7 +116,15 @@ class obj_scene_titlescreen(page.obj_page):
             share.quitgame()
         if controls.space and controls.spacec:
             share.scenemanager.switchscene(tests.obj_scene_testmenu())
-
+        #
+        #
+        # Access WIP: Jump to scene directly
+        if share.devmode and controls.lctrl and controls.space:
+            #
+            # change current WIP scene here
+            quickscene=ch2.obj_scene_ch2play()
+            #
+            share.scenemanager.switchscene(quickscene)
 
 
 ####################################################################################################################
