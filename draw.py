@@ -394,7 +394,7 @@ class obj_textchoice:
 # A text box
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
-    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1):
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
@@ -403,6 +403,7 @@ class obj_textbox:
         self.color=color
         self.setup()
         if scale != 1: self.scale(scale)
+        if rotate != 0: self.rotate(rotate)
     def setup(self):
         self.x=self.xini# position
         self.y=self.yini
@@ -641,7 +642,7 @@ class obj_animation:
         self.show=True# show the animation or not (can be toggled on/off)
         # sprite list
         self.spritelist=[]
-        self.addimage(self.imgname,scale=self.imgscale)
+        self.addimage(self.imgname,scale=self.imgscale,path=self.path)
         self.rx,self.ry=self.spritelist[0].getrxry()
         # sprite
         self.sprite=core.obj_sprite_image()# the one that is played
@@ -655,9 +656,9 @@ class obj_animation:
         self.devlineseq=core.obj_sprite_linesequence()
         self.devxy=(self.x,self.y)
         self.devarea=(self.x,self.y, 2*self.rx, 2*self.ry )
-    def addimage(self,imgname,scale=1):
+    def addimage(self,imgname,scale=1,path='book'):
         sprite=core.obj_sprite_image()
-        sprite.load(self.path+'/'+imgname+'.png')
+        sprite.load(path+'/'+imgname+'.png')
         if scale != 1: sprite.scale(scale)
         self.spritelist.append(sprite)
     def replaceimage(self,imgname,index):

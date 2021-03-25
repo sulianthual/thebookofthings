@@ -74,6 +74,7 @@ class obj_scene_ch2p2(page.obj_chapterpage):
                    ]
 
         drawing=draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200))
+        drawing.brush.makebrush(share.brushes.bigpen)
         self.addpart( drawing)
 
 
@@ -84,9 +85,10 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p4())
     def setup(self):
         self.text=[\
-                 'Now, lets add this to the story: '\
+                 'Now, lets add this to the story: ',\
                 '"',('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero),\
-                ' and his ',('partner',share.colors.partner),' were madly in ',\
+                ' and ',('{hero_his}',share.colors.hero),' ',\
+                ('partner',share.colors.partner),' were madly in ',\
                 ('love',share.colors.partner),'". '\
                 'We just need to give a name and gender for this ',('partner',share.colors.partner),'. '\
                    ]
@@ -201,11 +203,11 @@ class obj_scene_ch2p7(page.obj_chapterpage):
                    ' so ',('{hero_he}',share.colors.hero),' can play ',\
                    ('{partner_his}',share.colors.partner),' a serenade. ',\
                    ]
-
-        drawing=draw.obj_drawing('guitar',(340,450),legend='guitar',shadow=(300,200))
-        drawing.brush.makebrush(share.brushes.smallpen)
+        self.textkeys={'pos':(580,50),'xmin':580,'xmax':1230,'linespacing':55,'fontsize':'medium'}
+        drawing=draw.obj_drawing('guitar',(340,360),legend='guitar',shadow=(200,300))
+        # drawing.brush.makebrush(share.brushes.smallpen)
         self.addpart( drawing )
-        self.addpart(draw.obj_drawing('musicnote',(1040,450),legend='Music Note',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('musicnote',(1280-340,450),legend='Music Note',shadow=(200,200)))
 
 class obj_scene_ch2p8(page.obj_chapterpage):
     def prevpage(self):

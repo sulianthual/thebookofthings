@@ -50,7 +50,7 @@ class obj_colors:
         # Colors for story
         self.hero=self.red# hero text color
         self.partner=self.pink#partner text color
-        self.villain=self.pink#partner text color
+        self.villain=self.brown#partner text color
         self.item=self.blue# items (bed, fish,etc...)
         self.action=self.green# actions text (fishing, etc...)
 

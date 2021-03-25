@@ -87,14 +87,25 @@ class obj_scene_ideatodo(obj_ideapage):
         self.text=['Todo List:',\
                    '\nx) No more advanced physics! Only simple goofy minigames',\
                    '\nx) No more advanced drawings, only simple and goofy. Like same face on everything',\
-                   '\nx) Basis=3 chapter story: Hero, Partner, Villain.',\
-                   '\nx) Beware not to put choices (except gender/basic stuff) in the basis? ',\
-                   '\nx) Each new choice must be introduced and requires new drawings.',\
+                   '\nx) Basis=3 chapter story: Hero, Partner, Villain. (with NO choices)',\
                    '\nx) Then make alterations in Part II, Part III (Partner=He,She, Pet. Relation=love,friends,its complicated) ',\
+                   '\nx) Book celebrates perfect story after Chapter III, then wakes up with hangover and story is all out of place',\
                    '\nx) In Subsequent Parts on can add alterations to the basic story (choose from list at beginning of the day)',\
-                   '\nx) Use mise en abime where book, pen and eraser discuss new changes each day',\
-                   '\nx) book=instructions/critic, pen=new content, eraser=modify content',\
                    '\nx) Open new alterations with simple puzzles (get item from previous choice, etc...)',\
+                   '\nx)',\
+                   '\nx) Chapt 4: The Perfect Story. book of thing, pen/eraser have party to celebrate perfect story.',\
+                   '\nx) draw alcohol(or cocktail?) and party hat. Wakes up with hangover and story is all out of place.',\
+                   '\nx) hero/partner are in relationship=its complicated, partner is cheating with villain, and maybe 1 other change.',\
+                   '\nx) Chapt 5: Menage a Trois: explore more interactions between 3 characters. Open choice system' ,\
+                   '\nx)',\
+                   '\nx) Later on, theme changes: story is in space (draw space helmets, gravity is lowered in cutscenes)',\
+                   '\nx) story under the sea. story with cowboy hats, pirates... These may open unique questline (e.g. find pirate treasure)',\
+                   '\nx)',\
+                   '\nx) from chapt4 many event choices are added. Many of them lead to instant death (e.g. slapping partners ass)',
+                   ', and one has to restart the day. ',\
+                   'Another way to day is in specific minigames like fighting the villain. ',\
+                   '\nx)',\
+                   '\nx)',\
                    '\nx)',\
                    '\nx)',\
                    ]
@@ -120,7 +131,8 @@ class obj_scene_idea1(obj_ideapage):
                    '\nx) Indiana jones ball behind=[A][D] to avoid obstacles',\
                    '\nx) breakout game (pad, ball and horizontal layers of bricks)',\
                    '\nx)',\
-                   '\nx)',\
+                   '\nx) Chapt3: helicopter for hero/villain. flappy bird to use it and also shoots each flap.',\
+                   '\nx) first round boss fight hit him (he is flapping on right edge). second round he also shoots, avoid it.',\
                    '\nx)',\
                    '\nx)',\
                    '\nx)',\

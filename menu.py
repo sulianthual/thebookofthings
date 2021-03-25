@@ -23,6 +23,7 @@ import ch0
 import ch1
 import ch2
 import ch3
+import ch4
 
 
 ##########################################################
@@ -45,6 +46,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch1=draw.obj_textbox('Chapter 1: The Hero',(640,440),fontsize='smaller')
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
+        self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
         self.addpart(self.sprite_start)
@@ -54,6 +56,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(self.sprite_ch1)
         self.addpart(self.sprite_ch2)
         self.addpart(self.sprite_ch3)
+        self.addpart(self.sprite_ch4)
         # decorations
         self.sprite_pen=draw.obj_image('pen',(460,360), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
@@ -81,6 +84,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch1.show=self.maxchapter>0
         self.sprite_ch2.show=self.maxchapter>1
         self.sprite_ch3.show=self.maxchapter>2
+        self.sprite_ch4.show=self.maxchapter>3
         # update decorations (chapter dependent)
         share.windowicon.reset()# window icon
         self.sprite_pen.replaceimage('pen')
@@ -112,19 +116,22 @@ class obj_scene_titlescreen(page.obj_page):
                     share.scenemanager.switchscene(ch2.obj_scene_chapter2())
                 elif self.ichapter==3:
                     share.scenemanager.switchscene(ch3.obj_scene_chapter3())
+                elif self.ichapter==4:
+                    share.scenemanager.switchscene(ch3.obj_scene_chapter4())
         if controls.esc and controls.escc:
             share.quitgame()
         if controls.space and controls.spacec:
             share.scenemanager.switchscene(tests.obj_scene_testmenu())
         #
-        #
+        #############################################3
         # Access WIP: Jump to scene directly
         if share.devmode and controls.lctrl and controls.space:
             #
             # change current WIP scene here
-            quickscene=ch2.obj_scene_ch2play()
+            quickscene=ch3.obj_scene_ch3p10()
             #
             share.scenemanager.switchscene(quickscene)
+        #############################################3
 
 
 ####################################################################################################################

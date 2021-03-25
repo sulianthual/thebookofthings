@@ -211,6 +211,9 @@ class obj_grandactor():
     def movetoy(self,y):
         self.y=y
         for i in self.dict.keys(): self.dict[i].movetoy(self.y+self.dicty[i])
+    def movetoxy(self,xy):
+        self.movetox(xy[0])
+        self.movetoy(xy[1])
     def movex(self,dx):
         self.x += dx
         for i in self.dict.keys(): self.dict[i].movetox(self.x+self.dictx[i])
@@ -392,11 +395,11 @@ class obj_world_sunrise(obj_world):
         self.staticactor.addpart( 'img7', draw.obj_image('tree',(441,642),scale=0.5) )
         self.staticactor.addpart( 'img8', draw.obj_image('tree',(116,584),scale=0.5) )
         # start actor
-        self.startactor.addpart( 'img1', draw.obj_image('sun',(660,530),scale=0.5) )
+        # self.startactor.addpart( 'img1', draw.obj_image('sun',(660,300),scale=0.5) )
         # ungoing actor
         self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch2_sunrise','sun',(640,360)) )
         # finish actor
-        self.finishactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )
+        self.finishactor.addpart( 'img1', draw.obj_image('sun',(660,300),scale=0.5) )
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to rise the sun',(1000,620),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
@@ -518,12 +521,12 @@ class obj_world_wakeup(obj_world):
                     self.finishactor.show=False
                 if self.timer.ring:# flip to goal reached
                     self.goal=True
+                    self.timerend.start()
                     self.startactor.show=False
                     self.ungoingactor.show=False
                     self.finishactor.show=True
                     self.text_undone.show=False
                     self.text_done.show=True
-                    self.timerend.start()
         else:
             # goal reached state
             self.timerend.update()
@@ -600,6 +603,205 @@ class obj_world_fishing(obj_world):
 
 ####################################################################################################################
 
+# Mini Game: travel to evil lair
+class obj_world_traveltolair(obj_world):
+    def setup(self):
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.pathactor=obj_grandactor(self,(640,360))# below move actor
+        self.moveactor=obj_grandactor(self,(180,400))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        # static
+        self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340),scale=0.5) )
+        self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340),scale=0.5) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470)) )
+        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470)) )
+        self.staticactor.addpart( 'img3', draw.obj_image('tree',(230,570),scale=0.5) )
+        self.staticactor.addpart( 'img4', draw.obj_image('tree',(100,720-100),scale=0.5) )
+        self.staticactor.addpart( 'img5', draw.obj_image('tree',(70,190),scale=0.35) )
+        self.staticactor.addpart( 'img6', draw.obj_image('mountain',(1280-100,580),scale=0.4) )
+        self.staticactor.addpart( 'img7', draw.obj_image('mountain',(990,720-100),scale=0.5) )
+        self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170),scale=0.35) )
+        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(1030,120),scale=0.3) )
+        # hero
+        self.moveactor.addpart( 'img1', draw.obj_image('stickaura',(180,400),scale=0.25,path='premade') )
+        self.moveactor.addpart( 'img2', draw.obj_image('herobase',(180,400),scale=0.25) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
+        self.text_undone.show=True
+        self.text_done.show=False
+        # timer
+        self.timerend=tool.obj_timer(80)# goal to done
+        # random path
+        # whichpath=tool.randint(1,2)
+        whichpath=2
+        if whichpath==1:
+            self.pathactor.addpart( 'img1', draw.obj_image('lair_path1',(640,400),path='premade') )
+            self.pathmoves=['r','u','r','d','l','d','r','u','r','d','r','u','r']
+            self.pathpos=[(240,400),(412,400),(424,219),(520,217),\
+            (520,526),(420,535),(417,608),(648,603),\
+            (627,209),(755,207),(742,499),(904,500),(897,383),(1037,383)]
+        elif whichpath==2:
+            self.pathactor.addpart( 'img1', draw.obj_image('lair_path2',(640,400),path='premade') )
+            self.pathmoves=['r','d','r','u','r','d','r']
+            self.pathpos=[(242,407),(343,408),(349,637),(635,626),(637,142),(922,149),(919,480),(1031,463)]
+        # initialize
+        self.pathi=0
+        self.moveactor.movetoxy(self.pathpos[self.pathi])
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            hasmoved=False
+            if controls.w and controls.wc and self.pathmoves[self.pathi]=='u':
+                self.pathi +=1
+                hasmoved=True
+            if controls.s and controls.sc and self.pathmoves[self.pathi]=='d':
+                self.pathi +=1
+                hasmoved=True
+            if controls.a and controls.ac and self.pathmoves[self.pathi]=='l':
+                self.pathi +=1
+                hasmoved=True
+            if controls.d and controls.dc and self.pathmoves[self.pathi]=='r':
+                self.pathi +=1
+                hasmoved=True
+            if hasmoved and self.pathi<len(self.pathpos):
+                self.moveactor.movetoxy(self.pathpos[self.pathi])
+                if self.pathi >= len(self.pathpos)-1:
+                    self.goal=True
+                    self.timerend.start()
+                    self.text_undone.show=False
+                    self.text_done.show=True
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+
+####################################################################################################################
+
+
+# Mini Game: fight in the air (like flapping)
+class obj_world_airfight(obj_world):
+    def setup(self):
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        # boundaries
+        self.ymin=0+100
+        self.ymax=720-60
+        # sky background
+        self.sky=obj_grandactor(self,(640,360))
+        self.sky.addpart('img', draw.obj_image('cloud',(640,360),scale=0.5) )
+
+        # hero (some dynamics for flapping)
+        self.hero=obj_grandactor(self,(250,620))
+        self.hero.addpart('img', draw.obj_image('heropter',(250,620),scale=0.3) )
+        self.hero.addpart('imgr', draw.obj_image('heropter',(250,620),scale=0.3,rotate=15) )
+        self.hero.dict['img'].show=True
+        self.hero.dict['imgr'].show=False
+        self.herodt=1# hero time increment
+        self.herofy=0# hero force
+        self.herov=0# hero velocity
+        self.herog=1# gravity rate
+        self.herod=0.1# dissipation rate
+        self.heroj=20# jump rate
+        self.hero.rx=50# hitbox
+        self.hero.ry=30
+        self.hero.r=30
+        # villain (goes up and down in sin)
+        self.villain=obj_grandactor(self,(1280-150,360))
+        self.villain.addpart('img', draw.obj_image('villainpter',(1280-150,360),scale=0.5,fliph=True) )
+        self.villainp=1# sin period
+        self.villaina=0# time increment (angle )
+        self.villaintimert1=160# first shot timer
+        self.villaintimert2=40#80# consecutive shots
+        self.villaintimershoot=tool.obj_timer(self.villaintimert1,cycle=True)#timer between shots
+        self.villaintimershoot.start()
+        # cannonballs
+        self.cannonballs=[]# empty list
+        # health bar
+        self.maxherohealth=5# starting hero health
+        self.herohealth=self.maxherohealth# updated one
+        self.healthbar=obj_grandactor(self,(200,680))
+        for i in range(self.maxherohealth):
+            # self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,720-25),scale=0.125) )
+            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50,720-50-i*75),scale=0.125) )
+        # timer to done
+        self.timerend=tool.obj_timer(80)# goal to done
+    def makecannonball(self,x,y):
+        cannonball=obj_grandactor(self,(x,y))
+        cannonball.addpart('img', draw.obj_image('cannonball',(x,y),scale=0.5,path='premade') )
+        cannonball.rx=15# hitbox
+        cannonball.ry=15
+        cannonball.r=15
+        cannonball.speed=5#tool.randint(2,8)
+        self.cannonballs.append(cannonball)
+    def killcannonball(self,cannonball):
+        self.cannonballs.remove(cannonball)
+        cannonball.kill()
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            # hero dynamics
+            self.herofy=0# force
+            self.herofy += self.herog# gravity
+            if controls.w and controls.wc:# flap
+                self.herofy -= self.heroj
+                self.herov=0# reset velocity
+            # hero dynamics
+            self.herov += self.herodt*(self.herofy-self.herod*self.herov)# dtv=g+flap-dv**2
+            self.hero.movey(self.herodt*self.herov)# dty=v
+            if self.herov<-5:
+                self.hero.dict['img'].show=False
+                self.hero.dict['imgr'].show=True
+            else:
+                self.hero.dict['img'].show=True
+                self.hero.dict['imgr'].show=False
+            # boundaries
+            if self.hero.y>self.ymax:
+                self.hero.movetoy(self.ymax)
+                self.herov *= -0.5# loss from bounce
+            elif self.hero.y<self.ymin:
+                self.hero.movetoy(self.ymin)
+                self.herov *= -0.5# losse from bounce
+            # villain
+            self.villain.movetoy( (1+tool.sin(self.villaina/self.villainp))/2*(self.ymax-self.ymin)+self.ymin )
+            self.villaina += 1
+            if self.villaina>360: self.villaina=0
+            #villainshoot
+            self.villaintimershoot.update()
+            if self.villaintimershoot.ring:
+                # faster consecutive shots after first one
+                self.villaintimershoot.amount=self.villaintimert2
+                self.makecannonball(self.villain.x-100,self.villain.y)
+            #cannonballs
+            if self.cannonballs:
+                for i in self.cannonballs:
+                    i.movex(-i.speed)
+                    if i.x<-50: self.killcannonball(i)# disappears on left edge of screen
+                    if tool.checkrectcollide(i,self.hero):# cannonball hits hero
+                        self.killcannonball(i)
+                        # hero looses health
+                        self.herohealth -= 1
+                        if self.herohealth>-1:
+                            self.healthbar.dict['heart_'+str(self.herohealth)].show=False
+
+
+
+
+
+
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+####################################################################################################################
 
 # Mini Game: Eat Fish
 class obj_world_eatfish(obj_world):
@@ -612,7 +814,7 @@ class obj_world_eatfish(obj_world):
         #
         self.done=False# mini game is finished
         self.doneeating=False# done eating
-        self.bites=20# total number of bites
+        self.bites=6# total number of bites
         self.alternate_LR=True# alternate Left-Right pattern to eat
         self.eating=False
 
@@ -634,27 +836,14 @@ class obj_world_eatfish(obj_world):
         self.heroeat.show=False
         # text
         self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] [D] to Eat',(640,660),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] and [D] to Eat',(640,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390)) )
         self.text1.show=True
         self.text2.show=False
-        # textbox images
+        # textbox crunch
         self.text3=obj_grandactor(self,(640,360))
-        if False:
-            textbox=draw.obj_textbox("crunch",(640,360))
-            textbox.snapshot('says_crunch',path='premade')
-            textbox=draw.obj_textbox(" ",(640,360))
-            textbox.snapshot('says_empty',path='premade')
-            textbox=draw.obj_textbox("miam",(640,360))
-            textbox.snapshot('says_miam',path='premade')
-            textbox=draw.obj_textbox("gulp",(640,360))
-            textbox.snapshot('says_gulp',path='premade')
-        self.animation2=draw.obj_animation('ch1_eatsounds','says_crunch',(360,360),sync=self.animation1,path='premade')
-        self.animation2.addimage('says_miam')
-        self.animation2.addimage('says_gulp')
-        self.animation2.addimage('says_empty')
-        self.text3.addpart('anim_eatsounds', self.animation2)
+        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(860,180),scale=1.5) )
         self.text3.show=False
         # timer for eating
         self.timer=tool.obj_timer(50)
@@ -664,7 +853,7 @@ class obj_world_eatfish(obj_world):
         self.eating=True
         self.timer.start()
         self.bites -=1
-        self.fishscale *= 0.98
+        self.fishscale *= 0.8
         self.fish.removepart( 'img_fish')
         self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
     def update(self,controls):
@@ -685,7 +874,6 @@ class obj_world_eatfish(obj_world):
                 self.timer.update()# stop eating on timer
                 if self.timer.ring:
                     self.eating=False
-                    self.animation2.rewind()
                     self.animation1.rewind()
             else:
                 self.herostand.show=True
@@ -718,7 +906,7 @@ class obj_world_serenade(obj_world):
         self.hero=obj_grandactor(self,(640,360))
         # self.hero.addpart( 'img_hero',draw.obj_image('herobase',(200,450), scale=0.7) )# bit messy
         self.hero.addpart( 'img_herohead',draw.obj_image('herohead',(200,354), scale=0.35) )
-        self.hero.addpart( 'img_guitar',draw.obj_image('guitar',(200,500), scale=0.6) )
+        self.hero.addpart( 'img_guitar',draw.obj_image('guitar',(200,500), scale=0.5,rotate=60) )
         # partner on right
         self.partner=obj_grandactor(self,(640,360))
         self.partner.addpart( 'img_partner',draw.obj_image('partnerbase',(1280-200,450), scale=0.7,fliph=True) )

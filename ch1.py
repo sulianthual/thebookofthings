@@ -94,28 +94,6 @@ class obj_scene_ch1p2(page.obj_chapterpage):
         #
         animation1=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
         self.addpart(animation1)
-        # self.addpart(draw.obj_animation('ch1_book3','book',(360,360),record=False,scale=0.5,sync=animation1))
-        # self.addpart(draw.obj_animation('ch1_pen3','pen',(960,360),record=False,scale=0.25,sync=animation1))
-        # self.addpart(draw.obj_animation('ch1_eraser3','eraser',(960,560),record=False,scale=0.25,sync=animation1))
-        # textbox images
-        # if False:
-        #     textbox=draw.obj_textbox("Peak Performance",(640,360))
-        #     textbox.snapshot('says_peakperformance',path='premade')
-        #     textbox=draw.obj_textbox(" ",(640,360))
-        #     textbox.snapshot('says_empty',path='premade')
-        #     textbox=draw.obj_textbox("wow",(640,360))
-        #     textbox.snapshot('says_wow',path='premade')
-        #     textbox=draw.obj_textbox("awesome",(640,360))
-        #     textbox.snapshot('says_awesome',path='premade')
-        # animation2=draw.obj_animation('ch1_booksays1','says_peakperformance',(360,360),record=False,sync=animation1,path='premade')
-        # animation2.addimage('says_empty')
-        # self.addpart(animation2)
-        # animation2=draw.obj_animation('ch1_pensays1','says_wow',(360,360),record=False,sync=animation1,path='premade')
-        # animation2.addimage('says_empty')
-        # self.addpart(animation2)
-        # animation2=draw.obj_animation('ch1_erasersays1','says_awesome',(360,360),record=True,sync=animation1,path='premade')
-        # animation2.addimage('says_empty')
-        # self.addpart(animation2)
 
 
 
@@ -301,7 +279,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
                     ' Moving on, said the book of things. Lets write down: ',\
                     ' "The ',('hero',share.colors.hero),' ate the ',
                     ('fish',share.colors.item),' for dinner." ',\
-                    'Do it by ',('alternating [A][D]',share.colors.black),'. ',\
+                    'Do it by ',('alternating [A] and [D]',share.colors.black),'. ',\
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
