@@ -237,47 +237,147 @@ class obj_scene_ch3p9(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p8())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
+        share.scenemanager.switchscene(obj_scene_ch3p10start())
     def setup(self):
         self.text=[\
                   'This is going to be epic, said the book of things. ',\
-                 ' Draw an ',('helicopter',share.colors.item),'around the ',\
-                 ('hero',share.colors.hero),'\' s head and a ',\
-                 ('cloud',share.colors.item),\
-                 ' for a fight in the skies. ',\
+                 ' Draw a ',('gun',share.colors.item),'and a ',\
+                ('bullet',share.colors.item),' for the fight. ',\
                    ]
-
-        self.addpart( draw.obj_drawing('helicopter',(400,450),legend='Helicopter (facing right)',shadow=(300,200)) )
-        self.addpart( draw.obj_image('herohead',(500,450),scale=0.5) )
-        self.addpart( draw.obj_drawing('cloud',(1000,450),legend='Cloud',shadow=(200,200)) )
+        drawing1=draw.obj_drawing('gun',(300+50,450),legend='Gun (facing right)',shadow=(300,200))
+        drawing1.brush.makebrush(share.brushes.bigpen)
+        self.addpart(drawing1)
+        drawing2=draw.obj_drawing('bullet',(1280-200-50,450),legend='Bullet (facing right)',shadow=(200,200))
+        drawing2.brush.makebrush(share.brushes.bigpen)
+        self.addpart(drawing2)
     def endpage(self):
         super().endpage()
-        # save heropter =hero+helicopter
+        # herohead+stickcrouch =herocrouch
+        image1=draw.obj_image('stickcrouch',(940,360),path='premade')
+        image2=draw.obj_image('herohead',(800,360),scale=0.5,rotate=90)
         dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('helicopter',(400,450)) )
-        dispgroup1.addpart('part2',draw.obj_image('herohead',(500,450),scale=0.5) )
-        dispgroup1.snapshot((400,450,300,200),'heropter')
-        # save villainpter=villain+helicopter
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((940,360,300,200),'herocrouch')# 0 to 660 in height
+        # villainhead+stickshootcrouch =villainshootcrouch (beware larger if girl)
+        image1=draw.obj_image('stickshootcrouch',(640,360+100),path='premade')
+        image2=draw.obj_image('villainhead',(640,360),scale=0.5,fliph=True)
         dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('helicopter',(400,450)) )
-        dispgroup1.addpart('part2',draw.obj_image('villainhead',(500,450),scale=0.5) )
-        dispgroup1.snapshot((400,450,300,200),'villainpter')
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360+100-50,300,250),'villainshootcrouch')# 0 to 660 in height
 
 
-class obj_scene_ch3p10(page.obj_chapterpage):
+class obj_scene_ch3p10start(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p9())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p11())
+        share.scenemanager.switchscene(obj_scene_ch3p10start2())
+    def triggernextpage(self,controls):
+        return controls.enter and controls.enterc
+    def setup(self):
+        self.text=[\
+                  'Alright, here is how the ',('gunfight',share.colors.villain),\
+                  ' works, said the book of things. Make ',\
+                  ('{heroname}',share.colors.hero),' jump with [W] and crouch with [S].',\
+                   ]
+        self.world=world.obj_world_dodgegunshots(self)# Wake up hero mini-game
+        self.addpart(self.world)
+        self.world.villaintimershoot.end()# stop villain timer (never shoots)
+        # self.world.text_undone.show=False
+        self.world.healthbar.show=False
+        self.world.bulletbar.show=False
+
+class obj_scene_ch3p10start2(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10start())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10start3())
+    def triggernextpage(self,controls):
+        return controls.enter and controls.enterc
+    def setup(self):
+        self.text=[\
+                  'The ',('hearts',share.colors.partner),\
+                  ' in the lower left show how much',('life',share.colors.partner),\
+                  ('{heroname}',share.colors.hero),' has. ',\
+                  'If ',('{hero_he}',share.colors.hero),' gets hit, ',\
+                  ('{hero_he}',share.colors.hero),' will loose life and eventually ',\
+                  ('die',share.colors.villain),', so dont let that happen. '
+                   ]
+        self.world=world.obj_world_dodgegunshots(self)# Wake up hero mini-game
+        self.addpart(self.world)
+        self.world.villaintimershoot.end()# stop villain timer (never shoots)
+        self.world.text_undone.show=False
+        self.world.bulletbar.show=False
+        # self.addpart(draw.obj_drawing('show1',(480,530),shadow=(100,150)))
+        self.addpart(draw.obj_image('circle1',(200,640),path='premade'))
+        self.addpart(draw.obj_image('show1',(480,530),path='premade'))
+
+
+class obj_scene_ch3p10start3(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10start2())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10())
+    def triggernextpage(self,controls):
+        return controls.enter and controls.enterc
+    def setup(self):
+        self.text=[\
+                  'This is how much ',('bullets',share.colors.villain),\
+                  ('{villainname}',share.colors.villain),' has left. ',\
+                  ' Survive the fight until ',('{villain_he}',share.colors.villain),\
+                  ' is out. Press [Enter] when are ready to start. '
+                   ]
+        self.world=world.obj_world_dodgegunshots(self)# Wake up hero mini-game
+        self.addpart(self.world)
+        self.world.villaintimershoot.end()# stop villain timer (never shoots)
+        self.world.text_undone.show=False
+        # self.addpart(draw.obj_drawing('show2',(880,530),shadow=(100,150)))
+        self.addpart(draw.obj_image('circle2',(1080,720-70),path='premade'))
+        self.addpart(draw.obj_image('show2',(880,530),path='premade'))
+
+class obj_scene_ch3p10(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10start3())
+    def nextpage(self):
+        if self.world.win:
+            share.scenemanager.switchscene(obj_scene_ch3p11())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch3p10death())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                  'Maintain altitude by tapping [W]. Avoid the projectiles. ',\
+                  'Survive the gun fight. ',\
                    ]
-        self.world=world.obj_world_airfight(self)# Wake up hero mini-game
+        # drawing=draw.obj_drawing('floor1',(640,500),shadow=(640,100))
+        # drawing.brush.makebrush(share.brushes.smallpen)
+        # self.addpart(drawing)
+        self.world=world.obj_world_dodgegunshots(self)# Wake up hero mini-game
         self.addpart(self.world)
-        # self.addpart( draw.obj_drawing('cannonball',(640,360),shadow=(50,50)) )
+        # self.addpart(draw.obj_image('villainshootcrouch',(840,500+50),scale=0.5) )
+        # self.addpart(draw.obj_image('villainbase',(1140,500+50),scale=0.5,fliph=True) )
+        # self.addpart(draw.obj_image('herobase',(140,500+50),scale=0.5) )
+        # self.addpart(draw.obj_image('herocrouch',(440,500+50),scale=0.5) )
+        # animation1=draw.obj_animation('ch3_herodies','herobase',(640,360),record=True)
+        # self.addpart( animation1 )
+
+class obj_scene_ch3p10death(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10())
+
+    def setup(self):
+        self.text=[\
+                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                'Well, that doesnt sound right, said the book of things. ',\
+              'Try not to do that again, it messes my story. ',\
+                'Its ok for this time, just go back and act more "heroic" next time. ',\
+                   ]
+        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
+        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+
 
 
 class obj_scene_ch3p11(page.obj_chapterpage):
@@ -285,7 +385,10 @@ class obj_scene_ch3p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p10())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p12())
-
+    def setup(self):
+        self.text=[\
+                  'The villain is out of projectiles....(WIP) ',\
+                   ]
 
 # evil helicopter crashes in the mountains
 

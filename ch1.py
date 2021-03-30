@@ -90,7 +90,7 @@ class obj_scene_ch1p2(page.obj_chapterpage):
             dispgroup1.addpart('part2',image2)
             # self.addpart(dispgroup1)# preview
             dispgroup1.snapshot((640,360,200,300),'stickbase',path='premade')
-            self.addpart(draw.obj_image('stickbase',(940,360),path='premade'))# snapshot
+            # self.addpart(draw.obj_image('stickbase',(940,360),path='premade'))#
         #
         animation1=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
         self.addpart(animation1)
@@ -110,8 +110,15 @@ class obj_scene_ch1p3(page.obj_chapterpage):
                    ]
         drawing=draw.obj_drawing('herohead',(640,400),legend='Happy Face')
         self.addpart( drawing )
-
-
+    def endpage(self):
+        super().endpage()
+        # combine herohead+stickbody = herobase
+        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('herohead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herobase')
 
 class obj_scene_ch1p4(page.obj_chapterpage):
     def prevpage(self):
@@ -124,12 +131,6 @@ class obj_scene_ch1p4(page.obj_chapterpage):
                    'Indeed, ',('{hero_he}',share.colors.hero),' looks very cool. ',\
                    'Lets move on to the next step. ',\
                    ]
-        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herobase')
         self.addpart(draw.obj_animation('ch1_hero1','herobase',(360,360),record=True))
 
 
@@ -224,8 +225,13 @@ class obj_scene_ch1p9(page.obj_chapterpage):
             hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360))
             hookline.brush.makebrush(share.brushes.smallpen)
             self.addpart(hookline)
-
-
+    def endpage(self):
+        super().endpage()
+        # combine hero+fish into: hero holding fish
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,452), scale=0.7))
+        dispgroup1.addpart('part2',draw.obj_image('fish',(776,486), scale=0.4,rotate=-90))
+        dispgroup1.snapshot((700,452,200,260),'herobasefish')
 
 class obj_scene_ch1p10(page.obj_chapterpage):
     def prevpage(self):
@@ -257,12 +263,6 @@ class obj_scene_ch1p11(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero),\
                     ' went to the river and caught a ',('fish',share.colors.item),'". ',\
                    ]
-        # combine two images into one for animation (hero + fish)
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,452), scale=0.7))
-        dispgroup1.addpart('part2',draw.obj_image('fish',(776,486), scale=0.4,rotate=-90))
-        dispgroup1.snapshot((700,452,200,260),'herobasefish')
-        self.removepart(dispgroup1)
         self.addpart(draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=True))
 
 
@@ -328,8 +328,9 @@ class obj_scene_ch1p14(page.obj_chapterpage):
                    'That wraps it nicely, says the book of things. ',\
                    'One last thing, lets draw the sun and the moon so we know when it is day and night. ',\
                    ]
-        self.addpart(draw.obj_drawing('sun',(340,450),legend='Sun',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('moon',(940,450),legend='Moon',shadow=(200,200)))
+        # self.addpart(draw.obj_drawing('sun',(340,450),legend='Sun',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('sun',(300+50,450),legend='Sun',shadow=(300,200)))
+        self.addpart(draw.obj_drawing('moon',(1280-200-50,450),legend='Moon',shadow=(200,200)))
 
 
 ##########################################################

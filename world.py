@@ -684,61 +684,108 @@ class obj_world_traveltolair(obj_world):
 
 ####################################################################################################################
 
-
-# Mini Game: fight in the air (like flapping)
-class obj_world_airfight(obj_world):
+# Mini Game: dodge gun shots
+class obj_world_dodgegunshots(obj_world):
     def setup(self):
         self.done=False# end of minigame
-        self.goal=False# minigame goal reached
-        # boundaries
-        self.ymin=0+100
-        self.ymax=720-60
-        # sky background
-        self.sky=obj_grandactor(self,(640,360))
-        self.sky.addpart('img', draw.obj_image('cloud',(640,360),scale=0.5) )
-
-        # hero (some dynamics for flapping)
-        self.hero=obj_grandactor(self,(250,620))
-        self.hero.addpart('img', draw.obj_image('heropter',(250,620),scale=0.3) )
-        self.hero.addpart('imgr', draw.obj_image('heropter',(250,620),scale=0.3,rotate=15) )
-        self.hero.dict['img'].show=True
-        self.hero.dict['imgr'].show=False
+        self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
+        self.win=True# game is won
+        self.yoff=-50# offset for hero/villain
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.hero=obj_grandactor(self,(200,500+10+self.yoff))
+        self.herodead=obj_grandactor(self,(640,360))
+        self.villain=obj_grandactor(self,(640,360))
+        self.texthurt=obj_grandactor(self,(640,360))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_donewin=obj_grandactor(self,(640,360))
+        self.text_donelost=obj_grandactor(self,(640,360))
+        self.text_undone.show=True
+        self.text_donewin.show=False
+        self.text_donelost.show=False
+        # static
+        self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
+        self.staticactor.addpart( 'sun', draw.obj_image('sun',(800,250),scale=0.4) )
+        # hero
+        self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
+        self.hero.addpart( 'crouch', draw.obj_image('herocrouch',(200,500+50+self.yoff),scale=0.5) )
+        self.hero.dict['stand'].show=True
+        self.hero.dict['crouch'].show=False
+        self.herocrouch=False# crouching or not
+        self.heromayjump=True# hero can jump (not if in the air)
         self.herodt=1# hero time increment
         self.herofy=0# hero force
         self.herov=0# hero velocity
         self.herog=1# gravity rate
-        self.herod=0.1# dissipation rate
-        self.heroj=20# jump rate
-        self.hero.rx=50# hitbox
-        self.hero.ry=30
-        self.hero.r=30
-        # villain (goes up and down in sin)
-        self.villain=obj_grandactor(self,(1280-150,360))
-        self.villain.addpart('img', draw.obj_image('villainpter',(1280-150,360),scale=0.5,fliph=True) )
-        self.villainp=1# sin period
-        self.villaina=0# time increment (angle )
-        self.villaintimert1=160# first shot timer
-        self.villaintimert2=40#80# consecutive shots
-        self.villaintimershoot=tool.obj_timer(self.villaintimert1,cycle=True)#timer between shots
+        self.herod=0.05# dissipation rate
+        self.heroj=25# jump rate
+        self.heroy0=self.hero.y# hero.y of ground
+        # hero is hurt
+        self.texthurt.addpart( 'text', draw.obj_textbox('ouch!',(400,360),scale=1.5) )
+        self.texthurting=False# hero is hurting
+        self.texthurt.show=False
+        self.texthurttimer=tool.obj_timer(30)
+        # hero hitbox
+        self.herohitbox1=obj_grandactor(self,(200,self.hero.y))# standing
+        self.herohitbox1.rx=50
+        self.herohitbox1.ry=140
+        self.herohitbox2=obj_grandactor(self,(200+10,self.hero.y+50))# crouching
+        self.herohitbox2.rx=130
+        self.herohitbox2.ry=70
+        # hero dies
+        self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobase',(640,360)))
+        self.herodead.show=False
+
+        # boundaries
+        self.ymax=self.hero.y
+        # villain
+        self.villain.addpart( 'stand', draw.obj_image('villainbase',(1280-150,450+self.yoff),scale=0.5,fliph=True) )
+        self.villain.addpart( 'standgun', draw.obj_image('gun',(1280-150-175,445+self.yoff),scale=0.25,fliph=True) )
+        self.villain.addpart( 'standarm', draw.obj_image('stickshootarm',(1280-260,442+self.yoff),scale=0.5,path='premade') )# missing small piece
+        self.villain.addpart( 'crouch', draw.obj_image('villainshootcrouch',(1280-150,500+50+40+30-50+self.yoff),scale=0.5) )
+        self.villain.addpart( 'crouchgun', draw.obj_image('gun',(1280-150-175,500+50+40+30-50+self.yoff),scale=0.25,fliph=True) )
+        self.villain.dict['stand'].show=True
+        self.villain.dict['crouch'].show=False
+        self.villain.dict['standgun'].show=True
+        self.villain.dict['standarm'].show=True
+        self.villain.dict['crouchgun'].show=False
+        self.villaincrouch=False# villain is crouching or not (switch randomly every shot)
+        self.villainshots=15# number of shots
+        self.villaintimer=80# shot reload time
+        self.villaintimermin=50# min time
+        self.villaintimerm=0.98# timer fact each shot
+        self.villaintimershoot=tool.obj_timer(self.villaintimer,cycle=True)#timer between shots
         self.villaintimershoot.start()
         # cannonballs
         self.cannonballs=[]# empty list
         # health bar
         self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
-        self.healthbar=obj_grandactor(self,(200,680))
+        self.healthbar=obj_grandactor(self,(640,360))
         for i in range(self.maxherohealth):
-            # self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,720-25),scale=0.125) )
-            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50,720-50-i*75),scale=0.125) )
-        # timer to done
-        self.timerend=tool.obj_timer(80)# goal to done
+            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,650),scale=0.125) )
+        # bullet count
+        self.maxvillainshots=12
+        self.villainshots=self.maxvillainshots
+        self.bulletbar=obj_grandactor(self,(640,360))
+        for i in range(self.maxvillainshots):
+            if i>int(self.maxvillainshots/2)-1:
+                self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-(i-int(self.maxvillainshots/2))*50-10,720-25-5),scale=0.125) )
+            else:
+                self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-i*50-10,720-25-50-5),scale=0.125) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[W: Jump] [S: Crouch]',(640,660),color=share.colors.instructions) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('He is the one!',(640,660)) )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+        # timer for done part
+        self.timerendwin=tool.obj_timer(120)# goal to done
+        self.timerendloose=tool.obj_timer(300)# goal to done
     def makecannonball(self,x,y):
         cannonball=obj_grandactor(self,(x,y))
-        cannonball.addpart('img', draw.obj_image('cannonball',(x,y),scale=0.5,path='premade') )
+        cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=True) )
         cannonball.rx=15# hitbox
         cannonball.ry=15
         cannonball.r=15
-        cannonball.speed=5#tool.randint(2,8)
+        cannonball.speed=12#8#tool.randint(2,8)
         self.cannonballs.append(cannonball)
     def killcannonball(self,cannonball):
         self.cannonballs.remove(cannonball)
@@ -750,57 +797,114 @@ class obj_world_airfight(obj_world):
             # hero dynamics
             self.herofy=0# force
             self.herofy += self.herog# gravity
-            if controls.w and controls.wc:# flap
+            if self.heromayjump and (controls.w and controls.wc):# jump
                 self.herofy -= self.heroj
                 self.herov=0# reset velocity
+                self.heromayjump=False# cant jump again
             # hero dynamics
             self.herov += self.herodt*(self.herofy-self.herod*self.herov)# dtv=g+flap-dv**2
             self.hero.movey(self.herodt*self.herov)# dty=v
-            if self.herov<-5:
-                self.hero.dict['img'].show=False
-                self.hero.dict['imgr'].show=True
-            else:
-                self.hero.dict['img'].show=True
-                self.hero.dict['imgr'].show=False
             # boundaries
             if self.hero.y>self.ymax:
                 self.hero.movetoy(self.ymax)
-                self.herov *= -0.5# loss from bounce
-            elif self.hero.y<self.ymin:
-                self.hero.movetoy(self.ymin)
-                self.herov *= -0.5# losse from bounce
-            # villain
-            self.villain.movetoy( (1+tool.sin(self.villaina/self.villainp))/2*(self.ymax-self.ymin)+self.ymin )
-            self.villaina += 1
-            if self.villaina>360: self.villaina=0
+                self.herov = 0# just stall
+                self.heromayjump=True# may jump from ground
+            # hero crouch
+            if controls.sc:
+                if controls.s:# switch to crouch
+                    self.herocrouch=True
+                    self.hero.dict['stand'].show=False
+                    self.hero.dict['crouch'].show=True
+                else:# switch to stand/jump
+                    self.herocrouch=False
+                    self.hero.dict['stand'].show=True
+                    self.hero.dict['crouch'].show=False
+            # hero hitbox (two for stand/crouch)
+            self.herohitbox1.movetoy(self.hero.y)
+            self.herohitbox2.movetoy(self.hero.y+50)
             #villainshoot
             self.villaintimershoot.update()
-            if self.villaintimershoot.ring:
-                # faster consecutive shots after first one
-                self.villaintimershoot.amount=self.villaintimert2
-                self.makecannonball(self.villain.x-100,self.villain.y)
+            if self.villainshots > 0: # villain can still shoot
+                if self.villaintimershoot.ring:
+                    # faster consecutive shots after first one
+                    self.villaintimershoot.amount=max(self.villaintimershoot.amount*self.villaintimerm,self.villaintimermin)
+                    self.villaincrouch=tool.randbool()# villain stands or crouches
+                    if self.villaincrouch:# crouches
+                        self.makecannonball(860,600+self.yoff-50)
+                        self.villainshots -= 1
+                        if self.villainshots>-1:
+                            self.bulletbar.dict['bullet_'+str(self.villainshots)].show=False
+                        self.villain.dict['stand'].show=False
+                        self.villain.dict['crouch'].show=True
+                        self.villain.dict['standgun'].show=False
+                        self.villain.dict['standarm'].show=False
+                        self.villain.dict['crouchgun'].show=True
+                    else:# stands
+                        self.makecannonball(860,425+self.yoff)
+                        self.villainshots -= 1
+                        if self.villainshots>-1:
+                            self.bulletbar.dict['bullet_'+str(self.villainshots)].show=False
+                        self.villain.dict['stand'].show=True
+                        self.villain.dict['crouch'].show=False
+                        self.villain.dict['standgun'].show=True
+                        self.villain.dict['standarm'].show=True
+                        self.villain.dict['crouchgun'].show=False
+            else:# villain cant shoot. wait for all bullets to disappear to end mini-game and win
+                if not self.cannonballs:
+                    self.goal=True# reached goal
+                    self.win=True# won minigame
+                    self.timerendwin.start()
+                    self.text_undone.show=False
+                    self.text_donewin.show=True
             #cannonballs
             if self.cannonballs:
                 for i in self.cannonballs:
                     i.movex(-i.speed)
                     if i.x<-50: self.killcannonball(i)# disappears on left edge of screen
-                    if tool.checkrectcollide(i,self.hero):# cannonball hits hero
+                    # collision with hero
+                    if not self.herocrouch:
+                        hitboxcheck=self.herohitbox1#hero is standing
+                    else:
+                        hitboxcheck=self.herohitbox2# hero is crouching
+                    if tool.checkrectcollide(i,hitboxcheck):# cannonball hits hero
                         self.killcannonball(i)
+                        # hurt text
+                        self.texthurting=True
+                        self.texthurt.show=True
+                        self.texthurttimer.start()
                         # hero looses health
                         self.herohealth -= 1
-                        if self.herohealth>-1:
+                        if self.herohealth>0:
                             self.healthbar.dict['heart_'+str(self.herohealth)].show=False
-
-
-
-
-
-
+                        else:
+                            # hero dies
+                            self.healthbar.dict['heart_'+str(self.herohealth)].show=False
+                            self.goal=True# end minigame
+                            self.win=False# lost minigame
+                            self.timerendloose.start()
+                            self.text_undone.show=False
+                            self.text_donelost.show=True
+                            self.texthurt.show=False
+                            self.texthurting=False
+                            self.hero.show=False
+                            self.herodead.show=True
+                            self.herodead.dict['anim'].rewind()
+            #texthurt
+            if self.texthurting:
+                self.texthurttimer.update()
+                if self.texthurttimer.ring:
+                    self.texthurting=False
+                    self.texthurt.show=False
         else:
             # goal reached state
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
+            if self.win:# won minigame
+                self.timerendwin.update()
+                if self.timerendwin.ring:
+                    self.done=True# end of minigame
+            else:# lost minigame
+                self.timerendloose.update()
+                if self.timerendloose.ring:
+                    self.done=True# end of minigame
 ####################################################################################################################
 
 # Mini Game: Eat Fish

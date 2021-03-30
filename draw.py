@@ -62,7 +62,8 @@ class obj_pagedisplay_number:
         text='Page '+str(share.ipage)
         self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
     def display(self):
-        self.sprite.display(1190,680)
+        # self.sprite.display(1190,680)# bottom right
+        self.sprite.display(640,30)# top middle
     def update(self,controls):
         self.display()
 
@@ -829,8 +830,8 @@ class obj_animationsequence:
         self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
-        if controls.a: self.ra += 1
-        if controls.d: self.ra -= 1
+        if controls.a: self.ra += 3#1# cant fast edit here
+        if controls.d: self.ra -= 3#1
         if controls.w: self.sa += 1# (scaling is in bscal**sa)
         if controls.s: self.sa -= 1
         if controls.f and controls.fc: self.ia += 1 # change sprite

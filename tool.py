@@ -54,9 +54,11 @@ def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y) in rad
     return math_atan2(b.y-a.y,b.x-a.x)*180/pi()# in DEG
 
 # module random
-def randint(minrange,maxrange):
+def randint(minrange,maxrange):# returns integer within range with equal probabilities
     return random_randint(minrange,maxrange)
 
+def randbool():# return True or False with equal probabilities
+    return bool(random_randint(0,1))
 ####################################################################################################################
 # General Functions and objects for all uses
 
@@ -128,6 +130,11 @@ class obj_timer:
             self.ring=False
             self.off=True
             if self.cycle: self.start()# restart if cycled
+    def end(self):# force end to timer
+        self.on=False
+        self.ring=False
+        self.off=True
+        self.t=0
 
 
 

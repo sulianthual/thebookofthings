@@ -402,7 +402,8 @@ class obj_controls:
         for event in self.events:
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_BACKSPACE:# Pressed once
-                    text = ''#remove all#text[:-1]# remove character
+                    # text = ''#remove all
+                    text = text[:-1]# remove last character
                 elif event.key == pygame.K_RETURN:# Enter (nothing happens)
                     pass
                 elif event.key==pygame.K_ESCAPE:# Esc (nothing happens)

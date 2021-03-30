@@ -42,7 +42,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_start=draw.obj_textbox('Start Book [Press Enter]',(640,350),fontsize='smaller')
         self.sprite_info=draw.obj_textbox('[Up/Down: Select]  [Enter: Read]',(640,350),fontsize='smaller')
         self.sprite_erase=draw.obj_textbox('Erase Book',(640,380),fontsize='smaller')
-        self.sprite_prologue=draw.obj_textbox('Prologue',(640,410),fontsize='smaller')
+        self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(640,410),fontsize='smaller')
         self.sprite_ch1=draw.obj_textbox('Chapter 1: The Hero',(640,440),fontsize='smaller')
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
@@ -128,7 +128,7 @@ class obj_scene_titlescreen(page.obj_page):
         if share.devmode and controls.lctrl and controls.space:
             #
             # change current WIP scene here
-            quickscene=ch3.obj_scene_ch3p10()
+            quickscene=ch3.obj_scene_ch3p10start()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3
