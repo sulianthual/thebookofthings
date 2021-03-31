@@ -78,10 +78,10 @@ class obj_scene_ch3p2(page.obj_chapterpage):
                    'I want more action, more suspense! ',\
                    'Lets just add a ',('villain',share.colors.villain), '. ',\
                  'This ',('villain',share.colors.villain),' has probably been hurt a lot,',\
-                 ' so lets start him by drawing a ',('scar',share.colors.villain),' on our stickman. ',\
+                 ' so lets start him by drawing a big ',('scar',share.colors.villain),' on our stickman. ',\
                    ]
         self.addpart( draw.obj_image('herohead',(640,450)) )
-        drawing=draw.obj_drawing('scar',(640,450),legend='Add a scar',shadow=(200,200))
+        drawing=draw.obj_drawing('scar',(640,450),legend='Add a big scar',shadow=(200,200))
         self.addpart( drawing)
 
 class obj_scene_ch3p3(page.obj_chapterpage):

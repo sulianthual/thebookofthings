@@ -293,8 +293,8 @@ class obj_scene_ch2play(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'Now thats quite a few changes to our story, said the book of things. ',\
-                  'Lets read it again to summarize, ',\
-                   'and try to complete it as quickly as possible! Press [S] to start. ',\
+                  'Lets read it again to summarize. ',\
+                   'Press [S] to start. ',\
                    ]
         self.addpart(draw.obj_textbox('Press [S] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

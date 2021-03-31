@@ -1,19 +1,11 @@
 heroname
-sulian
+link
 hero_he
 he
 hero_his
 his
 hero_him
 him
-test1
-
-test2
-
-test_he
-
-test_his
-
 partner_he
 she
 partner_his
@@ -21,7 +13,7 @@ her
 partner_him
 her
 partnername
-jing
+zelda
 villain_he
 he
 villain_his
@@ -29,4 +21,4 @@ his
 villain_him
 him
 villainname
-dracula
+ganon

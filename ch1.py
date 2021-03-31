@@ -344,13 +344,13 @@ class obj_scene_ch1play(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play1())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.a and controls.d)
+        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
                    'Now, lets read again our story to summarize, said the book of things. ',\
-                   'You can try to complete it as quickly as possible. Press [A]+[D] together to start. ',\
+                   'Press [S] to start. ',\
                    ]
-        self.addpart(draw.obj_textbox('Press [A]+[D] to Start',(640,660),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [S] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
         animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
