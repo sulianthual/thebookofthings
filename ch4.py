@@ -28,7 +28,7 @@ class obj_scene_chapter4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def setup(self):
         self.text=['-----   Chapter IV: A Perfect Story   -----   ',\
-                  'The book of things said: "our story is perfect, lets celebrate". ',\
+                  'The book of things said: "our story is perfect, lets celebrate...(WIP)". ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)

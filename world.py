@@ -603,14 +603,24 @@ class obj_world_fishing(obj_world):
 
 ####################################################################################################################
 
-# Mini Game: travel to evil lair
+
+# Mini Game: travel to evil lair (or back from it)
 class obj_world_traveltolair(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
+        self.gotolair=True# go to or from lair
+        self.addpartner=False# add partner walking with hero
+        # scene tuning
+        if kwargs is not None:
+            if 'tohome' in kwargs: self.gotolair=not kwargs["tohome"]# option go back home
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
+        if self.gotolair:# initial hero position
+            self.heroxstart=180
+        else:
+            self.heroxstart=1280-180
         self.staticactor=obj_grandactor(self,(640,360))# background
-        self.pathactor=obj_grandactor(self,(640,360))# below move actor
-        self.moveactor=obj_grandactor(self,(180,400))
+        self.hero=obj_grandactor(self,(self.heroxstart,400))# hero
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_done=obj_grandactor(self,(640,360))
         # static
@@ -620,66 +630,113 @@ class obj_world_traveltolair(obj_world):
         self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470)) )
         self.staticactor.addpart( 'img3', draw.obj_image('tree',(230,570),scale=0.5) )
         self.staticactor.addpart( 'img4', draw.obj_image('tree',(100,720-100),scale=0.5) )
-        self.staticactor.addpart( 'img5', draw.obj_image('tree',(70,190),scale=0.35) )
+        self.staticactor.addpart( 'img5', draw.obj_image('tree',(300,235),scale=0.35) )
         self.staticactor.addpart( 'img6', draw.obj_image('mountain',(1280-100,580),scale=0.4) )
         self.staticactor.addpart( 'img7', draw.obj_image('mountain',(990,720-100),scale=0.5) )
         self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170),scale=0.35) )
         self.staticactor.addpart( 'img9', draw.obj_image('mountain',(1030,120),scale=0.3) )
         # hero
-        self.moveactor.addpart( 'img1', draw.obj_image('stickaura',(180,400),scale=0.25,path='premade') )
-        self.moveactor.addpart( 'img2', draw.obj_image('herobase',(180,400),scale=0.25) )
+        # optional partner (same actor as hero)
+        if self.addpartner:
+            self.pxoff=30# offset relative to hero
+            self.pyoff=-30
+            self.hero.addpart( 'pface_right', draw.obj_image('partnerbase',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25) )
+            self.hero.addpart( 'pface_left', draw.obj_image('partnerbase',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25,fliph=True) )
+            self.hero.addpart( 'pwalk_right', draw.obj_image('partnerwalk',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25) )
+            self.hero.addpart( 'pwalk_left', draw.obj_image('partnerwalk',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25,fliph=True) )
+        self.hero.addpart( 'face_right', draw.obj_image('herobase',(self.heroxstart,400),scale=0.25) )
+        self.hero.addpart( 'face_left', draw.obj_image('herobase',(self.heroxstart,400),scale=0.25,fliph=True) )
+        self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(self.heroxstart,400),scale=0.25) )
+        self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(self.heroxstart,400),scale=0.25,fliph=True) )
+        self.herofaceright=self.gotolair
+        self.herowalking=False# hero walking or standing
+        self.hero.dict['face_right'].show=self.herofaceright and not self.herowalking
+        self.hero.dict['face_left'].show=not self.herofaceright and not self.herowalking
+        self.hero.dict['walk_right'].show=self.herofaceright and self.herowalking
+        self.hero.dict['walk_left'].show=not self.herofaceright and self.herowalking
+        if self.addpartner:
+            self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
+            self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
+            self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
+            self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
+        self.herowalktimer=tool.obj_timer(10)# timer to alternate walk slides
+        self.herowalkframe1=True# alternate True/False for two frames
+        self.heromx=8# moving rate
+        self.heromy=8# moving rate
+
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
         self.text_done.show=False
+        # area to reach
+        if self.gotolair:
+            self.goalarea=obj_grandactor(self,(1280-100,340))# reach lair
+            self.goalarea.rx=100
+            self.goalarea.ry=100
+        else:
+            self.goalarea=obj_grandactor(self,(100,340))# reach house
+            self.goalarea.rx=100
+            self.goalarea.ry=100
         # timer
         self.timerend=tool.obj_timer(80)# goal to done
-        # random path
-        # whichpath=tool.randint(1,2)
-        whichpath=2
-        if whichpath==1:
-            self.pathactor.addpart( 'img1', draw.obj_image('lair_path1',(640,400),path='premade') )
-            self.pathmoves=['r','u','r','d','l','d','r','u','r','d','r','u','r']
-            self.pathpos=[(240,400),(412,400),(424,219),(520,217),\
-            (520,526),(420,535),(417,608),(648,603),\
-            (627,209),(755,207),(742,499),(904,500),(897,383),(1037,383)]
-        elif whichpath==2:
-            self.pathactor.addpart( 'img1', draw.obj_image('lair_path2',(640,400),path='premade') )
-            self.pathmoves=['r','d','r','u','r','d','r']
-            self.pathpos=[(242,407),(343,408),(349,637),(635,626),(637,142),(922,149),(919,480),(1031,463)]
-        # initialize
-        self.pathi=0
-        self.moveactor.movetoxy(self.pathpos[self.pathi])
     def update(self,controls):
         super().update(controls)
         if not self.goal:
             # goal unreached state
-            hasmoved=False
-            if controls.w and controls.wc and self.pathmoves[self.pathi]=='u':
-                self.pathi +=1
-                hasmoved=True
-            if controls.s and controls.sc and self.pathmoves[self.pathi]=='d':
-                self.pathi +=1
-                hasmoved=True
-            if controls.a and controls.ac and self.pathmoves[self.pathi]=='l':
-                self.pathi +=1
-                hasmoved=True
-            if controls.d and controls.dc and self.pathmoves[self.pathi]=='r':
-                self.pathi +=1
-                hasmoved=True
-            if hasmoved and self.pathi<len(self.pathpos):
-                self.moveactor.movetoxy(self.pathpos[self.pathi])
-                if self.pathi >= len(self.pathpos)-1:
-                    self.goal=True
-                    self.timerend.start()
-                    self.text_undone.show=False
-                    self.text_done.show=True
+            # hero walk motion
+            if controls.d or controls.a or controls.w or controls.s:
+                self.herowalking=True
+            else:
+                self.herowalking=False
+                self.herowalktimer.start()# reset timer
+            if self.herowalking:
+                self.herowalktimer.update()
+                if self.herowalktimer.ring:
+                    self.herowalkframe1=not self.herowalkframe1
+                    self.herowalktimer.start()
+                    if not self.herowalkframe1:
+                        self.hero.dict['face_right'].show=self.herofaceright
+                        self.hero.dict['face_left'].show=not self.herofaceright
+                        self.hero.dict['walk_right'].show=False
+                        self.hero.dict['walk_left'].show=False
+                    else:
+                        self.hero.dict['face_right'].show=False
+                        self.hero.dict['face_left'].show=False
+                        self.hero.dict['walk_right'].show=self.herofaceright
+                        self.hero.dict['walk_left'].show=not self.herofaceright
+            # move hero
+            if controls.a:
+                self.hero.movex(-self.heromx)
+                if controls.ac:
+                    self.herofaceright=False
+            if controls.d:
+                self.hero.movex(self.heromx)
+                if controls.dc:
+                    self.herofaceright=True
+            if controls.w:
+                self.hero.movey(-self.heromy)
+            if controls.s:
+                self.hero.movey(self.heromy)
+            # partner visuals
+            if self.addpartner:
+                self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
+                self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
+                self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
+                self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
+
+            # reach goal
+            if tool.checkrectcollide(self.hero,self.goalarea):
+                self.goal=True
+                self.timerend.start()
+                self.text_undone.show=False
+                self.text_done.show=True
         else:
             # goal reached state
             self.timerend.update()
             if self.timerend.ring:
                 self.done=True# end of minigame
+
 
 
 ####################################################################################################################
@@ -946,9 +1003,9 @@ class obj_world_stompfight(obj_world):
         self.herofy=0# hero force
         self.herov=0# hero velocity
         self.herog=1# gravity rate
-        self.herod=0.05# dissipation rate
+        self.herod=0.07# dissipation rate
         self.heroj=1# jump rate (click button)
-        self.herojh=4# jump rate (hold button)
+        self.herojh=3.5# jump rate (hold button)
         self.heroholdjumptimer=tool.obj_timer(12)# how long can hold jump button
         self.heromx=12# move rate horizontally
         # hero hitboxes
@@ -965,20 +1022,20 @@ class obj_world_stompfight(obj_world):
         self.villain.addpart( 'kick_left', draw.obj_image('villainkick',(940,self.yground-12),scale=0.35,fliph=True) )
         self.villain.addpart( 'hurt', draw.obj_image('villainbase',(940,self.yground-12+70),scale=0.35,rotate=90) )
         self.villain.addpart( 'hurttext', draw.obj_textbox('get that!',(940,self.yground-120),scale=1) )
-        self.villain.dict['stand_right'].show=True
-        self.villain.dict['stand_left'].show=False
+        self.villain.dict['stand_right'].show=False
+        self.villain.dict['stand_left'].show=True
         self.villain.dict['kick_right'].show=False
         self.villain.dict['kick_left'].show=False
         self.villain.dict['hurt'].show=False
         self.villain.dict['hurttext'].show=False
         self.villainhurt=False# hurt or not
         self.villainstate='stand'# stand, kick, rest (when no hurt)
-        self.villaintimerstand=tool.obj_timer(50)
+        self.villaintimerstand=tool.obj_timer(40)
         self.villaintimerkick=tool.obj_timer(80)
         self.villaintimerrest=tool.obj_timer(100)#
         self.villaintimerhurt=tool.obj_timer(100)
         self.villaintimerstand.start()
-        self.villainfaceright=True# direction facing (changes)
+        self.villainfaceright=False# direction facing (changes)
         self.villainmx=18# move rate horizontally
         self.villainxmin=200# area where will face to right
         self.villainxmax=1280-200# area where will face to left
@@ -990,24 +1047,25 @@ class obj_world_stompfight(obj_world):
         self.villainhitbox2.rx=50
         self.villainhitbox2.ry=70
         # health bar hero
-        self.maxherohealth=3# starting hero health
+        self.ybar=200# for health bars and text
+        self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360))
-        self.healthbar.addpart('face', draw.obj_image('herohead',(50,175),scale=0.25) )
+        self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         for i in range(self.maxherohealth):
-            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,175),scale=0.125) )
+            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
         # health bar villain
         self.maxvillainhealth=3# starting villain health
         self.villainhealth=self.maxvillainhealth# updated one
         self.vealthbar=obj_grandactor(self,(640,360))
-        self.vealthbar.addpart('face', draw.obj_image('villainhead',(1280-50,175),scale=0.25,fliph=True) )
+        self.vealthbar.addpart('face', draw.obj_image('villainhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.maxvillainhealth):
-            self.vealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-150-i*75,175),scale=0.125) )
-            self.vealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-150-i*75,175),scale=0.125) )
+            self.vealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-150-i*75,self.ybar),scale=0.125) )
+            self.vealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-150-i*75,self.ybar),scale=0.125) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(640,175),color=share.colors.instructions) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,175)) )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,175)) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(640,self.ybar),color=share.colors.instructions) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,self.ybar)) )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,self.ybar)) )
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(120)# goal to done
@@ -1060,8 +1118,6 @@ class obj_world_stompfight(obj_world):
                     self.hero.dict['stand_left'].show=False
                     self.hero.dict['hurt'].show=False
                     self.hero.dict['hurttext'].show=False
-
-
             if self.hero.x<self.xmin:# boundaries
                 self.hero.movetox(self.xmin)
             elif self.hero.x>self.xmax:

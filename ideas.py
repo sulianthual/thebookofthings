@@ -228,9 +228,83 @@ class obj_world_airfight(obj_world):
 ####################################################################################################################
 
 
-
-
-
+# OLD MINI GAME: travel to lair following a pattern
+class obj_world_traveltolairOLD(obj_world):
+    def setup(self):
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.pathactor=obj_grandactor(self,(640,360))# below move actor
+        self.moveactor=obj_grandactor(self,(180,400))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        # static
+        self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340),scale=0.5) )
+        self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340),scale=0.5) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470)) )
+        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470)) )
+        self.staticactor.addpart( 'img3', draw.obj_image('tree',(230,570),scale=0.5) )
+        self.staticactor.addpart( 'img4', draw.obj_image('tree',(100,720-100),scale=0.5) )
+        self.staticactor.addpart( 'img5', draw.obj_image('tree',(70,190),scale=0.35) )
+        self.staticactor.addpart( 'img6', draw.obj_image('mountain',(1280-100,580),scale=0.4) )
+        self.staticactor.addpart( 'img7', draw.obj_image('mountain',(990,720-100),scale=0.5) )
+        self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170),scale=0.35) )
+        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(1030,120),scale=0.3) )
+        # hero
+        self.moveactor.addpart( 'img1', draw.obj_image('stickaura',(180,400),scale=0.25,path='premade') )
+        self.moveactor.addpart( 'img2', draw.obj_image('herobase',(180,400),scale=0.25) )
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
+        self.text_undone.show=True
+        self.text_done.show=False
+        # timer
+        self.timerend=tool.obj_timer(80)# goal to done
+        # random path
+        # whichpath=tool.randint(1,2)
+        whichpath=2
+        if whichpath==1:
+            self.pathactor.addpart( 'img1', draw.obj_image('lair_path1',(640,400),path='premade') )
+            self.pathmoves=['r','u','r','d','l','d','r','u','r','d','r','u','r']
+            self.pathpos=[(240,400),(412,400),(424,219),(520,217),\
+            (520,526),(420,535),(417,608),(648,603),\
+            (627,209),(755,207),(742,499),(904,500),(897,383),(1037,383)]
+        elif whichpath==2:
+            # self.pathactor.addpart( 'img1', draw.obj_image('lair_path2',(640,400),path='premade') )
+            self.pathmoves=['r','d','r','u','r','d','r']
+            self.pathpos=[(242,407),(343,408),(349,637),(635,626),(637,142),(922,149),(919,480),(1031,463)]
+        # initialize
+        self.pathi=0
+        self.moveactor.movetoxy(self.pathpos[self.pathi])
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            hasmoved=False
+            if controls.w and controls.wc and self.pathmoves[self.pathi]=='u':
+                self.pathi +=1
+                hasmoved=True
+            if controls.s and controls.sc and self.pathmoves[self.pathi]=='d':
+                self.pathi +=1
+                hasmoved=True
+            if controls.a and controls.ac and self.pathmoves[self.pathi]=='l':
+                self.pathi +=1
+                hasmoved=True
+            if controls.d and controls.dc and self.pathmoves[self.pathi]=='r':
+                self.pathi +=1
+                hasmoved=True
+            if hasmoved and self.pathi<len(self.pathpos):
+                self.moveactor.movetoxy(self.pathpos[self.pathi])
+                if self.pathi >= len(self.pathpos)-1:
+                    self.goal=True
+                    self.timerend.start()
+                    self.text_undone.show=False
+                    self.text_done.show=True
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
 
 
 

@@ -181,8 +181,8 @@ class obj_drawing:
     def draw(self,controls):
         if controls.mouse1:
             self.mousedraw(controls,controls.mouse1,controls.mouse1c,self.sprite,self.brush,self.x,self.y)
-        if controls.mouse3:
-            self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)
+        # if controls.mouse3:# draw shadow for dev
+        #     self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)
         if controls.backspace and controls.backspacec and tool.isinrect(controls.mousex,controls.mousey,self.rect):
             self.clear()
     def basedraw(self):
@@ -830,8 +830,8 @@ class obj_animationsequence:
         self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
-        if controls.a: self.ra += 3#1# cant fast edit here
-        if controls.d: self.ra -= 3#1
+        if controls.a: self.ra += 1#3#1# cant fast edit here
+        if controls.d: self.ra -= 1#3#1
         if controls.w: self.sa += 1# (scaling is in bscal**sa)
         if controls.s: self.sa -= 1
         if controls.f and controls.fc: self.ia += 1 # change sprite

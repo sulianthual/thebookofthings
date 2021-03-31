@@ -124,11 +124,11 @@ class obj_scene_titlescreen(page.obj_page):
             share.scenemanager.switchscene(tests.obj_scene_testmenu())
         #
         #############################################3
-        # Access WIP: Jump to scene directly
-        if share.devmode and controls.lctrl and controls.space:
+        # Access WIP: Jump to scene directly (remove in final version)
+        if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch3.obj_scene_ch3p12()
+            quickscene=ch3.obj_scene_ch3play()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3
