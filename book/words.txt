@@ -23,10 +23,10 @@ her
 partnername
 jing
 villain_he
-she
+he
 villain_his
-her
+his
 villain_him
-her
+him
 villainname
-cruella
+cruello

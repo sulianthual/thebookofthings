@@ -128,7 +128,7 @@ class obj_scene_titlescreen(page.obj_page):
         if share.devmode and controls.lctrl and controls.space:
             #
             # change current WIP scene here
-            quickscene=ch3.obj_scene_ch3p10start()
+            quickscene=ch3.obj_scene_ch3p12()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

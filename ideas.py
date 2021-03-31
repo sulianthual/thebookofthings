@@ -42,7 +42,7 @@ self.text=['Mini Games Ideas:',\
            '\nx) Hunt = Arrow Parabolic Arc [A][D] then [W]',\
            '\nx) Situation? = Flappy Bird [W]',\
            '\nx) Fight = Play Pong [W][S]',\
-           '\nx)',\
+           '\nx) stomping game [A][D]+[W]. Just jump on each other',\
            '\nx) Fight = Mash [A][D]',\
            '\nx) Fight = Rock Paper Scissors (choose quickly on beat [A][W][D])',\
            '\nx) Mario level= move [A][D] and jump [W]',\
@@ -54,14 +54,12 @@ self.text=['Mini Games Ideas:',\
            '\nx) Shooter=Cannon on fast rotating wheel, shoot stuff with [W]',\
            '\nx) Indiana jones ball behind=[A][D] to avoid obstacles',\
            '\nx) breakout game (pad, ball and horizontal layers of bricks)',\
-           '\nx)',\
-           '\nx) Chapt3: helicopter for hero/villain. flappy bird to use it and also shoots each flap.',\
-           '\nx) first round boss fight hit him (he is flapping on right edge). second round he also shoots, avoid it.',\
-           '\nx) bunny stomping game (ask Jing): bunnies multiply (you can stomp them, they can stomp you)',\
+           '\nx) rock paper scissors (like alex kid). Countdown 3-2-1, can see villain choice that is random except on 1',\
+           '\nx) helicopters for hero/villain with flappy bird and shooting',\
            '\nx) writing game: type quickly text or answer to it. What is your favorite color? ...etc...',\
            '\nx) jump/duck. Simple for bullets (increase rythm)',\
            '\nx) simple dinosaur game from google. just jump in time.',\
-           '\nx)',\
+           '\nx) skiing game like classic game',\
            '\nx)',\
            '\nx)',\
            '\nx)',\
