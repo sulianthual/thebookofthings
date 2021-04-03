@@ -1,8 +1,8 @@
 difficulty
-1
+0
 donative
 True
 domusic
-False
+True
 dosound
 False

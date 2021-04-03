@@ -94,14 +94,10 @@ class obj_display:
             share.screen.screen=pygame.display.set_mode(self.displayresolution)
             share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
         else:
-            # fullscreen (image goes screen->intermscreen->displayscreen)
+            # fullscreen (image goes screen->displayscreen)
             self.displayresolution=(self.infos.current_w, self.infos.current_h)
             share.screen.screen=pygame.Surface((1280,720))
             share.screen.set_alpha(None)
-            self.intermscreen=pygame.Surface(self.displayresolution)
-            self.intermscreen.set_alpha(None)
-            self.intermscreen_offsetx=int(self.infos.current_w/2-self.displayresolution[0]/2)
-            self.intermscreen_offsety=int(self.infos.current_h/2-self.displayresolution[1]/2)
             self.displayscreen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)# fullscreen
             # self.displayscreen = pygame.display.set_mode((0,0), pygame.NOFRAME)# borderless
             # self.displayscreen = pygame.display.set_mode((0,0))# windowed
@@ -138,10 +134,10 @@ class obj_display:
             pygame.display.update()# always refresh entire display
             # pygame.display.update(share.screen.areas)# only refresh parts of the display
         else:# adapted, intermediary screen
-            pygame.transform.scale(share.screen.screen,self.displayresolution,self.intermscreen)# reg scale
-            # pygame.transform.smoothscale(share.screen.screen,self.displayresolution,self.intermscreen)# smoothscale (too slow)
-            self.displayscreen.blit(self.intermscreen,(self.intermscreen_offsetx,self.intermscreen_offsety))
-            pygame.display.update()# always refresh entire display
+            pygame.transform.scale(share.screen.screen,self.displayresolution,self.displayscreen)# scaling
+            # pygame.transform.smoothscale(share.screen.screen,self.displayresolution,self.displayscreen)# smoothscale (too slow)
+            pygame.display.update()# refresh entire display
+            # pygame.display.update(share.screen.areas)# only refresh parts of the display
 
 
 
