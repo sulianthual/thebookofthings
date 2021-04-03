@@ -41,21 +41,20 @@ iidea=0# idea menu index
 
 
 
-# Game Core
+# Game Core (order matters)
 core.initialize()# start game engine (pygame)
 clock=core.obj_clock()# game clock
 screen=core.obj_screen()# display buffer screen
-display=core.obj_display()# window display (pygame.display.update)
 controls=core.obj_controls()# mouse/keyboard controls
-windowicon=core.obj_windowicon()# window icon
+datamanager=datb.obj_datamanager()# data manager (display, music,etc...)
+display=core.obj_display()# window display (pygame.display.update)
 quitgame=core.obj_quit()# function quit game
 #
 # Databases with quick access
 fonts=datb.obj_fonts()# text fonts
 colors=datb.obj_colors()# dictionary of colors
 brushes=datb.obj_brushes()# brushes used for drawing
-# Data Manager
-datamanager=datb.obj_datamanager()
+
 #
 
 

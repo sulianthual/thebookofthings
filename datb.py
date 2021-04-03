@@ -107,30 +107,69 @@ class obj_datamanager:
         self.loadprogress()
         self.filewords='book/words.txt'# current written words for things
         self.loadwords()
+        self.filesettings='book/settings.txt'
+        self.loadsettings()
     def erasebook(self):
         files = tool.oslistdir('book')
-        for i in files: tool.osremove('book/'+i)
-        self.chapter=0
-        self.dictwords={}
+        for i in files: tool.osremove('book/'+i)# erase everything
+        self.loadprogress()# reset progress
         self.saveprogress()
+        self.loadwords()# reset words
         self.savewords()
+        self.savesettings()# conserve current settings
+    #
     def getprogress(self):
         return self.chapter# last chapter unlocked
     def saveprogress(self):
         with open(self.fileprogress,'w+') as f1:
-            f1.write('chapter,'+str(self.chapter)+'\n')# first line
+            f1.write('chapter'+'\n')# highest unlocked chapter
+            f1.write(str(self.chapter)+'\n')#
     def loadprogress(self):
         if tool.ospathexists(self.fileprogress):
             with open(self.fileprogress,'r+') as f1:
-                line=f1.readline()# chapter
-                line=line.split(",")
-                self.chapter=int(line[1])
+                line=f1.readline()# highest unlocked chapter
+                line=f1.readline()
+                self.chapter=int(line)
         else:
+            # default progress
             self.chapter=0
     def updateprogress(self,chapter=None):
         if chapter:
             self.chapter=max(self.chapter,chapter)
         self.saveprogress()
+    #
+    def savesettings(self):
+        with open(self.filesettings,'w') as f1:
+                f1.write('difficulty'+'\n')#key
+                f1.write(str(self.leveldifficulty)+'\n')#value
+                f1.write('donative'+'\n')#key
+                f1.write(str(self.donative)+'\n')#value
+                f1.write('domusic'+'\n')#key
+                f1.write(str(self.domusic)+'\n')#value
+                f1.write('dosound'+'\n')#key
+                f1.write(str(self.dosound)+'\n')#value
+    def loadsettings(self):
+        if tool.ospathexists(self.filesettings):
+            with open(self.filesettings,'r+') as f1:
+                line=f1.readline()# difficulty
+                line=f1.readline()
+                self.leveldifficulty=int(line)
+                line=f1.readline()# donative
+                line=f1.readline()
+                self.donative=line=='True'+'\n'
+                line=f1.readline()# domusic
+                line=f1.readline()
+                self.domusic=line=='True'+'\n'
+                line=f1.readline()# dosound
+                line=f1.readline()
+                self.dosound=line=='True'+'\n'
+        else:
+            # default settings
+            self.leveldifficulty=1# 0,1,2 for easy, medium, hard
+            self.donative=True# 1280x720(native) or adapted resolution
+            self.domusic=False# music on/off
+            self.dosound=False# sound on/off
+    #
     def getwords(self):
         return self.dictwords# dictionary of words=(key,value)
     def getwordkeys(self):
@@ -152,6 +191,7 @@ class obj_datamanager:
                 for i in range(int(len(matrix)/2)):# read alternated key,value on lines
                     self.dictwords[matrix[i*2]]=matrix[i*2+1]
         else:
+            # default words (empty)
             self.dictwords={}
 
 

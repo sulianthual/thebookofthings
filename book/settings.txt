@@ -1,0 +1,8 @@
+difficulty
+1
+donative
+True
+domusic
+False
+dosound
+False

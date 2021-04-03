@@ -46,13 +46,14 @@ class obj_pagedisplay_fps:
         text='FPS='+str(int(share.clock.getfps()))
         self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
     def display(self):
-        self.sprite.display(50,20)
+        # self.sprite.display(50,20)
+        self.sprite.display(1230,20)
     def update(self,controls):
         self.make()# rebuild sprite every update
         self.display()
 
 
-# display page number
+# display page number (obsolete)
 class obj_pagedisplay_number:
     def __init__(self):
         self.type='pagenumber'

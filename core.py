@@ -72,23 +72,84 @@ class obj_scenemanager:
         if controls.esc: share.quitgame()# QUICK QUIT: REMOVE ME IN FINAL VERSION
 
 
+####################################################################################################################
+####################################################################################################################
+
+
 # Display Manager
 class obj_display:
     def __init__(self):
-        self.setup()# initial setup (can be repeated on settings changes)
-    def setup(self):
-        share.screen.screen=pygame.display.set_mode((1280,720))# initialize display and buffer screen
-        share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
-        pygame.display.set_caption("The Book of Things")# window banner
+        self.infos=pygame.display.Info()# get computer display info (only at init)
+        # initial setup (can be repeated on settings changes)
+        if share.datamanager.donative:# launch in windowed
+            self.setup()
+        else:
+            self.setup(native=False)# launch in fullscreen
+    def setup(self,native=True):
+        self.native=native# native (windowed in 1280,720) or fullscreen (adapted resolution)
+        # initialize display and buffer screen
+        if self.native:
+            # native (windowed 1280x720)
+            self.displayresolution=(1280,720)
+            share.screen.screen=pygame.display.set_mode(self.displayresolution)
+            share.screen.set_alpha(None) # Remove alpha=transparency (for increased performances)
+        else:
+            # fullscreen (image goes screen->intermscreen->displayscreen)
+            self.displayresolution=(self.infos.current_w, self.infos.current_h)
+            share.screen.screen=pygame.Surface((1280,720))
+            share.screen.set_alpha(None)
+            self.intermscreen=pygame.Surface(self.displayresolution)
+            self.intermscreen.set_alpha(None)
+            self.intermscreen_offsetx=int(self.infos.current_w/2-self.displayresolution[0]/2)
+            self.intermscreen_offsety=int(self.infos.current_h/2-self.displayresolution[1]/2)
+            self.displayscreen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)# fullscreen
+            # self.displayscreen = pygame.display.set_mode((0,0), pygame.NOFRAME)# borderless
+            # self.displayscreen = pygame.display.set_mode((0,0))# windowed
+            self.displayscreen.set_alpha(None)
+        # Mouse
+        self.mousescaling=(1280/self.displayresolution[0],720/ self.displayresolution[1])# scaling
+        share.controls.mousescaling=self.mousescaling# tell controls about new mouse scaling
         pygame.mouse.set_visible(True)# show mouse
-    def seticon(self,image):# set window icon
-        pygame.display.set_icon(image)
-    def reset(self):# reset display with new values
+        # Other
+        pygame.display.set_caption("The Book of Things")# window banner
+        self.reseticon()# window icon
+    def reset(self,native=True):# reset display with new values
         pygame.display.quit()
-        self.setup()
+        self.setup(native)
+    #
+    def reseticon(self):
+        self.makeicon()
+        self.seticon()
+    def makeicon(self):# make window icon from a player drawing
+        if tool.ospathexists('book/book.png'):
+            img=pygame.image.load('book/book.png').convert()
+            img=pygame.transform.scale(img,(42,36))
+            pygame.image.save(img,'book/bookicon.png')
+    def seticon(self):
+        if tool.ospathexists('book/bookicon.png'):
+            img=pygame.image.load('book/bookicon.png').convert()
+        else:
+            img=pygame.image.load('data/booknoicon.png').convert()
+        img.set_colorkey(share.colorkey)
+        pygame.display.set_icon(img)
+    #
     def update(self):
-        pygame.display.update()# always refresh entire display
-        # pygame.display.update(share.screen.areas)# only refresh parts of the display
+        if self.native:# display is directly the screen
+            pygame.display.update()# always refresh entire display
+            # pygame.display.update(share.screen.areas)# only refresh parts of the display
+        else:# adapted, intermediary screen
+            pygame.transform.scale(share.screen.screen,self.displayresolution,self.intermscreen)# reg scale
+            # pygame.transform.smoothscale(share.screen.screen,self.displayresolution,self.intermscreen)# smoothscale (too slow)
+            self.displayscreen.blit(self.intermscreen,(self.intermscreen_offsetx,self.intermscreen_offsety))
+            pygame.display.update()# always refresh entire display
+
+
+
+
+
+####################################################################################################################
+####################################################################################################################
+####################################################################################################################
 
 
 # Game buffer screen (sprites draw on it)
@@ -311,28 +372,6 @@ class obj_sprite_font:
         return self.font.size(text)
 
 
-####################################################################################################################
-
-# Game Window icon
-class obj_windowicon:
-    def __init__(self):
-        self.reset()
-    def reset(self):
-        self.makeicon()
-        self.seticon()
-    def makeicon(self):# make window icon from a player drawing
-        if tool.ospathexists('book/book.png'):
-            img=pygame.image.load('book/book.png').convert()
-            img=pygame.transform.scale(img,(42,36))
-            pygame.image.save(img,'book/bookicon.png')
-    def seticon(self):
-        if tool.ospathexists('book/bookicon.png'):
-            img=pygame.image.load('book/bookicon.png').convert()
-        else:
-            img=pygame.image.load('data/booknoicon.png').convert()
-        img.set_colorkey(share.colorkey)
-        share.display.seticon(img)
-
 
 ####################################################################################################################
 
@@ -345,6 +384,7 @@ class obj_controls:
         self.events=pygame.event.get()
         self.quit=False
         # mouse
+        self.mousescaling=(1,1)#(= (1,1) unless screen is scaled)
         self.mousex=0
         self.mousey=0
         self.mouse1=False# pressed or not
@@ -422,8 +462,8 @@ class obj_controls:
         self.mouse4c=False#middle up
         self.mouse5c=False# middle down
         (self.mousex,self.mousey)=pygame.mouse.get_pos()
-        self.mousex=int(self.mousex)# add factor if screen is stretched
-        self.mousey=int(self.mousey)
+        self.mousex=int(self.mousex*self.mousescaling[0])# scale input if screen is stretched
+        self.mousey=int(self.mousey*self.mousescaling[1])# must remain an integer!!)
         for event in self.events:
             if event.type==pygame.MOUSEBUTTONDOWN:
                 if event.button==1:

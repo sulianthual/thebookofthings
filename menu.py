@@ -71,7 +71,7 @@ class obj_scene_titlescreen(page.obj_page):
 
     def setup(self):
         super().setup()
-        self.maxchapter=share.datamanager.getprogress()# last chapter unlocked
+        self.maxchapter=share.datamanager.chapter# highest unlocked chapter
         self.ichapter=self.maxchapter# pointer position
         share.ipage=1# current page number in chapter
         # update menu (chapter dependent)
@@ -86,7 +86,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch3.show=self.maxchapter>2
         self.sprite_ch4.show=self.maxchapter>3
         # update decorations (chapter dependent)
-        share.windowicon.reset()# window icon
+        share.display.reseticon()# window icon
         self.sprite_pen.replaceimage('pen')
         self.sprite_book.replaceimage('book')
         self.sprite_eraser.replaceimage('eraser')
@@ -154,15 +154,11 @@ class obj_scene_settings(page.obj_page):
     def presetup(self):
         super().presetup()
         # Default settings
-        self.domusic=False# music on/off
-        self.dosound=False# sound on/off
-        self.leveldifficulty=1# 0,1,2 for easy, medium, hard
-        self.screenresolution=1#0,1,2 for 640x360, 1280x720,2560x1440
-        self.screentype=1#0,1,2 for windowed, borderless,fullscreen
+        share.datamanager.loadsettings()# load current settings
         #
         self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
         self.addpart( draw.obj_textbox('[Tab: Back] [Up/Down: Select] [Enter: Change]',(640,350),fontsize='smaller') )
-        self.maxjpos=6# max pointer position
+        self.maxjpos=4# max pointer position
         self.jpos=0# pointer position
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
@@ -170,44 +166,31 @@ class obj_scene_settings(page.obj_page):
         self.difficultyeasy=draw.obj_textbox('Difficulty: Easy (Coming Soon)',(640,380),fontsize='smaller')
         self.difficultymedium=draw.obj_textbox('Difficulty: Medium',(640,380),fontsize='smaller')
         self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Soon)',(640,380),fontsize='smaller')
-        self.screen640x360=draw.obj_textbox('Screen Resolution: 640x360',(640,410),fontsize='smaller')
-        self.screen1280x720=draw.obj_textbox('Screen Resolution: 1280x720 (native)',(640,410),fontsize='smaller')
-        self.screen2560x1440=draw.obj_textbox('Screen Resolution: 2560x1440',(640,410),fontsize='smaller')
-        self.screentypewindowed=draw.obj_textbox('Screen Type: Windowed',(640,440),fontsize='smaller')
-        self.screentypeborderless=draw.obj_textbox('Screen Type: Borderless',(640,440),fontsize='smaller')
-        self.screentypefullscreen=draw.obj_textbox('Screen Type: FullScreen (not allowed)',(640,440),fontsize='smaller')
-        self.musicoff=draw.obj_textbox('Music: Off',(640,470),fontsize='smaller')
-        self.musicon=draw.obj_textbox('Music: On (Coming Soon)',(640,470),fontsize='smaller')
-        self.soundoff=draw.obj_textbox('Sound: Off',(640,500),fontsize='smaller')
-        self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,500),fontsize='smaller')
-        self.addpart( draw.obj_textbox('Erase Book',(640,530),fontsize='smaller') )
+        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
+        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
+        self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
+        self.musicon=draw.obj_textbox('Music: On (Coming Soon)',(640,440),fontsize='smaller')
+        self.soundoff=draw.obj_textbox('Sound: Off',(640,470),fontsize='smaller')
+        self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,470),fontsize='smaller')
+        self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
         self.addpart( self.difficultyeasy )
         self.addpart( self.difficultymedium )
         self.addpart( self.difficultyhard )
-        self.difficultyeasy.show=self.leveldifficulty == 0
-        self.difficultymedium.show=self.leveldifficulty == 1
-        self.difficultyhard.show=self.leveldifficulty == 2
-        self.addpart( self.screen640x360 )
-        self.addpart( self.screen1280x720 )
-        self.addpart( self.screen2560x1440 )
-        self.screen640x360.show=self.screenresolution == 0
-        self.screen1280x720.show=self.screenresolution == 1
-        self.screen2560x1440.show=self.screenresolution == 2
-        self.addpart( self.screentypewindowed )
-        self.addpart( self.screentypeborderless )
-        self.addpart( self.screentypefullscreen )
-        self.screentypewindowed.show=self.screentype == 0
-        self.screentypeborderless.show=self.screentype == 1
-        self.screentypefullscreen.show=self.screentype == 2
+        self.difficultyeasy.show=share.datamanager.leveldifficulty == 0
+        self.difficultymedium.show=share.datamanager.leveldifficulty == 1
+        self.difficultyhard.show=share.datamanager.leveldifficulty == 2
+        self.addpart( self.screennative )
+        self.addpart( self.screenadapted )
+        self.screennative.show=share.datamanager.donative
+        self.screenadapted.show=not share.datamanager.donative
         self.addpart( self.musicoff )
         self.addpart( self.musicon )
-        self.musicoff.show=not self.domusic
-        self.musicon.show=self.domusic
+        self.musicoff.show=not share.datamanager.domusic
+        self.musicon.show=share.datamanager.domusic
         self.addpart( self.soundoff )
         self.addpart( self.soundon )
-        self.soundoff.show=not self.dosound
-        self.soundon.show=self.dosound
-
+        self.soundoff.show=not share.datamanager.dosound
+        self.soundon.show=share.datamanager.dosound
     def page(self,controls):
         if (controls.s and controls.sc) or (controls.down and controls.downc):
             self.jpos=min(self.jpos+1,self.maxjpos)
@@ -215,47 +198,44 @@ class obj_scene_settings(page.obj_page):
         if (controls.w and controls.wc) or (controls.up and controls.upc):
             self.jpos=max(self.jpos-1,0)
             self.sprite_pointer.movetoy(380+self.jpos*30)
+        # change difficulty
         if self.jpos==0 and (controls.enter and controls.enterc):
-            if self.leveldifficulty == 0:
-                self.leveldifficulty=1
-            elif self.leveldifficulty == 1:
-                self.leveldifficulty=2
+            if share.datamanager.leveldifficulty == 0:
+                share.datamanager.leveldifficulty=1
+            elif share.datamanager.leveldifficulty == 1:
+                share.datamanager.leveldifficulty=2
             else:
-                self.leveldifficulty=0
-            self.difficultyeasy.show=self.leveldifficulty == 0
-            self.difficultymedium.show=self.leveldifficulty == 1
-            self.difficultyhard.show=self.leveldifficulty == 2
+                share.datamanager.leveldifficulty=0
+            self.difficultyeasy.show=share.datamanager.leveldifficulty == 0
+            self.difficultymedium.show=share.datamanager.leveldifficulty == 1
+            self.difficultyhard.show=share.datamanager.leveldifficulty == 2
+            share.datamanager.savesettings()# save settings
+        # change display
         if self.jpos==1 and (controls.enter and controls.enterc):
-            if self.screenresolution == 0:
-                self.screenresolution=1
-            elif self.screenresolution == 1:
-                self.screenresolution=2
+            share.datamanager.donative= not share.datamanager.donative
+            self.screennative.show=share.datamanager.donative
+            self.screenadapted.show=not share.datamanager.donative
+            if share.datamanager.donative:
+                share.display.reset(native=True)
             else:
-                self.screenresolution=0
-            self.screen640x360.show=self.screenresolution == 0
-            self.screen1280x720.show=self.screenresolution == 1
-            self.screen2560x1440.show=self.screenresolution == 2
-
+                share.display.reset(native=False)
+            share.datamanager.savesettings()# save settings
+        # change music
         if self.jpos==2 and (controls.enter and controls.enterc):
-            if self.screentype == 0:
-                self.screentype=1
-            elif self.screentype == 1:
-                self.screentype=2
-            else:
-                self.screentype=0
-            self.screentypewindowed.show=self.screentype == 0
-            self.screentypeborderless.show=self.screentype == 1
-            self.screentypefullscreen.show=self.screentype == 2
+            share.datamanager.domusic=not share.datamanager.domusic
+            self.musicoff.show=not share.datamanager.domusic
+            self.musicon.show=share.datamanager.domusic
+            share.datamanager.savesettings()# save settings
+        # change sound
         if self.jpos==3 and (controls.enter and controls.enterc):
-            self.domusic=not self.domusic
-            self.musicoff.show=not self.domusic
-            self.musicon.show=self.domusic
+            share.datamanager.dosound=not share.datamanager.dosound
+            self.soundoff.show=not share.datamanager.dosound
+            self.soundon.show=share.datamanager.dosound
+            share.datamanager.savesettings()# save settings
+        # erase book
         if self.jpos==4 and (controls.enter and controls.enterc):
-            self.dosound=not self.dosound
-            self.soundoff.show=not self.dosound
-            self.soundon.show=self.dosound
-        if self.jpos==5 and (controls.enter and controls.enterc):
             share.scenemanager.switchscene(obj_scene_erasebook())
+        # back to titlescreen
         if (controls.tab and controls.tabc):
             share.scenemanager.switchscene(share.titlescreen,init=True)
 
