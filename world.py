@@ -1065,7 +1065,7 @@ class obj_world_stompfight(obj_world):
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(640,self.ybar),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,self.ybar)) )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,self.ybar)) )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(120)# goal to done

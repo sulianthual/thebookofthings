@@ -117,7 +117,7 @@ class obj_scene_titlescreen(page.obj_page):
                 elif self.ichapter==3:
                     share.scenemanager.switchscene(ch3.obj_scene_chapter3())
                 elif self.ichapter==4:
-                    share.scenemanager.switchscene(ch3.obj_scene_chapter4())
+                    share.scenemanager.switchscene(ch4.obj_scene_chapter4())
         if controls.esc and controls.escc:
             share.quitgame()
         if controls.space and controls.spacec:
@@ -128,7 +128,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch3.obj_scene_ch3play()
+            quickscene=ch3.obj_scene_ch3play15()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

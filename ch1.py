@@ -420,12 +420,12 @@ class obj_scene_ch1play3(page.obj_chapterpage):
 
 
 
-# name house
+
 class obj_scene_ch1play4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play3())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1playend())
+        share.scenemanager.switchscene(obj_scene_ch1play5())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -439,20 +439,57 @@ class obj_scene_ch1play4(page.obj_chapterpage):
 
 
 
-class obj_scene_ch1playend(page.obj_chapterpage):
+class obj_scene_ch1play5(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play4())
     def nextpage(self):
-        share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
-        super().nextpage()
+        share.scenemanager.switchscene(obj_scene_ch1playend())
+    def setup(self):
+        self.text=[\
+                   '"',('{hero_he}',share.colors.hero),' did that forever and was happy, the End". ',\
+                   ]
+
+
+        # drawing1=draw.obj_drawing('endframe',(640,410),shadow=(400,250))
+        # drawing1.brush.makebrush(share.brushes.smallpen)
+        # self.addpart( drawing1 )
+        self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
+        self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
+        self.addpart( draw.obj_textbox('(of a very basic story)',(640,280)) )
+
+        self.addpart( draw.obj_image('bed',(400,530), scale=0.25) )
+        self.addpart( draw.obj_image('herobase',(580,490), scale=0.25) )
+        self.addpart( draw.obj_image('sun',(893,411), scale=0.25) )
+        self.addpart( draw.obj_image('moon',(410,365), scale=0.25) )
+        self.addpart( draw.obj_image('fish',(843,540), scale=0.15,rotate=90) )
+
+
+class obj_scene_ch1playend(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1play5())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1unlocknext())
     def setup(self):
         self.text=['And thats all the story for today, said the book of things. ',
-                   'But tomorrow we will make it even better! ',\
+                   'But tomorrow we will make this story even better! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
 
 
+
+class obj_scene_ch1unlocknext(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1playend())
+    def setup(self):
+        self.text=['You have unlocked ',('Chapter II: The Partner',share.colors.instructions),'. ',\
+                  'You can always redraw the hero, bed, sun and moon, fish and hook in ',\
+                  ('Chapter I: The Hero',share.colors.instructions),'. '\
+                   '',\
+                   ]
+        share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
+        for c,value in enumerate(['herobase','bed','sun','moon','fish','hook']):
+            self.addpart( draw.obj_image(value,(150+c*200,400), scale=0.25) )
 
 
 

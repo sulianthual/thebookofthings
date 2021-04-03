@@ -25,7 +25,7 @@ class obj_scene_prologue(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
     def setup(self):
-        self.text=['-----   Prologue   -----   ',\
+        self.text=['-----   Prologue: The Book of Things   -----   ',\
                    '\nIn the Beginning, there was Nothing. Absolutely Nothing. \nBut one Could Press [Enter] to Continue.']
         self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
 
@@ -157,7 +157,7 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
         self.text=['It was the book of things. The book of all things were all things would be.',
-                   'With the help of the pen and eraser, there would be many things to draw in the book.',\
+                   'With the help of the pen and eraser, there would be many things to write in the book.',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
@@ -166,15 +166,28 @@ class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def nextpage(self):
-        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
-        super().nextpage()
+        share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):
         self.text=['And so the book began...',\
                    ]
 
-
-
-
+class obj_scene_ch0unlocknext(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
+    def setup(self):
+        self.text=['You have unlocked ',('Chapter I: The Hero',share.colors.instructions),\
+                    '! Open it from the menu. ',\
+                   'You can always reopen older chapters to modify them. ',\
+                  'For example, you can redraw the book, pen and eraser in the ',\
+                  ('Prologue',share.colors.instructions),'. '\
+                   '',\
+                   ]
+        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
+        # self.addpart( draw.obj_image('pen',(400,490), scale=0.5) )
+        # self.addpart( draw.obj_image('book',(640,380), scale=0.5) )
+        # self.addpart( draw.obj_image('eraser',(890,490), scale=0.5) )
+        for c,value in enumerate(['book','pen','eraser']):
+            self.addpart( draw.obj_image(value,(340+c*300,400), scale=0.5) )
 
 
 

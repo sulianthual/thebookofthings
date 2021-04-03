@@ -14,25 +14,36 @@
 self.text=['Todo List:',\
            '\nx) No more advanced physics! Only simple goofy minigames',\
            '\nx) No more advanced drawings, only simple and goofy. Like same face on everything',\
-           '\nx) Basis=3 chapter story: Hero, Partner, Villain. (with NO choices)',\
-           '\nx) Then make alterations in Part II, Part III (Partner=He,She, Pet. Relation=love,friends,its complicated) ',\
-           '\nx) Book celebrates perfect story after Chapter III, then wakes up with hangover and story is all out of place',\
-           '\nx) In Subsequent Parts on can add alterations to the basic story (choose from list at beginning of the day)',\
-           '\nx) Open new alterations with simple puzzles (get item from previous choice, etc...)',\
+           '\nx) ',\
+           '\nx) Chapter 1-3 give the basic stories. Then alterations are made. ',\
+           '\nx)',\
+           '\nx) The story is organized into multiple endings coming choices (branch separations): ',\
+           '\nx) - keep paths simples (e.g. do not do independent choices or will obtain too much paths=2**choices)',\
+           '\nx)   finding a new ending unlocks a new path/choice, and we do one unlock at the end of each chapter',\
+           '\nx)   (except end-game we may leave a few path to discover)',\
+           '\nx)   we can still add short fail paths that reloop to last branch separation (e.g. hero dies during fight/choice => restarts fight)',\
+           '\nx)   look at flash game "fleeing the complex" that does these concepts very well',\
+           '\nx)   ',\
+           '\nx)',\
            '\nx)',\
            '\nx) Chapt 4: The Perfect Story. book of thing, pen/eraser have party to celebrate perfect story.',\
            '\nx) draw alcohol(or cocktail?) and party hat. Wakes up with hangover and story is all out of place.',\
-           '\nx) hero/partner are in relationship=its complicated, partner is cheating with villain, and maybe 1 other change.',\
-           '\nx) Chapt 5: Menage a Trois: explore more interactions between 3 characters. Open choice system' ,\
+           '\nx) hero/partner are in relationship=its complicated, goes rescue partner but is cheating with villain.',\
+           '\nx) hero begs partner to come back but partner kills hero. Open Ending: villain partner lived happily',\
+           '\nx) book of things says lets go back adds new choice: hero fights (instead of begging)',\
+           '\nx) goes to new Ending: hero goes back home alone (ending unlocks next chapter)',\
            '\nx)',\
-           '\nx) Later on, theme changes: story is in space (draw space helmets, gravity is lowered in cutscenes)',\
-           '\nx) story under the sea. story with cowboy hats, pirates... These may open unique questline (e.g. find pirate treasure)',\
+           '\nx) Chapter 5: Love Triangle. Open a new choice at begginning. hero-partner are friends. Or maybe they try to work on relatiohship?',\
+           '\nx)            Then can try to get new paths/endings with hero friend of villain,etc',\
            '\nx)',\
-           '\nx) from chapt4 many event choices are added. Many of them lead to instant death (e.g. slapping partners ass)',
-           ', and one has to restart the day. ',\
-           'Another way to day is in specific minigames like fighting the villain. ',\
+           '\nx) Chapter ?: pirate theme story alteration (make palm trees, islands, talk like pirates, treasure hunt)',\
+           '\nx)            everyone has an eyelid',\
+           '\nx)',\
+           '\nx) Chapter ?: A Space Odyssey. Draw helmets on everyone. Go on space adventure. ',\
            '\nx)',\
            '\nx)',\
+           '\nx) Chapter ??: The dream factory: completely break everything (end-game). hero can have fish head, etc...',\
+           '\nx) or do some malkovitch style repetitions...',\
            '\nx)',\
            '\nx)',\
            ]
