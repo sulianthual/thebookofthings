@@ -39,19 +39,19 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('By Sul',(1210,670),fontsize='smaller')
         self.sprite_pointer=draw.obj_textbox('---',(500,410),fontsize='smaller')
-        self.sprite_start=draw.obj_textbox('Start Book [Press Enter]',(640,350),fontsize='smaller')
-        self.sprite_info=draw.obj_textbox('[Up/Down: Select]  [Enter: Read]',(640,350),fontsize='smaller')
-        self.sprite_erase=draw.obj_textbox('Erase Book',(640,380),fontsize='smaller')
-        self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(640,410),fontsize='smaller')
+        self.sprite_info=draw.obj_textbox('[Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
+        self.sprite_settings=draw.obj_textbox('Settings',(640,380),fontsize='smaller')
+        self.sprite_start=draw.obj_textbox('Start New Book',(640,410),fontsize='smaller')
+        self.sprite_prologue=draw.obj_textbox('Prologue',(640,410),fontsize='smaller')
         self.sprite_ch1=draw.obj_textbox('Chapter 1: The Hero',(640,440),fontsize='smaller')
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
         self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
-        self.addpart(self.sprite_start)
         self.addpart(self.sprite_info)
-        self.addpart(self.sprite_erase)
+        self.addpart(self.sprite_settings)
+        self.addpart(self.sprite_start)
         self.addpart(self.sprite_prologue)
         self.addpart(self.sprite_ch1)
         self.addpart(self.sprite_ch2)
@@ -66,7 +66,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(self.sprite_eraser)
         # devtools
         self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
-        self.addpart(draw.obj_textbox('[Ctrl+Space: Access WIP]',(640,700),fontsize='smaller'))
+        self.addpart(draw.obj_textbox('[F: Quick Access for Developer]',(640,700),fontsize='smaller'))
         self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
 
     def setup(self):
@@ -76,10 +76,10 @@ class obj_scene_titlescreen(page.obj_page):
         share.ipage=1# current page number in chapter
         # update menu (chapter dependent)
         self.sprite_author.show=self.maxchapter>0
-        self.sprite_pointer.show=self.maxchapter>0
+        self.sprite_pointer.show=True
+        self.sprite_info.show=True
+        self.sprite_settings.show=True
         self.sprite_start.show=self.maxchapter==0
-        self.sprite_info.show=self.maxchapter>0
-        self.sprite_erase.show=self.maxchapter>0
         self.sprite_prologue.show=self.maxchapter>0
         self.sprite_ch1.show=self.maxchapter>0
         self.sprite_ch2.show=self.maxchapter>1
@@ -93,31 +93,42 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_book.show=self.ichapter>0
         self.sprite_pen.show=self.ichapter>0
         self.sprite_eraser.show=self.ichapter>0
-
-    def page(self,controls):
+        # pointer
         self.sprite_pointer.movetoy(410+self.ichapter*30)
         self.sprite_pen.movetoy(360+self.ichapter*30)
-        if self.maxchapter<1:# new book
-            if controls.enter  and controls.enterc:
+
+    def page(self,controls):
+
+        # if self.maxchapter<1:# new book
+        #     if controls.enter  and controls.enterc:
+        #         share.scenemanager.switchscene(ch0.obj_scene_prologue())
+        # else:
+
+        if (controls.s and controls.sc) or (controls.down and controls.downc):
+            self.ichapter=min(self.ichapter+1,self.maxchapter)
+            self.sprite_pointer.movetoy(410+self.ichapter*30)
+            self.sprite_pen.movetoy(360+self.ichapter*30)
+
+        if (controls.w and controls.wc) or (controls.up and controls.upc):
+            self.ichapter=max(self.ichapter-1,-1)
+            self.sprite_pointer.movetoy(410+self.ichapter*30)
+            self.sprite_pen.movetoy(360+self.ichapter*30)
+
+        if controls.enter  and controls.enterc:
+            if self.ichapter==-1:
+                share.scenemanager.switchscene(obj_scene_settings())
+            elif self.ichapter==0:
                 share.scenemanager.switchscene(ch0.obj_scene_prologue())
-        else:
-            if (controls.s and controls.sc) or (controls.down and controls.downc):
-                self.ichapter=min(self.ichapter+1,self.maxchapter)
-            if (controls.w and controls.wc) or (controls.up and controls.upc):
-                self.ichapter=max(self.ichapter-1,-1)
-            if controls.enter  and controls.enterc:
-                if self.ichapter==-1:
-                    share.scenemanager.switchscene(obj_scene_erasebook())
-                elif self.ichapter==0:
-                    share.scenemanager.switchscene(ch0.obj_scene_prologue())
-                elif self.ichapter==1:
-                    share.scenemanager.switchscene(ch1.obj_scene_chapter1())
-                elif self.ichapter==2:
-                    share.scenemanager.switchscene(ch2.obj_scene_chapter2())
-                elif self.ichapter==3:
-                    share.scenemanager.switchscene(ch3.obj_scene_chapter3())
-                elif self.ichapter==4:
-                    share.scenemanager.switchscene(ch4.obj_scene_chapter4())
+            elif self.ichapter==1:
+                share.scenemanager.switchscene(ch1.obj_scene_chapter1())
+            elif self.ichapter==2:
+                share.scenemanager.switchscene(ch2.obj_scene_chapter2())
+            elif self.ichapter==3:
+                share.scenemanager.switchscene(ch3.obj_scene_chapter3())
+            elif self.ichapter==4:
+                share.scenemanager.switchscene(ch4.obj_scene_chapter4())
+
+
         if controls.esc and controls.escc:
             share.quitgame()
         if controls.space and controls.spacec:
@@ -136,37 +147,145 @@ class obj_scene_titlescreen(page.obj_page):
 
 ####################################################################################################################
 ####################################################################################################################
+# Settings Menu
+class obj_scene_settings(page.obj_page):
+    def __init__(self):
+        super().__init__()
+    def presetup(self):
+        super().presetup()
+        # Default settings
+        self.domusic=False# music on/off
+        self.dosound=False# sound on/off
+        self.leveldifficulty=1# 0,1,2 for easy, medium, hard
+        self.screenresolution=1#0,1,2 for 640x360, 1280x720,2560x1440
+        self.screentype=1#0,1,2 for windowed, borderless,fullscreen
+        #
+        self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
+        self.addpart( draw.obj_textbox('[Tab: Back] [Up/Down: Select] [Enter: Change]',(640,350),fontsize='smaller') )
+        self.maxjpos=6# max pointer position
+        self.jpos=0# pointer position
+        self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
+        self.addpart(self.sprite_pointer)
+        #
+        self.difficultyeasy=draw.obj_textbox('Difficulty: Easy (Coming Soon)',(640,380),fontsize='smaller')
+        self.difficultymedium=draw.obj_textbox('Difficulty: Medium',(640,380),fontsize='smaller')
+        self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Soon)',(640,380),fontsize='smaller')
+        self.screen640x360=draw.obj_textbox('Screen Resolution: 640x360',(640,410),fontsize='smaller')
+        self.screen1280x720=draw.obj_textbox('Screen Resolution: 1280x720 (native)',(640,410),fontsize='smaller')
+        self.screen2560x1440=draw.obj_textbox('Screen Resolution: 2560x1440',(640,410),fontsize='smaller')
+        self.screentypewindowed=draw.obj_textbox('Screen Type: Windowed',(640,440),fontsize='smaller')
+        self.screentypeborderless=draw.obj_textbox('Screen Type: Borderless',(640,440),fontsize='smaller')
+        self.screentypefullscreen=draw.obj_textbox('Screen Type: FullScreen (not allowed)',(640,440),fontsize='smaller')
+        self.musicoff=draw.obj_textbox('Music: Off',(640,470),fontsize='smaller')
+        self.musicon=draw.obj_textbox('Music: On (Coming Soon)',(640,470),fontsize='smaller')
+        self.soundoff=draw.obj_textbox('Sound: Off',(640,500),fontsize='smaller')
+        self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,500),fontsize='smaller')
+        self.addpart( draw.obj_textbox('Erase Book',(640,530),fontsize='smaller') )
+        self.addpart( self.difficultyeasy )
+        self.addpart( self.difficultymedium )
+        self.addpart( self.difficultyhard )
+        self.difficultyeasy.show=self.leveldifficulty == 0
+        self.difficultymedium.show=self.leveldifficulty == 1
+        self.difficultyhard.show=self.leveldifficulty == 2
+        self.addpart( self.screen640x360 )
+        self.addpart( self.screen1280x720 )
+        self.addpart( self.screen2560x1440 )
+        self.screen640x360.show=self.screenresolution == 0
+        self.screen1280x720.show=self.screenresolution == 1
+        self.screen2560x1440.show=self.screenresolution == 2
+        self.addpart( self.screentypewindowed )
+        self.addpart( self.screentypeborderless )
+        self.addpart( self.screentypefullscreen )
+        self.screentypewindowed.show=self.screentype == 0
+        self.screentypeborderless.show=self.screentype == 1
+        self.screentypefullscreen.show=self.screentype == 2
+        self.addpart( self.musicoff )
+        self.addpart( self.musicon )
+        self.musicoff.show=not self.domusic
+        self.musicon.show=self.domusic
+        self.addpart( self.soundoff )
+        self.addpart( self.soundon )
+        self.soundoff.show=not self.dosound
+        self.soundon.show=self.dosound
+
+    def page(self,controls):
+        if (controls.s and controls.sc) or (controls.down and controls.downc):
+            self.jpos=min(self.jpos+1,self.maxjpos)
+            self.sprite_pointer.movetoy(380+self.jpos*30)
+        if (controls.w and controls.wc) or (controls.up and controls.upc):
+            self.jpos=max(self.jpos-1,0)
+            self.sprite_pointer.movetoy(380+self.jpos*30)
+        if self.jpos==0 and (controls.enter and controls.enterc):
+            if self.leveldifficulty == 0:
+                self.leveldifficulty=1
+            elif self.leveldifficulty == 1:
+                self.leveldifficulty=2
+            else:
+                self.leveldifficulty=0
+            self.difficultyeasy.show=self.leveldifficulty == 0
+            self.difficultymedium.show=self.leveldifficulty == 1
+            self.difficultyhard.show=self.leveldifficulty == 2
+        if self.jpos==1 and (controls.enter and controls.enterc):
+            if self.screenresolution == 0:
+                self.screenresolution=1
+            elif self.screenresolution == 1:
+                self.screenresolution=2
+            else:
+                self.screenresolution=0
+            self.screen640x360.show=self.screenresolution == 0
+            self.screen1280x720.show=self.screenresolution == 1
+            self.screen2560x1440.show=self.screenresolution == 2
+
+        if self.jpos==2 and (controls.enter and controls.enterc):
+            if self.screentype == 0:
+                self.screentype=1
+            elif self.screentype == 1:
+                self.screentype=2
+            else:
+                self.screentype=0
+            self.screentypewindowed.show=self.screentype == 0
+            self.screentypeborderless.show=self.screentype == 1
+            self.screentypefullscreen.show=self.screentype == 2
+        if self.jpos==3 and (controls.enter and controls.enterc):
+            self.domusic=not self.domusic
+            self.musicoff.show=not self.domusic
+            self.musicon.show=self.domusic
+        if self.jpos==4 and (controls.enter and controls.enterc):
+            self.dosound=not self.dosound
+            self.soundoff.show=not self.dosound
+            self.soundon.show=self.dosound
+        if self.jpos==5 and (controls.enter and controls.enterc):
+            share.scenemanager.switchscene(obj_scene_erasebook())
+        if (controls.tab and controls.tabc):
+            share.scenemanager.switchscene(share.titlescreen,init=True)
+
+
+####################################################################################################################
+####################################################################################################################
 # Erase Book
 # *ERASE
+
 class obj_scene_erasebook(page.obj_chapterpage):
-    def setup(self):
-        self.text=['It was decided to erase the book to start a new one. One had to be very sure.',\
-                   'All drawings, all names would be erased, and everything would have to be created again.',\
-                   '[Tab: Cancel]  [Enter: ',('Erase the Book',share.colors.red),']']
-        self.addpart( draw.obj_animation('bookerase','book',(640,360)) )
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_erasebookconfirm())
-
-
-class obj_scene_erasebookconfirm(page.obj_chapterpage):
-    def setup(self):
-        self.text=['A ',('LAST WARNING',share.colors.red),' was issued. It was time to make a big decision.',\
-                   '\n[Tab: Cancel]  [Enter+Space+Ctrl: ',('ERASE THE BOOK',share.colors.red),']']
-        self.addpart( draw.obj_image('book',(640,350)) )
-    def callnextpage(self,controls):
-        if controls.enter and controls.space and controls.lctrl:
-            self.preendpage()# template
-            self.endpage()# customized
-            share.ipage += 1
-            self.nextpage()# switch to next page
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
-
-
-# In Final version replace with the correct one
-class obj_scene_erasebookconfirmed(page.obj_chapterpage):
+    def triggernextpage(self,controls):
+        return controls.enter and controls.space and controls.lctrl
     def setup(self):
-        self.text=['The book vanished.',\
+        self.text=['Press [Enter+Space+Ctrl] to erase the book. ',\
+                    'You will loose all your drawings and progress. ',\
+                    '[Tab: Back]',\
+                    ]
+
+
+class obj_scene_erasebookconfirmed(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
+    def setup(self):
+        self.text=['The book has vanished.',\
                    '[Tab: Back]']
         share.datamanager.erasebook()
 
