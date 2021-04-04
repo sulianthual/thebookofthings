@@ -13,7 +13,7 @@ her
 partner_him
 her
 partnername
-zelda
+princess peach
 villain_he
 he
 villain_his
@@ -21,4 +21,12 @@ his
 villain_him
 him
 villainname
-ganon
+the joker
+test1
+justatest
+test2
+anothertest
+test_he
+{test1}
+test_his
+{test1}ss

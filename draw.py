@@ -831,10 +831,10 @@ class obj_animationsequence:
         self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
-        if controls.a: self.ra += 1#3#1# cant fast edit here
-        if controls.d: self.ra -= 1#3#1
-        if controls.w: self.sa += 1# (scaling is in bscal**sa)
-        if controls.s: self.sa -= 1
+        if controls.a: self.ra += 3#1# cant fast edit here
+        if controls.d: self.ra -= 3#1
+        if controls.w: self.sa += 1#3#1# (scaling is in bscal**sa)
+        if controls.s: self.sa -= 1#3#1
         if controls.f and controls.fc: self.ia += 1 # change sprite
         if controls.g and controls.gc: self.ia -= 1
         if self.ia > len(self.creator.spritelist)-1: self.ia =0
@@ -1054,8 +1054,15 @@ class obj_dispgroup:
             self.dictx[i],self.dicty[i]=xd,yd
             self.dict[i].movetox(self.x+self.dictx[i])# update element position
             self.dict[i].movetoy(self.y+self.dicty[i])
-    def snapshot(self,rect,filename,path='book'):# print a snapshot of dispgroup (images only)
-        xsnap,ysnap,rxsnap,rysnap=rect# snapshot area x,y center on screen, radx and rady
+    def snapshot(self,rect,filename,path='book',edges=False):# print a snapshot of dispgroup (images only)
+        if not edges:
+            xsnap,ysnap,rxsnap,rysnap=rect# snapshot area x,y center on screen, radx and rady
+        else:
+            xmin,xmax,ymin,ymax=rect# give edges of snapshot area (xmin,xmax,ymin,ymax)
+            rxsnap=int((xmax-xmin)/2)
+            rysnap=int((ymax-ymin)/2)
+            xsnap=xmin+rxsnap
+            ysnap=ymin+rysnap
         snap=core.obj_sprite_image()# make new sprite image object
         snap.makeempty(rxsnap,rysnap)# empty with desired dimensions
         for i in self.dict.keys():# iterate dispgroup elements

@@ -220,7 +220,7 @@ class obj_scene_ch1p9(page.obj_chapterpage):
                 ' and we will be on our way. ',\
                    ]
         self.addpart(draw.obj_drawing('hook',(240,450),legend='Hook',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('fish',(940,450),legend='Fish',shadow=(300,200)))
+        self.addpart(draw.obj_drawing('fish',(940,450),legend='Fish (Facing Left)',shadow=(300,200)))
         if False:# not for player
             hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360))
             hookline.brush.makebrush(share.brushes.smallpen)

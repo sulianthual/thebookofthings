@@ -98,22 +98,14 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_pen.movetoy(360+self.ichapter*30)
 
     def page(self,controls):
-
-        # if self.maxchapter<1:# new book
-        #     if controls.enter  and controls.enterc:
-        #         share.scenemanager.switchscene(ch0.obj_scene_prologue())
-        # else:
-
         if (controls.s and controls.sc) or (controls.down and controls.downc):
             self.ichapter=min(self.ichapter+1,self.maxchapter)
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
-
         if (controls.w and controls.wc) or (controls.up and controls.upc):
             self.ichapter=max(self.ichapter-1,-1)
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
-
         if controls.enter  and controls.enterc:
             if self.ichapter==-1:
                 share.scenemanager.switchscene(obj_scene_settings())
@@ -127,8 +119,6 @@ class obj_scene_titlescreen(page.obj_page):
                 share.scenemanager.switchscene(ch3.obj_scene_chapter3())
             elif self.ichapter==4:
                 share.scenemanager.switchscene(ch4.obj_scene_chapter4())
-
-
         if controls.esc and controls.escc:
             share.quitgame()
         if controls.space and controls.spacec:
@@ -139,7 +129,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch3.obj_scene_ch3play15()
+            quickscene=ch4.obj_scene_ch4p3()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

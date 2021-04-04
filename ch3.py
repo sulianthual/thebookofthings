@@ -285,7 +285,13 @@ class obj_scene_ch3p9(page.obj_chapterpage):
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.snapshot((640,360+100-50,300,250),'villainshootcrouch')# 0 to 660 in height
-
+        # villainbase+gun =villainbasegun (for cutscenes)
+        image1=draw.obj_image('villainbase',(640,330))
+        image2=draw.obj_image('gun',(640+180,330),scale=0.4)
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640+50,330,200+50,330),'villainbasegun')# 0 to 660 in height
 
 class obj_scene_ch3p10start(page.obj_chapterpage):
     def prevpage(self):
