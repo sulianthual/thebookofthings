@@ -75,6 +75,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testdrawingbase())
         # image
         self.list.append(obj_scene_testimage())
+        self.list.append(obj_scene_testimageplacer())
         # animation
         self.list.append(obj_scene_testanimation())
         self.list.append(obj_scene_testanimationanimation())
@@ -358,6 +359,24 @@ class obj_scene_testimage(obj_testpage):
             self.image1.load('testimage1')
 
 
+# Scene: test image placer
+class obj_scene_testimageplacer(obj_testpage):
+    def setup(self):
+        self.name='Image Placer'
+        self.text=['Image Placer: allows developer to quickly place images on screen. ',\
+                    'the file book/aaa.txt is edited live, and the code can be quickly copied to a page. ',\
+                   '[W,S:scale], [A,D:rotate], [Q,E: flip], [F: browse image].',\
+                   ' [LMouse: Place Image], [RMouse: Remove Last Image]',\
+                   ' [Space or Exit Page: Output to Code File]',\
+                   ]
+        self.addpart( draw.obj_imageplacer(self, 'testimage1','testimage2' ) )
+        # These images below obtained quickly by copying content of book/aaa.txt
+        #
+        # self.addpart( draw.obj_image('testimage1',(570,414),scale=1,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('testimage1',(905,328),scale=1.63,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('testimage1',(824,582),scale=1.2,rotate=56,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('testimage1',(256,403),scale=3.03,rotate=56,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('testimage1',(653,257),scale=0.93,rotate=56,fliph=False,flipv=False) )
 
 
 #########################################################################

@@ -39,12 +39,12 @@ class obj_page:
     def postsetup(self):# foreground
         self.addpart(draw.obj_pagedisplay_fps())
     def addpart(self,element):
-        term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup',\
+        term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup','imageplacer',\
               'pagebackground','pagefps','pagetext',\
               'world']
         if element.type in term:
             self.to_update.append(element)
-        if element.type in ['drawing','textinput','textchoice']:
+        if element.type in ['drawing','textinput','textchoice','imageplacer']:
             self.to_finish.append(element)
     def removepart(self,element):
         for i in [self.to_update,self.to_finish]:

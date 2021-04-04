@@ -167,7 +167,6 @@ class obj_scene_ch4p4(page.obj_chapterpage):
                    'The next morning, the book of things woke up and said: ',\
                    ' uh my head... I dont remember much about last night. Lets read our story again. ',\
                    ]
-
         self.addpart( draw.obj_image('eraser',(194,457), scale=0.7,rotate=-110) )
         self.addpart( draw.obj_image('partyhat',(292,551), scale=0.3,rotate=-140) )
         self.addpart( draw.obj_image('pen',(1067,550), scale=0.6,rotate=95) )
@@ -177,6 +176,10 @@ class obj_scene_ch4p4(page.obj_chapterpage):
         self.addpart( draw.obj_image('drink',(151,643), scale=0.3,rotate=-70) )
         animation1=draw.obj_animation('ch4_bookwakeup','bookpartyhat',(640,360),record=False)
         self.addpart(animation1)
+        # self.addpart( draw.obj_imageplacer(self,'eraser','partyhat','pen','drink') )
+
+
+
 
 
 class obj_scene_ch4p5(page.obj_chapterpage):

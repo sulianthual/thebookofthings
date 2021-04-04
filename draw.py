@@ -536,6 +536,9 @@ class obj_image:
         self.sprite.flip(self.fh,self.fv)
         self.sprite.scale(self.s)
         self.sprite.rotate(self.r)
+    def movetoxy(self,x,y):
+        self.movetox(x)
+        self.movetoy(y)
     def movetox(self,x):
         self.x=x
     def movetoy(self,y):
@@ -613,6 +616,106 @@ class obj_imagefill(obj_image):
         pass
 
 
+####################################################################################################################
+
+# Quickly Place Images on Screen
+# This edits an output text file which code can be copied to a page
+# input types:
+# - 'pen','eraser'...(only read images from folder /book)
+class obj_imageplacer:
+    def __init__(self,creator,*args):
+        self.type='imageplacer'# object type
+        self.creator=creator# created by page
+        self.imglist=[]# list of available images
+        if args is not None:# args is the list of image names
+            for i in args:
+                self.imglist.append(i)
+        self.setup()
+    def setup(self):
+        self.nimglist=len(self.imglist)
+        self.iimg=0# index
+        # pointer image
+        self.pointer=obj_image('error',(640,360))
+        self.creator.addpart(self.pointer)# add to page
+        self.pointer.replaceimage(self.imglist[self.iimg])
+        # transformations (reapplied from base each time)
+        self.s=1
+        self.r=0
+        self.fh=False
+        self.fv=False
+        # placed images on screen (in a dispgroup)
+        self.dispgroup=obj_dispgroup((640,360))# dispgroup of placed images
+        self.creator.addpart(self.dispgroup)
+        self.iplaced=0# index for placed images
+        # output code
+        self.filecode='book/aaa.txt'
+        self.outputmatrix=[]# output matrix of text
+    def retransformpointer(self):
+        self.pointer.setup()# reset pointer entirely
+        if self.s != 1: self.pointer.scale(self.s)
+        if self.r != 0: self.pointer.rotate(self.r)
+        if self.fh == True: self.pointer.fliph()
+        if self.fv == True: self.pointer.flipv()
+    def placefrompointer(self,controls):# place image on screen
+        self.dispgroup.addpart('img_'+str(self.iplaced),\
+        obj_image(self.imglist[self.iimg],(controls.mousex,controls.mousey),\
+        scale=self.s,rotate=self.r,fliph=self.fh,flipv=self.fv) )
+        self.iplaced += 1
+        self.outputmatrix.append(\
+        '        '\
+        +'self.addpart( '\
+        +'draw.obj_image(\''+str(self.imglist[self.iimg])+'\','\
+        +'('+str(controls.mousex)+','+str(controls.mousey)\
+        +'),scale='+str(round(self.s,2))+',rotate='+str(self.r)\
+        +',fliph='+str(self.fh)+',flipv='+str(self.fv)\
+        +') )'\
+        )
+    def removefrompointer(self,controls):# remove last image from screen
+        self.dispgroup.removepart('img_'+str(self.iplaced-1))
+        self.iplaced = max(self.iplaced-1,0)
+
+    def finish(self):# save output code
+        with open(self.filecode,'w+') as f1:
+            f1.write(' '+'\n')
+            for i in self.outputmatrix:
+                f1.write(i+'\n')#
+            f1.write(' '+'\n')
+
+    def update(self,controls):
+        self.retransform=False
+        if controls.e and controls.ec:
+            self.fh=not self.fh
+            self.retransform=True
+        if controls.q and controls.qc:
+            self.fv=not self.fv
+            self.retransform=True
+        if controls.a:
+            self.r += 2
+            self.retransform=True
+        if controls.d:
+            self.r -= 2
+            self.retransform=True
+        if controls.w:
+            self.s *= 1.05
+            self.retransform=True
+        if controls.s:
+            self.s *= 0.95
+            self.retransform=True
+        if controls.f and controls.fc:# change image
+            self.iimg += 1
+            if self.iimg>self.nimglist-1: self.iimg=0
+            self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
+            self.retransform=True
+        self.pointer.update(controls)
+        if self.retransform:
+            self.retransformpointer()
+        self.pointer.movetoxy(controls.mousex,controls.mousey)
+        if controls.mouse1 and controls.mouse1c:
+            self.placefrompointer(controls)
+        if controls.mouse2 and controls.mouse2c:
+            self.removefrompointer(controls)
+        if controls.space and controls.spacec:
+            self.finish()# save content
 
 ####################################################################################################################
 
