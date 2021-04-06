@@ -172,7 +172,7 @@ class obj_scene_ch3p5(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation1=draw.obj_animation('ch3_villaincapture','villainbase',(640,360),record=False,scale=0.7)
-        animation2=draw.obj_animation('ch3_villaincapture2','partnerbase',(640,360),record=True,sync=animation1,scale=0.7)
+        animation2=draw.obj_animation('ch3_villaincapture2','partnerbase',(640,360),record=False,sync=animation1,scale=0.7)
         self.addpart( animation1 )
         self.addpart( animation2 )
 

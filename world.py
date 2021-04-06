@@ -451,11 +451,21 @@ class obj_world_sunrise(obj_world):
 class obj_world_wakeup(obj_world):
     def setup(self,**kwargs):
         # default options
-        self.partner=False
+        self.partner=False# add partner alongside hero
+        self.angryfaces=False# replace happy faces with angry faces
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
+            if 'angryfaces' in kwargs: self.angryfaces=kwargs["angryfaces"]# partner options
         #
+        # change base picture
+        self.herobaseimg='herobase'
+        self.partnerbaseimg='partnerbase'
+        if self.angryfaces:# replace with angry characters
+            self.herobaseimg='herobaseangry'
+            self.partnerbaseimg='partnerbaseangry'
+
+
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.ungoing=False# ungoing or back to start
@@ -476,16 +486,17 @@ class obj_world_wakeup(obj_world):
         self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75) )
         # start actor
         if self.partner == 'inlove':# add partner in love
-            self.startactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(420+100,490-50),scale=0.7,rotate=80) )
-        self.startactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
+            self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
+        self.startactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(420,490),scale=0.7,rotate=80) )
+
         # ungoing actor
         if self.partner == 'inlove':# add partner in love
-            self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes','partnerbase',(640+100,360-50),scale=0.7) )
-        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7) )
+            self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes',self.partnerbaseimg,(640+100,360-50),scale=0.7) )
+        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_heroawakes',self.herobaseimg,(640,360),scale=0.7) )
         # finish actor
         if self.partner == 'inlove':# add partner in love
-            self.finishactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(903+100,452-50),scale=0.7) )
-        self.finishactor.addpart( 'img1', draw.obj_image('herobase',(903,452),scale=0.7) )
+            self.finishactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(903+100,452-50),scale=0.7) )
+        self.finishactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(903,452),scale=0.7) )
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [D] to Wake up',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
@@ -533,7 +544,243 @@ class obj_world_wakeup(obj_world):
             if self.timerend.ring:
                 self.done=True# end of minigame
 
+####################################################################################################################
 
+# Mini Game: sneak drink at breakfast
+class obj_world_breakfastdrinking(obj_world):
+    def setup(self):
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.progressbar=obj_grandactor(self,(640,360))# progress bar
+        self.hero=obj_grandactor(self,(145,515))# hero
+        self.partner=obj_grandactor(self,(1160,490))# partner
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        # static
+        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-100),path='premade') )
+        self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(830,560),scale=0.5,fliph=True) )
+        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(495,560),scale=0.5,fliph=False) )
+        # progress bar
+        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,250),path='premade') )
+        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,250),path='premade') )
+        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,250),path='premade') )
+        self.progressbar.addpart( 'textbox', draw.obj_textbox('0%',(640,320)) )
+        self.progressmx=2#1# move rate of progressbar (respect to self.progress)
+        self.progressmax=int(567/self.progressmx)# max progress
+        self.progress=0# 0 to max progress
+        # hero
+        self.hero.addpart( 'waiting', draw.obj_image('herobaseangry',(150,540),scale=1.15,fliph=False) )
+        self.hero.addpart( 'happy', draw.obj_image('herobase',(150,540),scale=1.15,fliph=False) )
+        self.hero.addpart( 'drinkinghero', draw.obj_animation('ch4_herodrinks1','herobase',(640,360)) )
+        self.hero.addpart( 'drinkingdrink', draw.obj_animation('ch4_herodrinks2','drink',(640,360)) )
+        self.hero.addpart( 'busted', draw.obj_image('herobaseangry',(195,620),scale=1.2,rotate=26) )
+        self.hero.addpart( 'finished', draw.obj_animation('world_breakfastdrinking3','herobase',(640,360)) )
+        self.hero.dict['waiting'].show=True
+        self.hero.dict['happy'].show=False
+        self.hero.dict['drinkinghero'].show=False
+        self.hero.dict['drinkingdrink'].show=False
+        self.hero.dict['busted'].show=False
+        self.hero.dict['finished'].show=False
+        self.herostate=0# 0,1,2 for neutral,drinking,happy (excludes busted from partnerbusting)
+        self.herohappytimer=tool.obj_timer(100)# timer for happy after drinking
+        # partner
+        self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15),scale=1.15,fliph=True,path='premade') )
+        self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15),scale=1.15,fliph=True) )
+        self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15),scale=1.15,fliph=False) )
+        self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15),scale=1.15,rotate=15,fliph=False) )
+        self.partner.addpart( 'waiting_headrightbobble', draw.obj_animation('world_breakfastdrinking1','partnerheadangry',(640,360)) )
+        self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360)) )
+        self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(940,300),fontsize='huge') )
+        self.partner.dict['waiting_base'].show=True
+        self.partner.dict['waiting_headleft'].show=True
+        self.partner.dict['waiting_headright'].show=False
+        self.partner.dict['waiting_headrightup'].show=False
+        self.partner.dict['waiting_headrightbobble'].show=False
+        self.partner.dict['busting'].show=False
+        self.partner.dict['bustedtext'].show=False
+        self.partnerbusting=False# busting or not (2 states)
+        self.partnerstate=0# while not busting, state 0,1,2,3 for headleft,headright,headrightup,headrightbobble
+        self.partnertimer=tool.obj_timer(50)# timer for switch states
+        self.partnertimer.start()
+        self.partnertimerbusting=tool.obj_timer(100)# timer for busting
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
+        self.text_undone.show=True
+        self.text_done.show=False
+        # timer for end
+        self.timerend=tool.obj_timer(180)# goal to done
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            if self.progress>self.progressmax-1:
+                self.goal=True
+                self.timerend.start()
+                self.text_undone.show=False
+                self.text_done.show=True
+                self.hero.dict['waiting'].show=False
+                self.hero.dict['drinkinghero'].show=False
+                self.hero.dict['drinkingdrink'].show=False
+                self.hero.dict['busted'].show=False
+                self.hero.dict['finished'].show=True
+                self.hero.dict['finished'].rewind()
+                self.partner.dict['waiting_base'].show=True
+                self.partner.dict['waiting_headleft'].show=True
+                self.partner.dict['waiting_headright'].show=False
+                self.partner.dict['waiting_headrightup'].show=False
+                self.partner.dict['waiting_headrightbobble'].show=False
+                self.partner.dict['busting'].show=False
+                self.partner.dict['bustedtext'].show=False
+            #
+            # partner is busting hero
+            if self.partnerbusting:
+                self.partnertimerbusting.update()
+                if self.partnertimerbusting.ring:# switch back to normal
+                    self.partnerbusting=False
+                    self.herostate=0
+                    self.partnerstate=0
+                    self.partnertimer.amount=100
+                    self.partnertimer.start()
+                    self.hero.dict['waiting'].show=True
+                    self.hero.dict['drinkinghero'].show=False
+                    self.hero.dict['drinkingdrink'].show=False
+                    self.hero.dict['busted'].show=False
+                    self.hero.dict['finished'].show=False
+                    self.partner.dict['waiting_base'].show=True
+                    self.partner.dict['waiting_headleft'].show=True
+                    self.partner.dict['waiting_headright'].show=False
+                    self.partner.dict['waiting_headrightup'].show=False
+                    self.partner.dict['waiting_headrightbobble'].show=False
+                    self.partner.dict['busting'].show=False
+                    self.partner.dict['bustedtext'].show=False
+
+            # partner is not busting hero
+            else:
+                # switch to busting
+                if self.herostate==1 and self.partnerstate==0:# busted drinking
+                    self.partnerbusting=True
+                    self.partnertimerbusting.start()
+                    self.progress = 0# reset progress
+                    self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
+                    self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
+                    self.hero.dict['waiting'].show=False
+                    self.hero.dict['drinkinghero'].show=False
+                    self.hero.dict['drinkingdrink'].show=False
+                    self.hero.dict['busted'].show=True
+                    self.hero.dict['finished'].show=False
+                    self.partner.dict['waiting_base'].show=False
+                    self.partner.dict['waiting_headleft'].show=False
+                    self.partner.dict['waiting_headright'].show=False
+                    self.partner.dict['waiting_headrightup'].show=False
+                    self.partner.dict['waiting_headrightbobble'].show=False
+                    self.partner.dict['busting'].show=True
+                    self.partner.dict['bustedtext'].show=True
+                # hero behavior
+                if self.herostate==0:# neutral
+                    if controls.w and controls.wc:# switch to drinking
+                        self.herostate=1#
+                        self.hero.dict['waiting'].show=False
+                        self.hero.dict['happy'].show=False
+                        self.hero.dict['drinkinghero'].show=True
+                        self.hero.dict['drinkingdrink'].show=True
+                        self.hero.dict['busted'].show=False
+                        self.hero.dict['finished'].show=False
+                elif self.herostate==1:# drinking
+                    self.progress += 1# update progress
+                    self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
+                    self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
+                    if not controls.w and controls.wc:# switch to happy
+                        self.herostate=2#
+                        self.herohappytimer.start()
+                        self.hero.dict['waiting'].show=False
+                        self.hero.dict['happy'].show=True
+                        self.hero.dict['drinkinghero'].show=False
+                        self.hero.dict['drinkingdrink'].show=False
+                        self.hero.dict['busted'].show=False
+                        self.hero.dict['finished'].show=False
+                elif self.herostate==2:# happy
+                    if controls.w and controls.wc:# switch to drinking
+                        self.herostate=1#
+                        self.hero.dict['waiting'].show=False
+                        self.hero.dict['happy'].show=False
+                        self.hero.dict['drinkinghero'].show=True
+                        self.hero.dict['drinkingdrink'].show=True
+                        self.hero.dict['busted'].show=False
+                        self.hero.dict['finished'].show=False
+                    else:# switch back to neutral
+                        self.herohappytimer.update()
+                        if self.herohappytimer.ring:# switch to neutral
+                            self.herostate=0
+                            self.hero.dict['waiting'].show=True
+                            self.hero.dict['happy'].show=False
+                            self.hero.dict['drinkinghero'].show=False
+                            self.hero.dict['drinkingdrink'].show=False
+                            self.hero.dict['busted'].show=False
+                            self.hero.dict['finished'].show=False
+                # partner behavior
+                self.partnertimer.update()
+                if self.partnertimer.ring:# regular switches between partner attitudes
+                    # decide next state
+                    if self.partnerstate==0:# headleft (unsafe) to headright,headrightup or headrightbobble
+                        self.partnerstate=tool.randchoice([1,2,3],probas=[40,40,20])# 20% chance of going to danger zone
+                    elif self.partnerstate==1:# headright to headrightup or headrightbobble
+                        self.partnerstate=tool.randchoice([2,3],probas=[30,70])# 70% chance of going to danger zone
+                    elif self.partnerstate==2:# headrightup to headright 1 or headrightbobble 3
+                        self.partnerstate=tool.randchoice([1,3],probas=[30,70])# 70% chance of going to danger zone
+                    elif self.partnerstate==3:# headrightbobble to headleft (unsafe) always
+                        self.partnerstate=0
+                    # switch to next state
+                    if self.partnerstate==0:# headleft
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=True
+                        self.partner.dict['waiting_headright'].show=False
+                        self.partner.dict['waiting_headrightup'].show=False
+                        self.partner.dict['waiting_headrightbobble'].show=False
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                    elif self.partnerstate==1:# headright
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=False
+                        self.partner.dict['waiting_headright'].show=True
+                        self.partner.dict['waiting_headrightup'].show=False
+                        self.partner.dict['waiting_headrightbobble'].show=False
+                        self.partner.dict['busting'].show=False
+                    elif self.partnerstate==2:# headrightup
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=False
+                        self.partner.dict['waiting_headright'].show=False
+                        self.partner.dict['waiting_headrightup'].show=True
+                        self.partner.dict['waiting_headrightbobble'].show=False
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                    elif self.partnerstate==3:# headrightbobble
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=False
+                        self.partner.dict['waiting_headright'].show=False
+                        self.partner.dict['waiting_headrightup'].show=False
+                        self.partner.dict['waiting_headrightbobble'].show=True
+                        self.partner.dict['waiting_headrightbobble'].rewind()
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                    # decide next timer (depends on next state)
+                    if self.partnerstate==0:# headleft
+                        self.partnertimer.amount=100+tool.randint(0,100)
+                    elif self.partnerstate==1:# headright
+                        self.partnertimer.amount=90+tool.randint(0,100)
+                    elif self.partnerstate==2:# headrightup
+                        self.partnertimer.amount=90+tool.randint(0,100)
+                    elif self.partnerstate==3:# headrightbobble (fast countdown)
+                        self.partnertimer.amount=80
+                    # start next timer
+                    self.partnertimer.start()
+
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
 
 ####################################################################################################################
 

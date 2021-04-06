@@ -33,17 +33,21 @@ self.text=['Todo List:',\
            '\nx) book of things says lets go back adds new choice: hero fights (instead of begging)',\
            '\nx) goes to new Ending: hero goes back home alone (ending unlocks next chapter)',\
            '\nx)',\
-           '\nx) Chapter 5: Love Triangle. Open a new choice at begginning. hero-partner are friends. Or maybe they try to work on relatiohship?',\
-           '\nx)            Then can try to get new paths/endings with hero friend of villain,etc',\
+           '\nx) Chapter 5: Choices. (or Love Triangle). Open a few new choices with new endings. ',\
+           '\nx)            hero-partner are friends... Villain says i am your father...',\
            '\nx)',\
-           '\nx) Chapter ?: pirate theme story alteration (make palm trees, islands, talk like pirates, treasure hunt)',\
-           '\nx)            everyone has an eyelid',\
+           '\nx) Chapter ??: Perspectives. change point of view. book of things (external), Hero, Partner or Villain. Or the fish',\
+           '\nx)             story is exaggerated in different ways depending on the perspective, with a few new choices and endings.',\
            '\nx)',\
-           '\nx) Chapter ?: A Space Odyssey. Draw helmets on everyone. Go on space adventure. ',\
+           '\nx) Chapter ??: Themes. Add themes that add cosmetic changes and a few new choices with new endings.',\
+           '\nx)            pirate theme (everyone has eyelid, tree->palm trees, islands, talk like pirates, new choice with treasure hunt)',\
+           '\nx)            space theme (everyone has elmet, ...., new choice with ??)',\
+           '\nx)            medieval theme (???)',\
            '\nx)',\
+           '\nx) Chapter ??: The fabric of reality (or Oulipo): completely break everything (end-game), swapping randomly all images.',\
+           '\nx)             hero can have fish-head, can have some i-am-malkovitch repetitions, etc...',\
            '\nx)',\
-           '\nx) Chapter ??: The dream factory: completely break everything (end-game). hero can have fish head, etc...',\
-           '\nx) or do some malkovitch style repetitions...',\
+           '\nx) Chapter End: Just the open-ended story with all the choices. Can add a few easter eggs.',\
            '\nx)',\
            '\nx)',\
            ]

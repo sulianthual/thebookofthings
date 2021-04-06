@@ -128,6 +128,47 @@ class obj_pagedisplay_text:
     def update(self,controls):
         self.display()
 
+####################################################################################################################
+# Basic Shapes
+
+# a basic rectangle on screen
+class obj_rectangle:
+    def __init__(self,xy,rx,ry,color=(0,0,0)):
+        self.type='rectangle'
+        self.x,self.y=xy
+        self.rx=rx
+        self.ry=ry
+        self.color=color
+        self.setup()
+    def setup(self):
+        self.spriterect=core.obj_sprite_rect()
+        self.show=True# show rectangle or not
+    def movetoxy(self,x,y):
+        self.movetox(x)
+        self.movetoy(y)
+    def movetox(self,x):
+        self.x=x
+    def movetoy(self,y):
+        self.y=y
+    def movex(self,dx):
+        self.x += dx
+    def movey(self,dy):
+        self.y += dy
+    def scale(self,s): # scale image by given factor s (permanent)
+        self.rx *= s
+        self.ry *= s
+    def rotate90(self): # rotate rectangle 90 degrees (permanent)
+        self.rx,self.ry= self.ry, self.rx
+    def display(self):
+        if self.show: self.spriterect.display(self.color,(self.x,self.y,2*self.rx,2*self.ry))
+    def play(self,controls):
+        self.display()
+    def update(self,controls):
+        self.play(controls)
+
+
+
+
 
 ####################################################################################################################
 
@@ -672,15 +713,14 @@ class obj_imageplacer:
         )
     def removefrompointer(self,controls):# remove last image from screen
         self.dispgroup.removepart('img_'+str(self.iplaced-1))
+        self.outputmatrix[:-1]
         self.iplaced = max(self.iplaced-1,0)
-
     def finish(self):# save output code
         with open(self.filecode,'w+') as f1:
             f1.write(' '+'\n')
             for i in self.outputmatrix:
                 f1.write(i+'\n')#
             f1.write(' '+'\n')
-
     def update(self,controls):
         self.retransform=False
         if controls.e and controls.ec:
@@ -705,6 +745,13 @@ class obj_imageplacer:
             self.iimg += 1
             if self.iimg>self.nimglist-1: self.iimg=0
             self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
+            self.retransform=True
+        if controls.backspace and controls.backspacec:# reset
+            self.iimg=0# index
+            self.s=1
+            self.r=0
+            self.fh=False
+            self.fv=False
             self.retransform=True
         self.pointer.update(controls)
         if self.retransform:
@@ -934,8 +981,8 @@ class obj_animationsequence:
         self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
-        if controls.a: self.ra += 3#1# cant fast edit here
-        if controls.d: self.ra -= 3#1
+        if controls.a: self.ra += 1#1# cant fast edit here
+        if controls.d: self.ra -= 1#1
         if controls.w: self.sa += 1#3#1# (scaling is in bscal**sa)
         if controls.s: self.sa -= 1#3#1
         if controls.f and controls.fc: self.ia += 1 # change sprite

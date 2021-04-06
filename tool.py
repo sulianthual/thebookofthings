@@ -24,6 +24,8 @@ from math import cos as math_cos
 from math import sin as math_sin
 from math import atan2 as math_atan2
 from random import randint as random_randint
+from random import choices as random_randchoice# choices not choice
+from random import gauss as random_randgauss
 
 ##########################################################
 ##########################################################
@@ -56,6 +58,15 @@ def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y) in rad
 # module random
 def randint(minrange,maxrange):# returns integer within range with equal probabilities
     return random_randint(minrange,maxrange)
+
+def randchoice(list,probas=None):# returns element from list (with either equal probabilities or weights)
+    if probas is None:
+        return random_randchoice(list)[0]
+    else:
+        return random_randchoice(list,weights=probas,k=1)[0]
+
+def randgauss(mean,std):# returns normal gaussian distribution of given mean and std
+    return random_randgauss(mean,std)
 
 def randbool():# return True or False with equal probabilities
     return bool(random_randint(0,1))

@@ -40,6 +40,7 @@ class obj_page:
         self.addpart(draw.obj_pagedisplay_fps())
     def addpart(self,element):
         term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup','imageplacer',\
+              'rectangle',\
               'pagebackground','pagefps','pagetext',\
               'world']
         if element.type in term:

@@ -1,2 +1,3 @@
  
+        self.addpart( draw.obj_image('herobaseangry',(195,619),scale=1.2,rotate=26,fliph=False,flipv=False) )
  

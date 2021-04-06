@@ -60,6 +60,8 @@ class obj_scene_testmenu(page.obj_page):
 
     def loadtests(self):# load all tests
         # developper
+        self.list.append(obj_scene_alldrawings())
+        # developper
         self.list.append(obj_scene_testmessage())
         self.list.append(obj_scene_testdevnotes())
         self.list.append(obj_scene_testdevmodeinfo())
@@ -110,6 +112,26 @@ class obj_testpage(page.obj_chapterpage):
 #########################################################################
 #########################################################################
 # All Tests Here
+
+class obj_scene_alldrawings(obj_testpage):
+    def setup(self):
+        self.name='All Drawings'
+        y1=50
+        for c,value in enumerate(['book','pen','eraser']):
+            self.addpart( draw.obj_image(value,(340+c*300,y1), scale=0.25) )
+        y1=150
+        for c,value in enumerate(['herohead','bed','sun','moon','fish','hook']):
+            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
+        y1=250
+        for c,value in enumerate(['partnerhead','love','guitar','musicnote','house','tree']):
+            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
+        y1=350
+        for c,value in enumerate(['villainhead','tower','mountain','gun','bullet']):
+            self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
+        y1=450
+        for c,value in enumerate(['partyhat','drink','coffeecup','alarmclock']):
+            self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
+
 
 class obj_scene_testmessage(obj_testpage):
     def setup(self):
@@ -365,7 +387,7 @@ class obj_scene_testimageplacer(obj_testpage):
         self.name='Image Placer'
         self.text=['Image Placer: allows developer to quickly place images on screen. ',\
                     'the file book/aaa.txt is edited live, and the code can be quickly copied to a page. ',\
-                   '[W,S:scale], [A,D:rotate], [Q,E: flip], [F: browse image].',\
+                   '[W,S:scale], [A,D:rotate], [Q,E: flip], [F: browse image], [Backspace: Reset].',\
                    ' [LMouse: Place Image], [RMouse: Remove Last Image]',\
                    ' [Space or Exit Page: Output to Code File]',\
                    ]
