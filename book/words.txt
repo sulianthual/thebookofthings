@@ -15,11 +15,11 @@ her
 partnername
 princess peach
 villain_he
-he
+she
 villain_his
-his
+her
 villain_him
-him
+her
 villainname
 the joker
 test1

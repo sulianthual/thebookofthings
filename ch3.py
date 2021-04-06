@@ -601,9 +601,6 @@ class obj_scene_ch3play1a(page.obj_chapterpage):
         self.world.timerend.amount=50
 
 
-
-
-
 class obj_scene_ch3play2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3play1a())

@@ -559,8 +559,8 @@ class obj_world_breakfastdrinking(obj_world):
         self.text_done=obj_grandactor(self,(640,360))
         # static
         self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-100),path='premade') )
-        self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(830,560),scale=0.5,fliph=True) )
-        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(495,560),scale=0.5,fliph=False) )
+        self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(830,560),scale=0.5,fliph=False) )
+        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(495,560),scale=0.5,fliph=True) )
         # progress bar
         self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,250),path='premade') )
         self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,250),path='premade') )
@@ -627,8 +627,8 @@ class obj_world_breakfastdrinking(obj_world):
                 self.hero.dict['finished'].show=True
                 self.hero.dict['finished'].rewind()
                 self.partner.dict['waiting_base'].show=True
-                self.partner.dict['waiting_headleft'].show=True
-                self.partner.dict['waiting_headright'].show=False
+                self.partner.dict['waiting_headleft'].show=False
+                self.partner.dict['waiting_headright'].show=True
                 self.partner.dict['waiting_headrightup'].show=False
                 self.partner.dict['waiting_headrightbobble'].show=False
                 self.partner.dict['busting'].show=False
@@ -881,7 +881,7 @@ class obj_world_traveltolair(obj_world):
         self.staticactor.addpart( 'img6', draw.obj_image('mountain',(1280-100,580),scale=0.4) )
         self.staticactor.addpart( 'img7', draw.obj_image('mountain',(990,720-100),scale=0.5) )
         self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170),scale=0.35) )
-        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(1030,120),scale=0.3) )
+        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(980,180),scale=0.3) )
         # hero
         # optional partner (same actor as hero)
         if self.addpartner:
@@ -990,7 +990,15 @@ class obj_world_traveltolair(obj_world):
 
 # Mini Game: dodge gun shots
 class obj_world_dodgegunshots(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.heroisangry=False# hero is angry during fight
+        self.partnerisenemy=False# parnter is alongside enemy during fight
+        # scene tuning
+        if kwargs is not None:
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
+            if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
+        #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
         self.win=True# game is won
@@ -1010,8 +1018,12 @@ class obj_world_dodgegunshots(obj_world):
         self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
         self.staticactor.addpart( 'sun', draw.obj_image('sun',(800,250),scale=0.4) )
         # hero
-        self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
-        self.hero.addpart( 'crouch', draw.obj_image('herocrouch',(200,500+50+self.yoff),scale=0.5) )
+        if not self.heroisangry:
+            self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
+            self.hero.addpart( 'crouch', draw.obj_image('herocrouch',(200,500+50+self.yoff),scale=0.5) )
+        else:
+            self.hero.addpart( 'stand', draw.obj_image('herobaseangry',(200,500+self.yoff),scale=0.5) )
+            self.hero.addpart( 'crouch', draw.obj_image('herocrouchangry',(200,500+50+self.yoff),scale=0.5) )
         self.hero.dict['stand'].show=True
         self.hero.dict['crouch'].show=False
         self.herocrouch=False# crouching or not
@@ -1036,10 +1048,16 @@ class obj_world_dodgegunshots(obj_world):
         self.herohitbox2.rx=130
         self.herohitbox2.ry=70
         # hero dies
-        self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobase',(640,360)))
+        if not self.heroisangry:
+            self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobase',(640,360)))
+        else:
+            self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobaseangry',(640,360)))
         self.herodead.show=False
         # boundaries
         self.ymax=self.hero.y
+        # partner with villain
+        if self.partnerisenemy:
+            self.villain.addpart( 'partnerstand', draw.obj_image('partnerbaseangry',(1280-150+100,450+self.yoff),scale=0.5,fliph=True) )
         # villain
         self.villain.addpart( 'stand', draw.obj_image('villainbase',(1280-150,450+self.yoff),scale=0.5,fliph=True) )
         self.villain.addpart( 'standgun', draw.obj_image('gun',(1280-150-175,445+self.yoff),scale=0.25,fliph=True) )
@@ -1214,7 +1232,15 @@ class obj_world_dodgegunshots(obj_world):
 
 # Mini Game: stomp on each other fight
 class obj_world_stompfight(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.heroisangry=False# hero is angry during fight
+        self.partnerisenemy=False# parnter is alongside enemy during fight
+        # scene tuning
+        if kwargs is not None:
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
+            if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
+        #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
         self.win=True# game is won when goal is reached or not
@@ -1234,9 +1260,14 @@ class obj_world_stompfight(obj_world):
         self.staticactor.addpart( 'floor', draw.obj_image('floor2',(640,self.yground+90),path='premade') )
         # self.staticactor.addpart( 'sun', draw.obj_image('sun',(640,280),scale=0.4) )
         # hero
-        self.hero.addpart( 'stand_right', draw.obj_image('herobase',(340,self.yground),scale=0.35) )
-        self.hero.addpart( 'stand_left', draw.obj_image('herobase',(340,self.yground),scale=0.35,fliph=True) )
-        self.hero.addpart( 'hurt', draw.obj_image('herobase',(340,self.yground+70),scale=0.35,rotate=90) )
+        if not self.heroisangry:
+            self.hero.addpart( 'stand_right', draw.obj_image('herobase',(340,self.yground),scale=0.35) )
+            self.hero.addpart( 'stand_left', draw.obj_image('herobase',(340,self.yground),scale=0.35,fliph=True) )
+            self.hero.addpart( 'hurt', draw.obj_image('herobase',(340,self.yground+70),scale=0.35,rotate=90) )
+        else:
+            self.hero.addpart( 'stand_right', draw.obj_image('herobaseangry',(340,self.yground),scale=0.35) )
+            self.hero.addpart( 'stand_left', draw.obj_image('herobaseangry',(340,self.yground),scale=0.35,fliph=True) )
+            self.hero.addpart( 'hurt', draw.obj_image('herobaseangry',(340,self.yground+70),scale=0.35,rotate=90) )
         self.hero.addpart( 'hurttext', draw.obj_textbox('ouch!',(340,self.yground-120),scale=1) )
         self.hero.dict['stand_right'].show=True
         self.hero.dict['stand_left'].show=False
@@ -1262,6 +1293,19 @@ class obj_world_stompfight(obj_world):
         self.herohitbox2=obj_grandactor(self,(340,self.yground+75))# for hitting (is hero feets)
         self.herohitbox2.rx=50
         self.herohitbox2.ry=25
+        # partner next to villain
+        if self.partnerisenemy:
+            xpartoff=50
+            self.villain.addpart( 'partnerstand_right', draw.obj_image('partnerbaseangry',(940+xpartoff,self.yground-12),scale=0.35) )
+            self.villain.addpart( 'partnerstand_left', draw.obj_image('partnerbaseangry',(940+xpartoff,self.yground-12),scale=0.35,fliph=True) )
+            self.villain.addpart( 'partnerkick_right', draw.obj_image('partnerkickangry',(940+xpartoff,self.yground-12),scale=0.35) )
+            self.villain.addpart( 'partnerkick_left', draw.obj_image('partnerkickangry',(940+xpartoff,self.yground-12),scale=0.35,fliph=True) )
+            self.villain.addpart( 'partnerhurt', draw.obj_image('partnerbaseangry',(940+xpartoff,self.yground-12+70),scale=0.35,rotate=90) )
+            self.villain.dict['partnerstand_right'].show=False
+            self.villain.dict['partnerstand_left'].show=True
+            self.villain.dict['partnerkick_right'].show=False
+            self.villain.dict['partnerkick_left'].show=False
+            self.villain.dict['partnerhurt'].show=False
         # villain
         self.villain.addpart( 'stand_right', draw.obj_image('villainbase',(940,self.yground-12),scale=0.35) )
         self.villain.addpart( 'stand_left', draw.obj_image('villainbase',(940,self.yground-12),scale=0.35,fliph=True) )
@@ -1298,13 +1342,20 @@ class obj_world_stompfight(obj_world):
         self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360))
-        self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
+        if not self.heroisangry:
+            self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
+        else:
+            self.healthbar.addpart('face', draw.obj_image('angryhead',(50,self.ybar),scale=0.2) )
+
         for i in range(self.maxherohealth):
             self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
         # health bar villain
         self.maxvillainhealth=3# starting villain health
         self.villainhealth=self.maxvillainhealth# updated one
         self.vealthbar=obj_grandactor(self,(640,360))
+
+        if self.partnerisenemy:
+            self.vealthbar.addpart('partnerface', draw.obj_image('partnerheadangry',(1280-50,self.ybar+100),scale=0.4,fliph=True) )
         self.vealthbar.addpart('face', draw.obj_image('villainhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.maxvillainhealth):
             self.vealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-150-i*75,self.ybar),scale=0.125) )
@@ -1385,6 +1436,12 @@ class obj_world_stompfight(obj_world):
                         self.villain.dict['kick_left'].show=not self.villainfaceright
                         self.villain.dict['hurt'].show=False
                         self.villain.dict['hurttext'].show=False
+                        if self.partnerisenemy:
+                            self.villain.dict['partnerstand_right'].show=False
+                            self.villain.dict['partnerstand_left'].show=False
+                            self.villain.dict['partnerkick_right'].show=self.villainfaceright
+                            self.villain.dict['partnerkick_left'].show=not self.villainfaceright
+                            self.villain.dict['partnerhurt'].show=False
                 #
                 elif self.villainstate=='kick':
                     # kick one direction
@@ -1402,6 +1459,12 @@ class obj_world_stompfight(obj_world):
                         self.villain.dict['kick_left'].show=False
                         self.villain.dict['hurt'].show=False
                         self.villain.dict['hurttext'].show=False
+                        if self.partnerisenemy:
+                            self.villain.dict['partnerstand_right'].show=self.villainfaceright
+                            self.villain.dict['partnerstand_left'].show=not self.villainfaceright
+                            self.villain.dict['partnerkick_right'].show=False
+                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerhurt'].show=False
                 #
                 elif self.villainstate=='rest':
                     self.villaintimerrest.update()
@@ -1410,18 +1473,18 @@ class obj_world_stompfight(obj_world):
                         self.villaintimerstand.start()
                         # choose next kick direction
                         self.villainfaceright = self.villain.x<self.hero.x# just face hero
-                        # if self.villain.x<self.villainxmin:# villain left edge of screen
-                        #     self.villainfaceright=True
-                        # elif self.villain.x>self.villainxmax:# villain left edge of screen
-                        #     self.villainfaceright=False
-                        # else:
-                        #     self.villainfaceright=tool.randbool()# random facing direction
                         self.villain.dict['stand_right'].show=self.villainfaceright
                         self.villain.dict['stand_left'].show=not self.villainfaceright
                         self.villain.dict['kick_right'].show=False
                         self.villain.dict['kick_left'].show=False
                         self.villain.dict['hurt'].show=False
                         self.villain.dict['hurttext'].show=False
+                        if self.partnerisenemy:
+                            self.villain.dict['partnerstand_right'].show=self.villainfaceright
+                            self.villain.dict['partnerstand_left'].show=not self.villainfaceright
+                            self.villain.dict['partnerkick_right'].show=False
+                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerhurt'].show=False
             #
             else:# villain hurt
                     self.villaintimerhurt.update()
@@ -1441,6 +1504,12 @@ class obj_world_stompfight(obj_world):
                         self.villain.dict['kick_left'].show=False
                         self.villain.dict['hurt'].show=False
                         self.villain.dict['hurttext'].show=False
+                        if self.partnerisenemy:
+                            self.villain.dict['partnerstand_right'].show=self.villainfaceright
+                            self.villain.dict['partnerstand_left'].show=not self.villainfaceright
+                            self.villain.dict['partnerkick_right'].show=False
+                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerhurt'].show=False
             # villain boundaries
             if self.villain.x<self.xmin:# boundaries
                 self.villain.movetox(self.xmin)
@@ -1448,18 +1517,31 @@ class obj_world_stompfight(obj_world):
                 if self.villainstate=='kick':
                     self.villain.dict['kick_right'].show=self.villainfaceright
                     self.villain.dict['kick_left'].show=not self.villainfaceright
+                    if self.partnerisenemy:
+                        self.villain.dict['partnerkick_right'].show=self.villainfaceright
+                        self.villain.dict['partnerkick_left'].show=not self.villainfaceright
                 else:
                     self.villain.dict['stand_right'].show=self.villainfaceright
                     self.villain.dict['stand_left'].show=not self.villainfaceright
+                    if self.partnerisenemy:
+                        self.villain.dict['partnerstand_right'].show=self.villainfaceright
+                        self.villain.dict['partnerstand_left'].show=not self.villainfaceright
+
             elif self.villain.x>self.xmax:
                 self.villain.movetox(self.xmax)
                 self.villainfaceright=False# reverse direction
                 if self.villainstate=='kick':
                     self.villain.dict['kick_right'].show=self.villainfaceright
                     self.villain.dict['kick_left'].show=not self.villainfaceright
+                    if self.partnerisenemy:
+                        self.villain.dict['partnerkick_right'].show=self.villainfaceright
+                        self.villain.dict['partnerkick_left'].show=not self.villainfaceright
                 else:
                     self.villain.dict['stand_right'].show=self.villainfaceright
                     self.villain.dict['stand_left'].show=not self.villainfaceright
+                    if self.partnerisenemy:
+                        self.villain.dict['partnerstand_right'].show=self.villainfaceright
+                        self.villain.dict['partnerstand_left'].show=not self.villainfaceright
             # villain hitboxes move
             self.villainhitbox1.movetoxy( (self.villain.x,self.villain.y-50) )
             if self.villainfaceright:
@@ -1508,6 +1590,12 @@ class obj_world_stompfight(obj_world):
                         self.villain.dict['kick_left'].show=False
                         self.villain.dict['hurt'].show=True
                         self.villain.dict['hurttext'].show=True
+                        if self.partnerisenemy:
+                            self.villain.dict['partnerstand_right'].show=False
+                            self.villain.dict['partnerstand_left'].show=False
+                            self.villain.dict['partnerkick_right'].show=False
+                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerhurt'].show=True
                     else:# dead villain
                         self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
                         self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
@@ -1522,6 +1610,12 @@ class obj_world_stompfight(obj_world):
                         self.villain.dict['kick_left'].show=False
                         self.villain.dict['hurt'].show=True
                         self.villain.dict['hurttext'].show=False
+                        if self.partnerisenemy:
+                            self.villain.dict['partnerstand_right'].show=False
+                            self.villain.dict['partnerstand_left'].show=False
+                            self.villain.dict['partnerkick_right'].show=False
+                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerhurt'].show=True
         else:
             # goal reached state
             if self.win:# won minigame
