@@ -610,7 +610,7 @@ class obj_world_breakfastdrinking(obj_world):
         self.text_undone.show=True
         self.text_done.show=False
         # timer for end
-        self.timerend=tool.obj_timer(180)# goal to done
+        self.timerend=tool.obj_timer(210)# goal to done
     def update(self,controls):
         super().update(controls)
         if not self.goal:
