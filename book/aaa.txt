@@ -1,5 +1,6 @@
  
-        self.addpart( draw.obj_image('villainbase',(666,545),scale=0.54,rotate=90,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('partnerbaseangry',(877,605),scale=0.54,rotate=90,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('villainbase',(660,490),scale=0.51,rotate=90,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(467,582),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(417,331),scale=0.21,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('flame',(850,347),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(972,347),scale=0.16,rotate=0,fliph=False,flipv=False) )
  

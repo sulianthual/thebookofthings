@@ -24,6 +24,8 @@ import ch1
 import ch2
 import ch3
 import ch4
+import ch5
+import ch6
 
 
 ##########################################################
@@ -47,6 +49,8 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
         self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
+        self.sprite_ch5=draw.obj_textbox('Chapter 5: Choices',(640,560),fontsize='smaller')
+        self.sprite_ch6=draw.obj_textbox('Chapter 6: Perspectives',(640,590),fontsize='smaller')
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
         self.addpart(self.sprite_info)
@@ -57,6 +61,8 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(self.sprite_ch2)
         self.addpart(self.sprite_ch3)
         self.addpart(self.sprite_ch4)
+        self.addpart(self.sprite_ch5)
+        self.addpart(self.sprite_ch6)
         # decorations
         self.sprite_pen=draw.obj_image('pen',(460,360), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
@@ -85,6 +91,8 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch2.show=self.maxchapter>1
         self.sprite_ch3.show=self.maxchapter>2
         self.sprite_ch4.show=self.maxchapter>3
+        self.sprite_ch5.show=self.maxchapter>4
+        self.sprite_ch6.show=self.maxchapter>5
         # update decorations (chapter dependent)
         share.display.reseticon()# window icon
         self.sprite_pen.replaceimage('pen')
@@ -119,6 +127,10 @@ class obj_scene_titlescreen(page.obj_page):
                 share.scenemanager.switchscene(ch3.obj_scene_chapter3())
             elif self.ichapter==4:
                 share.scenemanager.switchscene(ch4.obj_scene_chapter4())
+            elif self.ichapter==5:
+                share.scenemanager.switchscene(ch5.obj_scene_chapter5())
+            elif self.ichapter==6:
+                share.scenemanager.switchscene(ch6.obj_scene_chapter6())
         if controls.esc and controls.escc:
             share.quitgame()
         if controls.space and controls.spacec:
@@ -129,7 +141,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch4.obj_scene_ch4p18()
+            quickscene=ch4.obj_scene_ch4p17()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

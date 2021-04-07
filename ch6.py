@@ -19,15 +19,15 @@ import world
 ##########################################################
 ##########################################################
 
-# Chapter V: ...
-# *CHAPTER V
+# Chapter VI: ...
+# *CHAPTER VI
 
 # name house
-class obj_scene_chapter5(page.obj_chapterpage):
+class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p1())
+        share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
-        self.text=['-----   Chapter V: Choices    -----   ',\
+        self.text=['-----   Chapter VI: Perspectives    -----   ',\
                   '...(WIP)". ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
@@ -38,8 +38,8 @@ class obj_scene_chapter5(page.obj_chapterpage):
         self.addpart(animation3)
 
 
-class obj_scene_ch5p1(page.obj_chapterpage):
+class obj_scene_ch6p1(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter5())
+        share.scenemanager.switchscene(obj_scene_chapter6())
     # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch5p2())
+    #     share.scenemanager.switchscene(obj_scene_ch6p2())

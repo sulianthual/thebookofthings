@@ -615,7 +615,7 @@ class obj_world_breakfastdrinking(obj_world):
         super().update(controls)
         if not self.goal:
             # goal unreached state
-            if self.progress>self.progressmax-1:
+            if self.progress>self.progressmax-1:# reached goal
                 self.goal=True
                 self.timerend.start()
                 self.text_undone.show=False
@@ -640,7 +640,7 @@ class obj_world_breakfastdrinking(obj_world):
                 if self.partnertimerbusting.ring:# switch back to normal
                     self.partnerbusting=False
                     self.herostate=0
-                    self.partnerstate=0
+                    self.partnerstate=1# goes to facing right
                     self.partnertimer.amount=100
                     self.partnertimer.start()
                     self.hero.dict['waiting'].show=True
@@ -649,8 +649,8 @@ class obj_world_breakfastdrinking(obj_world):
                     self.hero.dict['busted'].show=False
                     self.hero.dict['finished'].show=False
                     self.partner.dict['waiting_base'].show=True
-                    self.partner.dict['waiting_headleft'].show=True
-                    self.partner.dict['waiting_headright'].show=False
+                    self.partner.dict['waiting_headleft'].show=False
+                    self.partner.dict['waiting_headright'].show=True
                     self.partner.dict['waiting_headrightup'].show=False
                     self.partner.dict['waiting_headrightbobble'].show=False
                     self.partner.dict['busting'].show=False
@@ -662,7 +662,7 @@ class obj_world_breakfastdrinking(obj_world):
                 if self.herostate==1 and self.partnerstate==0:# busted drinking
                     self.partnerbusting=True
                     self.partnertimerbusting.start()
-                    self.progress = 0# reset progress
+                    # self.progress = 0# reset progress
                     self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
                     self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
                     self.hero.dict['waiting'].show=False
@@ -965,6 +965,15 @@ class obj_world_traveltolair(obj_world):
                 self.hero.movey(-self.heromy)
             if controls.s:
                 self.hero.movey(self.heromy)
+            # boundaries
+            if self.hero.x>1280-50:
+                self.hero.movetox(1280-50)
+            elif self.hero.x<0+50:
+                self.hero.movetox(0+50)
+            if self.hero.y>720-50:
+                self.hero.movetoy(720-50)
+            elif self.hero.y<0+50:
+                self.hero.movetoy(0+50)
             # partner visuals
             if self.addpartner:
                 self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
@@ -1276,14 +1285,14 @@ class obj_world_stompfight(obj_world):
         self.heromayjump=True# hero can jump (not if in the air)
         self.heromayholdjump=False# hero can hold to jump higher
         self.herohurt=False# hurting state or not
-        self.herohurttimer=tool.obj_timer(100)# how long hero is hurting (and invincible). Make it just >kicking time,<rest+stand time
+        self.herohurttimer=tool.obj_timer(40)# how long hero is hurting. Make it just >kicking time,<rest+stand time
         self.herodt=1# hero time increment
         self.herofy=0# hero force
         self.herov=0# hero velocity
         self.herog=1# gravity rate
-        self.herod=0.07# dissipation rate
+        self.herod=0.15#0.07# dissipation rate
         self.heroj=1# jump rate (click button)
-        self.herojh=3.5# jump rate (hold button)
+        self.herojh=6#3.5# jump rate (hold button)
         self.heroholdjumptimer=tool.obj_timer(12)# how long can hold jump button
         self.heromx=12# move rate horizontally
         # hero hitboxes
@@ -1320,14 +1329,15 @@ class obj_world_stompfight(obj_world):
         self.villain.dict['hurt'].show=False
         self.villain.dict['hurttext'].show=False
         self.villainhurt=False# hurt or not
-        self.villainstate='stand'# stand, kick, rest (when no hurt)
-        self.villaintimerstand=tool.obj_timer(40)
-        self.villaintimerkick=tool.obj_timer(80)
+        self.villainstate='rest'# stand, kick, rest (when no hurt)
+        self.villaintimerstand=tool.obj_timer(60)# right before kicking
+        self.villaintimerkick=tool.obj_timer(40)
         self.villaintimerrest=tool.obj_timer(100)#
-        self.villaintimerhurt=tool.obj_timer(100)
-        self.villaintimerstand.start()
+        self.villaintimerhurt=tool.obj_timer(120)
+        # self.villaintimerstand.start()
+        self.villaintimerrest.start()
         self.villainfaceright=False# direction facing (changes)
-        self.villainmx=18# move rate horizontally
+        self.villainmx=12#18# move rate horizontally
         self.villainxmin=200# area where will face to right
         self.villainxmax=1280-200# area where will face to left
         # villlain hitboxes
@@ -1473,19 +1483,18 @@ class obj_world_stompfight(obj_world):
                         self.villaintimerstand.start()
                         # choose next kick direction
                         self.villainfaceright = self.villain.x<self.hero.x# just face hero
-                        self.villain.dict['stand_right'].show=self.villainfaceright
-                        self.villain.dict['stand_left'].show=not self.villainfaceright
-                        self.villain.dict['kick_right'].show=False
-                        self.villain.dict['kick_left'].show=False
+                        self.villain.dict['stand_right'].show=False
+                        self.villain.dict['stand_left'].show=False
+                        self.villain.dict['kick_right'].show=self.villainfaceright
+                        self.villain.dict['kick_left'].show=not self.villainfaceright
                         self.villain.dict['hurt'].show=False
                         self.villain.dict['hurttext'].show=False
                         if self.partnerisenemy:
-                            self.villain.dict['partnerstand_right'].show=self.villainfaceright
-                            self.villain.dict['partnerstand_left'].show=not self.villainfaceright
-                            self.villain.dict['partnerkick_right'].show=False
-                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerstand_right'].show=False
+                            self.villain.dict['partnerstand_left'].show=False
+                            self.villain.dict['partnerkick_right'].show=self.villainfaceright
+                            self.villain.dict['partnerkick_left'].show=not self.villainfaceright
                             self.villain.dict['partnerhurt'].show=False
-            #
             else:# villain hurt
                     self.villaintimerhurt.update()
                     if self.villaintimerhurt.ring:# flip to stand (choose direction)
@@ -1498,17 +1507,17 @@ class obj_world_stompfight(obj_world):
                             self.villainfaceright=False
                         else:
                             self.villainfaceright=tool.randbool()# random facing direction
-                        self.villain.dict['stand_right'].show=self.villainfaceright
-                        self.villain.dict['stand_left'].show=not self.villainfaceright
-                        self.villain.dict['kick_right'].show=False
-                        self.villain.dict['kick_left'].show=False
+                        self.villain.dict['stand_right'].show=False
+                        self.villain.dict['stand_left'].show=False
+                        self.villain.dict['kick_right'].show=self.villainfaceright
+                        self.villain.dict['kick_left'].show=not self.villainfaceright
                         self.villain.dict['hurt'].show=False
                         self.villain.dict['hurttext'].show=False
                         if self.partnerisenemy:
-                            self.villain.dict['partnerstand_right'].show=self.villainfaceright
-                            self.villain.dict['partnerstand_left'].show=not self.villainfaceright
-                            self.villain.dict['partnerkick_right'].show=False
-                            self.villain.dict['partnerkick_left'].show=False
+                            self.villain.dict['partnerstand_right'].show=False
+                            self.villain.dict['partnerstand_left'].show=False
+                            self.villain.dict['partnerkick_right'].show=self.villainfaceright
+                            self.villain.dict['partnerkick_left'].show=not self.villainfaceright
                             self.villain.dict['partnerhurt'].show=False
             # villain boundaries
             if self.villain.x<self.xmin:# boundaries

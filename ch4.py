@@ -598,57 +598,76 @@ class obj_scene_ch4p20(page.obj_chapterpage):
                   'A large ',('scar',share.colors.villain),' was splitting his face. ',\
                   'He had become the ',('villain',share.colors.villain),'. ',\
                   'He erupted into a maniacal laughter and swore to do ',('evil',share.colors.villain),\
-                  'for as long as he would breath".',\
+                  'for as long as he would breathe".',\
                    ]
-        animation1=draw.obj_animation('ch4_heroisevil','angrybasescar',(640,360),record=False)
+        animation1=draw.obj_animation('ch4_heroisevil','angryhead',(640,360),record=False)
+        animation1.addimage( 'angryheadscar' )
+        animation1.addimage( 'heroheadscar' )
         self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch4_heroisevil2','flame',(640,360),record=False,sync=animation1) )
+        self.addpart( draw.obj_animation('ch4_heroisevil3','flame',(640,360),record=False,sync=animation1) )
     def presetup(self):
         super().presetup()
-        # stickbody+angryhead+scar=angrybasescar (not necessarily=villain if has hair)
+        # angryhead+scar=angryheadscar (not necessarily=villain if has hair)
         dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('angryhead',(640,200),scale=0.5) )
-        dispgroup2.addpart('part3',draw.obj_image('scar',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,330,200,330),'angrybasescar')
-
+        dispgroup2.addpart('part1',draw.obj_image('angryhead',(640,360)) )
+        dispgroup2.addpart('part2',draw.obj_image('scar',(640,360)) )
+        dispgroup2.snapshot((640,360,200,200),'angryheadscar')
+        # herohead+scar=heroheadscar
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('herohead',(640,360)) )
+        dispgroup2.addpart('part2',draw.obj_image('scar',(640,360)) )
+        dispgroup2.snapshot((640,360,200,200),'heroheadscar')
 
 class obj_scene_ch4p21(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p20())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p22())
+        share.scenemanager.switchscene(obj_scene_ch4playend())
+    def setup(self):
+        self.text=[\
+                   '"And ',('{hero_he}',share.colors.hero),' lived evily ever after, the End". ',\
+                   ]
+        self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
+        self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
+        self.addpart( draw.obj_textbox('(of a very evil story)',(640,280)) )
+        self.addpart( draw.obj_image('house',(320,430), scale=0.25) )
+        self.addpart( draw.obj_image('tree',(340,560), scale=0.25) )
+        self.addpart( draw.obj_image('tower',(950,430), scale=0.25) )
+        self.addpart( draw.obj_image('mountain',(910,540), scale=0.25) )
+        self.addpart( draw.obj_image('herobaseangry',(538,439),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('partnerbaseangry',(732,570),scale=0.3,rotate=92,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('villainbase',(808,462),scale=0.27,rotate=92,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('flame',(467,582),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(417,331),scale=0.21,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('flame',(850,347),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(972,347),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_imageplacer(self,'flame','herobaseangry','partnerbaseangry','villainbase') )
 
-
-
-class obj_scene_ch4p22(page.obj_chapterpage):
+class obj_scene_ch4playend(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p21())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p23())
+        share.scenemanager.switchscene(obj_scene_ch4unlocknext())
+    def setup(self):
+        self.text=['This...this is quite terrifying, said the book of things. ',
+                   'I really hope we can change this story tomorrow!',\
+                   ]
+        self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
 
-
-class obj_scene_ch4p23(page.obj_chapterpage):
+class obj_scene_ch4unlocknext(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p22())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p24())
-
-
-
-class obj_scene_ch4p24(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p23())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p25())
-
-
-
-class obj_scene_ch4p25(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p24())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch4p26())
+        share.scenemanager.switchscene(obj_scene_ch4playend())
+    def setup(self):
+        self.text=['You have unlocked ',('Chapter V: Choices',share.colors.instructions),'. ',\
+                  'You can always redraw the party hat, drink, coffee cup and flame in ',\
+                  ('Chapter IV: A Perfect Story',share.colors.instructions),'. '\
+                   '',\
+                   ]
+        share.datamanager.updateprogress(chapter=5)# chapter 5 becomes available
+        for c,value in enumerate(['partyhat','drink','coffeecup','flame']):
+            self.addpart( draw.obj_image(value,(150+c*200,400), scale=0.25) )
 
 
 
