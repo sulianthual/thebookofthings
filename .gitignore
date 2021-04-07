@@ -1,0 +1,3 @@
+# Ignore everything inside folder book
+book/*
+
