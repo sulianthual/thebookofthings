@@ -185,8 +185,9 @@ class obj_scene_ch1p7(page.obj_chapterpage):
                   ' will go straight back to sleep. ',\
                   ' When',('{hero_he}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
-        self.world=world.obj_world_wakeup(self)# Wake up hero mini-game
+        self.world=world.obj_world_wakeup(self)
         self.addpart(self.world)
+        self.world.timerend.amount=100# longer cutscene for first time playing
 
 
 
@@ -246,7 +247,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
-        # fishanim=draw.obj_animation('fishmove1','fish',(640,360),record=True,imgscale=0.25)
+        self.world.timerend.amount=100# longer cutscene for first time playing
 
 
 
@@ -283,6 +284,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
+        self.world.timerend.amount=100# longer cutscene for first time playing
         # self.addpart( draw.obj_image('fish',(900,400), scale=1,rotate=-45) )
         # self.addpart( draw.obj_image('herobase',(340,400), scale=0.7) )
         # self.addpart(draw.obj_animation('ch1_heroeats1','herobase',(640,360),record=True,imgscale=0.7))
@@ -311,6 +313,7 @@ class obj_scene_ch1p13(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
         self.addpart(self.world)
+        self.world.timerend.amount=100# longer cutscene for first time playing
         # self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
         # self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
         # self.addpart(draw.obj_animation('ch1_herotosleep','herobase',(640,360),record=True,scale=0.7))
@@ -376,9 +379,8 @@ class obj_scene_ch1play1(page.obj_chapterpage):
                 'woke up from ',('bed',share.colors.item),'." ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),record=False,scale=0.5))
-        self.world=world.obj_world_wakeup(self)# Wake up hero mini-game
+        self.world=world.obj_world_wakeup(self)
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 
@@ -397,7 +399,6 @@ class obj_scene_ch1play2(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 
@@ -414,9 +415,8 @@ class obj_scene_ch1play3(page.obj_chapterpage):
                     ('{hero_he}',share.colors.hero),' ate the ',
                     ('fish',share.colors.item),' for dinner." ',\
                    ]
-        self.world=world.obj_world_eatfish(self)# fishing mini-game
+        self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 
@@ -435,7 +435,6 @@ class obj_scene_ch1play4(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),record=True,scale=0.5))
         self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 

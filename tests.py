@@ -420,6 +420,7 @@ class obj_scene_testanimation(obj_testpage):
                     '\n[Q-E]: Flip Horizontal/Vertical',\
                     '\n[F]: Change Image (if several exist)',\
                     '\n[R]: Save Animation to File (!)',\
+                    '\n[Left-Right]/[Up-Down]: Tune Rotate/Scale Rates',\
                    '\n-- While in Playback Mode: Animation loop-plays.',\
                    ]
         animation=draw.obj_animation('testanimation1','testimage1',(640,360),record=True)
@@ -433,12 +434,12 @@ class obj_scene_testanimationanimation(obj_testpage):
     def setup(self):
         self.name='Animation Sync'
         self.text=[(self.name,share.colors.red),': ',\
-                   'Only one animation per page should be recordable. ',\
-                   'Use \"sync\" to ensure an animation has the same duration as a reference one. ',\
-                   'If a new animation, the recording will stop once reference length has been reached ',\
-                   '(try it here and refresh the page to see the correct sync). ',\
-                   'If an existing animation, it will load only up to the reference length ',\
-                   '(try recording a shorter reference animation then come back to this page). ',\
+                   'Use \"sync\" to ensure an animation 2  has the same duration as animation 1. ',\
+                   'To record: 1) hold RMouse (rewinds animation 1),',\
+                   ' 2) Hold LMouse (starts recording animation 2 while playing animation1), ',\
+                   '3) optionnally release RMouse. 4) Record until the end of animation 1, save. ',\
+                   '5) Exit or refresh the page (to sync perfectly). ',\
+                  'Only one animation per page should be recordable (with record=True). ',\
                    ]
         animation1=draw.obj_animation('testanimation1','testimage1',(340,360))# cannot edit
         animation2=draw.obj_animation('testanimation2','testimage2',(940,360),record=True,sync=animation1)# can edit

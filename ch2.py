@@ -229,6 +229,7 @@ class obj_scene_ch2p8(page.obj_chapterpage):
             self.addpart( drawing )
         self.world=world.obj_world_serenade(self)# serenade mini-game
         self.addpart(self.world)
+        self.world.timerend.amount=100# longer cutscene for first time playing
         # self.addpart(draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3,record=True))
     def triggernextpage(self,controls):
         return (controls.enter and controls.enterc) or self.world.done# quick skip
@@ -267,6 +268,7 @@ class obj_scene_ch2p10(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_kiss(self)# kiss mini-game
         self.addpart(self.world)
+        self.world.timerend.amount=100# longer cutscene for first time playing
 
 class obj_scene_ch2p11(page.obj_chapterpage):
     def prevpage(self):
@@ -345,9 +347,8 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
                 'with his partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
-        self.world=world.obj_world_wakeup(self,partner='inlove')# Wake up hero mini-game
+        self.world=world.obj_world_wakeup(self,partner='inlove')
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 
@@ -365,9 +366,8 @@ class obj_scene_ch2play2(page.obj_chapterpage):
                     '"',('{hero_he}',share.colors.hero),\
                      ' went to the river and caught a fish."',\
                    ]
-        self.world=world.obj_world_fishing(self)# fishing mini-game
+        self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 
@@ -387,7 +387,6 @@ class obj_scene_ch2play3(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self,partner='inlove')
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 class obj_scene_ch2play4(page.obj_chapterpage):
@@ -402,9 +401,8 @@ class obj_scene_ch2play4(page.obj_chapterpage):
                    '"',('{heroname}',share.colors.hero),' charmed ',\
                    ('{partnername}',share.colors.partner),' with a serenade... ',\
                    ]
-        self.world=world.obj_world_serenade(self)# serenade mini-game
+        self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 
@@ -419,9 +417,8 @@ class obj_scene_ch2play5(page.obj_chapterpage):
         self.text=[\
                    '"...and then they kissed".   ',\
                    ]
-        self.world=world.obj_world_kiss(self)# kiss mini-game
+        self.world=world.obj_world_kiss(self)
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 class obj_scene_ch2play5a(page.obj_chapterpage):
@@ -455,9 +452,8 @@ class obj_scene_ch2play6(page.obj_chapterpage):
                    ' went to back to bed". ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5))
-        self.world=world.obj_world_gotobed(self,partner='inlove')# Wake up hero mini-game
+        self.world=world.obj_world_gotobed(self,partner='inlove')
         self.addpart(self.world)
-        self.world.timerend.amount=50
 
 
 class obj_scene_ch2play7(page.obj_chapterpage):

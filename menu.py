@@ -40,7 +40,7 @@ class obj_scene_titlescreen(page.obj_page):
         # menu
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('By Sul',(1210,670),fontsize='smaller')
-        self.sprite_pointer=draw.obj_textbox('---',(500,410),fontsize='smaller')
+        self.sprite_pointer=draw.obj_textbox('---',(500-100,410),fontsize='smaller')
         self.sprite_info=draw.obj_textbox('[Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
         self.sprite_settings=draw.obj_textbox('Settings',(640,380),fontsize='smaller')
         self.sprite_start=draw.obj_textbox('Start New Book',(640,410),fontsize='smaller')
@@ -49,7 +49,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
         self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
-        self.sprite_ch5=draw.obj_textbox('Chapter 5: Choices',(640,560),fontsize='smaller')
+        self.sprite_ch5=draw.obj_textbox('Chapter 5: Maybe Maybe Maybe',(640,560),fontsize='smaller')
         self.sprite_ch6=draw.obj_textbox('Chapter 6: Perspectives',(640,590),fontsize='smaller')
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
@@ -64,7 +64,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(self.sprite_ch5)
         self.addpart(self.sprite_ch6)
         # decorations
-        self.sprite_pen=draw.obj_image('pen',(460,360), scale=0.25)
+        self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
         self.sprite_eraser=draw.obj_image('eraser',(1210,620), scale=0.25)
         self.addpart(self.sprite_pen)
@@ -141,7 +141,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch4.obj_scene_ch4p17()
+            quickscene=tests.obj_scene_testanimationanimation()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

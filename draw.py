@@ -776,7 +776,8 @@ class obj_animation:
         self.xini=xy[0]
         self.yini=xy[1]
         self.record=record# ability to record sequence
-        if sync:# sync sequence length to other animation object
+        self.sync=sync# synced animation(or None)
+        if self.sync:# sync sequence length to other animation object
             self.maxlength=sync.sequence.length
         else:
             self.maxlength=None
@@ -959,6 +960,8 @@ class obj_animationsequence:
         self.sa=0# scaling exponent (int) for scaling = bscal**sa
         self.ia=0# index of image used (0=default, >0=next images)
         self.frame=self.ta,self.xa,self.ya,self.fha,self.fva,self.ra,self.sa,self.ia
+        self.dddra=1# increment
+        self.dddsa=1# increment
     def update(self,controls):
         if self.record:# ability to record
             if share.devmode and controls.space and controls.spacec: self.recording= not self.recording
@@ -981,10 +984,11 @@ class obj_animationsequence:
         self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
-        if controls.a: self.ra += 1#1# cant fast edit here
-        if controls.d: self.ra -= 1#1
-        if controls.w: self.sa += 1#3#1# (scaling is in bscal**sa)
-        if controls.s: self.sa -= 1#3#1
+        if controls.a: self.ra += self.dddra
+        if controls.d: self.ra -= self.dddra
+        if controls.w: self.sa += self.dddsa# (scaling is in bscal**sa)
+        if controls.s: self.sa -= self.dddsa
+        # change rotation/scaling increment
         if controls.f and controls.fc: self.ia += 1 # change sprite
         if controls.g and controls.gc: self.ia -= 1
         if self.ia > len(self.creator.spritelist)-1: self.ia =0
@@ -994,6 +998,16 @@ class obj_animationsequence:
             if not self.maxlength or len(self.data)<self.maxlength:
                 self.data.append(self.frame)
                 self.ta += 1
+        if controls.mouse2 and not controls.mouse1:# rewind synced animation (if any)
+        # to record two animations in sync, hold mouse2, then press mouse1 to start recording
+            if self.creator.sync:# animation is synced
+                self.creator.sync.rewind()
+        if controls.up and controls.upc: self.dddsa += 1
+        if controls.down and controls.downc: self.dddsa = max(self.dddsa-1,1)
+        if controls.right and controls.rightc: self.dddra += 1
+        if controls.left and controls.leftc: self.dddra = max(self.dddra-1,1)
+
+
     def savesequence(self):
         if not share.fps==60:
             print('WARNING: Animation sequence not recorded, can only record at 60 fps')

@@ -134,18 +134,6 @@ class obj_scene_ch4p3(page.obj_chapterpage):
                    ('best story ever',share.colors.hero),'! ',\
                    'The book, pen and eraser partied all night. ',\
                    ]
-        # self.addpart( draw.obj_image('book',(640,360), scale=1) )
-        # self.addpart( draw.obj_image('partyhat',(640,210), scale=0.5) )
-        # self.addpart( draw.obj_image('drink',(390,480), scale=0.5) )
-        # self.addpart( draw.obj_image('pen',(640,360), scale=1) )
-        # self.addpart( draw.obj_image('partyhat',(590,180), scale=0.5) )
-        # self.addpart( draw.obj_image('drink',(800,530), scale=0.45) )
-        # self.addpart( draw.obj_image('eraser',(640,360), scale=1) )
-        # self.addpart( draw.obj_image('partyhat',(720,210), scale=0.4,fliph=True) )
-        # self.addpart( draw.obj_image('drink',(470,350), scale=0.35) )
-        # self.addpart( draw.obj_image('bookpartyhat',(640,360), scale=1) )
-        # self.addpart( draw.obj_image('penpartyhat',(340,360), scale=1) )
-        # self.addpart( draw.obj_image('eraserpartyhat',(940,360), scale=1) )
         animation1=draw.obj_animation('ch4_bookparty','bookparty',(640,360),record=False)
         animation2=draw.obj_animation('ch4_penparty','penparty',(900,480),record=False,sync=animation1)
         animation3=draw.obj_animation('ch4_eraserparty','eraserparty',(900,480),record=False,sync=animation1)
@@ -199,7 +187,7 @@ class obj_scene_ch4p5(page.obj_chapterpage):
                 'with ',('trees',share.colors.item),'. ',\
                 'It was morning and the sun was rising". ',\
                    ]
-        self.world=world.obj_world_sunrise(self)# Wake up hero mini-game
+        self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
 
 
@@ -221,7 +209,6 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
         self.world=world.obj_world_wakeup(self,partner='inlove',angryfaces=True)
         self.addpart(self.world)
-        self.world.timerend.amount=50
         # self.addpart( draw.obj_imageplacer(self, 'herobaseangry','partnerbaseangry' ) )
     def presetup(self):
         super().presetup()
@@ -242,7 +229,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,330,200,330),'partnerbaseangry')# 0 to 660 in height
+        dispgroup1.snapshot((640,330,200,330),'partnerbaseangry')
         # combine stickhead+angryface+partnerhair=partnerheadangry
         image1=draw.obj_image('partnerhair',(640,360))
         image2=draw.obj_image('stickhead',(640,360),path='premade')
@@ -251,7 +238,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,360,200,200),'partnerheadangry')# 0 to 660 in height
+        dispgroup1.snapshot((640,360,200,200),'partnerheadangry')
 
 
 class obj_scene_ch4p7(page.obj_chapterpage):
@@ -359,7 +346,6 @@ class obj_scene_ch4p11(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=50
         # self.addpart( draw.obj_imageplacer(self, 'drink','guitar','coffeecup' ) )
         self.addpart( draw.obj_image('drink',(99,649),scale=0.32,rotate=124,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('drink',(254,657),scale=0.32,rotate=244,fliph=False,flipv=False) )
@@ -651,7 +637,7 @@ class obj_scene_ch4playend(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4unlocknext())
     def setup(self):
         self.text=['This...this is quite terrifying, said the book of things. ',
-                   'I really hope we can change this story tomorrow!',\
+                   'Thats it for today, but we will be back at it tomorrow. ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
@@ -660,7 +646,7 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4playend())
     def setup(self):
-        self.text=['You have unlocked ',('Chapter V: Choices',share.colors.instructions),'. ',\
+        self.text=['You have unlocked ',('Chapter V: Maybe Maybe Maybe',share.colors.instructions),'. ',\
                   'You can always redraw the party hat, drink, coffee cup and flame in ',\
                   ('Chapter IV: A Perfect Story',share.colors.instructions),'. '\
                    '',\

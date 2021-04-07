@@ -405,7 +405,7 @@ class obj_world_sunrise(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
         return controls.w and controls.wc
     def triggerstart(self,controls):
@@ -502,7 +502,7 @@ class obj_world_wakeup(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
         return controls.d and controls.dc
     def triggerstart(self,controls):
@@ -627,8 +627,8 @@ class obj_world_breakfastdrinking(obj_world):
                 self.hero.dict['finished'].show=True
                 self.hero.dict['finished'].rewind()
                 self.partner.dict['waiting_base'].show=True
-                self.partner.dict['waiting_headleft'].show=False
-                self.partner.dict['waiting_headright'].show=True
+                self.partner.dict['waiting_headleft'].show=True
+                self.partner.dict['waiting_headright'].show=False
                 self.partner.dict['waiting_headrightup'].show=False
                 self.partner.dict['waiting_headrightbobble'].show=False
                 self.partner.dict['busting'].show=False
@@ -812,7 +812,7 @@ class obj_world_fishing(obj_world):
         self.fishbox.ry=30
         self.fishbox.r=30
         # short timer at end
-        self.timerend=tool.obj_timer(100)
+        self.timerend=tool.obj_timer(50)
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [S] to lower Hook',(1100,480),color=share.colors.instructions) )
@@ -926,7 +926,7 @@ class obj_world_traveltolair(obj_world):
             self.goalarea.rx=100
             self.goalarea.ry=100
         # timer
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(50)# goal to done
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -1683,7 +1683,7 @@ class obj_world_eatfish(obj_world):
         # timer for eating
         self.timer=tool.obj_timer(50)
         # short timer after done eating
-        self.timerend=tool.obj_timer(100)
+        self.timerend=tool.obj_timer(50)
     def eatfood(self):
         self.eating=True
         self.timer.start()
@@ -1803,7 +1803,7 @@ class obj_world_serenade(obj_world):
         self.text1.show=True
         self.text2.show=False
         # short timer after done playing
-        self.timerend=tool.obj_timer(100)
+        self.timerend=tool.obj_timer(70)
     def update(self,controls):
         super().update(controls)
         if not self.doneplaying:
@@ -1875,7 +1875,7 @@ class obj_world_kiss(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
         return (controls.a and controls.d) and (controls.ac or controls.dc)
     def triggerstart(self,controls):
@@ -1959,7 +1959,7 @@ class obj_world_sunset(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
         return controls.s and controls.sc
     def triggerstart(self,controls):
@@ -2045,7 +2045,7 @@ class obj_world_gotobed(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
         return controls.a and controls.ac
     def triggerstart(self,controls):

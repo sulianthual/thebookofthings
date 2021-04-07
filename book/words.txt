@@ -30,3 +30,9 @@ test_he
 {test1}
 test_his
 {test1}ss
+hero_partner_relationship
+complicated
+hero_breakfast
+coffeecup
+hero_fishing
+pickuptrash

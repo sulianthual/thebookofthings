@@ -1,6 +1,5 @@
  
-        self.addpart( draw.obj_image('flame',(467,582),scale=0.21,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flame',(417,331),scale=0.21,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('flame',(850,347),scale=0.21,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flame',(972,347),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('herohead',(319,548),scale=0.34,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(639,545),scale=0.34,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('coffeecup',(947,544),scale=0.34,rotate=0,fliph=False,flipv=False) )
  
