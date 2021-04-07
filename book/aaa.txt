@@ -1,5 +1,0 @@
- 
-        self.addpart( draw.obj_image('herohead',(319,548),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('drink',(639,545),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('coffeecup',(947,544),scale=0.34,rotate=0,fliph=False,flipv=False) )
- 

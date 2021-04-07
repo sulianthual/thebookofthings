@@ -1,8 +1,0 @@
-difficulty
-2
-donative
-True
-domusic
-True
-dosound
-False
