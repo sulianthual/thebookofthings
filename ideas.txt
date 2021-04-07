@@ -24,15 +24,17 @@ The story is organized into multiple endings coming choices (branch separations)
 
 
 
-Chapt 4: The Perfect Story. book of thing, pen/eraser have party to celebrate perfect story.
-draw alcohol(or cocktail?) and party hat. Wakes up with hangover and story is all out of place.
-hero/partner are in relationship=its complicated, goes rescue partner but is cheating with villain.
-hero begs partner to come back but partner kills hero. Open Ending: villain partner lived happily
-book of things says lets go back adds new choice: hero fights (instead of begging)
-goes to new Ending: hero goes back home alone (ending unlocks next chapter)
+Chapter 5: Maybe Maybe Maybe. Open a few new choices with new ending goal = redemption
+           Have min 3 good actions to unlock it (after the fight).
+           good actions= not drinkng at breakfast, picking up trash in river, saving villain(+partner) from fire
 
-Chapter 5: Choices. (or Love Triangle). Open a few new choices with new endings.
-           hero-partner are friends... Villain says i am your father...
+consequences of choices:
+not drinking at breakfast => partner says he aint so bad he stopped drinking before fight. Only fight the villain (and save him from fire)
+picking up trash in river => fish becomes spirit, helps during villain fight (2 rounds become 1 round flappy bird against submarine). Fight outcome same.
+saving villain (+partner) from fire => +1 good action.
+
+
+villain says i am your father?
 
 Chapter ??: Perspectives. change point of view. book of things (external), Hero, Partner or Villain. Or the fish
             story is exaggerated in different ways depending on the perspective, with a few new choices and endings.
@@ -47,6 +49,13 @@ Chapter ??: The fabric of reality (or Oulipo): completely break everything (end-
 
 Chapter End: Just the open-ended story with all the choices. Can add a few easter eggs.
 
+
+Add in Menu:
+Arcade (replay all games)
+Drawings (quickly redraw anything + rename+gender)
+Endings (Collect all endings)
+Credits (unlock at the end, rolling credits)
+unlock them in some order at the ends of chapters
 
 Mini Game Ideas
 Hunt = Arrow Parabolic Arc [A][D] then [W]
@@ -72,7 +81,9 @@ simple dinosaur game from google. just jump in time.
 skiing game like classic game
 
 
-
+Technical:
+record  animation2 synced to animation 1, using LMouse2: dont rewind entirely animation1, but sync to current frame of animation2
+add .git in book folder
 
 Stuff to Draw: (check all objects in katamari damacy)
 
@@ -116,6 +127,7 @@ House:
 - mailbox
 
 Technology:
+- money bill (do a shower of bills for rich!)
 - Bicycle Wings
 - Tent Submarine
 - trumpet

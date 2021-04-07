@@ -109,6 +109,7 @@ class obj_datamanager:
         self.loadwords()
         self.filesettings='book/settings.txt'
         self.loadsettings()
+        self.savegitignore()
     def erasebook(self):
         files = tool.oslistdir('book')
         for i in files: tool.osremove('book/'+i)# erase everything
@@ -117,7 +118,14 @@ class obj_datamanager:
         self.loadwords()# reset words
         self.savewords()
         self.savesettings()# conserve current settings
+        self.savegitignore()
     #
+    def savegitignore(self):# write .gitignore file (for git compatibility)
+        with open('book/.gitignore','w+') as f1:
+                f1.write('# Ignore everything in this directory'+'\n')
+                f1.write('*'+'\n')
+                f1.write('# Except this file'+'\n')
+                f1.write('!.gitignore '+'\n')
     def getprogress(self):
         return self.chapter# last chapter unlocked
     def saveprogress(self):

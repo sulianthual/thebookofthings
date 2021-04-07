@@ -292,7 +292,7 @@ class obj_scene_ch5fishing_trashcleanup(page.obj_chapterpage):
                    ]
         animation1=draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5_pickuptrash1','love',(640,360),record=True,sync=animation1)
+        animation2=draw.obj_animation('ch5_pickuptrash1','love',(640,360),record=False,sync=animation1)
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
 
