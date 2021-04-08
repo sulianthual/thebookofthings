@@ -111,7 +111,7 @@ class obj_datamanager:
         self.loadsettings()
     def erasebook(self):
         files = tool.oslistdir('book')
-        if '.gitignore' in files: files.remove('.gitignore')# git compatibility
+        if '.gitignore' in files: files.remove('.gitignore')# do not erase git file
         for i in files: tool.osremove('book/'+i)# erase everything
         self.loadprogress()# reset progress
         self.saveprogress()

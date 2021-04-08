@@ -435,9 +435,9 @@ class obj_scene_testanimationanimation(obj_testpage):
         self.name='Animation Sync'
         self.text=[(self.name,share.colors.red),': ',\
                    'Use \"sync\" to ensure an animation 2  has the same duration as animation 1. ',\
-                   'To record: 1) hold RMouse (rewinds animation 1),',\
+                   'To record: 1) hold RMouse (rewinds animation 1 to current frame of animation 2),',\
                    ' 2) Hold LMouse (starts recording animation 2 while playing animation1), ',\
-                   '3) optionnally release RMouse. 4) Record until the end of animation 1, save. ',\
+                   '3) optionnally release LMouse for adjustments. 4) Record until the end of animation 1, save. ',\
                    '5) Exit or refresh the page (to sync perfectly). ',\
                   'Only one animation per page should be recordable (with record=True). ',\
                    ]

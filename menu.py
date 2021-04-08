@@ -51,6 +51,12 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
         self.sprite_ch5=draw.obj_textbox('Chapter 5: Maybe Maybe Maybe',(640,560),fontsize='smaller')
         self.sprite_ch6=draw.obj_textbox('Chapter 6: Perspectives',(640,590),fontsize='smaller')
+
+
+        self.sprite_drawings=draw.obj_textbox('Drawings (Coming Soon)',(1140,410),fontsize='smaller')
+        self.sprite_arcade=draw.obj_textbox('Arcade (Coming Soon)',(1140,440),fontsize='smaller')
+        self.sprite_endings=draw.obj_textbox('Endings (Coming Soon)',(1140,470),fontsize='smaller')
+        self.sprite_credits=draw.obj_textbox('Credits (Coming Soon)',(1140,500),fontsize='smaller')
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
         self.addpart(self.sprite_info)
@@ -63,6 +69,10 @@ class obj_scene_titlescreen(page.obj_page):
         self.addpart(self.sprite_ch4)
         self.addpart(self.sprite_ch5)
         self.addpart(self.sprite_ch6)
+        self.addpart(self.sprite_arcade)
+        self.addpart(self.sprite_drawings)
+        self.addpart(self.sprite_endings)
+        self.addpart(self.sprite_credits)
         # decorations
         self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
@@ -141,7 +151,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch5.obj_scene_ch5choosefishing()
+            quickscene=ch5.obj_scene_choosebreakfast()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

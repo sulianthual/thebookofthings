@@ -873,8 +873,8 @@ class obj_animation:
         self.r += r
         for i in self.spritelist: i.rotate(r)
         self.rx,self.ry=self.spritelist[0].getrxry()
-    def rewind(self):
-        self.sequence.rewindsequence()# to first frame
+    def rewind(self,frame=None):
+        self.sequence.rewindsequence(ta=frame)# rewind to frame ta
     def display(self):
         if self.show:
             # read sequence
@@ -969,8 +969,11 @@ class obj_animationsequence:
             self.recordsequence(controls)# record mode
         else:
             self.playbacksequence()# playback mode
-    def rewindsequence(self):
-        self.ta=0
+    def rewindsequence(self,ta=None):
+        if ta==None:
+            self.ta=0
+        else:
+            self.ta=ta
     def playbacksequence(self):
         self.ta +=1
         if self.ta > len(self.data)-1: self.ta=0
@@ -999,15 +1002,16 @@ class obj_animationsequence:
                 self.data.append(self.frame)
                 self.ta += 1
         if controls.mouse2 and not controls.mouse1:# rewind synced animation (if any)
-        # to record two animations in sync, hold mouse2, then press mouse1 to start recording
-            if self.creator.sync:# animation is synced
-                self.creator.sync.rewind()
+        # to record anim2 synced to anim1, 1) hold mouse2 (freezes anim1 to anim2 current frame)
+        # 2) hold mouse1 (record anim2 while playing anim1 in sync)
+        # 3) optionally unhold mouse2
+            if self.creator.sync:# animation is
+                self.creator.sync.rewind(frame=self.ta)# adjust to this sequence framesynced
+                # self.creator.sync.rewind()# rewind to start
         if controls.up and controls.upc: self.dddsa += 1
         if controls.down and controls.downc: self.dddsa = max(self.dddsa-1,1)
         if controls.right and controls.rightc: self.dddra += 1
         if controls.left and controls.leftc: self.dddra = max(self.dddra-1,1)
-
-
     def savesequence(self):
         if not share.fps==60:
             print('WARNING: Animation sequence not recorded, can only record at 60 fps')

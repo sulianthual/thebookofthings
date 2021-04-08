@@ -68,15 +68,14 @@ class obj_scene_ch5p2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p1())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5sunrise())
+        share.scenemanager.switchscene(obj_scene_sunrise())
     def setup(self):
         self.text=[\
                   'Choices have consequences you see, and they lead to different outcomes in this story. ',\
                  'This is what happened yesterday when we changed the ',('hero',share.colors.hero),' and ',\
                  ('partner',share.colors.partner),'\'s relationship status to "its complicated". ',\
-                 'Today we shall explore more choices until we change the ',\
-                 ('evil ending',share.colors.villain),' from yesterday for a ',\
-                ('redemptive ending',share.colors.hero),'. '\
+                 'Today we shall explore more choices and try to change the ',\
+                 ('evil ending',share.colors.villain),' from yesterday.',\
                    ]
         y1=400
         self.addpart( draw.obj_textbox('The hero and the partner were:',(250,y1)) )
@@ -94,17 +93,15 @@ class obj_scene_ch5p2(page.obj_chapterpage):
 # From here we use unordered pages for the story with multiple choices
 
 
-class obj_scene_ch5sunrise(page.obj_chapterpage):
+class obj_scene_sunrise(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p2())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5wakeup())
+        share.scenemanager.switchscene(obj_scene_wakeup())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                'Remember, explore choices to obtain a ',\
-               ('redemptive ending',share.colors.hero),' for this story, said the book of things. Lets start: ',\
                 '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' ',\
                 'that lived in a  ',('house',share.colors.item),' ',\
@@ -115,11 +112,11 @@ class obj_scene_ch5sunrise(page.obj_chapterpage):
         self.addpart(self.world)
 
 
-class obj_scene_ch5wakeup(page.obj_chapterpage):
+class obj_scene_wakeup(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5sunrise())
+        share.scenemanager.switchscene(obj_scene_sunrise())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosebreakfast())
+        share.scenemanager.switchscene(obj_scene_choosebreakfast())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -163,38 +160,37 @@ class obj_scene_ch5wakeup(page.obj_chapterpage):
 
 
 
-class obj_scene_ch5choosebreakfast(page.obj_chapterpage):
+class obj_scene_choosebreakfast(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5wakeup())
+        share.scenemanager.switchscene(obj_scene_wakeup())
     def nextpage(self):
         if share.datamanager.getword('hero_breakfast')=='drink':
-            share.scenemanager.switchscene(obj_scene_ch5breakfast_drinking())
+            share.scenemanager.switchscene(obj_scene_breakfast_drinking())
         else:
-            share.scenemanager.switchscene(obj_scene_ch5breakfast_notdrinking())
+            share.scenemanager.switchscene(obj_scene_breakfast_notdrinking())
     def setup(self):
         self.text=[\
                 '"',('{heroname}',share.colors.hero),\
                 'decided what to have for breakfast". ',\
-                'This is it, said the book of things. Lets make a wise choice that will improve ',\
-                ('{heroname}',share.colors.hero),' and ',\
-                ('{partnername}',share.colors.partner),'\'s relationship. ',\
                    ]
-        y1=400
+        y1=200
         self.addpart( draw.obj_textbox('The hero decided to have:',(340,y1)) )
         textchoice=draw.obj_textchoice('hero_breakfast')
         textchoice.addchoice('1. A drink','drink',(640,y1))
         textchoice.addchoice('2. A cup of coffee','coffeecup',(940,y1))
         self.addpart( textchoice )
-        self.addpart( draw.obj_image('herohead',(340,550),scale=0.35) )
-        self.addpart( draw.obj_image('drink',(640,550),scale=0.35) )
-        self.addpart( draw.obj_image('coffeecup',(940,550),scale=0.35) )
+        self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
+        self.addpart( draw.obj_image('herobaseangry',(1067,488),scale=0.67,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('partnerbaseangry',(814,472),scale=0.67,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('sun',(141,325),scale=0.36,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_imageplacer(self,'herobaseangry','partnerbaseangry','bed','sun') )
 
 
-class obj_scene_ch5breakfast_drinking(page.obj_chapterpage):
+class obj_scene_breakfast_drinking(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosebreakfast())
+        share.scenemanager.switchscene(obj_scene_choosebreakfast())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosefishing())
+        share.scenemanager.switchscene(obj_scene_choosefishing())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -206,12 +202,11 @@ class obj_scene_ch5breakfast_drinking(page.obj_chapterpage):
         self.world=world.obj_world_breakfastdrinking(self)
         self.addpart(self.world)
 
-
-class obj_scene_ch5breakfast_notdrinking(page.obj_chapterpage):
+class obj_scene_breakfast_notdrinking(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosebreakfast())
+        share.scenemanager.switchscene(obj_scene_choosebreakfast())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosefishing())
+        share.scenemanager.switchscene(obj_scene_choosefishing())
     def setup(self):
         self.text=[\
                 '"',('{heroname}',share.colors.hero),\
@@ -229,24 +224,21 @@ class obj_scene_ch5breakfast_notdrinking(page.obj_chapterpage):
         self.addpart( animation1 )
 
 
-class obj_scene_ch5choosefishing(page.obj_chapterpage):
+class obj_scene_choosefishing(page.obj_chapterpage):
     def prevpage(self):
         if share.datamanager.getword('hero_breakfast')=='drink':
-            share.scenemanager.switchscene(obj_scene_ch5breakfast_drinking())
+            share.scenemanager.switchscene(obj_scene_breakfast_drinking())
         else:
-            share.scenemanager.switchscene(obj_scene_ch5breakfast_notdrinking())
+            share.scenemanager.switchscene(obj_scene_breakfast_notdrinking())
     def nextpage(self):
         if share.datamanager.getword('hero_fishing')=='pickuptrash':
-            share.scenemanager.switchscene(obj_scene_ch5fishing_trashcleanup())
+            share.scenemanager.switchscene(obj_scene_fishing_trashcleanup())
         else:
-            share.scenemanager.switchscene(obj_scene_ch5fishing_withtrash())
-
+            share.scenemanager.switchscene(obj_scene_fishing_withtrash())
     def setup(self):
         self.text=[\
                 '"',('{heroname}',share.colors.hero),\
                 'decided what to do next". ',\
-                'Keep it on, said the book of things, remember to make wise choices ',\
-                'for a ',('redemptive ending',share.colors.hero),'. ',\
                    ]
         y1=400
         self.addpart( draw.obj_textbox('The hero decided to:',(180,y1)) )
@@ -254,14 +246,18 @@ class obj_scene_ch5choosefishing(page.obj_chapterpage):
         textchoice.addchoice('1. go fishing','fish',(540,y1))
         textchoice.addchoice('2. Pick up the trash in the river','pickuptrash',(940,y1))
         self.addpart( textchoice )
+        # self.addpart( draw.obj_imageplacer(self, 'fish','drink','guitar' ) )
+        self.addpart( draw.obj_image('fish',(534,525),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(834,577),scale=0.21,rotate=-126,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(945,591),scale=0.21,rotate=-60,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('guitar',(1045,564),scale=0.21,rotate=-122,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(935,495),scale=0.21,rotate=-242,fliph=False,flipv=False) )
 
-
-
-class obj_scene_ch5fishing_withtrash(page.obj_chapterpage):
+class obj_scene_fishing_withtrash(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosefishing())
+        share.scenemanager.switchscene(obj_scene_choosefishing())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5default())
+        share.scenemanager.switchscene(obj_scene_traveltolair())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -278,11 +274,11 @@ class obj_scene_ch5fishing_withtrash(page.obj_chapterpage):
         self.addpart( draw.obj_image('drink',(69,544),scale=0.32,rotate=210,fliph=False,flipv=False) )
 
 
-class obj_scene_ch5fishing_trashcleanup(page.obj_chapterpage):
+class obj_scene_fishing_trashcleanup(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5choosefishing())
+        share.scenemanager.switchscene(obj_scene_choosefishing())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5default())
+        share.scenemanager.switchscene(obj_scene_traveltolair())
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
@@ -297,13 +293,277 @@ class obj_scene_ch5fishing_trashcleanup(page.obj_chapterpage):
         self.addpart( animation2 )
 
 
-# 1) just fish
-#) 2) pick up trash, fish is happy and comes to the rescue latter on (as a river god)!!!
+class obj_scene_traveltolair(page.obj_chapterpage):
+    def prevpage(self):
+        if share.datamanager.getword('hero_fishing')=='pickuptrash':
+            share.scenemanager.switchscene(obj_scene_fishing_trashcleanup())
+        else:
+            share.scenemanager.switchscene(obj_scene_fishing_withtrash())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_arriveatlair())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                  '"When',\
+                    ('{heroname}',share.colors.hero),' came back home, ',\
+                  ('{partnername}',share.colors.partner),' wasnt there. ',\
+                'So ',('{hero_he}',share.colors.hero),' travelled to ',
+                ('{villainname}',share.colors.villain),'\'s evil lair to rescue',\
+                ('{partner_him}',share.colors.partner),'". ',\
+                   ]
+        self.world=world.obj_world_traveltolair(self)
+        self.addpart(self.world)
 
 
 
-#
-class obj_scene_ch5default(page.obj_chapterpage):
+class obj_scene_arriveatlair(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_traveltolair())
+    def nextpage(self):
+            share.scenemanager.switchscene(obj_scene_dodgebullets())
+    def setup(self):
+        self.text=[\
+                    '"',('{heroname}',share.colors.hero),' found ',\
+                    ('{partnername}',share.colors.partner),' in bed with ',\
+                    ('{villainname}',share.colors.villain),'.',\
+                   ]
+        y1=200
+        self.addpart( draw.obj_textbox('The hero decided to:',(240,y1)) )
+        textchoice=draw.obj_textchoice('hero_fightortalk')
+        textchoice.addchoice('1. fight them','fight',(640,y1))
+        textchoice.addchoice('2. talk to the partner (WIP)','talk',(940,y1))
+        self.addpart( textchoice )
+        share.datamanager.writeword('hero_fightswhom','villainpartner')# will fight both by default
+
+        self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
+        self.addpart( draw.obj_image('herobaseangry',(1100,458),scale=0.67,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('partnerbaseangry',(737,457),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('villainbase',(333,435),scale=0.65,rotate=0,fliph=False,flipv=False) )
+
+
+class obj_scene_dodgebullets(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_arriveatlair())
+    def nextpage(self):
+        if self.world.win:
+            share.scenemanager.switchscene(obj_scene_stompfight())
+        else:
+            share.scenemanager.switchscene(obj_scene_dodgebulletsdeath())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                  '"And so they fought with guns". ',\
+                   ]
+        if share.datamanager.getword('hero_fightswhom')=='villainpartner':
+            self.world=world.obj_world_dodgegunshots(self,heroangry=True,partnerenemy=True)
+        else:
+            self.world=world.obj_world_dodgegunshots(self,heroangry=True)# villain only
+        self.addpart(self.world)
+    def presetup(self):
+        super().presetup()
+        # heroheadangry+stickcrouch =herocrouchangry
+        image1=draw.obj_image('stickcrouch',(940,360),path='premade')
+        image2=draw.obj_image('angryhead',(800,360),scale=0.5,rotate=90)
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((940,360,300,200),'herocrouchangry')# 0 to 660 in height
+class obj_scene_dodgebulletsdeath(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_dodgebullets())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_dodgebullets())
+    def setup(self):
+        self.text=[\
+                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                'Well, that doesnt sound right, said the book of things. ',\
+                'Just go back to the last event and try to act more "heroic". ',\
+                   ]
+        self.addpart(draw.obj_image('herobaseangry',(640,540),scale=0.5,rotate=120))
+        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+
+
+class obj_scene_stompfight(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_dodgebullets())
+    def nextpage(self):
+        if self.world.win:
+            share.scenemanager.switchscene(obj_scene_lairfire())
+        else:
+            share.scenemanager.switchscene(obj_scene_stompfightdeath())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                  '"... and then they fought with fists." ',\
+                   ]
+        if share.datamanager.getword('hero_fightswhom')=='villainpartner':
+            self.world=world.obj_world_stompfight(self,heroangry=True,partnerenemy=True)
+        else:
+            self.world=world.obj_world_stompfight(self,heroangry=True)# villain only
+        self.addpart(self.world)
+    def presetup(self):
+        super().presetup()
+        # combine partnerheadangry+stickkick =partnerkickangry
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('stickkick',(640,460),path='premade') )
+        dispgroup2.addpart('part2',draw.obj_image('partnerheadangry',(640,200)) )
+        dispgroup2.snapshot((640,330,300,330),'partnerkickangry')
+class obj_scene_stompfightdeath(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_stompfight())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_stompfight())
+    def setup(self):
+        self.text=[\
+                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                'Well, that doesnt sound right, said the book of things. ',\
+                'Just go back to the last event and try to act more "heroic". ',\
+                   ]
+        self.addpart(draw.obj_image('herobaseangry',(640,540),scale=0.5,rotate=120))
+        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+
+
+class obj_scene_lairfire(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_stompfight())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_lairfire_savenone())
+    def setup(self):
+        if share.datamanager.getword('hero_fightswhom')=='villainpartner':
+            self.text=[\
+                      '"',('{heroname}',share.colors.hero),\
+                      ' defeated ',('{villainname}',share.colors.villain),\
+                      ' and ',('{partnername}',share.colors.villain),\
+                      ', then the evil lair took fire". ',\
+                       ]
+        else:# villain only
+            self.text=[\
+                      '"',('{heroname}',share.colors.hero),\
+                      ' defeated ',('{villainname}',share.colors.villain),\
+                      ', then the evil lair took fire". ',\
+                       ]
+        y1=200
+        self.addpart( draw.obj_textbox('The hero decided to:',(200,y1)) )
+        textchoice=draw.obj_textchoice('hero_savefromfire')
+        textchoice.addchoice('1. Save the Partner','partner',(640,y1))
+        textchoice.addchoice('2. Save the Villain','villain',(1040,y1))
+        textchoice.addchoice('3. Save both','villainpartner',(640,y1+80))
+        textchoice.addchoice('4. Save no one','nobody',(1040,y1+80))
+        self.addpart( textchoice )
+        self.addpart( draw.obj_image('herobaseangry',(300,523),scale=0.59,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1155,443),scale=0.5,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(1188,626),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(969,439),scale=0.34,rotate=10,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('flame',(536,655),scale=0.28,rotate=10,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(87,499),scale=0.37,rotate=10,fliph=False,flipv=False) )
+        if share.datamanager.getword('hero_fightswhom')=='villainpartner':
+            self.addpart( draw.obj_image('villainbase',(893,620),scale=0.45,rotate=94,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('partnerbaseangry',(616,514),scale=0.34,rotate=94,fliph=True,flipv=False) )
+        else:
+            self.addpart( draw.obj_image('villainbase',(893,620),scale=0.45,rotate=94,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_imageplacer(self,'flame','herobaseangry','villainbase','partnerbaseangry','tower','mountain') )
+
+
+class obj_scene_lairfire_saveboth(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_lairfire())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_default())
+    def setup(self):
+        pass
+
+
+class obj_scene_lairfire_savenone(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_lairfire())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_endingevil())
+    def setup(self):
+        self.text=[\
+                  '"',('{heroname}',share.colors.hero),\
+                  ' left ',('{partnername}',share.colors.villain),\
+                  ' and ',('{villainname}',share.colors.villain),' to die. ',\
+                  'He realized he had been hurt during the fight and ',\
+                  'a large ',('scar',share.colors.villain),' was splitting his face. ',\
+                  'He had become the ',('villain',share.colors.villain),'. ',\
+                  'He erupted into a maniacal laughter".',\
+                   ]
+        animation1=draw.obj_animation('ch4_heroisevil','angryhead',(640,360),record=False)
+        animation1.addimage( 'angryheadscar' )
+        animation1.addimage( 'heroheadscar' )
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch4_heroisevil2','flame',(640,360),record=False,sync=animation1) )
+        self.addpart( draw.obj_animation('ch4_heroisevil3','flame',(640,360),record=False,sync=animation1) )
+    def presetup(self):
+        super().presetup()
+        # angryhead+scar=angryheadscar (not necessarily=villain if has hair)
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('angryhead',(640,360)) )
+        dispgroup2.addpart('part2',draw.obj_image('scar',(640,360)) )
+        dispgroup2.snapshot((640,360,200,200),'angryheadscar')
+        # herohead+scar=heroheadscar
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('herohead',(640,360)) )
+        dispgroup2.addpart('part2',draw.obj_image('scar',(640,360)) )
+        dispgroup2.snapshot((640,360,200,200),'heroheadscar')
+
+####################################################################################################################
+####################################################################################################################
+# Endings
+
+
+class obj_scene_endingevil(page.obj_chapterpage):
+    def prevpage(self):
+        pass# cant go back!
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5uncorrectending())
+    def setup(self):
+        self.text=[\
+                   '"And ',('{hero_he}',share.colors.hero),' lived evily ever after, the End". ',\
+                   ]
+        self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
+        self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
+        self.addpart( draw.obj_textbox('(of a very evil story)',(640,280)) )
+        self.addpart( draw.obj_image('house',(320,430), scale=0.25) )
+        self.addpart( draw.obj_image('tree',(340,560), scale=0.25) )
+        self.addpart( draw.obj_image('tower',(950,430), scale=0.25) )
+        self.addpart( draw.obj_image('mountain',(910,540), scale=0.25) )
+        self.addpart( draw.obj_image('herobaseangry',(538,439),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('partnerbaseangry',(732,570),scale=0.3,rotate=92,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('villainbase',(808,462),scale=0.27,rotate=92,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('flame',(467,582),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(417,331),scale=0.21,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('flame',(850,347),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flame',(972,347),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_imageplacer(self,'flame','herobaseangry','partnerbaseangry','villainbase') )
+
+
+
+class obj_scene_ch5uncorrectending(page.obj_chapterpage):
+    def prevpage(self):
+        pass# cant go back!
+    def nextpage(self):
+        if share.datamanager.getword('choice_restartstory')=='yes':
+            share.scenemanager.switchscene(obj_scene_sunrise())
+        else:
+            super().nextpage()
+    def setup(self):
+        self.text=['This is interesting but not exactly the ending we were looking for, said the book of things. ',
+                   'Do you wan to restart the story. ',\
+                   ]
+        self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
+        y1=200
+        self.addpart( draw.obj_textbox('Restart the story:',(200,y1)) )
+        textchoice=draw.obj_textchoice('choice_restartstory')
+        textchoice.addchoice('1. Yes','yes',(640,y1))
+        textchoice.addchoice('2. No','no',(1040,y1))
+        self.addpart( textchoice )
+
+# Default page
+class obj_scene_default(page.obj_chapterpage):
     def prevpage(self):
         pass
     def nextpage(self):
@@ -313,6 +573,7 @@ class obj_scene_ch5default(page.obj_chapterpage):
                 'default page',\
                    ]
 
-
+####################################################################################################################
+####################################################################################################################
 
 #

@@ -367,7 +367,8 @@ class obj_scene_ch4p12(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' came back home, ',\
                   ('{partnername}',share.colors.partner),' wasnt there. ',\
                 'So ',('{hero_he}',share.colors.hero),' travelled to ',
-                ('{villainname}',share.colors.villain),'\'s evil lair in the mountains". ',\
+                ('{villainname}',share.colors.villain),'\'s evil lair to rescue',\
+                ('{partner_him}',share.colors.partner),'". ',\
                    ]
         self.world=world.obj_world_traveltolair(self)
         self.addpart(self.world)

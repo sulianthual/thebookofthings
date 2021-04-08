@@ -28,10 +28,22 @@ Chapter 5: Maybe Maybe Maybe. Open a few new choices with new ending goal = rede
            Have min 3 good actions to unlock it (after the fight).
            good actions= not drinkng at breakfast, picking up trash in river, saving villain(+partner) from fire
 
-consequences of choices:
-not drinking at breakfast => partner says he aint so bad he stopped drinking before fight. Only fight the villain (and save him from fire)
-picking up trash in river => fish becomes spirit, helps during villain fight (2 rounds become 1 round flappy bird against submarine). Fight outcome same.
-saving villain (+partner) from fire => +1 good action.
+Consequences of choices:
+- A simple scheme is 1 choice=1 delayed consequence (localized). For example:
+  pickup river trash => fight with fish god instead (later on)
+  no drink at breakfast => can breakup with partner (later on)
+  save villain from fire => ??? partner forgives you (later on)
+- Make object oriented events/endnigs: outcome depending on several conditions.
+  This way dont have to figure out every path in details.
+
+Delayed consequence:
+
+Endings:
+good samaritain (always good)
+redemptive (some bad)
+Make them from points instead of from path? This means several paths can have same ending
+
+
 
 
 villain says i am your father?
@@ -80,10 +92,6 @@ jump/duck. Simple for bullets (increase rythm)
 simple dinosaur game from google. just jump in time.
 skiing game like classic game
 
-
-Technical:
-record  animation2 synced to animation 1, using LMouse2: dont rewind entirely animation1, but sync to current frame of animation2
-add .git in book folder
 
 Stuff to Draw: (check all objects in katamari damacy)
 
