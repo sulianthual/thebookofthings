@@ -9,65 +9,104 @@
 ##########################################################
 ###########################################################
 
-Ideas for game
+Ideas for game:
+
 No more advanced physics! Only simple goofy minigames
-No more advanced drawings, only simple and goofy. Like same face on everything
+No more advanced drawings, only simple and goofy.
+
+Add in Menu (unlocked):
+Drawings (quickly redraw anything, unlocked after chapter 2: the partner)
+Arcade (replay all games, unlocked after chapter 3: the villain)
+Endings (Collection all all endings, unlocked after chapter 4: a perfect story)
+Credits (unlocked when last chapter becomes available)
+
+
+The story has multiple choices (from Chapter 5) leading to unique endings
+- look at flash game fleeing the complex (simple paths with multiple endings)
+- simple path: directed toward one ending, with simple choices that instantly fail and loop back.
+- delayed consequence: one choice comes later on to have a consequence (e.g. not fishing => river spirit later on)
+- object oriented events and endings: this way does not have to manage all paths (with possibilities in 2**choices at least)
+
+
+Technical:
+- Not necessary to draw everything in advance (this will give away new choices). Ask to draw if drawing not found.
+- When in story with choice, remove going back with Tab (easier path merging), except if doing drawings
+
+Each day of the story follows somewhat an arc (even if varying in content):
+arc:     wake up -> morning game -> travel1 -> overcome (game) -> travel2 -> aftermath -> ending
+phases:      *          morning                  |         afternoon          |        evening       *
+tension level: 0           2                    1             3              1            2          0
+
+morning games: morning breakfast, fishing, hunting.... (little consequence except for later)
+overcome games: defeat villain (gunfight, stomp fight...)
+aftermath games: eat diner, serenade/kiss...(happy ending or not)
+travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
+travel2: X back home, or to some location for an ending
+
+
+Endings ()
+basic story: never meet partner or villain, stay home.
+loving story: never meet villain, finish day with partner, in love, at home.
+perfect story: rescue partner from villain, finish day with partner at home.
+
+fishy story: cleanup river in morning. come back home, have nothing for diner, go back to river, talk to fish
+             fish becomes river spirit. Ride fish in minigame, fishy ending.
+
+wise story: hero-partner its complicated. Avoid fight (talking) or rescue everyone after fight.
+            what are you gonna do? Say climb the highest mountain. Find old man, become wise (with minigame). Wise ending.
+            become wise= play rock paper scissors (always loose). Then old man tells how to read mind to win: -> wisdom
+
+
 
 Chapter 1-3 give the basic stories. Then alterations are made.
+Chapter 4 gives an evil ending.
+Chapter 5 correct evil ending
 
-The story is organized into multiple endings coming choices (branch separations):
-- keep paths simples (e.g. do not do independent choices or will obtain too much paths=2**choices)
-  finding a new ending unlocks a new path/choice, and we do one unlock at the end of each chapter
-  (except end-game we may leave a few path to discover)
-  we can still add short fail paths that reloop to last branch separation (e.g. hero dies during fight/choice => restarts fight)
-  look at flash game fleing the complex that does these concepts very well
+add chapter here new endings???
 
+Chapter 6 changes storyteller (hero,partner,villain, hero when old, fish...)
+Chapter 7 adds themes (pirate, space, medieval...)
+Chapter 8 breaks reality (swap some game elements randomly)
+Chapter 9: the full story (add a few hidden endings to find)
 
+Chapter 5 version 1: unlock 2-3 new endings to progress?
+           what new drawings?
+           got drinking at breakfast, picking up trash in river, saving villain(+partner) from fire
 
-Chapter 5: Maybe Maybe Maybe. Open a few new choices with new ending goal = redemption
-           Have min 3 good actions to unlock it (after the fight).
-           good actions= not drinkng at breakfast, picking up trash in river, saving villain(+partner) from fire
+Chapter 5 version 2: just improve on the evil ending
+                     wakeup, drink or coffee, fish (no trash pickup yet), go to evil lair (no options)
+                     at evil lair:
+                        1) talk out of fight => go home or to mountain peak
+                        2) fight+ rescue => go home or to mountain peak
+                        3) fight +let die => evil ending
+                      go home => basic ending (alone)
+                      talk out of fight: if had coffee only (can say working on drinking issues)
+                      if goes to mountain peak:
+                        draw clouds + draw thunderstorm (for the top)
+                      mini game climb: jump on platforms
+                      meet the elder (draw old man/woman)
+                      propose rock paper scissors game (draw each), but loose each time
+                      choose to:
+                      1) go home => basic ending
+                      2) endure (at least 3 times): elder teaches to read mind for rock paper scissors
+                      win minigame, end up with wisdom ending.
 
-Consequences of choices:
-- A simple scheme is 1 choice=1 delayed consequence (localized). For example:
-  pickup river trash => fight with fish god instead (later on)
-  no drink at breakfast => can breakup with partner (later on)
-  save villain from fire => ??? partner forgives you (later on)
-- Make object oriented events/endnigs: outcome depending on several conditions.
-  This way dont have to figure out every path in details.
-
-Delayed consequence:
-
-Endings:
-good samaritain (always good)
-redemptive (some bad)
-Make them from points instead of from path? This means several paths can have same ending
-
-
-
-
-villain says i am your father?
-
-Chapter ??: Perspectives. change point of view. book of things (external), Hero, Partner or Villain. Or the fish
+Chapter 6: Perspectives. change point of view. book of things (external), Hero, Partner or Villain. Or the fish
             story is exaggerated in different ways depending on the perspective, with a few new choices and endings.
+            can also be hero in the future looking at his youth, etc
 
-Chapter ??: Themes. Add themes that add cosmetic changes and a few new choices with new endings.
+Chapter 7: Themes. Add themes that add cosmetic changes and a few new choices with new endings.
            pirate theme (everyone has eyelid, tree->palm trees, islands, talk like pirates, new choice with treasure hunt)
            space theme (everyone has elmet, ...., new choice with ??)
            medieval theme (???)
 
-Chapter ??: The fabric of reality (or Oulipo): completely break everything (end-game), swapping randomly all images.
+Chapter 8: The fabric of reality (or Oulipo): completely break everything (end-game), swapping randomly all images.
             hero can have fish-head, can have some i-am-malkovitch repetitions, etc...
 
 Chapter End: Just the open-ended story with all the choices. Can add a few easter eggs.
 
 
-Add in Menu:
-Arcade (replay all games)
-Drawings (quickly redraw anything + rename+gender)
-Endings (Collect all endings)
-Credits (unlock at the end, rolling credits)
-unlock them in some order at the ends of chapters
+
 
 Mini Game Ideas
 Hunt = Arrow Parabolic Arc [A][D] then [W]
@@ -161,6 +200,82 @@ Dustpan - Dish Rag - Quail Chick - Chick - Duckling - Swan - Hairbrush - Hair Dr
 ####################################################################################################################
 ####################################################################################################################
 # Some drafts
+
+
+# old cleanup trash instead of fishing (for river spirit quest)
+
+
+class obj_scene_choosefishing(page.obj_chapterpage):
+    def prevpage(self):
+        if share.datamanager.getword('hero_breakfast')=='drink':
+            share.scenemanager.switchscene(obj_scene_breakfast_drinking())
+        else:
+            share.scenemanager.switchscene(obj_scene_breakfast_notdrinking())
+    def nextpage(self):
+        if share.datamanager.getword('hero_fishing')=='pickuptrash':
+            share.scenemanager.switchscene(obj_scene_fishing_trashcleanup())
+        else:
+            share.scenemanager.switchscene(obj_scene_fishing_withtrash())
+    def setup(self):
+        self.text=[\
+                '"',('{heroname}',share.colors.hero),\
+                'decided what to do next". ',\
+                   ]
+        y1=400
+        self.addpart( draw.obj_textbox('The hero decided to:',(180,y1)) )
+        textchoice=draw.obj_textchoice('hero_fishing')
+        textchoice.addchoice('1. go fishing','fish',(540,y1))
+        textchoice.addchoice('2. Pick up the trash in the river','pickuptrash',(940,y1))
+        self.addpart( textchoice )
+        # self.addpart( draw.obj_imageplacer(self, 'fish','drink','guitar' ) )
+        self.addpart( draw.obj_image('fish',(534,525),scale=0.21,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(834,577),scale=0.21,rotate=-126,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(945,591),scale=0.21,rotate=-60,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('guitar',(1045,564),scale=0.21,rotate=-122,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('drink',(935,495),scale=0.21,rotate=-242,fliph=False,flipv=False) )
+
+
+        class obj_scene_fishing_withtrash(page.obj_chapterpage):
+            def prevpage(self):
+                share.scenemanager.switchscene(obj_scene_choosefishing())
+            def nextpage(self):
+                share.scenemanager.switchscene(obj_scene_traveltolair())
+            def triggernextpage(self,controls):
+                return (share.devmode and controls.enter and controls.enterc) or self.world.done
+            def setup(self):
+                self.text=[\
+                            '"',('{heroname}',share.colors.hero),\
+                             ' went to the river and caught a fish".',
+                           ]
+                self.world=world.obj_world_fishing(self)
+                self.addpart(self.world)
+                self.addpart( draw.obj_image('drink',(99,649),scale=0.32,rotate=124,fliph=False,flipv=False) )
+                self.addpart( draw.obj_image('drink',(254,657),scale=0.32,rotate=244,fliph=False,flipv=False) )
+                self.addpart( draw.obj_image('guitar',(457,675),scale=0.32,rotate=250,fliph=False,flipv=False) )
+                self.addpart( draw.obj_image('coffeecup',(236,570),scale=0.32,rotate=146,fliph=False,flipv=False) )
+                self.addpart( draw.obj_image('drink',(69,544),scale=0.32,rotate=210,fliph=False,flipv=False) )
+
+
+class obj_scene_fishing_trashcleanup(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_choosefishing())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_traveltolair())
+    def setup(self):
+        self.text=[\
+                    '"',('{heroname}',share.colors.hero),\
+                     ' went to the river and picked up all the trash. ',\
+                      'The fish was quite ',\
+                      ('pleased',share.colors.partner),' with that".',\
+                   ]
+        animation1=draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch5_pickuptrash1','love',(640,360),record=False,sync=animation1)
+        animation2.addimage('empty',path='premade')
+        self.addpart( animation2 )
+
+
+####################################################################################################################
 
 
 # draw elements for mini game fight with helicopters

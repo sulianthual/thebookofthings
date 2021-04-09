@@ -848,7 +848,7 @@ class obj_scene_ch3play13(page.obj_chapterpage):
         self.text=[\
                 '"It was already night".',\
                    ]
-        self.world=world.obj_world_sunset(self)# Wake up hero mini-game
+        self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
 
 
@@ -863,7 +863,7 @@ class obj_scene_ch3play14(page.obj_chapterpage):
         self.text=[\
                    '"',\
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
-                   ' went to back to bed". ',\
+                   ' went back to bed". ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5))
         self.world=world.obj_world_gotobed(self,partner='inlove')

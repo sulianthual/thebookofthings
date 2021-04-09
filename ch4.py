@@ -286,11 +286,6 @@ class obj_scene_ch4p8(page.obj_chapterpage):
         self.addpart( self.choice2 )
         self.choice1.show=False
         self.choice2.show=True
-        self.addpart( draw.obj_image('love',(630,452),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('herohead',(556,600),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('angryhead',(963,599),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('partnerheadangry',(1131,594),scale=0.56,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('partnerhead',(724,605),scale=0.56,rotate=0,fliph=True,flipv=False) )
         # self.addpart( draw.obj_imageplacer(self, 'herohead','partnerhead','angryhead','partnerheadangry','love' ) )
 
 
@@ -341,17 +336,11 @@ class obj_scene_ch4p11(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'Lets keep on reading, said the book of things. "',('{heroname}',share.colors.hero),\
-                     ' went to the river and caught a fish." Uh,',
-                     ('{hero_he}',share.colors.hero),' is even littering. '\
+                     ' went to the river and caught a fish."',
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
-        # self.addpart( draw.obj_imageplacer(self, 'drink','guitar','coffeecup' ) )
-        self.addpart( draw.obj_image('drink',(99,649),scale=0.32,rotate=124,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('drink',(254,657),scale=0.32,rotate=244,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('guitar',(457,675),scale=0.32,rotate=250,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('coffeecup',(236,570),scale=0.32,rotate=146,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('drink',(69,544),scale=0.32,rotate=210,fliph=False,flipv=False) )
+
 
 
 class obj_scene_ch4p12(page.obj_chapterpage):
@@ -647,7 +636,7 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4playend())
     def setup(self):
-        self.text=['You have unlocked ',('Chapter V: Maybe Maybe Maybe',share.colors.instructions),'. ',\
+        self.text=['You have unlocked ',('Chapter V: Over the Rainbow',share.colors.instructions),'. ',\
                   'You can always redraw the party hat, drink, coffee cup and flame in ',\
                   ('Chapter IV: A Perfect Story',share.colors.instructions),'. '\
                    '',\
