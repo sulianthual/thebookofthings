@@ -204,7 +204,8 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),' ',\
-                'with his partner ',('{partnername}',share.colors.partner),'." ',\
+                'with ',('{hero_his}',share.colors.hero),\
+                ' partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
         self.world=world.obj_world_wakeup(self,partner='inlove',angryfaces=True)
@@ -636,7 +637,7 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4playend())
     def setup(self):
-        self.text=['You have unlocked ',('Chapter V: Over the Rainbow',share.colors.instructions),'. ',\
+        self.text=['You have unlocked ',('Chapter V: The Highest Peak',share.colors.instructions),'. ',\
                   'You can always redraw the party hat, drink, coffee cup and flame in ',\
                   ('Chapter IV: A Perfect Story',share.colors.instructions),'. '\
                    '',\

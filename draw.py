@@ -466,6 +466,9 @@ class obj_textbox:
         formattextkwargs=share.datamanager.getwords()
         self.text=tool.formattext(self.text,**formattextkwargs)# replace with book of things keywords
         self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color)
+    def movetoxy(self,x,y):
+        self.movetox(x)
+        self.movetoy(y)
     def movetox(self,x):
         self.x=x
     def movetoy(self,y):
