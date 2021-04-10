@@ -1803,9 +1803,6 @@ class obj_world_climbpeak(obj_world):
         self.staticactor.addpart( 'img6',draw.obj_image('mountain',(1070,605),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img7',draw.obj_image('mountain',(1203,585),scale=0.38,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( 'text1', draw.obj_textbox('Lets go!',(585,212)) )
-
-
-
         # hero
         self.hero.addpart( 'stand_right', draw.obj_image('herobase',self.heroxystart,scale=0.35) )
         self.hero.addpart( 'stand_left', draw.obj_image('herobase',self.heroxystart,scale=0.35,fliph=True) )
@@ -1827,7 +1824,7 @@ class obj_world_climbpeak(obj_world):
         self.platformsxy=[(1110,195),(813,385),(457,575)]
         for c,xy in enumerate(self.platformsxy):
             platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy) )
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
@@ -1883,7 +1880,7 @@ class obj_world_climbpeak(obj_world):
         # platformes
         for c,xy in enumerate(self.platformsxy):
             platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy) )
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
@@ -1924,7 +1921,7 @@ class obj_world_climbpeak(obj_world):
         # platformes
         for c,xy in enumerate(self.platformsxy):
             platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy) )
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)

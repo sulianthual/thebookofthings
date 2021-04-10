@@ -685,6 +685,7 @@ class obj_scene_climbpeak(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_climbpeak(self)
         self.addpart(self.world)
+        # self.addpart( draw.obj_drawing('platform1',(340,450),shadow=(150,25)) )
         # self.addpart( draw.obj_drawing('arrowup',(340,450),shadow=(50,50)) )
         # self.addpart( draw.obj_imageplacer(self,'platform1','cloud','sun','mountain') )
 

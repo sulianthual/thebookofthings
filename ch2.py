@@ -127,15 +127,15 @@ class obj_scene_ch2p4(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
     def endpage(self):
         super().endpage()
-        # combine stickbody+herohead+partnerhair=partnerbase
+        # combine stickbody+stickhead+partnerhair=partnerbasenoface
         image1=draw.obj_image('stickbody',(640,460),path='premade')
         image2=draw.obj_image('partnerhair',(640,200))
-        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
+        image3=draw.obj_image('stickhead',(640,200),path='premade')# hero instead of stick head
         dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,330,200,330),'partnerbase')# 0 to 660 in height
+        dispgroup1.snapshot((640,330,200,330),'partnerbasenoface')# 0 to 660 in height
         # combine stickbody+herohead+partnerhair=partnerbase
         image1=draw.obj_image('stickbody',(640,460),path='premade')
         image2=draw.obj_image('partnerhair',(640,200))
