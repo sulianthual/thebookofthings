@@ -204,21 +204,20 @@ class obj_scene_ch2p7(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' surely wants to show his mad',\
                    ('love',share.colors.partner),' to ',\
                    ('{partnername}',share.colors.partner),'. ',\
-                   'Draw a ',('guitar',share.colors.item),' and a ',('music note',share.colors.item),\
+                   'Draw a ',('saxophone',share.colors.item),' and a ',('music note',share.colors.item),\
                    ' so ',('{hero_he}',share.colors.hero),' can play ',\
                    ('{partner_his}',share.colors.partner),' a serenade. ',\
                    ]
-        self.textkeys={'pos':(580,50),'xmin':580,'xmax':1230,'linespacing':55,'fontsize':'medium'}
-        drawing=draw.obj_drawing('guitar',(340,360),legend='guitar',shadow=(200,300))
-        # drawing.brush.makebrush(share.brushes.smallpen)
-        self.addpart( drawing )
-        self.addpart(draw.obj_drawing('musicnote',(1280-340,450),legend='Music Note',shadow=(200,200)))
+        self.addpart( draw.obj_drawing('saxophone',(340,450),legend='Saxophone (facing right)',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('musicnote',(1280-340,450),legend='Music Note',shadow=(200,200)) )
 
 class obj_scene_ch2p8(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p7())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p9())
+    def triggernextpage(self,controls):
+        return (controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
                    'Play the melody with [WASD] to serenade ',('{partnername}',share.colors.partner),'. '\
@@ -229,10 +228,9 @@ class obj_scene_ch2p8(page.obj_chapterpage):
             self.addpart( drawing )
         self.world=world.obj_world_serenade(self)# serenade mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=100# longer cutscene for first time playing
         # self.addpart(draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3,record=True))
-    def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done# quick skip
+        # self.addpart( draw.obj_imageplacer(self,'saxophone','guitar','herobase') )
+
 
 
 class obj_scene_ch2p9(page.obj_chapterpage):
@@ -328,7 +326,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
                 'with ',('trees',share.colors.item),'. ',\
                 'It was morning and the sun was rising". ',\
                    ]
-        self.world=world.obj_world_sunrise(self)# Wake up hero mini-game
+        self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
         # self.addpart( draw.obj_animation('ch2_sunrise','sun',(640,360),record=True) )
 
@@ -346,7 +344,6 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
                 'woke up from ',('bed',share.colors.item),' ',\
                 'with his partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
         self.world=world.obj_world_wakeup(self,partner='inlove')
         self.addpart(self.world)
 
@@ -432,7 +429,7 @@ class obj_scene_ch2play5a(page.obj_chapterpage):
         self.text=[\
                 '"It was already night".',\
                    ]
-        self.world=world.obj_world_sunset(self)# Wake up hero mini-game
+        self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
         # animation1=draw.obj_animation('ch2_sunset','sun',(640,360),record=True)
         # animation1.addimage('moon')
@@ -472,7 +469,7 @@ class obj_scene_ch2play7(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(460,520), scale=0.25) )
         self.addpart( draw.obj_image('herobase',(590,470), scale=0.25) )
         self.addpart( draw.obj_image('partnerbase',(690,470), scale=0.25,fliph=True) )
-        self.addpart( draw.obj_image('guitar',(850,500), scale=0.25,rotate=-90) )
+        self.addpart( draw.obj_image('saxophone',(850,500), scale=0.25) )
         self.addpart( draw.obj_image('love',(350,320), scale=0.15) )
         self.addpart( draw.obj_image('musicnote',(900,320), scale=0.15) )
 
@@ -494,12 +491,12 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def setup(self):
         self.text=['You have unlocked ',('Chapter III: The Villain',share.colors.instructions),'. ',\
-                  'You can always redraw the partner, love heart, guitar and music note, house and tree in ',\
+                  'You can always redraw the partner, love heart, saxophone and music note, house and tree in ',\
                   ('Chapter II: The Partner',share.colors.instructions),'. '\
                    '',\
                    ]
         share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
-        for c,value in enumerate(['partnerbase','love','guitar','musicnote','house','tree']):
+        for c,value in enumerate(['partnerbase','love','saxophone','musicnote','house','tree']):
             self.addpart( draw.obj_image(value,(150+c*200,400), scale=0.25) )
 
 

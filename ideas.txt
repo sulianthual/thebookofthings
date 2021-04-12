@@ -11,73 +11,58 @@
 
 Ideas for game:
 
+* Main Guidelines:
+Keep it simple or will never finish this game !!!:
 No more advanced physics! Only simple goofy minigames
-No more advanced drawings, only simple and goofy.
-
-Add in Menu (unlocked):
-Drawings (quickly redraw anything, unlocked after chapter 2: the partner)
-Arcade (replay all games, unlocked after chapter 3: the villain)
-Endings (Collection all all endings, unlocked after chapter 4: a perfect story)
-Credits (unlocked when last chapter becomes available)
-
-Important question:
- do we make very different quests and stories each chapter? Or do we constantly recycle the same story?
- Recycling seems more interesting:
- - we can change point of view, who did what (e.g. partner saves hero, villain saves hero, etc...), add themes...
- - we can still add content in the form of drawings, locations...
- - but every possible "story" should always remain a variation of the canonical story!!!
-- can add mini games each chapter on side
+No more advanced drawings! Only simple and goofy.
+No more advanced modular story! Only one linear story.
 
 
-!!!!!! Do a MODULAR STORY: !!!!!!!
-- between slightly different options, outcome shouldnt be fundamentally different
-- easy to code events/endings as object oriented (depending on choices)
-- And book of thing's goal is not to "fix" anything, just write on for fun.
-- every combo should have a unique ending: its part of the fun! max 2*2*2*2=16 endings and good to go
--  Have a SINGLE page where the entire story writes down (for each set of choices). This is basically the modular part of the story.
+* Game Progression:
+- Each chapter, the story is modified in some way.
+- This has to do with the book of things doing/eating/drinking certain things?
+  or a warp to another dimension?
+Chapter 1: start story with the hero
+Chapter 2: add the partner
+Chapter 3: add the villain
+Chapter 4: twist story, hero-partners hate each others, hero fights both
+Chapter 5: twist story, hero fights his problems instead (on high peak)
+           its complicated with partner. receives mail: come solve your problems at the highest peak.
+           goes, finds old man. chase him in the clouds. then does rock-paper-scissor game
+           cant win (must retry >3 times). then taught how to read minds for game
+           wisdom ending or perserverance ending
+           Comes back home and can read partner's mind (?)
+Chapter ?:
+Final Chapter: just the complete story and can choose morning mini-game, afternoon quest.
 
 
-- 1) find what the canonical story is. Every story follows this arc
-- 2) start with no choice = perfect story
-- 3) move to 2 choices:
-     hero-partner = 1. in love
-                    2. its complicated.
-     if its complicated, rescues princess but brings her back by force (locked in cage! kind of funny)
-- 4) add 1 choice: 2**2=4 endings possible. (in that chapter, ask to explore both)
-     enemy-partner= a.enemies
-                    b.lovers
-     so we have:
-        1a: (in love/enemies) perfect story: draw gun - bullet
-        2b: (complicated/lovers) hero brings partner by force (burns villain, puts partner in cage): draw flame - cage
-        1b: (in love/lovers) hero has not idea what is going on. mock fight with villain (wink wink), comes back home and loving ending: draw ? - ?
-        2a: (complicated/enemies): partner has captured villain and he is asking for help.
-                                   both fight partner, hero comes back with villain as bro: draw ? - ? (push partner in pit, draw spikes)
-        Note: put a mailbox with anonymous notes: like "help, I am trapped at villain lair come rescue me"
+* General Story Arc:
+Each day of the story follows somewhat an arc (even if varying in content):
+arc:     wake up -> morning game -> travel1 -> afternoon quest (game) -> travel2 -> aftermath -> ending
+phases:      *          morning             |         afternoon        |        evening       *
+tension level: 0           2           1             3                     1            2          0
+morning games: morning breakfast, fishing, hunting.... (little consequence except for later)
+overcome games: defeat villain (gunfight, stomp fight...)
+aftermath games: eat diner, serenade/kiss...(happy ending or not)
+travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
+travel2: X back home, or to some location for an ending
 
 
-then can do other swaps:
- - general theme (space, medieval, pirates)... doesnt change the story, but has a unique ending....
- - swaps: partner rescues the hero, etc...
- - perspective: hero tells the story, etc..., told in the future or not...
- - twists: hero is an anti-hero, parodie (they are "playing" their adventure)
+* Possible Story twists:
+- change point of view (hero, partner,villain,fish, hero in the future,...)
+- new setting like tropical island and treasure hunt (palm tree, ship, shark fins, cannon fight, islands...)(eyelid on everyone)
+- medieval setting with a fight for the partner=princess
+- space setting (villain is the father?) (space elment on everyone)
+- the hero is an anti-hero
+- parodie (they are "playing" their adventure)
+- partner rescues the hero
+- the hero is evil, the villain is good, the partner is evil
+- the fish becomes a river spirit (is huge)
+- they are all super-heroes
+- the fabric of reality: break everything, swapping images randomly
 
 
-https://www.fabula.org/actualites/figures-du-heros-litterature-cinema-bande-dessinee_48188.php
-....L'aventure peut consister soit en un processus externe de purification du monde,
-laquelle peut avoir une signification historique et politique:
- chercher un trésor, libérer quelqu'un, capturer un criminel,
- combattre des terroristes, des traficants, des tyrans
-Héros et Famille
-
-
-The story has multiple choices (from Chapter 5) leading to unique endings
-- look at flash game fleeing the complex (simple paths with multiple endings)
-- simple path: directed toward one ending, with simple choices that instantly fail and loop back.
-- delayed consequence: one choice comes later on to have a consequence (e.g. not fishing => river spirit later on)
-- object oriented events and endings: this way does not have to manage all paths (with possibilities in 2**choices at least)
-- or maybe instead work on a SINGLE core story adding tons of twists to it (but not new content except some drawings)
-
-Map:
+* World Map:
 - Villain in East
 - Introduce 3 new characters in North/West/South:
 The elder in north highest peak... (gives advice)
@@ -86,105 +71,10 @@ The randobot in west ... (randomizes the story)
 Later on: Make unique minigame travel where can roam unique map (add tons of content from drawings +roads)
 => Is this a good idea? We should only keep the hero, partner and villain!
 
-Technical:
-- Not necessary to draw everything in advance (this will give away new choices). Ask to draw if drawing not found.
-- When in story with choice, remove going back with Tab (easier path merging), except if doing drawings
-
-Each day of the story follows somewhat an arc (even if varying in content):
-arc:     wake up -> morning game -> travel1 -> overcome (game) -> travel2 -> aftermath -> ending
-phases:      *          morning                  |         afternoon          |        evening       *
-tension level: 0           2                    1             3              1            2          0
-
-morning games: morning breakfast, fishing, hunting.... (little consequence except for later)
-overcome games: defeat villain (gunfight, stomp fight...)
-aftermath games: eat diner, serenade/kiss...(happy ending or not)
-travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
-travel2: X back home, or to some location for an ending
-
-
-Put a mailbox:
-draw an enveloppe, and maybe a letter (then use pen eraser on top)
-read mail after morning game
-example:
-i have captured the partner.... (perfect story)
-i have been captured but its ok, ill be fine and back for diner...(evil story)
-have problems? Come find answers at the highest peak (perserverance story chapt 5)
-
-Endings ()
-basic story: never meet partner or villain, stay home.
-loving story: never meet villain, finish day with partner, in love, at home.
-perfect story: rescue partner from villain, finish day with partner at home.
-
-fishy story: cleanup river in morning. come back home, have nothing for diner, go back to river, talk to fish
-             fish becomes river spirit. Ride fish in minigame, fishy ending.
-
-wise story: hero-partner its complicated. Avoid fight (talking) or rescue everyone after fight.
-            what are you gonna do? Say climb the highest mountain. Find old man, become wise (with minigame). Wise ending.
-            become wise= play rock paper scissors (always loose). Then old man tells how to read mind to win: -> wisdom
-
-
-
-Chapter 1-3 give the basic stories. Then alterations are made.
-Chapter 4 gives an evil ending.
-Chapter 5 correct evil ending?
-
-
-Chapter 4 bis: Should actually have a "Love Triangle" chapter. It makes twists to the story!
-               with a lot of small possibilities (it was good!)
-Hero-Partner=1. in love
-             2. its complicated
-
-Partner-Villain=a. enemies
-                b. lovers
-
-Hero-Villain: X. enemies
-              Y. friends
-
-
-
-
-add chapter here new endings???
-
-Chapter 6 changes storyteller (hero,partner,villain, hero when old, fish...)
-Chapter 7 adds themes (pirate, space, medieval...)
-Chapter 8 breaks reality (swap some game elements randomly)
-Chapter 9: the full story (add a few hidden endings to find)
-
-Chapter 5 version 1: unlock 2-3 new endings to progress?
-           what new drawings?
-           got drinking at breakfast, picking up trash in river, saving villain(+partner) from fire
-
-Chapter 5 version 2: just improve on the evil ending
-                     wakeup, drink or coffee, fish (no trash pickup yet), go to evil lair (no options)
-                     at evil lair:
-                        1) talk out of fight => go home or to mountain peak
-                        2) fight+ rescue => go home or to mountain peak
-                        3) fight +let die => evil ending
-                      go home => basic ending (alone)
-                      talk out of fight: if had coffee only (can say working on drinking issues)
-                      if goes to mountain peak:
-                        draw clouds + draw thunderstorm (for the top)
-                      mini game climb: jump on platforms
-                      meet the elder (draw old man/woman)
-                      propose rock paper scissors game (draw each), but loose each time
-                      choose to:
-                      1) go home => basic ending
-                      2) endure (at least 3 times): elder teaches to read mind for rock paper scissors
-                      win minigame, end up with wisdom ending.
-
-Chapter 6: Perspectives. change point of view. book of things (external), Hero, Partner or Villain. Or the fish
-            story is exaggerated in different ways depending on the perspective, with a few new choices and endings.
-            can also be hero in the future looking at his youth, etc
-
-Chapter 7: Themes. Add themes that add cosmetic changes and a few new choices with new endings.
-           pirate theme (everyone has eyelid, tree->palm trees, islands, talk like pirates, new choice with treasure hunt)
-           space theme (everyone has elmet, ...., new choice with ??)
-           medieval theme (???)
-
-Chapter 8: The fabric of reality (or Oulipo): completely break everything (end-game), swapping randomly all images.
-            hero can have fish-head, can have some i-am-malkovitch repetitions, etc...
-
-Chapter End: Just the open-ended story with all the choices. Can add a few easter eggs.
+* Todo:
+- add a mailbox and the hero reads mail after morning mini-game? (this could start quests)
+  (villain says: I have captured the partner... have problems? come solve them at the highest peak)
+-cleanup chapter 4: no littering ,etc...
 
 
 
@@ -211,7 +101,7 @@ writing game: type quickly text or answer to it. What is your favorite color? ..
 jump/duck. Simple for bullets (increase rythm)
 simple dinosaur game from google. just jump in time.
 skiing game like classic game
-
+Atari games: https://games.aarp.org/category/atari-games
 
 Stuff to Draw: (check all objects in katamari damacy)
 

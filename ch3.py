@@ -596,7 +596,6 @@ class obj_scene_ch3play1a(page.obj_chapterpage):
                 'woke up from ',('bed',share.colors.item),' ',\
                 'with his partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
         self.world=world.obj_world_wakeup(self,partner='inlove')
         self.addpart(self.world)
 
@@ -654,7 +653,7 @@ class obj_scene_ch3play4(page.obj_chapterpage):
                 '"So ',('{heroname}',share.colors.hero),'" travelled to ',
                 ('{villainname}',share.colors.villain),'\'s evil lair in the mountains". ',\
                    ]
-        self.world=world.obj_world_traveltolair(self)# Wake up hero mini-game
+        self.world=world.obj_world_traveltolair(self)
         self.addpart(self.world)
         # self.addpart( draw.obj_drawing('grid',(640,400),shadow=(400,280)) )
 

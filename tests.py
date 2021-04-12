@@ -17,6 +17,7 @@ import draw
 import page
 import world
 #
+import cha
 
 ##########################################################
 ##########################################################
@@ -32,7 +33,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list=[]# list of tests
         self.loadtests()
         self.addpart(draw.obj_textbox('Appendix Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
-        self.addpart(draw.obj_textbox('[Space: Menu]',(1120,700),fontsize='smaller'))
+        self.addpart(draw.obj_textbox('[Space: Arcade]',(1120,700),fontsize='smaller'))
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
@@ -54,9 +55,10 @@ class obj_scene_testmenu(page.obj_page):
             if share.itest == -1: share.itest=self.listlen-1
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.itest],init=True)
-        if (controls.esc and controls.escc) or (controls.space and controls.spacec):
+        if (controls.esc and controls.escc) :
             share.scenemanager.switchscene(share.titlescreen)
-
+        if (controls.space and controls.spacec):
+            share.scenemanager.switchscene(cha.obj_scene_arcademenu())
 
     def loadtests(self):# load all tests
         # developper

@@ -151,7 +151,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch5.obj_scene_ch5drawelder()
+            quickscene=ch5.obj_scene_ch5p6()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

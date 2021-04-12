@@ -207,7 +207,6 @@ class obj_scene_ch4p6(page.obj_chapterpage):
                 'with ',('{hero_his}',share.colors.hero),\
                 ' partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5))
         self.world=world.obj_world_wakeup(self,partner='inlove',angryfaces=True)
         self.addpart(self.world)
         # self.addpart( draw.obj_imageplacer(self, 'herobaseangry','partnerbaseangry' ) )
@@ -277,7 +276,6 @@ class obj_scene_ch4p8(page.obj_chapterpage):
                   ('in love',share.colors.partner),'" to "',('its complicated',share.colors.villain),'". ',\
                 'To be fair i am so hangover i dont remember anything of what we did last night. ',\
                    ]
-
         self.addpart( draw.obj_textbox('The hero and the partner were:',(250,320)) )
         self.addpart( draw.obj_textbox('1. in love',(630,320)) )
         self.addpart( draw.obj_textbox('2. its complicated',(1060,320)) )
@@ -339,7 +337,7 @@ class obj_scene_ch4p11(page.obj_chapterpage):
                     'Lets keep on reading, said the book of things. "',('{heroname}',share.colors.hero),\
                      ' went to the river and caught a fish."',
                    ]
-        self.world=world.obj_world_fishing(self)# fishing mini-game
+        self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
 
 

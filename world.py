@@ -453,10 +453,12 @@ class obj_world_wakeup(obj_world):
         # default options
         self.partner=False# add partner alongside hero
         self.angryfaces=False# replace happy faces with angry faces
+        self.addsun=True# add the sun (must have been drawn)
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
             if 'angryfaces' in kwargs: self.angryfaces=kwargs["angryfaces"]# partner options
+            if 'sun' in kwargs: self.addsun=kwargs["sun"]# partner options
         #
         # change base picture
         self.herobaseimg='herobase'
@@ -464,8 +466,6 @@ class obj_world_wakeup(obj_world):
         if self.angryfaces:# replace with angry characters
             self.herobaseimg='herobaseangry'
             self.partnerbaseimg='partnerbaseangry'
-
-
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.ungoing=False# ungoing or back to start
@@ -484,6 +484,8 @@ class obj_world_wakeup(obj_world):
         self.text_done.show=False
         # static actor
         self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75) )
+        if self.addsun:
+            self.staticactor.addpart( 'annim',draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5) )
         # start actor
         if self.partner == 'inlove':# add partner in love
             self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
@@ -998,7 +1000,7 @@ class obj_world_traveltolair(obj_world):
 
 
 # Mini Game: travel from evil lair to highest peak
-class obj_world_travellairtopeak(obj_world):
+class obj_world_traveltopeak(obj_world):
     def setup(self,**kwargs):
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
@@ -1007,7 +1009,7 @@ class obj_world_travellairtopeak(obj_world):
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
-        self.heroxstart=1280-180
+        self.heroxstart=180
         self.heroystart=400+yoff1
         self.staticactor=obj_grandactor(self,(640,360))# background
         self.hero=obj_grandactor(self,(self.heroxstart,self.heroystart))# hero
@@ -1039,7 +1041,7 @@ class obj_world_travellairtopeak(obj_world):
         self.hero.addpart( 'face_left', draw.obj_image('herobase',(self.heroxstart,self.heroystart),scale=0.25,fliph=True) )
         self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(self.heroxstart,self.heroystart),scale=0.25) )
         self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(self.heroxstart,self.heroystart),scale=0.25,fliph=True) )
-        self.herofaceright=False
+        self.herofaceright=True
         self.herowalking=False# hero walking or standing
         self.hero.dict['face_right'].show=self.herofaceright and not self.herowalking
         self.hero.dict['face_left'].show=not self.herofaceright and not self.herowalking
@@ -2116,9 +2118,9 @@ class obj_world_serenade(obj_world):
         self.doneplaying=False# done playing serenade
         # hero on left
         self.hero=obj_grandactor(self,(640,360))
-        # self.hero.addpart( 'img_hero',draw.obj_image('herobase',(200,450), scale=0.7) )# bit messy
-        self.hero.addpart( 'img_herohead',draw.obj_image('herohead',(200,354), scale=0.35) )
-        self.hero.addpart( 'img_guitar',draw.obj_image('guitar',(200,500), scale=0.5,rotate=60) )
+        self.hero.addpart( 'img_hero',draw.obj_image('herobase',(140+20,470), scale=0.7) )# bit messy
+        self.hero.addpart( 'img_instru',draw.obj_image('saxophone',(270+20,470),scale=0.5) )
+
         # partner on right
         self.partner=obj_grandactor(self,(640,360))
         self.partner.addpart( 'img_partner',draw.obj_image('partnerbase',(1280-200,450), scale=0.7,fliph=True) )
@@ -2180,7 +2182,7 @@ class obj_world_serenade(obj_world):
         self.text1.show=True
         self.text2.show=False
         # short timer after done playing
-        self.timerend=tool.obj_timer(70)
+        self.timerend=tool.obj_timer(100)
     def update(self,controls):
         super().update(controls)
         if not self.doneplaying:

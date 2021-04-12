@@ -185,9 +185,8 @@ class obj_scene_ch1p7(page.obj_chapterpage):
                   ' will go straight back to sleep. ',\
                   ' When',('{hero_he}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
-        self.world=world.obj_world_wakeup(self)
+        self.world=world.obj_world_wakeup(self,sun=False)
         self.addpart(self.world)
-        self.world.timerend.amount=100# longer cutscene for first time playing
 
 
 
@@ -378,7 +377,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
                 'It was morning when ',('{hero_he}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),'." ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),record=False,scale=0.5))
+        # self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),record=False,scale=0.5))
         self.world=world.obj_world_wakeup(self)
         self.addpart(self.world)
 
@@ -397,7 +396,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
                     '"',('{heroname}',share.colors.hero),\
                      ' went to the river and caught a fish."',\
                    ]
-        self.world=world.obj_world_fishing(self)# fishing mini-game
+        self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
 
 
@@ -433,7 +432,7 @@ class obj_scene_ch1play4(page.obj_chapterpage):
                    '"And finally, at night, ',('{hero_he}',share.colors.hero),' went to back to bed". ',\
                    ]
         self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),record=True,scale=0.5))
-        self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
+        self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
 
 
