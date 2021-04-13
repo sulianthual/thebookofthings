@@ -28,6 +28,7 @@ class obj_colors:
         self.red=(220,0,0)# bit darker
         self.blue=(0,0,220)
         self.green=(0,220,0)
+        self.darkgreen=(0,100,0)
         self.gray=(150,150,150)
         self.darkgray=(100,100,100)
         self.brown=(165,42,42)
@@ -51,9 +52,10 @@ class obj_colors:
         self.hero=self.red# hero text color
         self.partner=self.pink#partner text color
         self.villain=self.brown#partner text color
-        self.elder=self.gray#elder text color
+        self.elder=self.darkgray#elder text color
         self.item=self.blue# items (bed, fish,etc...)
-        self.action=self.green# actions text (fishing, etc...)
+        self.location=self.darkgreen# locations
+        self.action=self.green# actions text (??? not used)
 
 
 

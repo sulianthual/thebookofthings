@@ -185,9 +185,10 @@ class obj_scene_ch3p6(page.obj_chapterpage):
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' travelled to the  ',\
-                  ('villain',share.colors.villain),'\'s evil lair to rescue ',\
+                  ('villain',share.colors.villain),'\'s ',('evil lair',share.colors.location),' to rescue ',\
                    ('{partnername}',share.colors.partner),'. ',\
-                 ' The evil lair was a',('tower',share.colors.item),' in the ',('mountains',share.colors.item),'".'\
+                 ' The ',('evil lair',share.colors.location),\
+                 ' was a',('tower',share.colors.item),' in the ',('mountains',share.colors.item),'".'\
                  ' Draw an ',('evil tower',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
@@ -221,7 +222,7 @@ class obj_scene_ch3p8(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   'Great, said the book of things, now lets add: "',\
-                    'At the evil lair. ',\
+                    'At the ',('evil lair',share.colors.location),', ',\
                   ('{villainname}',share.colors.villain),' said: you will have to',\
                   ('fight',share.colors.villain),' me if you want ',\
                    ('{partnername}',share.colors.partner),' back". ',\
@@ -641,7 +642,7 @@ class obj_scene_ch3play3a(page.obj_chapterpage):
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                     '\nI have captured ',('{partnername}',share.colors.partner),'. ',\
-                     '\nCome to my evil lair to save ',\
+                     '\nCome to my ',('evil lair',share.colors.location),' to save ',\
                      ('{partner_him}',share.colors.partner),' if you dare. ',\
                     '\nMuahahahaha, ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
@@ -661,7 +662,8 @@ class obj_scene_ch3play4(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"So ',('{heroname}',share.colors.hero),'" travelled to ',
-                ('{villainname}',share.colors.villain),'\'s evil lair in the mountains". ',\
+                ('{villainname}',share.colors.villain),'\'s ',\
+                ('evil lair',share.colors.location),' in the mountains". ',\
                    ]
         self.world=world.obj_world_traveltolair(self)
         self.addpart(self.world)
@@ -678,7 +680,7 @@ class obj_scene_ch3play5(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     ('{heroname}',share.colors.hero),' confronted ',\
-                  ('{villainname}',share.colors.villain),' at the evil lair, ',\
+                  ('{villainname}',share.colors.villain),' at the ',('evil lair',share.colors.location),', ',\
                 'and they started to ',('fight',share.colors.villain),'for ',\
               ('{partnername}',share.colors.partner),'. ',\
                    ]
@@ -811,7 +813,7 @@ class obj_scene_ch3play10(page.obj_chapterpage):
                     '"They  ate ',\
                     ('fish',share.colors.item),'for dinner".',\
                    ]
-        self.world=world.obj_world_eatfish(self,partner='inlove')
+        self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)
 
 

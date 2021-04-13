@@ -71,11 +71,35 @@ class obj_scene_ch5p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p3())
     def setup(self):
         self.text=[\
-                  'Well, lets try to change this story a bit today. ',\
-                 'It looks like ',('{heroname}',share.colors.hero),' has quite a few issues that ',\
-                 ('{hero_he}',share.colors.partner),' could work on. ',\
-                   ]
+                 'Well, it looks like ',('{heroname}',share.colors.hero),' has quite a few issues that ',\
+                 ('{hero_he}',share.colors.hero),' could work on, said the book of things. ',\
+                   'Lets try help ',('{hero_him}',share.colors.hero),' a little. ',\
+                   'Start by drawing a ',('night stand',share.colors.item),\
+                   'and an ',('alarm clock',share.colors.item),\
+                   'to wake ',('{hero_him}',share.colors.hero),' up on time. ',\
 
+                   ]
+        self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='Night Stand',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock (draw the exterior)',shadow=(200,200)) )
+        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
+        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
+
+    def endpage(self):
+        super().endpage()
+        # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
+        image1=draw.obj_image('alarmclockext',(640,360))
+        image2=draw.obj_image('alarmclockfill',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock')
+        # combine alarmclock+alarmclockcenter8am=alarmclock8am
+        image1=draw.obj_image('alarmclock',(640,360))
+        image2=draw.obj_image('alarmclockcenter8am',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock8am')
 
 
 
@@ -88,7 +112,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+                'Ok here we go: "Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' ',\
                 'that lived in a  ',('house',share.colors.item),' ',\
                 'with ',('trees',share.colors.item),'. ',\
@@ -110,9 +134,14 @@ class obj_scene_ch5p4(page.obj_chapterpage):
                 '"',('{heroname}',share.colors.hero),' woke up, but ',\
                 ('{partnername}',share.colors.partner),' wasnt there. ',\
                    ]
-        self.world=world.obj_world_wakeup(self,angryfaces=True)
+        self.world=world.obj_world_wakeup(self,angryfaces=True,sun=True,alarmclock=True)
         self.addpart(self.world)
-
+        # self.addpart (draw.obj_imageplacer(self,'nightstand','alarmclock'))
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5,rotate=0,fliph=False,flipv=False) )
+        # animation1=draw.obj_animation('wakeup_alarmclock','alarmclock',(640,360),record=False)
+        # animation2=draw.obj_animation('wakeup_sun','sun',(640,360),record=True,sync=animation1)
+        # self.addpart( animation1 )
+        # self.addpart( animation2 )
 
 class obj_scene_ch5p5(page.obj_chapterpage):
     def prevpage(self):
@@ -134,36 +163,100 @@ class obj_scene_ch5p6(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p7())
+        share.scenemanager.switchscene(obj_scene_ch5p6a())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
-                  '"When',\
-                    ('{heroname}',share.colors.hero),' came back home, ',\
-                  ('{partnername}',share.colors.partner),' still wasnt there. ',\
-                   'There were ',('two letters',share.colors.item),' in the mail. ',
-                    'The first one said: ',\
-                     '\n\nHe    `y looser, its ',('{partnername}',share.colors.partner),'. ',\
-                      'Me and ',('{villainname}',share.colors.villain),' are madly in love ',\
-                       'and I am dumping you. Btw, you have some issues. Dont ever call again. XOXO ',\
-                    '\n\nThe second letter said: ',\
-                     '\n\nHaving issues? Looking for meaning in life? ',\
-                      'Come find answers at the Highest Peak ',\
-                       '(Conveniently located just north of the hero\'s house). ',\
+                  '"',\
+                    ('{heroname}',share.colors.hero),' came back home and checked ',\
+                    ('{hero_his}',share.colors.hero),' mailbox.',\
+                    ('{hero_he}',share.colors.hero),' had received ',\
+                    ('two',share.colors.item),' letters". ',\
                    ]
+        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
+        self.addpart( draw.obj_image('herobaseangry',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),record=True,sync=animation1)
+        animation2.addimage('empty',path='premade')
+        self.addpart(animation1)
+        self.addpart(animation2)
+        # self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
+
+
+
+class obj_scene_ch5p6a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p6())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p6b())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
+    def setup(self):
+        self.addpart( draw.obj_textbox('"The first letter said:"',(163+30,83)) )
+        xmargin=100
+        ymargin=230
+        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
+        self.text=[\
+                    'Hey ',('looser',share.colors.hero),', ',\
+                      '\nYou really need to work on your issues. ',\
+                     'I am dumping you and I am going to live with ',\
+                    ('{villainname}',share.colors.villain),' in ',\
+                    ('{villain_his}',share.colors.villain),' ',('evil lair',share.colors.location),'. '\
+                      'Dont ever call me again. XOXO, ',\
+                    '\n\nsigned: ',('{partnername}',share.colors.partner),\
+                   ]
+        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('partnerhead',(1065,305),scale=0.5) )
+        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
+
+
+class obj_scene_ch5p6b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p6a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p7())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
+    def setup(self):
+        self.addpart( draw.obj_textbox('"The second letter said:"',(163+30,83)) )
+        xmargin=100
+        ymargin=230
+        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
+        self.text=[\
+                    'Dear ',\
+                    ('[Current resident at the House with Trees]',share.colors.hero),', ',\
+                      '\nAre you having issues. Are you looking for meaning in life. ',\
+                     'Come find the solution to all your problems at the  ',\
+                    ('highest peak',share.colors.location),'. ',\
+                    '\n\nsigned: unknown. ',\
+                   ]
+        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('interrogationmark',(1065,305),path='premade',scale=1.5) )
+        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
+
+
+
 
 
 class obj_scene_ch5p7(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p6())
+        share.scenemanager.switchscene(obj_scene_ch5p6b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p8())
     def setup(self):
         self.text=[\
                    'I think we are onto something, said the book of things.',\
-                   ' Our ',('hero',share.colors.hero),' is probably a bit down right now, ',\
-                  'so this ',('highest peak',share.colors.hero),' thing cant hurt. ',\
+                   ' Our ',('hero',share.colors.hero),' is so down right now that ',\
+                  'this ',('highest peak',share.colors.location),' thing cant hurt. ',\
                   ' It is so high up in the sky it is always covered by stormy clouds. ',\
-                 'So raw a ',('cloud',share.colors.item),' and a',\
+                 'So draw a ',('cloud',share.colors.item),' and a',\
                  ('lightning bolt',share.colors.hero),'. ',\
                    ]
         self.addpart( draw.obj_drawing('cloud',(340,450),legend='Cloud',shadow=(200,200)) )
@@ -181,7 +274,7 @@ class obj_scene_ch5p8(page.obj_chapterpage):
         self.text=[\
                   'Great, now lets write: "',\
                     ('{heroname}',share.colors.hero),' travelled to the ',\
-                  ('highest peak',share.colors.hero),' to find meaning in life". ',\
+                  ('highest peak',share.colors.location),' to find meaning in life". ',\
                    ]
         self.world=world.obj_world_traveltopeak(self)
         self.addpart(self.world)
@@ -198,13 +291,13 @@ class obj_scene_ch5p9(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"',('{heroname}',share.colors.hero),\
-                ' climbed the highest peak".',\
+                ' climbed the ',('highest peak',share.colors.location),'".',\
                    ]
         self.world=world.obj_world_climbpeak(self)
         self.addpart(self.world)
         # self.addpart( draw.obj_drawing('platform1',(340,450),shadow=(150,25)) )
         # self.addpart( draw.obj_drawing('arrowup',(340,450),shadow=(50,50)) )
-        # self.addpart( draw.obj_imageplacer(self,'platform1','cloud','sun','mountain') )
+        # self.addpart( draw.obj_imageplacer(self,'platform1','cloud','lightningbolt','sun','mountain') )
 
 
 class obj_scene_ch5p10(page.obj_chapterpage):
@@ -215,7 +308,8 @@ class obj_scene_ch5p10(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '" When ',('{heroname}',share.colors.hero),\
-                ' reached the top of the highest peak, he encountered a mysterious character.',\
+                ' reached the top of ',('highest peak',share.colors.location),\
+                ', he encountered a mysterious character.',\
                 'It was an ',('elder',share.colors.elder),' that granted wisdom".',\
                'Fascinating, said the book of things. ',\
                 'Choose a name and gender for this ',\
@@ -248,7 +342,7 @@ class obj_scene_ch5p11(page.obj_chapterpage):
                 'but that is entirely up to you. ',\
                    ]
         # self.addpart( draw.obj_image('herohead',(640,450)) )
-        self.addpart( draw.obj_drawing('elderhead',(640,450),legend='The Elder') )
+        self.addpart( draw.obj_drawing('elderhead',(640,450),legend='Draw the Elder') )
     def endpage(self):
         super().endpage()
         # save elder full body
@@ -264,41 +358,146 @@ class obj_scene_ch5p12(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p13())
     def setup(self):
         self.text=[\
-               'Lets continue, say the book of things: "',\
-               ('{heroname}',share.colors.hero),' met ',('{eldername}',share.colors.elder),', the ',\
-               ('elder',share.colors.elder),' that lived at the top of the high peak. ',\
-                'The ',('elder',share.colors.elder),\
-                'said: "so you have come to seek wisdom, Hi Hi". ',\
-                   ]
-        self.text=[\
-               '"The ',('elder',share.colors.elder),' said: so you have come here to seek wisdom.',\
-               ' I, ',('{eldername}',share.colors.elder),', may give this to you. All you have to do is win one easy game, hi hi hi". ',\
+               'Lets continue, say the book of things: ',\
+               '"At the top of the ',('highest peak',share.colors.location),', above the clouds, ',\
+               ('{heroname}',share.colors.hero),' met the ',('elder',share.colors.elder),' called ',\
+               ('{eldername}',share.colors.elder),'. ',\
+
                    ]
         self.addpart( draw.obj_image('elderbase',(964,325),scale=0.48,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('herobase',(424,572),scale=0.49,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('sun',(128,457),scale=0.34,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(72,655),scale=0.34,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(209,681),scale=0.22,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(667,300),scale=0.53,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1198,468),scale=0.35,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1176,246),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(530,603),scale=0.55,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(266,557),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(84,527),scale=0.24,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1184,487),scale=0.42,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1219,584),scale=0.32,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(339,663),scale=0.22,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('floor4',(1280-500,720-140),path='premade') )
-        self.addpart( draw.obj_animation('ch5_meetelder','herobase',(640,360),record=False) )
+        animation1=draw.obj_animation('ch5_meetelder','herobase',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch5_meetelder2','sun',(640,360),record=True,sync=animation1) )
         # self.addpart( draw.obj_imageplacer(self,'herobase','elderbase','cloud','sun','mountain') )
 
 
 class obj_scene_ch5p13(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p12())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch5p14())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p14())
     def setup(self):
         self.text=[\
-               '"Well actually, said"',\
-               ('{eldername}',share.colors.elder),', the story is unfinished and its stop here for now. ',\
-               'Sorry about that. But do come back later for more. ',\
+               '"The ',('elder',share.colors.elder),' said: oh, a visitor, did you receive my mail. ',\
+               ' My name is ',('{eldername}',share.colors.elder),\
+               ' and I may grant you the wisdom to solve all your problems, hi hi hi. ',\
+                  ]
+        # self.addpart( draw.obj_image('elderhead',(640,450),fliph=True) )
+        animation1=draw.obj_animation('ch5eldertalks1','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+
+
+
+class obj_scene_ch5p14(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p13())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p15())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                    '"First, lets cover my fee, said the ',('elder',share.colors.elder),'. ',\
+                    'I see you have caught a yummy ',\
+                    ('fish',share.colors.item),'. I am starving, so that will do hi hi hi".',\
                    ]
-        self.addpart( draw.obj_image('elderhead',(640,450),fliph=True) )
+        self.world=world.obj_world_eatfish(self,eldereats=True)
+        self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'herobaseangry','interrogationmark') )
+        self.addpart( draw.obj_image('herobaseangry',(1172,376),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('interrogationmark',(1214,167),scale=1.2,path='premade') )
+
+
+class obj_scene_ch5p15(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p14())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p16())
+    def setup(self):
+        self.text=[\
+               '"Now, lets grant you the wisdom, said ',('{eldername}',share.colors.elder),'. ',\
+               'All you have to do is win one easy game of ',('rock-paper-scissors',share.colors.item),\
+               ', hi hi hi". ',\
+               'Well, that sounds rather easy, said the book of things. Just draw each ',\
+               ('item',share.colors.item),'. ',\
+                  ]
+        drawing1=draw.obj_drawing('rock',(200+20,450),legend='Large Rock',shadow=(200,200))
+        # drawing1.brush.makebrush(share.brushes.smallpen)
+        self.addpart(drawing1)
+        drawing2=draw.obj_drawing('paper',(640,450),legend='Piece of Paper',shadow=(200,200))
+        # drawing2.brush.makebrush(share.brushes.smallpen)
+        self.addpart(drawing2)
+        drawing3=draw.obj_drawing('scissors',(1280-200-20,450),legend='Scissors',shadow=(200,200))
+        # drawing3.brush.makebrush(share.brushes.smallpen)
+        self.addpart(drawing3)
+
+class obj_scene_ch5p16(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p15())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p17())
+    def setup(self):
+        self.text=[\
+               'Alright, said the book of things. ',\
+               'Select rock, paper or scissors with [A][W][D]. ',\
+               'Press [S] when you are ready to start the countdown with the ',('elder',share.colors.elder),'. ',\
+               'First one out of hearts looses. ',\
+                  ]
+
+class obj_scene_ch5p17(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p16())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p18())
+
+
+class obj_scene_ch5p18(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p17())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p19())
+
+
+
+class obj_scene_ch5p19(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p18())
+    # def nextpage(self):
+    #     share.scenemanager.switchscene(obj_scene_ch5p20())
+
+# ' The elder said: very well, now lets grant you this wisdom. To get it, all you have to do is win one easy game, hi hi hi". ',\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

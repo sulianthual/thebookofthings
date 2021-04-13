@@ -454,11 +454,13 @@ class obj_world_wakeup(obj_world):
         self.partner=False# add partner alongside hero
         self.angryfaces=False# replace happy faces with angry faces
         self.addsun=True# add the sun (must have been drawn)
+        self.addalarmclock=False# add the alarm clock and night stand
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
             if 'angryfaces' in kwargs: self.angryfaces=kwargs["angryfaces"]# partner options
             if 'sun' in kwargs: self.addsun=kwargs["sun"]# partner options
+            if 'alarmclock' in kwargs: self.addalarmclock=kwargs["alarmclock"]# partner options
         #
         # change base picture
         self.herobaseimg='herobase'
@@ -485,7 +487,11 @@ class obj_world_wakeup(obj_world):
         # static actor
         self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75) )
         if self.addsun:
-            self.staticactor.addpart( 'annim',draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5) )
+            self.staticactor.addpart( 'annim',draw.obj_animation('wakeup_sun','sun',(640,360)) )
+        if self.addalarmclock:
+            self.staticactor.addpart( 'annim1',draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360)) )
+            self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
+
         # start actor
         if self.partner == 'inlove':# add partner in love
             self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
@@ -903,8 +909,8 @@ class obj_world_traveltolair(obj_world):
         # static
         self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340),scale=0.5) )
         self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340),scale=0.5) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470)) )
-        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470)) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470),color=share.colors.location) )
+        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470),color=share.colors.location) )
         self.staticactor.addpart( 'img3', draw.obj_image('tree',(230,570),scale=0.5) )
         self.staticactor.addpart( 'img4', draw.obj_image('tree',(100,720-100),scale=0.5) )
         self.staticactor.addpart( 'img5', draw.obj_image('tree',(300,235),scale=0.35) )
@@ -1033,10 +1039,12 @@ class obj_world_traveltopeak(obj_world):
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.addpartner=False# add partner walking with hero
+        self.heroangry=False# hero is angry
         yoff1=210# just offset map in obj_world_traveltolair to be more north
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
         self.heroxstart=180
         self.heroystart=400+yoff1
         self.staticactor=obj_grandactor(self,(640,360))# background
@@ -1046,8 +1054,8 @@ class obj_world_traveltopeak(obj_world):
         # static
         self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340+yoff1),scale=0.5) )
         self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340+yoff1),scale=0.5) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470+yoff1)) )
-        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470+yoff1)) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470+yoff1),color=share.colors.location) )
+        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470+yoff1),color=share.colors.location) )
         self.staticactor.addpart( 'img5', draw.obj_image('tree',(300,235+yoff1),scale=0.35) )
         self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170+yoff1),scale=0.35) )
         self.staticactor.addpart( 'img9', draw.obj_image('mountain',(980,180+yoff1),scale=0.3) )
@@ -1055,7 +1063,8 @@ class obj_world_traveltopeak(obj_world):
         self.staticactor.addpart( 'imga1', draw.obj_image('mountain',(640,260),scale=0.73,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'imga5', draw.obj_image('tree',(129,340),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'imga6', draw.obj_image('mountain',(979,245),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'texta1', draw.obj_textbox('highest peak',(640,435)) )
+        self.staticactor.addpart( 'texta1', draw.obj_textbox('highest peak',(640,435),color=share.colors.location) )
+        #
         # hero
         # optional partner (same actor as hero)
         if self.addpartner:
@@ -1833,6 +1842,15 @@ class obj_world_climbpeak(obj_world):
         self.staticactor.addpart( 'img6',draw.obj_image('mountain',(1070,605),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img7',draw.obj_image('mountain',(1203,585),scale=0.38,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( 'text1', draw.obj_textbox('Lets go!',(585,212)) )
+        # platforms
+        self.platforms=[]
+        self.platformsxy=[(1110,195),(813,385),(457,575)]
+        for c,xy in enumerate(self.platformsxy):
+            platformi=obj_grandactor(self,xy)
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.rx=150
+            platformi.ry=5
+            self.platforms.append(platformi)
         # hero
         self.hero.addpart( 'stand_right', draw.obj_image('herobase',self.heroxystart,scale=0.35) )
         self.hero.addpart( 'stand_left', draw.obj_image('herobase',self.heroxystart,scale=0.35,fliph=True) )
@@ -1849,15 +1867,7 @@ class obj_world_climbpeak(obj_world):
         self.herojh=5#3.5# jump rate (hold button)
         self.heroholdjumptimer=tool.obj_timer(5)# how long can hold jump button
         self.heromx=12# move rate horizontally
-        # platforms
-        self.platforms=[]
-        self.platformsxy=[(1110,195),(813,385),(457,575)]
-        for c,xy in enumerate(self.platformsxy):
-            platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
-            platformi.rx=150
-            platformi.ry=5
-            self.platforms.append(platformi)
+
         # hero hitboxes
         self.herohitbox1=obj_grandactor(self,(self.heroxystart[0],self.heroxystart[1]))# for being hit
         self.herohitbox1.rx=50
@@ -1886,18 +1896,13 @@ class obj_world_climbpeak(obj_world):
             i.kill()
         # static
         self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(250,200),path='premade') )
-        self.staticactor.addpart( 'img2',draw.obj_image('sun',(1060,167),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img2',draw.obj_image('cloud',(1060,167),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img3',draw.obj_image('cloud',(533,329),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img4',draw.obj_image('cloud',(335,620),scale=0.41,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( 'img5',draw.obj_image('mountain',(111,676),scale=0.34,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img6',draw.obj_image('mountain',(715,692),scale=0.26,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( 'img7',draw.obj_image('mountain',(862,671),scale=0.26,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( 'text1', draw.obj_textbox('Keep it up!',(850,347)) )
-        # hero
-        self.heroxystart=(1110+50,560)
-        self.hero.movetoxy(self.heroxystart)
-        self.heromayjump=True# hero can jump (not if in the air)
-        self.heromayholdjump=False# hero can hold to jump higher
         # platforms
         self.platforms=[]
         # self.platformsxy=[(457,193),(813,385),(1110,575)]
@@ -1914,6 +1919,11 @@ class obj_world_climbpeak(obj_world):
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
+        # hero
+        self.heroxystart=(1110+50,560)
+        self.hero.movetoxy(self.heroxystart)
+        self.heromayjump=True# hero can jump (not if in the air)
+        self.heromayholdjump=False# hero can hold to jump higher
         # goal
         self.goalhitbox.movetoxy((250,200-100))
         # text
@@ -1927,18 +1937,14 @@ class obj_world_climbpeak(obj_world):
             i.kill()
         # static
         self.staticactor.addpart( 'img0a', draw.obj_image('arrowup',(1110,50),path='premade') )
-        self.staticactor.addpart( 'img1a', draw.obj_image('sun',(349,235),scale=0.51,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img2a', draw.obj_image('cloud',(757,175),scale=0.51,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img3a', draw.obj_image('cloud',(505,459),scale=0.37,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'img4a', draw.obj_image('mountain',(1201,645),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img5a', draw.obj_image('mountain',(1063,656),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img6a', draw.obj_image('mountain',(406,656),scale=0.32,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'text1', draw.obj_textbox('Almost there!',(827,398)) )
-        # hero
-        self.heroxystart=(140+50,560)
-        self.hero.movetoxy(self.heroxystart)
-        self.heromayjump=True# hero can jump (not if in the air)
-        self.heromayholdjump=False# hero can hold to jump higher
+        self.staticactor.addpart( 'img1b', draw.obj_image('cloud',(478,227),scale=0.66,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img2b', draw.obj_image('cloud',(1146,626),scale=0.39,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3b', draw.obj_image('cloud',(816,535),scale=0.43,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img4b', draw.obj_image('lightningbolt',(496,385),scale=0.43,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img5b', draw.obj_image('lightningbolt',(810,218),scale=0.28,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img6b', draw.obj_image('cloud',(832,102),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img7b', draw.obj_image('cloud',(117,262),scale=0.43,rotate=0,fliph=False,flipv=False) )
         # platforms
         self.platforms=[]
         # self.platformsxy=[(457,193),(813,385),(1110,575)]
@@ -1955,6 +1961,11 @@ class obj_world_climbpeak(obj_world):
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
+        # hero
+        self.heroxystart=(140+50,560)
+        self.hero.movetoxy(self.heroxystart)
+        self.heromayjump=True# hero can jump (not if in the air)
+        self.heromayholdjump=False# hero can hold to jump higher
         # goal
         self.goalhitbox.movetoxy((1110,-30))
         # text
@@ -2033,7 +2044,6 @@ class obj_world_climbpeak(obj_world):
                         self.text_undone.show=False
                         self.text_done.show=True
                         self.timerend.start()
-                print(self.hero.x,self.hero.y)
         else:
             # goal reached states
             self.timerend.update()
@@ -2049,10 +2059,12 @@ class obj_world_climbpeak(obj_world):
 class obj_world_eatfish(obj_world):
     def setup(self,**kwargs):
         # default options
-        self.partner=False
+        self.addpartner=False
+        self.eldereats=False# replace hero with elder as eater
         # scene tuning
         if kwargs is not None:
-            if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+            if 'eldereats' in kwargs: self.eldereats=kwargs["eldereats"]# partner options
         #
         self.done=False# mini game is finished
         self.doneeating=False# done eating
@@ -2066,13 +2078,19 @@ class obj_world_eatfish(obj_world):
         self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
         # hero eating or not eating
         self.herostand=obj_grandactor(self,(640,360))
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:# add partner
             self.herostand.addpart( 'imgadd1', draw.obj_image('partnerbase',(340-100,400-50), scale=0.7) )
-        self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
+        if self.eldereats:
+            self.herostand.addpart( 'img_stand',draw.obj_image('elderbase',(340,400), scale=0.7) )
+        else:
+            self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
         self.heroeat=obj_grandactor(self,(640,360))
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:# add partner in love
             self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-50),imgscale=0.7) )
-        self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
+        if self.eldereats:
+            self.animation1=draw.obj_animation('ch1_heroeats1','elderbase',(640,360),imgscale=0.7)
+        else:
+            self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
         self.heroeat.addpart('anim_eat', self.animation1)
         self.herostand.show=True
         self.heroeat.show=False

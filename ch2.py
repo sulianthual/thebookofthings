@@ -441,7 +441,7 @@ class obj_scene_ch2play3(page.obj_chapterpage):
                     ('{partnername}',share.colors.partner),' ate the ',\
                     ('fish',share.colors.item),'." ',\
                    ]
-        self.world=world.obj_world_eatfish(self,partner='inlove')
+        self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)
 
 

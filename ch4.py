@@ -431,7 +431,7 @@ class obj_scene_ch4p12(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' decided to rescue ',\
                   ('{partnername}',share.colors.partner),' anyway. ',\
                 'So ',('{hero_he}',share.colors.hero),' travelled to ',
-                ('{villainname}',share.colors.villain),'\'s evil lair. ',\
+                ('{villainname}',share.colors.villain),'\'s ',('evil lair',share.colors.location),'. ',\
                    ]
         self.world=world.obj_world_traveltolair(self)
         self.addpart(self.world)
@@ -445,7 +445,7 @@ class obj_scene_ch4p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p14())
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),' arrived at the evil lair. ',\
+                    '"',('{heroname}',share.colors.hero),' arrived at the ',('evil lair',share.colors.location),'. ',\
                     'No one was around so ',('{hero_he}',share.colors.hero),' went inside". ',\
                     'Its weird, I didnt remember the story exactly like this, said the book of things.',\
                    ]
@@ -602,7 +602,7 @@ class obj_scene_ch4p18(page.obj_chapterpage):
                   '"',('{heroname}',share.colors.hero),\
                   ' defeated ',('{villainname}',share.colors.villain),\
                   ' and ',('{partnername}',share.colors.villain),'. ',\
-                  'Suddendly, the evil lair took fire". ',\
+                  'Suddendly, the ',('evil lair',share.colors.location),' took fire". ',\
                   'Quick, draw a ',('flame',share.colors.item),\
                   ', said the book of things. ',\
                   ' (WIP: draw a cage too around the stickman) ',\
