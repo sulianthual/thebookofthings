@@ -322,6 +322,7 @@ class obj_scene_ch3p10start2(page.obj_chapterpage):
         self.world.text_undone.show=False
         self.world.bulletbar.show=False
         # self.addpart(draw.obj_drawing('show1',(480,530),shadow=(100,150)))
+        # self.addpart(draw.obj_drawing('circle1',(200,640),shadow=(200,70),brush=share.brushes.smallpen))
         self.addpart(draw.obj_image('circle1',(200,640),path='premade'))
         self.addpart(draw.obj_image('show1',(480,530),path='premade'))
 

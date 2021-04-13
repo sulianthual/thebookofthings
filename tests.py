@@ -125,14 +125,14 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
             self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
         y1=250
-        for c,value in enumerate(['partnerhead','love','saxophone','musicnote','house','tree']):
-            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
+        for c,value in enumerate(['partnerhead','mailbox','mailletter','love','saxophone','musicnote','house','tree']):
+            self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
         y1=350
         for c,value in enumerate(['villainhead','gun','bullet','tower','mountain']):
             self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
         y1=450
-        for c,value in enumerate(['partyhat','drink','coffeecup']):
-            self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
+        for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
+            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
 
 
 class obj_scene_testmessage(obj_testpage):

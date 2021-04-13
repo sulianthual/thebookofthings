@@ -222,8 +222,7 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         self.addpart(draw.obj_drawing('hook',(240,450),legend='Hook',shadow=(200,200)))
         self.addpart(draw.obj_drawing('fish',(940,450),legend='Fish (Facing Left)',shadow=(300,200)))
         if False:# not for player
-            hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360))
-            hookline.brush.makebrush(share.brushes.smallpen)
+            hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360),brush=share.brushes.smallpen)
             self.addpart(hookline)
     def endpage(self):
         super().endpage()
@@ -446,11 +445,6 @@ class obj_scene_ch1play5(page.obj_chapterpage):
         self.text=[\
                    '"',('{hero_he}',share.colors.hero),' did that forever and was happy, the End". ',\
                    ]
-
-
-        # drawing1=draw.obj_drawing('endframe',(640,410),shadow=(400,250))
-        # drawing1.brush.makebrush(share.brushes.smallpen)
-        # self.addpart( drawing1 )
         self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
         self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
         self.addpart( draw.obj_textbox('(of a very basic story)',(640,280)) )

@@ -573,7 +573,8 @@ class obj_world_breakfastdrinking(obj_world):
         self.text_done=obj_grandactor(self,(640,360))
         # static
         self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-150),path='premade') )
-        self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(640+180,600),scale=0.4,fliph=False) )
+        if self.addpartner:
+            self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(640+180,600),scale=0.4,fliph=False) )
         self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(640-180,600),scale=0.4,fliph=True) )
         self.staticactor.addpart( 'img4', draw.obj_image('flowervase',(640,440),scale=0.5) )
         # progress bar
@@ -631,7 +632,10 @@ class obj_world_breakfastdrinking(obj_world):
             self.partnerstate=1
             self.partnertimer=tool.obj_timer(0)# dummy
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
+        if self.addpartner:
+            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
+        else:
+            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Drink',(640,690),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
         self.text_undone.show=True
         self.text_done.show=False
@@ -2051,6 +2055,364 @@ class obj_world_climbpeak(obj_world):
                 self.done=True# end of minigame
 
 
+####################################################################################################################
+
+
+# Mini Game: Play Rock Paper Scissors
+class obj_world_rockpaperscissors(obj_world):
+    def setup(self,**kwargs):
+        # default parameters
+        self.elderalwayswin=False# elder always wins (chooses counter at last moment)
+        self.elderalwaysloose=False# elder always looses (chooses bad counter at last moment)
+        self.elderthinks=True# can see what the elder is thinking
+        self.elderpeaks=False# elder peaks on last countdown to counter
+        # scene tuning
+        if kwargs is not None:
+            if 'elderwins' in kwargs: self.elderalwayswin=kwargs["elderwins"]
+            if 'elderlooses' in kwargs: self.elderalwaysloose=kwargs["elderlooses"]
+            if 'elderthinks' in kwargs: self.elderthinks=kwargs["elderthinks"]
+            if 'elderpeaks' in kwargs: self.elderpeaks=kwargs["elderpeaks"]
+        #
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
+        self.win=True# game is won
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.hero=obj_grandactor(self,(640,360))
+        self.elder=obj_grandactor(self,(640,360))
+        self.countdown=obj_grandactor(self,(640,360))
+        self.result=obj_grandactor(self,(640,360))
+        self.healthbar=obj_grandactor(self,(640,360))
+        self.instructions=obj_grandactor(self,(640,360))# text always in front
+        self.endgame=obj_grandactor(self,(640,360))# text always in front
+        self.text_donewin=obj_grandactor(self,(640,360))
+        self.text_donelost=obj_grandactor(self,(640,360))
+        self.text_donewin.show=False
+        self.text_donelost.show=False
+        #
+        # static
+        self.staticactor.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
+        self.staticactor.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
+        # instructions
+        self.instructions.addpart( 'texta', draw.obj_textbox('[A]: rock',(70,520+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textw', draw.obj_textbox('[W]: paper',(150,520),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textd', draw.obj_textbox('[D]: scissors',(240,520+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('[S]: Start Countdown',(640,660),color=share.colors.instructions) )
+        self.instructions.dict['texta'].show=True
+        self.instructions.dict['textw'].show=True
+        self.instructions.dict['textd'].show=True
+        self.instructions.dict['texts'].show=True
+        # hero
+        self.hero.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='premade') )
+        self.hero.addpart( 'rock', draw.obj_image('rock',(100+50,320),scale=0.5) )
+        self.hero.addpart( 'paper', draw.obj_image('paper',(100+50,320),scale=0.5) )
+        self.hero.addpart( 'scissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
+        self.hero.show=True# show what the hero is thinking or not
+        self.herochoice=0# 0,1,2 for rock, paper scissors
+        self.hero.dict['rock'].show=self.herochoice==0
+        self.hero.dict['paper'].show=self.herochoice==1
+        self.hero.dict['scissors'].show=self.herochoice==2
+        self.hero.dict['thinkcloud'].show=True
+        # elder
+        self.elder.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(1280-200,320),fliph=True,path='premade') )
+        self.elder.addpart( 'rock', draw.obj_image('rock',(1280-100-50,320),scale=0.5) )
+        self.elder.addpart( 'paper', draw.obj_image('paper',(1280-100-50,320),scale=0.5) )
+        self.elder.addpart( 'scissors', draw.obj_image('scissors',(1280-100-50,320),scale=0.5) )
+        self.elder.show=self.elderthinks# show what the elder is thinking or not
+        self.elderchoice=tool.randchoice([0,1,2])# 0,1,2 for rock, paper scissors
+        self.elder.dict['rock'].show=self.elderchoice==0
+        self.elder.dict['paper'].show=self.elderchoice==1
+        self.elder.dict['scissors'].show=self.elderchoice==2
+        self.elder.dict['thinkcloud'].show=True
+        # show
+        self.result.addpart( 'herorock', draw.obj_image('rock',(640-70,510),scale=0.35)  )
+        self.result.addpart( 'heropaper', draw.obj_image('paper',(640-70,510),scale=0.35)  )
+        self.result.addpart( 'heroscissors', draw.obj_image('scissors',(640-70,510),scale=0.35)  )
+        self.resulthero=0# 0,1,2 for rock, paper scissors
+        self.result.dict['herorock'].show=False
+        self.result.dict['heropaper'].show=False
+        self.result.dict['heroscissors'].show=False
+        self.result.addpart( 'elderrock', draw.obj_image('rock',(640+70,510),scale=0.35)  )
+        self.result.addpart( 'elderpaper', draw.obj_image('paper',(640+70,510),scale=0.35)  )
+        self.result.addpart( 'elderscissors', draw.obj_image('scissors',(640+70,510),scale=0.35)  )
+        self.resultelder=0# 0,1,2 for rock, paper scissors
+        self.result.dict['elderrock'].show=False
+        self.result.dict['elderpaper'].show=False
+        self.result.dict['elderscissors'].show=False
+        self.computedresults=False# has computed results (one frame each round)
+        self.result.addpart( 'win', draw.obj_textbox('Round: Hero',(640,350),fontsize='big')  )
+        self.result.addpart( 'loose', draw.obj_textbox('Round: Elder',(640,350),fontsize='big')  )
+        self.result.addpart( 'tie', draw.obj_textbox('Tie',(640,350),fontsize='big')  )
+        self.result.dict['win'].show=False
+        self.result.dict['loose'].show=False
+        self.result.dict['tie'].show=False
+        self.result.addpart( 'winspark', draw.obj_image('rpsspark',(640-70,510),fliph=False,path='premade')  )
+        self.result.addpart( 'loosespark', draw.obj_image('rpsspark',(640+70,510),fliph=True,path='premade')  )
+        self.result.dict['winspark'].show=False
+        self.result.dict['loosespark'].show=False
+        self.checkingtimer=tool.obj_timer(120)# timer for showing result
+        # countdown
+        self.countdown.addpart( '3', draw.obj_textbox('3...',(640,350),fontsize='huge')  )
+        self.countdown.addpart( '2', draw.obj_textbox('2...',(640,350),fontsize='huge')  )
+        self.countdown.addpart( '1', draw.obj_textbox('1...',(640,350),fontsize='huge')  )
+        self.countdown.dict['3'].show=False
+        self.countdown.dict['2'].show=False
+        self.countdown.dict['1'].show=False
+        self.checking=False# checking result or not
+        self.countdowning=False# doing countdown or not
+        self.icountdown=3
+        self.countdowntimer=tool.obj_timer(80)# timer
+        # healthbars
+        self.herohealth=3#
+        self.elderhealth=3#
+        for i in range(3):
+            self.healthbar.addpart('hero_'+str(i), draw.obj_image('love',(640-300+i*75,240),scale=0.125) )
+            self.healthbar.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
+            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('smallcross',(640-300+i*75,240),path='premade') )
+            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('smallcross',(640+300-i*75,240),path='premade') )
+            self.healthbar.dict['herocross_'+str(i)].show=False
+            self.healthbar.dict['eldercross_'+str(i)].show=False
+        # text
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,660),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('Defeat!',(640,360),fontsize='huge') )
+        # endgame animations
+        self.endgame.addpart( 'loose', draw.obj_animation('ch5_rpsloose','herobase',(640,360)) )
+        self.endgame.addpart( 'win', draw.obj_animation('ch5_rpswin','elderbase',(640,360)) )
+        self.endgame.dict['loose'].show=False
+        self.endgame.dict['win'].show=False
+        # timer for done part
+        self.timerendwin=tool.obj_timer(120)# goal to done
+        self.timerendloose=tool.obj_timer(120)# goal to done
+    def update(self,controls):
+        super().update(controls)
+        # goal unreached
+        if not self.goal:
+            if not self.checking: # deciding state
+                if controls.a and controls.ac:
+                    self.herochoice=0
+                    self.hero.dict['rock'].show=self.herochoice==0
+                    self.hero.dict['paper'].show=self.herochoice==1
+                    self.hero.dict['scissors'].show=self.herochoice==2
+                elif controls.w and controls.wc:
+                    self.herochoice=1
+                    self.hero.dict['rock'].show=self.herochoice==0
+                    self.hero.dict['paper'].show=self.herochoice==1
+                    self.hero.dict['scissors'].show=self.herochoice==2
+                elif controls.d and controls.dc:
+                    self.herochoice=2
+                    self.hero.dict['rock'].show=self.herochoice==0
+                    self.hero.dict['paper'].show=self.herochoice==1
+                    self.hero.dict['scissors'].show=self.herochoice==2
+                if not self.countdowning:# not countdown
+                    if controls.s and controls.sc:
+                        self.countdowning=True# flip to countdown
+                        self.icountdown=3
+                        self.countdowntimer.start()
+                        self.countdown.dict['3'].show=True
+                        self.countdown.dict['2'].show=False
+                        self.countdown.dict['1'].show=False
+                        self.elderchoice=tool.randchoice([0,1,2])
+                        self.elder.dict['rock'].show=self.elderchoice==0
+                        self.elder.dict['paper'].show=self.elderchoice==1
+                        self.elder.dict['scissors'].show=self.elderchoice==2
+                        self.instructions.dict['texta'].show=True
+                        self.instructions.dict['textw'].show=True
+                        self.instructions.dict['textd'].show=True
+                        self.instructions.dict['texts'].show=False
+                else:
+                    self.countdowntimer.update()
+                    if self.countdowntimer.ring:
+                        if self.icountdown>1:# still countdown
+                            self.icountdown -=1
+                            self.countdowntimer.start()# reset timer
+                            if self.elderpeaks and self.icountdown==1:# elder peaks on 1...
+                                if self.herochoice==0:
+                                    self.elderchoice=1
+                                elif self.herochoice==1:
+                                    self.elderchoice=2#
+                                else:
+                                    self.elderchoice=0
+                            else:# random choice (but change)
+                                if self.elderchoice==0:
+                                    self.elderchoice=tool.randchoice([1,2])
+                                elif self.elderchoice==1:
+                                    self.elderchoice=tool.randchoice([0,2])
+                                else:
+                                    self.elderchoice=tool.randchoice([0,1])
+                            self.elder.dict['rock'].show=self.elderchoice==0
+                            self.elder.dict['paper'].show=self.elderchoice==1
+                            self.elder.dict['scissors'].show=self.elderchoice==2
+                            if self.icountdown==2:
+                                self.countdown.dict['3'].show=False
+                                self.countdown.dict['2'].show=True
+                                self.countdown.dict['1'].show=False
+                            elif self.icountdown==1:
+                                self.countdown.dict['3'].show=False
+                                self.countdown.dict['2'].show=False
+                                self.countdown.dict['1'].show=True
+                        else: # flip to checking state (elder doesnt choose anymore)
+                            self.checking=True
+                            self.checkingtimer.start()
+                            if self.elderalwayswin:# elder counters last moment
+                                if self.herochoice==0:
+                                    self.elderchoice=1
+                                elif self.herochoice==1:
+                                    self.elderchoice=2#
+                                else:
+                                    self.elderchoice=0
+                            elif self.elderalwaysloose:# elder bad counters las moment
+                                if self.herochoice==0:
+                                    self.elderchoice=2
+                                elif self.herochoice==1:
+                                    self.elderchoice=0#
+                                else:
+                                    self.elderchoice=1
+                            self.resulthero=self.herochoice
+                            self.resultelder=self.elderchoice
+                            self.hero.dict['rock'].show=False
+                            self.hero.dict['paper'].show=False
+                            self.hero.dict['scissors'].show=False
+                            self.elder.dict['rock'].show=False
+                            self.elder.dict['paper'].show=False
+                            self.elder.dict['scissors'].show=False
+                            self.result.dict['herorock'].show=self.resulthero==0
+                            self.result.dict['heropaper'].show=self.resulthero==1
+                            self.result.dict['heroscissors'].show=self.resulthero==2
+                            self.result.dict['elderrock'].show=self.resultelder==0
+                            self.result.dict['elderpaper'].show=self.resultelder==1
+                            self.result.dict['elderscissors'].show=self.resultelder==2
+                            self.hero.dict['thinkcloud'].show=False
+                            self.elder.dict['thinkcloud'].show=False
+                            self.countdown.dict['3'].show=False
+                            self.countdown.dict['2'].show=False
+                            self.countdown.dict['1'].show=False
+                            self.instructions.dict['texta'].show=False
+                            self.instructions.dict['textw'].show=False
+                            self.instructions.dict['textd'].show=False
+                            self.instructions.dict['texts'].show=False
+            #
+            else:#checking state
+                # compute results once
+                if not self.computedresults:
+                    self.computedresults=True
+                    outcome=2# outcome=0,1,2 for hero wins, elder wins, tie
+                    if self.resultelder==self.resulthero:# tie
+                        outcome=2
+                    else:
+                        if self.resultelder==0:# hero: rock, elder: paper
+                            if self.resulthero==1:
+                                outcome=0
+                            else:
+                                outcome=1
+                        elif self.resultelder==1:
+                            if self.resulthero==2:
+                                outcome=0
+                            else:
+                                outcome=1
+                        elif self.resultelder==2:
+                            if self.resulthero==0:
+                                outcome=0
+                            else:
+                                outcome=1
+                    if outcome==0:# hero wins
+                        self.elderhealth -= 1
+                        if self.elderhealth>-1:
+                            self.healthbar.dict['elder_'+str(self.elderhealth)].show=False
+                            self.healthbar.dict['eldercross_'+str(self.elderhealth)].show=True
+                        self.result.dict['win'].show=True
+                        self.result.dict['loose'].show=False
+                        self.result.dict['tie'].show=False
+                        self.result.dict['winspark'].show=True
+                        self.result.dict['loosespark'].show=False
+                    elif outcome==1:# elder wins
+                        self.herohealth -= 1
+                        if self.herohealth>-1:
+                            self.healthbar.dict['hero_'+str(self.herohealth)].show=False
+                            self.healthbar.dict['herocross_'+str(self.herohealth)].show=True
+                        self.result.dict['win'].show=False
+                        self.result.dict['loose'].show=True
+                        self.result.dict['tie'].show=False
+                        self.result.dict['winspark'].show=False
+                        self.result.dict['loosespark'].show=True
+                    else:# tie
+                        self.result.dict['win'].show=False
+                        self.result.dict['loose'].show=False
+                        self.result.dict['tie'].show=True
+                        self.result.dict['winspark'].show=False
+                        self.result.dict['loosespark'].show=False
+                self.checkingtimer.update()
+                if self.checkingtimer.ring:# flip back to deciding state or to win/loose
+                    if self.herohealth==0:# elder won entire game
+                        self.goal=True
+                        self.win=False
+                        self.timerendloose.start()
+                        self.text_donelost.show=True
+                        self.staticactor.dict['hero'].show=False
+                        self.endgame.dict['loose'].show=True
+                        self.endgame.dict['loose'].rewind()
+                    elif self.elderhealth==0:# hero won entire game
+                        self.goal=True
+                        self.win=True
+                        self.timerendwin.start()
+                        self.text_donewin.show=True
+                        self.staticactor.dict['elder'].show=False
+                        self.endgame.dict['win'].show=True
+                        self.endgame.dict['win'].rewind()
+                    else:# keep playing
+                        self.checking=False
+                        self.countdowning=False
+                        self.computedresults=False
+                    # images shown
+                    if self.goal:
+                        self.hero.dict['rock'].show=False
+                        self.hero.dict['paper'].show=False
+                        self.hero.dict['scissors'].show=False
+                        self.elder.dict['rock'].show=False
+                        self.elder.dict['paper'].show=False
+                        self.elder.dict['scissors'].show=False
+                        self.hero.dict['thinkcloud'].show=False
+                        self.elder.dict['thinkcloud'].show=False
+                        self.instructions.dict['texta'].show=False
+                        self.instructions.dict['textw'].show=False
+                        self.instructions.dict['textd'].show=False
+                        self.instructions.dict['texts'].show=False
+                    else:
+                        self.hero.dict['rock'].show=self.herochoice==0
+                        self.hero.dict['paper'].show=self.herochoice==1
+                        self.hero.dict['scissors'].show=self.herochoice==2
+                        self.elder.dict['rock'].show=self.elderchoice==0
+                        self.elder.dict['paper'].show=self.elderchoice==1
+                        self.elder.dict['scissors'].show=self.elderchoice==2
+                        self.hero.dict['thinkcloud'].show=True
+                        self.elder.dict['thinkcloud'].show=True
+                        self.instructions.dict['texta'].show=True
+                        self.instructions.dict['textw'].show=True
+                        self.instructions.dict['textd'].show=True
+                        self.instructions.dict['texts'].show=True
+                    self.result.dict['herorock'].show=False
+                    self.result.dict['heropaper'].show=False
+                    self.result.dict['heroscissors'].show=False
+                    self.result.dict['elderrock'].show=False
+                    self.result.dict['elderpaper'].show=False
+                    self.result.dict['elderscissors'].show=False
+                    self.result.dict['win'].show=False
+                    self.result.dict['loose'].show=False
+                    self.result.dict['tie'].show=False
+                    self.result.dict['winspark'].show=False
+                    self.result.dict['loosespark'].show=False
+                    for i in range(3):
+                        self.healthbar.dict['herocross_'+str(i)].show=False
+                        self.healthbar.dict['eldercross_'+str(i)].show=False
+        else:
+            # goal reached state
+            if self.win:# won minigame
+                self.timerendwin.update()
+                if self.timerendwin.ring:
+                    self.done=True# end of minigame
+            else:# lost minigame
+                self.timerendloose.update()
+                if self.timerendloose.ring:
+                    self.done=True# end of minigame
 
 
 ####################################################################################################################

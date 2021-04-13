@@ -175,7 +175,7 @@ class obj_rectangle:
 # A drawing (image to edit interactively by the player)
 # *DRAWING
 class obj_drawing:
-    def __init__(self,name,xy,base=None,legend=None,shadow=None,scale=1):# start new drawing (load or new)
+    def __init__(self,name,xy,base=None,legend=None,shadow=None,brush=None,scale=1):# start new drawing (load or new)
         self.type='drawing'
         self.name=name# drawing name
         self.x,self.y = xy
@@ -183,12 +183,16 @@ class obj_drawing:
         self.legend=legend
         self.shadow=shadow# =None (use file) or =(rx,ry) (use empty canvas)
         self.scale=scale# scale drawing area on screen
+        self.brushtype=brush
         self.setup()
     def setup(self):
         # drawing tools
         self.mousedraw=obj_mousedraw()# mouse drawing tool
         self.brush=core.obj_sprite_brush()
-        self.brush.makebrush(share.brushes.pen)
+        if not self.brushtype:# default brush type
+            self.brush.makebrush(share.brushes.pen)
+        else:# specify brush type
+            self.brush.makebrush(self.brushtype)
         self.shadowbrush=core.obj_sprite_brush()
         self.shadowbrush.makebrush(share.brushes.shadowpen)
         # shadow (start of the drawing)

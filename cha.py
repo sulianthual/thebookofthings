@@ -70,6 +70,7 @@ class obj_scene_arcademenu(page.obj_page):
         self.list.append(obj_scene_dodgebullets())
         self.list.append(obj_scene_stompfight())
         self.list.append(obj_scene_climbing())
+        self.list.append(obj_scene_rockpaperscissors())
         self.list.append(obj_scene_eating())
         self.list.append(obj_scene_serenade())
         self.list.append(obj_scene_kiss())
@@ -207,6 +208,20 @@ class obj_scene_climbing(obj_testpage):
         self.name='Climbing'
         self.text=['Climbing']
         self.world=world.obj_world_climbpeak(self)
+        self.addpart(self.world)
+
+
+class obj_scene_rockpaperscissors(obj_testpage):
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.name='Rock-Paper-Scissors'
+        self.text=['Rock-Paper-Scissors']
+        self.world=world.obj_world_rockpaperscissors(self)
+        # self.world=world.obj_world_rockpaperscissors(self,elderwins=True)
+        # self.world=world.obj_world_rockpaperscissors(self,elderlooses=True)
+        # self.world=world.obj_world_rockpaperscissors(self,elderpeaks=True)
+        # self.world=world.obj_world_rockpaperscissors(self,elderthinks=False)
         self.addpart(self.world)
 
 

@@ -126,7 +126,7 @@ class obj_scene_ch5p4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p3())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p5())
+        share.scenemanager.switchscene(obj_scene_ch5p4a())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -143,9 +143,27 @@ class obj_scene_ch5p4(page.obj_chapterpage):
         # self.addpart( animation1 )
         # self.addpart( animation2 )
 
-class obj_scene_ch5p5(page.obj_chapterpage):
+
+
+class obj_scene_ch5p4a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p4())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p5())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                '"The ',('hero',share.colors.hero),' got drunk for breakfast". ',\
+                'Well that isnt too hard to do with ',('{partnername}',share.colors.partner),' gone, said the book of things. ',\
+                   ]
+        self.world=world.obj_world_breakfastdrinking(self,partner=False)
+        self.addpart(self.world)
+
+
+class obj_scene_ch5p5(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p4a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p6())
     def triggernextpage(self,controls):
@@ -408,7 +426,7 @@ class obj_scene_ch5p14(page.obj_chapterpage):
         self.text=[\
                     '"First, lets cover my fee, said the ',('elder',share.colors.elder),'. ',\
                     'I see you have caught a yummy ',\
-                    ('fish',share.colors.item),'. I am starving, so that will do hi hi hi".',\
+                    ('fish',share.colors.item),'. I am starving, so that will be my lunch hi hi hi".',\
                    ]
         self.world=world.obj_world_eatfish(self,eldereats=True)
         self.addpart(self.world)
@@ -445,13 +463,20 @@ class obj_scene_ch5p16(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p15())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p17())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
                'Alright, said the book of things. ',\
-               'Select rock, paper or scissors with [A][W][D]. ',\
-               'Press [S] when you are ready to start the countdown with the ',('elder',share.colors.elder),'. ',\
-               'First one out of hearts looses. ',\
+               'Select rock, paper or scissors with [A][W][D], and ',\
+               'press [S] when you are ready to start the countdown with the ',('elder',share.colors.elder),'. ',\
                   ]
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=True)
+        self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'herobase','elderbase','rock','paper','scissors') )
+        # self.addpart( draw.obj_drawing('smallcross',(640,240),shadow=(50,50),brush=share.brushes.pen) )
+        # self.addpart( draw.obj_animation('ch5_rpsloose','herobase',(640,360),record=False) )
+        # self.addpart( draw.obj_animation('ch5_rpswin','elderbase',(640,360),record=False) )
 
 class obj_scene_ch5p17(page.obj_chapterpage):
     def prevpage(self):

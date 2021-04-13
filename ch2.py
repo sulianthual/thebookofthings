@@ -72,9 +72,7 @@ class obj_scene_ch2p2(page.obj_chapterpage):
                  'This will certainly make the story more interesting. ',\
                  'Lets start by drawing a heart for ',('love',share.colors.partner),'. ',\
                    ]
-        drawing=draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200))
-        drawing.brush.makebrush(share.brushes.bigpen)
-        self.addpart( drawing)
+        self.addpart( draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200),brush=share.brushes.bigpen) )
 
 
 class obj_scene_ch2p3(page.obj_chapterpage):
@@ -119,9 +117,7 @@ class obj_scene_ch2p4(page.obj_chapterpage):
                    'First, draw some pretty hair around ', ('{partner_his}',share.colors.partner),' head. ',\
                    'Something that ',('{heroname}',share.colors.hero),' will fall in ',('love',share.colors.partner),' with. '\
                    ]
-        drawing=draw.obj_drawing('partnerhair',(640,420),legend='Partner Hair',shadow=(200,200))
-        drawing.brush.makebrush(share.brushes.smallpen)
-        self.addpart( drawing )
+        self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner Hair',shadow=(200,200),brush=share.brushes.smallpen) )
         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=True,scale=0.5))
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
@@ -282,8 +278,7 @@ class obj_scene_ch2p8(page.obj_chapterpage):
                    'Play the melody with [WASD] to serenade ',('{partnername}',share.colors.partner),'. '\
                    ]
         if False:
-            drawing=draw.obj_drawing('musicscore',(640,360),shadow=(300,100))
-            drawing.brush.makebrush(share.brushes.smallpen)
+            drawing=draw.obj_drawing('musicscore',(640,360),shadow=(300,100),brush=share.brushes.smallpen)
             self.addpart( drawing )
         self.world=world.obj_world_serenade(self)# serenade mini-game
         self.addpart(self.world)
