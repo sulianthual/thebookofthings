@@ -550,7 +550,13 @@ class obj_world_wakeup(obj_world):
 
 # Mini Game: sneak drink at breakfast
 class obj_world_breakfastdrinking(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.addpartner=True# add partner alongside hero (otherwise can just drink alone)
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+        #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.staticactor=obj_grandactor(self,(640,360))# background
@@ -560,14 +566,15 @@ class obj_world_breakfastdrinking(obj_world):
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_done=obj_grandactor(self,(640,360))
         # static
-        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-100),path='premade') )
-        self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(830,560),scale=0.5,fliph=False) )
-        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(495,560),scale=0.5,fliph=True) )
+        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(640+180,600),scale=0.4,fliph=False) )
+        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(640-180,600),scale=0.4,fliph=True) )
+        self.staticactor.addpart( 'img4', draw.obj_image('flowervase',(640,440),scale=0.5) )
         # progress bar
-        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,250),path='premade') )
-        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,250),path='premade') )
-        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,250),path='premade') )
-        self.progressbar.addpart( 'textbox', draw.obj_textbox('0%',(640,320)) )
+        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,200),path='premade') )
+        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,200),path='premade') )
+        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,200),path='premade') )
+        self.progressbar.addpart( 'textbox', draw.obj_textbox('0%',(640,270)) )
         self.progressmx=2#1# move rate of progressbar (respect to self.progress)
         self.progressmax=int(567/self.progressmx)# max progress
         self.progress=0# 0 to max progress
@@ -576,7 +583,8 @@ class obj_world_breakfastdrinking(obj_world):
         self.hero.addpart( 'happy', draw.obj_image('herobase',(150,540),scale=1.15,fliph=False) )
         self.hero.addpart( 'drinkinghero', draw.obj_animation('ch4_herodrinks1','herobase',(640,360)) )
         self.hero.addpart( 'drinkingdrink', draw.obj_animation('ch4_herodrinks2','drink',(640,360)) )
-        self.hero.addpart( 'busted', draw.obj_image('herobaseangry',(195,620),scale=1.2,rotate=26) )
+        # self.hero.addpart( 'busted', draw.obj_image('herobaseangry',(195,620),scale=1.2,rotate=26) )
+        self.hero.addpart( 'busted', draw.obj_animation('ch4_herodrinks1','herobaseangry',(640,360)) )
         self.hero.addpart( 'finished', draw.obj_animation('world_breakfastdrinking3','herobase',(640,360)) )
         self.hero.dict['waiting'].show=True
         self.hero.dict['happy'].show=False
@@ -587,25 +595,35 @@ class obj_world_breakfastdrinking(obj_world):
         self.herostate=0# 0,1,2 for neutral,drinking,happy (excludes busted from partnerbusting)
         self.herohappytimer=tool.obj_timer(100)# timer for happy after drinking
         # partner
-        self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15),scale=1.15,fliph=True,path='premade') )
-        self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15),scale=1.15,fliph=True) )
-        self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15),scale=1.15,fliph=False) )
-        self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15),scale=1.15,rotate=15,fliph=False) )
-        self.partner.addpart( 'waiting_headrightbobble', draw.obj_animation('world_breakfastdrinking1','partnerheadangry',(640,360)) )
-        self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360)) )
-        self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(940,300),fontsize='huge') )
-        self.partner.dict['waiting_base'].show=True
-        self.partner.dict['waiting_headleft'].show=True
-        self.partner.dict['waiting_headright'].show=False
-        self.partner.dict['waiting_headrightup'].show=False
-        self.partner.dict['waiting_headrightbobble'].show=False
-        self.partner.dict['busting'].show=False
-        self.partner.dict['bustedtext'].show=False
-        self.partnerbusting=False# busting or not (2 states)
-        self.partnerstate=0# while not busting, state 0,1,2,3 for headleft,headright,headrightup,headrightbobble
-        self.partnertimer=tool.obj_timer(50)# timer for switch states
-        self.partnertimer.start()
-        self.partnertimerbusting=tool.obj_timer(100)# timer for busting
+        if self.addpartner:
+            self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15),scale=1.15,fliph=True,path='premade') )
+            self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15),scale=1.15,fliph=True) )
+            self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15),scale=1.15,fliph=False) )
+            self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15),scale=1.15,rotate=15,fliph=False) )
+            self.partner.addpart( 'waiting_headrightbobble', draw.obj_image('partnerheadangry',(1160-50+30,340+15),scale=1.15,rotate=-15,fliph=False) )
+            self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360)) )
+            self.partner.addpart( 'bustingmark', draw.obj_image('exclamationmark',(1132,176),scale=1.5,path='premade') )
+            self.partner.addpart( 'whatmark', draw.obj_image('interrogationmark',(1132,176),scale=1.5,path='premade') )
+            self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(640,400),fontsize='huge') )
+            self.partner.dict['waiting_base'].show=True
+            self.partner.dict['waiting_headleft'].show=False
+            self.partner.dict['waiting_headright'].show=True
+            self.partner.dict['waiting_headrightup'].show=False
+            self.partner.dict['waiting_headrightbobble'].show=False
+            self.partner.dict['busting'].show=False
+            self.partner.dict['bustingmark'].show=False
+            self.partner.dict['bustedtext'].show=False
+            self.partner.dict['whatmark'].show=False
+            self.partnerbusting=False# busting or not (2 states)
+            self.partnerstate=1# while not busting, state 0,1,2,3 for headleft,headright,headrightup,headrightbobble
+            self.partnertimer=tool.obj_timer(50)# timer for switch states
+            self.partnertimer.start()
+            self.partnertimerbusting=tool.obj_timer(110)# timer for busting
+        else:
+            # ensure partner is never seen
+            self.partnerbusting=False
+            self.partnerstate=1
+            self.partnertimer=tool.obj_timer(0)# dummy
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
@@ -628,13 +646,18 @@ class obj_world_breakfastdrinking(obj_world):
                 self.hero.dict['busted'].show=False
                 self.hero.dict['finished'].show=True
                 self.hero.dict['finished'].rewind()
-                self.partner.dict['waiting_base'].show=True
-                self.partner.dict['waiting_headleft'].show=True
-                self.partner.dict['waiting_headright'].show=False
-                self.partner.dict['waiting_headrightup'].show=False
-                self.partner.dict['waiting_headrightbobble'].show=False
-                self.partner.dict['busting'].show=False
-                self.partner.dict['bustedtext'].show=False
+                if self.addpartner:
+                    self.partner.dict['waiting_base'].show=True
+                    self.partner.dict['waiting_headleft'].show=True
+                    self.partner.dict['waiting_headright'].show=False
+                    self.partner.dict['waiting_headrightup'].show=False
+                    self.partner.dict['waiting_headrightbobble'].show=False
+                    self.partner.dict['busting'].show=False
+                    self.partner.dict['bustingmark'].show=False
+                    self.partner.dict['bustedtext'].show=False
+                    self.partner.dict['whatmark'].show=True
+                self.staticactor.show=True
+                self.progressbar.show=True
             #
             # partner is busting hero
             if self.partnerbusting:
@@ -656,7 +679,10 @@ class obj_world_breakfastdrinking(obj_world):
                     self.partner.dict['waiting_headrightup'].show=False
                     self.partner.dict['waiting_headrightbobble'].show=False
                     self.partner.dict['busting'].show=False
+                    self.partner.dict['bustingmark'].show=False
                     self.partner.dict['bustedtext'].show=False
+                    self.staticactor.show=True
+                    self.progressbar.show=True
 
             # partner is not busting hero
             else:
@@ -664,21 +690,24 @@ class obj_world_breakfastdrinking(obj_world):
                 if self.herostate==1 and self.partnerstate==0:# busted drinking
                     self.partnerbusting=True
                     self.partnertimerbusting.start()
-                    # self.progress = 0# reset progress
+                    self.progress = 0# reset progress
                     self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
                     self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
                     self.hero.dict['waiting'].show=False
                     self.hero.dict['drinkinghero'].show=False
-                    self.hero.dict['drinkingdrink'].show=False
+                    self.hero.dict['drinkingdrink'].show=True
                     self.hero.dict['busted'].show=True
                     self.hero.dict['finished'].show=False
-                    self.partner.dict['waiting_base'].show=False
-                    self.partner.dict['waiting_headleft'].show=False
+                    self.partner.dict['waiting_base'].show=True
+                    self.partner.dict['waiting_headleft'].show=True
                     self.partner.dict['waiting_headright'].show=False
                     self.partner.dict['waiting_headrightup'].show=False
                     self.partner.dict['waiting_headrightbobble'].show=False
-                    self.partner.dict['busting'].show=True
+                    self.partner.dict['busting'].show=False
+                    self.partner.dict['bustingmark'].show=True
                     self.partner.dict['bustedtext'].show=True
+                    self.staticactor.show=False
+                    self.progressbar.show=False
                 # hero behavior
                 if self.herostate==0:# neutral
                     if controls.w and controls.wc:# switch to drinking
@@ -763,7 +792,6 @@ class obj_world_breakfastdrinking(obj_world):
                         self.partner.dict['waiting_headright'].show=False
                         self.partner.dict['waiting_headrightup'].show=False
                         self.partner.dict['waiting_headrightbobble'].show=True
-                        self.partner.dict['waiting_headrightbobble'].rewind()
                         self.partner.dict['busting'].show=False
                         self.partner.dict['bustedtext'].show=False
                     # decide next timer (depends on next state)

@@ -122,16 +122,16 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['book','pen','eraser']):
             self.addpart( draw.obj_image(value,(340+c*300,y1), scale=0.25) )
         y1=150
-        for c,value in enumerate(['herohead','bed','sun','moon','fish','hook']):
+        for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
             self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
         y1=250
-        for c,value in enumerate(['partnerhead','love','guitar','musicnote','house','tree']):
+        for c,value in enumerate(['partnerhead','love','saxophone','musicnote','house','tree']):
             self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
         y1=350
-        for c,value in enumerate(['villainhead','tower','mountain','gun','bullet']):
+        for c,value in enumerate(['villainhead','gun','bullet','tower','mountain']):
             self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
         y1=450
-        for c,value in enumerate(['partyhat','drink','coffeecup','alarmclock']):
+        for c,value in enumerate(['partyhat','drink','coffeecup']):
             self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
 
 

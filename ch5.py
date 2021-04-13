@@ -142,11 +142,11 @@ class obj_scene_ch5p6(page.obj_chapterpage):
                   ('{partnername}',share.colors.partner),' still wasnt there. ',\
                    'There were ',('two letters',share.colors.item),' in the mail. ',
                     'The first one said: ',\
-                     '\n\nHey looser, its ',('{partnername}',share.colors.partner),'. ',\
+                     '\n\nHe    `y looser, its ',('{partnername}',share.colors.partner),'. ',\
                       'Me and ',('{villainname}',share.colors.villain),' are madly in love ',\
-                       'and I am dumping you. Dont ever call again. XOXO ',\
+                       'and I am dumping you. Btw, you have some issues. Dont ever call again. XOXO ',\
                     '\n\nThe second letter said: ',\
-                     '\n\nHaving problems? Looking for meaning in life? ',\
+                     '\n\nHaving issues? Looking for meaning in life? ',\
                       'Come find answers at the Highest Peak ',\
                        '(Conveniently located just north of the hero\'s house). ',\
                    ]

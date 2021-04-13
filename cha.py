@@ -130,6 +130,7 @@ class obj_scene_drinking(obj_testpage):
         self.name='Drinking'
         self.text=['Drinking']
         self.world=world.obj_world_breakfastdrinking(self)
+        # self.world=world.obj_world_breakfastdrinking(self,partner=False)
         self.addpart(self.world)
 
 

@@ -105,6 +105,7 @@ Atari games: https://games.aarp.org/category/atari-games
 
 Stuff to Draw: (check all objects in katamari damacy)
 
+alarmclock and desk (just add to morning scenes in bedroom)
 
 Nature:
 - iceberg tree mountain
@@ -171,6 +172,45 @@ Dustpan - Dish Rag - Quail Chick - Chick - Duckling - Swan - Hairbrush - Hair Dr
 ####################################################################################################################
 ####################################################################################################################
 # Some drafts
+
+
+
+####3 Alarm clock
+
+class obj_scene_ch4p9(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p8())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p10())
+    def setup(self):
+        self.text=[\
+                   'Maybe we can improve this situation at breakfast. ',\
+                  'Draw a ',('coffee cup',share.colors.item),'. Then, draw an ',\
+                  ('alarm clock',share.colors.item),'(draw around the panel). ',\
+                   ]
+        self.addpart( draw.obj_drawing('coffeecup',(200+50,450),legend='Coffee Cup',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock',shadow=(200,200)) )
+        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
+        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
+
+    def endpage(self):
+        super().endpage()
+        # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
+        image1=draw.obj_image('alarmclockext',(640,360))
+        image2=draw.obj_image('alarmclockfill',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock')
+        # combine alarmclock+alarmclockcenter8am=alarmclock8am
+        image1=draw.obj_image('alarmclock',(640,360))
+        image2=draw.obj_image('alarmclockcenter8am',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock8am')
+
+####################################################################################################################
 
 
 # old cleanup trash instead of fishing (for river spirit quest)

@@ -177,7 +177,7 @@ class obj_scene_ch2p6(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p7())
+        share.scenemanager.switchscene(obj_scene_ch2p6a())
     def setup(self):
         self.text=[\
                    'Uh...Well...aint ',('{partner_he}',share.colors.partner),' pretty. '\
@@ -194,19 +194,78 @@ class obj_scene_ch2p6(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch2_partnerbasenoface','partnerbase',(640,360),scale=0.75,sync=animation1))
 
 
-class obj_scene_ch2p7(page.obj_chapterpage):
+class obj_scene_ch2p6a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p6())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p6b())
+    def setup(self):
+        self.text=[\
+                   'First thing first, ',('{heroname}',share.colors.hero),' and ',\
+                   ('{partnername}',share.colors.partner),' want to send each other some ',\
+                   ('love',share.colors.partner),' letters. ',\
+                   'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
+                   ]
+
+        self.textkeys={'pos':(500,50),'xmin':500}# same as ={}
+
+        self.addpart( draw.obj_drawing('mailbox',(200+50,450-50),legend='Mailbox (on a pole)',shadow=(200,250)) )
+        self.addpart( draw.obj_drawing('mailletter',(1280-200-50,450),legend='Mail Letter',shadow=(200,200)) )
+
+class obj_scene_ch2p6b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p6a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p6c())
+    def setup(self):
+        self.text=[\
+                    'Great, lets write: "',\
+                    ('{heroname}',share.colors.hero),' checked ',\
+                    ('{hero_his}',share.colors.hero),' mailbox.',\
+                    ('{hero_he}',share.colors.hero),' had received ',\
+                    'a ',' letter". ',\
+                   ]
+        # self.addpart( draw.obj_imageplacer(self,'herobase','mailbox','mailletter') )
+        self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        self.addpart(animation1)
+        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
+
+class obj_scene_ch2p6c(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p6b())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p7())
+    def setup(self):
+        self.addpart( draw.obj_textbox('"The letter said:"',(163,83)) )
+        xmargin=150
+        ymargin=230
+        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':740}# same as ={}
+        self.text=[\
+                    'Dear ',('{heroname}',share.colors.hero),', ',\
+                    '\nI just wanted to tell you I love you very very much. ',\
+                    '\nXOXO, ',\
+                    '\n\nsigned: ',('{partnername}',share.colors.partner),\
+                   ]
+        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('partnerhead',(1065,305),scale=0.5) )
+        self.addpart( draw.obj_image('love',(431,545),scale=0.25) )
+
+
+class obj_scene_ch2p7(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p6c())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p8())
     def setup(self):
         self.text=[\
-                   ('{heroname}',share.colors.hero),' surely wants to show his mad',\
-                   ('love',share.colors.partner),' to ',\
-                   ('{partnername}',share.colors.partner),'. ',\
+                    'Aww that is so sweet, said the book of things. ',\
+                   ('{heroname}',share.colors.hero),' wants to show his love too. ',\
                    'Draw a ',('saxophone',share.colors.item),' and a ',('music note',share.colors.item),\
                    ' so ',('{hero_he}',share.colors.hero),' can play ',\
-                   ('{partner_his}',share.colors.partner),' a serenade. ',\
+                   ('{partnername}',share.colors.partner),' a serenade. ',\
                    ]
         self.addpart( draw.obj_drawing('saxophone',(340,450),legend='Saxophone (facing right)',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('musicnote',(1280-340,450),legend='Music Note',shadow=(200,200)) )
@@ -372,7 +431,7 @@ class obj_scene_ch2play3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play2())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play4())
+        share.scenemanager.switchscene(obj_scene_ch2play3a())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -386,9 +445,32 @@ class obj_scene_ch2play3(page.obj_chapterpage):
         self.addpart(self.world)
 
 
-class obj_scene_ch2play4(page.obj_chapterpage):
+class obj_scene_ch2play3a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play4())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
+    def setup(self):
+        self.text=[\
+                   '"',('{heroname}',share.colors.hero),' received a letter from ',\
+                   ('{partnername}',share.colors.partner),' that said ',\
+                   ('{partner_he}',share.colors.partner),' loved ',\
+                   ('{hero_him}',share.colors.hero),' very very much". ',\
+                   ]
+        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
+        self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        self.addpart(animation1)
+        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
+
+
+class obj_scene_ch2play4(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play3a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5())
     def triggernextpage(self,controls):
@@ -491,13 +573,13 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def setup(self):
         self.text=['You have unlocked ',('Chapter III: The Villain',share.colors.instructions),'. ',\
-                  'You can always redraw the partner, love heart, saxophone and music note, house and tree in ',\
+                  'You can always redraw the partner, love heart, mailbox and mail letter, saxophone and music note, house and tree in ',\
                   ('Chapter II: The Partner',share.colors.instructions),'. '\
                    '',\
                    ]
         share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
-        for c,value in enumerate(['partnerbase','love','saxophone','musicnote','house','tree']):
-            self.addpart( draw.obj_image(value,(150+c*200,400), scale=0.25) )
+        for c,value in enumerate(['partnerhead','mailbox','mailletter','love','saxophone','musicnote','house','tree']):
+            self.addpart( draw.obj_image(value,(100+c*150,400), scale=0.2) )
 
 
 #
