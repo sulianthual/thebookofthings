@@ -525,7 +525,6 @@ class obj_scene_ch2play6(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
                    ' went to back to bed". ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5))
         self.world=world.obj_world_gotobed(self,partner='inlove')
         self.addpart(self.world)
 

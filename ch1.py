@@ -108,7 +108,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
                    'and make ', ('{hero_him}',share.colors.hero),' look slightly to the right. ',\
                    ('Draw with [Left Mouse] and erase with [Backspace]',share.colors.instructions),', but you should know this by now.',\
                    ]
-        drawing=draw.obj_drawing('herohead',(640,400),legend='Happy Face')
+        drawing=draw.obj_drawing('herohead',(640,450),legend='Draw a Happy Face')
         self.addpart( drawing )
     def endpage(self):
         super().endpage()
@@ -144,10 +144,10 @@ class obj_scene_ch1p5(page.obj_chapterpage):
     def setup(self):
         self.text=['So far, our story goes as "Once upon a Time, There was a ',('Hero',share.colors.hero),'". ',\
                   'It aint much but its a start, said the book of things. ',\
-                'Now, lets draw a ',('bed',share.colors.item),\
+                'Now, lets draw a ',('bed',share.colors.item),' ',\
                 'such that our ',('hero',share.colors.hero),' can wake up.',\
                    ]
-        drawing=draw.obj_drawing('bed',(640,400),legend='Bed',shadow=(400,200))
+        drawing=draw.obj_drawing('bed',(640,450),legend='Draw a Bed',shadow=(400,200))
         self.addpart( drawing )
 
 
@@ -158,9 +158,10 @@ class obj_scene_ch1p6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p7())
     def setup(self):
-        self.text=['Well done, so lets write down: "It was morning when',\
+        self.text=['Well done, so lets write down: "It was morning when ',\
                   ('{heroname}',share.colors.hero),', the ',('hero',share.colors.hero),\
-                  ', woke up from ',('bed',share.colors.item),'". We are off to a great start, said the book of things... ',\
+                  ', woke up from ',('bed',share.colors.item),\
+                  '". We are off to a great start, said the book of things. ',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
         self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
@@ -178,12 +179,13 @@ class obj_scene_ch1p7(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                  '... Huh...well, you actually need to hold [D] to wake',('{heroname}',share.colors.hero),\
-                  'from ',('bed',share.colors.item),', said the book of things. ',\
+                  '... Huh...well, you actually need to hold [D] to wake ',\
+                  ('{heroname}',share.colors.hero),\
+                  ' from ',('bed',share.colors.item),', said the book of things. ',\
                   ('{hero_he}',share.colors.hero),' is quite lazy you know. ',\
                   ' And dont release [D] too soon or ',('{hero_he}',share.colors.hero),\
                   ' will go straight back to sleep. ',\
-                  ' When',('{hero_he}',share.colors.hero),' is fully awake, we will move on. ',\
+                  ' When ',('{hero_he}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
         self.world=world.obj_world_wakeup(self,sun=False)
         self.addpart(self.world)
@@ -214,7 +216,7 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p10())
     def setup(self):
         self.text=['Since it is the first day, today we will have ',('{heroname}',share.colors.hero), \
-                  'take it easy, said the book of things. Lets just go  ',('fishing',share.colors.action),'. ',\
+                  ' take it easy, said the book of things. Lets just go  ',('fishing',share.colors.action),'. ',\
                 'All you need is to draw a ',('fish',share.colors.item),\
                 ' and a ',('hook',share.colors.item),', ',\
                 ' and we will be on our way. ',\
@@ -309,13 +311,8 @@ class obj_scene_ch1p13(page.obj_chapterpage):
                     ' Hold [A], and dont release',\
                     ' or this procrastinator will stay awake all night. ',\
                    ]
-        self.world=world.obj_world_gotobed(self)# Wake up hero mini-game
+        self.world=world.obj_world_gotobed(self,addmoon=False)
         self.addpart(self.world)
-        self.world.timerend.amount=100# longer cutscene for first time playing
-        # self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
-        # self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
-        # self.addpart(draw.obj_animation('ch1_herotosleep','herobase',(640,360),record=True,scale=0.7))
-        # self.addpart( draw.obj_image('herobase',(903,452), scale=0.7) )
 
 
 class obj_scene_ch1p14(page.obj_chapterpage):
@@ -430,7 +427,6 @@ class obj_scene_ch1play4(page.obj_chapterpage):
         self.text=[\
                    '"And finally, at night, ',('{hero_he}',share.colors.hero),' went to back to bed". ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),record=True,scale=0.5))
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
 

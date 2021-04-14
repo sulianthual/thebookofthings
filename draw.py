@@ -104,6 +104,7 @@ class obj_pagedisplay_text:
     def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space
+        space_widthnone=font.size('')[0]# width of no separation
         x,y=pos# text position (top left corner)
         if x<xmin: x==xmin
         for count,line in enumerate(wordmatrix):
@@ -111,7 +112,7 @@ class obj_pagedisplay_text:
                 word_surface=core.obj_sprite_text()# New sprite_text object for each word
                 word_surface.make(word,font,color)
                 word_width, word_height = 2*word_surface.getrx(),2*word_surface.getry()
-                if x + word_width >= xmax:
+                if x + word_width >= xmax:# return to line auto
                     x = xmin
                     y += linespacing
                 self.words_prerender.append( (word_surface,(x+word_width/2,y+word_height/2)) )# record prerendered text
@@ -120,6 +121,8 @@ class obj_pagedisplay_text:
             if count<len(wordmatrix)-1:
                 x = xmin
                 y += linespacing
+            # last item of line, replace space with no-separation
+            x = x - space_width + space_widthnone
         return x,y# return position for next call
     def display(self):
         for i in self.words_prerender:

@@ -173,6 +173,7 @@ class obj_scene_traveltopeak(obj_testpage):
         self.name='Travel -> Peak'
         self.text=['Travel -> Peak']
         self.world=world.obj_world_traveltopeak(self)
+        # self.world=world.obj_world_traveltopeak(self,tohome=True)
         self.addpart(self.world)
 
 

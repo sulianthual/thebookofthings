@@ -50,7 +50,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
         self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
         self.sprite_ch5=draw.obj_textbox('Chapter 5: The Highest Peak',(640,560),fontsize='smaller')
-        self.sprite_ch6=draw.obj_textbox('Chapter 6: Perspectives',(640,590),fontsize='smaller')
+        self.sprite_ch6=draw.obj_textbox('Chapter 6: Treasure Hunt',(640,590),fontsize='smaller')
 
 
         self.sprite_drawings=draw.obj_textbox('Drawings (Coming Soon)',(1140,410),fontsize='smaller')
@@ -151,7 +151,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch5.obj_scene_ch5p28()
+            quickscene=ch5.obj_scene_ch5p35()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

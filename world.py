@@ -890,6 +890,106 @@ class obj_world_fishing(obj_world):
 
 ####################################################################################################################
 
+# Mini Game: Eat Fish
+class obj_world_eatfish(obj_world):
+    def setup(self,**kwargs):
+        # default options
+        self.addpartner=False
+        self.eldereats=False# replace hero with elder as eater
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+            if 'eldereats' in kwargs: self.eldereats=kwargs["eldereats"]# partner options
+        #
+        self.done=False# mini game is finished
+        self.doneeating=False# done eating
+        self.bites=6# total number of bites
+        self.alternate_LR=True# alternate Left-Right pattern to eat
+        self.eating=False
+
+        # fish
+        self.fish=obj_grandactor(self,(640,360))
+        self.fishscale=1# initial size of fish
+        self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
+        # hero eating or not eating
+        self.herostand=obj_grandactor(self,(640,360))
+        if self.addpartner:# add partner
+            self.herostand.addpart( 'imgadd1', draw.obj_image('partnerbase',(340-100,400-50), scale=0.7) )
+        if self.eldereats:
+            self.herostand.addpart( 'img_stand',draw.obj_image('elderbase',(340,400), scale=0.7) )
+        else:
+            self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
+        self.heroeat=obj_grandactor(self,(640,360))
+        if self.addpartner:# add partner in love
+            self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-50),imgscale=0.7) )
+        if self.eldereats:
+            self.animation1=draw.obj_animation('ch1_heroeats1','elderbase',(640,360),imgscale=0.7)
+        else:
+            self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
+        self.heroeat.addpart('anim_eat', self.animation1)
+        self.herostand.show=True
+        self.heroeat.show=False
+        # text
+        self.text1=obj_grandactor(self,(640,360))
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] and [D] to Eat',(640,660),color=share.colors.instructions) )
+        self.text2=obj_grandactor(self,(640,360))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390)) )
+        self.text1.show=True
+        self.text2.show=False
+        # textbox crunch
+        self.text3=obj_grandactor(self,(640,360))
+        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(860,180),scale=1.5) )
+        self.text3.show=False
+        # timer for eating
+        self.timer=tool.obj_timer(50)
+        # short timer after done eating
+        self.timerend=tool.obj_timer(50)
+    def eatfood(self):
+        self.eating=True
+        self.timer.start()
+        self.bites -=1
+        self.fishscale *= 0.8
+        self.fish.removepart( 'img_fish')
+        self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
+    def update(self,controls):
+        super().update(controls)
+        if not self.doneeating:
+            if self.alternate_LR:
+                if controls.a and controls.ac:
+                    self.eatfood()
+                    self.alternate_LR=False
+            else:
+                if controls.d and controls.dc:
+                    self.eatfood()
+                    self.alternate_LR=True
+            if self.eating:
+                self.herostand.show=False
+                self.heroeat.show=True
+                self.text3.show=True
+                self.timer.update()# stop eating on timer
+                if self.timer.ring:
+                    self.eating=False
+                    self.animation1.rewind()
+            else:
+                self.herostand.show=True
+                self.heroeat.show=False
+                self.text3.show=False
+            if self.bites<1:
+                self.doneeating=True
+                self.timerend.start()
+        else:# done eating
+            self.herostand.show=True
+            self.heroeat.show=False
+            self.fish.show=False
+            self.text1.show=False
+            self.text2.show=True
+            self.text3.show=False
+            self.timerend.update()
+            if self.timerend.ring: self.done=True
+
+
+####################################################################################################################
+
 
 # Mini Game: travel to evil lair (or back from it)
 class obj_world_traveltolair(obj_world):
@@ -1042,6 +1142,7 @@ class obj_world_traveltopeak(obj_world):
     def setup(self,**kwargs):
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
+        self.gotopeak=True# go to or from peak
         self.addpartner=False# add partner walking with hero
         self.heroangry=False# hero is angry
         yoff1=210# just offset map in obj_world_traveltolair to be more north
@@ -1049,8 +1150,14 @@ class obj_world_traveltopeak(obj_world):
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
-        self.heroxstart=180
-        self.heroystart=400+yoff1
+            if 'tohome' in kwargs: self.gotopeak=not kwargs["tohome"]# option go back home
+        #
+        if self.gotopeak:
+            self.heroxstart=180
+            self.heroystart=400+yoff1
+        else:
+            self.heroxstart=640
+            self.heroystart=260
         self.staticactor=obj_grandactor(self,(640,360))# background
         self.hero=obj_grandactor(self,(self.heroxstart,self.heroystart))# hero
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
@@ -1104,9 +1211,14 @@ class obj_world_traveltopeak(obj_world):
         self.text_undone.show=True
         self.text_done.show=False
         # area to reach
-        self.goalarea=obj_grandactor(self,(640,260))# reach peak
-        self.goalarea.rx=50
-        self.goalarea.ry=50
+        if self.gotopeak:
+            self.goalarea=obj_grandactor(self,(640,260))# reach peak
+            self.goalarea.rx=50
+            self.goalarea.ry=50
+        else:
+            self.goalarea=obj_grandactor(self,(100,340+yoff1))# reach home
+            self.goalarea.rx=50
+            self.goalarea.ry=50
         # timer
         self.timerend=tool.obj_timer(50)# goal to done
     def update(self,controls):
@@ -2408,6 +2520,12 @@ class obj_world_rockpaperscissors(obj_world):
                         self.instructions.dict['textd'].show=False
                         self.instructions.dict['texts'].show=False
                     else:
+                        if self.elderchoice==0:# elder does a new random choice
+                            self.elderchoice=tool.randchoice([1,2])
+                        elif self.elderchoice==1:
+                            self.elderchoice=tool.randchoice([0,2])
+                        else:
+                            self.elderchoice=tool.randchoice([0,1])
                         self.hero.dict['rock'].show=self.herochoice==0
                         self.hero.dict['paper'].show=self.herochoice==1
                         self.hero.dict['scissors'].show=self.herochoice==2
@@ -2449,107 +2567,6 @@ class obj_world_rockpaperscissors(obj_world):
                 self.timerendloose.update()
                 if self.timerendloose.ring:
                     self.done=True# end of minigame
-
-
-####################################################################################################################
-
-# Mini Game: Eat Fish
-class obj_world_eatfish(obj_world):
-    def setup(self,**kwargs):
-        # default options
-        self.addpartner=False
-        self.eldereats=False# replace hero with elder as eater
-        # scene tuning
-        if kwargs is not None:
-            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
-            if 'eldereats' in kwargs: self.eldereats=kwargs["eldereats"]# partner options
-        #
-        self.done=False# mini game is finished
-        self.doneeating=False# done eating
-        self.bites=6# total number of bites
-        self.alternate_LR=True# alternate Left-Right pattern to eat
-        self.eating=False
-
-        # fish
-        self.fish=obj_grandactor(self,(640,360))
-        self.fishscale=1# initial size of fish
-        self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
-        # hero eating or not eating
-        self.herostand=obj_grandactor(self,(640,360))
-        if self.addpartner:# add partner
-            self.herostand.addpart( 'imgadd1', draw.obj_image('partnerbase',(340-100,400-50), scale=0.7) )
-        if self.eldereats:
-            self.herostand.addpart( 'img_stand',draw.obj_image('elderbase',(340,400), scale=0.7) )
-        else:
-            self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
-        self.heroeat=obj_grandactor(self,(640,360))
-        if self.addpartner:# add partner in love
-            self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-50),imgscale=0.7) )
-        if self.eldereats:
-            self.animation1=draw.obj_animation('ch1_heroeats1','elderbase',(640,360),imgscale=0.7)
-        else:
-            self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
-        self.heroeat.addpart('anim_eat', self.animation1)
-        self.herostand.show=True
-        self.heroeat.show=False
-        # text
-        self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] and [D] to Eat',(640,660),color=share.colors.instructions) )
-        self.text2=obj_grandactor(self,(640,360))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390)) )
-        self.text1.show=True
-        self.text2.show=False
-        # textbox crunch
-        self.text3=obj_grandactor(self,(640,360))
-        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(860,180),scale=1.5) )
-        self.text3.show=False
-        # timer for eating
-        self.timer=tool.obj_timer(50)
-        # short timer after done eating
-        self.timerend=tool.obj_timer(50)
-    def eatfood(self):
-        self.eating=True
-        self.timer.start()
-        self.bites -=1
-        self.fishscale *= 0.8
-        self.fish.removepart( 'img_fish')
-        self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
-    def update(self,controls):
-        super().update(controls)
-        if not self.doneeating:
-            if self.alternate_LR:
-                if controls.a and controls.ac:
-                    self.eatfood()
-                    self.alternate_LR=False
-            else:
-                if controls.d and controls.dc:
-                    self.eatfood()
-                    self.alternate_LR=True
-            if self.eating:
-                self.herostand.show=False
-                self.heroeat.show=True
-                self.text3.show=True
-                self.timer.update()# stop eating on timer
-                if self.timer.ring:
-                    self.eating=False
-                    self.animation1.rewind()
-            else:
-                self.herostand.show=True
-                self.heroeat.show=False
-                self.text3.show=False
-            if self.bites<1:
-                self.doneeating=True
-                self.timerend.start()
-        else:# done eating
-            self.herostand.show=True
-            self.heroeat.show=False
-            self.fish.show=False
-            self.text1.show=False
-            self.text2.show=True
-            self.text3.show=False
-            self.timerend.update()
-            if self.timerend.ring: self.done=True
-
 
 
 ####################################################################################################################
@@ -2829,9 +2846,15 @@ class obj_world_gotobed(obj_world):
     def setup(self,**kwargs):
         # default options
         self.partner=False
+        self.addmoon=True# add the moon (must have been drawn)
+        self.addalarmclock=False# add the alarm clock and night stand
+        self.heroisangry=False# angry face on hero
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
+            if 'addmoon' in kwargs: self.addmoon=kwargs["addmoon"]# partner options
+            if 'alarmclock' in kwargs: self.addalarmclock=kwargs["alarmclock"]# partner options
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# partner options
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
@@ -2851,18 +2874,34 @@ class obj_world_gotobed(obj_world):
         self.text_done.show=False
         # static actor
         self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75)  )
+        if self.addmoon:
+            self.staticactor.addpart( 'annim',draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
+        if self.addalarmclock:
+            self.staticactor.addpart( 'img3',draw.obj_image('alarmclock8am',(100,370),scale=0.4) )
+            self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
         # start actor
         if self.partner == 'inlove':# add partner in love
             self.startactor.addpart( 'animadd1', draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7) )
-        self.startactor.addpart( 'anim1', draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7) )
+        if self.heroisangry:
+            self.startactor.addpart( 'anim1', draw.obj_animation('ch1_awaken','herobaseangry',(640,360),scale=0.7) )
+        else:
+            self.startactor.addpart( 'anim1', draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7) )
+
         # ungoing actor
         if self.partner == 'inlove':# add partner in love
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_herotosleep','partnerbase',(640+100,360),scale=0.7) )
-        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7) )
+
+        if self.heroisangry:
+            self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobaseangry',(640,360),scale=0.7) )
+        else:
+            self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7) )
         # finish actor
         if self.partner == 'inlove':# add partner in love
             self.finishactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(420+100,490),scale=0.7,rotate=80) )
-        self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
+        if self.heroisangry:
+            self.finishactor.addpart( 'img1', draw.obj_image('herobaseangry',(420,490),scale=0.7,rotate=80) )
+        else:
+            self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [A] to go to Sleep',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )

@@ -75,8 +75,16 @@ Later on: Make unique minigame travel where can roam unique map (add tons of con
 - add a mailbox and the hero reads mail after morning mini-game? (this could start quests)
   (villain says: I have captured the partner... have problems? come solve them at the highest peak)
 -cleanup chapter 4: no littering ,etc...
-
-
+- add flavors to characters:
+   the hero was "always angry", "dumb as a rock", etc...
+    then it may just affect the story text with options, but still add a lot of depth to the story
+- lie, cheat and steal:
+  chapt 4 we can have the hero lie (then betray the partner by killing the villain and enslaving her)
+  chapt 5 the hero learn to cheat with the elder
+  chapt 6 the hero learns to steal the treasure
+  Remember to lie, cheat and steal becomes the game's memo!
+- add a mirror: in villain chapter? in hero's house?
+  easy to make a character reflection in the mirror
 
 
 Mini Game Ideas

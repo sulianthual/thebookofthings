@@ -877,7 +877,6 @@ class obj_scene_ch3play14(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
                    ' went back to bed". ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5))
         self.world=world.obj_world_gotobed(self,partner='inlove')
         self.addpart(self.world)
 
@@ -928,7 +927,7 @@ class obj_scene_ch3unlocknext(page.obj_chapterpage):
                    '',\
                    ]
         share.datamanager.updateprogress(chapter=4)# chapter 4 becomes available
-        for c,value in enumerate(['villainbase','tower','mountain','gun','bullet']):
+        for c,value in enumerate(['villainhead','tower','mountain','gun','bullet']):
             self.addpart( draw.obj_image(value,(240+c*200,400), scale=0.25) )
 
 

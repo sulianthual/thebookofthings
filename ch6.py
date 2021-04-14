@@ -5,7 +5,7 @@
 # Game by sul
 # Started Sept 2020
 #
-# chapter5.py: ...
+# chapter6.py: ...
 #
 ##########################################################
 ###########################################################
@@ -27,7 +27,7 @@ class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
-        self.text=['-----   Chapter VI: Perspectives    -----   ',\
+        self.text=['-----   Chapter VI: Treasure Hunt    -----   ',\
                   '...(WIP)". ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

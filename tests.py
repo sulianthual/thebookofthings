@@ -133,6 +133,9 @@ class obj_scene_alldrawings(obj_testpage):
         y1=450
         for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
             self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
+        y1=550
+        for c,value in enumerate(['elderhead','nightstand','alarmclock8am','cloud','lightningbolt','rock','paper','scissors']):
+            self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
 
 
 class obj_scene_testmessage(obj_testpage):
