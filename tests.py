@@ -263,19 +263,32 @@ class obj_scene_textchoice(obj_testpage):
             'textchoice: Hover with [Mouse] and click with [Left Mouse] to select among choices. ',\
             'The current choice is the circled one. ',\
             'This saves keywords (in words.txt) similar to textinput. ',\
-            'Refresh this page to see changes: \nThe test was a:',('{test_he}',share.colors.red),'. ',\
+            'Refresh this page to see changes: \n "',('{test_he}',share.colors.red),' was the test". ',\
             '\nA textchoice can have additional keys: ',\
             'a choice for the base key determines the choices of the additional keys using analogies. ',\
-            'The test gender was: ',('{test_his}',share.colors.red),' choice. ',\
+            '\n "The test hero made ',('{test_his}',share.colors.red),' choice". ',\
+            '\n It is possible to set a default choice (here value is always when refreshing the page)',\
             ]
-        self.addpart( draw.obj_textbox("The test gender was:",(200,460)) )
-        textchoice=draw.obj_textchoice('test_he')
-        textchoice.addchoice('1. A guy','he',(440,460))
-        textchoice.addchoice('2. A girl','she',(740,460))
-        textchoice.addchoice('3. A thing','it',(1040,460))
-        textchoice.addchoice('4. The keyword: {test1}','{test1}',(640,560))
-        textchoice.addkey('test_his',{'he':'his','she':'her','it':'its','{test1}':'{test1}ss'})# additional key and analogies
+        y1=450
+        self.addpart( draw.obj_textbox("The test gender was:",(200,y1)) )
+        textchoice=draw.obj_textchoice('test_he')# optional to set default choice
+        textchoice.addchoice('1. A guy','he',(440,y1))
+        textchoice.addchoice('2. A girl','she',(640,y1))
+        textchoice.addchoice('3. A thing','it',(840,y1))
+        textchoice.addkey('test_his',{'he':'his','she':'her','it':'its'})# additional key and analogies
         self.addpart( textchoice )
+        #
+        y2=600
+        self.addpart( draw.obj_textbox("Default value was:",(200,y2)) )
+        textchoice2=draw.obj_textchoice('test_value',default='one')# optional to set default choice
+        textchoice2.addchoice('1. one','one',(440,y2))
+        textchoice2.addchoice('2. two','two',(740,y2))
+        textchoice2.addchoice('3. three','three',(1040,y2))
+        self.addpart( textchoice2 )
+
+
+
+
     def page(self,controls):
         pass
         # print(share.words.dict['test_he'])# can access key value directly

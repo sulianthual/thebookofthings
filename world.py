@@ -2091,19 +2091,31 @@ class obj_world_rockpaperscissors(obj_world):
         self.text_donelost.show=False
         #
         # static
-        self.staticactor.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
+        self.staticactor.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
+        self.staticactor.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5) )
         self.staticactor.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
+        self.staticactor.addpart( 'img1a', draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img2a', draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3a', draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img4a', draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img5a', draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img6a', draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
         # instructions
-        self.instructions.addpart( 'texta', draw.obj_textbox('[A]: rock',(70,520+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textw', draw.obj_textbox('[W]: paper',(150,520),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textd', draw.obj_textbox('[D]: scissors',(240,520+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('[S]: Start Countdown',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('[S]: Start Game',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'textn', draw.obj_textbox('[S]: Next Round',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texte', draw.obj_textbox('[S]: End Game',(640,660),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
         self.instructions.dict['textw'].show=True
         self.instructions.dict['textd'].show=True
         self.instructions.dict['texts'].show=True
+        self.instructions.dict['textn'].show=False
+        self.instructions.dict['texte'].show=False
         # hero
         self.hero.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='premade') )
+        self.hero.addpart( 'talkcloud', draw.obj_image('talkcloud',(200,320),path='premade') )
         self.hero.addpart( 'rock', draw.obj_image('rock',(100+50,320),scale=0.5) )
         self.hero.addpart( 'paper', draw.obj_image('paper',(100+50,320),scale=0.5) )
         self.hero.addpart( 'scissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
@@ -2113,44 +2125,55 @@ class obj_world_rockpaperscissors(obj_world):
         self.hero.dict['paper'].show=self.herochoice==1
         self.hero.dict['scissors'].show=self.herochoice==2
         self.hero.dict['thinkcloud'].show=True
+        self.hero.dict['talkcloud'].show=False
         # elder
         self.elder.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(1280-200,320),fliph=True,path='premade') )
-        self.elder.addpart( 'rock', draw.obj_image('rock',(1280-100-50,320),scale=0.5) )
-        self.elder.addpart( 'paper', draw.obj_image('paper',(1280-100-50,320),scale=0.5) )
-        self.elder.addpart( 'scissors', draw.obj_image('scissors',(1280-100-50,320),scale=0.5) )
-        self.elder.show=self.elderthinks# show what the elder is thinking or not
+        self.elder.addpart( 'talkcloud', draw.obj_image('talkcloud',(1280-200,320),fliph=True,path='premade') )
+        if self.elderthinks:# can see what elder is thinking
+            self.elder.addpart( 'rock', draw.obj_image('rock',(1280-100-50,320),scale=0.5) )
+            self.elder.addpart( 'paper', draw.obj_image('paper',(1280-100-50,320),scale=0.5) )
+            self.elder.addpart( 'scissors', draw.obj_image('scissors',(1280-100-50,320),scale=0.5) )
+        else:
+            self.elder.addpart( 'rock', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='premade') )
+            self.elder.addpart( 'paper', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='premade') )
+            self.elder.addpart( 'scissors', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='premade') )
+        self.elder.show=True# show what the elder is thinking or not
         self.elderchoice=tool.randchoice([0,1,2])# 0,1,2 for rock, paper scissors
         self.elder.dict['rock'].show=self.elderchoice==0
         self.elder.dict['paper'].show=self.elderchoice==1
         self.elder.dict['scissors'].show=self.elderchoice==2
         self.elder.dict['thinkcloud'].show=True
+        self.elder.dict['talkcloud'].show=False
         # show
-        self.result.addpart( 'herorock', draw.obj_image('rock',(640-70,510),scale=0.35)  )
-        self.result.addpart( 'heropaper', draw.obj_image('paper',(640-70,510),scale=0.35)  )
-        self.result.addpart( 'heroscissors', draw.obj_image('scissors',(640-70,510),scale=0.35)  )
+
+        self.result.addpart( 'herorock', draw.obj_image('rock',(100+50,320),scale=0.5) )
+        self.result.addpart( 'heropaper', draw.obj_image('paper',(100+50,320),scale=0.5) )
+        self.result.addpart( 'heroscissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
         self.resulthero=0# 0,1,2 for rock, paper scissors
         self.result.dict['herorock'].show=False
         self.result.dict['heropaper'].show=False
         self.result.dict['heroscissors'].show=False
-        self.result.addpart( 'elderrock', draw.obj_image('rock',(640+70,510),scale=0.35)  )
-        self.result.addpart( 'elderpaper', draw.obj_image('paper',(640+70,510),scale=0.35)  )
-        self.result.addpart( 'elderscissors', draw.obj_image('scissors',(640+70,510),scale=0.35)  )
+        self.result.addpart( 'elderrock', draw.obj_image('rock',(1280-100-50,320),scale=0.5) )
+        self.result.addpart( 'elderpaper', draw.obj_image('paper',(1280-100-50,320),scale=0.5) )
+        self.result.addpart( 'elderscissors', draw.obj_image('scissors',(1280-100-50,320),scale=0.5) )
         self.resultelder=0# 0,1,2 for rock, paper scissors
         self.result.dict['elderrock'].show=False
         self.result.dict['elderpaper'].show=False
         self.result.dict['elderscissors'].show=False
         self.computedresults=False# has computed results (one frame each round)
-        self.result.addpart( 'win', draw.obj_textbox('Round: Hero',(640,350),fontsize='big')  )
-        self.result.addpart( 'loose', draw.obj_textbox('Round: Elder',(640,350),fontsize='big')  )
-        self.result.addpart( 'tie', draw.obj_textbox('Tie',(640,350),fontsize='big')  )
+        self.result.addpart( 'win',  draw.obj_image('largecross',(1280-100-50,320),path='premade')  )
+        self.result.addpart( 'loose', draw.obj_image('largecross',(100+50,320),path='premade')  )
+
+        self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,350),fontsize='big',scale=0.9)  )
+        self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,350),fontsize='big',scale=0.9)  )
+        self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,350),fontsize='big',scale=0.9)  )
+        self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,350),fontsize='big')  )
         self.result.dict['win'].show=False
         self.result.dict['loose'].show=False
         self.result.dict['tie'].show=False
-        self.result.addpart( 'winspark', draw.obj_image('rpsspark',(640-70,510),fliph=False,path='premade')  )
-        self.result.addpart( 'loosespark', draw.obj_image('rpsspark',(640+70,510),fliph=True,path='premade')  )
-        self.result.dict['winspark'].show=False
-        self.result.dict['loosespark'].show=False
-        self.checkingtimer=tool.obj_timer(120)# timer for showing result
+        self.result.dict['paperrock'].show=False
+        self.result.dict['rockscissors'].show=False
+        self.result.dict['scissorspaper'].show=False
         # countdown
         self.countdown.addpart( '3', draw.obj_textbox('3...',(640,350),fontsize='huge')  )
         self.countdown.addpart( '2', draw.obj_textbox('2...',(640,350),fontsize='huge')  )
@@ -2203,8 +2226,8 @@ class obj_world_rockpaperscissors(obj_world):
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
-                if not self.countdowning:# not countdown
-                    if controls.s and controls.sc:
+                if not self.countdowning:# not countdown (only before starting game)
+                    if (controls.s and controls.sc) or self.icountdown<3:
                         self.countdowning=True# flip to countdown
                         self.icountdown=3
                         self.countdowntimer.start()
@@ -2219,10 +2242,13 @@ class obj_world_rockpaperscissors(obj_world):
                         self.instructions.dict['textw'].show=True
                         self.instructions.dict['textd'].show=True
                         self.instructions.dict['texts'].show=False
+                        self.instructions.dict['textn'].show=False
+                        self.instructions.dict['texte'].show=False
                 else:
                     self.countdowntimer.update()
+                    print(self.icountdown)
                     if self.countdowntimer.ring:
-                        if self.icountdown>1:# still countdown
+                        if self.icountdown>1:# not the last round yet
                             self.icountdown -=1
                             self.countdowntimer.start()# reset timer
                             if self.elderpeaks and self.icountdown==1:# elder peaks on 1...
@@ -2252,7 +2278,6 @@ class obj_world_rockpaperscissors(obj_world):
                                 self.countdown.dict['1'].show=True
                         else: # flip to checking state (elder doesnt choose anymore)
                             self.checking=True
-                            self.checkingtimer.start()
                             if self.elderalwayswin:# elder counters last moment
                                 if self.herochoice==0:
                                     self.elderchoice=1
@@ -2283,6 +2308,8 @@ class obj_world_rockpaperscissors(obj_world):
                             self.result.dict['elderscissors'].show=self.resultelder==2
                             self.hero.dict['thinkcloud'].show=False
                             self.elder.dict['thinkcloud'].show=False
+                            self.hero.dict['talkcloud'].show=True
+                            self.elder.dict['talkcloud'].show=True
                             self.countdown.dict['3'].show=False
                             self.countdown.dict['2'].show=False
                             self.countdown.dict['1'].show=False
@@ -2290,6 +2317,8 @@ class obj_world_rockpaperscissors(obj_world):
                             self.instructions.dict['textw'].show=False
                             self.instructions.dict['textd'].show=False
                             self.instructions.dict['texts'].show=False
+                            self.instructions.dict['textn'].show=True
+                            self.instructions.dict['texte'].show=False
             #
             else:#checking state
                 # compute results once
@@ -2302,18 +2331,24 @@ class obj_world_rockpaperscissors(obj_world):
                         if self.resultelder==0:# hero: rock, elder: paper
                             if self.resulthero==1:
                                 outcome=0
+                                self.result.dict['paperrock'].show=True
                             else:
                                 outcome=1
+                                self.result.dict['rockscissors'].show=True
                         elif self.resultelder==1:
                             if self.resulthero==2:
                                 outcome=0
+                                self.result.dict['scissorspaper'].show=True
                             else:
                                 outcome=1
+                                self.result.dict['paperrock'].show=True
                         elif self.resultelder==2:
                             if self.resulthero==0:
                                 outcome=0
+                                self.result.dict['rockscissors'].show=True
                             else:
                                 outcome=1
+                                self.result.dict['scissorspaper'].show=True
                     if outcome==0:# hero wins
                         self.elderhealth -= 1
                         if self.elderhealth>-1:
@@ -2322,8 +2357,6 @@ class obj_world_rockpaperscissors(obj_world):
                         self.result.dict['win'].show=True
                         self.result.dict['loose'].show=False
                         self.result.dict['tie'].show=False
-                        self.result.dict['winspark'].show=True
-                        self.result.dict['loosespark'].show=False
                     elif outcome==1:# elder wins
                         self.herohealth -= 1
                         if self.herohealth>-1:
@@ -2332,16 +2365,14 @@ class obj_world_rockpaperscissors(obj_world):
                         self.result.dict['win'].show=False
                         self.result.dict['loose'].show=True
                         self.result.dict['tie'].show=False
-                        self.result.dict['winspark'].show=False
-                        self.result.dict['loosespark'].show=True
                     else:# tie
                         self.result.dict['win'].show=False
                         self.result.dict['loose'].show=False
                         self.result.dict['tie'].show=True
-                        self.result.dict['winspark'].show=False
-                        self.result.dict['loosespark'].show=False
-                self.checkingtimer.update()
-                if self.checkingtimer.ring:# flip back to deciding state or to win/loose
+                    if self.herohealth==0 or self.elderhealth==0:# endgame message
+                        self.instructions.dict['textn'].show=False
+                        self.instructions.dict['texte'].show=True
+                if controls.s and controls.sc:# flip back to deciding state (or to end of the game)
                     if self.herohealth==0:# elder won entire game
                         self.goal=True
                         self.win=False
@@ -2398,8 +2429,13 @@ class obj_world_rockpaperscissors(obj_world):
                     self.result.dict['win'].show=False
                     self.result.dict['loose'].show=False
                     self.result.dict['tie'].show=False
-                    self.result.dict['winspark'].show=False
-                    self.result.dict['loosespark'].show=False
+                    self.hero.dict['talkcloud'].show=False
+                    self.elder.dict['talkcloud'].show=False
+                    self.result.dict['paperrock'].show=False
+                    self.result.dict['rockscissors'].show=False
+                    self.result.dict['scissorspaper'].show=False
+                    self.instructions.dict['textn'].show=False
+                    self.instructions.dict['texte'].show=False
                     for i in range(3):
                         self.healthbar.dict['herocross_'+str(i)].show=False
                         self.healthbar.dict['eldercross_'+str(i)].show=False

@@ -174,12 +174,16 @@ class obj_datamanager:
             self.domusic=False# music on/off
             self.dosound=False# sound on/off
     #
+
+
     def getwords(self):
         return self.dictwords# dictionary of words=(key,value)
     def getwordkeys(self):
         return self.dictwords.keys()
     def getword(self,wordkey):
         return self.dictwords[wordkey]
+    def setword(self,wordkey,wordvalue):
+        self.writeword(wordkey,wordvalue)
     def writeword(self,wordkey,wordvalue):
         self.dictwords[wordkey]=wordvalue
     def savewords(self):# save keywords to file

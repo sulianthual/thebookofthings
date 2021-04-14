@@ -366,9 +366,11 @@ class obj_textinput:
 # $ textchoice.addchoice('2. A girl','she',(640,360))
 # $ textchoice.addkey('hero_his',{'he':'his','she':'her'})
 class obj_textchoice:
-    def __init__(self,key):
+    def __init__(self,key,default=None):
         self.type='textchoice'
         self.key=key# key from choice that will be saved (in words.txt)
+        if default:# impose default choice
+            self.setdefault(default)
         self.setup()
     def setup(self):
         self.choices=[]
@@ -377,6 +379,9 @@ class obj_textchoice:
         self.xmargin=20
         self.ymargin=10
         self.keytodict(self.key)
+    def setdefault(self,default):
+        share.datamanager.writeword(self.key,default)
+
     def keytodict(self,key):# write key in dictionary if not there
         if not key in share.datamanager.getwordkeys():
             share.datamanager.writeword(key,'')

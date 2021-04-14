@@ -218,10 +218,10 @@ class obj_scene_rockpaperscissors(obj_testpage):
         self.name='Rock-Paper-Scissors'
         self.text=['Rock-Paper-Scissors']
         self.world=world.obj_world_rockpaperscissors(self)
-        # self.world=world.obj_world_rockpaperscissors(self,elderwins=True)
-        # self.world=world.obj_world_rockpaperscissors(self,elderlooses=True)
-        # self.world=world.obj_world_rockpaperscissors(self,elderpeaks=True)
-        # self.world=world.obj_world_rockpaperscissors(self,elderthinks=False)
+        # self.world=world.obj_world_rockpaperscissors(self,elderwins=True)# elder always wins
+        # self.world=world.obj_world_rockpaperscissors(self,elderlooses=True)# elder always looses
+        # self.world=world.obj_world_rockpaperscissors(self,elderpeaks=True)# elder peaks on 1...
+        # self.world=world.obj_world_rockpaperscissors(self,elderthinks=False)# cant see elder choice
         self.addpart(self.world)
 
 
