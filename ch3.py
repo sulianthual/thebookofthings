@@ -665,9 +665,8 @@ class obj_scene_ch3play4(page.obj_chapterpage):
                 ('{villainname}',share.colors.villain),'\'s ',\
                 ('evil lair',share.colors.location),' in the mountains". ',\
                    ]
-        self.world=world.obj_world_traveltolair(self)
+        self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3)
         self.addpart(self.world)
-        # self.addpart( draw.obj_drawing('grid',(640,400),shadow=(400,280)) )
 
 
 class obj_scene_ch3play5(page.obj_chapterpage):
@@ -798,7 +797,7 @@ class obj_scene_ch3play9(page.obj_chapterpage):
                   '"',('{heroname}',share.colors.hero),' and ',\
                   ('{partnername}',share.colors.partner),' went back home". ',\
                    ]
-        self.world=world.obj_world_traveltolair(self,tohome=True,partner=True)
+        self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3,partner=True)
         self.addpart(self.world)
 
 class obj_scene_ch3play10(page.obj_chapterpage):

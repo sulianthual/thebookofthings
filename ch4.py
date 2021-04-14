@@ -433,9 +433,8 @@ class obj_scene_ch4p12(page.obj_chapterpage):
                 'So ',('{hero_he}',share.colors.hero),' travelled to ',
                 ('{villainname}',share.colors.villain),'\'s ',('evil lair',share.colors.location),'. ',\
                    ]
-        self.world=world.obj_world_traveltolair(self)
+        self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=4)
         self.addpart(self.world)
-        # self.addpart( draw.obj_drawing('grid',(640,400),shadow=(400,280)) )
 
 
 class obj_scene_ch4p13(page.obj_chapterpage):

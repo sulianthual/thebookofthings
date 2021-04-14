@@ -990,214 +990,138 @@ class obj_world_eatfish(obj_world):
 ####################################################################################################################
 #
 # # Mini Game: travel on overworld
-# class obj_world_travel(obj_world):
-#     def setup(self,**kwargs):
-#         self.done=False# end of minigame
-#         self.goal=False# destination reached
-#         #
-#
-
-####################################################################################################################
-
-
-# Mini Game: travel to evil lair (or back from it)
-class obj_world_traveltolair(obj_world):
+class obj_world_travel(obj_world):
     def setup(self,**kwargs):
         self.done=False# end of minigame
-        self.goal=False# minigame goal reached
-        self.gotolair=True# go to or from lair
+        self.goal=False# destination reached
+        #
+        # Default parameters
+        self.wherestart='home'# where the hero starts
+        self.whereends='tower'# where the goal is
+        self.chapter=1# level of drawings to show from chapters (1=tree/house, 3=tower/mountain, 5=peak+cloud/lightning)
         self.addpartner=False# add partner walking with hero
         # scene tuning
         if kwargs is not None:
-            if 'tohome' in kwargs: self.gotolair=not kwargs["tohome"]# option go back home
+            if 'chapter' in kwargs: self.chapter=kwargs["chapter"]
+            if 'start' in kwargs: self.wherestart=kwargs["start"]
+            if 'goal' in kwargs: self.whereends=kwargs["goal"]# option go back home
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
-        if self.gotolair:# initial hero position
-            self.heroxstart=180
-        else:
-            self.heroxstart=1280-180
-        self.staticactor=obj_grandactor(self,(640,360))# background
-        self.hero=obj_grandactor(self,(self.heroxstart,400))# hero
+        if self.wherestart=='home':# initial position of hero
+            self.xyhero=(0,0)
+        elif self.wherestart=='tower':
+            self.xyhero=(1280,0)
+        elif self.wherestart=='peak':
+            self.xyhero=(0,-720)
+        if self.whereends=='home':# goal position
+            self.xygoal=(0,0)
+        elif self.whereends=='tower':
+            self.xygoal=(1280,0)
+        elif self.whereends=='peak':
+            self.xygoal=(0,-720-80)
+
+        # layering
+        self.staticactor00=obj_grandactor(self,(640,360))
+        self.staticactor01=obj_grandactor(self,(640,360))
+        self.staticactor02=obj_grandactor(self,(640,360))
+        self.staticactor10=obj_grandactor(self,(640,360))
+        self.staticactor11=obj_grandactor(self,(640,360))
+        self.staticactor12=obj_grandactor(self,(640,360))
+        self.staticactor20=obj_grandactor(self,(640,360))
+        self.staticactor21=obj_grandactor(self,(640,360))
+        self.staticactor22=obj_grandactor(self,(640,360))
+        self.staticactorplus=obj_grandactor(self,(640,360))
+        self.hero=obj_grandactor(self,(640,360))# hero
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_done=obj_grandactor(self,(640,360))
-        # static
-        self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340),scale=0.5) )
-        self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340),scale=0.5) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470),color=share.colors.location) )
-        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470),color=share.colors.location) )
-        self.staticactor.addpart( 'img3', draw.obj_image('tree',(230,570),scale=0.5) )
-        self.staticactor.addpart( 'img4', draw.obj_image('tree',(100,720-100),scale=0.5) )
-        self.staticactor.addpart( 'img5', draw.obj_image('tree',(300,235),scale=0.35) )
-        self.staticactor.addpart( 'img6', draw.obj_image('mountain',(1280-100,580),scale=0.4) )
-        self.staticactor.addpart( 'img7', draw.obj_image('mountain',(990,720-100),scale=0.5) )
-        self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170),scale=0.35) )
-        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(980,180),scale=0.3) )
+        #
+        # background world (9 panels 0-1-2 left right, 0-1-2 top down)
+        self.panels=[]
+        self.panels.append(self.staticactor00)
+        self.panels.append(self.staticactor01)
+        self.panels.append(self.staticactor02)
+        self.panels.append(self.staticactor10)
+        self.panels.append(self.staticactor11)
+        self.panels.append(self.staticactor12)
+        self.panels.append(self.staticactor20)
+        self.panels.append(self.staticactor21)
+        self.panels.append(self.staticactor22)
+        self.panels.append(self.staticactorplus)
+        #
+        if True:
+            # central panel 1-1: hero house (always shown)
+            self.staticactor11.addpart( 'textref', draw.obj_textbox('home sweet home',(640,360+120),color=share.colors.location) )
+            self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
+            self.staticactor11.addpart( "img1", draw.obj_image('tree',(414,496),scale=0.51,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img2", draw.obj_image('tree',(869,330),scale=0.48,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img3", draw.obj_image('tree',(477,218),scale=0.48,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img4", draw.obj_image('tree',(642,162),scale=0.37,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img5", draw.obj_image('tree',(269,293),scale=0.37,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img6", draw.obj_image('tree',(1015,635),scale=0.46,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img7", draw.obj_image('tree',(898,5),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img8", draw.obj_image('tree',(131,549),scale=0.39,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img9", draw.obj_image('tree',(225,37),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            #
+            # east panel 2-1: villain tower
+            if self.chapter>=3:
+                self.staticactor21.addpart( 'textref', draw.obj_textbox('evil lair',(640,360+120),color=share.colors.location) )
+                self.staticactor21.addpart( 'ref', draw.obj_image('tower',(640,360),scale=0.5) )
+                self.staticactor21.addpart( "img2", draw.obj_image('mountain',(845,587),scale=0.57,rotate=0,fliph=True,flipv=False) )
+                self.staticactor21.addpart( "img3", draw.obj_image('mountain',(1007,385),scale=0.44,rotate=0,fliph=True,flipv=False) )
+                self.staticactor21.addpart( "img4", draw.obj_image('mountain',(404,499),scale=0.53,rotate=0,fliph=False,flipv=False) )
+                self.staticactor21.addpart( "img5", draw.obj_image('mountain',(308,351),scale=0.3,rotate=0,fliph=False,flipv=False) )
+                self.staticactor21.addpart( "img6", draw.obj_image('mountain',(508,162),scale=0.35,rotate=0,fliph=True,flipv=False) )
+                self.staticactor21.addpart( "img7", draw.obj_image('mountain',(821,199),scale=0.44,rotate=0,fliph=True,flipv=False) )
+                self.staticactor21.addpart( "img8", draw.obj_image('mountain',(987,526),scale=0.26,rotate=0,fliph=True,flipv=False) )
+                self.staticactor21.addpart( "img9", draw.obj_image('mountain',(519,633),scale=0.26,rotate=0,fliph=False,flipv=False) )
+                self.staticactor21.addpart( "img1", draw.obj_image('tree',(53,670),scale=0.41,rotate=0,fliph=False,flipv=False) )
+                self.staticactor21.addpart( "img10", draw.obj_image('tree',(46,264),scale=0.35,rotate=0,fliph=True,flipv=False) )
+                self.staticactor21.addpart( "img11", draw.obj_image('tree',(229,473),scale=0.26,rotate=0,fliph=True,flipv=False) )
+                if self.chapter>=5:
+                    self.staticactor21.addpart( "img12", draw.obj_image('cloud',(1086,291),scale=0.26,rotate=0,fliph=True,flipv=False) )
+                    self.staticactor21.addpart( "img13", draw.obj_image('cloud',(421,69),scale=0.32,rotate=0,fliph=False,flipv=False) )
+                    self.staticactor21.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
+            for i in self.staticactor21.dict.values():
+                i.movex(1280)
+            #
+            # north panel 1-0: highest peak
+            if self.chapter>=5:
+                self.staticactor10.addpart( 'textref', draw.obj_textbox('highest peak',(640,200+220),color=share.colors.location) )
+                self.staticactor10.addpart( 'imgref', draw.obj_image('mountain',(640,200)) )
+                self.staticactor10.addpart( "img5", draw.obj_image('mountain',(1212,319),scale=0.32,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img6", draw.obj_image('mountain',(1059,287),scale=0.26,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img7", draw.obj_image('tree',(951,315),scale=0.22,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img8", draw.obj_image('mountain',(124,341),scale=0.44,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img9", draw.obj_image('mountain',(296,316),scale=0.26,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img10", draw.obj_image('tree',(894,615),scale=0.32,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img11", draw.obj_image('cloud',(865,205),scale=0.38,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img12", draw.obj_image('cloud',(417,151),scale=0.45,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img13", draw.obj_image('cloud',(479,292),scale=0.36,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img14", draw.obj_image('cloud',(831,374),scale=0.31,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img15", draw.obj_image('cloud',(1034,184),scale=0.2,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img16", draw.obj_image('cloud',(130,231),scale=0.2,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img17", draw.obj_image('lightningbolt',(661,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img18", draw.obj_image('lightningbolt',(517,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img19", draw.obj_image('lightningbolt',(816,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img2", draw.obj_image('tree',(1121,685),scale=0.46,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img3", draw.obj_image('tree',(386,555),scale=0.46,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img4", draw.obj_image('tree',(1076,442),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            for i in self.staticactor10.dict.values():
+                i.movey(-720)
+            # individual elements
+            if self.chapter>=3:# path home to villain
+                self.staticactorplus.addpart( "img1", draw.obj_image('path2',(1280,360),path='premade') )
+            if self.chapter>=5:# path home to peak
+                self.staticactorplus.addpart( "img2", draw.obj_image('path1',(640,0),path='premade') )
         # hero
-        # optional partner (same actor as hero)
         if self.addpartner:
-            self.pxoff=30# offset relative to hero
-            self.pyoff=-30
-            self.hero.addpart( 'pface_right', draw.obj_image('partnerbase',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25) )
-            self.hero.addpart( 'pface_left', draw.obj_image('partnerbase',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25,fliph=True) )
-            self.hero.addpart( 'pwalk_right', draw.obj_image('partnerwalk',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25) )
-            self.hero.addpart( 'pwalk_left', draw.obj_image('partnerwalk',(self.heroxstart+self.pxoff,400+self.pyoff),scale=0.25,fliph=True) )
-        self.hero.addpart( 'face_right', draw.obj_image('herobase',(self.heroxstart,400),scale=0.25) )
-        self.hero.addpart( 'face_left', draw.obj_image('herobase',(self.heroxstart,400),scale=0.25,fliph=True) )
-        self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(self.heroxstart,400),scale=0.25) )
-        self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(self.heroxstart,400),scale=0.25,fliph=True) )
-        self.herofaceright=self.gotolair
-        self.herowalking=False# hero walking or standing
-        self.hero.dict['face_right'].show=self.herofaceright and not self.herowalking
-        self.hero.dict['face_left'].show=not self.herofaceright and not self.herowalking
-        self.hero.dict['walk_right'].show=self.herofaceright and self.herowalking
-        self.hero.dict['walk_left'].show=not self.herofaceright and self.herowalking
-        if self.addpartner:
-            self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
-            self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
-            self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
-            self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
-        self.herowalktimer=tool.obj_timer(10)# timer to alternate walk slides
-        self.herowalkframe1=True# alternate True/False for two frames
-        self.heromx=8# moving rate
-        self.heromy=8# moving rate
-
-        # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
-        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
-        self.text_undone.show=True
-        self.text_done.show=False
-        # area to reach
-        if self.gotolair:
-            self.goalarea=obj_grandactor(self,(1280-100,340))# reach lair
-            self.goalarea.rx=100
-            self.goalarea.ry=100
-        else:
-            self.goalarea=obj_grandactor(self,(100,340))# reach house
-            self.goalarea.rx=100
-            self.goalarea.ry=100
-        # timer
-        self.timerend=tool.obj_timer(50)# goal to done
-    def update(self,controls):
-        super().update(controls)
-        if not self.goal:
-            # goal unreached state
-            # hero walk motion
-            if controls.d or controls.a or controls.w or controls.s:
-                self.herowalking=True
-            else:
-                self.herowalking=False
-                self.herowalktimer.start()# reset timer
-            if self.herowalking:
-                self.herowalktimer.update()
-                if self.herowalktimer.ring:
-                    self.herowalkframe1=not self.herowalkframe1
-                    self.herowalktimer.start()
-                    if not self.herowalkframe1:
-                        self.hero.dict['face_right'].show=self.herofaceright
-                        self.hero.dict['face_left'].show=not self.herofaceright
-                        self.hero.dict['walk_right'].show=False
-                        self.hero.dict['walk_left'].show=False
-                    else:
-                        self.hero.dict['face_right'].show=False
-                        self.hero.dict['face_left'].show=False
-                        self.hero.dict['walk_right'].show=self.herofaceright
-                        self.hero.dict['walk_left'].show=not self.herofaceright
-            # move hero
-            if controls.a:
-                self.hero.movex(-self.heromx)
-                if controls.ac:
-                    self.herofaceright=False
-            if controls.d:
-                self.hero.movex(self.heromx)
-                if controls.dc:
-                    self.herofaceright=True
-            if controls.w:
-                self.hero.movey(-self.heromy)
-            if controls.s:
-                self.hero.movey(self.heromy)
-            # boundaries
-            if self.hero.x>1280-50:
-                self.hero.movetox(1280-50)
-            elif self.hero.x<0+50:
-                self.hero.movetox(0+50)
-            if self.hero.y>720-50:
-                self.hero.movetoy(720-50)
-            elif self.hero.y<0+50:
-                self.hero.movetoy(0+50)
-            # partner visuals
-            if self.addpartner:
-                self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
-                self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
-                self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
-                self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
-
-            # reach goal
-            if tool.checkrectcollide(self.hero,self.goalarea):
-                self.goal=True
-                self.timerend.start()
-                self.text_undone.show=False
-                self.text_done.show=True
-        else:
-            # goal reached state
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
-
-
-####################################################################################################################
-
-
-# Mini Game: travel from evil lair to highest peak
-class obj_world_traveltopeak(obj_world):
-    def setup(self,**kwargs):
-        self.done=False# end of minigame
-        self.goal=False# minigame goal reached
-        self.gotopeak=True# go to or from peak
-        self.addpartner=False# add partner walking with hero
-        self.heroangry=False# hero is angry
-        yoff1=210# just offset map in obj_world_traveltolair to be more north
-        # scene tuning
-        if kwargs is not None:
-            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
-            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
-            if 'tohome' in kwargs: self.gotopeak=not kwargs["tohome"]# option go back home
-        #
-        if self.gotopeak:
-            self.heroxstart=180
-            self.heroystart=400+yoff1
-        else:
-            self.heroxstart=640
-            self.heroystart=260
-        self.staticactor=obj_grandactor(self,(640,360))# background
-        self.hero=obj_grandactor(self,(self.heroxstart,self.heroystart))# hero
-        self.text_undone=obj_grandactor(self,(640,360))# text always in front
-        self.text_done=obj_grandactor(self,(640,360))
-        # static
-        self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340+yoff1),scale=0.5) )
-        self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340+yoff1),scale=0.5) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470+yoff1),color=share.colors.location) )
-        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470+yoff1),color=share.colors.location) )
-        self.staticactor.addpart( 'img5', draw.obj_image('tree',(300,235+yoff1),scale=0.35) )
-        self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170+yoff1),scale=0.35) )
-        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(980,180+yoff1),scale=0.3) )
-        #
-        self.staticactor.addpart( 'imga1', draw.obj_image('mountain',(640,260),scale=0.73,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'imga5', draw.obj_image('tree',(129,340),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'imga6', draw.obj_image('mountain',(979,245),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'texta1', draw.obj_textbox('highest peak',(640,435),color=share.colors.location) )
-        #
-        # hero
-        # optional partner (same actor as hero)
-        if self.addpartner:
-            self.pxoff=30# offset relative to hero
-            self.pyoff=-30
-            self.hero.addpart( 'pface_right', draw.obj_image('partnerbase',(self.heroxstart+self.pxoff,self.heroystart+self.pyoff),scale=0.25) )
-            self.hero.addpart( 'pface_left', draw.obj_image('partnerbase',(self.heroxstart+self.pxoff,self.heroystart+self.pyoff),scale=0.25,fliph=True) )
-            self.hero.addpart( 'pwalk_right', draw.obj_image('partnerwalk',(self.heroxstart+self.pxoff,self.heroystart+self.pyoff),scale=0.25) )
-            self.hero.addpart( 'pwalk_left', draw.obj_image('partnerwalk',(self.heroxstart+self.pxoff,self.heroystart+self.pyoff),scale=0.25,fliph=True) )
-        self.hero.addpart( 'face_right', draw.obj_image('herobase',(self.heroxstart,self.heroystart),scale=0.25) )
-        self.hero.addpart( 'face_left', draw.obj_image('herobase',(self.heroxstart,self.heroystart),scale=0.25,fliph=True) )
-        self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(self.heroxstart,self.heroystart),scale=0.25) )
-        self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(self.heroxstart,self.heroystart),scale=0.25,fliph=True) )
+            self.hero.addpart( 'pface_right', draw.obj_image('partnerbase',(640+30,360-30),scale=0.25) )
+            self.hero.addpart( 'pface_left', draw.obj_image('partnerbase',(640+30,360-30),scale=0.25,fliph=True) )
+            self.hero.addpart( 'pwalk_right', draw.obj_image('partnerwalk',(640+30,360-30),scale=0.25) )
+            self.hero.addpart( 'pwalk_left', draw.obj_image('partnerwalk',(640+30,360-30),scale=0.25,fliph=True) )
+        self.hero.addpart( 'face_right', draw.obj_image('herobase',(640,360),scale=0.25) )
+        self.hero.addpart( 'face_left', draw.obj_image('herobase',(640,360),scale=0.25,fliph=True) )
+        self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(640,360),scale=0.25) )
+        self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(640,360),scale=0.25,fliph=True) )
         self.herofaceright=True
         self.herowalking=False# hero walking or standing
         self.hero.dict['face_right'].show=self.herofaceright and not self.herowalking
@@ -1211,30 +1135,63 @@ class obj_world_traveltopeak(obj_world):
             self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
         self.herowalktimer=tool.obj_timer(10)# timer to alternate walk slides
         self.herowalkframe1=True# alternate True/False for two frames
-        self.heromx=8# moving rate
-        self.heromy=8# moving rate
-
+        self.heromx=6# moving rate
+        self.heromy=6# moving rate
+        # hitboxes
+        self.hitboxes=[]
+        # goal to reach
+        self.goalarea=obj_grandactor(self,self.xygoal)
+        self.goalarea.rx=50
+        self.goalarea.ry=50
+        self.hitboxes.append(self.goalarea)
+        # place hero (move background+hitboxes)
+        self.xhw=self.xyhero[0]# relative to world (0,0 = house)
+        self.yhw=self.xyhero[1]
+        for j in self.panels:
+            for i in j.dict.values():# move world
+                i.movex(-self.xhw)
+                i.movey(-self.yhw)
+        for k in self.hitboxes:
+            k.movex(640-self.xhw)
+            k.movey(360-self.yhw)
+        # boundaries (chapter dependent. At max should be +-1280,+-720, with small additional margin  )
+        if self.chapter in [1,2]:# just roam around the house
+            self.xhwmax=640
+            self.xhwmin=-640
+            self.yhwmax=360
+            self.yhwmin=-360
+        elif self.chapter in [3,4]:# can go east
+            self.xhwmax=1280+50
+            self.xhwmin=-640
+            self.yhwmax=360
+            self.yhwmin=-360
+        elif self.chapter==5:# can go north too
+            self.xhwmax=1280+50
+            self.xhwmin=-640
+            self.yhwmax=360
+            self.yhwmin=-720-50
+        elif self.chapter==6:# can go south too
+            self.xhwmax=1280+50
+            self.xhwmin=-640
+            self.yhwmax=720+50
+            self.yhwmin=-720-50
+        else:# can go everywhere
+            self.xhwmax=1280+50
+            self.xhwmin=-1280-50
+            self.yhwmax=720+50
+            self.yhwmin=-720-50
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
         self.text_done.show=False
-        # area to reach
-        if self.gotopeak:
-            self.goalarea=obj_grandactor(self,(640,260))# reach peak
-            self.goalarea.rx=50
-            self.goalarea.ry=50
-        else:
-            self.goalarea=obj_grandactor(self,(100,340+yoff1))# reach home
-            self.goalarea.rx=50
-            self.goalarea.ry=50
         # timer
         self.timerend=tool.obj_timer(50)# goal to done
     def update(self,controls):
         super().update(controls)
         if not self.goal:
             # goal unreached state
-            # hero walk motion
+            # hero walking motion
             if controls.d or controls.a or controls.w or controls.s:
                 self.herowalking=True
             else:
@@ -1255,35 +1212,49 @@ class obj_world_traveltopeak(obj_world):
                         self.hero.dict['face_left'].show=False
                         self.hero.dict['walk_right'].show=self.herofaceright
                         self.hero.dict['walk_left'].show=not self.herofaceright
-            # move hero
-            if controls.a:
-                self.hero.movex(-self.heromx)
-                if controls.ac:
-                    self.herofaceright=False
-            if controls.d:
-                self.hero.movex(self.heromx)
-                if controls.dc:
-                    self.herofaceright=True
-            if controls.w:
-                self.hero.movey(-self.heromy)
-            if controls.s:
-                self.hero.movey(self.heromy)
-            # boundaries
-            if self.hero.x>1280-50:
-                self.hero.movetox(1280-50)
-            elif self.hero.x<0+50:
-                self.hero.movetox(0+50)
-            if self.hero.y>720-50:
-                self.hero.movetoy(720-50)
-            elif self.hero.y<0+50:
-                self.hero.movetoy(0+50)
             # partner visuals
             if self.addpartner:
                 self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
                 self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
                 self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
                 self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
-
+            # move the world (not the hero!)
+            if controls.a:
+                if self.xhw>self.xhwmin:# boundary
+                    self.xhw -= self.heromx
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movex(self.heromx)
+                    for k in self.hitboxes:
+                        k.movex(self.heromx)
+                if controls.ac:
+                    self.herofaceright=False
+            if controls.d:
+                if self.xhw<self.xhwmax:
+                    self.xhw += self.heromx
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movex(-self.heromx)
+                    for k in self.hitboxes:
+                        k.movex(-self.heromx)
+                    if controls.dc:
+                        self.herofaceright=True
+            if controls.w:
+                if self.yhw>self.yhwmin:
+                    self.yhw -= self.heromy
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movey(self.heromy)
+                    for k in self.hitboxes:
+                        k.movey(self.heromy)
+            if controls.s:
+                if self.yhw<self.yhwmax:
+                    self.yhw += self.heromy
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movey(-self.heromy)
+                    for k in self.hitboxes:
+                        k.movey(-self.heromy)
             # reach goal
             if tool.checkrectcollide(self.hero,self.goalarea):
                 self.goal=True
@@ -1295,7 +1266,6 @@ class obj_world_traveltopeak(obj_world):
             self.timerend.update()
             if self.timerend.ring:
                 self.done=True# end of minigame
-
 
 
 ####################################################################################################################

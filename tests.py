@@ -410,14 +410,15 @@ class obj_scene_testimageplacer(obj_testpage):
                    ' [Space or Exit Page: Output to Code File]',\
                    ]
         self.addpart( draw.obj_imageplacer(self, 'testimage1','testimage2' ) )
+
         # These images below obtained quickly by copying content of book/aaa.txt
-        #
         # self.addpart( draw.obj_image('testimage1',(570,414),scale=1,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('testimage1',(905,328),scale=1.63,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('testimage1',(824,582),scale=1.2,rotate=56,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('testimage1',(256,403),scale=3.03,rotate=56,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('testimage1',(653,257),scale=0.93,rotate=56,fliph=False,flipv=False) )
-
+        #
+        # Alternative where code is for adding content to an an actor named "staticactor"
+        # self.addpart( draw.obj_imageplacer(self, 'testimage1','testimage2',actor='staticactor' ) )
+        # self.staticactor.addpart( "img1", draw.obj_image('testimage1',(402,473),scale=1,rotate=0,fliph=False,flipv=False) )
+        # self.staticactor.addpart( "img2", draw.obj_image('testimage2',(777,377),scale=1,rotate=0,fliph=False,flipv=False) )
 
 #########################################################################
 # Tests Animations

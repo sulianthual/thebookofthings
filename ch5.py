@@ -295,9 +295,8 @@ class obj_scene_ch5p8(page.obj_chapterpage):
                   ('highest peak',share.colors.location),' to find the solution to all ',\
                   ('{hero_his}',share.colors.hero),' problems". ',\
                    ]
-        self.world=world.obj_world_traveltopeak(self)
+        self.world=world.obj_world_travel(self,start='home',goal='peak',chapter=5)
         self.addpart(self.world)
-        # self.addpart( draw.obj_imageplacer(self,'house','tree','tower','mountain','cloud','lightningbolt') )
 
 
 class obj_scene_ch5p9(page.obj_chapterpage):
@@ -1059,7 +1058,7 @@ class obj_scene_ch5p31(page.obj_chapterpage):
                '"And so ',('{heroname}',share.colors.hero),', having learned the solution to all ',\
                ('{hero_his}',share.colors.hero),' problems, went back home".'
                   ]
-        self.world=world.obj_world_traveltopeak(self,tohome=True)
+        self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
         self.addpart(self.world)
 
 

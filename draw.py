@@ -679,13 +679,14 @@ class obj_imagefill(obj_image):
 # input types:
 # - 'pen','eraser'...(only read images from folder /book)
 class obj_imageplacer:
-    def __init__(self,creator,*args):
+    def __init__(self,creator,*args,actor=None):
         self.type='imageplacer'# object type
         self.creator=creator# created by page
         self.imglist=[]# list of available images
         if args is not None:# args is the list of image names
             for i in args:
                 self.imglist.append(i)
+        self.actor=actor# format for an actor instead
         self.setup()
     def setup(self):
         self.nimglist=len(self.imglist)
@@ -717,15 +718,27 @@ class obj_imageplacer:
         obj_image(self.imglist[self.iimg],(controls.mousex,controls.mousey),\
         scale=self.s,rotate=self.r,fliph=self.fh,flipv=self.fv) )
         self.iplaced += 1
-        self.outputmatrix.append(\
-        '        '\
-        +'self.addpart( '\
-        +'draw.obj_image(\''+str(self.imglist[self.iimg])+'\','\
-        +'('+str(controls.mousex)+','+str(controls.mousey)\
-        +'),scale='+str(round(self.s,2))+',rotate='+str(self.r)\
-        +',fliph='+str(self.fh)+',flipv='+str(self.fv)\
-        +') )'\
-        )
+        if self.actor is None:# format for adding content to page
+            self.outputmatrix.append(\
+            '        '\
+            +'self.addpart( '\
+            +'draw.obj_image(\''+str(self.imglist[self.iimg])+'\','\
+            +'('+str(controls.mousex)+','+str(controls.mousey)\
+            +'),scale='+str(round(self.s,2))+',rotate='+str(self.r)\
+            +',fliph='+str(self.fh)+',flipv='+str(self.fv)\
+            +') )'\
+            )
+        else:# format for adding content to actor
+            self.outputmatrix.append(\
+            '        '\
+            +'self.'+str(self.actor)+'.addpart( '\
+            +'"img'+str(self.iplaced)+'", '\
+            +'draw.obj_image(\''+str(self.imglist[self.iimg])+'\','\
+            +'('+str(controls.mousex)+','+str(controls.mousey)\
+            +'),scale='+str(round(self.s,2))+',rotate='+str(self.r)\
+            +',fliph='+str(self.fh)+',flipv='+str(self.fv)\
+            +') )'\
+            )
     def removefrompointer(self,controls):# remove last image from screen
         self.dispgroup.removepart('img_'+str(self.iplaced-1))
         self.outputmatrix[:-1]
@@ -744,16 +757,16 @@ class obj_imageplacer:
         if controls.q and controls.qc:
             self.fv=not self.fv
             self.retransform=True
-        if controls.a:
+        if controls.left:
             self.r += 2
             self.retransform=True
-        if controls.d:
+        if controls.right:
             self.r -= 2
             self.retransform=True
-        if controls.w:
+        if controls.up:
             self.s *= 1.05
             self.retransform=True
-        if controls.s:
+        if controls.down:
             self.s *= 0.95
             self.retransform=True
         if controls.f and controls.fc:# change image

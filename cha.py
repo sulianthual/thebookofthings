@@ -64,8 +64,7 @@ class obj_scene_arcademenu(page.obj_page):
         self.list.append(obj_scene_wakeup())
         self.list.append(obj_scene_drinking())
         self.list.append(obj_scene_fishing())
-        self.list.append(obj_scene_traveltolair())
-        self.list.append(obj_scene_traveltopeak())
+        self.list.append(obj_scene_travel())
         self.list.append(obj_scene_dodgebullets())
         self.list.append(obj_scene_stompfight())
         self.list.append(obj_scene_climbing())
@@ -144,26 +143,24 @@ class obj_scene_fishing(obj_testpage):
         self.addpart(self.world)
 
 
-class obj_scene_traveltolair(obj_testpage):
+class obj_scene_travel(obj_testpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.name='Travel -> Lair'
-        self.text=['Travel -> Lair']
-        self.world=world.obj_world_traveltolair(self)
-        # self.world=world.obj_world_traveltolair(self,tohome=True)
+        self.name='Travel'
+        self.text=['Travel']
+        # self.world=world.obj_world_travel(self)# chapter 1 only, home to tower
+        # self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3)
+        self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3,partner=True)
+        # self.world=world.obj_world_travel(self,start='home',goal='peak',chapter=5)
+        # self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
         self.addpart(self.world)
-
-
-class obj_scene_traveltopeak(obj_testpage):
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.name='Travel -> Peak'
-        self.text=['Travel -> Peak']
-        self.world=world.obj_world_traveltopeak(self)
-        # self.world=world.obj_world_traveltopeak(self,tohome=True)
-        self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'house','tree') )
+        # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
+        # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','lightningbolt','tree') )
+        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','lightningbolt',actor='staticactor21') )
+        # self.addpart( draw.obj_drawing('path1',(640,360),shadow=(200,360),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('path2',(640,360),shadow=(640,200),brush=share.brushes.smallpen) )
 
 
 class obj_scene_dodgebullets(obj_testpage):
