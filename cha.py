@@ -65,7 +65,6 @@ class obj_scene_arcademenu(page.obj_page):
         self.list.append(obj_scene_drinking())
         self.list.append(obj_scene_fishing())
         self.list.append(obj_scene_traveltolair())
-        self.list.append(obj_scene_travelfromlair())
         self.list.append(obj_scene_traveltopeak())
         self.list.append(obj_scene_dodgebullets())
         self.list.append(obj_scene_stompfight())
@@ -152,17 +151,7 @@ class obj_scene_traveltolair(obj_testpage):
         self.name='Travel -> Lair'
         self.text=['Travel -> Lair']
         self.world=world.obj_world_traveltolair(self)
-        self.addpart(self.world)
-
-
-class obj_scene_travelfromlair(obj_testpage):
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.name='Travel <- Lair'
-        self.text=['Travel <- Lair']
-        self.world=world.obj_world_traveltolair(self,tohome=True)
-        # self.world=world.obj_world_traveltolair(self,tohome=True,partner=True)
+        # self.world=world.obj_world_traveltolair(self,tohome=True)
         self.addpart(self.world)
 
 
@@ -175,7 +164,6 @@ class obj_scene_traveltopeak(obj_testpage):
         self.world=world.obj_world_traveltopeak(self)
         # self.world=world.obj_world_traveltopeak(self,tohome=True)
         self.addpart(self.world)
-
 
 
 class obj_scene_dodgebullets(obj_testpage):

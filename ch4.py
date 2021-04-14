@@ -27,7 +27,7 @@ class obj_scene_chapter4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def setup(self):
-        self.text=['-----   Chapter IV: A Perfect Story   -----   ',\
+        self.text=['-----   Chapter IV: Marital Issues   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: "Lets see how our story is going so far". ',\
                    ]
@@ -46,7 +46,7 @@ class obj_scene_ch4p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p2())
     def setup(self):
         self.text=['" The ',('villain',share.colors.villain),\
-                   'captured ',('{partnername}',share.colors.partner),'. ',
+                   ' captured ',('{partnername}',share.colors.partner),'. ',
                    ('{heroname}',share.colors.hero),\
                     ' rescued ',('{partner_him}',share.colors.partner),' after a long ',\
                  ('fight',share.colors.villain),' at the evil lair. ',\
@@ -78,7 +78,7 @@ class obj_scene_ch4p2(page.obj_chapterpage):
                    'I say this story is just ',('perfect',share.colors.hero),', said the book of things. ',\
                    'It has love, action, suspense, just everything! ',\
                    'I propose we celebrate, just draw a  ',('party hat',share.colors.item),\
-                     'and a ',('drink',share.colors.item),'.',\
+                     ' and a ',('drink',share.colors.item),'.',\
                    ]
         self.addpart( draw.obj_drawing('partyhat',(340,450),legend='Party Hat') )# use shadow
         self.addpart( draw.obj_drawing('drink',(940,450),legend='Drink',shadow=(200,200)) )
@@ -180,7 +180,7 @@ class obj_scene_ch4p4(page.obj_chapterpage):
                    'The next morning... the book of things woke up and said: ',\
                    ' uh my head... I dont remember much about last night.',\
                    'But I am super excited to read our ',('perfect story',share.colors.hero),\
-                   'all over again. ',\
+                   ' all over again. ',\
                    ]
         self.addpart( draw.obj_image('eraser',(194,457), scale=0.7,rotate=-110) )
         self.addpart( draw.obj_image('partyhat',(292,551), scale=0.3,rotate=-140) )
@@ -380,7 +380,7 @@ class obj_scene_ch4p11a(page.obj_chapterpage):
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' came back home and checked ',\
-                    ('{hero_his}',share.colors.hero),' mailbox.',\
+                    ('{hero_his}',share.colors.hero),' mailbox. ',\
                     ('{hero_he}',share.colors.hero),' had received ',\
                     'a ',' letter". ',\
                    ]
@@ -408,7 +408,7 @@ class obj_scene_ch4p11b(page.obj_chapterpage):
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                     '\nI have been captured by ',('{villainname}',share.colors.villain),' once again. ',\
-                     'I will be back for diner. There is ',('ABSOLUTELY',share.colors.villain),\
+                     'I will be back for diner. There is ',('AB-SO-LU-TE-LY',share.colors.villain),\
                      ' no need to rescue me. ',\
                     ' Dont get too drunk. ',\
                     '\n\nsigned: ',('{partnername}',share.colors.partner),\
@@ -446,7 +446,7 @@ class obj_scene_ch4p13(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),' arrived at the ',('evil lair',share.colors.location),'. ',\
-                    'No one was around so ',('{hero_he}',share.colors.hero),' went inside". ',\
+                    'No one was around so ',('{hero_he}',share.colors.hero),' went inside. ',\
                     'Its weird, I didnt remember the story exactly like this, said the book of things.',\
                    ]
         self.addpart( draw.obj_image('tower',(1100,310), scale=0.7) )
@@ -719,7 +719,7 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
     def setup(self):
         self.text=['You have unlocked ',('Chapter V: The Highest Peak',share.colors.instructions),'. ',\
                   'You can always redraw the party hat, drink, coffee cup and flower vase, and flame in ',\
-                  ('Chapter IV: A Perfect Story',share.colors.instructions),'. '\
+                  ('Chapter IV: Marital Issues',share.colors.instructions),'. '\
                    '',\
                    ]
         share.datamanager.updateprogress(chapter=5)# chapter 5 becomes available

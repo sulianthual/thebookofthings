@@ -73,10 +73,10 @@ class obj_scene_ch5p2(page.obj_chapterpage):
         self.text=[\
                  'Well, it looks like ',('{heroname}',share.colors.hero),' has quite a few issues that ',\
                  ('{hero_he}',share.colors.hero),' could work on, said the book of things. ',\
-                   'Lets try help ',('{hero_him}',share.colors.hero),' a little. ',\
+                   'Lets try to help a little. ',\
                    'Start by drawing a ',('night stand',share.colors.item),\
-                   'and an ',('alarm clock',share.colors.item),\
-                   'to wake ',('{hero_him}',share.colors.hero),' up on time. ',\
+                   ' and an ',('alarm clock',share.colors.item),\
+                   ' to wake ',('{hero_him}',share.colors.hero),' up on time. ',\
 
                    ]
         self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='Night Stand',shadow=(200,200)) )
@@ -274,7 +274,7 @@ class obj_scene_ch5p7(page.obj_chapterpage):
                    ' Our ',('hero',share.colors.hero),' is so down right now that ',\
                   'this ',('highest peak',share.colors.location),' thing cant hurt. ',\
                   ' It is so high up in the sky it is always covered by stormy clouds. ',\
-                 'So draw a ',('cloud',share.colors.item),' and a',\
+                 'So draw a ',('cloud',share.colors.item),' and a ',\
                  ('lightning bolt',share.colors.hero),'. ',\
                    ]
         self.addpart( draw.obj_drawing('cloud',(340,450),legend='Cloud',shadow=(200,200)) )
@@ -1129,7 +1129,7 @@ class obj_scene_ch5p35(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5playend())
     def setup(self):
         self.text=[\
-                   '"And he lived wisely ever after, the End". ',\
+                   '"And he lived very wisely ever after, the End". ',\
                    ]
         self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
         self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )

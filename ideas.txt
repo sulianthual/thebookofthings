@@ -85,6 +85,7 @@ Later on: Make unique minigame travel where can roam unique map (add tons of con
   Remember to lie, cheat and steal becomes the game's memo!
 - add a mirror: in villain chapter? in hero's house?
   easy to make a character reflection in the mirror
+- name stuff: like locations (the evil lair, home, the highest peak, etc...)
 
 
 Mini Game Ideas

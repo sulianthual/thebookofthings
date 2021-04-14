@@ -46,8 +46,8 @@ class obj_scene_ch2p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p2())
     def setup(self):
         self.text=['Lets see here... " The ',('hero',share.colors.hero),\
-                    ' woke up... mmmh... caught a ',('fish',share.colors.item),', ate it...  ',\
-                    ' and went back to ',('bed',share.colors.item),'". '\
+                    ' woke up... mmmh... caught a ',('fish',share.colors.item),', ate it ',\
+                    'and went back to ',('bed',share.colors.item),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation1=draw.obj_animation('ch2_summary','herobase',(640,360),record=False,scale=0.7)
@@ -396,7 +396,8 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),' ',\
-                'with his partner ',('{partnername}',share.colors.partner),'." ',\
+                'with ',('{hero_his}',share.colors.hero),\
+                ' partner called ',('{partnername}',share.colors.partner),'." ',\
                    ]
         self.world=world.obj_world_wakeup(self,partner='inlove')
         self.addpart(self.world)
@@ -414,7 +415,7 @@ class obj_scene_ch2play2(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                    '"',('{hero_he}',share.colors.hero),\
+                    '"',('{heroname}',share.colors.hero),\
                      ' went to the river and caught a fish."',\
                    ]
         self.world=world.obj_world_fishing(self)
@@ -432,9 +433,9 @@ class obj_scene_ch2play3(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"Then, ',\
-                    ('{heroname}',share.colors.hero),' and',\
+                    ('{heroname}',share.colors.hero),' and ',\
                     ('{partnername}',share.colors.partner),' ate the ',\
-                    ('fish',share.colors.item),'." ',\
+                    ('fish',share.colors.item),'". ',\
                    ]
         self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)

@@ -46,7 +46,7 @@ class obj_scene_ch3p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p2())
     def setup(self):
         self.text=['Lets see here... " The ',('hero',share.colors.hero),\
-                   'and ',('{hero_his}',share.colors.hero),' ',('partner',share.colors.partner),\
+                   ' and ',('{hero_his}',share.colors.hero),' ',('partner',share.colors.partner),\
                     ' woke up... mmmh... caught a ',('fish',share.colors.item),', ate it...  ',\
                      'played a serenade, ',('kissed',share.colors.partner),\
                     ' and went back to ',('bed',share.colors.item),'". '\
@@ -56,7 +56,7 @@ class obj_scene_ch3p1(page.obj_chapterpage):
         animation1.addimage('herobasefish')
         animation2=draw.obj_animation('ch3_summary2','partnerbase',(640,360),record=False,sync=animation1,scale=0.7)
         animation3=draw.obj_animation('ch3_summary3','love',(640,360),record=False,sync=animation1)
-        animation3.addimage('guitar')
+        animation3.addimage('empty',path='premade')# was guitar, obsolete
         animation3.addimage('empty',path='premade')
         animation4=draw.obj_animation('ch3_summary4','sun',(640,360),record=False,sync=animation1)
         animation4.addimage('moon')
@@ -167,7 +167,7 @@ class obj_scene_ch3p5(page.obj_chapterpage):
                   'Now lets write this: "',\
                     ('{heroname}',share.colors.hero),' came back home and ',\
                   ('{partnername}',share.colors.partner),' wasnt there. ',\
-                   ('{partner_he}',share.colors.partner),' had been captured by the evil ',\
+                   ('{partner_he}',share.colors.partner),' had been captured by the ',\
                     ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
@@ -223,7 +223,7 @@ class obj_scene_ch3p8(page.obj_chapterpage):
         self.text=[\
                   'Great, said the book of things, now lets add: "',\
                     'At the ',('evil lair',share.colors.location),', ',\
-                  ('{villainname}',share.colors.villain),' said: you will have to',\
+                  ('{villainname}',share.colors.villain),' said: you will have to ',\
                   ('fight',share.colors.villain),' me if you want ',\
                    ('{partnername}',share.colors.partner),' back". ',\
                    ]
@@ -310,7 +310,7 @@ class obj_scene_ch3p10start2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   'The ',('hearts',share.colors.partner),\
-                  ' in the lower left show how much',('life',share.colors.partner),\
+                  ' in the lower left show how much ',('life',share.colors.partner),' ',\
                   ('{heroname}',share.colors.hero),' has. ',\
                   'If ',('{hero_he}',share.colors.hero),' gets hit, ',\
                   ('{hero_he}',share.colors.hero),' will loose life and eventually ',\
@@ -323,7 +323,7 @@ class obj_scene_ch3p10start2(page.obj_chapterpage):
         self.world.bulletbar.show=False
         # self.addpart(draw.obj_drawing('show1',(480,530),shadow=(100,150)))
         # self.addpart(draw.obj_drawing('circle1',(200,640),shadow=(200,70),brush=share.brushes.smallpen))
-        self.addpart(draw.obj_image('circle1',(200,640),path='premade'))
+        # self.addpart(draw.obj_image('circle1',(200,640),path='premade'))
         self.addpart(draw.obj_image('show1',(480,530),path='premade'))
 
 
@@ -336,7 +336,7 @@ class obj_scene_ch3p10start3(page.obj_chapterpage):
         return controls.enter and controls.enterc
     def setup(self):
         self.text=[\
-                  'This is how much ',('bullets',share.colors.villain),\
+                  'This is how much bullets ',\
                   ('{villainname}',share.colors.villain),' has left. ',\
                   ' Survive the fight until ',('{villain_he}',share.colors.villain),\
                   ' is out. Press [Enter] when are ready to start. '
@@ -346,7 +346,7 @@ class obj_scene_ch3p10start3(page.obj_chapterpage):
         self.world.villaintimershoot.end()# stop villain timer (never shoots)
         self.world.text_undone.show=False
         # self.addpart(draw.obj_drawing('show2',(880,530),shadow=(100,150)))
-        self.addpart(draw.obj_image('circle2',(1080,720-70),path='premade'))
+        # self.addpart(draw.obj_image('circle2',(1080,720-70),path='premade'))
         self.addpart(draw.obj_image('show2',(880,530),path='premade'))
 
 class obj_scene_ch3p10(page.obj_chapterpage):
@@ -404,7 +404,7 @@ class obj_scene_ch3p11(page.obj_chapterpage):
                 ' has ran out of bullets. ',\
                 'But it isnt over yet. ',\
                 ('{villainname}',share.colors.villain),\
-                'has started to fight ',('{heroname}',share.colors.hero),\
+                ' has started to fight ',('{heroname}',share.colors.hero),\
                 ' in hand-to-hand combat. ',\
                    ]
         self.addpart( draw.obj_image('floor2',(640,580+90),path='premade') )
@@ -426,20 +426,18 @@ class obj_scene_ch3p12start(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p12start2())
     def setup(self):
         self.text=[\
-                  'Here is how the ',('fight',share.colors.villain),\
-                  ' works, said the book of things. ',\
                   'These are the ',('hero',share.colors.hero),\
-                  ' and the ',('villain',share.colors.villain),\
-                  ' healthbars.',\
+                  '\'s and the ',('villain',share.colors.villain),\
+                  '\'s healthbars.',\
                    ]
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
         self.world.villainhurt=True# hurt so cannot evolve
         self.world.villain.dict['hurt'].show=False
         self.world.text_undone.show=False
-        self.addpart(draw.obj_image('circle1',(300,200),path='premade'))
+        # self.addpart(draw.obj_image('circle1',(300,200),path='premade'))
         self.addpart(draw.obj_image('show1',(480,370),path='premade',flipv=True))
-        self.addpart(draw.obj_image('circle2',(990,200),path='premade'))
+        # self.addpart(draw.obj_image('circle2',(990,200),path='premade'))
         self.addpart(draw.obj_image('show2',(880,370),path='premade',flipv=True))
 
 class obj_scene_ch3p12start2(page.obj_chapterpage):
@@ -461,6 +459,7 @@ class obj_scene_ch3p12start2(page.obj_chapterpage):
         self.world.villainhurt=True# hurt so cannot evolve
         self.world.villain.dict['hurt'].show=False
         self.world.text_undone.show=False
+        self.addpart(draw.obj_textbox('[A,D: Move] [W: Jump]',(640,200),color=share.colors.instructions) )
 
 
 class obj_scene_ch3p12(page.obj_chapterpage):
@@ -682,7 +681,7 @@ class obj_scene_ch3play5(page.obj_chapterpage):
         self.text=[\
                     ('{heroname}',share.colors.hero),' confronted ',\
                   ('{villainname}',share.colors.villain),' at the ',('evil lair',share.colors.location),', ',\
-                'and they started to ',('fight',share.colors.villain),'for ',\
+                'and they started to ',('fight',share.colors.villain),' for ',\
               ('{partnername}',share.colors.partner),'. ',\
                    ]
         self.addpart( draw.obj_image('tower',(1100,310), scale=0.7) )
@@ -812,7 +811,7 @@ class obj_scene_ch3play10(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"They  ate ',\
-                    ('fish',share.colors.item),'for dinner".',\
+                    ('fish',share.colors.item),' for dinner".',\
                    ]
         self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)
@@ -828,7 +827,7 @@ class obj_scene_ch3play11(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' charmed ',\
-                   ('{partnername}',share.colors.partner),' with a serenade... ',\
+                   ('{partnername}',share.colors.partner),' with a serenade..." ',\
                    ]
         self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
@@ -921,7 +920,7 @@ class obj_scene_ch3unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3playend())
     def setup(self):
-        self.text=['You have unlocked ',('Chapter IV: A Perfect Story',share.colors.instructions),'. ',\
+        self.text=['You have unlocked ',('Chapter IV: Marital Issues',share.colors.instructions),'. ',\
                   'You can always redraw the villain, tower and mountain, gun and bullet in ',\
                   ('Chapter III: The Villain',share.colors.instructions),'. '\
                    '',\

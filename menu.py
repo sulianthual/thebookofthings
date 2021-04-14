@@ -48,7 +48,7 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch1=draw.obj_textbox('Chapter 1: The Hero',(640,440),fontsize='smaller')
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
-        self.sprite_ch4=draw.obj_textbox('Chapter 4: A Perfect Story',(640,530),fontsize='smaller')
+        self.sprite_ch4=draw.obj_textbox('Chapter 4: Marital Issues',(640,530),fontsize='smaller')
         self.sprite_ch5=draw.obj_textbox('Chapter 5: The Highest Peak',(640,560),fontsize='smaller')
         self.sprite_ch6=draw.obj_textbox('Chapter 6: Treasure Hunt',(640,590),fontsize='smaller')
 

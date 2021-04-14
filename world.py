@@ -987,6 +987,15 @@ class obj_world_eatfish(obj_world):
             self.timerend.update()
             if self.timerend.ring: self.done=True
 
+####################################################################################################################
+#
+# # Mini Game: travel on overworld
+# class obj_world_travel(obj_world):
+#     def setup(self,**kwargs):
+#         self.done=False# end of minigame
+#         self.goal=False# destination reached
+#         #
+#
 
 ####################################################################################################################
 

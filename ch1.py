@@ -476,7 +476,7 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
                    '',\
                    ]
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
-        for c,value in enumerate(['herobase','bed','sun','moon','fish','hook']):
+        for c,value in enumerate(['herohead','bed','sun','moon','fish','hook']):
             self.addpart( draw.obj_image(value,(150+c*200,400), scale=0.25) )
 
 
