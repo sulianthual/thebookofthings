@@ -408,6 +408,8 @@ class obj_scene_testimageplacer(obj_testpage):
                    '[W,S:scale], [A,D:rotate], [Q,E: flip], [F: browse image], [Backspace: Reset].',\
                    ' [LMouse: Place Image], [RMouse: Remove Last Image]',\
                    ' [Space or Exit Page: Output to Code File]',\
+                   '. These commands are received only in active mode, which can be toggled.',\
+                   ' [Down: Active Mode off], [Up: Active Mode]',\
                    ]
         self.addpart( draw.obj_imageplacer(self, 'testimage1','testimage2' ) )
 

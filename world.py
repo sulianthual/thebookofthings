@@ -552,10 +552,289 @@ class obj_world_wakeup(obj_world):
             if self.timerend.ring:
                 self.done=True# end of minigame
 
+
 ####################################################################################################################
 
 # Mini Game: sneak drink at breakfast
 class obj_world_breakfastdrinking(obj_world):
+    def setup(self,**kwargs):
+        # default options
+        self.addpartner=True# add partner alongside hero (otherwise can just drink alone)
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+        #
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.progressbar=obj_grandactor(self,(640,360))# progress bar
+        self.hero=obj_grandactor(self,(145,515))# hero
+        self.partner=obj_grandactor(self,(1160,490))# partner
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        # static
+        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-150),path='premade') )
+        if self.addpartner:
+            self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(640+180,600),scale=0.4,fliph=False) )
+        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(640-180,600),scale=0.4,fliph=True) )
+        self.staticactor.addpart( 'img4', draw.obj_image('flowervase',(640,440),scale=0.5) )
+        # progress bar
+        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,200),path='premade') )
+        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,200),path='premade') )
+        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,200),path='premade') )
+        self.progressbar.addpart( 'textbox', draw.obj_textbox('0%',(640,270)) )
+        self.progressmx=2#1# move rate of progressbar (respect to self.progress)
+        self.progressmax=int(567/self.progressmx)# max progress
+        self.progress=0# 0 to max progress
+        ydown=60# shift down hero/partner
+        # hero
+        self.hero.addpart( 'waiting', draw.obj_image('herobaseangry',(150,540+ydown),scale=1.15,fliph=False) )
+        self.hero.addpart( 'happy', draw.obj_image('herobase',(150,540+ydown),scale=1.15,fliph=False) )
+        self.hero.addpart( 'drinkinghero', draw.obj_animation('ch4_herodrinks1','herobase',(640,360+ydown)) )
+        self.hero.addpart( 'drinkingdrink', draw.obj_animation('ch4_herodrinks2','drink',(640,360+ydown)) )
+        # self.hero.addpart( 'busted', draw.obj_image('herobaseangry',(195,620),scale=1.2,rotate=26) )
+        self.hero.addpart( 'busted', draw.obj_animation('ch4_herodrinks1','herobaseangry',(640,360+ydown)) )
+        self.hero.addpart( 'finished', draw.obj_animation('world_breakfastdrinking3','herobase',(640,360+ydown)) )
+        self.hero.dict['waiting'].show=True
+        self.hero.dict['happy'].show=False
+        self.hero.dict['drinkinghero'].show=False
+        self.hero.dict['drinkingdrink'].show=False
+        self.hero.dict['busted'].show=False
+        self.hero.dict['finished'].show=False
+        self.herostate=0# 0,1,2 for neutral,drinking,happy (excludes busted from partnerbusting)
+        self.herohappytimer=tool.obj_timer(100)# timer for happy after drinking
+        # partner
+        if self.addpartner:
+            self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15+ydown),scale=1.15,fliph=True,path='premade') )
+            self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15+ydown),scale=1.15,fliph=True) )
+            self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15+ydown),scale=1.15,fliph=False) )
+            self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15+ydown),scale=1.15,rotate=15,fliph=False) )
+            self.partner.addpart( 'waiting_headrightbobble', draw.obj_image('partnerheadangry',(1160-50+30,340+15+ydown),scale=1.15,rotate=-15,fliph=False) )
+            self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360+ydown)) )
+            self.partner.addpart( 'bustingmark', draw.obj_image('exclamationmark',(1100,130+ydown),scale=1.5,path='premade') )
+            self.partner.addpart( 'whatmark', draw.obj_image('interrogationmark',(1160,130+ydown),scale=1.5,path='premade') )
+            self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(640,400+ydown),fontsize='huge') )
+            self.partner.dict['waiting_base'].show=True
+            self.partner.dict['waiting_headleft'].show=False
+            self.partner.dict['waiting_headright'].show=True
+            self.partner.dict['waiting_headrightup'].show=False
+            self.partner.dict['waiting_headrightbobble'].show=False
+            self.partner.dict['busting'].show=False
+            self.partner.dict['bustingmark'].show=False
+            self.partner.dict['bustedtext'].show=False
+            self.partner.dict['whatmark'].show=False
+            self.partnerbusting=False# busting or not (2 states)
+            self.partnerstate=1# while not busting, state 0,1,2,3 for headleft,headright,headrightup,headrightbobble
+            self.partnertimer=tool.obj_timer(50)# timer for switch states
+            self.partnertimer.start()
+            self.partnertimerbusting=tool.obj_timer(110)# timer for busting
+        else:
+            # ensure partner is never seen
+            self.partnerbusting=False
+            self.partnerstate=1
+            self.partnertimer=tool.obj_timer(0)# dummy
+        # text
+        if self.addpartner:
+            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
+        else:
+            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Drink',(640,690),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
+        self.text_undone.show=True
+        self.text_done.show=False
+        # timer for end
+        self.timerend=tool.obj_timer(210)# goal to done
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            if self.progress>self.progressmax-1:# reached goal
+                self.goal=True
+                self.timerend.start()
+                self.text_undone.show=False
+                self.text_done.show=True
+                self.hero.dict['waiting'].show=False
+                self.hero.dict['drinkinghero'].show=False
+                self.hero.dict['drinkingdrink'].show=False
+                self.hero.dict['busted'].show=False
+                self.hero.dict['finished'].show=True
+                self.hero.dict['finished'].rewind()
+                if self.addpartner:
+                    self.partner.dict['waiting_base'].show=False
+                    self.partner.dict['waiting_headleft'].show=False
+                    self.partner.dict['waiting_headright'].show=False
+                    self.partner.dict['waiting_headrightup'].show=False
+                    self.partner.dict['waiting_headrightbobble'].show=False
+                    self.partner.dict['busting'].show=False
+                    self.partner.dict['bustingmark'].show=False
+                    self.partner.dict['bustedtext'].show=False
+                    self.partner.dict['whatmark'].show=False
+                self.staticactor.show=True
+                self.progressbar.show=True
+            #
+            # partner is busting hero
+            if self.partnerbusting:
+                self.partnertimerbusting.update()
+                if self.partnertimerbusting.ring:# switch back to normal
+                    self.partnerbusting=False
+                    self.herostate=0
+                    self.partnerstate=1# goes to facing right
+                    self.partnertimer.amount=100
+                    self.partnertimer.start()
+                    self.hero.dict['waiting'].show=True
+                    self.hero.dict['drinkinghero'].show=False
+                    self.hero.dict['drinkingdrink'].show=False
+                    self.hero.dict['busted'].show=False
+                    self.hero.dict['finished'].show=False
+                    self.partner.dict['waiting_base'].show=True
+                    self.partner.dict['waiting_headleft'].show=False
+                    self.partner.dict['waiting_headright'].show=True
+                    self.partner.dict['waiting_headrightup'].show=False
+                    self.partner.dict['waiting_headrightbobble'].show=False
+                    self.partner.dict['busting'].show=False
+                    self.partner.dict['bustingmark'].show=False
+                    self.partner.dict['bustedtext'].show=False
+                    self.partner.dict['whatmark'].show=False
+                    self.staticactor.show=True
+                    self.progressbar.show=True
+
+            # partner is not busting hero
+            else:
+                # switch to busting
+                if self.herostate==1 and self.partnerstate==0:# busted drinking
+                    self.partnerbusting=True
+                    self.partnertimerbusting.start()
+                    self.progress = 0# reset progress
+                    self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
+                    self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
+                    self.hero.dict['waiting'].show=False
+                    self.hero.dict['drinkinghero'].show=False
+                    self.hero.dict['drinkingdrink'].show=True
+                    self.hero.dict['busted'].show=True
+                    self.hero.dict['finished'].show=False
+                    self.partner.dict['waiting_base'].show=True
+                    self.partner.dict['waiting_headleft'].show=True
+                    self.partner.dict['waiting_headright'].show=False
+                    self.partner.dict['waiting_headrightup'].show=False
+                    self.partner.dict['waiting_headrightbobble'].show=False
+                    self.partner.dict['busting'].show=False
+                    self.partner.dict['bustingmark'].show=True
+                    self.partner.dict['bustedtext'].show=True
+                    self.partner.dict['whatmark'].show=False
+                    self.staticactor.show=False
+                    self.progressbar.show=False
+                # hero behavior
+                if self.herostate==0:# neutral
+                    if controls.w and controls.wc:# switch to drinking
+                        self.herostate=1#
+                        self.hero.dict['waiting'].show=False
+                        self.hero.dict['happy'].show=False
+                        self.hero.dict['drinkinghero'].show=True
+                        self.hero.dict['drinkingdrink'].show=True
+                        self.hero.dict['busted'].show=False
+                        self.hero.dict['finished'].show=False
+                elif self.herostate==1:# drinking
+                    self.progress += 1# update progress
+                    self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
+                    self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
+                    if not controls.w and controls.wc:# switch to happy
+                        self.herostate=2#
+                        self.herohappytimer.start()
+                        self.hero.dict['waiting'].show=False
+                        self.hero.dict['happy'].show=True
+                        self.hero.dict['drinkinghero'].show=False
+                        self.hero.dict['drinkingdrink'].show=False
+                        self.hero.dict['busted'].show=False
+                        self.hero.dict['finished'].show=False
+                elif self.herostate==2:# happy
+                    if controls.w and controls.wc:# switch to drinking
+                        self.herostate=1#
+                        self.hero.dict['waiting'].show=False
+                        self.hero.dict['happy'].show=False
+                        self.hero.dict['drinkinghero'].show=True
+                        self.hero.dict['drinkingdrink'].show=True
+                        self.hero.dict['busted'].show=False
+                        self.hero.dict['finished'].show=False
+                    else:# switch back to neutral
+                        self.herohappytimer.update()
+                        if self.herohappytimer.ring:# switch to neutral
+                            self.herostate=0
+                            self.hero.dict['waiting'].show=True
+                            self.hero.dict['happy'].show=False
+                            self.hero.dict['drinkinghero'].show=False
+                            self.hero.dict['drinkingdrink'].show=False
+                            self.hero.dict['busted'].show=False
+                            self.hero.dict['finished'].show=False
+                # partner behavior
+                self.partnertimer.update()
+                if self.partnertimer.ring:# regular switches between partner attitudes
+                    # decide next state
+                    if self.partnerstate==0:# headleft (unsafe) to headright,headrightup or headrightbobble
+                        self.partnerstate=tool.randchoice([1,2,3],probas=[40,40,20])# 20% chance of going to danger zone
+                    elif self.partnerstate==1:# headright to headrightup or headrightbobble
+                        self.partnerstate=tool.randchoice([2,3],probas=[30,70])# 70% chance of going to danger zone
+                    elif self.partnerstate==2:# headrightup to headright 1 or headrightbobble 3
+                        self.partnerstate=tool.randchoice([1,3],probas=[30,70])# 70% chance of going to danger zone
+                    elif self.partnerstate==3:# headrightbobble to headleft (unsafe) always
+                        self.partnerstate=0
+                    # switch to next state
+                    if self.partnerstate==0:# headleft
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=True
+                        self.partner.dict['waiting_headright'].show=False
+                        self.partner.dict['waiting_headrightup'].show=False
+                        self.partner.dict['waiting_headrightbobble'].show=False
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=False
+                    elif self.partnerstate==1:# headright
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=False
+                        self.partner.dict['waiting_headright'].show=True
+                        self.partner.dict['waiting_headrightup'].show=False
+                        self.partner.dict['waiting_headrightbobble'].show=False
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=False
+                    elif self.partnerstate==2:# headrightup
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=False
+                        self.partner.dict['waiting_headright'].show=False
+                        self.partner.dict['waiting_headrightup'].show=True
+                        self.partner.dict['waiting_headrightbobble'].show=False
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=False
+                    elif self.partnerstate==3:# headrightbobble
+                        self.partner.dict['waiting_base'].show=True
+                        self.partner.dict['waiting_headleft'].show=False
+                        self.partner.dict['waiting_headright'].show=False
+                        self.partner.dict['waiting_headrightup'].show=False
+                        self.partner.dict['waiting_headrightbobble'].show=True
+                        self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=True# interrogation mark
+                    # decide next timer (depends on next state)
+                    if self.partnerstate==0:# headleft
+                        self.partnertimer.amount=100+tool.randint(0,100)
+                    elif self.partnerstate==1:# headright
+                        self.partnertimer.amount=90+tool.randint(0,100)
+                    elif self.partnerstate==2:# headrightup
+                        self.partnertimer.amount=90+tool.randint(0,100)
+                    elif self.partnerstate==3:# headrightbobble (fast countdown)
+                        self.partnertimer.amount=80
+                    # start next timer
+                    self.partnertimer.start()
+
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+####################################################################################################################
+
+# Mini Game: sneak drink at breakfast
+class obj_world_breakfastdrinkingOLD(obj_world):
     def setup(self,**kwargs):
         # default options
         self.addpartner=True# add partner alongside hero (otherwise can just drink alone)
@@ -657,15 +936,15 @@ class obj_world_breakfastdrinking(obj_world):
                 self.hero.dict['finished'].show=True
                 self.hero.dict['finished'].rewind()
                 if self.addpartner:
-                    self.partner.dict['waiting_base'].show=True
-                    self.partner.dict['waiting_headleft'].show=True
+                    self.partner.dict['waiting_base'].show=False
+                    self.partner.dict['waiting_headleft'].show=False
                     self.partner.dict['waiting_headright'].show=False
                     self.partner.dict['waiting_headrightup'].show=False
                     self.partner.dict['waiting_headrightbobble'].show=False
                     self.partner.dict['busting'].show=False
                     self.partner.dict['bustingmark'].show=False
                     self.partner.dict['bustedtext'].show=False
-                    self.partner.dict['whatmark'].show=True
+                    self.partner.dict['whatmark'].show=False
                 self.staticactor.show=True
                 self.progressbar.show=True
             #
@@ -691,6 +970,7 @@ class obj_world_breakfastdrinking(obj_world):
                     self.partner.dict['busting'].show=False
                     self.partner.dict['bustingmark'].show=False
                     self.partner.dict['bustedtext'].show=False
+                    self.partner.dict['whatmark'].show=False
                     self.staticactor.show=True
                     self.progressbar.show=True
 
@@ -716,6 +996,7 @@ class obj_world_breakfastdrinking(obj_world):
                     self.partner.dict['busting'].show=False
                     self.partner.dict['bustingmark'].show=True
                     self.partner.dict['bustedtext'].show=True
+                    self.partner.dict['whatmark'].show=False
                     self.staticactor.show=False
                     self.progressbar.show=False
                 # hero behavior
@@ -781,6 +1062,7 @@ class obj_world_breakfastdrinking(obj_world):
                         self.partner.dict['waiting_headrightbobble'].show=False
                         self.partner.dict['busting'].show=False
                         self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=False
                     elif self.partnerstate==1:# headright
                         self.partner.dict['waiting_base'].show=True
                         self.partner.dict['waiting_headleft'].show=False
@@ -788,6 +1070,8 @@ class obj_world_breakfastdrinking(obj_world):
                         self.partner.dict['waiting_headrightup'].show=False
                         self.partner.dict['waiting_headrightbobble'].show=False
                         self.partner.dict['busting'].show=False
+                        self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=False
                     elif self.partnerstate==2:# headrightup
                         self.partner.dict['waiting_base'].show=True
                         self.partner.dict['waiting_headleft'].show=False
@@ -796,6 +1080,7 @@ class obj_world_breakfastdrinking(obj_world):
                         self.partner.dict['waiting_headrightbobble'].show=False
                         self.partner.dict['busting'].show=False
                         self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=False
                     elif self.partnerstate==3:# headrightbobble
                         self.partner.dict['waiting_base'].show=True
                         self.partner.dict['waiting_headleft'].show=False
@@ -804,6 +1089,7 @@ class obj_world_breakfastdrinking(obj_world):
                         self.partner.dict['waiting_headrightbobble'].show=True
                         self.partner.dict['busting'].show=False
                         self.partner.dict['bustedtext'].show=False
+                        self.partner.dict['whatmark'].show=True# interrogation mark
                     # decide next timer (depends on next state)
                     if self.partnerstate==0:# headleft
                         self.partnertimer.amount=100+tool.randint(0,100)
@@ -1018,7 +1304,8 @@ class obj_world_travel(obj_world):
             self.xygoal=(1280,0)
         elif self.whereends=='peak':
             self.xygoal=(0,-720-80)
-
+        elif self.whereends=='nowhere':# cant reach
+            self.xygoal=(1280+300,0)
         # layering
         self.staticactor00=obj_grandactor(self,(640,360))
         self.staticactor01=obj_grandactor(self,(640,360))
@@ -1034,7 +1321,8 @@ class obj_world_travel(obj_world):
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_done=obj_grandactor(self,(640,360))
         #
-        # background world (9 panels 0-1-2 left right, 0-1-2 top down)
+        # background world (9 panels 0-1-2 left right, 0-1-2 top down, each 1280x720)
+        #
         self.panels=[]
         self.panels.append(self.staticactor00)
         self.panels.append(self.staticactor01)
@@ -1054,10 +1342,10 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( "img1", draw.obj_image('tree',(414,496),scale=0.51,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img2", draw.obj_image('tree',(869,330),scale=0.48,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img3", draw.obj_image('tree',(477,218),scale=0.48,rotate=0,fliph=True,flipv=False) )
-            self.staticactor11.addpart( "img4", draw.obj_image('tree',(642,162),scale=0.37,rotate=0,fliph=False,flipv=False) )
+            # self.staticactor11.addpart( "img4", draw.obj_image('tree',(642,162),scale=0.37,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img5", draw.obj_image('tree',(269,293),scale=0.37,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img6", draw.obj_image('tree',(1015,635),scale=0.46,rotate=0,fliph=True,flipv=False) )
-            self.staticactor11.addpart( "img7", draw.obj_image('tree',(898,5),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            # self.staticactor11.addpart( "img7", draw.obj_image('tree',(898,5),scale=0.39,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img8", draw.obj_image('tree',(131,549),scale=0.39,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img9", draw.obj_image('tree',(225,37),scale=0.35,rotate=0,fliph=False,flipv=False) )
             #
@@ -1073,9 +1361,6 @@ class obj_world_travel(obj_world):
                 self.staticactor21.addpart( "img7", draw.obj_image('mountain',(821,199),scale=0.44,rotate=0,fliph=True,flipv=False) )
                 self.staticactor21.addpart( "img8", draw.obj_image('mountain',(987,526),scale=0.26,rotate=0,fliph=True,flipv=False) )
                 self.staticactor21.addpart( "img9", draw.obj_image('mountain',(519,633),scale=0.26,rotate=0,fliph=False,flipv=False) )
-                self.staticactor21.addpart( "img1", draw.obj_image('tree',(53,670),scale=0.41,rotate=0,fliph=False,flipv=False) )
-                self.staticactor21.addpart( "img10", draw.obj_image('tree',(46,264),scale=0.35,rotate=0,fliph=True,flipv=False) )
-                self.staticactor21.addpart( "img11", draw.obj_image('tree',(229,473),scale=0.26,rotate=0,fliph=True,flipv=False) )
                 if self.chapter>=5:
                     self.staticactor21.addpart( "img12", draw.obj_image('cloud',(1086,291),scale=0.26,rotate=0,fliph=True,flipv=False) )
                     self.staticactor21.addpart( "img13", draw.obj_image('cloud',(421,69),scale=0.32,rotate=0,fliph=False,flipv=False) )
@@ -1087,31 +1372,36 @@ class obj_world_travel(obj_world):
             if self.chapter>=5:
                 self.staticactor10.addpart( 'textref', draw.obj_textbox('highest peak',(640,200+220),color=share.colors.location) )
                 self.staticactor10.addpart( 'imgref', draw.obj_image('mountain',(640,200)) )
-                self.staticactor10.addpart( "img5", draw.obj_image('mountain',(1212,319),scale=0.32,rotate=0,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img6", draw.obj_image('mountain',(1059,287),scale=0.26,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img7", draw.obj_image('tree',(951,315),scale=0.22,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img8", draw.obj_image('mountain',(124,341),scale=0.44,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img9", draw.obj_image('mountain',(296,316),scale=0.26,rotate=0,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img10", draw.obj_image('tree',(894,615),scale=0.32,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img11", draw.obj_image('cloud',(865,205),scale=0.38,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img12", draw.obj_image('cloud',(417,151),scale=0.45,rotate=0,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img13", draw.obj_image('cloud',(479,292),scale=0.36,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img14", draw.obj_image('cloud',(831,374),scale=0.31,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img15", draw.obj_image('cloud',(1034,184),scale=0.2,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img16", draw.obj_image('cloud',(130,231),scale=0.2,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img17", draw.obj_image('lightningbolt',(661,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img18", draw.obj_image('lightningbolt',(517,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img19", draw.obj_image('lightningbolt',(816,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img2", draw.obj_image('tree',(1121,685),scale=0.46,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img3", draw.obj_image('tree',(386,555),scale=0.46,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img4", draw.obj_image('tree',(1076,442),scale=0.34,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img1a", draw.obj_image('cloud',(865,205),scale=0.38,rotate=0,fliph=False,flipv=False) )
+                self.staticactor10.addpart( "img2a", draw.obj_image('cloud',(417,151),scale=0.45,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img3a", draw.obj_image('lightningbolt',(640,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img4a", draw.obj_image('lightningbolt',(500,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
+                self.staticactor10.addpart( "img5a", draw.obj_image('lightningbolt',(800,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
             for i in self.staticactor10.dict.values():
-                i.movey(-720)
+                i.movey(-1080)
+
+            #
+            # north east panel 2-0: sun and horizon
+            if self.chapter>=5:
+                self.staticactor20.addpart( "img1", draw.obj_image('sun',(1009,167),scale=0.68,rotate=0,fliph=False,flipv=False) )
+                self.staticactor20.addpart( "img2", draw.obj_image('cloud',(735,141),scale=0.43,rotate=0,fliph=False,flipv=False) )
+                self.staticactor20.addpart( "img3", draw.obj_image('cloud',(231,203),scale=0.35,rotate=0,fliph=True,flipv=False) )
+                self.staticactor20.addpart( "img4", draw.obj_image('cloud',(1203,327),scale=0.24,rotate=0,fliph=False,flipv=False) )
+                self.staticactor20.addpart( "img5", draw.obj_image('tree',(733,539),scale=0.42,rotate=0,fliph=False,flipv=False) )
+                self.staticactor20.addpart( "img6", draw.obj_image('tree',(859,691),scale=0.32,rotate=0,fliph=True,flipv=False) )
+                self.staticactor20.addpart( "img7", draw.obj_image('tree',(406,325-50),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            for i in self.staticactor20.dict.values():
+                i.movex(1280)
+                i.movey(-1080)
+
             # individual elements
             if self.chapter>=3:# path home to villain
-                self.staticactorplus.addpart( "img1", draw.obj_image('path2',(1280,360),path='premade') )
+                self.staticactorplus.addpart( "imge1", draw.obj_image('path1',(640+640,360+0),path='premade') )
             if self.chapter>=5:# path home to peak
-                self.staticactorplus.addpart( "img2", draw.obj_image('path1',(640,0),path='premade') )
+                self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='premade') )
+                self.staticactorplus.addpart( "imgn2", draw.obj_image('horizon1',(640+0,360-1080-50),path='premade') )
+                self.staticactorplus.addpart( "imgn3", draw.obj_image('horizon2',(1280+320,360-1080-50),path='premade') )
+                self.staticactorplus.addpart( "imgn4", draw.obj_image('horizon3',(1280+640+320,360-1080+180-50),path='premade') )
         # hero
         if self.addpartner:
             self.hero.addpart( 'pface_right', draw.obj_image('partnerbase',(640+30,360-30),scale=0.25) )
@@ -1155,31 +1445,33 @@ class obj_world_travel(obj_world):
             k.movex(640-self.xhw)
             k.movey(360-self.yhw)
         # boundaries (chapter dependent. At max should be +-1280,+-720, with small additional margin  )
+        self.xbm=50#50# margin
+        self.ybm=50#50
         if self.chapter in [1,2]:# just roam around the house
             self.xhwmax=640
             self.xhwmin=-640
             self.yhwmax=360
             self.yhwmin=-360
         elif self.chapter in [3,4]:# can go east
-            self.xhwmax=1280+50
+            self.xhwmax=1280+self.xbm
             self.xhwmin=-640
             self.yhwmax=360
             self.yhwmin=-360
         elif self.chapter==5:# can go north too
-            self.xhwmax=1280+50
+            self.xhwmax=1280+self.xbm
             self.xhwmin=-640
             self.yhwmax=360
-            self.yhwmin=-720-50
+            self.yhwmin=-1080-self.ybm
         elif self.chapter==6:# can go south too
-            self.xhwmax=1280+50
+            self.xhwmax=1280+self.xbm
             self.xhwmin=-640
-            self.yhwmax=720+50
-            self.yhwmin=-720-50
+            self.yhwmax=1080+self.ybm
+            self.yhwmin=-1080-self.ybm
         else:# can go everywhere
-            self.xhwmax=1280+50
-            self.xhwmin=-1280-50
-            self.yhwmax=720+50
-            self.yhwmin=-720-50
+            self.xhwmax=1280+self.xbm
+            self.xhwmin=-1280-self.xbm
+            self.yhwmax=1080+self.ybm
+            self.yhwmin=-1080-self.ybm
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )

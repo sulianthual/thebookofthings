@@ -20,28 +20,25 @@ No more advanced modular story! Only one linear story.
 
 * Game Progression:
 - Each chapter, the story is modified in some way.
-- This has to do with the book of things doing/eating/drinking certain things?
-  or a warp to another dimension?
 Chapter 1: start story with the hero
 Chapter 2: add the partner
 Chapter 3: add the villain
-Chapter 4: twist story, hero-partners hate each others, hero fights both
-           lies at the end
-Chapter 5: twist story, hero fights his problems instead (on high peak)
-Chapter 6: treasure hunt. Go south to islands and pirate theme.
-           cooperate with partner, villain and elder as a team.
-           then steal the treasure from everyone at the end!
-           => From chapter 4 to 6, we learn to lie, cheat and steal!
+Chapter 4: twist story, hero and partners hate each others (evil ending, learn to lie)
+Chapter 5: hero finds wisdom with elder (learn to cheat)
+Chapter 6: treasure hunt in south with pirates (learn to steal)
+           introduce sailor or pirate character. need to do drinking game with him
+           cooperate with partner, villain and elder as a team?
+           then steal the treasure from everyone at the end?
 
-Chapter X: Vegas Baby!
-           lie,cheat and steal! ready for Vegas
-           go spend all the fortune from pirates
-           can draw eiffel tower, the sphinx and many fun stuff
+(go west for next chapter)
+Chapter X: Vegas Baby! (since we learned ot lie, cheat and steal we are ready for Vegas)
+           (and we can go spend all the fortune we made from treasure hunt. And loose everything!)
+           can draw eiffel tower, the sphinx, building and many fun stuff. To do a city on the map
 Chapter 7: the fabric of reality
-
-           go west to space launch.
-          go in space, end up in black hole
-          then every story element is scrambled (hero has fish head, etc, etc...)
+           launch into space (from somewhere on map).
+           end up in black hole (like 2001 space odyssey)
+           then every story element is scrambled (hero has fish head, etc, etc...)
+           ends up with big bang? book of things disappears, left with free roaming
 
 Final Chapter: Free Roaming
    - just the complete story and can choose morning mini-game, afternoon quest ?
@@ -49,22 +46,22 @@ Final Chapter: Free Roaming
 
 
 * General Story Arc:
-Each day of the story follows somewhat an arc (even if varying in content):
+Each day of the story should follow somewhat an arc (even if varying in content):
 arc:     wake up -> morning game -> travel1 -> afternoon quest (game) -> travel2 -> aftermath -> ending
 phases:      *          morning             |         afternoon        |        evening       *
 tension level: 0           2           1             3                     1            2          0
-morning games: morning breakfast, fishing, hunting.... (little consequence except for later)
-overcome games: defeat villain (gunfight, stomp fight...)
+morning games: morning breakfast, fishing, hunting, drinking, picking up flowers (no consequences)
+overcome games: defeat villain, win elders's game, find the treasure...
 aftermath games: eat diner, serenade/kiss...(happy ending or not)
 travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
-travel2: X back home, or to some location for an ending
+travel2: X go back home, or to some location for an ending
 
 
-* Possible Story twists:
+* Possible Story twists to add:
 - change point of view (hero, partner,villain,fish, hero in the future,...)
 - new setting like tropical island and treasure hunt (palm tree, ship, shark fins, cannon fight, islands...)(eyelid on everyone)
 - medieval setting with a fight for the partner=princess
-- space setting (villain is the father?) (space elment on everyone)
+- space setting (villain is the father?) (space element on everyone)
 - the hero is an anti-hero
 - parodie (they are "playing" their adventure)
 - partner rescues the hero
@@ -72,21 +69,6 @@ travel2: X back home, or to some location for an ending
 - the fish becomes a river spirit (is huge)
 - they are all super-heroes
 - the fabric of reality: break everything, swapping images randomly
-
-
-* World Map:
-- Villain in East
-- Introduce 3 new characters in North/West/South:
-The elder in north highest peak... (gives advice)
-The pirate (or the sailor) in south ocean
-The randobot in west ... (randomizes the story)
-Later on: Make unique minigame travel where can roam unique map (add tons of content from drawings +roads)
-=> Is this a good idea? We should only keep the hero, partner and villain!
-
-* Todo:
-- add a mailbox and the hero reads mail after morning mini-game? (this could start quests)
-  (villain says: I have captured the partner... have problems? come solve them at the highest peak)
--cleanup chapter 4: no littering ,etc...
 - add flavors to characters:
    the hero was "always angry", "dumb as a rock", etc...
     then it may just affect the story text with options, but still add a lot of depth to the story
@@ -98,6 +80,7 @@ Later on: Make unique minigame travel where can roam unique map (add tons of con
 - add a mirror: in villain chapter? in hero's house?
   easy to make a character reflection in the mirror
 - name stuff: like locations (the evil lair, home, the highest peak, etc...)
+- pickup flowers: in hero house vicinity. then put in vase, or just offer to partner
 
 
 Mini Game Ideas

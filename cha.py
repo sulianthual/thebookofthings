@@ -131,6 +131,7 @@ class obj_scene_drinking(obj_testpage):
         self.world=world.obj_world_breakfastdrinking(self)
         # self.world=world.obj_world_breakfastdrinking(self,partner=False)
         self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'herobaseangry',actor='hero') )
 
 
 class obj_scene_fishing(obj_testpage):
@@ -151,16 +152,20 @@ class obj_scene_travel(obj_testpage):
         self.text=['Travel']
         # self.world=world.obj_world_travel(self)# chapter 1 only, home to tower
         # self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3)
-        self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3,partner=True)
+        # self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3,partner=True)
         # self.world=world.obj_world_travel(self,start='home',goal='peak',chapter=5)
         # self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
+        self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=5)
         self.addpart(self.world)
         # self.addpart( draw.obj_imageplacer(self,'house','tree') )
         # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
         # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','lightningbolt','tree') )
-        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','lightningbolt',actor='staticactor21') )
-        # self.addpart( draw.obj_drawing('path1',(640,360),shadow=(200,360),brush=share.brushes.smallpen) )
-        # self.addpart( draw.obj_drawing('path2',(640,360),shadow=(640,200),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','tree','sun') )
+        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','sun',actor='staticactor10') )
+        # self.addpart( draw.obj_drawing('path2',(640,360),shadow=(540,200),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('horizon1',(640,360),shadow=(640,50),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('horizon2',(640+320,360),shadow=(320,50),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('horizon3',(640+320,360+180),shadow=(320,200),brush=share.brushes.smallpen) )
 
 
 class obj_scene_dodgebullets(obj_testpage):

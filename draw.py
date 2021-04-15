@@ -707,6 +707,8 @@ class obj_imageplacer:
         # output code
         self.filecode='book/aaa.txt'
         self.outputmatrix=[]# output matrix of text
+        # active mode
+        self.activemode=True
     def retransformpointer(self):
         self.pointer.setup()# reset pointer entirely
         if self.s != 1: self.pointer.scale(self.s)
@@ -751,46 +753,52 @@ class obj_imageplacer:
             f1.write(' '+'\n')
     def update(self,controls):
         self.retransform=False
-        if controls.e and controls.ec:
-            self.fh=not self.fh
-            self.retransform=True
-        if controls.q and controls.qc:
-            self.fv=not self.fv
-            self.retransform=True
-        if controls.left:
-            self.r += 2
-            self.retransform=True
-        if controls.right:
-            self.r -= 2
-            self.retransform=True
-        if controls.up:
-            self.s *= 1.05
-            self.retransform=True
-        if controls.down:
-            self.s *= 0.95
-            self.retransform=True
-        if controls.f and controls.fc:# change image
-            self.iimg += 1
-            if self.iimg>self.nimglist-1: self.iimg=0
-            self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
-            self.retransform=True
-        if controls.backspace and controls.backspacec:# reset
-            self.iimg=0# index
-            self.s=1
-            self.r=0
-            self.fh=False
-            self.fv=False
-            self.retransform=True
+        if controls.down and controls.downc:
+            self.activemode=False
+        if controls.up and controls.upc:
+            self.activemode=True
+        if self.activemode:
+            if controls.e and controls.ec:
+                self.fh=not self.fh
+                self.retransform=True
+            if controls.q and controls.qc:
+                self.fv=not self.fv
+                self.retransform=True
+            if controls.a:
+                self.r += 2
+                self.retransform=True
+            if controls.d:
+                self.r -= 2
+                self.retransform=True
+            if controls.w:
+                self.s *= 1.05
+                self.retransform=True
+            if controls.s:
+                self.s *= 0.95
+                self.retransform=True
+            if controls.f and controls.fc:# change image
+                self.iimg += 1
+                if self.iimg>self.nimglist-1: self.iimg=0
+                self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
+                self.retransform=True
+            if controls.backspace and controls.backspacec:# reset
+                self.iimg=0# index
+                self.s=1
+                self.r=0
+                self.fh=False
+                self.fv=False
+                self.retransform=True
         self.pointer.update(controls)
         if self.retransform:
             self.retransformpointer()
         self.pointer.movetoxy(controls.mousex,controls.mousey)
-        if controls.mouse1 and controls.mouse1c:
-            self.placefrompointer(controls)
-        if controls.mouse2 and controls.mouse2c:
-            self.removefrompointer(controls)
-        if controls.space and controls.spacec:
-            self.finish()# save content
+        if self.activemode:
+            if controls.mouse1 and controls.mouse1c:
+                self.placefrompointer(controls)
+            if controls.mouse2 and controls.mouse2c:
+                self.removefrompointer(controls)
+            if controls.space and controls.spacec:
+                self.finish()# save content
 
 ####################################################################################################################
 

@@ -340,21 +340,41 @@ class obj_scene_ch4p10(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p9())
     def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p10a())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                'What a nice breakfast... but our ',('hero',share.colors.hero),' is getting drunk! Hold [W] to drink. ',\
+                   ]
+        self.world=world.obj_world_breakfastdrinking(self)
+        self.addpart(self.world)
+        self.world.partnertimer.end()# no timer for partner check
+        self.world.timerend.amount=0# game ends immediately (no wasted animation)
+
+
+class obj_scene_ch4p10a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p10())
+    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p11())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                'What in the... our ',('hero',share.colors.hero),' is getting drunk at breakfast! Hold [W] to sneak drink ',\
-                'when ',('{partnername}',share.colors.partner),' isnt looking. ',\
+                ('{partnername}',share.colors.partner),' is starting to suspect something. ',\
+                'Dont drink when ',('{partner_he}',share.colors.partner),\
+                ' turns around or ',('{heroname}',share.colors.hero),' will get busted. ',\
                    ]
         self.world=world.obj_world_breakfastdrinking(self)
         self.addpart(self.world)
 
 
+
+
 class obj_scene_ch4p11(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p10())
+        share.scenemanager.switchscene(obj_scene_ch4p10a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p11a())
     def triggernextpage(self,controls):
