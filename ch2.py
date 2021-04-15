@@ -117,7 +117,7 @@ class obj_scene_ch2p4(page.obj_chapterpage):
                    'First, draw some pretty hair around ', ('{partner_his}',share.colors.partner),' head. ',\
                    'Something that ',('{heroname}',share.colors.hero),' will fall in ',('love',share.colors.partner),' with. '\
                    ]
-        self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner Hair',shadow=(200,200),brush=share.brushes.smallpen) )
+        self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner\'s Hair',shadow=(200,200),brush=share.brushes.smallpen) )
         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=True,scale=0.5))
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
@@ -202,9 +202,7 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
                    ('love',share.colors.partner),' letters. ',\
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
                    ]
-
         self.textkeys={'pos':(500,50),'xmin':500}# same as ={}
-
         self.addpart( draw.obj_drawing('mailbox',(200+50,450-50),legend='Mailbox (on a pole)',shadow=(200,250)) )
         self.addpart( draw.obj_drawing('mailletter',(1280-200-50,450),legend='Mail Letter',shadow=(200,200)) )
 
@@ -217,7 +215,7 @@ class obj_scene_ch2p6b(page.obj_chapterpage):
         self.text=[\
                     'Great, lets write: "',\
                     ('{heroname}',share.colors.hero),' checked ',\
-                    ('{hero_his}',share.colors.hero),' mailbox.',\
+                    ('{hero_his}',share.colors.hero),' mailbox. ',\
                     ('{hero_he}',share.colors.hero),' had received ',\
                     'a ',' letter". ',\
                    ]

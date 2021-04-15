@@ -344,7 +344,7 @@ class obj_scene_ch5p10(page.obj_chapterpage):
         textchoice.addkey('elder_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the Elder\'s Name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('eldername',25,(750,y2),color=share.colors.hero, legend='Villain Name') )
+        self.addpart( draw.obj_textinput('eldername',25,(750,y2),color=share.colors.hero, legend='Elder Name') )
 
 
 class obj_scene_ch5p11(page.obj_chapterpage):
@@ -634,7 +634,7 @@ class obj_scene_ch5p19fail(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p19())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p20())
+        share.scenemanager.switchscene(obj_scene_ch5p19())
     def setup(self):
         self.text=[\
                'Giving up already. ',\
@@ -669,7 +669,7 @@ class obj_scene_ch5p21(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p20())
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch5p22())
+            share.scenemanager.switchscene(obj_scene_ch5p23())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p21fail())
     def setup(self):
@@ -699,7 +699,7 @@ class obj_scene_ch5p21fail(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p21())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p22())
+        share.scenemanager.switchscene(obj_scene_ch5p21())
     def setup(self):
         self.text=[\
                'Oh, you want to give up. ',\
@@ -714,33 +714,20 @@ class obj_scene_ch5p21fail(page.obj_chapterpage):
         self.addpart( animation2 )
 
 
-class obj_scene_ch5p22(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p21())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p23())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-               '"Alright, lets play one last time, said ',('{eldername}',share.colors.elder),'". ',\
-                  ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True)
-        self.addpart(self.world)
 
 
 class obj_scene_ch5p23(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p22())
+        share.scenemanager.switchscene(obj_scene_ch5p21())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p24())
     def setup(self):
         self.text=[\
-               '"You lost yet again, said ',('{eldername}',share.colors.elder),\
-               ', but you finally ',('made it',share.colors.hero),'! ',\
-               'Now let me tell you that the secret to solving all your problems in life is ',('perseverance',share.colors.hero),'. ',\
+                '"What a ',('strong willed',share.colors.hero),' character, said ',('{eldername}',share.colors.elder),'. ',\
+               'That\'s it, you discovered my ',('secret',share.colors.hero),'! ',\
+               'The solution to all your problems in life is ',('perseverance',share.colors.hero),'. ',\
                ('PER-SE-VE-RANCE',share.colors.hero),'! ','Look, you came all the way here, you climbed this ',('peak',share.colors.location),', ',\
-               'and even when you were loosing you didnt give up. You had it in you all this time!" ',\
+               'and even when you were loosing you never gave up. You had it in you all this time!"',\
                   ]
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
         animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)
@@ -932,9 +919,10 @@ class obj_scene_ch5p28(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p29())
     def setup(self):
         self.text=[\
-               'No seriously, when playing you can just ',('peek',share.colors.hero),\
+               'Seriously, when playing you can ',('peek',share.colors.hero),\
                ' at other\'s ',('bubble',share.colors.instructions),' to know what they are thinking. ',\
-              'If you are quick enough, you can even counter and win ',('every time',share.colors.hero),'. ',\
+              'You can even counter ',('at the last moment',share.colors.hero),\
+              ' and win ',('every time',share.colors.hero),', but you gotta be quick. ',\
                   ]
         self.dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup1.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )

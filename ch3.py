@@ -188,7 +188,7 @@ class obj_scene_ch3p6(page.obj_chapterpage):
                   ('villain',share.colors.villain),'\'s ',('evil lair',share.colors.location),' to rescue ',\
                    ('{partnername}',share.colors.partner),'. ',\
                  ' The ',('evil lair',share.colors.location),\
-                 ' was a',('tower',share.colors.item),' in the ',('mountains',share.colors.item),'".'\
+                 ' was a tower in the mountains".'\
                  ' Draw an ',('evil tower',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
@@ -247,7 +247,7 @@ class obj_scene_ch3p9(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   'This is going to be epic, said the book of things. ',\
-                 ' Draw a ',('gun',share.colors.item),'and a ',\
+                 ' Draw a ',('gun',share.colors.item),' and a ',\
                 ('bullet',share.colors.item),' for the fight. ',\
                    ]
         drawing1=draw.obj_drawing('gun',(300+50,450),legend='Gun (facing right)',shadow=(300,200))

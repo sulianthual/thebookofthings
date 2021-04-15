@@ -216,13 +216,13 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p10())
     def setup(self):
         self.text=['Since it is the first day, today we will have ',('{heroname}',share.colors.hero), \
-                  ' take it easy, said the book of things. Lets just go  ',('fishing',share.colors.action),'. ',\
+                  ' take it easy, said the book of things. Lets just go  fishing. ',\
                 'All you need is to draw a ',('fish',share.colors.item),\
                 ' and a ',('hook',share.colors.item),', ',\
                 ' and we will be on our way. ',\
                    ]
-        self.addpart(draw.obj_drawing('hook',(240,450),legend='Hook',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('fish',(940,450),legend='Fish (Facing Left)',shadow=(300,200)))
+        self.addpart(draw.obj_drawing('hook',(240,450),legend='Draw a Hook',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('fish',(940,450),legend='Draw a Fish (Facing Left)',shadow=(300,200)))
         if False:# not for player
             hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360),brush=share.brushes.smallpen)
             self.addpart(hookline)
@@ -324,7 +324,9 @@ class obj_scene_ch1p14(page.obj_chapterpage):
         self.text=[\
                    'And we finish with: "At night, the ',('hero',share.colors.hero),' went to back to bed". ',\
                    'That wraps it nicely, says the book of things. ',\
-                   'One last thing, lets draw the sun and the moon so we know when it is day and night. ',\
+                   'One last thing, lets draw the ',('sun',share.colors.item),\
+                   ' and the ',('moon',share.colors.item),\
+                   ' so we know when it is day and night. ',\
                    ]
         # self.addpart(draw.obj_drawing('sun',(340,450),legend='Sun',shadow=(200,200)))
         self.addpart(draw.obj_drawing('sun',(300+50,450),legend='Sun',shadow=(300,200)))

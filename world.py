@@ -2236,7 +2236,6 @@ class obj_world_rockpaperscissors(obj_world):
         self.elder.dict['thinkcloud'].show=True
         self.elder.dict['talkcloud'].show=False
         # show
-
         self.result.addpart( 'herorock', draw.obj_image('rock',(100+50,320),scale=0.5) )
         self.result.addpart( 'heropaper', draw.obj_image('paper',(100+50,320),scale=0.5) )
         self.result.addpart( 'heroscissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
@@ -2254,7 +2253,6 @@ class obj_world_rockpaperscissors(obj_world):
         self.computedresults=False# has computed results (one frame each round)
         self.result.addpart( 'win',  draw.obj_image('largecross',(1280-100-50,320),path='premade')  )
         self.result.addpart( 'loose', draw.obj_image('largecross',(100+50,320),path='premade')  )
-
         self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,350),fontsize='big',scale=0.9)  )
         self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,350),fontsize='big',scale=0.9)  )
         self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,350),fontsize='big',scale=0.9)  )
@@ -2275,7 +2273,11 @@ class obj_world_rockpaperscissors(obj_world):
         self.checking=False# checking result or not
         self.countdowning=False# doing countdown or not
         self.icountdown=3
-        self.countdowntimer=tool.obj_timer(80)# timer
+        self.countdowntime=80
+        self.countdowntimelast=140# on last count, slightly more time to decide
+        if self.elderalwayswin or self.elderalwaysloose:# if win/loose just hurry it
+            self.countdowntimelast=self.countdowntime
+        self.countdowntimer=tool.obj_timer(self.countdowntime)# timer
         # healthbars
         self.herohealth=3#
         self.elderhealth=3#
@@ -2302,6 +2304,7 @@ class obj_world_rockpaperscissors(obj_world):
         # goal unreached
         if not self.goal:
             if not self.checking: # deciding state
+                # print('VALUE='+str(self.icountdown)+'----:'+str(self.countdowntimer.t))
                 if controls.a and controls.ac:
                     self.herochoice=0
                     self.hero.dict['rock'].show=self.herochoice==0
@@ -2317,10 +2320,11 @@ class obj_world_rockpaperscissors(obj_world):
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
-                if not self.countdowning:# not countdown (only before starting game)
+                if not self.countdowning:# not countdown
                     if (controls.s and controls.sc) or self.icountdown<3:
                         self.countdowning=True# flip to countdown
                         self.icountdown=3
+                        self.countdowntimer.amount=self.countdowntime# default time
                         self.countdowntimer.start()
                         self.countdown.dict['3'].show=True
                         self.countdown.dict['2'].show=False
@@ -2337,10 +2341,13 @@ class obj_world_rockpaperscissors(obj_world):
                         self.instructions.dict['texte'].show=False
                 else:
                     self.countdowntimer.update()
-                    print(self.icountdown)
                     if self.countdowntimer.ring:
                         if self.icountdown>1:# not the last round yet
                             self.icountdown -=1
+                            if self.icountdown==1:# slightly more time to decide on last count
+                                self.countdowntimer.amount=self.countdowntimelast
+                            else:
+                                self.countdowntimer.amount=self.countdowntime
                             self.countdowntimer.start()# reset timer
                             if self.elderpeaks and self.icountdown==1:# elder peaks on 1...
                                 if self.herochoice==0:
