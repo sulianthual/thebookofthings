@@ -725,7 +725,7 @@ class obj_scene_ch5p22(page.obj_chapterpage):
         self.text=[\
                '"Alright, lets play one last time, said ',('{eldername}',share.colors.elder),'". ',\
                   ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderlooses=True)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True)
         self.addpart(self.world)
 
 
@@ -736,8 +736,8 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p24())
     def setup(self):
         self.text=[\
-               '"Amazing, said ',('{eldername}',share.colors.elder),\
-               ', you finally ',('won',share.colors.hero),'! ',\
+               '"You lost yet again, said ',('{eldername}',share.colors.elder),\
+               ', but you finally ',('made it',share.colors.hero),'! ',\
                'Now let me tell you that the secret to solving all your problems in life is ',('perseverance',share.colors.hero),'. ',\
                ('PER-SE-VE-RANCE',share.colors.hero),'! ','Look, you came all the way here, you climbed this ',('peak',share.colors.location),', ',\
                'and even when you were loosing you didnt give up. You had it in you all this time!" ',\
@@ -932,7 +932,7 @@ class obj_scene_ch5p28(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p29())
     def setup(self):
         self.text=[\
-               'No seriously, when playing you can just ',('peak',share.colors.hero),\
+               'No seriously, when playing you can just ',('peek',share.colors.hero),\
                ' at other\'s ',('bubble',share.colors.instructions),' to know what they are thinking. ',\
               'If you are quick enough, you can even counter and win ',('every time',share.colors.hero),'. ',\
                   ]
@@ -1002,7 +1002,7 @@ class obj_scene_ch5p29fail(page.obj_chapterpage):
         self.text=[\
                'OWWWW you really dont listen, said ',('{eldername}',share.colors.elder),'. ',\
                'You need to ',\
-               ('peak',share.colors.hero),' at what I am thinking and ',\
+               ('peek',share.colors.hero),' at what I am thinking and ',\
                ('counter',share.colors.hero),' me at the ',\
                ('last moment',share.colors.hero),'. ',\
                'Lets do this again before I loose my patience. ',\
@@ -1128,11 +1128,11 @@ class obj_scene_ch5p35(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5playend())
     def setup(self):
         self.text=[\
-                   '"And he lived very wisely ever after, the End". ',\
+                   '"And he lived very cheatingly ever after, the End". ',\
                    ]
         self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
         self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
-        self.addpart( draw.obj_textbox('(of a very wise story)',(640,280)) )
+        self.addpart( draw.obj_textbox('(of a very cheating story)',(640,280)) )
         # self.addpart( draw.obj_imageplacer(self,'herobase','elderhead','cloud','lightningbolt','sun','mountain','rock','paper','scissors') )
         self.addpart( draw.obj_image('herobase',(495,464),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('elderhead',(742,437),scale=0.35,rotate=0,fliph=True,flipv=False) )

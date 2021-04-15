@@ -1135,8 +1135,8 @@ class obj_world_travel(obj_world):
             self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
         self.herowalktimer=tool.obj_timer(10)# timer to alternate walk slides
         self.herowalkframe1=True# alternate True/False for two frames
-        self.heromx=6# moving rate
-        self.heromy=6# moving rate
+        self.heromx=4#6# moving rate
+        self.heromy=4#6# moving rate
         # hitboxes
         self.hitboxes=[]
         # goal to reach
