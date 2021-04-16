@@ -232,7 +232,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
                 'with ',('{hero_his}',share.colors.hero),\
                 ' partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,partner='inlove',angryfaces=True)
+        self.world=world.obj_world_wakeup(self,partner=True,heroangry=True,partnerangry=True)
         self.addpart(self.world)
         # self.addpart( draw.obj_imageplacer(self, 'herobaseangry','partnerbaseangry' ) )
     def presetup(self):

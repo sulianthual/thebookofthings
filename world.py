@@ -367,6 +367,7 @@ class obj_actor_bdry(obj_actor):# basic actor
 ####################################################################################################################
 
 # Mini Game: sunrise
+# *SUNRISE
 class obj_world_sunrise(obj_world):
     def setup(self):
         self.done=False# end of minigame
@@ -448,25 +449,29 @@ class obj_world_sunrise(obj_world):
 ####################################################################################################################
 
 # Mini Game: wakeup
+# *WAKEUP WAKE UP
 class obj_world_wakeup(obj_world):
     def setup(self,**kwargs):
         # default options
-        self.partner=False# add partner alongside hero
-        self.angryfaces=False# replace happy faces with angry faces
+        self.addpartner=False# add partner alongside hero
+        self.partnerangry=False# partner is angry
+        self.heroangry=False# hero is angry
         self.addsun=True# add the sun (must have been drawn)
         self.addalarmclock=False# add the alarm clock and night stand
         # scene tuning
         if kwargs is not None:
-            if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
-            if 'angryfaces' in kwargs: self.angryfaces=kwargs["angryfaces"]# partner options
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+            if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]# partner options
+            if 'partnerangry' in kwargs: self.partnerangry=kwargs["partnerangry"]# partner options
             if 'sun' in kwargs: self.addsun=kwargs["sun"]# partner options
             if 'alarmclock' in kwargs: self.addalarmclock=kwargs["alarmclock"]# partner options
         #
         # change base picture
         self.herobaseimg='herobase'
         self.partnerbaseimg='partnerbase'
-        if self.angryfaces:# replace with angry characters
+        if self.heroangry:# replace with angry characters
             self.herobaseimg='herobaseangry'
+        if self.partnerangry:
             self.partnerbaseimg='partnerbaseangry'
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
@@ -491,18 +496,16 @@ class obj_world_wakeup(obj_world):
         if self.addalarmclock:
             self.staticactor.addpart( 'annim1',draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360)) )
             self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
-
         # start actor
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:# add partner
             self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
         self.startactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(420,490),scale=0.7,rotate=80) )
-
         # ungoing actor
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:# add partner in love
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes',self.partnerbaseimg,(640+100,360-50),scale=0.7) )
         self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_heroawakes',self.herobaseimg,(640,360),scale=0.7) )
         # finish actor
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:# add partner in love
             self.finishactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(903+100,452-50),scale=0.7) )
         self.finishactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(903,452),scale=0.7) )
         # text
@@ -528,7 +531,7 @@ class obj_world_wakeup(obj_world):
                     self.finishactor.show=False
                     self.timer.start()# reset ungoing timer
                     self.ungoingactor.dict["anim1"].rewind()
-                    if self.partner == 'inlove':
+                    if self.addpartner == 'inlove':
                         self.ungoingactor.dict["animadd1"].rewind()
             else:
                 # ungoing substate
@@ -556,6 +559,7 @@ class obj_world_wakeup(obj_world):
 ####################################################################################################################
 
 # Mini Game: sneak drink at breakfast
+#*DRINKING *BREAKFAST
 class obj_world_breakfastdrinking(obj_world):
     def setup(self,**kwargs):
         # default options
@@ -831,286 +835,11 @@ class obj_world_breakfastdrinking(obj_world):
             if self.timerend.ring:
                 self.done=True# end of minigame
 
-####################################################################################################################
-
-# Mini Game: sneak drink at breakfast
-class obj_world_breakfastdrinkingOLD(obj_world):
-    def setup(self,**kwargs):
-        # default options
-        self.addpartner=True# add partner alongside hero (otherwise can just drink alone)
-        # scene tuning
-        if kwargs is not None:
-            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
-        #
-        self.done=False# end of minigame
-        self.goal=False# minigame goal reached
-        self.staticactor=obj_grandactor(self,(640,360))# background
-        self.progressbar=obj_grandactor(self,(640,360))# progress bar
-        self.hero=obj_grandactor(self,(145,515))# hero
-        self.partner=obj_grandactor(self,(1160,490))# partner
-        self.text_undone=obj_grandactor(self,(640,360))# text always in front
-        self.text_done=obj_grandactor(self,(640,360))
-        # static
-        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-150),path='premade') )
-        if self.addpartner:
-            self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(640+180,600),scale=0.4,fliph=False) )
-        self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(640-180,600),scale=0.4,fliph=True) )
-        self.staticactor.addpart( 'img4', draw.obj_image('flowervase',(640,440),scale=0.5) )
-        # progress bar
-        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,200),path='premade') )
-        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,200),path='premade') )
-        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,200),path='premade') )
-        self.progressbar.addpart( 'textbox', draw.obj_textbox('0%',(640,270)) )
-        self.progressmx=2#1# move rate of progressbar (respect to self.progress)
-        self.progressmax=int(567/self.progressmx)# max progress
-        self.progress=0# 0 to max progress
-        # hero
-        self.hero.addpart( 'waiting', draw.obj_image('herobaseangry',(150,540),scale=1.15,fliph=False) )
-        self.hero.addpart( 'happy', draw.obj_image('herobase',(150,540),scale=1.15,fliph=False) )
-        self.hero.addpart( 'drinkinghero', draw.obj_animation('ch4_herodrinks1','herobase',(640,360)) )
-        self.hero.addpart( 'drinkingdrink', draw.obj_animation('ch4_herodrinks2','drink',(640,360)) )
-        # self.hero.addpart( 'busted', draw.obj_image('herobaseangry',(195,620),scale=1.2,rotate=26) )
-        self.hero.addpart( 'busted', draw.obj_animation('ch4_herodrinks1','herobaseangry',(640,360)) )
-        self.hero.addpart( 'finished', draw.obj_animation('world_breakfastdrinking3','herobase',(640,360)) )
-        self.hero.dict['waiting'].show=True
-        self.hero.dict['happy'].show=False
-        self.hero.dict['drinkinghero'].show=False
-        self.hero.dict['drinkingdrink'].show=False
-        self.hero.dict['busted'].show=False
-        self.hero.dict['finished'].show=False
-        self.herostate=0# 0,1,2 for neutral,drinking,happy (excludes busted from partnerbusting)
-        self.herohappytimer=tool.obj_timer(100)# timer for happy after drinking
-        # partner
-        if self.addpartner:
-            self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15),scale=1.15,fliph=True,path='premade') )
-            self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15),scale=1.15,fliph=True) )
-            self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15),scale=1.15,fliph=False) )
-            self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15),scale=1.15,rotate=15,fliph=False) )
-            self.partner.addpart( 'waiting_headrightbobble', draw.obj_image('partnerheadangry',(1160-50+30,340+15),scale=1.15,rotate=-15,fliph=False) )
-            self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360)) )
-            self.partner.addpart( 'bustingmark', draw.obj_image('exclamationmark',(1132,176),scale=1.5,path='premade') )
-            self.partner.addpart( 'whatmark', draw.obj_image('interrogationmark',(1132,176),scale=1.5,path='premade') )
-            self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(640,400),fontsize='huge') )
-            self.partner.dict['waiting_base'].show=True
-            self.partner.dict['waiting_headleft'].show=False
-            self.partner.dict['waiting_headright'].show=True
-            self.partner.dict['waiting_headrightup'].show=False
-            self.partner.dict['waiting_headrightbobble'].show=False
-            self.partner.dict['busting'].show=False
-            self.partner.dict['bustingmark'].show=False
-            self.partner.dict['bustedtext'].show=False
-            self.partner.dict['whatmark'].show=False
-            self.partnerbusting=False# busting or not (2 states)
-            self.partnerstate=1# while not busting, state 0,1,2,3 for headleft,headright,headrightup,headrightbobble
-            self.partnertimer=tool.obj_timer(50)# timer for switch states
-            self.partnertimer.start()
-            self.partnertimerbusting=tool.obj_timer(110)# timer for busting
-        else:
-            # ensure partner is never seen
-            self.partnerbusting=False
-            self.partnerstate=1
-            self.partnertimer=tool.obj_timer(0)# dummy
-        # text
-        if self.addpartner:
-            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
-        else:
-            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Drink',(640,690),color=share.colors.instructions) )
-        self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
-        self.text_undone.show=True
-        self.text_done.show=False
-        # timer for end
-        self.timerend=tool.obj_timer(210)# goal to done
-    def update(self,controls):
-        super().update(controls)
-        if not self.goal:
-            # goal unreached state
-            if self.progress>self.progressmax-1:# reached goal
-                self.goal=True
-                self.timerend.start()
-                self.text_undone.show=False
-                self.text_done.show=True
-                self.hero.dict['waiting'].show=False
-                self.hero.dict['drinkinghero'].show=False
-                self.hero.dict['drinkingdrink'].show=False
-                self.hero.dict['busted'].show=False
-                self.hero.dict['finished'].show=True
-                self.hero.dict['finished'].rewind()
-                if self.addpartner:
-                    self.partner.dict['waiting_base'].show=False
-                    self.partner.dict['waiting_headleft'].show=False
-                    self.partner.dict['waiting_headright'].show=False
-                    self.partner.dict['waiting_headrightup'].show=False
-                    self.partner.dict['waiting_headrightbobble'].show=False
-                    self.partner.dict['busting'].show=False
-                    self.partner.dict['bustingmark'].show=False
-                    self.partner.dict['bustedtext'].show=False
-                    self.partner.dict['whatmark'].show=False
-                self.staticactor.show=True
-                self.progressbar.show=True
-            #
-            # partner is busting hero
-            if self.partnerbusting:
-                self.partnertimerbusting.update()
-                if self.partnertimerbusting.ring:# switch back to normal
-                    self.partnerbusting=False
-                    self.herostate=0
-                    self.partnerstate=1# goes to facing right
-                    self.partnertimer.amount=100
-                    self.partnertimer.start()
-                    self.hero.dict['waiting'].show=True
-                    self.hero.dict['drinkinghero'].show=False
-                    self.hero.dict['drinkingdrink'].show=False
-                    self.hero.dict['busted'].show=False
-                    self.hero.dict['finished'].show=False
-                    self.partner.dict['waiting_base'].show=True
-                    self.partner.dict['waiting_headleft'].show=False
-                    self.partner.dict['waiting_headright'].show=True
-                    self.partner.dict['waiting_headrightup'].show=False
-                    self.partner.dict['waiting_headrightbobble'].show=False
-                    self.partner.dict['busting'].show=False
-                    self.partner.dict['bustingmark'].show=False
-                    self.partner.dict['bustedtext'].show=False
-                    self.partner.dict['whatmark'].show=False
-                    self.staticactor.show=True
-                    self.progressbar.show=True
-
-            # partner is not busting hero
-            else:
-                # switch to busting
-                if self.herostate==1 and self.partnerstate==0:# busted drinking
-                    self.partnerbusting=True
-                    self.partnertimerbusting.start()
-                    self.progress = 0# reset progress
-                    self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
-                    self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
-                    self.hero.dict['waiting'].show=False
-                    self.hero.dict['drinkinghero'].show=False
-                    self.hero.dict['drinkingdrink'].show=True
-                    self.hero.dict['busted'].show=True
-                    self.hero.dict['finished'].show=False
-                    self.partner.dict['waiting_base'].show=True
-                    self.partner.dict['waiting_headleft'].show=True
-                    self.partner.dict['waiting_headright'].show=False
-                    self.partner.dict['waiting_headrightup'].show=False
-                    self.partner.dict['waiting_headrightbobble'].show=False
-                    self.partner.dict['busting'].show=False
-                    self.partner.dict['bustingmark'].show=True
-                    self.partner.dict['bustedtext'].show=True
-                    self.partner.dict['whatmark'].show=False
-                    self.staticactor.show=False
-                    self.progressbar.show=False
-                # hero behavior
-                if self.herostate==0:# neutral
-                    if controls.w and controls.wc:# switch to drinking
-                        self.herostate=1#
-                        self.hero.dict['waiting'].show=False
-                        self.hero.dict['happy'].show=False
-                        self.hero.dict['drinkinghero'].show=True
-                        self.hero.dict['drinkingdrink'].show=True
-                        self.hero.dict['busted'].show=False
-                        self.hero.dict['finished'].show=False
-                elif self.herostate==1:# drinking
-                    self.progress += 1# update progress
-                    self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
-                    self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
-                    if not controls.w and controls.wc:# switch to happy
-                        self.herostate=2#
-                        self.herohappytimer.start()
-                        self.hero.dict['waiting'].show=False
-                        self.hero.dict['happy'].show=True
-                        self.hero.dict['drinkinghero'].show=False
-                        self.hero.dict['drinkingdrink'].show=False
-                        self.hero.dict['busted'].show=False
-                        self.hero.dict['finished'].show=False
-                elif self.herostate==2:# happy
-                    if controls.w and controls.wc:# switch to drinking
-                        self.herostate=1#
-                        self.hero.dict['waiting'].show=False
-                        self.hero.dict['happy'].show=False
-                        self.hero.dict['drinkinghero'].show=True
-                        self.hero.dict['drinkingdrink'].show=True
-                        self.hero.dict['busted'].show=False
-                        self.hero.dict['finished'].show=False
-                    else:# switch back to neutral
-                        self.herohappytimer.update()
-                        if self.herohappytimer.ring:# switch to neutral
-                            self.herostate=0
-                            self.hero.dict['waiting'].show=True
-                            self.hero.dict['happy'].show=False
-                            self.hero.dict['drinkinghero'].show=False
-                            self.hero.dict['drinkingdrink'].show=False
-                            self.hero.dict['busted'].show=False
-                            self.hero.dict['finished'].show=False
-                # partner behavior
-                self.partnertimer.update()
-                if self.partnertimer.ring:# regular switches between partner attitudes
-                    # decide next state
-                    if self.partnerstate==0:# headleft (unsafe) to headright,headrightup or headrightbobble
-                        self.partnerstate=tool.randchoice([1,2,3],probas=[40,40,20])# 20% chance of going to danger zone
-                    elif self.partnerstate==1:# headright to headrightup or headrightbobble
-                        self.partnerstate=tool.randchoice([2,3],probas=[30,70])# 70% chance of going to danger zone
-                    elif self.partnerstate==2:# headrightup to headright 1 or headrightbobble 3
-                        self.partnerstate=tool.randchoice([1,3],probas=[30,70])# 70% chance of going to danger zone
-                    elif self.partnerstate==3:# headrightbobble to headleft (unsafe) always
-                        self.partnerstate=0
-                    # switch to next state
-                    if self.partnerstate==0:# headleft
-                        self.partner.dict['waiting_base'].show=True
-                        self.partner.dict['waiting_headleft'].show=True
-                        self.partner.dict['waiting_headright'].show=False
-                        self.partner.dict['waiting_headrightup'].show=False
-                        self.partner.dict['waiting_headrightbobble'].show=False
-                        self.partner.dict['busting'].show=False
-                        self.partner.dict['bustedtext'].show=False
-                        self.partner.dict['whatmark'].show=False
-                    elif self.partnerstate==1:# headright
-                        self.partner.dict['waiting_base'].show=True
-                        self.partner.dict['waiting_headleft'].show=False
-                        self.partner.dict['waiting_headright'].show=True
-                        self.partner.dict['waiting_headrightup'].show=False
-                        self.partner.dict['waiting_headrightbobble'].show=False
-                        self.partner.dict['busting'].show=False
-                        self.partner.dict['bustedtext'].show=False
-                        self.partner.dict['whatmark'].show=False
-                    elif self.partnerstate==2:# headrightup
-                        self.partner.dict['waiting_base'].show=True
-                        self.partner.dict['waiting_headleft'].show=False
-                        self.partner.dict['waiting_headright'].show=False
-                        self.partner.dict['waiting_headrightup'].show=True
-                        self.partner.dict['waiting_headrightbobble'].show=False
-                        self.partner.dict['busting'].show=False
-                        self.partner.dict['bustedtext'].show=False
-                        self.partner.dict['whatmark'].show=False
-                    elif self.partnerstate==3:# headrightbobble
-                        self.partner.dict['waiting_base'].show=True
-                        self.partner.dict['waiting_headleft'].show=False
-                        self.partner.dict['waiting_headright'].show=False
-                        self.partner.dict['waiting_headrightup'].show=False
-                        self.partner.dict['waiting_headrightbobble'].show=True
-                        self.partner.dict['busting'].show=False
-                        self.partner.dict['bustedtext'].show=False
-                        self.partner.dict['whatmark'].show=True# interrogation mark
-                    # decide next timer (depends on next state)
-                    if self.partnerstate==0:# headleft
-                        self.partnertimer.amount=100+tool.randint(0,100)
-                    elif self.partnerstate==1:# headright
-                        self.partnertimer.amount=90+tool.randint(0,100)
-                    elif self.partnerstate==2:# headrightup
-                        self.partnertimer.amount=90+tool.randint(0,100)
-                    elif self.partnerstate==3:# headrightbobble (fast countdown)
-                        self.partnertimer.amount=80
-                    # start next timer
-                    self.partnertimer.start()
-
-        else:
-            # goal reached state
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
 
 ####################################################################################################################
 
 # Mini Game: Fishing
+# *FISHING
 class obj_world_fishing(obj_world):
     def setup(self):
         self.done=False# mini game is finished
@@ -1276,6 +1005,7 @@ class obj_world_eatfish(obj_world):
 ####################################################################################################################
 #
 # # Mini Game: travel on overworld
+# *TRAVEL
 class obj_world_travel(obj_world):
     def setup(self,**kwargs):
         self.done=False# end of minigame
@@ -1563,6 +1293,7 @@ class obj_world_travel(obj_world):
 ####################################################################################################################
 
 # Mini Game: dodge gun shots
+#*DODGE *GUN
 class obj_world_dodgegunshots(obj_world):
     def setup(self,**kwargs):
         # default options
@@ -1805,6 +1536,7 @@ class obj_world_dodgegunshots(obj_world):
 ####################################################################################################################
 
 # Mini Game: stomp on each other fight
+#*STOMP *FIGHT
 class obj_world_stompfight(obj_world):
     def setup(self,**kwargs):
         # default options
@@ -1851,14 +1583,12 @@ class obj_world_stompfight(obj_world):
         self.heromayholdjump=False# hero can hold to jump higher
         self.herohurt=False# hurting state or not
         self.herohurttimer=tool.obj_timer(40)# how long hero is hurting. Make it just >kicking time,<rest+stand time
-        self.herodt=1# hero time increment
-        self.herofy=0# hero force
-        self.herov=0# hero velocity
-        self.herog=1# gravity rate
-        self.herod=0.15#0.07# dissipation rate
-        self.heroj=1# jump rate (click button)
-        self.herojh=6#3.5# jump rate (hold button)
-        self.heroholdjumptimer=tool.obj_timer(12)# how long can hold jump button
+        self.herov=0#total velocity
+        self.herovj=0# added velocity from jump (changes during jump)
+        self.heroivj=4# initial velocity from jump (when starting jump)
+        self.herodvj=0.9# velocity factor loss (when holding jump)
+        self.herovg=1#1 velocity from gravity
+        self.heroholdjumptimer=tool.obj_timer(100)# how long can hold jump button
         self.heromx=12# move rate horizontally
         # hero hitboxes
         self.herohitbox1=obj_grandactor(self,(340,self.yground))# for being hit
@@ -1896,13 +1626,13 @@ class obj_world_stompfight(obj_world):
         self.villainhurt=False# hurt or not
         self.villainstate='rest'# stand, kick, rest (when no hurt)
         self.villaintimerstand=tool.obj_timer(60)# right before kicking
-        self.villaintimerkick=tool.obj_timer(40)
+        self.villaintimerkick=tool.obj_timer(200)# 40
         self.villaintimerrest=tool.obj_timer(100)#
         self.villaintimerhurt=tool.obj_timer(120)
         # self.villaintimerstand.start()
         self.villaintimerrest.start()
         self.villainfaceright=False# direction facing (changes)
-        self.villainmx=12#18# move rate horizontally
+        self.villainmx=9#12#12# move rate horizontally
         self.villainxmin=200# area where will face to right
         self.villainxmax=1280-200# area where will face to left
         # villlain hitboxes
@@ -1949,21 +1679,20 @@ class obj_world_stompfight(obj_world):
             #
             if not self.herohurt:
                 # hero dynamics y
-                self.herofy=0# force
-                self.herofy += self.herog# gravity
-                if self.heromayjump and (controls.w and controls.wc):# jump (click button)
-                    self.herofy -= self.heroj
+                if self.heromayjump and (controls.w and controls.wc):# start jump (click button)
                     self.herov=0# reset velocity
+                    self.herovj=self.heroivj# reset jump velocity
                     self.heromayjump=False# cant jump again
                     self.heromayholdjump=True# can hold this jump
                     self.heroholdjumptimer.start()
-                if self.heromayholdjump and controls.w:# jump (hold button)
-                    self.herofy -= self.herojh
+                if self.heromayholdjump and controls.w:# hold jump (hold button)
+                    self.herovj *= self.herodvj# factor jump velocity
+                    self.herov -= self.herovj
                     self.heroholdjumptimer.update()
                     if self.heroholdjumptimer.ring:
                         self.heromayholdjump=False
-                self.herov += self.herodt*(self.herofy-self.herod*self.herov)# dtv=g+flap-dv**2
-                self.hero.movey(self.herodt*self.herov)# dty=v
+                self.herov += self.herovg# gravity
+                self.hero.movey(self.herov)# dty=v (dt=1)
                 if self.hero.y>self.yground:# hero is on ground
                     self.hero.movetoy(self.yground)
                     self.herov = 0# just stall
@@ -2149,7 +1878,8 @@ class obj_world_stompfight(obj_world):
                         self.hero.dict['hurt'].show=True
                         self.hero.dict['hurttext'].show=False
 
-            if not self.villainhurt and self.herov>0:
+            if not self.villainhurt and not self.villainstate=='kick' and self.herov>0:
+            # if not self.villainhurt and self.herov>0:# easier version even when villain kicks
                 if tool.checkrectcollide(self.villainhitbox1,self.herohitbox2):# hero hits villain
                     self.villainhealth -= 1
                     if self.villainhealth>0:
@@ -2206,7 +1936,239 @@ class obj_world_stompfight(obj_world):
 
 
 # Mini Game: Climb Highest Peak
+#*CLIMB *CLIMBING *PEAK
 class obj_world_climbpeak(obj_world):
+    def setup(self):
+        #
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
+        self.xmin=50
+        self.xmax=1280-50
+        self.yground=720-120# ground
+        self.heroxystart=(140,self.yground)# where hero starts
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.hero=obj_grandactor(self,self.heroxystart)
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static
+        self.staticactor.addpart( 'img1', draw.obj_image('sun',(218,233),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img4', draw.obj_image('floor1',(640,720-100),path='premade') )
+        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(1110,100),path='premade') )
+        self.staticactor.addpart( 'img5',draw.obj_image('mountain',(779,624),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img6',draw.obj_image('mountain',(1070,605),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img7',draw.obj_image('mountain',(1203,585),scale=0.38,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('Lets go!',(585,212)) )
+        # platforms
+        self.platforms=[]
+        self.platformsxy=[(1110,195),(813,385),(457,575)]
+        for c,xy in enumerate(self.platformsxy):
+            platformi=obj_grandactor(self,xy)
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.rx=150
+            platformi.ry=5
+            self.platforms.append(platformi)
+        # hero
+        self.hero.addpart( 'stand_right', draw.obj_image('herobase',self.heroxystart,scale=0.35) )
+        self.hero.addpart( 'stand_left', draw.obj_image('herobase',self.heroxystart,scale=0.35,fliph=True) )
+        self.hero.dict['stand_right'].show=True
+        self.hero.dict['stand_left'].show=False
+        self.heromayjump=True# hero can jump (not if in the air)
+        self.heromayholdjump=False# hero can hold to jump higher
+        self.herov=0#total velocity
+        self.herovj=0# added velocity from jump (changes during jump)
+        self.heroivj=4# initial velocity from jump (when starting jump)
+        self.herodvj=0.9# velocity factor loss (when holding jump)
+        self.herovg=1.2#1 velocity from gravity
+        self.heroholdjumptimer=tool.obj_timer(100)# how long can hold jump button
+        self.heromx=12# move rate horizontally
+        # hero hitboxes
+        self.herohitbox1=obj_grandactor(self,(self.heroxystart[0],self.heroxystart[1]))# for being hit
+        self.herohitbox1.rx=50
+        self.herohitbox1.ry=100
+        self.herohitbox2=obj_grandactor(self,(self.heroxystart[0],self.heroxystart[1]+75))# for hitting (is hero feets)
+        self.herohitbox2.rx=50
+        self.herohitbox2.ry=25
+        # goal hitbox
+        self.goalhitbox=obj_grandactor(self,(1110,100))
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(980,510),color=share.colors.instructions) )
+        self.text_done.addpart( 'text1', draw.obj_textbox(' ',(980,510)) )
+        # levels
+        self.startlevel=False# start playing new level
+        self.level=1# current level
+        # timer for done part
+        self.timerend=tool.obj_timer(0)# goal to done
+        # self.setlevel2()# Test
+        # self.setlevel3()# Test
+
+    def setlevel2(self):
+        # clear stuff
+        self.staticactor.clearparts()
+        for i in self.platforms:
+            i.clearparts()
+            i.kill()
+        # static
+        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(250,200),path='premade') )
+        self.staticactor.addpart( 'img2',draw.obj_image('cloud',(1060,167),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3',draw.obj_image('cloud',(533,329),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img4',draw.obj_image('cloud',(335,620),scale=0.41,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img5',draw.obj_image('mountain',(111,676),scale=0.34,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img6',draw.obj_image('mountain',(715,692),scale=0.26,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img7',draw.obj_image('mountain',(862,671),scale=0.26,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('Keep it up!',(850,347)) )
+        # platforms
+        self.platforms=[]
+        # self.platformsxy=[(457,193),(813,385),(1110,575)]
+        self.platformsxy=[(1110,675),(1111,485),(250,485),(250,295)]
+        # ground (becomes a fall)
+        self.yground=720+200
+        # level
+        self.startlevel=False
+        self.level=2
+        # platformes
+        for c,xy in enumerate(self.platformsxy):
+            platformi=obj_grandactor(self,xy)
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.rx=150
+            platformi.ry=5
+            self.platforms.append(platformi)
+        # hero
+        self.heroxystart=(1110+50,560)
+        self.hero.movetoxy(self.heroxystart)
+        self.heromayjump=True# hero can jump (not if in the air)
+        self.heromayholdjump=False# hero can hold to jump higher
+        # goal
+        self.goalhitbox.movetoxy((250,200-100))
+        # text
+        self.text_undone.dict['text1'].movetoxy(640,580)
+
+    def setlevel3(self):
+        # clear stuff
+        self.staticactor.clearparts()
+        for i in self.platforms:
+            i.clearparts()
+            i.kill()
+        # static
+        self.staticactor.addpart( 'img0a', draw.obj_image('arrowup',(1110,50),path='premade') )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('Almost there!',(827,398)) )
+        self.staticactor.addpart( 'img1b', draw.obj_image('cloud',(478,227),scale=0.66,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img2b', draw.obj_image('cloud',(1146,626),scale=0.39,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3b', draw.obj_image('cloud',(816,535),scale=0.43,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img4b', draw.obj_image('lightningbolt',(496,385),scale=0.43,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img5b', draw.obj_image('lightningbolt',(810,218),scale=0.28,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img6b', draw.obj_image('cloud',(832,102),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img7b', draw.obj_image('cloud',(117,262),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        # platforms
+        self.platforms=[]
+        # self.platformsxy=[(457,193),(813,385),(1110,575)]
+        self.platformsxy=[(140,675),(680,675),(1110,490),(1110,320),(1110,160)]
+        # ground (becomes a fall)
+        self.yground=720+200
+        # level
+        self.startlevel=False
+        self.level=3
+        # platformes
+        for c,xy in enumerate(self.platformsxy):
+            platformi=obj_grandactor(self,xy)
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.rx=150
+            platformi.ry=5
+            self.platforms.append(platformi)
+        # hero
+        self.heroxystart=(140+50,560)
+        self.hero.movetoxy(self.heroxystart)
+        self.heromayjump=True# hero can jump (not if in the air)
+        self.heromayholdjump=False# hero can hold to jump higher
+        # goal
+        self.goalhitbox.movetoxy((1110,-30))
+        # text
+        self.text_undone.dict['text1'].movetoxy(204,409)
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            #
+            # hero
+            # initial move (press one button to initiate movement in each level)
+            if not self.startlevel:
+                if controls.ac or controls.dc or controls.sc or controls.wc:
+                    self.startlevel=True
+            if self.startlevel:
+                # hero dynamics y
+                if self.heromayjump and (controls.w and controls.wc):# jump (click button)
+                    self.herov=0# reset velocity
+                    self.herovj=self.heroivj# reset jump velocity
+                    self.heromayjump=False# cant jump again
+                    self.heromayholdjump=True# can hold this jump
+                    self.heroholdjumptimer.start()
+                if self.heromayholdjump and controls.w:# jump (hold button)
+                    self.herovj *= self.herodvj# factor jump velocity
+                    self.herov -= self.herovj
+                    self.heroholdjumptimer.update()
+                    if self.heroholdjumptimer.ring:
+                        self.heromayholdjump=False
+                self.herov += self.herovg# gravity
+                # ground
+                if self.hero.y+self.herov>self.yground:# hero is on ground
+                    if self.level<2:# first level, ground is hard
+                        self.hero.movetoy(self.yground)
+                        self.herov = 0# just stall
+                        self.heromayjump=True# may jump from ground again
+                    else:# next levels, ground is a fall (restart level)
+                        self.hero.movetoxy(self.heroxystart)
+                        self.heromayjump=True# hero can jump (not if in the air)
+                        self.startlevel=False
+                # platforms
+                for i in self.platforms:
+                    if tool.checkrectcollide(self.herohitbox2,i):
+                        self.herov=min(0,self.herov)# positive
+                        self.heromayjump=True# may jump from ground again
+                # apply movement
+                self.hero.movey(self.herov)# dty=v
+                # hero dynamics x
+                if controls.a:#
+                    self.hero.movex(-self.heromx)
+                    if controls.ac:# flip left
+                        self.hero.dict['stand_right'].show=False
+                        self.hero.dict['stand_left'].show=True
+                if controls.d:
+                    self.hero.movex(self.heromx)
+                    if controls.dc:# flip right
+                        self.hero.dict['stand_right'].show=True
+                        self.hero.dict['stand_left'].show=False
+                if self.hero.x<self.xmin:# boundaries
+                    self.hero.movetox(self.xmin)
+                elif self.hero.x>self.xmax:
+                    self.hero.movetox(self.xmax)
+                # hero hitboxes move
+                self.herohitbox1.movetoxy( (self.hero.x,self.hero.y) )
+                self.herohitbox2.movetoxy( (self.hero.x,self.hero.y+75) )
+                # hero reaches goal
+                if tool.checkrectcollide(self.herohitbox1,self.goalhitbox):
+                    if self.level==1:
+                        self.setlevel2()
+                    elif self.level==2:
+                        self.setlevel3()
+                    else:# end of all levels
+                        self.goal=True
+                        self.text_undone.show=False
+                        self.text_done.show=True
+                        self.timerend.start()
+        else:
+            # goal reached states
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+
+####################################################################################################################
+
+
+# Mini Game: Climb Highest Peak
+#*CLIMB *CLIMBING *PEAK
+class obj_world_climbpeakOLD(obj_world):
     def setup(self):
         #
         self.done=False# end of minigame
@@ -2442,6 +2404,7 @@ class obj_world_climbpeak(obj_world):
 
 
 # Mini Game: Play Rock Paper Scissors
+# *ROCK *PAPER *SCISSORS
 class obj_world_rockpaperscissors(obj_world):
     def setup(self,**kwargs):
         # default parameters
@@ -2851,6 +2814,7 @@ class obj_world_rockpaperscissors(obj_world):
 
 
 # Mini Game: play a serenade
+# *SERENADE
 class obj_world_serenade(obj_world):
     def setup(self):
         self.done=False# mini game is finished
@@ -2957,6 +2921,7 @@ class obj_world_serenade(obj_world):
 ####################################################################################################################
 
 # Mini Game: kiss
+# *KISSING
 class obj_world_kiss(obj_world):
     def setup(self):
         self.done=False# end of minigame
@@ -3037,6 +3002,7 @@ class obj_world_kiss(obj_world):
 ####################################################################################################################
 
 # Mini Game: sunrise
+# *SUNSET *NIGHTFALL
 class obj_world_sunset(obj_world):
     def setup(self):
         self.done=False# end of minigame
@@ -3120,16 +3086,17 @@ class obj_world_sunset(obj_world):
 ####################################################################################################################
 
 # Mini Game: go to bed
+# *GO TO BED *BED *SLEEP
 class obj_world_gotobed(obj_world):
     def setup(self,**kwargs):
         # default options
-        self.partner=False
+        self.addpartner=False
         self.addmoon=True# add the moon (must have been drawn)
         self.addalarmclock=False# add the alarm clock and night stand
         self.heroisangry=False# angry face on hero
         # scene tuning
         if kwargs is not None:
-            if 'partner' in kwargs: self.partner=kwargs["partner"]# partner options
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
             if 'addmoon' in kwargs: self.addmoon=kwargs["addmoon"]# partner options
             if 'alarmclock' in kwargs: self.addalarmclock=kwargs["alarmclock"]# partner options
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# partner options
@@ -3158,23 +3125,21 @@ class obj_world_gotobed(obj_world):
             self.staticactor.addpart( 'img3',draw.obj_image('alarmclock8am',(100,370),scale=0.4) )
             self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
         # start actor
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:# add partner in love
             self.startactor.addpart( 'animadd1', draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7) )
         if self.heroisangry:
             self.startactor.addpart( 'anim1', draw.obj_animation('ch1_awaken','herobaseangry',(640,360),scale=0.7) )
         else:
             self.startactor.addpart( 'anim1', draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7) )
-
         # ungoing actor
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_herotosleep','partnerbase',(640+100,360),scale=0.7) )
-
         if self.heroisangry:
             self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobaseangry',(640,360),scale=0.7) )
         else:
             self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7) )
         # finish actor
-        if self.partner == 'inlove':# add partner in love
+        if self.addpartner:
             self.finishactor.addpart( 'imgadd1', draw.obj_image('partnerbase',(420+100,490),scale=0.7,rotate=80) )
         if self.heroisangry:
             self.finishactor.addpart( 'img1', draw.obj_image('herobaseangry',(420,490),scale=0.7,rotate=80) )
@@ -3203,7 +3168,7 @@ class obj_world_gotobed(obj_world):
                     self.finishactor.show=False
                     self.timer.start()# reset ungoing timer
                     self.ungoingactor.dict["anim1"].rewind()
-                    if self.partner == 'inlove':
+                    if self.addpartner:
                         self.ungoingactor.dict["animadd1"].rewind()
             else:
                 # ungoing substate
@@ -3214,7 +3179,7 @@ class obj_world_gotobed(obj_world):
                     self.ungoingactor.show=False
                     self.finishactor.show=False
                     self.startactor.dict["anim1"].rewind()
-                    if self.partner == 'inlove':
+                    if self.addpartner:
                         self.startactor.dict["animadd1"].rewind()
                 if self.timer.ring:# flip to goal reached
                     self.goal=True

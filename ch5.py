@@ -134,7 +134,7 @@ class obj_scene_ch5p4(page.obj_chapterpage):
                 '"',('{heroname}',share.colors.hero),' woke up, but ',\
                 ('{partnername}',share.colors.partner),' wasnt there. ',\
                    ]
-        self.world=world.obj_world_wakeup(self,angryfaces=True,sun=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,heroangry=True,sun=True,alarmclock=True)
         self.addpart(self.world)
         # self.addpart (draw.obj_imageplacer(self,'nightstand','alarmclock'))
         # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5,rotate=0,fliph=False,flipv=False) )

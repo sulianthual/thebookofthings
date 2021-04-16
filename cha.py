@@ -116,8 +116,8 @@ class obj_scene_wakeup(obj_testpage):
         self.name='Wake Up'
         self.text=['Wake Up']
         self.world=world.obj_world_wakeup(self)
-        # self.world=world.obj_world_wakeup(self,partner='inlove')
-        # self.world=world.obj_world_wakeup(self,partner='inlove',angryfaces=True)
+        # self.world=world.obj_world_wakeup(self,partner=True,addsun=False)
+        # self.world=world.obj_world_wakeup(self,partner=True,heroangry=True,partnerangry=True)
         # self.world=world.obj_world_wakeup(self,sun=False)
         self.addpart(self.world)
 
@@ -264,6 +264,7 @@ class obj_scene_gotobed(obj_testpage):
         self.name='Go to Bed'
         self.text=['Go to Bed']
         self.world=world.obj_world_gotobed(self)
+        # self.world=world.obj_world_gotobed(self,partner=True,heroangry=True,addmoon=False)
         self.addpart(self.world)
 
 ####################################################################################################################

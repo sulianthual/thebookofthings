@@ -451,7 +451,7 @@ class obj_scene_ch3p12start2(page.obj_chapterpage):
         self.text=[\
                   'Move with [A][D] and jump with [W]. ',\
                 'Stomp on ',('{villainname}',share.colors.villain),\
-                ' but beware of ',('{villain_his}',share.colors.villain),\
+                ', but beware of ',('{villain_his}',share.colors.villain),\
               ' kick. Press [Enter] to start the fight. ',\
                    ]
         self.world=world.obj_world_stompfight(self)
@@ -582,7 +582,7 @@ class obj_scene_ch3play1a(page.obj_chapterpage):
                 'woke up from ',('bed',share.colors.item),' ',\
                 'with his partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,partner='inlove')
+        self.world=world.obj_world_wakeup(self,partner=True)
         self.addpart(self.world)
 
 
@@ -875,7 +875,7 @@ class obj_scene_ch3play14(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
                    ' went back to bed". ',\
                    ]
-        self.world=world.obj_world_gotobed(self,partner='inlove')
+        self.world=world.obj_world_gotobed(self,partner=True)
         self.addpart(self.world)
 
 

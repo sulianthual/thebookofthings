@@ -26,7 +26,7 @@ import ch3
 import ch4
 import ch5
 import ch6
-import cha
+import cha# remove this in final version
 
 
 ##########################################################
@@ -152,7 +152,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch4.obj_scene_ch4p10a()
+            quickscene=cha.obj_scene_climbing()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

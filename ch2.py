@@ -397,7 +397,7 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
                 'with ',('{hero_his}',share.colors.hero),\
                 ' partner called ',('{partnername}',share.colors.partner),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,partner='inlove')
+        self.world=world.obj_world_wakeup(self,partner=True)
         self.addpart(self.world)
 
 
@@ -524,7 +524,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
                    ' went to back to bed". ',\
                    ]
-        self.world=world.obj_world_gotobed(self,partner='inlove')
+        self.world=world.obj_world_gotobed(self,partner=True)
         self.addpart(self.world)
 
 
