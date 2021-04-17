@@ -28,7 +28,7 @@ class obj_scene_chapter6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
         self.text=['-----   Chapter VI: Treasure Hunt    -----   ',\
-                  '...(WIP)". ',\
+                  'Oh, it looks like this chapter hasnt been written yet. Come back later. ". ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)

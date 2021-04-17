@@ -753,10 +753,8 @@ class obj_imageplacer:
             f1.write(' '+'\n')
     def update(self,controls):
         self.retransform=False
-        if controls.down and controls.downc:
-            self.activemode=False
-        if controls.up and controls.upc:
-            self.activemode=True
+        if controls.g and controls.gc:
+            self.activemode=not self.activemode
         if self.activemode:
             if controls.e and controls.ec:
                 self.fh=not self.fh
@@ -764,16 +762,16 @@ class obj_imageplacer:
             if controls.q and controls.qc:
                 self.fv=not self.fv
                 self.retransform=True
-            if controls.a:
+            if controls.a or controls.left:
                 self.r += 2
                 self.retransform=True
-            if controls.d:
+            if controls.d or controls.right:
                 self.r -= 2
                 self.retransform=True
-            if controls.w:
+            if controls.w or controls.up:
                 self.s *= 1.05
                 self.retransform=True
-            if controls.s:
+            if controls.s or controls.down:
                 self.s *= 0.95
                 self.retransform=True
             if controls.f and controls.fc:# change image

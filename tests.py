@@ -122,8 +122,8 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['book','pen','eraser']):
             self.addpart( draw.obj_image(value,(340+c*300,y1), scale=0.25) )
         y1=150
-        for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
-            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
+        for c,value in enumerate(['herohead','bed','house','tree','pond','bush','fish','hook','sun','moon']):
+            self.addpart( draw.obj_image(value,(120+c*120,y1), scale=0.2) )
         y1=250
         for c,value in enumerate(['partnerhead','mailbox','mailletter','love','saxophone','musicnote','house','tree']):
             self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
@@ -405,11 +405,11 @@ class obj_scene_testimageplacer(obj_testpage):
         self.name='Image Placer'
         self.text=['Image Placer: allows developer to quickly place images on screen. ',\
                     'the file book/aaa.txt is edited live, and the code can be quickly copied to a page. ',\
-                   '[W,S:scale], [A,D:rotate], [Q,E: flip], [F: browse image], [Backspace: Reset].',\
+                   '[W,S or Up,Down:scale], [A,D or Left,Right:rotate], [Q,E: flip], [F: browse image], [Backspace: Reset].',\
                    ' [LMouse: Place Image], [RMouse: Remove Last Image]',\
                    ' [Space or Exit Page: Output to Code File]',\
-                   '. These commands are received only in active mode, which can be toggled.',\
-                   ' [Down: Active Mode off], [Up: Active Mode]',\
+                   '. These commands are received only in active mode: .',\
+                   ' [G: Toggle Active Mode ]',\
                    ]
         self.addpart( draw.obj_imageplacer(self, 'testimage1','testimage2' ) )
 

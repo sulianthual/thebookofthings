@@ -120,6 +120,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
         dispgroup1.addpart('part2',image2)
         dispgroup1.snapshot((640,360,200,300),'herobase')
 
+
 class obj_scene_ch1p4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p3())
@@ -359,8 +360,6 @@ class obj_scene_ch1play(page.obj_chapterpage):
         self.addpart(animation3)
 
 
-
-
 class obj_scene_ch1play1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play())
@@ -397,8 +396,6 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
 
-
-
 class obj_scene_ch1play3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play2())
@@ -414,8 +411,6 @@ class obj_scene_ch1play3(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
-
-
 
 
 class obj_scene_ch1play4(page.obj_chapterpage):
@@ -478,8 +473,8 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
                    '',\
                    ]
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
-        for c,value in enumerate(['herohead','bed','sun','moon','fish','hook']):
-            self.addpart( draw.obj_image(value,(150+c*200,400), scale=0.25) )
+        for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
+            self.addpart( draw.obj_image(value,(120+c*200,400), scale=0.4) )
 
 
 

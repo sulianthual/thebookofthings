@@ -11,13 +11,15 @@
 
 Ideas for game:
 
+
+###################
 * Main Guidelines:
 Keep it simple or will never finish this game !!!:
 No more advanced physics! Only simple goofy minigames
 No more advanced drawings! Only simple and goofy.
 No more advanced modular story! Only one linear story.
 
-
+###################
 * Game Progression:
 - Each chapter, the story is modified in some way.
 Chapter 1: start story with the hero
@@ -25,14 +27,7 @@ Chapter 2: add the partner
 Chapter 3: add the villain
 Chapter 4: twist story, hero and partners hate each others (evil ending, learn to lie)
 Chapter 5: hero finds wisdom with elder (learn to cheat)
-Chapter 6: treasure hunt in south with pirates (learn to steal)
-           introduce sailor or pirate character. need to do drinking game with him
-           cooperate with partner, villain and elder as a team?
-           then steal the treasure from everyone at the end?
-(go west for next chapter)
-Chapter X: Vegas Baby! (since we learned ot lie, cheat and steal we are ready for Vegas)
-           (and we can go spend all the fortune we made from treasure hunt. And loose everything!)
-           can draw eiffel tower, the sphinx, building and many fun stuff. To do a city on the map
+Chapter 6: treasure hunt in south with pirate theme (learn to steal)
 Chapter 7: the fabric of reality
            launch into space (from somewhere on map).
            end up in black hole (like 2001 space odyssey)
@@ -43,6 +38,53 @@ Final Chapter: Free Roaming
    - or just free-roaming: can go anywhere on open world and access all minigames
 
 
+###################
+* Chapter 4: Needs a better twist and ending
+   Hero lies to partner: hyptnotizes her ???
+   then brings her back home (like normal), plays a serenade and kisses???
+
+###################
+* Chapter 6: Treasure Hunt (or Skull Island)
+1) wake up, morning mini-game as usual
+2)  pirate knocks on door (when goes to pick letters, there is none but he is behind, like in treasure island)
+    draw pirate (eyelid + pirate hat)
+    pirate says aye, ahoy.
+3)  needs a crew of 2 buddies (choose between partner, villain and elder).
+    Need to round them up (with 2 very short mini-quests)
+    partner: around house, pickup flowers
+    villain: at villain lair, just talk?
+    elder: at highest peak, win a game of rock-paper-scissors
+    when has them all, meet at south where pirate stands.
+4)  go south on the boat, that is an ocean (draw wave, ship.)
+    reach island (draw palm tree, volcano)
+Make a skeleton character (draw a skull head)
+make skull captain (eyelid/hat), skull npc, partner skeleton (hair), villain skeleton (scar)
+*Could they be reflection of main characters with same problems? (bringing flowers, something...)
+
+OR
+
+the main npcs get cursed, each of them is a skeleton!
+The pirate did that to them to recruit some crew.
+now they must escape and break the curse
+
+5) steal treasure from skulls ?
+   break curse ?
+   dive to get a treasure (draw shark fin, whale?)
+    gets betray, something is stolen
+    infiltrate the ghost pirate lair!!!!
+    to steal back the treasure
+need to get drunk at some point s(?)
+steal a puppy (the sailor's puppy)called treasure (know it from the get go ?)
+warp to land of deads and everyone is a skeleton?
+
+
+###################
+* Chapter X: Vegas Baby! (since we learned ot lie, cheat and steal we are ready for Vegas)
+           (and we can go spend all the fortune we made from treasure hunt. And loose everything!)
+           can draw eiffel tower, the sphinx, building and many fun stuff. To do a city on the map
+
+
+###################
 * General Story Arc:
 Each day of the story should follow somewhat an arc (even if varying in content):
 arc:     wake up -> morning game -> travel1 -> afternoon quest (game) -> travel2 -> aftermath -> ending
@@ -54,11 +96,33 @@ aftermath games: eat diner, serenade/kiss...(happy ending or not)
 travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
 travel2: X go back home, or to some location for an ending
 
+###################
 * Map
 pirate in south: skull for pirate cove. Or a ship?
 add flowers: can be picked during minigame (for partner)
 add pond: can go there to fish (starting from chapter 1)
 
+
+###################
+* Drawings:
+chapter 1: add tree, house (minigame go to pond)
+chapter 2: add flower, bush to chapter 2 (minigame pick up flowers)
+chapter 3: add tennis racket (minigame tennis, with partner?)
+chapter 4: add dear, bow (minigame hunting)
+
+
+###################
+* Minigames
+( every chapter: sunrise, wakeup, nightfall, gotobed )
+ch1:  fishing   eat-fish
+ch2:  fishing   eat-fish    serenade
+ch3:  fishing   travel  dodge-bullets   stompfight
+ch4:  drinking  travel  dodge-bullets   stompfight
+ch5:  travel    climbing  RPS
+
+
+
+###################
 * Possible Story twists to add:
 - change point of view (hero, partner,villain,fish, hero in the future,...)
 - new setting like tropical island and treasure hunt (palm tree, ship, shark fins, cannon fight, islands...)(eyelid on everyone)
@@ -83,8 +147,10 @@ add pond: can go there to fish (starting from chapter 1)
   easy to make a character reflection in the mirror
 - name stuff: like locations (the evil lair, home, the highest peak, etc...)
 - pickup flowers: in hero house vicinity. then put in vase, or just offer to partner
+                  draw bush and flowers at same time?
+- map: allow player to place items (e.g. place 3 trees near the hero house, etc...)
 
-
+###################
 Mini Game Ideas
 Hunt = Arrow Parabolic Arc [A][D] then [W]
 Situation? = Flappy Bird [W]
@@ -108,70 +174,6 @@ jump/duck. Simple for bullets (increase rythm)
 simple dinosaur game from google. just jump in time.
 skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
-
-Stuff to Draw: (check all objects in katamari damacy)
-
-alarmclock and desk (just add to morning scenes in bedroom)
-
-Nature:
-- iceberg tree mountain
-- palm tree
-- cloud rain
-- flower
-
-Animals:
-- Bird  Bird Nest Egg Duck Chicken
-- Cat Dog Snail Wolf Bear
-- dolphin whale shark turtle
--octopus
-- snake frog
-- mushroom
-- mosquito fly spider spider web
-- penguin
-
-Food:
-- drink coffeecup
-- fried egg
-- apple banana
-- cake
-- grape strawberry
-- fork spoon knife plate
-
-
-Clothes:
-- hat cap pants sock sweathshirt
-- sunglasses
-
-House:
-- Bed pillow alarmclock
-- Chair
-- telephone
-- hammer
-- Tv
-- teapot
-- mailbox
-
-Technology:
-- money bill (do a shower of bills for rich!)
-- Bicycle Wings
-- Tent Submarine
-- trumpet
-- windmill
- -tennis raquet
-
-
-Culture:
-- Ghost Vampire God
-
-
-
-#####################################################################
-# COMPLETE LIST KATAMARI DAMACY OF STUFF FOR IDEAS TO DRAW
-
-
-Dustpan - Dish Rag - Quail Chick - Chick - Duckling - Swan - Hairbrush - Hair Dryer - Kokeshi Doll - Big Kokeshi - Fried Shrimp - New Year's Cards - Home Mailbox - Film - PET Bottle - Oden - Toast - Bread Loaf - Noh Mask - Red Oni Mask - Police ID - Shuriken - Tuna Sushi - Squid Sushi - Toro Sushi - Egg Sushi - Octopus Sushi - Shrimp Sushi - Inkstone - Horsetail - Police Club - Watercolor - Dynamometer - Maple Leaf - Ginkgo - Takoyaki Hotplate - Fishing Lure - Binoculars - Windmill - Barn - Picnic Table - Straw - Carport - Local Police Sign - Town Map - Street Stall - "You Are Here" - Corner Store - Drink Crate - Gong - Pampas Grass - Rice Container - Vase - Girl's Backpack - Boy's Backpack - Bulldog - Rat - Dung Beetle - Big Dung Beetle - Giant Dung Beetle - Toy Dog - Insect Cage - Butterfly Specimens - Poisonous Frog - Gold Medal - Deer Scare - Garden Rock - Police Bike - Cream Puff - Medium Tree - Kiddie Spade - Kiddie Rake - Kiddie Bucket - Small Takoyaki - Takoyaki - Big Takoyaki - Girl's Graffiti - Boy's Graffiti - Handcuffs - New Year's Card - Postcard - Envelope - Water Pump Ad - Fire Hazard Sign - Appliance Billboard - Cream Puff Ad - Sushi Ad - No Parking! - Manhole Cover - Toy Capsule - Toy Capsule - Toy Capsule - Green Crayon - Blue Crayon - Purple Crayon - Crayon Box - Banana - Survey Marker - Rock - Black Rock - Big Rock - Swallowtail - White Butterfly - Yellow Swallowtail - Purple Butterfly - Ice Cube Tray - Arrow - Orange Juice - Giraffe Slide - Girly Cellphone - Persimmon - Blackboard Eraser - Chalk - Red Chalk - Fireworks - Blue Chalk - Yellow Chalk - Green Chalk - Pigeon - Old Magazines - Kanji Workbook - Telephone Pole - 10 Yen Coin - Toothbrush - Toothpaste - Chocolate - Chocolate - Fiddler Crab - Blue Crab - Pink Flower - White Flower - Yellow Flower - Concrete Cover - Iron Cover - Steel Cover - Wall (Short) - Kiddie Pylon - Ethnic Mask - Water Tank - Nakata Residence - Kido Residence - Motoki Residence - Yamada Residence - Hayashi Residence - "Over 45cm" Sign - Sand Castle - Tin Crown - Crown - Jungle - Coffee Milk - Strawberry Jam - New Driver Sign - Senior Driver Sign - Baseball - Striped T-Shirt - Cardboard Box - Pylon - Yellow Paint - Paintbrush - Red Paint - Paintbrush - Cherry Tree - Ruby Ring - Welcome Mat - Barber's Pole - Lottery - Shopping Basket - Shopping Cart - Daikon Radishes - Chinese Cabbages - Magazine Rack - Cabbage - Barbershop - Squash - Bookstore - Drugstore - Ramen Shop - Panda Mascot - Pansies - Cake Shop - Cake Shop Sign - Lotto Store - Lottery Sign - Shop. Center Arch - Paper Lantern - Shabu-Shabu Pot - Barbershop Sign - Bookstore Sign - Drugstore Sign - Detergent - Toilet Paper - Blowfish Restaurant - "All You Can Eat" - On Sale Banner - AC Condenser - Blowfish - Calico Cat - Black Cat - Ice Cream Freezer - Sale Cart - Florist - Florist Sign - Shoe Store - Shoe Store Sign - Fruit & Veg Shop - Gas Meter - Turkey - Banana Bunch - Price Tag - Price Tag - Display Menu - Ramen Sign - Birthday Cake - Chocolate Cake - Cheesecake - Shortcake - Wedding Cake - Cafe - Tulip Bouquet - Flower Bouquet - Hydrangea - Flower Pot - Flower Pot - Flower Pot - Flower Basket - Flower Basket - Pear - Big Pear - Melon - Monster Melon - Monster Apple - Noticeboard - Fruit Shop - Cash Register - Shoe Box - Magazine - Lucky Cat - Pineapple - Peach - Giant Peach - Tissues (5 pack) - Gardening Fence - Florist Fence - Construction Guy - Chief Driller - Part-Timer - Flower Girl - Store Owner - Bucket - Short Fence - Momma - Shopper - Chubby Housewife - Chinese Bowl - Lamp Post - Open/Closed Sign - Display Stand - Strawberry Pack - Blowfish Ad Balloon - Half Watermelon - Watermelon - Peso - Food Delivery Box - Wok - Dragon Statue - Vegetable Carton - Fruit Carton - Fried Rice - Ramen - Roast Pork - Daruma - Clapper Board - Calligraphy - 8th Step - Quail River Sign - Carp - Salmon - Tire - Ceiling Light - Momotaro - Ostrich Chick - Big Crown - Honey - Fisherman - 4b. S. Pigeon St. - Wooden Bench - Briefcase - Scarecrow - Traffic Dummy - 6th Step - Warning Sign - Daikon Radish - Yellow Squash - Matsuri Tent - Matsuri Table - Wheelbarrow - Hoe - Shovel - Axe - Handrail - Pickaxe - Wooden Box - Accident Notice - Policeman - Mikoshi - Ship's Wheel - Lantern - Sweets Container - Toaster - Roller Boy - Farmer - Strong Man - Paper Fan Man - Matsuri Boy - Matsuri Lover - Matsuri Girl - Busker - Fortune-teller - Big Turnip - Cherry Tree - Tree Stump - Takoyaki Sign - Toy Dispenser - Photo Booth - "Don't Rush Out" - Carrot - Flea Market - Hard Hat - Baseball Cap - Straw Hat - Telephone Pole Ad - Paper Bag - Laundry Hanger - Fire Extinguisher - Copy Machine - Pachinko Machine - Bowling Pin - Palmistry Table - Palmistry Sign - Cushioned Chair - Mortar - Pestle - Dove Statue - Old Comics - Old Newspapers - Boy - Junior - Precious - Scooter - Girl - Telephone Pole - Pay Phone - Telephone Book - Megaphone - Biker Flag - Bus Stop - Businessman - Businessman - Fat Businessman - Utility Worker - Grandpa - Storekeeper - Great x2 Grandpa - Great x3 Grandpa - Grandma - DIY Dad - Bamboo Broom - Store Dustpan - Schoolgirl - Wooden Fence - Housewife - Snoozing Momma - Triangle Pylon - Fox Mask - Hyottoko Mask - Kendo Mask - Bamboo Sword - Punk - Big Guy - Nerdy Guy - Pretty Boy - Konishi Residence - Wada Residence - Bicycle - Tricycle - Russian Doll (S) - Royal Crown - Pizza - Food Delivery Bike - Burglar Mask - Briefs - Sidewalk Marker - Jumboman Mask - Organ - Scale - Weather Station - Red Oil Drum - Green Oil Drum - Blue Oil Drum - Bale of Rice - Tractor - Backpack - Plastic Greenhouse - Matsuri Stage - Small Tree - Farmhouse - Cinema Marquee - Garbage Truck - Carp Streamer - Magoi - Higoi - Kogoi - Fukinagashi - Plastic Bench - Globe Jungle Gym - See-saw - Jungle Gym - Slide - Telescope - Taiko Drum - Port-A-Potty - Cardboard Carton - Kintaro-Bear - Skater Boy - Election Posters - Traffic Mirror - Grand Opening - Swing - Traffic Signal - Pedestrian Signal - Tea House - Teahouse Banner - Food Sample - Umbrella Shop - Umbrella Shop Sign - Bear Cub Statue - Parasol - Curry Ad - Road Sign - Washing Machine - Gatepost - Shoe Cupboard - Stereo Shelf - Weathercock - Eagle - Hatchback - Compact - Van - Minivan - Monster Truck - Stop Sign - Speed Limit Sign - Phone Booth - Sliding Door - Guardrail  - Fancy Guardrail - Pedestrian Bridge - Bus Stop - Nurse - Vending Machine - Manneken Pis - Spirit - Garbage Dump - Wooden Fence - Mama-san - Jumbo Pylon - Gas Station - RF Radiation Sign - Gas Pump - Car Wash - Gas Station Sign - Blue Girl - Yellow Girl - Pink Girl - Girl Statue - Kerosene Stove - Oil Heater - Potbellied Stove - Bicycle - Shoe Display Stand - Shikao - Colombo - June - Kid's Umbrella - Umbrella - Polka Dot Umbrella - Jumbo Umbrella - Alpinist - Helicopter - 6b. Dove Lake - Barrel - X'mas Tree - 9th Step - 10th Step - Fishing Pole - Pier - Fishing Shack - Surfboard - Clay Stove - Picnic Basket - "No Swimming" Sign - Snapper - Bonito - Stingray - Vanilla Cone - Mixed Cone - Strawberry Cone - Boat Rental Sign - Round Table - Bear Carving - Drainboard - Winners' Podium - Cooler - TV Camera - Mystery Creature - Treasure Chest - Fishing Hole Sign - Shoji - Torn Shoji - Microphone Stand - Inner Tube Kid - Flag Buoy - Fish Statue - Sea Otter - Seal - Baby Turtle - Pool Ring - Pool Ring - Spotlight - Spotlight - Park Lamp Post - Big Watermelon - Fridge - Marny - Ichigo - Chubby Fisherman - Diver - Closed Box - Open Box - Crocodile - 7b. Sparrow Hill - Regular Tree - Big Tree - No Trespassing - Log - Mountain Guidepost - Hiking Course Map - Monument - Picture Stand - 8b. Baseball Field - Outfielder - Pitcher - Batter - Benchwarmer - Baseball Bat - Scoreboard - Base - Home Plate - Pitcher's Mound - Baseball Field Sign - Field Liner - Lawn Roller - Folding Chair - Champion's Belt - Barbell - Wrestler - Speakers - Jumping Bear Castle - Teepee - Camping Tent - Log Cabin - Bungalow - Scattered Clouds - 10b. Construction Site - Wrecking Ball - Radio Tower - Duct - Barrier - Prefab House - Construction Fence - Crane - Bulldozer - Steamroller - Driller - Steel Tower - Water Tank Sign - Fossil - Ammonite - Construction Entrance - Under Construction - Light Truck - Breakwater Block - Tiller - Flower Bed - Well Pump - Rubber Boot - Kid's Boot - Globe - Trophy - Snowman - Holy Cow - Man - Dog With Fleas - Siamese Cat - Clown - Balloon Man - Rocking Horse - Kebab - Ball Toss Basket - Butcher Sign - Candy Store Sign - Roast On Bone - Sunflower - Rabbit-Man - Bear-Man - Cow-Man - Toad - Hot Air Balloon - Balloon Shop Sign - Park Entrance - Forest Guidepost - Park Map - Door - Stilts - Green Balloon - Pink Balloon - Balloon Shop - Butcher Shop - Candy Store - Kiddie Car - Froggy Car - Coconut Crab - Trash Can - Penguin - Park Fence - Lollipop - Garden Plant (M) - Kid's Tricycle - Totem Pole - Tall Totem Poll - Panda Ride - Piggybackers - Tri-Piggybackers - Human Tower - Hour Hand - Minute Hand - Seagull Park Site - Portfolio - Sailboat - Firewood - Palm Tree - Lotus Leaf - Giant Lotus Leaf - Lotus - Striped Fish - Kotatsu - Beachball - Bear Cub - Polar Bear - Big Bear - Surfer - Judo Contest - Deer Head - Pond Guide - Camp Fire - Lighthouse - Chicken - Kickboard Boy - Watermelon Boy - Buoy - Great Grandpa - Old Salt - Abalone Diver - Electric Jellyfish - Sea Anemone - Algae Ball - The Best Mask - Double Punk - Cranky Guy - Golfer Guy - Golf Nut - Beach Umbrella - Cow Umbrella - Safe - Giant Watermelon - Ace - Bikini - Swimsuit - Sandpile - Chopper - Gangster Car - Boat - Swan Boat - Soccer Ball - Football - Mountain Man - Falling Rock - Merman - Top - 4th Step - Height Measure - School Chair - School Desk - Combine Harvester - Propane Tank - Kerosene Tank - Pickle Tub - Garden Lantern - Squared Shrubbery - Mailbox - Arcade Machine - Pressure Cooker - Soccer Goal - Calf - Cute Cow - White Sheep - Black Sheep - Burglar - Horizontal Bar - Hanging Bars - Principal's Statue - Kettle - Killer Move - Soccer Player - Podium - Convenience Store - "No Stealing Cows" - Pachinko Sign - Convenience Store - Parking Turntable - Sumo Wrestler - Pachinko Parlor - School Gate - School Sign - Pine Decoration - Crow - Lion Dance - Pogo Boy - RC Boy - Middle School - Clock Pedestal - Tall Business Man - Gym Storage - Gymnasium - Cow Vending Machine - Panda Balloon - Spirit of Joy - Garbage - Metal Bucket - Recycling Bin - Fence - Schoolgirl - Wall - Schoolboy - Pylon - Gymnastic Boy - Ball Race - Dangling Boy - Shy Guy - Apartment Building - Russian Doll - Nickel - Velvet - Dipp - Pizza Delivery Bike - Foomin - Opeo - Fujio - Principal - Red Ball - Giant Daruma - Invisible Man - Mermaid - Old Urchinville - Parking Lot Sign - Advertising Balloon - Truck - Bus - Wrestling Ring - Wrestling Match - Supermarket - Supermarket Sign - Stingray Building - Tree - Parking Garage - Neon Hotel Sign - Hotel Parking - Balance Beam - Parking Lot - Old Hotel Building - New Hotel Building - Connecting Bridge - Old Hotel Sign - New Hotel Sign - Masked Wrestler - Judo Wrestler - Bathhouse - Smokestack - Boiler Room - Bathhouse Curtain - White Wall - Japanese Car - Tall Business Man - Delivery Guy - Panda Sign - Summer Skinny - Mom - Playful Punk - TV Station - Monument - Lamp Post - Lion Statue - Lion Fountain - Lion Paw - Deluxe Fridge - Skinny - American Guy - Towel Guy - Drawbridge - Old Saltville - The Old Crab Mart - 5c. Seaslug Ranch - Cowshed - Dairy Cow - Ox - Giraffe - Windmill - Mushroom (L) - Silo - Log Fence - Huge Falling Rock - The Old Ranch - 6c. Sunshine Beach - Tuna - Sumo Bout - Kelp Factory - Smokestack - Ryokan - Kimono - Dried Kelp - Gull 'n Kelp - Sea Turtle - Old Suntan Beach - Boathouse - Market - Wholesale Market - Market Sign - Swordfish - Tall Lighthouse - Breakwater Block - Kimura Residence - Hara Residence - Majima Residence - Sailboat - Suspension Bridge - Small Fishing Boat - Fishing Boat - Trawler - Whale Mountain - Old Fishing Port - New Fishing Port - The Old Port - Demo Island - 8c. Circus - Elephant - Mammoth - Huge Tree - Gigantic Tree - Flat Car - Cage - Small Circus Tent - Circus Balloon - Circus Arch - Circus Sign - Train - Fight, Jumboman! - Circus Site - 9c. Mullet Bay - Warehouse - Anchor - Factory - Factory - Oil Tank - Petroleum Tank - Gas Tank - Crane Scaffold - Crane - Crane Scaffold - Crane - Cargo Ship - Sea Lion Isle - Cargo Container - Cargo Container - Cargo Container - 10c. Whirlpool Point - Hotel Sign - Goldfish Building - Shop Sign - Dentist Sign - Company Sign - Bank Sign - Men's Clothes Sign - Soccer Stadium - Stadium Lights - Stadium Balloon - Publisher Sign - Appliance Billboard - Car Ad - Sea Bass Building - Doi Residence - Towering Kokeshi - Bubble Island - Penguin Island - Scallop Island - Sunglass Bridge - Stadium Screen - Marlin Building - Bream Building - Coral Building - Satellite Dish - Elementary School - School Clocktower - Kuroshio Hills - Kuroshio Town - Old Middle School - 12c. Dolphin City - Tower - Eel Building - Sunfish Building - Drink Sign - Financing Ad - Netting Cage - Mogran - Mackerel Building - Guppy Building - Shark Building - Huge Bowling Pin - Bowling Alley - High School - Super Pylon - Marine Jumboman - Anglerfish Island - Coral Island - Railroad Bridge - 13c. Whale City - Ferris Wheel - Airport Terminal - Control Tower - Pilchard Building - Salmon Building - Airport - Stadium - Brine Building - Japanese Castle - Big Hot Air Balloon - Shrimp Building - Airplane - Oil Tanker - Splashy Island - Cuttlefish Island - Sea Cucumber Is. - Jellyfish Mountain - Toll Bridge - Rocket - Cruise Ship - Satellite - Space Center - Launch Pad - Storm Cloud - Oni Island - The Oni Rock - Thunder God - Rain - College - Giant Sea Turtle - Prop Plane - Submarine - Cloud - Tornado - Whirlpool - Rainbow - Top Shell Island - Anchor Island - Nagisa Island - Abalone Island - Cockle Island - Starfish Island - Tsunami Island - Flying Fish Island - Roe Island - Sperm Whale - Takeda Residence - Pigeon Town - Giant Squid - Giant Octopus - Gigantic Squid - Gigantic Octopus - Small Iceberg - Pointy Iceberg - Big Iceberg
-
-
 
 
 
@@ -524,7 +526,72 @@ class obj_world_traveltolairOLD(obj_world):
 
 
 
+#############################3
+#old : add pond and bushes directly in chapter 1 (too much
 
+
+class obj_scene_ch1p8a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8b())
+    def setup(self):
+        self.text=['Now, lets make a ',('house',share.colors.item),\
+                    ' surrounded by some ',('trees',share.colors.item),\
+                    ' where ',('{heroname}',share.colors.hero),' can live. ',\
+                   ]
+        self.addpart( draw.obj_textbox("The Hero\'s House was called:",(230,180)) )
+        self.addpart( draw.obj_textinput('housename',25,(750,180),color=share.colors.hero, legend=' ') )
+        self.addpart( draw.obj_drawing('house',(340,450),legend='Draw a House',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('tree',(940,450),legend='Draw a Tree',shadow=(200,200)) )
+
+class obj_scene_ch1p8b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8c())
+
+    def setup(self):
+        self.text=[\
+                    'This what the ',('house',share.colors.item),\
+                    ' looks like so far.',\
+                      'It aint much but its a start, said the book of things. ',\
+                   ]
+        self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=1,part=1)
+        self.addpart(self.world)
+
+
+class obj_scene_ch1p8c(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8b())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8d())
+    def setup(self):
+        self.text=['I think we could decorate a bit, said the book of things.',\
+                ' Lets add a ',('pond',share.colors.item),\
+                    ' nearby and a  few ',('bushes',share.colors.item),'. ',\
+                   ]
+        self.addpart( draw.obj_drawing('pond',(340,450),legend='Draw a Pond',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('bush',(940,450),legend='Draw a Bush',shadow=(200,200)) )
+
+
+
+class obj_scene_ch1p8d(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p8c())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch1p9())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                    'Slightly better! Now go to the ',
+                    ('pond',share.colors.item),'. ',\
+                   ]
+        self.world=world.obj_world_travel(self,start='home',goal='pond',chapter=1,part=2)
+        self.addpart(self.world)
+        # self.addpart( draw.obj_drawing('path3',(320,360),legend='Draw a Bush',shadow=(320,200),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','sun','bush',actor='staticactor10') ))
 
 
 

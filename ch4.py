@@ -624,12 +624,12 @@ class obj_scene_ch4p18(page.obj_chapterpage):
                   'Suddendly, the ',('evil lair',share.colors.location),' took fire". ',\
                   'Quick, draw a ',('flame',share.colors.item),\
                   ', said the book of things. ',\
-                  ' (WIP: draw a cage too around the stickman) ',\
+                  # ' (WIP: draw a cage too around the stickman) ',\
                    ]
         self.addpart( draw.obj_drawing('flame',(200+50,450),legend='Flame',shadow=(200,200)) )
         #
-        self.addpart( draw.obj_image('stickbase',(1280-200-50,450),scale=0.5,path='premade') )
-        self.addpart( draw.obj_drawing('cage',(1280-200-50,450),legend='Cage',shadow=(200,200)) )
+        # self.addpart( draw.obj_image('stickbase',(1280-200-50,450),scale=0.5,path='premade') )
+        # self.addpart( draw.obj_drawing('cage',(1280-200-50,450),legend='Cage',shadow=(200,200)) )
 
 
 

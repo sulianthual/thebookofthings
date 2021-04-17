@@ -60,10 +60,12 @@ class obj_scene_arcademenu(page.obj_page):
 
     def loadtests(self):# load all mini-games
         #
+
         self.list.append(obj_scene_sunrise())
         self.list.append(obj_scene_wakeup())
         self.list.append(obj_scene_drinking())
         self.list.append(obj_scene_fishing())
+        self.list.append(obj_scene_pickflowers())
         self.list.append(obj_scene_travel())
         self.list.append(obj_scene_dodgebullets())
         self.list.append(obj_scene_stompfight())
@@ -144,6 +146,27 @@ class obj_scene_fishing(obj_testpage):
         self.addpart(self.world)
 
 
+class obj_scene_pickflowers(obj_testpage):
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_pickflowers2())
+    def setup(self):
+        self.name='Pickup Flowers (draw)'
+        self.text=['Pickup Flowers (draw)']
+        self.addpart( draw.obj_drawing('bush',(210,450),legend='Bush',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('flower',(640,450),legend='Flower',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('pond',(1280-210,450),legend='Pond',shadow=(200,200)) )
+
+class obj_scene_pickflowers2(obj_testpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_pickflowers())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=['Pickup Flowers (play)']
+        self.world=world.obj_world_travel(self,start='home',goal='home',chapter=3,minigame='flowers')
+        self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'flower','bush','pond',actor='staticactor11') )
+
 class obj_scene_travel(obj_testpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
@@ -161,7 +184,7 @@ class obj_scene_travel(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
         # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','lightningbolt','tree') )
         # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','tree','sun') )
-        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','sun',actor='staticactor10') )
+        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','sun','bush',actor='staticactor10') )
         # self.addpart( draw.obj_drawing('path2',(640,360),shadow=(540,200),brush=share.brushes.smallpen) )
         # self.addpart( draw.obj_drawing('horizon1',(640,360),shadow=(640,50),brush=share.brushes.smallpen) )
         # self.addpart( draw.obj_drawing('horizon2',(640+320,360),shadow=(320,50),brush=share.brushes.smallpen) )
