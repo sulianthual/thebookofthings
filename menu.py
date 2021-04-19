@@ -32,8 +32,17 @@ import cha# remove this in final version
 ##########################################################
 ##########################################################
 
+# Reference to titlescreen
+class obj_scene_titlescreen:
+    def __init__(self):
+        pass
+    def update(self,controls):
+        # reloads main menu every time
+        share.scenemanager.switchscene(obj_scene_realtitlescreen())
+
+
 # Main Menu
-class obj_scene_titlescreen(page.obj_page):
+class obj_scene_realtitlescreen(page.obj_page):
     def __init__(self):
         super().__init__()
     def presetup(self):
@@ -49,9 +58,9 @@ class obj_scene_titlescreen(page.obj_page):
         self.sprite_ch1=draw.obj_textbox('Chapter 1: The Hero',(640,440),fontsize='smaller')
         self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
         self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
-        self.sprite_ch4=draw.obj_textbox('Chapter 4: Marital Issues',(640,530),fontsize='smaller')
-        self.sprite_ch5=draw.obj_textbox('Chapter 5: The Highest Peak',(640,560),fontsize='smaller')
-        self.sprite_ch6=draw.obj_textbox('Chapter 6: Treasure Hunt',(640,590),fontsize='smaller')
+        self.sprite_ch4=draw.obj_textbox('Chapter 4: The Elder',(640,530),fontsize='smaller')
+        self.sprite_ch5=draw.obj_textbox('Chapter 5: WIP',(640,560),fontsize='smaller')
+        self.sprite_ch6=draw.obj_textbox('Chapter 6: The full story',(640,590),fontsize='smaller')
 
 
         self.sprite_drawings=draw.obj_textbox('Drawings (Coming Soon)',(1140,410),fontsize='smaller')
@@ -152,7 +161,7 @@ class obj_scene_titlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch1.obj_scene_ch1unlocknext()
+            quickscene=ch4.obj_scene_travelhomepeak()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

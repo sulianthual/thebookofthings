@@ -5,7 +5,7 @@
 # Game by sul
 # Started Sept 2020
 #
-# chapter5.py: ...
+# chapter6.py: ...
 #
 ##########################################################
 ###########################################################
@@ -23,13 +23,12 @@ import world
 # *CHAPTER VI
 
 # name house
-class obj_scene_chapter5(page.obj_chapterpage):
+class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p1())
+        share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
-        self.text=['-----   Chapter V: The Full Story   -----   ',\
-                  'This chapter and the rest of the game is still a work in progress, said the book of things. ',\
-                    'Come back later. Or just try to read next chapter, it is a new format I am testing. ". ',\
+        self.text=['-----   Chapter VI: Treasure Hunt    -----   ',\
+                  'Oh, it looks like this chapter hasnt been written yet. Come back later. ". ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
@@ -39,11 +38,8 @@ class obj_scene_chapter5(page.obj_chapterpage):
         self.addpart(animation3)
 
 
-class obj_scene_ch5p1(page.obj_chapterpage):
+class obj_scene_ch6p1(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter5())
-    def setup(self):
-        self.text=['You have unlocked a new chapter, ',\
-                    ('Chapter VI',share.colors.instructions),'! Access it from the menu. ',\
-                   ]
-        share.datamanager.updateprogress(chapter=6)# chapter 6 becomes available
+        share.scenemanager.switchscene(obj_scene_chapter6())
+    # def nextpage(self):
+    #     share.scenemanager.switchscene(obj_scene_ch6p2())

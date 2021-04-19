@@ -515,7 +515,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5a())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play7())
+        share.scenemanager.switchscene(obj_scene_ch2playend())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -528,34 +528,15 @@ class obj_scene_ch2play6(page.obj_chapterpage):
         self.addpart(self.world)
 
 
-class obj_scene_ch2play7(page.obj_chapterpage):
+class obj_scene_ch2playend(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play6())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2playend())
-    def setup(self):
-        self.text=[\
-                   '"And they lived happily ever after, the End". ',\
-                   ]
-        self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
-        self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
-        self.addpart( draw.obj_textbox('(of a very loving story)',(640,280)) )
-        self.addpart( draw.obj_image('house',(370,430), scale=0.25) )
-        self.addpart( draw.obj_image('tree',(460,520), scale=0.25) )
-        self.addpart( draw.obj_image('herobase',(590,470), scale=0.25) )
-        self.addpart( draw.obj_image('partnerbase',(690,470), scale=0.25,fliph=True) )
-        self.addpart( draw.obj_image('saxophone',(850,500), scale=0.25) )
-        self.addpart( draw.obj_image('love',(350,320), scale=0.15) )
-        self.addpart( draw.obj_image('musicnote',(900,320), scale=0.15) )
-
-
-class obj_scene_ch2playend(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play7())
-    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2unlocknext())
     def setup(self):
-        self.text=['And thats all the story for today, said the book of things. ',
+        self.text=[\
+                   '"And they lived happily ever after, the end". ',\
+                    'And thats all the story for today, said the book of things. ',
                    'But tomorrow we will make this story even better! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
@@ -565,14 +546,11 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def setup(self):
-        self.text=['You have unlocked ',('Chapter III: The Villain',share.colors.instructions),'. ',\
-                  'You can always redraw the partner, love heart, mailbox and mail letter, saxophone and music note, house and tree in ',\
-                  ('Chapter II: The Partner',share.colors.instructions),'. '\
-                   '',\
+        self.text=['You have unlocked a new chapter, ',\
+                    ('Chapter III',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
-        for c,value in enumerate(['partnerhead','mailbox','mailletter','love','saxophone','musicnote','house','tree']):
-            self.addpart( draw.obj_image(value,(100+c*150,400), scale=0.2) )
+
 
 
 #

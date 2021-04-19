@@ -393,116 +393,12 @@ class obj_scene_ch3p10death(page.obj_chapterpage):
 
 
 
+
+
+
 class obj_scene_ch3p11(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p10())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start())
-    def setup(self):
-        self.text=[\
-                  'Well done!, said the book of things. ',('{villainname}',share.colors.villain),\
-                ' has ran out of bullets. ',\
-                'But it isnt over yet. ',\
-                ('{villainname}',share.colors.villain),\
-                ' has started to fight ',('{heroname}',share.colors.hero),\
-                ' in hand-to-hand combat. ',\
-                   ]
-        self.addpart( draw.obj_image('floor2',(640,580+90),path='premade') )
-        self.addpart( draw.obj_image('herobase',(340,580),scale=0.35) )
-        self.addpart( draw.obj_image('villainbase',(940,580-12),scale=0.35,fliph=True) )
-    def endpage(self):
-        super().endpage()
-        # combine villainhead+stickkick for villain kick
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickkick',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,330,300,330),'villainkick')
-
-
-class obj_scene_ch3p12start(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p11())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start2())
-    def setup(self):
-        self.text=[\
-                  'These are the ',('hero',share.colors.hero),\
-                  '\'s and the ',('villain',share.colors.villain),\
-                  '\'s healthbars.',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-        self.world.villainhurt=True# hurt so cannot evolve
-        self.world.villain.dict['hurt'].show=False
-        self.world.text_undone.show=False
-        # self.addpart(draw.obj_image('circle1',(300,200),path='premade'))
-        self.addpart(draw.obj_image('show1',(480,370),path='premade',flipv=True))
-        # self.addpart(draw.obj_image('circle2',(990,200),path='premade'))
-        self.addpart(draw.obj_image('show2',(880,370),path='premade',flipv=True))
-
-class obj_scene_ch3p12start2(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
-    def triggernextpage(self,controls):
-        return controls.enter and controls.enterc
-    def setup(self):
-        self.text=[\
-                  'Move with [A][D] and jump with [W]. ',\
-                'Stomp on ',('{villainname}',share.colors.villain),\
-                ', but beware of ',('{villain_his}',share.colors.villain),\
-              ' kick. Press [Enter] to start the fight. ',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-        self.world.villainhurt=True# hurt so cannot evolve
-        self.world.villain.dict['hurt'].show=False
-        self.world.text_undone.show=False
-        self.addpart(draw.obj_textbox('[A,D: Move] [W: Jump]',(640,200),color=share.colors.instructions) )
-
-
-class obj_scene_ch3p12(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start2())
-    def nextpage(self):
-        if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3p13())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch3p12death())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                  'Stomp the villain. ',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-        # drawing=draw.obj_drawing('floor2',(640,720-50),shadow=(640,50))
-        # drawing.brush.makebrush(share.brushes.smallpen)
-        # self.addpart(drawing)
-
-
-class obj_scene_ch3p12death(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
-
-    def setup(self):
-        self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
-                'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
-                'Now go back and try to act more "heroic". ',\
-                   ]
-        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
-
-
-class obj_scene_ch3p13(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3play())
     def setup(self):
@@ -529,7 +425,7 @@ class obj_scene_ch3p13(page.obj_chapterpage):
 
 class obj_scene_ch3play(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p13())
+        share.scenemanager.switchscene(obj_scene_ch3p11())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3play1())
     def triggernextpage(self,controls):
@@ -580,7 +476,8 @@ class obj_scene_ch3play1a(page.obj_chapterpage):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item),' ',\
-                'with his partner ',('{partnername}',share.colors.partner),'." ',\
+                'with ',('{hero_his}',share.colors.hero),\
+                ' partner ',('{partnername}',share.colors.partner),'." ',\
                    ]
         self.world=world.obj_world_wakeup(self,partner=True)
         self.addpart(self.world)
@@ -697,7 +594,7 @@ class obj_scene_ch3play6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3play5())
     def nextpage(self):
         if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3play7())
+            share.scenemanager.switchscene(obj_scene_ch3play8())
         else:
             share.scenemanager.switchscene(obj_scene_ch3play6death())
     def triggernextpage(self,controls):
@@ -708,8 +605,6 @@ class obj_scene_ch3play6(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)
-
-
 class obj_scene_ch3play6death(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3play6())
@@ -726,42 +621,11 @@ class obj_scene_ch3play6death(page.obj_chapterpage):
         self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
 
 
-class obj_scene_ch3play7(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play6())
-    def nextpage(self):
-        if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3play8())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch3play7death())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                  '"..then they fought with fists." ',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-
-class obj_scene_ch3play7death(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play7())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play7())
-    def setup(self):
-        self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
-                'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
-                'Now go back and try to act more "heroic". ',\
-                   ]
-        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
 
 
 class obj_scene_ch3play8(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play7())
+        share.scenemanager.switchscene(obj_scene_ch3play6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3play9())
     def triggernextpage(self,controls):
@@ -866,7 +730,7 @@ class obj_scene_ch3play14(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3play13())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play15())
+        share.scenemanager.switchscene(obj_scene_ch3playend())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -879,36 +743,17 @@ class obj_scene_ch3play14(page.obj_chapterpage):
         self.addpart(self.world)
 
 
-class obj_scene_ch3play15(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play14())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3playend())
-    def setup(self):
-        self.text=[\
-                   '"And they lived happily ever after, the End". ',\
-                   ]
-        self.addpart( draw.obj_image('endframe',(640,410),path='premade') )
-        self.addpart( draw.obj_textbox('The End',(640,200),fontsize='huge') )
-        self.addpart( draw.obj_textbox('(of a very perfect story)',(640,280)) )
-        self.addpart( draw.obj_image('house',(320,430), scale=0.25) )
-        self.addpart( draw.obj_image('tree',(340,560), scale=0.25) )
-        self.addpart( draw.obj_image('tower',(950,430), scale=0.25) )
-        self.addpart( draw.obj_image('mountain',(910,540), scale=0.25) )
-        self.addpart( draw.obj_image('herobase',(620,450), scale=0.25) )
-        self.addpart( draw.obj_image('partnerbase',(509,476), scale=0.25) )
-        self.addpart( draw.obj_image('villainbase',(772,474), scale=0.25,fliph=True) )
-        self.addpart( draw.obj_image('gun',(380,270), scale=0.15) )
-        self.addpart( draw.obj_image('bullet',(890,270), scale=0.15) )
 
 
 class obj_scene_ch3playend(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play15())
+        share.scenemanager.switchscene(obj_scene_ch3play14())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3unlocknext())
     def setup(self):
-        self.text=['And thats it for today, said the book of things. ',
+        self.text=[\
+                   '"And they lived happily ever after, the End". ',\
+                    'And thats it for today, said the book of things. ',
                    'That is quite a story, well done! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
@@ -919,14 +764,10 @@ class obj_scene_ch3unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3playend())
     def setup(self):
-        self.text=['You have unlocked ',('Chapter IV: Marital Issues',share.colors.instructions),'. ',\
-                  'You can always redraw the villain, tower and mountain, gun and bullet in ',\
-                  ('Chapter III: The Villain',share.colors.instructions),'. '\
-                   '',\
+        self.text=['You have unlocked a new chapter, ',\
+                    ('Chapter IV',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=4)# chapter 4 becomes available
-        for c,value in enumerate(['villainhead','tower','mountain','gun','bullet']):
-            self.addpart( draw.obj_image(value,(240+c*200,400), scale=0.25) )
 
 
 
