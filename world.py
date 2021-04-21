@@ -913,10 +913,12 @@ class obj_world_eatfish(obj_world):
         # default options
         self.addpartner=False
         self.eldereats=False# replace hero with elder as eater
+        self.heroisangry=False# angry face on hero
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
             if 'eldereats' in kwargs: self.eldereats=kwargs["eldereats"]# partner options
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# partner options
         #
         self.done=False# mini game is finished
         self.doneeating=False# done eating
@@ -935,14 +937,20 @@ class obj_world_eatfish(obj_world):
         if self.eldereats:
             self.herostand.addpart( 'img_stand',draw.obj_image('elderbase',(340,400), scale=0.7) )
         else:
-            self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
+            if self.heroisangry:
+                self.herostand.addpart( 'img_stand',draw.obj_image('herobaseangry',(340,400), scale=0.7) )
+            else:
+                self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
         self.heroeat=obj_grandactor(self,(640,360))
         if self.addpartner:# add partner in love
             self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-50),imgscale=0.7) )
         if self.eldereats:
             self.animation1=draw.obj_animation('ch1_heroeats1','elderbase',(640,360),imgscale=0.7)
         else:
-            self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
+            if self.heroisangry:
+                self.animation1=draw.obj_animation('ch1_heroeats1','herobaseangry',(640,360),imgscale=0.7)
+            else:
+                self.animation1=draw.obj_animation('ch1_heroeats1','herobase',(640,360),imgscale=0.7)
         self.heroeat.addpart('anim_eat', self.animation1)
         self.herostand.show=True
         self.heroeat.show=False

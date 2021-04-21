@@ -29,6 +29,7 @@ import ch6
 import cha# remove this in final version
 
 
+
 ##########################################################
 ##########################################################
 
@@ -55,18 +56,13 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_settings=draw.obj_textbox('Settings',(640,380),fontsize='smaller')
         self.sprite_start=draw.obj_textbox('Start New Book',(640,410),fontsize='smaller')
         self.sprite_prologue=draw.obj_textbox('Prologue',(640,410),fontsize='smaller')
-        self.sprite_ch1=draw.obj_textbox('Chapter 1: The Hero',(640,440),fontsize='smaller')
-        self.sprite_ch2=draw.obj_textbox('Chapter 2: The Partner',(640,470),fontsize='smaller')
-        self.sprite_ch3=draw.obj_textbox('Chapter 3: The Villain',(640,500),fontsize='smaller')
-        self.sprite_ch4=draw.obj_textbox('Chapter 4: The Elder',(640,530),fontsize='smaller')
-        self.sprite_ch5=draw.obj_textbox('Chapter 5: WIP',(640,560),fontsize='smaller')
-        self.sprite_ch6=draw.obj_textbox('Chapter 6: The full story',(640,590),fontsize='smaller')
-
-
-        self.sprite_drawings=draw.obj_textbox('Drawings (Coming Soon)',(1140,410),fontsize='smaller')
-        self.sprite_arcade=draw.obj_textbox('Arcade (Coming Soon)',(1140,440),fontsize='smaller')
-        self.sprite_endings=draw.obj_textbox('Endings (Coming Soon)',(1140,470),fontsize='smaller')
-        self.sprite_credits=draw.obj_textbox('Credits (Coming Soon)',(1140,500),fontsize='smaller')
+        self.sprite_ch1=draw.obj_textbox('Chapter I: Home Sweet Home',(540,440),fontsize='smaller',xleft=True)
+        self.sprite_ch2=draw.obj_textbox('Chapter II: My Love',(540,470),fontsize='smaller',xleft=True)
+        self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(540,500),fontsize='smaller',xleft=True)
+        self.sprite_ch4=draw.obj_textbox('Chapter IV: Higher and Higher',(540,530),fontsize='smaller',xleft=True)
+        self.sprite_ch5=draw.obj_textbox('Chapter V: Treasure Hunt',(540,560),fontsize='smaller',xleft=True)
+        self.sprite_ch6=draw.obj_textbox('Chapter VI: Something West',(540,590),fontsize='smaller',xleft=True)
+        self.sprite_ch7=draw.obj_textbox('Chapter VII: Showtime',(540,620),fontsize='smaller',xleft=True)
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
         self.addpart(self.sprite_info)
@@ -79,10 +75,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(self.sprite_ch4)
         self.addpart(self.sprite_ch5)
         self.addpart(self.sprite_ch6)
-        # self.addpart(self.sprite_arcade)
-        # self.addpart(self.sprite_drawings)
-        # self.addpart(self.sprite_endings)
-        # self.addpart(self.sprite_credits)
+        self.addpart(self.sprite_ch7)
         # decorations
         self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
@@ -113,6 +106,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_ch4.show=self.maxchapter>3
         self.sprite_ch5.show=self.maxchapter>4
         self.sprite_ch6.show=self.maxchapter>5
+        self.sprite_ch7.show=self.maxchapter>6
         # update decorations (chapter dependent)
         share.display.reseticon()# window icon
         self.sprite_pen.replaceimage('pen')
@@ -151,6 +145,8 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(ch5.obj_scene_chapter5())
             elif self.ichapter==6:
                 share.scenemanager.switchscene(ch6.obj_scene_chapter6())
+            elif self.ichapter==7:
+                share.scenemanager.switchscene(ch7.obj_scene_chapter7())
         if controls.esc and controls.escc:
             share.quitgame()
         if controls.space and controls.spacec:
@@ -161,7 +157,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch4.obj_scene_travelhomepeak()
+            quickscene=story.obj_scene_story()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

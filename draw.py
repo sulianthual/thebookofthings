@@ -412,6 +412,12 @@ class obj_textchoice:
                 if tool.isinrect(controls.mousex,controls.mousey,area):
                     self.ichoice=c
                     break
+        if (controls.d and controls.dc) or (controls.s and controls.sc):
+            self.ichoice += 1
+            if self.ichoice>len(self.choices)-1: self.ichoice=0
+        if (controls.a and controls.ac) or (controls.w and controls.wc):
+            self.ichoice -= 1
+            if self.ichoice<0: self.ichoice=len(self.choices)-1
     def choicetodict(self):# write key choice in words dict
         if self.choices:
             value,img,sprite,spriterect,size,area=self.choices[self.ichoice]
@@ -449,13 +455,15 @@ class obj_textchoice:
 # A text box
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
-    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0):
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,xleft=False,ytop=False):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
         self.yini=xy[1]
         self.fontsize=fontsize
         self.color=color
+        self.xleft=xleft# x (from xy) defines left of frame instead of center
+        self.ytop=ytop# y (from xy) defines top of frame instead of center
         self.setup()
         if scale != 1: self.scale(scale)
         if rotate != 0: self.rotate(rotate)
@@ -478,6 +486,13 @@ class obj_textbox:
         formattextkwargs=share.datamanager.getwords()
         self.text=tool.formattext(self.text,**formattextkwargs)# replace with book of things keywords
         self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color)
+        if self.xleft:
+            tempo=self.sprite.getrx()
+            self.movex(tempo)
+        if self.ytop:
+            tempo=self.sprite.getry()
+            self.movey(tempo)
+
     def movetoxy(self,x,y):
         self.movetox(x)
         self.movetoy(y)

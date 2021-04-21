@@ -165,27 +165,29 @@ class obj_scene_ch0p8(page.obj_chapterpage):
 class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch0unlocknext())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):
         self.text=['And so the book began...',\
                    ]
-        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
 
-# class obj_scene_ch0unlocknext(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch0end())
-#     def setup(self):
-#         self.text=['You have unlocked ',('Chapter I',share.colors.instructions),\
-#                     '! Open it from the menu. ',\
-#                    'You can always reopen older chapters to modify them. ',\
-#                   'For example, you can redraw the book, pen and eraser in the ',\
-#                   ('Prologue',share.colors.instructions),'. '\
-#                    '',\
-#                    ]
-#         share.datamanager.updateprogress(chapter=1)
-#         for c,value in enumerate(['book','pen','eraser']):
-#             self.addpart( draw.obj_image(value,(340+c*300,400), scale=0.5) )
+class obj_scene_ch0unlocknext(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
+    def setup(self):
+        self.text=['You have unlocked ',('Chapter I',share.colors.instructions),\
+                    '! Open it from the menu. ',\
+                   'You can always reopen older chapters to modify them. ',\
+                  'For example, you can redraw the book, pen and eraser in the ',\
+                  ('Prologue',share.colors.instructions),'. '\
+                   '',\
+                   ]
+        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
+        # self.addpart( draw.obj_image('pen',(400,490), scale=0.5) )
+        # self.addpart( draw.obj_image('book',(640,380), scale=0.5) )
+        # self.addpart( draw.obj_image('eraser',(890,490), scale=0.5) )
+        for c,value in enumerate(['book','pen','eraser']):
+            self.addpart( draw.obj_image(value,(340+c*300,400), scale=0.5) )
 
 
 

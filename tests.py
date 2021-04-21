@@ -306,10 +306,11 @@ class obj_scene_textbox(obj_testpage):
             'Acts like an image: Can reset[space], move [Arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
             'Can rotate[f] but use sparingly (enlargens-memory issues). ',\
             'Save an image of textbox[g] (useful to animate it). ',\
+            'use options xleft,ytop such that given position is left-top instead of center. ',\
                    ]
         self.addpart(draw.obj_textbox('textbox',(340,260),color=share.colors.blue))#customize font and color
         self.addpart(draw.obj_textbox('small',(340,360),color=share.colors.blue, fontsize='tiny'))
-        self.addpart(draw.obj_textbox('large',(340,460),color=share.colors.blue, fontsize='big'))
+        self.addpart(draw.obj_textbox('xleft-ytop',(340,460),color=share.colors.blue, fontsize='big',xleft=True,ytop=True))
         self.addpart(draw.obj_textbox('from keyword: {test1}',(340,660),color=share.colors.green))
         self.textbox=draw.obj_textbox('textbox:move me',(840,460),color=share.colors.red)
         self.dx,self.dy=5,5

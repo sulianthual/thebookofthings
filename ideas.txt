@@ -19,8 +19,25 @@ No more advanced physics! Only simple goofy minigames
 No more advanced drawings! Only simple and goofy.
 No more advanced modular story! Only one linear story.
 
+
 ###################
-* Game Progression:
+* Game Progression IDEA 1:
+- Just a classic series of minigames for fetch
+- have several locations on map:
+  villain-east, elder-north, partner (dream about her) near pond, mailbox
+  make all minigames there to unlock final battle, and can come back redo the minigames
+  ``
+- Partner has been captured: final battle is against villain
+- retrieve 3 stones/whatever in 3 locations before
+   robot at the factory/city (learn persistence - but no learn to lie)
+   elder at the peak (learn persistence - but no learn to cheat)
+   sailor for pirate (learn bravor- but no learn to steal), infiltrate lair with treasure inside
+  sailor is actually always stealing from the skeletons and is arrested
+   => with the quests, learn to lie cheat and steal
+
+
+###################
+* Game Progression IDEA 2:
 - Each chapter, the story is modified in some way.
 - 12 days of christmas: add an element each chapter
 Chapter 1: start story with the hero
@@ -28,6 +45,8 @@ Chapter 2: add the partner
 Chapter 3: add the villain
 Chapter 4: add the quest (the elder)
 Chapter 5: add the henchmen
+
+
 
 
 ###################
@@ -687,6 +706,3 @@ class obj_scene_ch3play7death(page.obj_chapterpage):
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
-
-
-        

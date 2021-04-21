@@ -110,7 +110,8 @@ class obj_chapterpage(obj_page):
     def endpage(self):# when exit page
         pass
     def prevpage(self):# actions to prev page (replace here)**
-        share.scenemanager.switchscene(share.titlescreen,init=True)
+        pass
+        # share.scenemanager.switchscene(share.titlescreen,init=True)
     def exitpage(self):
         share.scenemanager.switchscene(share.titlescreen,init=True)
     def nextpage(self):# actions to next page (replace here)**

@@ -379,7 +379,6 @@ class obj_scene_ch5p12(page.obj_chapterpage):
                '"At the top of the ',('highest peak',share.colors.location),', above the clouds, ',\
                ('{heroname}',share.colors.hero),' met the ',('elder',share.colors.elder),' called ',\
                ('{eldername}',share.colors.elder),'. ',\
-
                    ]
         self.addpart( draw.obj_image('elderbase',(964,325),scale=0.48,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('mountain',(72,655),scale=0.34,rotate=0,fliph=False,flipv=False) )
