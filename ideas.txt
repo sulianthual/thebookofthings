@@ -21,55 +21,93 @@ No more advanced modular story! Only one linear story.
 
 
 ###################
-* Game Progression IDEA 1:
-- Just a classic series of minigames for fetch
-- have several locations on map:
-  villain-east, elder-north, partner (dream about her) near pond, mailbox
-  make all minigames there to unlock final battle, and can come back redo the minigames
-  ``
-- Partner has been captured: final battle is against villain
-- retrieve 3 stones/whatever in 3 locations before
-   robot at the factory/city (learn persistence - but no learn to lie)
-   elder at the peak (learn persistence - but no learn to cheat)
-   sailor for pirate (learn bravor- but no learn to steal), infiltrate lair with treasure inside
-  sailor is actually always stealing from the skeletons and is arrested
-   => with the quests, learn to lie cheat and steal
+* Game Progression:
+- Chapter I, II: set hero, partner, home (story setting)
+- Chapter III: villain captures partner (disruption)
+               hero meets sidekick, starts quest (find password to open evil lair)
+- Chapter IV, V, VI: parts of quests
+                    retrieve 3 parts of password in 3 locations (north,west,south)
+- Chapter VII: final fight against villain, rescue the princess
 
 
-###################
-* Game Progression IDEA 2:
-- Each chapter, the story is modified in some way.
-- 12 days of christmas: add an element each chapter
-Chapter 1: start story with the hero
-Chapter 2: add the partner
-Chapter 3: add the villain
-Chapter 4: add the quest (the elder)
-Chapter 5: add the henchmen
+##################
+* Some Plot Themes (that are funny, against the norms):
+
+- The sidekick is the most feared bug:
+we learn that our most feared bugs are our best friends
+- From 3 locations we learn to lie, cheat and steal:
+           with lying minigame (lie to win, with lying game)
+           with rock-paper-scissors (cheat to win, with rock paper scissors)
+           with stealing the treasure (steal in the skeletons lair)
+  (we are supposed to learn strength,wisdom and courage but it turns out differently)
+- think about other funny themes:
+           for example, partner is cheating with villain in final chapter, etc...
+- the password is: old smelly fart
+                   old =what the elder is
+                   smelly=what the west character is (a bunny, a mushroom, a flower?)
+                   fart=speed in nordic (what the sailor likes, to sail fast)
+
+
+##################
+* Game Map
+- hero house: remove the trees (keep them for west forest) and instead add a pond (for fishing) (???)
+- elder in highest peak: climb, play minigame (lie or rockpaperscissors), avoid falling boulders???
+- sailor(or pirate) in the south: quest is must retrieve treasure from ghost ship
+         draw skeletons (henchmen), infiltrate with stealth minigames
+         minigame stealth cut rope/open door (reuse drinking minigame)
+         the sailor is actually the baddie and gets arrested/judged by the peaceful skeletons (?)
+- magical forest in the west: character is a bunny, giant mushroom, flower????
+
+
+##################
+* Chapter 3 Plot:
+For this chapter you DRAW AS YOU GO. We dont replay the chapter (too long).
+- draw villain
+- hero+partner wake up
+- go fishing
+- hero checks mail: nothing but villain is behind
+- conversation villain hero (brief)
+- draw gun+bullet
+- dodge minigame
+- high kick from villain, hero is unconscious
+- hero dreams: minigame where catches flying hearts and fishes (that partners throws)
+- sunrise cutscene:
+- hero wakes up (out of bed) alone
+- checks mail: villain letter, i have captured partner you will never get her ahaha
+- draw evil lair
+- go to evil lair
+- talk to villain (is on top of evil lair): evil lair is password locked
+- enter password (but doesnt work)
+- go back home.
+- hero thinks about serenade and kiss. is sad
+- little voice talks: tell me, what is the bug you are most terrified about? (name bug)
+                      what does it look like (draw)
+- sidekick appears, is the bug. Name it
+- says has been in your pocket the whole time. Used to crawl under the villain's bed.
+- Overheard everything, and knows how to figure out his password.
+- All wants is to eat some fish: minigame make it eat (grows slightly bigger)
+- go to bed, preparing for next day
+*** for next chapters: each time bug gives new tip, eats a fish and becomes bigger.
+                       eventually have a giant bug waiting at home (like in Kafka)
+
+
+##################
+* Chapter 6 Plot:
+For this chapter DRAW AS YOU GO
+- go south to pirate ship. draw the pirate (eyelid+pirate hat)
+- pirate says will give password if helps retrieve treasure
+- treasure is in skull island.
+-draw skull (serves as island).
+    Also serves to make skeleton henchmens (and their boss=eyelid+pirate hat)
+- infiltrate the island: stealth minigames (move across and hide in furnitures/stuff)
+- get the treasure
+- but get arrested with sailor: skeletons say he is a recidivist always trying to steal
+- get judged with sailor: but because can LIE get out of it (also maybe because can CHEAT)
+                          can maybe even just blame sailor
+- can go see sailor in jail later on (and keep his ship to sail yourself)
 
 
 
-
-###################
-* Format 12 days of Chrimstas:
-- each chapter add a new element, then replay entire story
-- this adds around 1-2 minigames each chapter
-NEW CONTENT:
-- quest to gain ability (with elder)
-- sidekick
-- point of view (what hero is thinking, or villain, etc...)
-- origin story (e.g. of villain)
-- villain last ditch effort...
-- henchmen (villain's army, can be all skeletons)
-Then add OPTIONS:
-- location of villain, hero: island, space, medieval castle....
-- what minigame in morning
-- how to defeat the villain (strength, stealth...):
-       maybe depending on the quest, there is only one way of defeating the villain
-       e.g. replace drinking game with cutting rope game (when villain isnt looking around)
-       serenade with picking up flowers...
-       fishing with hunting
-       boss fight (dodge gun) with stomp (remove from first one)
-- other options that DONT significantly affect whole plot
 
 
 ###################
@@ -139,6 +177,38 @@ jump/duck. Simple for bullets (increase rythm)
 simple dinosaur game from google. just jump in time.
 skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
+
+#########################33
+LYING GAME (put in chapter 4 as the minigame to get the password part):
+three rounds to this game
+- PART 1: the opponent and the hero both tell the truth
+- round 1) opponent makes 3 TRUE statements about him (that are all BOOLEAN):
+  1) I love bananas
+  2) I hate apples
+  3) I never take showers
+- opponent then makes joint statements:
+  1)I love bananas and I love apples (True+False=False)
+  2) I never take showers and I love bananas (True+True=False)
+  3) I love apples and I hate bananas (False+False=False)
+  For each statement as they are told, the hero must say if they are True or not. For example on screen:
+       I like bananas and I love apples (True+False=False)
+       True: Yes No
+PART II: same as before, but the opponent is ALWAYS LYING, the hero tells the truth
+- round 1) opponent makes 3 FALSE statements about him (that are all BOOLEAN):
+  1) I love bananas
+  2) I hate apples
+  3) I never take showers
+- opponent then makes joint statements:
+  1)I like bananas and I love apples (False+True=False)
+  2) I never take showers and I love bananas (False+False=False)
+  3) I love apples and I hate bananas (True+True=True)
+  For each statement as they are told, the hero must say if they are True or not. For example on screen:
+       I love bananas and I love apples (False+True=False)
+       True: Yes No
+=> The difficulty comes from how True and False statements combine, and how they must be remembered.
+PART III:
+same as part II, but both the opponent and the hero ALWAYS LIE. the hero must make opposite answers
+
 
 
 

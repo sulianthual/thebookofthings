@@ -29,7 +29,7 @@ class obj_scene_chapter6(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Chapter V: Something West   -----   ',\
                    '\n In this chapter introduce the third and last part of quest. ',\
-                  '\n Must go west for this. in space, with a robot, an alien... ',\
+                  '\n Must go west for this. in space, with a robot, an alien, a bunny?... ',\
                    ]
 
 

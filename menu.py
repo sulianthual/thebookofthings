@@ -26,6 +26,7 @@ import ch3
 import ch4
 import ch5
 import ch6
+import ch7
 import cha# remove this in final version
 
 
@@ -157,7 +158,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=story.obj_scene_story()
+            quickscene=ch3.obj_scene_ch3p35()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

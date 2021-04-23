@@ -69,6 +69,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testdevmodeinfo())
         # page
         self.list.append(obj_scene_testpagefunctions())
+        self.list.append(obj_scene_testheadermaker())
         # text
         self.list.append(obj_scene_interactivetext())
         self.list.append(obj_scene_textinput())
@@ -131,11 +132,11 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['villainhead','gun','bullet','tower','mountain']):
             self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
         y1=450
-        for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
-            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
-        y1=550
         for c,value in enumerate(['elderhead','nightstand','alarmclock8am','cloud','lightningbolt','rock','paper','scissors']):
             self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
+        y1=550
+        for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
+            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
 
 
 class obj_scene_testmessage(obj_testpage):
@@ -225,6 +226,17 @@ class obj_scene_testpagefunctions(obj_testpage):
         self.drawing.update(controls)
     def endpage(self):
         self.drawing.finish()# non-managed elements must be finished here (textinput and drawings...)
+
+# Scene: page basics
+class obj_scene_testheadermaker(obj_testpage):
+    def setup(self):
+        self.name='Header Maker'
+        self.text=['Header Maker: add this to quickly build the code headers for pages in a chapter. ',\
+                   'check the file book/aaa.txt for the code output. ',\
+                  'Page must start above 0. Last nextpage is commented (for if next page doesnt exist) ',\
+                   ]
+        # self.addpart( draw.obj_headermaker('ch3',10,25) )# for chapter 3, page 10 to 25
+        self.addpart( draw.obj_headermaker('ch3',24,40) )# for chapter 3, page 10 to 25
 
 
 class obj_scene_interactivetext(obj_testpage):

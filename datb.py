@@ -50,9 +50,10 @@ class obj_colors:
         self.textchoice=(180,0,0)# text input box
         # Colors for story
         self.hero=self.red# hero text color
-        self.partner=self.pink#partner text color
-        self.villain=self.brown#partner text color
-        self.elder=self.darkgray#elder text color
+        self.partner=self.pink
+        self.villain=self.brown
+        self.bug=self.maroon
+        self.elder=self.darkgray
         self.item=self.blue# items (bed, fish,etc...)
         self.location=self.darkgreen# locations
         self.action=self.green# actions text (??? not used)
@@ -204,10 +205,8 @@ class obj_datamanager:
             # default words (empty)
             self.dictwords={}
     #
-    # unlocks in story
+    # unlocks in story (obsolete)
     # organized into:
-    # event
-    # drawing
     #
     def unlocked(self,wordkey):
         if (wordkey in self.dictunlocks) and self.dictunlocks[wordkey]=='True':

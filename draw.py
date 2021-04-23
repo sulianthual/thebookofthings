@@ -170,6 +170,35 @@ class obj_rectangle:
         self.play(controls)
 
 
+# writes headers for pages in the file aaa.txt
+# (useful to write long chapters)
+class obj_headermaker:
+    def __init__(self,header,pagemin,pagemax):
+        self.type='headermaker'# object type
+        self.header=header
+        self.pagemin=max(pagemin,1)# must be >0
+        self.pagemax=max(pagemax,self.pagemin)# must be >0
+        self.setup()
+    def setup(self):
+        self.filecode='book/aaa.txt'
+        self.makeheadercode()
+    def makeheadercode(self):
+        with open(self.filecode,'w+') as f1:
+            for i in range(self.pagemin,self.pagemax):
+                f1.write(' '+'\n')
+                f1.write('class obj_scene_'+self.header+'p'+str(i)+'(page.obj_chapterpage):'+'\n')
+                f1.write('    def prevpage(self):'+'\n')
+                f1.write('        share.scenemanager.switchscene(obj_scene_'+self.header+'p'+str(i-1)+'())'+'\n')
+                if i<self.pagemax-1:
+                    f1.write('    def nextpage(self):'+'\n')
+                    f1.write('        share.scenemanager.switchscene(obj_scene_'+self.header+'p'+str(i+1)+'())'+'\n')
+                else:
+                    f1.write('    # def nextpage(self):'+'\n')
+                    f1.write('    #     share.scenemanager.switchscene(obj_scene_'+self.header+'p'+str(i+1)+'())'+'\n')
+
+                f1.write(' '+'\n')
+
+
 
 
 
@@ -298,13 +327,15 @@ class obj_mousedraw:
 
 # A text input
 class obj_textinput:
-    def __init__(self,key,nchar,xy,color=(0,0,0),legend=None):
+    def __init__(self,key,nchar,xy,color=(0,0,0),legend=None,default=None):
         self.type='textinput'
         self.key=key# key from textinput that will be saved
         self.nchar=nchar# max number of characters
         self.x,self.y = xy# position
         self.color=color
         self.legend=legend
+        if default:# impose default choice
+            self.setdefault(default)
         self.setup()
     def setup(self):
         self.texttodict()
@@ -320,6 +351,8 @@ class obj_textinput:
         if self.legend: self.makelegend(self.legend)
         # devtools
         self.devcross=core.obj_sprite_cross()
+    def setdefault(self,default):
+        share.datamanager.writeword(self.key,default)
     def texttodict(self):# text to/from dictionary
         if self.key in share.datamanager.getwordkeys():
             self.text=share.datamanager.getword(self.key)
@@ -384,7 +417,6 @@ class obj_textchoice:
         self.keytodict(self.key)
     def setdefault(self,default):
         share.datamanager.writeword(self.key,default)
-
     def keytodict(self,key):# write key in dictionary if not there
         if not key in share.datamanager.getwordkeys():
             share.datamanager.writeword(key,'')
@@ -412,12 +444,13 @@ class obj_textchoice:
                 if tool.isinrect(controls.mousex,controls.mousey,area):
                     self.ichoice=c
                     break
-        if (controls.d and controls.dc) or (controls.s and controls.sc):
-            self.ichoice += 1
-            if self.ichoice>len(self.choices)-1: self.ichoice=0
-        if (controls.a and controls.ac) or (controls.w and controls.wc):
-            self.ichoice -= 1
-            if self.ichoice<0: self.ichoice=len(self.choices)-1
+        # removed wasd controls: interferes with typing names on same screen
+        # if (controls.d and controls.dc) or (controls.s and controls.sc):
+        #     self.ichoice += 1
+        #     if self.ichoice>len(self.choices)-1: self.ichoice=0
+        # if (controls.a and controls.ac) or (controls.w and controls.wc):
+        #     self.ichoice -= 1
+        #     if self.ichoice<0: self.ichoice=len(self.choices)-1
     def choicetodict(self):# write key choice in words dict
         if self.choices:
             value,img,sprite,spriterect,size,area=self.choices[self.ichoice]

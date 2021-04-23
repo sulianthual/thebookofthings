@@ -1028,6 +1028,7 @@ class obj_world_travel(obj_world):
         self.part=1# part with a chapter for level of drawings (if there are several)
         self.addpartner=False# add partner walking with hero
         self.minigame=None# add mini-game on the travel game (minigame='flowers',etc....)
+        self.heroangry=False# angry face on hero
         # scene tuning
         if kwargs is not None:
             if 'chapter' in kwargs: self.chapter=kwargs["chapter"]
@@ -1036,6 +1037,7 @@ class obj_world_travel(obj_world):
             if 'goal' in kwargs: self.whereends=kwargs["goal"]# option go back home
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
             if 'minigame' in kwargs: self.minigame=kwargs["minigame"]# option add minigame
+            if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]# partner options
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
@@ -1043,7 +1045,7 @@ class obj_world_travel(obj_world):
                 self.xyhero=(0,0)
             elif self.wherestart=='pond':
                 self.xyhero=(-640,-360)
-            elif self.wherestart=='tower':
+            elif self.wherestart=='castle':
                 self.xyhero=(1280,0)
             elif self.wherestart=='peak':
                 self.xyhero=(0,-1080)
@@ -1054,7 +1056,7 @@ class obj_world_travel(obj_world):
             self.xygoal=(0,0)
         elif self.whereends=='pond':
             self.xygoal=(-640,-360)
-        elif self.whereends=='tower':
+        elif self.whereends=='castle':
             self.xygoal=(1280,0)
         elif self.whereends=='peak':
             self.xygoal=(0,-1080-80)
@@ -1119,7 +1121,7 @@ class obj_world_travel(obj_world):
             # east panel 2-1: villain tower
             if self.chapter>=3:
                 self.staticactor21.addpart( 'textref', draw.obj_textbox('evil lair',(640,360+120),color=share.colors.location) )
-                self.staticactor21.addpart( 'ref', draw.obj_image('tower',(640,360),scale=0.5) )
+                self.staticactor21.addpart( 'ref', draw.obj_image('castle',(640,360),scale=0.5) )
                 self.staticactor21.addpart( "img2", draw.obj_image('mountain',(845,587),scale=0.57,rotate=0,fliph=True,flipv=False) )
                 self.staticactor21.addpart( "img3", draw.obj_image('mountain',(1007,385),scale=0.44,rotate=0,fliph=True,flipv=False) )
                 self.staticactor21.addpart( "img4", draw.obj_image('mountain',(404,499),scale=0.53,rotate=0,fliph=False,flipv=False) )
@@ -1204,10 +1206,16 @@ class obj_world_travel(obj_world):
             self.hero.addpart( 'pface_left', draw.obj_image('partnerbase',(640+30,360-30),scale=0.25,fliph=True) )
             self.hero.addpart( 'pwalk_right', draw.obj_image('partnerwalk',(640+30,360-30),scale=0.25) )
             self.hero.addpart( 'pwalk_left', draw.obj_image('partnerwalk',(640+30,360-30),scale=0.25,fliph=True) )
-        self.hero.addpart( 'face_right', draw.obj_image('herobase',(640,360),scale=0.25) )
-        self.hero.addpart( 'face_left', draw.obj_image('herobase',(640,360),scale=0.25,fliph=True) )
-        self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(640,360),scale=0.25) )
-        self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(640,360),scale=0.25,fliph=True) )
+        if self.heroangry:
+            self.hero.addpart( 'face_right', draw.obj_image('herobaseangry',(640,360),scale=0.25) )
+            self.hero.addpart( 'face_left', draw.obj_image('herobaseangry',(640,360),scale=0.25,fliph=True) )
+            self.hero.addpart( 'walk_right', draw.obj_image('herowalkangry',(640,360),scale=0.25) )
+            self.hero.addpart( 'walk_left', draw.obj_image('herowalkangry',(640,360),scale=0.25,fliph=True) )
+        else:
+            self.hero.addpart( 'face_right', draw.obj_image('herobase',(640,360),scale=0.25) )
+            self.hero.addpart( 'face_left', draw.obj_image('herobase',(640,360),scale=0.25,fliph=True) )
+            self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(640,360),scale=0.25) )
+            self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(640,360),scale=0.25,fliph=True) )
         self.herofaceright=True
         self.herowalking=False# hero walking or standing
         self.hero.dict['face_right'].show=self.herofaceright and not self.herowalking
@@ -2901,17 +2909,29 @@ class obj_world_rockpaperscissors(obj_world):
 # Mini Game: play a serenade
 # *SERENADE
 class obj_world_serenade(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.addpartner=True# add the partner
+        self.heroangry=False# angry face on hero
+        # scene tuning
+        if kwargs is not None:
+            if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+            if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]# partner options
+        #
         self.done=False# mini game is finished
         self.doneplaying=False# done playing serenade
         # hero on left
         self.hero=obj_grandactor(self,(640,360))
-        self.hero.addpart( 'img_hero',draw.obj_image('herobase',(140+20,470), scale=0.7) )# bit messy
+        if self.heroangry:
+            self.hero.addpart( 'img_hero',draw.obj_image('herobaseangry',(140+20,470), scale=0.7) )# bit messy
+        else:
+            self.hero.addpart( 'img_hero',draw.obj_image('herobase',(140+20,470), scale=0.7) )# bit messy
         self.hero.addpart( 'img_instru',draw.obj_image('saxophone',(270+20,470),scale=0.5) )
 
         # partner on right
         self.partner=obj_grandactor(self,(640,360))
-        self.partner.addpart( 'img_partner',draw.obj_image('partnerbase',(1280-200,450), scale=0.7,fliph=True) )
+        if self.addpartner:
+            self.partner.addpart( 'img_partner',draw.obj_image('partnerbase',(1280-200,450), scale=0.7,fliph=True) )
         # melody score
         if True:
             self.score=obj_grandactor(self,(640,380))
@@ -3008,7 +3028,13 @@ class obj_world_serenade(obj_world):
 # Mini Game: kiss
 # *KISSING
 class obj_world_kiss(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.noending=True# skip the completion part of minigame
+        # scene tuning
+        if kwargs is not None:
+            if 'noending' in kwargs: self.noending=kwargs["noending"]# partner options
+        #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.ungoing=False# ungoing or back to start
@@ -3038,6 +3064,7 @@ class obj_world_kiss(obj_world):
         self.finishactor.addpart( 'img2', draw.obj_image('herobase',(580,400),scale=0.7,rotate=-15) )
         self.finishactor.addpart( 'anim1', draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
         self.finishactor.addpart( 'anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
+
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [A]+[D] to kiss',(640,660),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
@@ -3071,13 +3098,18 @@ class obj_world_kiss(obj_world):
                     self.ungoingactor.show=False
                     self.finishactor.show=False
                 if self.timer.ring:# flip to goal reached
-                    self.goal=True
-                    self.startactor.show=False
-                    self.ungoingactor.show=False
-                    self.finishactor.show=True
-                    self.text_undone.show=False
-                    self.text_done.show=True
-                    self.timerend.start()
+                    if self.noending:
+                        self.goal=True
+                        self.done=True
+                    else:
+                        self.goal=True
+                        self.startactor.show=False
+                        self.ungoingactor.show=False
+                        self.finishactor.show=True
+                        self.text_undone.show=False
+                        self.text_done.show=True
+                        self.timerend.start()
+
         else:
             # goal reached state
             self.timerend.update()

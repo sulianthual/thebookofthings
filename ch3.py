@@ -171,15 +171,69 @@ class obj_scene_ch3p4(page.obj_chapterpage):
         dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
         dispgroup2.snapshot((640,330,200,330),'villainbase')
 
+
+
+
 class obj_scene_ch3p5(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p6())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+               'Lets read our story again, said the book of things: ',\
+                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+                'called  ',('{heroname}',share.colors.hero),'. ',\
+                'It was morning and the sun was rising". ',\
+                   ]
+        self.world=world.obj_world_sunrise(self)
+        self.addpart(self.world)
+
+class obj_scene_ch3p6(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p5())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p8())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                ('{heroname}',share.colors.hero),' ',\
+                'woke up from ',('bed',share.colors.item),' ',\
+                'with ',('{hero_his}',share.colors.hero),\
+                ' partner ',('{partnername}',share.colors.partner),'." ',\
+                   ]
+        self.world=world.obj_world_wakeup(self,partner=True)
+        self.addpart(self.world)
+
+
+class obj_scene_ch3p8(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p6())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p9())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                    '"',('{heroname}',share.colors.hero),\
+                     ' went to the river and caught a fish."',\
+                   ]
+        self.world=world.obj_world_fishing(self)
+        self.addpart(self.world)
+
+
+class obj_scene_ch3p9(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p8())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10())
     def setup(self):
         self.text=[\
                   'Now lets write this: "',\
-                    ('{heroname}',share.colors.hero),' came back home and ',\
+                    ('{heroname}',share.colors.hero),' came back home but ',\
                   ('{partnername}',share.colors.partner),' wasnt there. ',\
                    ('{partner_he}',share.colors.partner),' had been captured by the ',\
                     ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),'". '\
@@ -190,26 +244,94 @@ class obj_scene_ch3p5(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( animation2 )
 
-class obj_scene_ch3p6(page.obj_chapterpage):
+
+class obj_scene_ch3p10(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p5())
+        share.scenemanager.switchscene(obj_scene_ch3p9())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p8())
+        share.scenemanager.switchscene(obj_scene_ch3p11())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
                   '"',\
-                    ('{heroname}',share.colors.hero),' travelled to the  ',\
-                  ('villain',share.colors.villain),'\'s ',('evil lair',share.colors.location),' to rescue ',\
-                   ('{partnername}',share.colors.partner),'. ',\
-                 ' The ',('evil lair',share.colors.location),\
-                 ' was a tower in the mountains".'\
-                 ' Draw an ',('evil tower',share.colors.item),\
+                    ('{heroname}',share.colors.hero),' checked his ',\
+                    ('{hero_his}',share.colors.hero),' mailbox. ',\
+                    ('{hero_he}',share.colors.hero),' had received ',\
+                    'a ',' letter". ',\
+                   ]
+        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
+        self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        self.addpart(animation1)
+        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
+
+
+class obj_scene_ch3p11(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p10())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p12())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
+    def setup(self):
+        self.addpart( draw.obj_textbox('"The letter said:"',(163,83)) )
+        xmargin=100
+        ymargin=230
+        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
+        self.text=[\
+                    'Dear ',('{heroname}',share.colors.hero),', ',\
+                    '\nI have captured ',('{partnername}',share.colors.partner),'. ',\
+                     'She is in my ',('evil lair',share.colors.location),'. ',\
+                     '\nDont even think about coming to rescue ',\
+                     ('{partner_him}',share.colors.partner),'. ',\
+                    '\nMuahahahaha, ',\
+                    '\n\nsigned: ',('{villainname}',share.colors.villain),\
+                   ]
+        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
+
+
+class obj_scene_ch3p12(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p11())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p13())
+    def setup(self):
+        self.text=[\
+                  'Fantastic, said the book of things. A great disruptive event for our story. ',\
+                 'Let continue: "The ',('evil lair',share.colors.location),\
+                 ' was a castle in the mountains". '\
+                 'Draw an ',('castle',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('tower',(340,450),legend='Evil Tower',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('castle',(340,450),legend='Evil Castle',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('mountain',(940,450),legend='Mountain',shadow=(200,200)) )
-    def endpage(self):
-        super().endpage()
+
+
+
+
+class obj_scene_ch3p13(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p12())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p14())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                '"',('{heroname}',share.colors.hero),'" travelled to ',
+                ('{villainname}',share.colors.villain),'\'s ',\
+                ('evil lair',share.colors.location),' to rescue ',\
+                ('{partnername}',share.colors.villain),'". ',\
+                   ]
+        self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3)
+        self.addpart(self.world)
+    def presetup(self):
+        super().presetup()
         # combine herohead+stickwalk = herowalk
         image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
         image2=draw.obj_image('herohead',(640,200),scale=0.5)
@@ -226,23 +348,29 @@ class obj_scene_ch3p6(page.obj_chapterpage):
         dispgroup2.addpart('part2',image2)
         dispgroup2.addpart('part3',image3)
         dispgroup2.snapshot((640,330,200,330),'partnerwalk')
+        # combine angryhead+stickwalk = herowalkangry
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('angryhead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herowalkangry')
 
-
-class obj_scene_ch3p8(page.obj_chapterpage):
+class obj_scene_ch3p14(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p6())
+        share.scenemanager.switchscene(obj_scene_ch3p13())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p9())
+        share.scenemanager.switchscene(obj_scene_ch3p15())
     def setup(self):
         self.text=[\
                   'Great, said the book of things, now lets add: "',\
                     'At the ',('evil lair',share.colors.location),', ',\
-                  ('{villainname}',share.colors.villain),' said: you will have to ',\
-                  ('fight',share.colors.villain),' me if you want ',\
-                   ('{partnername}',share.colors.partner),' back". ',\
+                  ('{villainname}',share.colors.villain),' said: I told you not to come here. ',\
+                  'Now leave or get ready to ',\
+                  ('fight',share.colors.villain),'!". ',\
                    ]
-        self.addpart( draw.obj_image('tower',(1100,310), scale=0.7) )
-        self.addpart( draw.obj_image('partnerbase',(1100,530), scale=0.4,rotate=90) )
+        self.addpart( draw.obj_image('castle',(1100,310), scale=0.7) )
+        # self.addpart( draw.obj_image('partnerbase',(1100,530), scale=0.4,rotate=90) )
         self.addpart( draw.obj_image('mountain',(881,292),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(709,245),scale=0.29,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_imageplacer(self,'mountain') )
@@ -253,11 +381,11 @@ class obj_scene_ch3p8(page.obj_chapterpage):
 
 
 
-class obj_scene_ch3p9(page.obj_chapterpage):
+class obj_scene_ch3p15(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p8())
+        share.scenemanager.switchscene(obj_scene_ch3p14())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10start())
+        share.scenemanager.switchscene(obj_scene_ch3p16())
     def setup(self):
         self.text=[\
                   'This is going to be epic, said the book of things. ',\
@@ -294,16 +422,17 @@ class obj_scene_ch3p9(page.obj_chapterpage):
         dispgroup1.addpart('part2',image2)
         dispgroup1.snapshot((640+50,330,200+50,330),'villainbasegun')# 0 to 660 in height
 
-class obj_scene_ch3p10start(page.obj_chapterpage):
+
+class obj_scene_ch3p16(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p9())
+        share.scenemanager.switchscene(obj_scene_ch3p15())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10start2())
+        share.scenemanager.switchscene(obj_scene_ch3p17())
     def triggernextpage(self,controls):
         return controls.enter and controls.enterc
     def setup(self):
         self.text=[\
-                  'Alright, here is how the ',('gunfight',share.colors.villain),\
+                  'This is how the ',('gunfight',share.colors.villain),\
                   ' works, said the book of things. Make ',\
                   ('{heroname}',share.colors.hero),' jump with [W] and crouch with [S].',\
                    ]
@@ -314,11 +443,12 @@ class obj_scene_ch3p10start(page.obj_chapterpage):
         self.world.healthbar.show=False
         self.world.bulletbar.show=False
 
-class obj_scene_ch3p10start2(page.obj_chapterpage):
+
+class obj_scene_ch3p17(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10start())
+        share.scenemanager.switchscene(obj_scene_ch3p16())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10start3())
+        share.scenemanager.switchscene(obj_scene_ch3p18())
     def triggernextpage(self,controls):
         return controls.enter and controls.enterc
     def setup(self):
@@ -341,11 +471,11 @@ class obj_scene_ch3p10start2(page.obj_chapterpage):
         self.addpart(draw.obj_image('show1',(480,530),path='premade'))
 
 
-class obj_scene_ch3p10start3(page.obj_chapterpage):
+class obj_scene_ch3p18(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10start2())
+        share.scenemanager.switchscene(obj_scene_ch3p17())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
+        share.scenemanager.switchscene(obj_scene_ch3p19())
     def triggernextpage(self,controls):
         return controls.enter and controls.enterc
     def setup(self):
@@ -363,14 +493,15 @@ class obj_scene_ch3p10start3(page.obj_chapterpage):
         # self.addpart(draw.obj_image('circle2',(1080,720-70),path='premade'))
         self.addpart(draw.obj_image('show2',(880,530),path='premade'))
 
-class obj_scene_ch3p10(page.obj_chapterpage):
+
+class obj_scene_ch3p19(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10start3())
+        share.scenemanager.switchscene(obj_scene_ch3p18())
     def nextpage(self):
         if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3p11())
+            share.scenemanager.switchscene(obj_scene_ch3p20())
         else:
-            share.scenemanager.switchscene(obj_scene_ch3p10death())
+            share.scenemanager.switchscene(obj_scene_ch3p19death())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -389,11 +520,11 @@ class obj_scene_ch3p10(page.obj_chapterpage):
         # animation1=draw.obj_animation('ch3_herodies','herobase',(640,360),record=True)
         # self.addpart( animation1 )
 
-class obj_scene_ch3p10death(page.obj_chapterpage):
+class obj_scene_ch3p19death(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
+        share.scenemanager.switchscene(obj_scene_ch3p19())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
+        share.scenemanager.switchscene(obj_scene_ch3p19())
 
     def setup(self):
         self.text=[\
@@ -407,329 +538,259 @@ class obj_scene_ch3p10death(page.obj_chapterpage):
 
 
 
-
-
-
-class obj_scene_ch3p11(page.obj_chapterpage):
+class obj_scene_ch3p20(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
+        share.scenemanager.switchscene(obj_scene_ch3p19())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play())
+        share.scenemanager.switchscene(obj_scene_ch3p21())
     def setup(self):
         self.text=[\
                   'Well done, said the book of things. Lets write down: ',\
-                  '"After a long fight, ',\
-                  ('{heroname}',share.colors.hero),' defeated ',\
-                  ('{villainname}',share.colors.villain),' and rescued ',\
-                  ('{partnername}',share.colors.partner),'. ',\
-                  ('{villainname}',share.colors.villain),' said "I will have my revenge" ',\
-                  'and disappeared in the mountains". ',\
+                  '"',\
+                  ('{villainname}',share.colors.villain),' ran out of bullets. ',\
+                  ('{villain_he}',share.colors.villain),' said: this isnt over! ',\
+                  ' and headed towards ',\
+                  ('{villain_his}',share.colors.villain),' ',\
+                  ('evil castle',share.colors.location),'". ',\
                    ]
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
         self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
-        self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_image('castle',(1143,318),scale=0.67) )
+        # self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
         animation1=draw.obj_animation('ch3_herowins','herobase',(640,360),record=False)
         self.addpart( animation1 )
-        self.addpart( draw.obj_animation('ch3_herowins2','partnerbase',(640,360),record=False,sync=animation1) )
+        # self.addpart( draw.obj_animation('ch3_herowins2','partnerbase',(640,360),record=False,sync=animation1) )
         self.addpart( draw.obj_animation('ch3_herowins3','villainbase',(640,360),record=False,sync=animation1) )
+        # self.addpart(draw.obj_imageplacer(self,'castle','mountain'))
 
-##########################################################
-##########################################################
-# PLAY CHAPTER
-
-class obj_scene_ch3play(page.obj_chapterpage):
+class obj_scene_ch3p21(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p11())
+        share.scenemanager.switchscene(obj_scene_ch3p20())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play1())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
-    def setup(self):
-        self.text=[\
-                   'Thats quite a few changes to our story, said the book of things. ',\
-                  'Lets read it again to summarize. ',\
-                   'Press [S] to start. ',\
-                   ]
-        self.addpart(draw.obj_textbox('Press [S] to Start',(640,660),color=share.colors.instructions))
-        animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
-        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
-        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
-        self.addpart(animation1)
-        self.addpart(animation2)
-        self.addpart(animation3)
-
-
-class obj_scene_ch3play1(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play1a())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
-                'called  ',('{heroname}',share.colors.hero),' ',\
-                'that lived in a  ',('house',share.colors.item),' ',\
-                'with ',('trees',share.colors.item),'. ',\
-                'It was morning and the sun was rising". ',\
-                   ]
-        self.world=world.obj_world_sunrise(self)
-        self.addpart(self.world)
-        # self.addpart( draw.obj_animation('ch2_sunrise','sun',(640,360),record=True) )
-
-
-class obj_scene_ch3play1a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play1())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play2())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                ('{heroname}',share.colors.hero),' ',\
-                'woke up from ',('bed',share.colors.item),' ',\
-                'with ',('{hero_his}',share.colors.hero),\
-                ' partner ',('{partnername}',share.colors.partner),'." ',\
-                   ]
-        self.world=world.obj_world_wakeup(self,partner=True)
-        self.addpart(self.world)
-
-
-class obj_scene_ch3play2(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play1a())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play3())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                    '"',('{hero_he}',share.colors.hero),\
-                     ' went to the river and caught a fish."',\
-                   ]
-        self.world=world.obj_world_fishing(self)
-        self.addpart(self.world)
-
-
-
-class obj_scene_ch3play3(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play2())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play3a())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
+        share.scenemanager.switchscene(obj_scene_ch3p22())
     def setup(self):
         self.text=[\
                   '"',\
-                    ('{heroname}',share.colors.hero),' came back home and checked ',\
-                    ('{hero_his}',share.colors.hero),' mailbox.',\
-                    ('{hero_he}',share.colors.hero),' had received ',\
-                    'a ',' letter". ',\
+                  ('{villainname}',share.colors.villain),' entered ',\
+                  ('{villain_his}',share.colors.villain),' ',\
+                  ('evil castle',share.colors.location),' and said: ',\
+                  'Muahaha, my ',\
+                  ('castle',share.colors.location),' is locked tight and protected by a ',\
+                  ('password',share.colors.item),'. ',\
+                  'You will never get in!".  ',\
                    ]
-        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
-        self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
-        self.addpart(animation1)
-        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
+        self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_drawing('towersparks',(1000,310),shadow=(280,200)) )
+        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
 
-
-class obj_scene_ch3play3a(page.obj_chapterpage):
+class obj_scene_ch3p22(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play3())
+        share.scenemanager.switchscene(obj_scene_ch3p21())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play4())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
-    def setup(self):
-        self.addpart( draw.obj_textbox('"The letter said:"',(163,83)) )
-        xmargin=100
-        ymargin=230
-        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
-        self.text=[\
-                    'Dear ',('{heroname}',share.colors.hero),', ',\
-                    '\nI have captured ',('{partnername}',share.colors.partner),'. ',\
-                     '\nCome to my ',('evil lair',share.colors.location),' to save ',\
-                     ('{partner_him}',share.colors.partner),' if you dare. ',\
-                    '\nMuahahahaha, ',\
-                    '\n\nsigned: ',('{villainname}',share.colors.villain),\
-                   ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
-        self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
-        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
-
-
-class obj_scene_ch3play4(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play3a())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play5())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        share.scenemanager.switchscene(obj_scene_ch3p23())
     def setup(self):
         self.text=[\
-                '"So ',('{heroname}',share.colors.hero),'" travelled to ',
-                ('{villainname}',share.colors.villain),'\'s ',\
-                ('evil lair',share.colors.location),' in the mountains". ',\
+                  '"The  ',('castle',share.colors.location),'\'s ',\
+                  ('ass',share.colors.item),' (automated security system) blasted: ',\
+                  'Lockdown Engaged. Password Required to open castle. Please Enter password". ',\
                    ]
-        self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3)
-        self.addpart(self.world)
+        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.textinput=draw.obj_textinput('castlepassword',25,(380,260),color=share.colors.villain, legend='Castle Password',default=' ')
+        self.addpart( self.textinput )
 
-
-class obj_scene_ch3play5(page.obj_chapterpage):
+class obj_scene_ch3p23(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play4())
+        share.scenemanager.switchscene(obj_scene_ch3p22())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play6())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
+        share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
         self.text=[\
-                    ('{heroname}',share.colors.hero),' confronted ',\
-                  ('{villainname}',share.colors.villain),' at the ',('evil lair',share.colors.location),', ',\
-                'and they started to ',('fight',share.colors.villain),' for ',\
-              ('{partnername}',share.colors.partner),'. ',\
+                  '"Wrong password, blasted the ',('castle',share.colors.location),'\'s ',\
+                  ('ass',share.colors.item),', zapping engaged! ',\
+                  'And it zapped ',\
+                  ('{heroname}',share.colors.hero),' with an electric shock". ',\
                    ]
-        self.addpart( draw.obj_image('tower',(1100,310), scale=0.7) )
-        self.addpart( draw.obj_image('partnerbase',(1100,530), scale=0.4,rotate=90) )
-        animation1=draw.obj_animation('ch3_villainconfront1','herobase',(640,360),record=False)
-        animation2=draw.obj_animation('ch3_villainconfront2','villainbase',(640,360),record=False,sync=animation1)
+        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
+        animation1.addimage('herozapped')
         self.addpart( animation1 )
-        self.addpart( animation2 )
-        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
+    def presetup(self):
+        super().presetup()
+        # heroangry+zapaura=herozapped
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup2.addpart('part2',draw.obj_image('angryhead',(640,200),scale=0.5) )
+        dispgroup2.addpart('part3',draw.obj_image('zapaura',(640,360),path='premade') )
+        dispgroup2.snapshot((640,360,200,300),'herozapped')
 
 
-class obj_scene_ch3play6(page.obj_chapterpage):
+
+class obj_scene_ch3p24(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play5())
+        share.scenemanager.switchscene(obj_scene_ch3p23())
     def nextpage(self):
-        if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3play8())
+        if share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch3p25())
         else:
-            share.scenemanager.switchscene(obj_scene_ch3play6death())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+            share.scenemanager.switchscene(obj_scene_ch3p24fail())
     def setup(self):
         self.text=[\
-                  '"They fought with guns". ',\
+                  '"The  ',('castle',share.colors.location),'\'s ',\
+                  ('ass',share.colors.item),' blasted: ',\
+                  'You may leave or dare try again". ',\
                    ]
-        self.world=world.obj_world_dodgegunshots(self)
-        self.addpart(self.world)
-class obj_scene_ch3play6death(page.obj_chapterpage):
+        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.textinput=draw.obj_textinput('castlepassword',25,(380,260),color=share.colors.villain, legend='Castle Password',default=' ')
+        self.addpart( self.textinput )
+        y1=170
+        # self.addpart( draw.obj_textbox('Leave:',(90,y1),xleft=True) )
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Leave','yes',(240,y1))
+        textchoice.addchoice('Try Again','no',(460,y1))
+        self.addpart( textchoice )
+
+class obj_scene_ch3p24fail(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play6())
+        share.scenemanager.switchscene(obj_scene_ch3p24())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play6())
+        share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
+        randolist=['Wrooooong','Failed Again','Haha, you are really enjoy this']
+        randotext=tool.randchoice(randolist)
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
-                'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
-                'Now go back and try to act more "heroic". ',\
+                  '"'+randotext+', blasted the ',('castle',share.colors.location),'\'s ',\
+                  ('ass',share.colors.item),', zapping engaged! ',\
+                  'And it zapped ',\
+                  ('{heroname}',share.colors.hero),' with an electric shock". ',\
                    ]
-        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
-
-
-
-
-class obj_scene_ch3play8(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play6())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play9())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.a and controls.d)
-    def setup(self):
-        self.text=[\
-                  '"',('{heroname}',share.colors.hero),' defeated ',\
-                  ('{villainname}',share.colors.villain),' and rescued ',\
-                  ('{partnername}',share.colors.partner),'. ',\
-                  ('{villainname}',share.colors.villain),' said "I will have my revenge" ',\
-                  'and disappeared in the mountains". ',\
-                   ]
-        self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
-        self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
-        self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
-        animation1=draw.obj_animation('ch3_herowins','herobase',(640,360),record=False)
+        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
+        animation1.addimage('herozapped')
         self.addpart( animation1 )
-        self.addpart( draw.obj_animation('ch3_herowins2','partnerbase',(640,360),record=False,sync=animation1) )
-        self.addpart( draw.obj_animation('ch3_herowins3','villainbase',(640,360),record=False,sync=animation1) )
-        self.addpart(draw.obj_textbox('Press [A]+[D] to Continue',(640,660),color=share.colors.instructions))
 
 
-
-class obj_scene_ch3play9(page.obj_chapterpage):
+class obj_scene_ch3p25(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play8())
+        share.scenemanager.switchscene(obj_scene_ch3p24())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play10())
+        share.scenemanager.switchscene(obj_scene_ch3p26())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                  '"',('{heroname}',share.colors.hero),' and ',\
-                  ('{partnername}',share.colors.partner),' went back home". ',\
+                '"After failing to unlock the  ',('evil lair',share.colors.location),', ',\
+                ('{heroname}',share.colors.hero),' travelled back ',
+                ('home',share.colors.location),'". ',\
                    ]
-        self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3,partner=True)
+        self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=3,heroangry=True)
         self.addpart(self.world)
+    def presetup(self):
+        super().presetup()
+        # combine herohead+stickwalk = herowalk
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('herohead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herowalk')
+        # combine partnerhead+stickwalk = partnerwalk
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('partnerhair',(640,200))
+        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
+        dispgroup2=draw.obj_dispgroup((640,360))
+        dispgroup2.addpart('part1',image1)
+        dispgroup2.addpart('part2',image2)
+        dispgroup2.addpart('part3',image3)
+        dispgroup2.snapshot((640,330,200,330),'partnerwalk')
+        # combine angryhead+stickwalk = herowalkangry
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('angryhead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herowalkangry')
 
-class obj_scene_ch3play10(page.obj_chapterpage):
+
+class obj_scene_ch3p26(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play9())
+        share.scenemanager.switchscene(obj_scene_ch3p25())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play11())
+        share.scenemanager.switchscene(obj_scene_ch3p27())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                    '"They  ate ',\
-                    ('fish',share.colors.item),' for dinner".',\
+                   '"',('{heroname}',share.colors.hero),' was very sad. ',\
+                   ('{hero_he}',share.colors.hero), ' though about how ',\
+                   ('{hero_he}',share.colors.hero),' used to charm ',\
+                   ('{partnername}',share.colors.partner),' with a serenade. ',\
                    ]
-        self.world=world.obj_world_eatfish(self,partner=True)
+        self.world=world.obj_world_serenade(self,partner=False,heroangry=True)
         self.addpart(self.world)
 
-
-class obj_scene_ch3play11(page.obj_chapterpage):
+class obj_scene_ch3p27(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play10())
+        share.scenemanager.switchscene(obj_scene_ch3p26())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play12())
+        share.scenemanager.switchscene(obj_scene_ch3p28())
     def triggernextpage(self,controls):
         return (controls.enter and controls.enterc) or self.world.done# quick skip
     def setup(self):
         self.text=[\
-                   '"',('{heroname}',share.colors.hero),' charmed ',\
-                   ('{partnername}',share.colors.partner),' with a serenade..." ',\
+                   '"Then, ',\
+                   ('{heroname}',share.colors.hero),' remembered how ',\
+                   ('{hero_him}',share.colors.hero),' and ',\
+                   ('{partnername}',share.colors.partner),' used to kiss". ',\
                    ]
-        self.world=world.obj_world_serenade(self)
+        self.world=world.obj_world_kiss(self,noending=True)
         self.addpart(self.world)
 
-
-class obj_scene_ch3play12(page.obj_chapterpage):
+class obj_scene_ch3p28(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play11())
+        share.scenemanager.switchscene(obj_scene_ch3p27())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play13())
-    def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done# quick skip
+        share.scenemanager.switchscene(obj_scene_ch3p29())
     def setup(self):
         self.text=[\
-                   '"...and then they kissed".   ',\
+                   '"But ',\
+                   ('{partnername}',share.colors.partner),' wasnt there, and ',\
+                   ('{heroname}',share.colors.hero),' was only kissing the ',\
+                   ('fish',share.colors.item),' that ',\
+                   ('{hero_he}',share.colors.hero),' had caught earlier". ',\
                    ]
-        self.world=world.obj_world_kiss(self)
-        self.addpart(self.world)
 
+        # self.addpart( draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
+        self.addpart( draw.obj_image('fish',(785,467),scale=0.84,rotate=-68,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('herobaseangry',(580,400),scale=0.7,rotate=-15) )
+        # self.addpart( draw.obj_imageplacer(self,'fish'))
+        self.addpart( draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
+        self.addpart( draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
 
-class obj_scene_ch3play13(page.obj_chapterpage):
+class obj_scene_ch3p29(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play12())
+        share.scenemanager.switchscene(obj_scene_ch3p28())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play14())
+        share.scenemanager.switchscene(obj_scene_ch3p30())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -740,63 +801,194 @@ class obj_scene_ch3play13(page.obj_chapterpage):
         self.addpart(self.world)
 
 
-class obj_scene_ch3play14(page.obj_chapterpage):
+class obj_scene_ch3p30(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play13())
+        share.scenemanager.switchscene(obj_scene_ch3p29())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3playend())
+        share.scenemanager.switchscene(obj_scene_ch3p31())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
                    '"',\
-                   ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
-                   ' went back to bed". ',\
+                   ('{heroname}',share.colors.hero),\
+                   ' went to back to bed sad and lonely". ',\
                    ]
-        self.world=world.obj_world_gotobed(self,partner=True)
+        self.world=world.obj_world_gotobed(self,heroangry=True)
+        self.addpart(self.world)
+
+class obj_scene_ch3p31(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p30())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p32())
+    def setup(self):
+        self.text=[\
+                   '"',('{heroname}',share.colors.hero),' was almost asleep, ',\
+                  '"when a small voice started whispering. "',\
+                   ]
+        self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
+        self.addpart( draw.obj_image('herobaseangry',(420,490), scale=0.7,rotate=80) )
+        self.addpart( draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
+
+class obj_scene_ch3p32(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p31())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p33())
+    def setup(self):
+        self.text=[\
+                   '"The small voice whispered: ',\
+                   'please tell me. ',\
+                  'Please answer me honestly. ',\
+                  'Of all the ',('bugs',share.colors.bug),\
+                  ' in the world, which ',('bug',share.colors.bug),' is the one that ',\
+                  ('TERRIFIES',share.colors.hero),' you the most." ',\
+                   ]
+        self.addpart( draw.obj_textinput('bug',25,(640,260),color=share.colors.hero, legend='Most Terrifying Bug') )
+
+
+class obj_scene_ch3p33(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p32())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p34())
+    def setup(self):
+        self.text=[\
+                   '"A ',('{bug}',share.colors.bug),'!, whispered the small voice. ',\
+                   'That is indeed so ',('TERRIFYING',share.colors.hero),'! ',\
+                  'Please show me what a ',('{bug}',share.colors.bug),' looks like ',\
+                  ' and I will bother you no more." ',\
+                   ]
+        bugword=share.datamanager.getword('bug')
+        self.addpart( draw.obj_drawing('bug',(640,450),legend='Draw a '+bugword,shadow=(200,200)) )
+
+
+class obj_scene_ch3p34(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p33())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p35())
+    def setup(self):
+        self.text=[\
+                   '"Well, I have a small confession to make, whispered the small voice. ',\
+                  'Then, something cold and sticky crawled on ',('{heroname}',share.colors.hero),\
+                  '\'s back." ',\
+                   ]
+        # self.addpart( draw.obj_imageplacer(self,'herobaseangry','bug'))
+        self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
+        # self.addpart( draw.obj_image('herobaseangry',(420,490), scale=0.7,rotate=80) )
+        animation1=draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch3_herobuginbed','herobaseangry',(640,360),record=False,sync=animation1) )
+
+
+class obj_scene_ch3p35(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p34())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p36())
+    def setup(self):
+        self.text=[\
+                   '"Just like ',('{heroname}',share.colors.hero),' had feard, a small ', \
+                   ('{bug}',share.colors.bug),' emerged from ',\
+                   ('{hero_his}',share.colors.hero),' bed. ',\
+                  'Please, please do not crush me said the ',('{bug}',share.colors.bug),'! ',\
+                  'I am here to help you!". ',\
+                   ]
+        # self.addpart( draw.obj_imageplacer(self,'herobaseangry','bug'))
+        self.addpart( draw.obj_image('herobaseangry',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(640,360),record=False) )
+
+
+class obj_scene_ch3p36(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p35())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p37())
+    def setup(self):
+        self.text=[\
+                   '"I was in your pocket the whole time, said the ',('{bug}',share.colors.bug),'. ',\
+                  'I am terribly sorry to ',('terrify',share.colors.hero),' you, this wasnt my intention at all. ',\
+                 'I can help you unlock ',('{villainname}',share.colors.villain),\
+                 '\'s ',('evil castle',share.colors.location),' and rescue ',\
+                 ('{partnername}',share.colors.partner),'. ',\
+                   ]
+        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(440,360),record=False) )
+
+
+class obj_scene_ch3p37(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p36())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p38())
+    def setup(self):
+        self.text=[\
+                   '"See, before this I used to crawl under ',('{villainname}',share.colors.villain),'\'s bed. ',\
+                  'And I even heard ',('{villain_him}',share.colors.villain),' talk in ',\
+                  ('{villain_his}',share.colors.villain),' sleep! ', \
+                   ]
+        self.addpart( draw.obj_image('bed',(1280-440,500), scale=0.75,fliph=True) )
+        self.addpart( draw.obj_image('villainbase',(1280-420,490), scale=0.7,rotate=80,fliph=True) )
+        animation1=draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch3_bugtalks2','bug',(640,360),record=True,sync=animation1) )
+
+
+class obj_scene_ch3p38(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p37())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p39())
+    def setup(self):
+        self.text=[\
+                   '"Apparently, the first clue to the evil castle\'s ', \
+                   ('password',share.colors.item),' can be found at the top of the ',\
+                   ('highest peak',share.colors.location),', just north of here. ',\
+                  'Tomorrow, I will show you how to get there". ',\
+                   ]
+        # self.addpart( draw.obj_imageplacer(self,'herobaseangry','bug'))
+        self.addpart( draw.obj_image('herobaseangry',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(640,360),record=False) )
+
+class obj_scene_ch3p39(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p38())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3end())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                   '"The ',('{bug}',share.colors.bug),\
+                   ' crawled back in ',('{heroname}',share.colors.hero),'\'s pocket. ',\
+                   ('{heroname}',share.colors.hero),\
+                   ' went back to bed a little happier, for tomorrow he may be able to rescue ',\
+                   ('{partnername}',share.colors.partner),'".',\
+                   ]
+        self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
 
 
-
-
-class obj_scene_ch3playend(page.obj_chapterpage):
+class obj_scene_ch3end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play14())
+        share.scenemanager.switchscene(obj_scene_ch3p39())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3unlocknext())
     def setup(self):
         self.text=[\
-                   '"And they lived happily ever after, the End". ',\
-                    'And thats it for today, said the book of things. ',
-                   'That is quite a story, well done! ',\
+                    'And thats all for today, said the book of things. ',
+                   'The tension is killing me. I cant wait to find what happens tomorrow! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
 
-
 class obj_scene_ch3unlocknext(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3playend())
+        share.scenemanager.switchscene(obj_scene_ch3end())
     def setup(self):
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter IV',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=4)# chapter 4 becomes available
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #

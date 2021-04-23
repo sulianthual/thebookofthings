@@ -481,7 +481,7 @@ class obj_scene_ch2play4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5())
     def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done# quick skip
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' charmed ',\
@@ -498,7 +498,7 @@ class obj_scene_ch2play5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5a())
     def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done# quick skip
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
                    '"...and then they kissed".   ',\
