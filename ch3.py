@@ -672,7 +672,7 @@ class obj_scene_ch3p24fail(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
-        randolist=['Wrooooong','Failed Again','Haha, you are really enjoy this']
+        randolist=['Wrooooong','Failed Again','Haha, I bet you are enjoying this']
         randotext=tool.randchoice(randolist)
         self.text=[\
                   '"'+randotext+', blasted the ',('castle',share.colors.location),'\'s ',\
@@ -698,7 +698,7 @@ class obj_scene_ch3p25(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"After failing to unlock the  ',('evil lair',share.colors.location),', ',\
+                '"Having failed to unlock the  ',('evil lair',share.colors.location),', ',\
                 ('{heroname}',share.colors.hero),' travelled back ',
                 ('home',share.colors.location),'". ',\
                    ]
@@ -722,6 +722,15 @@ class obj_scene_ch3p25(page.obj_chapterpage):
         dispgroup2.addpart('part2',image2)
         dispgroup2.addpart('part3',image3)
         dispgroup2.snapshot((640,330,200,330),'partnerwalk')
+        # combine stickhead+angryface+stickbody = herobaseangry
+        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('stickhead',(640,200),path='premade')
+        image3=draw.obj_image('angryface',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.addpart('part3',image3)
+        dispgroup1.snapshot((640,360,200,300),'herobaseangry')
         # combine angryhead+stickwalk = herowalkangry
         image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
         image2=draw.obj_image('angryhead',(640,200),scale=0.5)
@@ -861,7 +870,7 @@ class obj_scene_ch3p33(page.obj_chapterpage):
                   ' and I will bother you no more." ',\
                    ]
         bugword=share.datamanager.getword('bug')
-        self.addpart( draw.obj_drawing('bug',(640,450),legend='Draw a '+bugword,shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('bug',(640,450),legend='Draw a '+bugword+' ',shadow=(200,200)) )
 
 
 class obj_scene_ch3p34(page.obj_chapterpage):
@@ -890,7 +899,7 @@ class obj_scene_ch3p35(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p36())
     def setup(self):
         self.text=[\
-                   '"Just like ',('{heroname}',share.colors.hero),' had feard, a small ', \
+                   '"Just like ',('{heroname}',share.colors.hero),' had feared, a small ', \
                    ('{bug}',share.colors.bug),' emerged from ',\
                    ('{hero_his}',share.colors.hero),' bed. ',\
                   'Please, please do not crush me said the ',('{bug}',share.colors.bug),'! ',\
