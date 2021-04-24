@@ -22,25 +22,26 @@ import world
 # Chapter VI: ...
 # *CHAPTER VI
 
-
 class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p0())
-    def setup(self):
-        self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
-                   '\n In this chapter introduce the third part of quest (sailor/pirate in south). ',\
-                  '\n sailor gives quest if help retrieve treasure (from skeletons on skull island). hero learns to steal ',\
-                 '\n draw sailor, and henchmens skeletons ',\
-                  '\n add minigame stealth (walk and hide in places with henchmens patrolling) ',\
-                   ]
+    def triggernextpage(self,controls):
+        return True
+    # def setup(self):
+    #     self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
+    #                '\n In this chapter introduce the third part of quest (sailor/pirate in south). ',\
+    #               '\n sailor gives quest if help retrieve treasure (from skeletons on skull island). hero learns to steal ',\
+    #              '\n draw sailor, and henchmens skeletons ',\
+    #               '\n add minigame stealth (walk and hide in places with henchmens patrolling) ',\
+    #                ]
+
 
 class obj_scene_ch6p0(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
-        self.text=['-----   xxx   -----   ',\
+        self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
+                  '\n Sorry this chapter isnt ready yet, come back later. ',\
 
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

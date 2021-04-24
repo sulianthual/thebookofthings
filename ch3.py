@@ -25,19 +25,19 @@ import world
 class obj_scene_chapter3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p0())
-    def setup(self):
-        self.text=['-----   Chapter III: Where are you   -----   ',\
-                   '\n In this chapter introduce the villain. ',\
-                  'partner is captured. hero confronts villain but looses. start quest to unlock evil lair. ',\
-                  '\n keep minigame dodgebullets ',\
-                  '\n add area evil lair gate (or bridge) that blocks access ',\
-                  '\n add free roaming ',\
-                   ]
+    def triggernextpage(self,controls):
+        return True
+    # def setup(self):
+    #     self.text=['-----   Chapter III: Where are you   -----   ',\
+    #                '\n In this chapter introduce the villain. ',\
+    #               'partner is captured. hero confronts villain but looses. start quest to unlock evil lair. ',\
+    #               '\n keep minigame dodgebullets ',\
+    #               '\n add area evil lair gate (or bridge) that blocks access ',\
+    #               '\n add free roaming ',\
+    #                ]
 
 
 class obj_scene_ch3p0(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p1())
     def setup(self):
@@ -145,7 +145,7 @@ class obj_scene_ch3p4(page.obj_chapterpage):
         textchoice.addkey('villain_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the Villain\'s Name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('villainname',25,(750,y2),color=share.colors.hero, legend='Villain Name') )
+        self.addpart( draw.obj_textinput('villainname',25,(750,y2),color=share.colors.villain, legend='Villain Name') )
         #
         self.addpart( draw.obj_image('angryhead',(440,310),scale=0.25) )
         self.addpart( draw.obj_image('scar',(440,310),scale=0.25) )
@@ -219,7 +219,7 @@ class obj_scene_ch3p8(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
-                     ' went to the river and caught a fish."',\
+                     ' went to the pond and caught a fish."',\
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
@@ -323,10 +323,8 @@ class obj_scene_ch3p13(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"',('{heroname}',share.colors.hero),'" travelled to ',
-                ('{villainname}',share.colors.villain),'\'s ',\
-                ('evil lair',share.colors.location),' to rescue ',\
-                ('{partnername}',share.colors.villain),'". ',\
+                '"',('{heroname}',share.colors.hero),' travelled to the ',
+                ('evil lair',share.colors.location),' in the west."',\
                    ]
         self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3)
         self.addpart(self.world)
@@ -977,7 +975,7 @@ class obj_scene_ch3p39(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"The first ', ('Master of Deceit',share.colors.villain),\
-                   ' lives not too far from here in the west. ',\
+                   ' lives not too far from here in the east. ',\
                    'Tomorrow, I will show you how to get there". ',\
                    ]
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(440,360),record=False) )

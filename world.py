@@ -389,14 +389,17 @@ class obj_world_sunrise(obj_world):
         self.text_undone.show=True
         self.text_done.show=False
         # static actor
-        self.staticactor.addpart( 'img1', draw.obj_image('tree',(1029,449),scale=0.5) )
-        self.staticactor.addpart( 'img2', draw.obj_image('tree',(81,434),scale=0.5) )
-        self.staticactor.addpart( 'img3', draw.obj_image('horizon',(640,720-150),path='premade') )
-        self.staticactor.addpart( 'img4', draw.obj_image('house',(296,443),scale=0.5) )
-        self.staticactor.addpart( 'img5', draw.obj_image('tree',(826,466),scale=0.5) )
-        self.staticactor.addpart( 'img6', draw.obj_image('tree',(671,590),scale=0.5) )
-        self.staticactor.addpart( 'img7', draw.obj_image('tree',(441,642),scale=0.5) )
-        self.staticactor.addpart( 'img8', draw.obj_image('tree',(116,584),scale=0.5) )
+        self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        #
+        self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
+        self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
+        #
+        self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img2", draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img4", draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img5", draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        #
         # start actor
         # self.startactor.addpart( 'img1', draw.obj_image('sun',(660,300),scale=0.5) )
         # ungoing actor
@@ -1023,29 +1026,31 @@ class obj_world_travel(obj_world):
         #
         # Default parameters
         self.wherestart='home'# where the hero starts
-        self.whereends='tower'# where the goal is
+        self.whereends='nowhere'# where the goal is
         self.chapter=1# level of drawings to show from chapters (1=tree/house, 3=tower/mountain, 5=peak+cloud/lightning)
-        self.part=1# part with a chapter for level of drawings (if there are several)
+        self.removelist=[]# force to remove specific items (if they dont exit yet)
         self.addpartner=False# add partner walking with hero
         self.minigame=None# add mini-game on the travel game (minigame='flowers',etc....)
         self.heroangry=False# angry face on hero
+        self.noending=True# skip the completion part of minigame
         # scene tuning
         if kwargs is not None:
             if 'chapter' in kwargs: self.chapter=kwargs["chapter"]
-            if 'part' in kwargs: self.part=kwargs["part"]
             if 'start' in kwargs: self.wherestart=kwargs["start"]
             if 'goal' in kwargs: self.whereends=kwargs["goal"]# option go back home
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
             if 'minigame' in kwargs: self.minigame=kwargs["minigame"]# option add minigame
-            if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]# partner options
+            if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]
+            if 'remove' in kwargs: self.removelist=kwargs["remove"]
+            if 'noending' in kwargs: self.noending=kwargs["noending"]
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
             if self.wherestart=='home':# initial position of hero
                 self.xyhero=(0,0)
-            elif self.wherestart=='pond':
-                self.xyhero=(-640,-360)
             elif self.wherestart=='castle':
+                self.xyhero=(-1280,0)
+            elif self.wherestart=='forest':
                 self.xyhero=(1280,0)
             elif self.wherestart=='peak':
                 self.xyhero=(0,-1080)
@@ -1054,9 +1059,9 @@ class obj_world_travel(obj_world):
         #
         if self.whereends=='home':# goal position
             self.xygoal=(0,0)
-        elif self.whereends=='pond':
-            self.xygoal=(-640,-360)
         elif self.whereends=='castle':
+            self.xygoal=(-1280,0)
+        elif self.whereends=='forest':
             self.xygoal=(1280,0)
         elif self.whereends=='peak':
             self.xygoal=(0,-1080-80)
@@ -1078,6 +1083,7 @@ class obj_world_travel(obj_world):
         self.staticactorplus=obj_grandactor(self,(640,360))
         self.hero=obj_grandactor(self,(640,360))# hero
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_undoneenter=obj_grandactor(self,(640,360))
         self.text_done=obj_grandactor(self,(640,360))
         #
         # background world (9 panels 0-1-2 left right, 0-1-2 top down, each 1280x720)
@@ -1093,83 +1099,106 @@ class obj_world_travel(obj_world):
         self.panels.append(self.staticactor22)
         self.panels.append(self.staticactorplus)
         #
-        if True:
-            # central panel 1-1: hero house (always shown)
-            # textpass=share.datamanager.getword('housename')
-            self.staticactor11.addpart( 'textref', draw.obj_textbox('Home Sweet Home',(640,360+120),color=share.colors.location) )
-            self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
-            #
-            # if self.chapter>1 or (self.chapter==1 and self.part>1):
-            #     self.staticactor11.addpart( 'textref2', draw.obj_textbox('pond',(0,0+120),color=share.colors.location) )
-            #     self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(0,0),scale=0.5) )
-            #     self.staticactor11.addpart( 'ref3', draw.obj_image('path3',(320,360)) )
-            #     self.staticactor11.addpart( "img1b", draw.obj_image('bush',(469-640,230-360),scale=0.36,rotate=0,fliph=False,flipv=False) )
-            #     self.staticactor11.addpart( "img2b", draw.obj_image('bush',(688-640,185-360),scale=0.26,rotate=0,fliph=True,flipv=False) )
-            #     self.staticactor11.addpart( "img3b", draw.obj_image('bush',(786-640,493-360),scale=0.31,rotate=0,fliph=False,flipv=False) )
+        # central panel 1-1: hero house (always shown)
+        # textpass=share.datamanager.getword('housename')
+        self.staticactor11.addpart( 'textref', draw.obj_textbox('Home Sweet Home',(640,360+120),color=share.colors.location) )
+        self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
+        self.staticactor11.addpart( 'textref2', draw.obj_textbox('Pond',(640-320,360-180+120),color=share.colors.location) )
+        self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(640-320,360-180),scale=0.5) )
+        if 'garden' not in self.removelist:
+            self.staticactor11.addpart( 'textref3', draw.obj_textbox('Garden',(640+320,360+120),color=share.colors.location) )
+        if 'flower' not in self.removelist:
+            self.staticactor11.addpart( "img1", draw.obj_image('flower',(925,362),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img2", draw.obj_image('flower',(990,266),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img3", draw.obj_image('flower',(1040,369),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img4", draw.obj_image('flower',(1103,259),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img5", draw.obj_image('flower',(851,280),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        if 'bush' not in self.removelist:
+            self.staticactor11.addpart( "img6", draw.obj_image('bush',(523,170),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
 
-            self.staticactor11.addpart( "img1", draw.obj_image('tree',(414,496),scale=0.51,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img2", draw.obj_image('tree',(869,330),scale=0.48,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img3", draw.obj_image('tree',(477,218),scale=0.48,rotate=0,fliph=True,flipv=False) )
-            self.staticactor11.addpart( "img6", draw.obj_image('tree',(1015,635),scale=0.46,rotate=0,fliph=True,flipv=False) )
-            # if self.chapter>=2:
-            #     self.staticactor11.addpart( "img4a", draw.obj_image('flower',(600,106),scale=0.26,rotate=0,fliph=True,flipv=False) )
-            #     self.staticactor11.addpart( "img5a", draw.obj_image('flower',(261,547),scale=0.26,rotate=0,fliph=False,flipv=False) )
-            #     self.staticactor11.addpart( "img6a", draw.obj_image('flower',(997,425),scale=0.26,rotate=0,fliph=False,flipv=False) )
-            #     self.staticactor11.addpart( "img7a", draw.obj_image('flower',(1187,2),scale=0.26,rotate=0,fliph=False,flipv=False) )
-            #     self.staticactor11.addpart( "img8a", draw.obj_image('flower',(240,20),scale=0.26,rotate=0,fliph=True,flipv=False) )
+        #
+        # west panel 0-1: villain castle
+        if self.chapter>=3:
+            self.staticactor01.addpart( 'textref', draw.obj_textbox('evil lair',(640,360+120),color=share.colors.location) )
+            self.staticactor01.addpart( 'ref', draw.obj_image('castle',(640,360),scale=0.5) )
             #
-            # east panel 2-1: villain tower
-            if self.chapter>=3:
-                self.staticactor21.addpart( 'textref', draw.obj_textbox('evil lair',(640,360+120),color=share.colors.location) )
-                self.staticactor21.addpart( 'ref', draw.obj_image('castle',(640,360),scale=0.5) )
-                self.staticactor21.addpart( "img2", draw.obj_image('mountain',(845,587),scale=0.57,rotate=0,fliph=True,flipv=False) )
-                self.staticactor21.addpart( "img3", draw.obj_image('mountain',(1007,385),scale=0.44,rotate=0,fliph=True,flipv=False) )
-                self.staticactor21.addpart( "img4", draw.obj_image('mountain',(404,499),scale=0.53,rotate=0,fliph=False,flipv=False) )
-                self.staticactor21.addpart( "img5", draw.obj_image('mountain',(308,351),scale=0.3,rotate=0,fliph=False,flipv=False) )
-                self.staticactor21.addpart( "img6", draw.obj_image('mountain',(508,162),scale=0.35,rotate=0,fliph=True,flipv=False) )
-                self.staticactor21.addpart( "img7", draw.obj_image('mountain',(821,199),scale=0.44,rotate=0,fliph=True,flipv=False) )
-                self.staticactor21.addpart( "img8", draw.obj_image('mountain',(987,526),scale=0.26,rotate=0,fliph=True,flipv=False) )
-                self.staticactor21.addpart( "img9", draw.obj_image('mountain',(519,633),scale=0.26,rotate=0,fliph=False,flipv=False) )
-                if self.chapter>=5:
-                    self.staticactor21.addpart( "img12", draw.obj_image('cloud',(1086,291),scale=0.26,rotate=0,fliph=True,flipv=False) )
-                    self.staticactor21.addpart( "img13", draw.obj_image('cloud',(421,69),scale=0.32,rotate=0,fliph=False,flipv=False) )
-                    self.staticactor21.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
-            for i in self.staticactor21.dict.values():
-                i.movex(1280)
-            #
-            # north panel 1-0: highest peak
+            self.staticactor01.addpart( "img2", draw.obj_image('mountain',(845,587),scale=0.57,rotate=0,fliph=True,flipv=False) )
+            self.staticactor01.addpart( "img3", draw.obj_image('mountain',(1007,385),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.staticactor01.addpart( "img4", draw.obj_image('mountain',(404,499),scale=0.53,rotate=0,fliph=False,flipv=False) )
+            self.staticactor01.addpart( "img5", draw.obj_image('mountain',(308,351),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.staticactor01.addpart( "img6", draw.obj_image('mountain',(508,162),scale=0.35,rotate=0,fliph=True,flipv=False) )
+            self.staticactor01.addpart( "img7", draw.obj_image('mountain',(731,155),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.staticactor01.addpart( "img8", draw.obj_image('mountain',(987,526),scale=0.26,rotate=0,fliph=True,flipv=False) )
+            self.staticactor01.addpart( "img9", draw.obj_image('mountain',(519,633),scale=0.26,rotate=0,fliph=False,flipv=False) )
             if self.chapter>=5:
-                self.staticactor10.addpart( 'textref', draw.obj_textbox('highest peak',(640,200+220),color=share.colors.location) )
-                self.staticactor10.addpart( 'imgref', draw.obj_image('mountain',(640,200)) )
-                self.staticactor10.addpart( "img1a", draw.obj_image('cloud',(865,205),scale=0.38,rotate=0,fliph=False,flipv=False) )
-                self.staticactor10.addpart( "img2a", draw.obj_image('cloud',(417,151),scale=0.45,rotate=0,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img3a", draw.obj_image('lightningbolt',(640,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img4a", draw.obj_image('lightningbolt',(500,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
-                self.staticactor10.addpart( "img5a", draw.obj_image('lightningbolt',(800,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
-            for i in self.staticactor10.dict.values():
-                i.movey(-1080)
+                self.staticactor01.addpart( "img12", draw.obj_image('cloud',(794,59),scale=0.26,rotate=0,fliph=True,flipv=False) )
+                self.staticactor01.addpart( "img13", draw.obj_image('cloud',(421,69),scale=0.32,rotate=0,fliph=False,flipv=False) )
+                self.staticactor01.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        for i in self.staticactor01.dict.values():
+            i.movex(-1280)
+        #
+        # east panel 2-1: magical forest and peak
+        if self.chapter>=4:
+            self.staticactor21.addpart( 'textref', draw.obj_textbox('magical cave',(640,360+120),color=share.colors.location) )
+            self.staticactor21.addpart( 'ref', draw.obj_image('cave',(640,360),scale=0.5) )
             #
-            # north east panel 2-0: sun and horizon
-            if self.chapter>=5:
-                self.staticactor20.addpart( "img1", draw.obj_image('sun',(1009,167),scale=0.68,rotate=0,fliph=False,flipv=False) )
-                self.staticactor20.addpart( "img2", draw.obj_image('cloud',(735,141),scale=0.43,rotate=0,fliph=False,flipv=False) )
-                self.staticactor20.addpart( "img3", draw.obj_image('cloud',(231,203),scale=0.35,rotate=0,fliph=True,flipv=False) )
-                self.staticactor20.addpart( "img4", draw.obj_image('cloud',(1203,327),scale=0.24,rotate=0,fliph=False,flipv=False) )
-                self.staticactor20.addpart( "img5", draw.obj_image('tree',(733,539),scale=0.42,rotate=0,fliph=False,flipv=False) )
-                self.staticactor20.addpart( "img6", draw.obj_image('tree',(859,691),scale=0.32,rotate=0,fliph=True,flipv=False) )
-                self.staticactor20.addpart( "img7", draw.obj_image('tree',(406,325-50),scale=0.41,rotate=0,fliph=False,flipv=False) )
-            for i in self.staticactor20.dict.values():
-                i.movex(1280)
-                i.movey(-1080)
+            self.staticactor21.addpart( "img1", draw.obj_image('tree',(377,210),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img2", draw.obj_image('tree',(395,512),scale=0.46,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img3", draw.obj_image('tree',(826,137),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img4", draw.obj_image('tree',(919,331),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img5", draw.obj_image('tree',(843,514),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img6", draw.obj_image('tree',(1112,616),scale=0.44,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img7", draw.obj_image('tree',(520,698),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img8", draw.obj_image('tree',(552,6),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img9", draw.obj_image('tree',(935,670),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img10", draw.obj_image('tree',(243,394),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img11", draw.obj_image('tree',(475,350),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img12", draw.obj_image('tree',(667,164),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img13", draw.obj_image('tree',(997,477),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img14", draw.obj_image('tree',(682,624),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.staticactor21.addpart( "img15", draw.obj_image('tree',(129,131),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.staticactor21.addpart( "img16", draw.obj_image('tree',(185,644),scale=0.36,rotate=0,fliph=True,flipv=False) )
+
+
+        for i in self.staticactor21.dict.values():
+            i.movex(1280)
+        #
+        # north panel 1-0: highest peak
+        if self.chapter>=5:
+            self.staticactor10.addpart( 'textref', draw.obj_textbox('highest peak',(640,200+220),color=share.colors.location) )
+            self.staticactor10.addpart( 'imgref', draw.obj_image('mountain',(640,200)) )
             #
-            # individual elements
-            if self.chapter>=3:# path home to villain
-                self.staticactorplus.addpart( "imge1", draw.obj_image('path1',(640+640,360+0),path='premade') )
-            if self.chapter>=5:# path home to peak
-                self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='premade') )
-                self.staticactorplus.addpart( "imgn2", draw.obj_image('horizon1',(640+0,360-1080-50),path='premade') )
-                self.staticactorplus.addpart( "imgn3", draw.obj_image('horizon2',(1280+320,360-1080-50),path='premade') )
-                self.staticactorplus.addpart( "imgn4", draw.obj_image('horizon3',(1280+640+320,360-1080+180-50),path='premade') )
+            self.staticactor10.addpart( "img1a", draw.obj_image('cloud',(865,205),scale=0.38,rotate=0,fliph=False,flipv=False) )
+            self.staticactor10.addpart( "img2a", draw.obj_image('cloud',(417,151),scale=0.45,rotate=0,fliph=True,flipv=False) )
+            self.staticactor10.addpart( "img3a", draw.obj_image('lightningbolt',(640,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
+            self.staticactor10.addpart( "img4a", draw.obj_image('lightningbolt',(500,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
+            self.staticactor10.addpart( "img5a", draw.obj_image('lightningbolt',(800,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
+        for i in self.staticactor10.dict.values():
+            i.movey(-1080)
+        #
+        # north east panel 2-0: sun and horizon
+        if self.chapter>=5:
+            self.staticactor20.addpart( "img1", draw.obj_image('sun',(1009,167),scale=0.68,rotate=0,fliph=False,flipv=False) )
+            self.staticactor20.addpart( "img2", draw.obj_image('cloud',(735,141),scale=0.43,rotate=0,fliph=False,flipv=False) )
+            self.staticactor20.addpart( "img3", draw.obj_image('cloud',(231,203),scale=0.35,rotate=0,fliph=True,flipv=False) )
+            self.staticactor20.addpart( "img4", draw.obj_image('cloud',(1203,327),scale=0.24,rotate=0,fliph=False,flipv=False) )
+            self.staticactor20.addpart( "img5", draw.obj_image('tree',(733,539),scale=0.42,rotate=0,fliph=False,flipv=False) )
+            self.staticactor20.addpart( "img6", draw.obj_image('tree',(859,691),scale=0.32,rotate=0,fliph=True,flipv=False) )
+            self.staticactor20.addpart( "img7", draw.obj_image('tree',(406,325-50),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        for i in self.staticactor20.dict.values():
+            i.movex(1280)
+            i.movey(-1080)
+        #
+        # individual elements
+        if self.chapter>=3:# path home to villain
+            self.staticactorplus.addpart( "imgw1", draw.obj_image('path1',(640-640,360+0),path='premade',fliph=True) )
+        if self.chapter>=5:# path home to peak
+            self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='premade') )
+            self.staticactorplus.addpart( "imgn2", draw.obj_image('horizon1',(640+0,360-1080-50),path='premade') )
+            self.staticactorplus.addpart( "imgn3", draw.obj_image('horizon2',(1280+320,360-1080-50),path='premade') )
+            self.staticactorplus.addpart( "imgn4", draw.obj_image('horizon3',(1280+640+320,360-1080+180-50),path='premade') )
         ###############
         # boundaries (chapter dependent. At max should be +-1280,+-720, with small additional margin  )
         self.xbm=50#50# margin
@@ -1179,19 +1208,24 @@ class obj_world_travel(obj_world):
             self.xhwmin=-640
             self.yhwmax=360
             self.yhwmin=-360
-        elif self.chapter in [3,4]:# can go east
+        elif self.chapter == 3:# can go west
+            self.xhwmax=640
+            self.xhwmin=-1280-self.xbm
+            self.yhwmax=360
+            self.yhwmin=-360
+        elif self.chapter == 4:# can go west and east
             self.xhwmax=1280+self.xbm
-            self.xhwmin=-640
+            self.xhwmin=-1280-self.xbm
             self.yhwmax=360
             self.yhwmin=-360
         elif self.chapter==5:# can go north too
             self.xhwmax=1280+self.xbm
-            self.xhwmin=-640
+            self.xhwmin=-1280-self.xbm
             self.yhwmax=360
             self.yhwmin=-1080-self.ybm
-        elif self.chapter==6:# can go south too
+        elif self.chapter==6:# can go south too (so everywhere)
             self.xhwmax=1280+self.xbm
-            self.xhwmin=-640
+            self.xhwmin=-1280-self.xbm
             self.yhwmax=1080+self.ybm
             self.yhwmin=-1080-self.ybm
         else:# can go everywhere
@@ -1251,8 +1285,10 @@ class obj_world_travel(obj_world):
         #
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
+        self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Enter',(640,680),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
+        self.text_undoneenter.show=False
         self.text_done.show=False
         # timer
         self.timerend=tool.obj_timer(50)# goal to done
@@ -1280,8 +1316,6 @@ class obj_world_travel(obj_world):
                     i.removepart(j)
             for k in self.floweractors:# append flower actors to tracked hitboxes
                 self.hitboxes.append(k)
-
-
 
     def update(self,controls):
         super().update(controls)
@@ -1353,11 +1387,23 @@ class obj_world_travel(obj_world):
                         k.movey(-self.heromy)
             # goals
             if not self.minigame:# no minigame, just reach a point on map
-                if tool.checkrectcollide(self.hero,self.goalarea):
-                    self.goal=True
-                    self.timerend.start()
-                    self.text_undone.show=False
-                    self.text_done.show=True
+                if tool.checkrectcollide(self.hero,self.goalarea):# contact with goal
+                    self.text_undone.show=False# message to enter on contact
+                    self.text_undoneenter.show=True
+                    if controls.enter and controls.enterc:# enter goal
+                        if self.noending:
+                            self.goal=True
+                            self.done=True
+                        else:
+                            self.goal=True
+                            self.timerend.start()
+                            self.text_undone.show=False
+                            self.text_undoneenter.show=False
+                            self.text_done.show=True
+                else:
+                    self.text_undone.show=True
+                    self.text_undoneenter.show=False
+
             elif self.minigame=='flowers':# mini-game pickup some flowers
                 if self.flowercount<self.flowerneed:
                     tokill=[]
@@ -1371,11 +1417,22 @@ class obj_world_travel(obj_world):
                         i.clearparts()
                         i.kill()
                 else:# when obtained all flowers can reach goal
-                    if tool.checkrectcollide(self.hero,self.goalarea):
-                        self.goal=True
-                        self.timerend.start()
-                        self.text_undone.show=False
-                        self.text_done.show=True
+                    if tool.checkrectcollide(self.hero,self.goalarea):# contact with goal
+                        self.text_undone.show=False# message to enter on contact
+                        self.text_undoneenter.show=True
+                        if controls.enter and controls.enterc:# enter goal
+                            if self.noending:
+                                self.goal=True
+                                self.done=True
+                            else:
+                                self.goal=True
+                                self.timerend.start()
+                                self.text_undone.show=False
+                                self.text_undoneenter.show=False
+                                self.text_done.show=True
+                    else:
+                        self.text_undone.show=True
+                        self.text_undoneenter.show=False
         else:
             # goal reached state
             self.timerend.update()
@@ -2829,7 +2886,7 @@ class obj_world_kiss(obj_world):
         self.noending=True# skip the completion part of minigame
         # scene tuning
         if kwargs is not None:
-            if 'noending' in kwargs: self.noending=kwargs["noending"]# partner options
+            if 'noending' in kwargs: self.noending=kwargs["noending"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
@@ -2935,14 +2992,17 @@ class obj_world_sunset(obj_world):
         self.text_undone.show=True
         self.text_done.show=False
         # static actor
-        self.staticactor.addpart( 'img1', draw.obj_image('tree',(1029,449),scale=0.5) )
-        self.staticactor.addpart( 'img2', draw.obj_image('tree',(81,434),scale=0.5) )
-        self.staticactor.addpart( 'img3', draw.obj_image('horizon',(640,720-150),path='premade') )
-        self.staticactor.addpart( 'img4', draw.obj_image('house',(296,443),scale=0.5) )
-        self.staticactor.addpart( 'img5', draw.obj_image('tree',(826,466),scale=0.5) )
-        self.staticactor.addpart( 'img6', draw.obj_image('tree',(671,590),scale=0.5) )
-        self.staticactor.addpart( 'img7', draw.obj_image('tree',(441,642),scale=0.5) )
-        self.staticactor.addpart( 'img8', draw.obj_image('tree',(116,584),scale=0.5) )
+        self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        #
+        self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
+        self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
+        #
+        self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img2", draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img4", draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img5", draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        #
         # start actor
         self.startactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )
         # ungoing actor

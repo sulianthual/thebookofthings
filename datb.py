@@ -35,6 +35,7 @@ class obj_colors:
         self.maroon=(128,0,0)
         self.purple=(128,0,128)
         self.pink=(231,84,128)
+        self.orange=(255,165,0)
         # Colors devmode
         self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
@@ -53,6 +54,7 @@ class obj_colors:
         self.partner=self.pink
         self.villain=self.brown
         self.bug=self.maroon
+        self.bunny=self.orange
         self.elder=self.darkgray
         self.item=self.blue# items (bed, fish,etc...)
         self.location=self.darkgreen# locations
@@ -115,7 +117,7 @@ class obj_datamanager:
         self.loadsettings()
         self.fileunlocks='book/unlocks.txt'
         self.loadunlocks()
-        self.temp=obj_datatemp()# object for temporal data storage
+        self.temp=obj_datatemp()# object for temporal data storage (by anyone anytime)
     def erasebook(self):
         files = tool.oslistdir('book')
         if '.gitignore' in files: files.remove('.gitignore')# do not erase git file

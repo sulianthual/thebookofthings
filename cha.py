@@ -71,6 +71,7 @@ class obj_scene_arcademenu(page.obj_page):
         self.list.append(obj_scene_stompfight())
         self.list.append(obj_scene_climbing())
         self.list.append(obj_scene_rockpaperscissors())
+        self.list.append(obj_scene_lying())
         self.list.append(obj_scene_eating())
         self.list.append(obj_scene_serenade())
         self.list.append(obj_scene_kiss())
@@ -109,6 +110,7 @@ class obj_scene_sunrise(obj_testpage):
         self.text=['Sunrise']
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'pond','flower','bush',actor='staticactor') )
 
 
 class obj_scene_wakeup(obj_testpage):
@@ -173,14 +175,16 @@ class obj_scene_travel(obj_testpage):
     def setup(self):
         self.name='Travel'
         self.text=['Travel']
-        # self.world=world.obj_world_travel(self)# chapter 1 only, home to tower
-        # self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3)
-        # self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3,partner=True)
+        self.world=world.obj_world_travel(self)# default=chapter1, home area only, no goal
+        # self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3)
+        # self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3,partner=True)
+        self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=7)
         # self.world=world.obj_world_travel(self,start='home',goal='peak',chapter=5)
         # self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
-        self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=5)
+        # self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=7)
         self.addpart(self.world)
-        # self.addpart( draw.obj_imageplacer(self,'house','tree') )
+        # self.addpart( draw.obj_imageplacer(self,'bush','flower',actor='staticactor11') )
+        # self.addpart( draw.obj_imageplacer(self,'tree',actor='staticactor21') )
         # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
         # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','lightningbolt','tree') )
         # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','tree','sun') )
@@ -237,6 +241,14 @@ class obj_scene_rockpaperscissors(obj_testpage):
         # self.world=world.obj_world_rockpaperscissors(self,elderpeaks=True)# elder peaks on 1...
         # self.world=world.obj_world_rockpaperscissors(self,elderthinks=False)# cant see elder choice
         self.addpart(self.world)
+
+
+class obj_scene_lying(obj_testpage):
+    def triggernextpage(self,controls):
+        return controls.enter and controls.enterc
+    def setup(self):
+        self.name='Lying'
+        self.text=['Lying: this game is not in a world but in a serie of pages']
 
 
 class obj_scene_eating(obj_testpage):

@@ -57,12 +57,12 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_settings=draw.obj_textbox('Settings',(640,380),fontsize='smaller')
         self.sprite_start=draw.obj_textbox('Start New Book',(640,410),fontsize='smaller')
         self.sprite_prologue=draw.obj_textbox('Prologue',(640,410),fontsize='smaller')
-        self.sprite_ch1=draw.obj_textbox('Chapter I: Home Sweet Home',(540,440),fontsize='smaller',xleft=True)
-        self.sprite_ch2=draw.obj_textbox('Chapter II: My Love',(540,470),fontsize='smaller',xleft=True)
+        self.sprite_ch1=draw.obj_textbox('Chapter I: The Hero',(540,440),fontsize='smaller',xleft=True)
+        self.sprite_ch2=draw.obj_textbox('Chapter II: Home Sweet Home',(540,470),fontsize='smaller',xleft=True)
         self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(540,500),fontsize='smaller',xleft=True)
-        self.sprite_ch4=draw.obj_textbox('Chapter IV: Higher and Higher',(540,530),fontsize='smaller',xleft=True)
-        self.sprite_ch5=draw.obj_textbox('Chapter V: Treasure Hunt',(540,560),fontsize='smaller',xleft=True)
-        self.sprite_ch6=draw.obj_textbox('Chapter VI: Something West',(540,590),fontsize='smaller',xleft=True)
+        self.sprite_ch4=draw.obj_textbox('Chapter IV Something East',(540,530),fontsize='smaller',xleft=True)
+        self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(540,560),fontsize='smaller',xleft=True)
+        self.sprite_ch6=draw.obj_textbox('Chapter VI: Treasure Hunt',(540,590),fontsize='smaller',xleft=True)
         self.sprite_ch7=draw.obj_textbox('Chapter VII: Showtime',(540,620),fontsize='smaller',xleft=True)
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
@@ -158,7 +158,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch3.obj_scene_ch3p38()
+            quickscene=ch4.obj_scene_ch4p3()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

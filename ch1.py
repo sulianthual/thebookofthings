@@ -26,19 +26,19 @@ import world
 class obj_scene_chapter1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p0())
-    def setup(self):
-        self.text=['-----   Chapter I: Home Sweet Home   -----   ',\
-                   '\n In this chapter introduce the hero. ',\
-                  '\n add minigame hunting, drawing house and surroundings. ',\
-                  '\n add drawing house+trees ',\
-                  '\n add free roaming ',\
-                   ]
+    def triggernextpage(self,controls):
+        return True
+    # def setup(self):
+    #     self.text=['-----   Chapter I: Home Sweet Home   -----   ',\
+    #                '\n In this chapter introduce the hero. ',\
+    #               '\n add minigame hunting, drawing house and surroundings. ',\
+    #               '\n add drawing house+trees ',\
+    #               '\n add free roaming ',\
+    #                ]
 
 
 
 class obj_scene_ch1p0(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter1())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p1())
     def setup(self):
@@ -278,7 +278,7 @@ class obj_scene_ch1p11(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' is going places. ',\
                     ' Lets write down in our story: "',\
                     ('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero),\
-                    ' went to the river and caught a ',('fish',share.colors.item),'". ',\
+                    ' went fishing and caught a ',('fish',share.colors.item),'". ',\
                    ]
         self.addpart(draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=True))
 
@@ -406,7 +406,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
-                     ' went to the river and caught a fish."',\
+                     ' went fishing."',\
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)

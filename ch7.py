@@ -19,28 +19,27 @@ import world
 ##########################################################
 ##########################################################
 
-# Chapter VI: ...
-# *CHAPTER VI
-
+# Chapter VII: ...
+# *CHAPTER VII
 
 class obj_scene_chapter7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p0())
-    def setup(self):
-        self.text=['-----   Chapter VII: Showtime   -----   ',\
-                   '\n Final chapter. hero unlocks east gate, confronts villain, rescues partner. ',\
-                  '\n Reuse all minigames but in setting against the villain, as the final fight. ',\
-                   ]
-
+    def triggernextpage(self,controls):
+        return True
+    # def setup(self):
+    #     self.text=['-----   Chapter VII: Showtime   -----   ',\
+    #                '\n Final chapter. hero unlocks east gate, confronts villain, rescues partner. ',\
+    #               '\n Reuse all minigames but in setting against the villain, as the final fight. ',\
+    #                ]
 
 
 class obj_scene_ch7p0(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter7())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p1())
     def setup(self):
         self.text=['-----   Chapter VII: Showtime   -----   ',\
+                  '\n Sorry this chapter isnt ready yet, come back later. ',\
 
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

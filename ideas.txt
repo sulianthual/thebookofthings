@@ -109,7 +109,6 @@ For this chapter DRAW AS YOU GO
 
 
 
-
 ###################
 * General Story Arc:
 Each day of the story should follow somewhat an arc (even if varying in content):
@@ -177,39 +176,6 @@ jump/duck. Simple for bullets (increase rythm)
 simple dinosaur game from google. just jump in time.
 skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
-
-#########################33
-LYING GAME (put in chapter 4 as the minigame to get the password part):
-three rounds to this game
-- PART 1: the opponent and the hero both tell the truth
-- round 1) opponent makes 3 TRUE statements about him (that are all BOOLEAN):
-  1) I love bananas
-  2) I hate apples
-  3) I never take showers
-- opponent then makes joint statements:
-  1)I love bananas and I love apples (True+False=False)
-  2) I never take showers and I love bananas (True+True=False)
-  3) I love apples and I hate bananas (False+False=False)
-  For each statement as they are told, the hero must say if they are True or not. For example on screen:
-       I like bananas and I love apples (True+False=False)
-       True: Yes No
-PART II: same as before, but the opponent is ALWAYS LYING, the hero tells the truth
-- round 1) opponent makes 3 FALSE statements about him (that are all BOOLEAN):
-  1) I love bananas
-  2) I hate apples
-  3) I never take showers
-- opponent then makes joint statements:
-  1)I like bananas and I love apples (False+True=False)
-  2) I never take showers and I love bananas (False+False=False)
-  3) I love apples and I hate bananas (True+True=True)
-  For each statement as they are told, the hero must say if they are True or not. For example on screen:
-       I love bananas and I love apples (False+True=False)
-       True: Yes No
-=> The difficulty comes from how True and False statements combine, and how they must be remembered.
-PART III:
-same as part II, but both the opponent and the hero ALWAYS LIE. the hero must make opposite answers
-
-
 
 
 ####################################################################################################################

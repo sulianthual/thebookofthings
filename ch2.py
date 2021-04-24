@@ -23,24 +23,26 @@ import world
 # *CHAPTER II
 
 
+
 class obj_scene_chapter2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p0())
-    def setup(self):
-        self.text=['-----   Chapter II: My Love   -----   ',\
-                   '\n In this chapter introduce the partner. ',\
-                  '\n add minigame pickup flowers, tennis. ',\
-                  '\n add drawing partner area ',\
-                  '\n add free roaming ',\
-                   ]
+    def triggernextpage(self,controls):
+        return True
+    # def setup(self):
+    #     self.text=['-----   Chapter II: My Love   -----   ',\
+    #                '\n In this chapter introduce the partner. ',\
+    #               '\n add minigame pickup flowers, tennis. ',\
+    #               '\n add drawing partner area ',\
+    #               '\n add free roaming ',\
+    #                ]
+
 
 class obj_scene_ch2p0(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p1())
     def setup(self):
-        self.text=['-----   Chapter II: My Love   -----   ',\
+        self.text=['-----   Chapter II: Home Sweet Home   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: "Lets see how our story is going so far". ',\
                    ]
@@ -337,17 +339,52 @@ class obj_scene_ch2p11(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p10())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play())
+        share.scenemanager.switchscene(obj_scene_ch2p12())
     def setup(self):
         self.text=[\
                   'Lets write down: "',('{heroname}',share.colors.hero),' charmed ',\
                    ('{partnername}',share.colors.partner),' with a serenade, and then they kissed". ',\
-                   'That wraps it up nicely, said the book of things. ',\
-                   'One last thing, lets draw a house with trees where they live happily together. ',\
+                   'One last thing, lets draw a house with a pond where they live happily together. ',\
                    ]
         self.addpart( draw.obj_drawing('house',(340,450),legend='House',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('tree',(940,450),legend='Tree',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('pond',(940,450),legend='Pond',shadow=(200,200)) )
 
+class obj_scene_ch2p12(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p11())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p13())
+    def setup(self):
+        self.text=[\
+                  'This is what the house looks like, said the book of things. Move around a little to check it out. ',\
+                   ]
+        self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,remove=['flower','bush','garden'])
+        self.addpart(self.world)
+
+
+class obj_scene_ch2p13(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p12())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p14())
+    def setup(self):
+        self.text=[\
+                   'Still a bit basic. Lets also add a few bushes around the pond, and some flowers to make a nice garden. ',\
+                   ]
+        self.addpart( draw.obj_drawing('bush',(340,450),legend='Bush',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('flower',(940,450),legend='Flower',shadow=(200,200)) )
+
+class obj_scene_ch2p14(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2p13())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play())
+    def setup(self):
+        self.text=[\
+                  'Great, said the book of things. What a lovely home. ',\
+                   ]
+        self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2)
+        self.addpart(self.world)
 
 ##########################################################
 ##########################################################
@@ -355,15 +392,15 @@ class obj_scene_ch2p11(page.obj_chapterpage):
 
 class obj_scene_ch2play(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p11())
+        share.scenemanager.switchscene(obj_scene_ch2p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play1())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
-                   'Now thats quite a few changes to our story, said the book of things. ',\
-                  'Lets read it again to summarize. ',\
+                    'That wraps it up nicely, said the book of things. ',\
+                  'Lets read our story again to summarize. ',\
                    'Press [S] to start. ',\
                    ]
         self.addpart(draw.obj_textbox('Press [S] to Start',(640,660),color=share.colors.instructions))
@@ -387,8 +424,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
         self.text=[\
                 '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' ',\
-                'that lived in a  ',('house',share.colors.item),' ',\
-                'with ',('trees',share.colors.item),'. ',\
+                'that lived in a house with a pond and a garden. ',\
                 'It was morning and the sun was rising". ',\
                    ]
         self.world=world.obj_world_sunrise(self)
@@ -427,7 +463,7 @@ class obj_scene_ch2play2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
-                     ' went to the river and caught a fish."',\
+                     ' went to the pond and caught a fish."',\
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
@@ -440,28 +476,10 @@ class obj_scene_ch2play3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3a())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                    '"Then, ',\
-                    ('{heroname}',share.colors.hero),' and ',\
-                    ('{partnername}',share.colors.partner),' ate the ',\
-                    ('fish',share.colors.item),'". ',\
-                   ]
-        self.world=world.obj_world_eatfish(self,partner=True)
-        self.addpart(self.world)
-
-
-class obj_scene_ch2play3a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play3())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play4())
-    def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
-                   '"',('{heroname}',share.colors.hero),' received a letter from ',\
+                   '"Then, ',('{heroname}',share.colors.hero),' received a letter from ',\
                    ('{partnername}',share.colors.partner),' that said ',\
                    ('{partner_he}',share.colors.partner),' loved ',\
                    ('{hero_him}',share.colors.hero),' very very much". ',\
@@ -473,6 +491,39 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
         animation1.addimage('empty',path='premade')
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
+
+
+class obj_scene_ch2play3a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play3())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play3b())
+    def setup(self):
+        self.text=[\
+                    '"',\
+                    ('{heroname}',share.colors.hero),' and ',\
+                    ('{partnername}',share.colors.partner),' spent the day talking and walking around the house". ',\
+                   ]
+        self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,partner=True)
+        self.addpart(self.world)
+
+
+class obj_scene_ch2play3b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play3a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch2play4())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.text=[\
+                    '"In the evening, ',\
+                    ('{heroname}',share.colors.hero),' and ',\
+                    ('{partnername}',share.colors.partner),' ate the ',\
+                    ('fish',share.colors.item),' for dinner". ',\
+                   ]
+        self.world=world.obj_world_eatfish(self,partner=True)
+        self.addpart(self.world)
 
 
 class obj_scene_ch2play4(page.obj_chapterpage):
