@@ -155,7 +155,7 @@ class obj_scene_ch5p1d(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p1c())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p1e())
+        share.scenemanager.switchscene(obj_scene_ch5p1f())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
@@ -166,27 +166,13 @@ class obj_scene_ch5p1d(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
 
-class obj_scene_ch5p1e(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p1d())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p1f())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                    '"',\
-                    ('{hero_he}',share.colors.hero),' ate the ',
-                    ('fish',share.colors.item),' for breakfast, but the heart wasnt there." ',\
-                   ]
-        self.world=world.obj_world_eatfish(self,heroangry=True)
-        self.addpart(self.world)
+
 
 
 
 class obj_scene_ch5p1f(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p1e())
+        share.scenemanager.switchscene(obj_scene_ch5p1d())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p1g())
     def triggernextpage(self,controls):
@@ -222,12 +208,9 @@ class obj_scene_ch5p1g(page.obj_chapterpage):
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
-                    '\nWasup. ',('{partnername}',share.colors.partner),\
-                    ' is still being held hostage in my . ',\
-                     ('evil lair',share.colors.location),', so come save ',\
-                     ('{partner_him}',share.colors.partner),' if you dare. ',\
-                     ' Take your time. ',\
-                    '\nMuahahahaha, ',\
+                    '\nIts me again. ',\
+                    'I am still waiting for you, but boy are you slow to pay me a visit. ',\
+                    'I heard you met my former grandmaster the eastern bunny. Good for you, whatever. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )

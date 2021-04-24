@@ -955,7 +955,7 @@ class obj_scene_ch3p38(page.obj_chapterpage):
                    ('{villainname}',share.colors.villain),\
                    ' learned all ',('{villain_his}',share.colors.villain),\
                    ' evil ways from three grand masters. ',\
-                   'They are called the ',('Masters of Deceit',share.colors.villain),'. ',\
+                   'They are called the ',('Grandmasters of Deceit',share.colors.villain),'. ',\
                    ' Apparently, theses masters hold the clues to the evil castle\'s ',\
                    ('password',share.colors.item),'". ',\
                    ]
@@ -974,7 +974,7 @@ class obj_scene_ch3p39(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p40())
     def setup(self):
         self.text=[\
-                   '"The first ', ('Master of Deceit',share.colors.villain),\
+                   '"The first ', ('Grandmaster of Deceit',share.colors.villain),\
                    ' lives not too far from here in the east. ',\
                    'Tomorrow, I will show you how to get there". ',\
                    ]

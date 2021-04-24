@@ -35,7 +35,7 @@ class obj_colors:
         self.maroon=(128,0,0)
         self.purple=(128,0,128)
         self.pink=(231,84,128)
-        self.orange=(255,165,0)
+        self.darkorange=(255,140,0)
         # Colors devmode
         self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
@@ -54,7 +54,7 @@ class obj_colors:
         self.partner=self.pink
         self.villain=self.brown
         self.bug=self.maroon
-        self.bunny=self.orange
+        self.bunny=self.darkorange
         self.elder=self.darkgray
         self.item=self.blue# items (bed, fish,etc...)
         self.location=self.darkgreen# locations
@@ -97,6 +97,7 @@ class obj_brushes:
         self.bigpen=('data/pen.png',(16,16))
         self.pen12=('data/pen.png',(12,12))
         self.pen=('data/pen.png',(8,8))
+        self.pen6=('data/pen.png',(6,6))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))
         self.shadowpen=('data/shadowpen.png',(64,64))

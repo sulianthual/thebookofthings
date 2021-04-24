@@ -459,6 +459,7 @@ class obj_world_wakeup(obj_world):
     def setup(self,**kwargs):
         # default options
         self.addpartner=False# add partner alongside hero
+        self.addbug=False# add bug alongside hero
         self.partnerangry=False# partner is angry
         self.heroangry=False# hero is angry
         self.addsun=True# add the sun (must have been drawn)
@@ -466,6 +467,7 @@ class obj_world_wakeup(obj_world):
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+            if 'bug' in kwargs: self.addbug=kwargs["bug"]# partner options
             if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]# partner options
             if 'partnerangry' in kwargs: self.partnerangry=kwargs["partnerangry"]# partner options
             if 'sun' in kwargs: self.addsun=kwargs["sun"]# partner options
@@ -508,10 +510,14 @@ class obj_world_wakeup(obj_world):
         # ungoing actor
         if self.addpartner:# add partner in love
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes',self.partnerbaseimg,(640+100,360-50),scale=0.7) )
+        if self.addbug:# add bug crawling out of bed
+            self.ungoingactor.addpart( 'animadd2', draw.obj_animation('ch4_heroawakesbug','bug',(640,360)) )
         self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_heroawakes',self.herobaseimg,(640,360),scale=0.7) )
         # finish actor
         if self.addpartner:# add partner in love
             self.finishactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(903+100,452-50),scale=0.7) )
+        if self.addbug:
+            self.finishactor.addpart( 'imgadd2', draw.obj_image('bug',(1168,595),scale=0.33) )
         self.finishactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(903,452),scale=0.7) )
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [D] to Wake up',(1100,480),color=share.colors.instructions) )
@@ -536,8 +542,10 @@ class obj_world_wakeup(obj_world):
                     self.finishactor.show=False
                     self.timer.start()# reset ungoing timer
                     self.ungoingactor.dict["anim1"].rewind()
-                    if self.addpartner == 'inlove':
+                    if self.addpartner:
                         self.ungoingactor.dict["animadd1"].rewind()
+                    if self.addbug:
+                        self.ungoingactor.dict["animadd2"].rewind()
             else:
                 # ungoing substate
                 self.timer.update()

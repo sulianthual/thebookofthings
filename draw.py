@@ -374,7 +374,7 @@ class obj_textinput:
         self.legend=legend
         formattextkwargs=share.datamanager.getwords()
         self.legend=tool.formattext(self.legend,**formattextkwargs)# replace with book of things keywords
-        self.sprite_legend.make(self.legend,share.fonts.font('smaller'),(0,0,0),bold=True)
+        self.sprite_legend.make(self.legend,share.fonts.font('smaller'),share.colors.instructions,bold=True)
         termx,termy=self.sprite_legend.getrxry()
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
