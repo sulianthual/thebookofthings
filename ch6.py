@@ -27,12 +27,12 @@ class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p0())
     def setup(self):
-        self.text=['-----   Chapter V: Something West   -----   ',\
-                   '\n In this chapter introduce the third and last part of quest. ',\
-                  '\n Must go west for this. in space, with a robot, an alien, a bunny?... ',\
+        self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
+                   '\n In this chapter introduce the third part of quest (sailor/pirate in south). ',\
+                  '\n sailor gives quest if help retrieve treasure (from skeletons on skull island). hero learns to steal ',\
+                 '\n draw sailor, and henchmens skeletons ',\
+                  '\n add minigame stealth (walk and hide in places with henchmens patrolling) ',\
                    ]
-
-
 
 class obj_scene_ch6p0(page.obj_chapterpage):
     def prevpage(self):
@@ -40,7 +40,7 @@ class obj_scene_ch6p0(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
-        self.text=['-----   Chapter V: Something West   -----   ',\
+        self.text=['-----   xxx   -----   ',\
 
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

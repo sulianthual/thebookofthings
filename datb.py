@@ -115,6 +115,7 @@ class obj_datamanager:
         self.loadsettings()
         self.fileunlocks='book/unlocks.txt'
         self.loadunlocks()
+        self.temp=obj_datatemp()# object for temporal data storage
     def erasebook(self):
         files = tool.oslistdir('book')
         if '.gitignore' in files: files.remove('.gitignore')# do not erase git file
@@ -239,7 +240,11 @@ class obj_datamanager:
             # default unlocks (empty)
             self.dictunlocks={}
 
-
+# Temp object for datamanager: store any temporal data here
+# (under share.datamanager.temp.something=True)
+class obj_datatemp:
+    def __init__(self):
+        pass
 
 
 ####################################################################################################################

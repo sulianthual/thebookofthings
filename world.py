@@ -2258,239 +2258,35 @@ class obj_world_climbpeak(obj_world):
 
 ####################################################################################################################
 
-
-# Mini Game: Climb Highest Peak
-#*CLIMB *CLIMBING *PEAK
-class obj_world_climbpeakOLD(obj_world):
-    def setup(self):
+# Mini Game: liar liar game
+# *LIAR *LIAR
+class obj_world_liarliar(obj_world):
+    def setup(self,**kwargs):
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
-        self.xmin=50
-        self.xmax=1280-50
-        self.yground=720-120# ground
-        self.heroxystart=(140,self.yground)# where hero starts
+        self.win=True# game is won
+        # layering
         self.staticactor=obj_grandactor(self,(640,360))# background
-        self.hero=obj_grandactor(self,self.heroxystart)
-        self.text_undone=obj_grandactor(self,(640,360))# text always in front
-        self.text_done=obj_grandactor(self,(640,360))
-        self.text_undone.show=True
-        self.text_done.show=False
+        self.statement=obj_grandactor(self,(640,360))
+        #
         # static
-        self.staticactor.addpart( 'img1', draw.obj_image('sun',(218,233),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img4', draw.obj_image('floor1',(640,720-100),path='premade') )
-        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(1110,100),path='premade') )
-        self.staticactor.addpart( 'img5',draw.obj_image('mountain',(779,624),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img6',draw.obj_image('mountain',(1070,605),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img7',draw.obj_image('mountain',(1203,585),scale=0.38,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('Lets go!',(585,212)) )
-        # platforms
-        self.platforms=[]
-        self.platformsxy=[(1110,195),(813,385),(457,575)]
-        for c,xy in enumerate(self.platformsxy):
-            platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
-            platformi.rx=150
-            platformi.ry=5
-            self.platforms.append(platformi)
-        # hero
-        self.hero.addpart( 'stand_right', draw.obj_image('herobase',self.heroxystart,scale=0.35) )
-        self.hero.addpart( 'stand_left', draw.obj_image('herobase',self.heroxystart,scale=0.35,fliph=True) )
-        self.hero.dict['stand_right'].show=True
-        self.hero.dict['stand_left'].show=False
-        self.heromayjump=True# hero can jump (not if in the air)
-        self.heromayholdjump=False# hero can hold to jump higher
-        self.herodt=1# hero time increment
-        self.herofy=0# hero force
-        self.herov=0# hero velocity
-        self.herog=1# gravity rate
-        self.herod=0.05#0.07# dissipation rate
-        self.heroj=1# jump rate (click button)
-        self.herojh=5#3.5# jump rate (hold button)
-        self.heroholdjumptimer=tool.obj_timer(5)# how long can hold jump button
-        self.heromx=12# move rate horizontally
-
-        # hero hitboxes
-        self.herohitbox1=obj_grandactor(self,(self.heroxystart[0],self.heroxystart[1]))# for being hit
-        self.herohitbox1.rx=50
-        self.herohitbox1.ry=100
-        self.herohitbox2=obj_grandactor(self,(self.heroxystart[0],self.heroxystart[1]+75))# for hitting (is hero feets)
-        self.herohitbox2.rx=50
-        self.herohitbox2.ry=25
-        # goal hitbox
-        self.goalhitbox=obj_grandactor(self,(1110,100))
-        # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(980,510),color=share.colors.instructions) )
-        self.text_done.addpart( 'text1', draw.obj_textbox(' ',(980,510)) )
-        # levels
-        self.startlevel=False# start playing new level
-        self.level=1# current level
-        # timer for done part
-        self.timerend=tool.obj_timer(0)# goal to done
-        # self.setlevel2()# Test
-        # self.setlevel3()# Test
-
-    def setlevel2(self):
-        # clear stuff
-        self.staticactor.clearparts()
-        for i in self.platforms:
-            i.clearparts()
-            i.kill()
-        # static
-        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(250,200),path='premade') )
-        self.staticactor.addpart( 'img2',draw.obj_image('cloud',(1060,167),scale=0.41,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img3',draw.obj_image('cloud',(533,329),scale=0.41,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img4',draw.obj_image('cloud',(335,620),scale=0.41,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'img5',draw.obj_image('mountain',(111,676),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img6',draw.obj_image('mountain',(715,692),scale=0.26,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'img7',draw.obj_image('mountain',(862,671),scale=0.26,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('Keep it up!',(850,347)) )
-        # platforms
-        self.platforms=[]
-        # self.platformsxy=[(457,193),(813,385),(1110,575)]
-        self.platformsxy=[(1110,675),(1111,485),(250,485),(250,295)]
-        # ground (becomes a fall)
-        self.yground=720+200
-        # level
-        self.startlevel=False
-        self.level=2
-        # platformes
-        for c,xy in enumerate(self.platformsxy):
-            platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
-            platformi.rx=150
-            platformi.ry=5
-            self.platforms.append(platformi)
-        # hero
-        self.heroxystart=(1110+50,560)
-        self.hero.movetoxy(self.heroxystart)
-        self.heromayjump=True# hero can jump (not if in the air)
-        self.heromayholdjump=False# hero can hold to jump higher
-        # goal
-        self.goalhitbox.movetoxy((250,200-100))
-        # text
-        self.text_undone.dict['text1'].movetoxy(640,580)
-
-    def setlevel3(self):
-        # clear stuff
-        self.staticactor.clearparts()
-        for i in self.platforms:
-            i.clearparts()
-            i.kill()
-        # static
-        self.staticactor.addpart( 'img0a', draw.obj_image('arrowup',(1110,50),path='premade') )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('Almost there!',(827,398)) )
-        self.staticactor.addpart( 'img1b', draw.obj_image('cloud',(478,227),scale=0.66,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img2b', draw.obj_image('cloud',(1146,626),scale=0.39,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img3b', draw.obj_image('cloud',(816,535),scale=0.43,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'img4b', draw.obj_image('lightningbolt',(496,385),scale=0.43,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'img5b', draw.obj_image('lightningbolt',(810,218),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img6b', draw.obj_image('cloud',(832,102),scale=0.46,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img7b', draw.obj_image('cloud',(117,262),scale=0.43,rotate=0,fliph=False,flipv=False) )
-        # platforms
-        self.platforms=[]
-        # self.platformsxy=[(457,193),(813,385),(1110,575)]
-        self.platformsxy=[(140,675),(680,675),(1110,490),(1110,320),(1110,160)]
-        # ground (becomes a fall)
-        self.yground=720+200
-        # level
-        self.startlevel=False
-        self.level=3
-        # platformes
-        for c,xy in enumerate(self.platformsxy):
-            platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
-            platformi.rx=150
-            platformi.ry=5
-            self.platforms.append(platformi)
-        # hero
-        self.heroxystart=(140+50,560)
-        self.hero.movetoxy(self.heroxystart)
-        self.heromayjump=True# hero can jump (not if in the air)
-        self.heromayholdjump=False# hero can hold to jump higher
-        # goal
-        self.goalhitbox.movetoxy((1110,-30))
-        # text
-        self.text_undone.dict['text1'].movetoxy(204,409)
+        self.staticactor.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5) )
+        self.staticactor.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
+        #
+        # statements (boolean pairs)
+        self.statements=[]#
+        self.statements.append( ('I love apples','I hate apples') )
+        self.statements.append( ('I love bananas','I hate bananas') )
+        self.statements.append( ('I shower every day','I never shower') )
+        self.threestatements=[]
+        # self.statement.addpart('statement')
     def update(self,controls):
         super().update(controls)
+        # goal unreached
         if not self.goal:
-            # goal unreached state
-            #
-            # hero
-            # initial move (press one button to initiate movement in each level)
-            if not self.startlevel:
-                if controls.ac or controls.dc or controls.sc or controls.wc:
-                    self.startlevel=True
-            if self.startlevel:
-                # hero dynamics y
-                self.herofy=0# force
-                self.herofy += self.herog# gravity
-                if self.heromayjump and (controls.w and controls.wc):# jump (click button)
-                    self.herofy -= self.heroj
-                    self.herov=0# reset velocity
-                    self.heromayjump=False# cant jump again
-                    self.heromayholdjump=True# can hold this jump
-                    self.heroholdjumptimer.start()
-                if self.heromayholdjump and controls.w:# jump (hold button)
-                    self.herofy -= self.herojh
-                    self.heroholdjumptimer.update()
-                    if self.heroholdjumptimer.ring:
-                        self.heromayholdjump=False
-                # apply forces
-                self.herov += self.herodt*(self.herofy-self.herod*self.herov)# dtv=g+flap-dv**2
-                # ground
+            pass
 
-                if self.hero.y+self.herov*self.herodt>self.yground:# hero is on ground
-                    if self.level<2:# first level, ground is hard
-                        self.hero.movetoy(self.yground)
-                        self.herov = 0# just stall
-                        self.heromayjump=True# may jump from ground again
-                    else:# next levels, ground is a fall (restart level)
-                        self.hero.movetoxy(self.heroxystart)
-                        self.heromayjump=True# hero can jump (not if in the air)
-                        self.startlevel=False
-                # platforms
-                for i in self.platforms:
-                    if tool.checkrectcollide(self.herohitbox2,i):
-                        self.herov=min(0,self.herov)# positive
-                        self.heromayjump=True# may jump from ground again
-                # apply movement
-                self.hero.movey(int(self.herodt*self.herov))# dty=v
-                # hero dynamics x
-                if controls.a:#
-                    self.hero.movex(-self.heromx)
-                    if controls.ac:# flip left
-                        self.hero.dict['stand_right'].show=False
-                        self.hero.dict['stand_left'].show=True
-                if controls.d:
-                    self.hero.movex(self.heromx)
-                    if controls.dc:# flip right
-                        self.hero.dict['stand_right'].show=True
-                        self.hero.dict['stand_left'].show=False
-                if self.hero.x<self.xmin:# boundaries
-                    self.hero.movetox(self.xmin)
-                elif self.hero.x>self.xmax:
-                    self.hero.movetox(self.xmax)
-                # hero hitboxes move
-                self.herohitbox1.movetoxy( (self.hero.x,self.hero.y) )
-                self.herohitbox2.movetoxy( (self.hero.x,self.hero.y+75) )
-                # hero reaches goal
-                if tool.checkrectcollide(self.herohitbox1,self.goalhitbox):
-                    if self.level==1:
-                        self.setlevel2()
-                    elif self.level==2:
-                        self.setlevel3()
-                    else:# end of all levels
-                        self.goal=True
-                        self.text_undone.show=False
-                        self.text_done.show=True
-                        self.timerend.start()
-        else:
-            # goal reached states
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
 
 
 ####################################################################################################################

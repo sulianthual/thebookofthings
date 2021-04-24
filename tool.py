@@ -25,6 +25,7 @@ from math import sin as math_sin
 from math import atan2 as math_atan2
 from random import randint as random_randint
 from random import choices as random_randchoice# choices not choice
+from random import sample as random_randsample
 from random import gauss as random_randgauss
 
 ##########################################################
@@ -64,6 +65,9 @@ def randchoice(list,probas=None):# returns element from list (with either equal 
         return random_randchoice(list)[0]
     else:
         return random_randchoice(list,weights=probas,k=1)[0]
+
+def randsample(list,n):# returns n element from list chosen randomly WITHOUT REPETITIONS
+    return random_randsample(list,n)
 
 def randgauss(mean,std):# returns normal gaussian distribution of given mean and std
     return random_randgauss(mean,std)

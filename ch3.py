@@ -951,18 +951,41 @@ class obj_scene_ch3p38(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p39())
     def setup(self):
         self.text=[\
-                   '"Apparently, the first clue to the evil castle\'s ', \
-                   ('password',share.colors.item),' can be found at the top of the ',\
-                   ('highest peak',share.colors.location),', just north of here. ',\
-                  'Tomorrow, I will show you how to get there". ',\
+                   '"Well, ',('{villainname}',share.colors.villain),\
+                   ' sure talks a lot in ',('{villain_his}',share.colors.villain),' sleep. ',\
+                   'It turns out that ', \
+                   ('{villainname}',share.colors.villain),\
+                   ' learned all ',('{villain_his}',share.colors.villain),\
+                   ' evil ways from three grand masters. ',\
+                   'They are called the ',('Masters of Deceit',share.colors.villain),'. ',\
+                   ' Apparently, theses masters hold the clues to the evil castle\'s ',\
+                   ('password',share.colors.item),'". ',\
                    ]
-        # self.addpart( draw.obj_imageplacer(self,'herobaseangry','bug'))
-        self.addpart( draw.obj_image('herobaseangry',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(640,360),record=False) )
+        self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(640,360),record=True,path='premade') )
+        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='premade') )
+        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade') )
+        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='premade') )
+        # self.addpart( draw.obj_imageplacer(self,'castle','villainhead') )
 
 class obj_scene_ch3p39(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p38())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p40())
+    def setup(self):
+        self.text=[\
+                   '"The first ', ('Master of Deceit',share.colors.villain),\
+                   ' lives not too far from here in the west. ',\
+                   'Tomorrow, I will show you how to get there". ',\
+                   ]
+        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(440,360),record=False) )
+
+
+class obj_scene_ch3p40(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p39())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3end())
     def triggernextpage(self,controls):
@@ -977,7 +1000,6 @@ class obj_scene_ch3p39(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
-
 
 class obj_scene_ch3end(page.obj_chapterpage):
     def prevpage(self):
