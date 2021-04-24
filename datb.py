@@ -247,7 +247,14 @@ class obj_datamanager:
 # (under share.datamanager.temp.something=True)
 class obj_datatemp:
     def __init__(self):
-        pass
+        self.setup()
+    def setup(self):
+        # some temp data used for the lying game
+        self.statements={}
+        self.statdict={}
+        self.statkeys=[]
+        self.stat01=[]
+        self.fqstatdict={}
 
 
 ####################################################################################################################
