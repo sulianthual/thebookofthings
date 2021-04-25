@@ -120,26 +120,27 @@ class obj_scene_alldrawings(obj_testpage):
     def setup(self):
         self.name='All Drawings'
         y1=50
-        for c,value in enumerate(['book','pen','eraser']):
-            self.addpart( draw.obj_image(value,(340+c*300,y1), scale=0.2) )
-        y1=150
+        dy1=100
+        x1=50
+        dx1=100
+        ss=0.2
         for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
-            self.addpart( draw.obj_image(value,(120+c*120,y1), scale=0.2) )
-        y1=250
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
         for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','pond','bush','flower']):
-            self.addpart( draw.obj_image(value,(100+c*100,y1), scale=0.15) )
-        y1=350
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
         for c,value in enumerate(['villainhead','gun','bullet','castle','mountain','bug']):
-            self.addpart( draw.obj_image(value,(240+c*100,y1), scale=0.2) )
-        y1=450
-        for c,value in enumerate(['bunnyhead','cave','tree']):
-            self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
-        y1=550
-        for c,value in enumerate(['elderhead','nightstand','alarmclock8am','cloud','lightningbolt','rock','paper','scissors']):
-            self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
-        y1=650
-        for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
-            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.2) )
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['bunnyhead','nightstand','alarmclock8am','cave','tree']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['elderhead','cloud','lightningbolt','rock','paper','scissors']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        # for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
+        #     self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
 
 
 class obj_scene_testmessage(obj_testpage):
@@ -239,7 +240,7 @@ class obj_scene_testheadermaker(obj_testpage):
                   'Page must start above 0. Last nextpage is commented (for if next page doesnt exist) ',\
                    ]
         # self.addpart( draw.obj_headermaker('ch3',10,25) )# for chapter 3, page 10 to 25
-        self.addpart( draw.obj_headermaker('ch4',19,50) )# for chapter 3, page 10 to 25
+        self.addpart( draw.obj_headermaker('ch6',2,30) )# for chapter 3, page 10 to 25
 
 
 class obj_scene_interactivetext(obj_testpage):

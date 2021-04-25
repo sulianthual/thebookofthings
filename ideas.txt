@@ -95,6 +95,11 @@ we learn that our most feared bugs are our best friends
               the bunny jumps over the hero
               start with one bunny, then up to 3 (the bunny multiplies)
 
+
+- Chapter 4: explain in lying minigame:
+            A statement is correct only if it is entirely correct.
+            A statement that is partially wrong is always wrong.
+
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
              or freezing temperatures (draw a snowman!)
 
@@ -107,14 +112,30 @@ we learn that our most feared bugs are our best friends
             then villain captures hero, and use lie-cheat-steal to win
             1. lie to villain, 2. cheat him at rockpaperscissors, 3. steal his key/something
 
+- Credits: Make a song about "lie, cheat and steal"
+          Play it with everyone dancing, with a little ball like a karaoke
+          Write some verses about the story that rhymes
+          "Once upon a time there was a hero in his prime, "
+          "He saved his partner in no time. "
+          ....
+          And the chorus is:
+          LIE, CHEAT AND STEAL!
+          learn how to LIE, CHEAT AND STEAL!
+          its great to LIE, CHEAT AND STEAL!
+          so fun to LIE, CHEAT AND STEAL!
+          when life pulls you down and you just feel like a clown
+          you will come around if you LIE, CHEAT AND STEAL!
+          (you can replace learn how to=> you need to, and so on...)
+
+
 ##################
 * Chapter 6 Plot:
 For this chapter DRAW AS YOU GO
 - unlike chapter 4,5, the sailor COMES to the hero house
   (to tell about the treasure). He heard of the hero from the 2 other grandmasters
   ( this is like the plot of Treasure Island )
-- go south to pirate ship. draw the pirate (eyelid+pirate hat)
-- pirate says will give password if helps retrieve treasure
+- draw sailor = eyelid + sailor hat (like the marin shadok!)
+- sailor says will give password if helps retrieve treasure
 - treasure is in skull island.
 -draw skull (serves as island).
     Also serves to make skeleton henchmens (and their boss=eyelid+pirate hat)
@@ -126,7 +147,14 @@ For this chapter DRAW AS YOU GO
 - can go see sailor in jail later on (and keep his ship to sail yourself)
 
 
-
+##################
+* Technical
+- Make game website (thebookofthings.com). with game download etc...
+- remove unlock system (?)
+- in file progress, add part: this can tell which part of chapter is done,
+  if exiting and wanting to go back
+- add place where all drawings can be redone
+- add place where all games can be replayed (maybe free roaming once a region has been done?)
 
 ###################
 * General Story Arc:

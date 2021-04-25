@@ -54,9 +54,9 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_author=draw.obj_textbox('By Sul',(1210,670),fontsize='smaller')
         self.sprite_pointer=draw.obj_textbox('---',(500-100,410),fontsize='smaller')
         self.sprite_info=draw.obj_textbox('[Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
-        self.sprite_settings=draw.obj_textbox('Settings',(640,380),fontsize='smaller')
-        self.sprite_start=draw.obj_textbox('Start New Book',(640,410),fontsize='smaller')
-        self.sprite_prologue=draw.obj_textbox('Prologue',(640,410),fontsize='smaller')
+        self.sprite_settings=draw.obj_textbox('Settings',(540,380),fontsize='smaller',xleft=True)
+        self.sprite_start=draw.obj_textbox('Start New Book',(540,410),fontsize='smaller',xleft=True)
+        self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(540,410),fontsize='smaller',xleft=True)
         self.sprite_ch1=draw.obj_textbox('Chapter I: The Hero',(540,440),fontsize='smaller',xleft=True)
         self.sprite_ch2=draw.obj_textbox('Chapter II: Home Sweet Home',(540,470),fontsize='smaller',xleft=True)
         self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(540,500),fontsize='smaller',xleft=True)
@@ -158,7 +158,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         if controls.f and controls.fc:
             #
             # change current WIP scene here
-            quickscene=ch4.obj_scene_lyingstart()
+            quickscene=ch6.obj_scene_ch6p1()
             #
             share.scenemanager.switchscene(quickscene)
         #############################################3

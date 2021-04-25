@@ -312,7 +312,9 @@ class obj_scene_ch4p11(page.obj_chapterpage):
                 '"Arrived at the ',('magical cave',share.colors.location),', ',\
                 ('{heroname}',share.colors.hero),' met a curious character. ',\
                 'It was an extremely cute ',('bunny',share.colors.bunny),'". ',\
-                'Well, draw the ',('bunny',share.colors.bunny),'\'s head, said the book of things. ',\
+                'Well, there\'s never ever been anything wrong with that, ',\
+                'said the book of things. ',\
+                'Go on, draw the ',('bunny',share.colors.bunny),'\'s head. ',\
                    ]
         self.textkeys={'pos':(50,200),'xmax':720}
         self.addpart( draw.obj_image('stickhead',(980,360+150-10),path='premade',scale=1.5) )
@@ -389,8 +391,9 @@ class obj_scene_ch4p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p15())
     def setup(self):
         self.text=[\
-                '"So you think I am cute, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                'Well, look carefully at all these trees. Poof, they are all gone! I just chopped them with my little paw. ',\
+                '"Ha! You think I am cute!, said ',('{bunnyname}',share.colors.bunny),'. ',\
+                'Well, look carefully at all these trees. Poof, they are all gone! ',\
+                'I just chopped them with my ',('little paw',share.colors.bunny),'. ',\
                 'Do you still want to pet me now". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )

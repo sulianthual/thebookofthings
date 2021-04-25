@@ -25,7 +25,7 @@ class obj_scene_prologue(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
     def setup(self):
-        self.text=['-----   Prologue   -----   ',\
+        self.text=['-----   Prologue: The Book of Things   -----   ',\
                    '\nIn the Beginning, there was Nothing. Absolutely Nothing. \nBut one Could Press [Enter] to Continue.']
         self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
 
