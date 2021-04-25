@@ -27,14 +27,6 @@ class obj_scene_chapter3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p0())
     def triggernextpage(self,controls):
         return True
-    # def setup(self):
-    #     self.text=['-----   Chapter III: Where are you   -----   ',\
-    #                '\n In this chapter introduce the villain. ',\
-    #               'partner is captured. hero confronts villain but looses. start quest to unlock evil lair. ',\
-    #               '\n keep minigame dodgebullets ',\
-    #               '\n add area evil lair gate (or bridge) that blocks access ',\
-    #               '\n add free roaming ',\
-    #                ]
 
 
 class obj_scene_ch3p0(page.obj_chapterpage):
@@ -328,31 +320,6 @@ class obj_scene_ch3p13(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3)
         self.addpart(self.world)
-    def presetup(self):
-        super().presetup()
-        # combine herohead+stickwalk = herowalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalk')
-        # combine partnerhead+stickwalk = partnerwalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('partnerhair',(640,200))
-        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
-        dispgroup2=draw.obj_dispgroup((640,360))
-        dispgroup2.addpart('part1',image1)
-        dispgroup2.addpart('part2',image2)
-        dispgroup2.addpart('part3',image3)
-        dispgroup2.snapshot((640,330,200,330),'partnerwalk')
-        # combine angryhead+stickwalk = herowalkangry
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('angryhead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalkangry')
 
 class obj_scene_ch3p14(page.obj_chapterpage):
     def prevpage(self):
@@ -702,41 +669,6 @@ class obj_scene_ch3p25(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=3,heroangry=True)
         self.addpart(self.world)
-    def presetup(self):
-        super().presetup()
-        # combine herohead+stickwalk = herowalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalk')
-        # combine partnerhead+stickwalk = partnerwalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('partnerhair',(640,200))
-        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
-        dispgroup2=draw.obj_dispgroup((640,360))
-        dispgroup2.addpart('part1',image1)
-        dispgroup2.addpart('part2',image2)
-        dispgroup2.addpart('part3',image3)
-        dispgroup2.snapshot((640,330,200,330),'partnerwalk')
-        # combine stickhead+angryface+stickbody = herobaseangry
-        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('stickhead',(640,200),path='premade')
-        image3=draw.obj_image('angryface',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,360,200,300),'herobaseangry')
-        # combine angryhead+stickwalk = herowalkangry
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('angryhead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalkangry')
-
 
 class obj_scene_ch3p26(page.obj_chapterpage):
     def prevpage(self):

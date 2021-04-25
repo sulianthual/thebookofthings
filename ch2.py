@@ -29,13 +29,7 @@ class obj_scene_chapter2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p0())
     def triggernextpage(self,controls):
         return True
-    # def setup(self):
-    #     self.text=['-----   Chapter II: My Love   -----   ',\
-    #                '\n In this chapter introduce the partner. ',\
-    #               '\n add minigame pickup flowers, tennis. ',\
-    #               '\n add drawing partner area ',\
-    #               '\n add free roaming ',\
-    #                ]
+
 
 
 class obj_scene_ch2p0(page.obj_chapterpage):
@@ -331,9 +325,8 @@ class obj_scene_ch2p10(page.obj_chapterpage):
         self.text=[\
                    'Hold [A]+[D] to make them kiss.   ',\
                    ]
-        self.world=world.obj_world_kiss(self)# kiss mini-game
+        self.world=world.obj_world_kiss(self,noending=False)# kiss mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=100# longer cutscene for first time playing
 
 class obj_scene_ch2p11(page.obj_chapterpage):
     def prevpage(self):
@@ -554,7 +547,7 @@ class obj_scene_ch2play5(page.obj_chapterpage):
         self.text=[\
                    '"...and then they kissed".   ',\
                    ]
-        self.world=world.obj_world_kiss(self)
+        self.world=world.obj_world_kiss(self,noending=False)
         self.addpart(self.world)
 
 

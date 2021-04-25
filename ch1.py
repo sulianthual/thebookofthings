@@ -28,15 +28,6 @@ class obj_scene_chapter1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p0())
     def triggernextpage(self,controls):
         return True
-    # def setup(self):
-    #     self.text=['-----   Chapter I: Home Sweet Home   -----   ',\
-    #                '\n In this chapter introduce the hero. ',\
-    #               '\n add minigame hunting, drawing house and surroundings. ',\
-    #               '\n add drawing house+trees ',\
-    #               '\n add free roaming ',\
-    #                ]
-
-
 
 class obj_scene_ch1p0(page.obj_chapterpage):
     def nextpage(self):

@@ -60,40 +60,59 @@ we learn that our most feared bugs are our best friends
 
 
 ##################
-* Chapter 3 Plot:
-For this chapter you DRAW AS YOU GO. We dont replay the chapter (too long).
-- draw villain
-- hero+partner wake up
-- go fishing
-- hero checks mail: nothing but villain is behind
-- conversation villain hero (brief)
-- draw gun+bullet
-- dodge minigame
-- high kick from villain, hero is unconscious
-- hero dreams: minigame where catches flying hearts and fishes (that partners throws)
-- sunrise cutscene:
-- hero wakes up (out of bed) alone
-- checks mail: villain letter, i have captured partner you will never get her ahaha
-- draw evil lair
-- go to evil lair
-- talk to villain (is on top of evil lair): evil lair is password locked
-- enter password (but doesnt work)
-- go back home.
-- hero thinks about serenade and kiss. is sad
-- little voice talks: tell me, what is the bug you are most terrified about? (name bug)
-                      what does it look like (draw)
-- sidekick appears, is the bug. Name it
-- says has been in your pocket the whole time. Used to crawl under the villain's bed.
-- Overheard everything, and knows how to figure out his password.
-- All wants is to eat some fish: minigame make it eat (grows slightly bigger)
-- go to bed, preparing for next day
-*** for next chapters: each time bug gives new tip, eats a fish and becomes bigger.
-                       eventually have a giant bug waiting at home (like in Kafka)
+* Some Additions to Make:
+- Chapter 1: draw the stickman (only give the shape of the head). Do positions:
+    Standing (legs straigth, facing right)
+    Walking (legs open)
+    Crouching
+    Jumping
+    => Then have all movements needed with WASD.
+- Motivate it with platform minigame
 
+- Chapter 1: Add a TV and antenna (draw)
+   Add minigame of jumping: first over bushes, then over house to fix the antenna
+   put TV animation where something plays inside.
+   Hero has basic life: sleeping, fishing, eating, and watching TV.
+   => but this requires moving the house (and maybe pond+bush) to the first chapter.
+
+- Chapter 2: add a minigame to pickup flowers for the partner
+             add a tennis game to play against the partner
+             make the garden the spot where could replay all minigames
+
+- Chapter 3: misses at least one drawing (?)
+             could ask to draw the lightning bolt here maybe
+             castle entrance would be spot to replay all minigames
+
+- Chapter 4: I am the grandmaster of deceipt of the east
+             some also call me the eastern bunny
+             (not to be confused with the easter bunny, that guy scares even me)
+
+- Chapter 4: the lying minigame should be a WORLD, not a series of PAGES
+            this makes use of the datamanager.temp whish is messy
+            (for example, we cant skip to middle of game because it skips initialization)
+
+- Chapter 4: add the stomping minigame with the bunny (just adapt it)
+              the bunny jumps over the hero
+              start with one bunny, then up to 3 (the bunny multiplies)
+
+- Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
+             or freezing temperatures (draw a snowman!)
+
+- Chapter 6: Add a game with parabolic shooting
+             can be done easily with naval battle and a cannon
+             (could have been arc and bow for hunting too)
+
+- Chapter 7: Combine all previous minigames
+             (dodge bullets, stomping, falling boulders...)
+            then villain captures hero, and use lie-cheat-steal to win
+            1. lie to villain, 2. cheat him at rockpaperscissors, 3. steal his key/something
 
 ##################
 * Chapter 6 Plot:
 For this chapter DRAW AS YOU GO
+- unlike chapter 4,5, the sailor COMES to the hero house
+  (to tell about the treasure). He heard of the hero from the 2 other grandmasters
+  ( this is like the plot of Treasure Island )
 - go south to pirate ship. draw the pirate (eyelid+pirate hat)
 - pirate says will give password if helps retrieve treasure
 - treasure is in skull island.

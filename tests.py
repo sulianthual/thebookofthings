@@ -121,22 +121,25 @@ class obj_scene_alldrawings(obj_testpage):
         self.name='All Drawings'
         y1=50
         for c,value in enumerate(['book','pen','eraser']):
-            self.addpart( draw.obj_image(value,(340+c*300,y1), scale=0.25) )
+            self.addpart( draw.obj_image(value,(340+c*300,y1), scale=0.2) )
         y1=150
-        for c,value in enumerate(['herohead','bed','house','tree','pond','bush','fish','hook','sun','moon']):
+        for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
             self.addpart( draw.obj_image(value,(120+c*120,y1), scale=0.2) )
         y1=250
-        for c,value in enumerate(['partnerhead','mailbox','mailletter','love','saxophone','musicnote','house','tree']):
-            self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
+        for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','pond','bush','flower']):
+            self.addpart( draw.obj_image(value,(100+c*100,y1), scale=0.15) )
         y1=350
-        for c,value in enumerate(['villainhead','gun','bullet','tower','mountain']):
-            self.addpart( draw.obj_image(value,(240+c*200,y1), scale=0.25) )
+        for c,value in enumerate(['villainhead','gun','bullet','castle','mountain','bug']):
+            self.addpart( draw.obj_image(value,(240+c*100,y1), scale=0.2) )
         y1=450
-        for c,value in enumerate(['elderhead','nightstand','alarmclock8am','cloud','lightningbolt','rock','paper','scissors']):
+        for c,value in enumerate(['bunnyhead','cave','tree']):
             self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
         y1=550
+        for c,value in enumerate(['elderhead','nightstand','alarmclock8am','cloud','lightningbolt','rock','paper','scissors']):
+            self.addpart( draw.obj_image(value,(100+c*150,y1), scale=0.2) )
+        y1=650
         for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
-            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.25) )
+            self.addpart( draw.obj_image(value,(150+c*200,y1), scale=0.2) )
 
 
 class obj_scene_testmessage(obj_testpage):

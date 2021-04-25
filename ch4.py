@@ -28,17 +28,11 @@ class obj_scene_chapter4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p0())
     def triggernextpage(self,controls):
         return True
-    # def setup(self):
-    #     self.text=['-----   Chapter IV: Something East   -----   ',\
-    #                '\n In this chapter introduce the first part of quest. ',\
-    #               '\n Must go east to enchanted forest, learn to lie from a bunny in a cave ',\
-    #                ]
 
 
 class obj_scene_ch4p0(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p1())
-        # share.scenemanager.switchscene(obj_scene_lyingstart())
     def setup(self):
         self.text=['-----   Chapter IV: Something East   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
@@ -92,7 +86,7 @@ class obj_scene_ch4p2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p3())
+        share.scenemanager.switchscene(obj_scene_ch4p2a())
     def setup(self):
         self.text=[\
                   '"Luckily, ',('{heroname}',share.colors.hero),\
@@ -106,9 +100,50 @@ class obj_scene_ch4p2(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
 
 
-class obj_scene_ch4p3(page.obj_chapterpage):
+class obj_scene_ch4p2a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p2())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p3())
+    def setup(self):
+        self.text=[\
+                   'First, lets make sure ',('{heroname}',share.colors.hero),' wakes up on time for ', \
+                   ('{hero_his}',share.colors.hero),' adventure, said the book of things.',\
+                   'Draw a ',('night stand',share.colors.item),\
+                   ' and an ',('alarm clock',share.colors.item),\
+                   ' to wake ',('{hero_him}',share.colors.hero),'. ',\
+                   ]
+        self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='Night Stand',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock (draw the exterior)',shadow=(200,200)) )
+        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
+        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
+    def endpage(self):
+        super().endpage()
+        # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
+        image1=draw.obj_image('alarmclockext',(640,360))
+        image2=draw.obj_image('alarmclockfill',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock')
+        # combine alarmclock+alarmclockcenter8am=alarmclock8am (morning)
+        image1=draw.obj_image('alarmclock',(640,360))
+        image2=draw.obj_image('alarmclockcenter8am',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock8am')
+        # combine alarmclock+alarmclockcenter8am=alarmclock8am (night)
+        image1=draw.obj_image('alarmclock',(640,360))
+        image2=draw.obj_image('alarmclockcenter12am',(640,360),path='premade')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,200),'alarmclock12am')
+
+class obj_scene_ch4p3(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p2a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p4())
     def triggernextpage(self,controls):
@@ -134,11 +169,11 @@ class obj_scene_ch4p4(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
-                'woke up from ',('bed',share.colors.item),' ',\
-                'with ',('{hero_his}',share.colors.hero),\
+                'woke up from bed with ',\
+                ('{hero_his}',share.colors.hero),\
                 ' new friend the ',('{bug}',share.colors.bug),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,bug=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
         self.addpart(self.world)
         # self.addpart( draw.obj_image('bed',(440,500),scale=0.75) )
         # self.addpart( draw.obj_textbox('Hold [D] to Wake up',(1100,480),color=share.colors.instructions) )
@@ -360,7 +395,7 @@ class obj_scene_ch4p14(page.obj_chapterpage):
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
         # self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
         # self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
@@ -399,7 +434,7 @@ class obj_scene_ch4p15(page.obj_chapterpage):
                 '"Hahaha, said the ',('bunny',share.colors.bunny),'. ',\
                 'Do not underestimate me. ',\
                 'I am ',('{bunnyname}',share.colors.bunny),\
-                ', the ',('Grandmaster of Deceit',share.colors.villain),\
+                ', the ',('grandmaster of deceit',share.colors.villain),\
                 ' from the east! ',\
                 'Tremble before me". ',\
                    ]
@@ -450,7 +485,7 @@ class obj_scene_ch4p17(page.obj_chapterpage):
 #############
 # Lying game
 # *LYING
-# NB: ONE CANNOT QUICK ACCESS THE MIDDLE/END OF THE GAME, BECAUSE THEN TEMP DATA IS NOT LOADED 
+# NB: ONE CANNOT QUICK ACCESS THE MIDDLE/END OF THE GAME, BECAUSE THEN TEMP DATA IS NOT LOADED
 class obj_scene_lyingstart(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p17())
@@ -868,8 +903,8 @@ class obj_scene_ch4p18(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"Oh, you want to know the  ',('password',share.colors.item),\
-                    ' for ',('{villainname}',share.colors.villain),'\'s ',\
-                    ('evil lair',share.colors.location),'. ',\
+                    ' of ',('{villainname}',share.colors.villain),'\'s ',\
+                    ('castle',share.colors.location),'. ',\
                     'Well sorry, I dont really know. ',\
                     ('{villainname}',share.colors.villain),' was a former student of mine, ',\
                     'a bit mediocre but quite dedicated". ',\
@@ -897,7 +932,7 @@ class obj_scene_ch4p19(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"I guess if the ',('password',share.colors.item),\
-                    ' is related to me, then it must be ',('bunny',share.colors.item),'. ',\
+                    ' is related to me, then it must be ',('"bunny"',share.colors.item),'. ',\
                     'That\'s how smart ',\
                     ('{villainname}',share.colors.villain),' is, for real. Well, goodbye now". ',\
                    ]
@@ -954,15 +989,7 @@ class obj_scene_ch4p20(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start='forest',goal='home',chapter=4)
         self.addpart(self.world)
-    def presetup(self):
-        super().presetup()
-        # combine herohead+stickwalk = herowalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalk')
+
 
 
 class obj_scene_ch4p21(page.obj_chapterpage):
@@ -1069,7 +1096,7 @@ class obj_scene_ch4p26(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),\
                    ' went back to bed". ',\
                    ]
-        self.world=world.obj_world_gotobed(self,heroangry=True)
+        self.world=world.obj_world_gotobed(self,heroangry=True,bug=True)
         self.addpart(self.world)
 
 class obj_scene_ch4p27(page.obj_chapterpage):

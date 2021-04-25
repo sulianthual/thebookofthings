@@ -501,7 +501,7 @@ class obj_world_wakeup(obj_world):
         if self.addsun:
             self.staticactor.addpart( 'annim',draw.obj_animation('wakeup_sun','sun',(640,360)) )
         if self.addalarmclock:
-            self.staticactor.addpart( 'annim1',draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360)) )
+            self.staticactor.addpart( 'annim1',draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50)) )
             self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
         # start actor
         if self.addpartner:# add partner
@@ -1029,6 +1029,48 @@ class obj_world_eatfish(obj_world):
 # *TRAVEL
 class obj_world_travel(obj_world):
     def setup(self,**kwargs):
+        #
+        ##########################3
+        # Premake necessary images
+        # combine herohead+stickwalk = herowalk
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('herohead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herowalk')
+        # combine partnerhead+stickwalk = partnerwalk
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('partnerhair',(640,200))
+        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
+        dispgroup2=draw.obj_dispgroup((640,360))
+        dispgroup2.addpart('part1',image1)
+        dispgroup2.addpart('part2',image2)
+        dispgroup2.addpart('part3',image3)
+        dispgroup2.snapshot((640,330,200,330),'partnerwalk')
+        # combine stickhead+angryface+stickbody = herobaseangry
+        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('stickhead',(640,200),path='premade')
+        image3=draw.obj_image('angryface',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.addpart('part3',image3)
+        dispgroup1.snapshot((640,360,200,300),'herobaseangry')
+        # combine angryhead+stickwalk = herowalkangry
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('angryhead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herowalkangry')
+        #
+        ##############################################3
+
+
+
+
+
         self.done=False# end of minigame
         self.goal=False# destination reached
         #
@@ -1113,14 +1155,16 @@ class obj_world_travel(obj_world):
         self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
         self.staticactor11.addpart( 'textref2', draw.obj_textbox('Pond',(640-320,360-180+120),color=share.colors.location) )
         self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(640-320,360-180),scale=0.5) )
+        self.staticactor11.addpart( 'ref3', draw.obj_image('mailbox',(834,182),scale=0.25) )
+
         if 'garden' not in self.removelist:
-            self.staticactor11.addpart( 'textref3', draw.obj_textbox('Garden',(640+320,360+120),color=share.colors.location) )
+            self.staticactor11.addpart( 'textref3', draw.obj_textbox('Garden',(640+320+100,360+120),color=share.colors.location) )
         if 'flower' not in self.removelist:
-            self.staticactor11.addpart( "img1", draw.obj_image('flower',(925,362),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img2", draw.obj_image('flower',(990,266),scale=0.34,rotate=0,fliph=True,flipv=False) )
-            self.staticactor11.addpart( "img3", draw.obj_image('flower',(1040,369),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img4", draw.obj_image('flower',(1103,259),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img5", draw.obj_image('flower',(851,280),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img1", draw.obj_image('flower',(925+100,362),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img2", draw.obj_image('flower',(990+100,266),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img3", draw.obj_image('flower',(1040+100,369),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img4", draw.obj_image('flower',(1103+100,259),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img5", draw.obj_image('flower',(851+100,280),scale=0.34,rotate=0,fliph=True,flipv=False) )
         if 'bush' not in self.removelist:
             self.staticactor11.addpart( "img6", draw.obj_image('bush',(523,170),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
@@ -3075,9 +3119,11 @@ class obj_world_gotobed(obj_world):
         self.addmoon=True# add the moon (must have been drawn)
         self.addalarmclock=False# add the alarm clock and night stand
         self.heroisangry=False# angry face on hero
+        self.addbug=False# add bug alongside hero
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
+            if 'bug' in kwargs: self.addbug=kwargs["bug"]# partner options
             if 'addmoon' in kwargs: self.addmoon=kwargs["addmoon"]# partner options
             if 'alarmclock' in kwargs: self.addalarmclock=kwargs["alarmclock"]# partner options
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# partner options
@@ -3103,7 +3149,7 @@ class obj_world_gotobed(obj_world):
         if self.addmoon:
             self.staticactor.addpart( 'annim',draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
         if self.addalarmclock:
-            self.staticactor.addpart( 'img3',draw.obj_image('alarmclock8am',(100,370),scale=0.4) )
+            self.staticactor.addpart( 'img3',draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
             self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
         # start actor
         if self.addpartner:# add partner in love
@@ -3115,6 +3161,8 @@ class obj_world_gotobed(obj_world):
         # ungoing actor
         if self.addpartner:
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_herotosleep','partnerbase',(640+100,360),scale=0.7) )
+        if self.addbug:
+            self.ungoingactor.addpart( 'animadd2', draw.obj_animation('ch1_herotosleepbug','bug',(640,360)) )
         if self.heroisangry:
             self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch1_herotosleep','herobaseangry',(640,360),scale=0.7) )
         else:
@@ -3151,6 +3199,8 @@ class obj_world_gotobed(obj_world):
                     self.ungoingactor.dict["anim1"].rewind()
                     if self.addpartner:
                         self.ungoingactor.dict["animadd1"].rewind()
+                    if self.addbug:
+                        self.ungoingactor.dict["animadd2"].rewind()
             else:
                 # ungoing substate
                 self.timer.update()

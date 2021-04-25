@@ -119,7 +119,7 @@ class obj_scene_wakeup(obj_testpage):
     def setup(self):
         self.name='Wake Up'
         self.text=['Wake Up']
-        self.world=world.obj_world_wakeup(self)
+        self.world=world.obj_world_wakeup(self,bug=True)
         # self.world=world.obj_world_wakeup(self,partner=True,addsun=False)
         # self.world=world.obj_world_wakeup(self,partner=True,heroangry=True,partnerangry=True)
         # self.world=world.obj_world_wakeup(self,sun=False)
@@ -183,7 +183,7 @@ class obj_scene_travel(obj_testpage):
         # self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
         # self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=7)
         self.addpart(self.world)
-        # self.addpart( draw.obj_imageplacer(self,'bush','flower',actor='staticactor11') )
+        # self.addpart( draw.obj_imageplacer(self,'mailbox','bush','flower',actor='staticactor11') )
         # self.addpart( draw.obj_imageplacer(self,'tree',actor='staticactor21') )
         # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
         # self.addpart( draw.obj_imageplacer(self,'cloud','mountain','lightningbolt','tree') )
@@ -293,13 +293,24 @@ class obj_scene_nightfall(obj_testpage):
 
 
 class obj_scene_gotobed(obj_testpage):
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    # def triggernextpage(self,controls):
+    #     return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.name='Go to Bed'
         self.text=['Go to Bed']
-        self.world=world.obj_world_gotobed(self)
+        self.world=world.obj_world_gotobed(self,bug=True)
         # self.world=world.obj_world_gotobed(self,partner=True,heroangry=True,addmoon=False)
         self.addpart(self.world)
+        # self.addpart( draw.obj_animation('ch4_heroawakesbug','bug',(640,360)) )
+        # self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
+        # animation1=draw.obj_animation('ch1_herotosleep','herobase',(640,360),scale=0.7)
+        # animation2=draw.obj_animation('ch1_herotosleepbug','bug',(640,360),record=False,sync=animation1)
+        # animation2.addimage('empty',path='premade')
+        # self.addpart( animation1 )
+        # self.addpart( animation2 )
+
+
+
+
 
 ####################################################################################################################
