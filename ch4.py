@@ -556,13 +556,13 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
         self.text=[\
                     'This game plays in three rounds. For the first round, ',\
                     'here are three ',\
-                    ('true statements',share.colors.darkgreen),' you need to remember. ',\
-                    'You can even draw some notes at the bottom of the screen to help your memory. '
+                    ('correct statements',share.colors.darkgreen),' you need to remember. ',\
+                    'You can even take some notes at the bottom of the screen to help your memory. '
                    ]
         self.addpart( draw.obj_textbox( '1. '+self.statements[self.statkeys[0]][self.stat01[0]],(400,220),xleft=True,color=share.colors.darkgreen  ) )
         self.addpart( draw.obj_textbox( '2. '+self.statements[self.statkeys[1]][self.stat01[1]],(400,290),xleft=True,color=share.colors.darkgreen  ) )
         self.addpart( draw.obj_textbox( '3. '+self.statements[self.statkeys[2]][self.stat01[2]],(400,360),xleft=True,color=share.colors.darkgreen  ) )
-        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(500,120),legend='Take some notes',brush=share.brushes.smallpen)
+        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
         drawing.clear()# erase drawing
         self.addpart( drawing )
         # self.addpart( draw.obj_imageplacer(self,'bunnyhead') )
@@ -577,7 +577,7 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
         self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
                     ' You gave me the wrong answer. ',\
                     'If your memory is that bad you can always ',\
-                    ('draw some notes',share.colors.darkgreen),' at the bottom of the screen. ',\
+                    ('take some notes',share.colors.darkgreen),' at the bottom of the screen. ',\
                     'Now go back and win this first round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -626,17 +626,26 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         else:
             share.datamanager.setword('truth_yesno','no')
         # Page text
-        self.text=['Now tell me if the following is ',('True',share.colors.darkgreen),':   ']
-        self.addpart( draw.obj_textbox( \
-        self.statements[qstatkeys[0]][qstat01[0]]+' and '+\
-        self.statements[qstatkeys[1]][qstat01[1]],(640,220) ) )
+        self.text=['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),':   ']
+        # self.addpart( draw.obj_textbox( \
+        # self.statements[qstatkeys[0]][qstat01[0]]+' and '+\
+        # self.statements[qstatkeys[1]][qstat01[1]],(640,220) ) )
+        #
+        y1=190
+        self.addpart( draw.obj_textbox( '" '+self.statements[qstatkeys[0]][qstat01[0]],(640-40,y1),xright=True ) )
+        self.addpart( draw.obj_textbox( ' and ',(640,y1),color=share.colors.item ) )
+        self.addpart( draw.obj_textbox( self.statements[qstatkeys[1]][qstat01[1]]+' "',(640+40,y1),xleft=True ) )
+        #
+        y2=310
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('True','yes',(640-100,290))
-        textchoice.addchoice('False','no',(640+100,290))
+        textchoice.addchoice('Yes','yes',(640-100,y2))
+        textchoice.addchoice('No','no',(640+100,y2))
         self.addpart( textchoice )
-        self.addpart( draw.obj_image('lyingnote',(640,530)) )
-        self.addpart( draw.obj_textbox( 'Use your notes',(640,685),color=share.colors.instructions  ) )
-        self.addpart( draw.obj_rectangle((640,530),500,120,color=(0,0,0)) )
+        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Use your notes',brush=share.brushes.smallpen)
+        self.addpart( drawing )
+        # self.addpart( draw.obj_image('lyingnote',(640,530)) )
+        # self.addpart( draw.obj_textbox( 'Use your notes',(640,685),color=share.colors.instructions  ) )
+        # self.addpart( draw.obj_rectangle((640,530),500,120,color=(0,0,0)) )
         # if share.devmode:# check correct answer
         if False:
             print('###')
@@ -670,7 +679,8 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
-                    'you won the first round! ',\
+                    'you won the ',\
+                    ('first round',share.colors.villain),'! ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -682,7 +692,9 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation2 )
-
+        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation2)
+        animation3.addimage('empty',path='premade')
+        self.addpart( animation3 )
 
 class obj_scene_lyingpart2(page.obj_chapterpage):
     def prevpage(self):
@@ -708,14 +720,14 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         # Page Text
         self.text=['For the second round, ',('I will now be lying',share.colors.red),'. ',\
                     ' Here are three ',\
-                    ('False',share.colors.red),' statements, remember them well. ',\
-                    'Once again, you can draw some notes to help your memory. '
+                    ('wrong statements',share.colors.red),' to remember. ',\
+                    'Once again, you can take some notes to help your memory. '
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
         self.addpart( draw.obj_textbox( '1. '+self.statements[self.statkeys[0]][1-self.stat01[0]],(400,220),xleft=True,color=share.colors.red  ) )
         self.addpart( draw.obj_textbox( '2. '+self.statements[self.statkeys[1]][1-self.stat01[1]],(400,290),xleft=True,color=share.colors.red  ) )
         self.addpart( draw.obj_textbox( '3. '+self.statements[self.statkeys[2]][1-self.stat01[2]],(400,360),xleft=True,color=share.colors.red  ) )
-        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(500,120),legend='Take some notes',brush=share.brushes.smallpen)
+        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
         drawing.clear()# erase drawing
         self.addpart( drawing )
         self.addpart( draw.obj_image('bunnyhead',(1069,298),scale=0.35,rotate=0,fliph=True,flipv=False) )
@@ -729,10 +741,9 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
         self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
                     ' You gave me the wrong answer. ',\
                     'For this second round, remember that ',\
-                    ('all my statements are False',share.colors.red),'. ',\
-                    'I may suggest that you figure out the ',\
-                    ('True statements',share.colors.darkgreen),\
-                    ' and draw them at the bottom of the screen. ',\
+                    ('all my statements are wrong',share.colors.red),'. ',\
+                    'And I may suggest that you take some notes ',\
+                    'at the bottom of the screen. ',\
                     'Now go back and win this second round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -766,7 +777,8 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
-                    'you won the second round! ',\
+                    'you won the ',\
+                    ('second round',share.colors.villain),'! ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -778,6 +790,12 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation2 )
+        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation2)
+        animation3.addimage('empty',path='premade')
+        self.addpart( animation3 )
+        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation2)
+        animation4.addimage('empty',path='premade')
+        self.addpart( animation4 )
 
 class obj_scene_lyingpart3(page.obj_chapterpage):
     def prevpage(self):
@@ -801,17 +819,17 @@ class obj_scene_lyingpart3(page.obj_chapterpage):
         share.datamanager.temp.stat01=self.stat01# bool of subset
         share.datamanager.temp.fqstatdict={}# former questions asked (for later)
         # Page Text
-        self.text=['For the last round, ',('both you and me will be lying',share.colors.red),'. ',\
-                    ' Here are three ',\
-                    ('False',share.colors.red),' statements to remember. ',\
-                    'When answering my questions, I want you to always give the ',\
+        self.text=['For the last round, ',('I will be lying and so will you',share.colors.red),'! ',\
+                    'Remember these three ',\
+                    ('wrong statements',share.colors.red),'. ',\
+                    'But then, when answering my questions, always give me the ',\
                     ('wrong answer',share.colors.red),'. ',\
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
         self.addpart( draw.obj_textbox( '1. '+self.statements[self.statkeys[0]][1-self.stat01[0]],(400,220),xleft=True,color=share.colors.red  ) )
         self.addpart( draw.obj_textbox( '2. '+self.statements[self.statkeys[1]][1-self.stat01[1]],(400,290),xleft=True,color=share.colors.red  ) )
         self.addpart( draw.obj_textbox( '3. '+self.statements[self.statkeys[2]][1-self.stat01[2]],(400,360),xleft=True,color=share.colors.red  ) )
-        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(500,120),legend='Take some notes',brush=share.brushes.smallpen)
+        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
         drawing.clear()# erase drawing
         self.addpart( drawing )
         self.addpart( draw.obj_image('bunnyhead',(1069,298),scale=0.35,rotate=0,fliph=True,flipv=False) )
@@ -825,12 +843,11 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
         self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
                     ' You gave me the wrong answer. ',\
                     'For this third round, remember that ',\
-                    ('all my statements are False',share.colors.red),'. ',\
-                    'I may suggest that you figure out the ',\
-                    ('True statements',share.colors.darkgreen),\
-                    ' and draw them at the bottom of the screen. ',\
+                    ('all my statements are wrong',share.colors.red),'. ',\
                     'Then, remember to ',\
                     ('always give me the wrong answer',share.colors.red),'. ',\
+                    'I may also suggest that you take some notes ',\
+                    'at the bottom of the screen. ',\
                     'Now go back and win this third round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -851,9 +868,10 @@ class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
         share.scenemanager.switchscene(obj_scene_lyingfailpart3())
     def setup(self):
         super().setup()
-        self.text=['Now tell me if the following is True, ',\
-                    'and remember to give me the ',\
-                    ('wrong answer',share.colors.red),'. ',\
+        self.text=['Now tell me if the following is "correct" ',\
+                    '(but ',\
+                    ('lie',share.colors.red),' and give me the ',\
+                    ('wrong answer',share.colors.red),'): ',\
                     ]
 
 class obj_scene_lyingp3q2(obj_scene_lyingp3q1):# child of lying 3
@@ -893,6 +911,15 @@ class obj_scene_lyingend(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation2 )
+        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation2)
+        animation3.addimage('empty',path='premade')
+        self.addpart( animation3 )
+        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation2)
+        animation4.addimage('empty',path='premade')
+        self.addpart( animation4 )
+        animation5=draw.obj_animation('ch4_herowalkbunny2love3','love',(640,360),record=False,sync=animation2)
+        animation5.addimage('empty',path='premade')
+        self.addpart( animation5 )
 
 
 class obj_scene_ch4p18(page.obj_chapterpage):
@@ -1044,7 +1071,7 @@ class obj_scene_ch4p23(page.obj_chapterpage):
 
         # self.addpart( draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
         # self.addpart( draw.obj_image('fish',(785,467),scale=0.84,rotate=-68,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bug',(771,473),scale=0.9,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bug',(730,440),scale=0.5,rotate=30,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('herobaseangry',(580,400),scale=0.7,rotate=-15) )
         # self.addpart( draw.obj_imageplacer(self,'fish','bug'))
         self.addpart( draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )

@@ -240,22 +240,12 @@ class obj_scene_ch5p1h(page.obj_chapterpage):
 
 
 
-
-
 class obj_scene_ch5p2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p1h())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p3())
     def setup(self):
-        self.text=[\
-                   'Today, ',\
-                  ('{heroname}',share.colors.hero),' must go to the ',('Highest Peak',share.colors.location),'. ',\
-                  ' It is so high up in the sky it is always covered by stormy clouds. ',\
-                  'Draw a ',('cloud',share.colors.item),' and a ',\
-                  ('lightning bolt',share.colors.hero),'. ',\
-                   ]
-
         self.text=[\
                    'Today, ',\
                   ('{heroname}',share.colors.hero),' must seek the ',\
@@ -266,9 +256,6 @@ class obj_scene_ch5p2(page.obj_chapterpage):
                   'Draw a ',('cloud',share.colors.item),' and a ',\
                   ('lightning bolt',share.colors.hero),'. ',\
                    ]
-
-
-
         self.addpart( draw.obj_drawing('cloud',(340,450),legend='Cloud',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('lightningbolt',(940,450),legend='Lightning Bolt',shadow=(200,200)) )
 
@@ -349,12 +336,16 @@ class obj_scene_ch5p4(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('elderhead',(640,450),legend='Draw the Elder') )
     def endpage(self):
         super().endpage()
-        # save elder full body
+        # # save elder full body (slight offset made)
         dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
         dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
         dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
         dispgroup2.snapshot((640,330,200,330),'elderbase')
-
+        # save elder full body (This is the CORRECT way, is used for some animations)
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
+        dispgroup2.snapshot((640,360,200,300),'elderbase2')
 
 
 class obj_scene_ch5p5(page.obj_chapterpage):
@@ -516,7 +507,9 @@ class obj_scene_ch5p7(page.obj_chapterpage):
         self.dispgroup1.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='premade') )
+        self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
+        self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
+        self.dispgroup1.addpart( 'interrogationmark', draw.obj_image('interrogationmark',(1280-100-50,320),path='premade') )
         self.dispgroup1.addpart( 'rock', draw.obj_image('rock',(100+50,320),scale=0.5) )
         self.dispgroup1.addpart( 'paper', draw.obj_image('paper',(100+50,320),scale=0.5) )
         self.dispgroup1.addpart( 'scissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
@@ -530,13 +523,12 @@ class obj_scene_ch5p7(page.obj_chapterpage):
         self.addpart( draw.obj_image('show3',(418,246),path='premade') )
         #
         # self.addpart( draw.obj_imageplacer(self,'cloud','sun','mountain') )
-        self.addpart( draw.obj_image('sun',(1120,285),scale=0.39,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
     def page(self,controls):
         super().page(controls)
         if controls.a and controls.ac:
@@ -573,7 +565,9 @@ class obj_scene_ch5p8(page.obj_chapterpage):
         self.dispgroup1.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='premade') )
+        self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
+        self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
+        self.dispgroup1.addpart( 'interrogationmark', draw.obj_image('interrogationmark',(1280-100-50,320),path='premade') )
         self.dispgroup1.addpart( 'rock', draw.obj_image('rock',(100+50,320),scale=0.5) )
         self.dispgroup1.addpart( 'paper', draw.obj_image('paper',(100+50,320),scale=0.5) )
         self.dispgroup1.addpart( 'scissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
@@ -594,13 +588,12 @@ class obj_scene_ch5p8(page.obj_chapterpage):
         self.addpart( draw.obj_image('show1',(744,347),scale=0.65,fliph=True,flipv=True,path='premade') )
         #
         # self.addpart( draw.obj_imageplacer(self,'cloud','sun','mountain') )
-        self.addpart( draw.obj_image('sun',(1120,285),scale=0.39,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
     def page(self,controls):
         super().page(controls)
         if controls.a and controls.ac:
@@ -971,11 +964,23 @@ class obj_scene_ch5pp28(page.obj_chapterpage):
               'You can then ',('counter their hand at the last moment',share.colors.instructions),\
               ', but you gotta be quick. ',\
                   ]
+
+
         self.dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup1.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
         self.dispgroup1.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
         self.dispgroup1.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
-        self.dispgroup1.addpart( 'thinkcloud2', draw.obj_image('thinkcloud',(1280-200,320),fliph=True,path='premade') )
+        self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=share.colors.drawing) )
+        self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=share.colors.drawing) )
+        self.dispgroup1.addpart( 'rock', draw.obj_image('rock',(100+50,320),scale=0.5) )
+        self.addpart(self.dispgroup1)
+        for i in range(3):
+            self.dispgroup1.addpart('hero_'+str(i), draw.obj_image('love',(640-300+i*75,240),scale=0.125) )
+            self.dispgroup1.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
+            self.dispgroup1.addpart('herocross_'+str(i), draw.obj_image('smallcross',(640-300+i*75,240),path='premade') )
+            self.dispgroup1.addpart('eldercross_'+str(i), draw.obj_image('smallcross',(640+300-i*75,240),path='premade') )
+            self.dispgroup1.dict['herocross_'+str(i)].show=False
+            self.dispgroup1.dict['eldercross_'+str(i)].show=False
         self.dispgroup1.addpart( 'elderrock', draw.obj_image('rock',(1280-100-50,320),scale=0.5) )
         self.dispgroup1.addpart( 'elderpaper', draw.obj_image('paper',(1280-100-50,320),scale=0.5) )
         self.dispgroup1.addpart( 'elderscissors', draw.obj_image('scissors',(1280-100-50,320),scale=0.5) )
@@ -986,14 +991,13 @@ class obj_scene_ch5pp28(page.obj_chapterpage):
         self.addpart(self.dispgroup1)
         self.timerswitch=tool.obj_timer(100)
         self.timerswitch.start()
-        self.addpart( draw.obj_image('show3',(640+220,246),path='premade',fliph=True) )
-        self.addpart( draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('sun',(168,289),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('show3',(640+220,246+70),path='premade',fliph=True) )
+        # self.addpart( draw.obj_image('mountain',(1212,666),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(1096,627),scale=0.24,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(1207,536),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(80,651),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
     def page(self,controls):
         super().page(controls)
         self.timerswitch.update()
@@ -1243,7 +1247,7 @@ class obj_scene_ch5p26(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5end())
     def setup(self):
         self.text=[\
-                   '"Right before falling asleep, ',\
+                   '"Then, right before falling asleep, ',\
                    ('{heroname}',share.colors.hero),' smiled hoping that ',\
                    ('{hero_he}',share.colors.hero),' would soon be able to rescue ',\
                    ('{partnername}',share.colors.partner),'".',\

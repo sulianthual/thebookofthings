@@ -17,8 +17,8 @@ import tool
 import core
 
 ####################################################################################################################
-# page background
-
+# page baground
+# *BACKGROUND
 class obj_pagebackground:
     def __init__(self):
         self.type='pagebackground'
@@ -85,6 +85,7 @@ class obj_pagedisplay_note:
 
 
 # Main body of text on a story page
+# *TEXT
 class obj_pagedisplay_text:
     def __init__(self):
         self.type='pagetext'
@@ -135,15 +136,19 @@ class obj_pagedisplay_text:
 # Basic Shapes
 
 # a basic rectangle on screen
+# *RECTANGLE
 class obj_rectangle:
     def __init__(self,xy,rx,ry,color=(0,0,0)):
         self.type='rectangle'
-        self.x,self.y=xy
+        self.xini=xy[0]# xy is the CENTER of the rectangle on screen
+        self.yini=xy[1]
         self.rx=rx
         self.ry=ry
         self.color=color
         self.setup()
     def setup(self):
+        self.x=self.xini# position
+        self.y=self.yini
         self.spriterect=core.obj_sprite_rect()
         self.show=True# show rectangle or not
     def movetoxy(self,x,y):
@@ -172,6 +177,7 @@ class obj_rectangle:
 
 # writes headers for pages in the file aaa.txt
 # (useful to write long chapters)
+# *HEADERMAKER
 class obj_headermaker:
     def __init__(self,header,pagemin,pagemax):
         self.type='headermaker'# object type
@@ -326,6 +332,7 @@ class obj_mousedraw:
 ####################################################################################################################
 
 # A text input
+# *TEXTINPUT
 class obj_textinput:
     def __init__(self,key,nchar,xy,color=(0,0,0),legend=None,default=None):
         self.type='textinput'
@@ -397,6 +404,7 @@ class obj_textinput:
 ####################################################################################################################
 #
 # text choice: similar to textinput (saves keyword) but must select between choices
+# *TEXTCHOICE
 # $ textchoice=draw.obj_textchoice('herogender')
 # $ textchoice.addchoice('1. A guy','he',(340,360))
 # $ textchoice.addchoice('2. A girl','she',(640,360))
@@ -486,9 +494,10 @@ class obj_textchoice:
 ####################################################################################################################
 #
 # A text box
+# *TEXTBOX
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
-    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,xleft=False,ytop=False):
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,xleft=False,xright=False,ytop=False):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
@@ -496,6 +505,7 @@ class obj_textbox:
         self.fontsize=fontsize
         self.color=color
         self.xleft=xleft# x (from xy) defines left of frame instead of center
+        self.xright=xright# x (from xy) defines right of frame instead of center
         self.ytop=ytop# y (from xy) defines top of frame instead of center
         self.setup()
         if scale != 1: self.scale(scale)
@@ -522,6 +532,9 @@ class obj_textbox:
         if self.xleft:
             tempo=self.sprite.getrx()
             self.movex(tempo)
+        elif self.xright:
+            tempo=self.sprite.getrx()
+            self.movex(-tempo)
         if self.ytop:
             tempo=self.sprite.getry()
             self.movey(tempo)
@@ -599,6 +612,7 @@ class obj_textbox:
 ####################################################################################################################
 
 # A simple image (from the book folder) to display at a given location
+# *IMAGE
 class obj_image:
     def __init__(self,name,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False,show=True,path='book'):
         self.type='image'# object type
@@ -723,6 +737,7 @@ class obj_imagefill(obj_image):
 ####################################################################################################################
 
 # Quickly Place Images on Screen
+# *IMAGEPLACER
 # This edits an output text file which code can be copied to a page
 # input types:
 # - 'pen','eraser'...(only read images from folder /book)
@@ -849,9 +864,10 @@ class obj_imageplacer:
 ####################################################################################################################
 
 # Animate an image on screen
+# *ANIMATION
 # Animation=base sprite  + temporal sequence of transformations (cyclic)
 class obj_animation:
-    def __init__(self,name,imgname,xy,record=False,scale=1,imgscale=1,sync=None,path='book'):
+    def __init__(self,name,imgname,xy,record=False,scale=1,imgscale=1,imgfliph=False, sync=None,path='book'):
         self.type='animation'
         self.name=name# animation name
         self.imgname=imgname# reference image (more can be added). Or can be text if textbox=True
@@ -865,6 +881,7 @@ class obj_animation:
             self.maxlength=None
         self.path=path# folder where images are found
         self.imgscale=imgscale# scale of ref image
+        self.imgfliph=imgfliph# fliph of ref image
         self.setup()
         if scale != 1: self.scale(scale)
     def setup(self):
@@ -877,7 +894,7 @@ class obj_animation:
         self.show=True# show the animation or not (can be toggled on/off)
         # sprite list
         self.spritelist=[]
-        self.addimage(self.imgname,scale=self.imgscale,path=self.path)
+        self.addimage(self.imgname,scale=self.imgscale,fliph=self.imgfliph,path=self.path)
         self.rx,self.ry=self.spritelist[0].getrxry()
         # sprite
         self.sprite=core.obj_sprite_image()# the one that is played
@@ -891,10 +908,11 @@ class obj_animation:
         self.devlineseq=core.obj_sprite_linesequence()
         self.devxy=(self.x,self.y)
         self.devarea=(self.x,self.y, 2*self.rx, 2*self.ry )
-    def addimage(self,imgname,scale=1,path='book'):
+    def addimage(self,imgname,scale=1,fliph=False,path='book'):
         sprite=core.obj_sprite_image()
         sprite.load(path+'/'+imgname+'.png')
         if scale != 1: sprite.scale(scale)
+        if fliph: sprite.fliph()
         self.spritelist.append(sprite)
     def replaceimage(self,imgname,index):
         if index >=0 and index<len(self.spritelist):
@@ -1009,6 +1027,7 @@ class obj_animation:
 
 
 # Animation sequence (vector of time-transformations)
+# *SEQUENCE
 # Only recorded at 60 fps, and can only be read at 60,30 or 20 fps
 class obj_animationsequence:
     def __init__(self,creator,name,xy,record,maxlength=None):
@@ -1166,6 +1185,7 @@ class obj_animationsequence:
 ####################################################################################################################
 
 # Group of Display Elements (Animations, Images or textboxes)
+# *DISPGROUP
 # Can apply transformations (move,flip,scale,rotate) while conserving properties (distance between elements)
 # Every Element must have the followed fonctionalities (called/modified by the dispgroup):
 #  self.xini, self.yini: reference position (used to compute conserved distances)

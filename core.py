@@ -254,6 +254,10 @@ class obj_sprite_image(obj_sprite):
         self.surf.blit(sprite_source.surf,( int(xoffset),int(yoffset)) )
     def fill(self,color):
         self.surf.fill(color)
+    def fliph(self):
+        self.surf=pygame.transform.flip(self.surf,True,False)
+    def flipv(self):
+        self.surf=pygame.transform.flip(self.surf,False,True)
     def flip(self,fliph,flipv):
         if fliph or flipv:
             self.surf=pygame.transform.flip(self.surf,fliph,flipv)

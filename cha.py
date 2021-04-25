@@ -235,12 +235,25 @@ class obj_scene_rockpaperscissors(obj_testpage):
     def setup(self):
         self.name='Rock-Paper-Scissors'
         self.text=['Rock-Paper-Scissors']
-        self.world=world.obj_world_rockpaperscissors(self)
-        # self.world=world.obj_world_rockpaperscissors(self,elderwins=True)# elder always wins
-        # self.world=world.obj_world_rockpaperscissors(self,elderlooses=True)# elder always looses
-        # self.world=world.obj_world_rockpaperscissors(self,elderpeaks=True)# elder peaks on 1...
-        # self.world=world.obj_world_rockpaperscissors(self,elderthinks=False)# cant see elder choice
-        self.addpart(self.world)
+        if True:
+            self.world=world.obj_world_rockpaperscissors(self)
+            # self.world=world.obj_world_rockpaperscissors(self,elderwins=True)# elder always wins
+            # self.world=world.obj_world_rockpaperscissors(self,elderlooses=True)# elder always looses
+            # self.world=world.obj_world_rockpaperscissors(self,elderpeaks=True)# elder peaks on 1...
+            # self.world=world.obj_world_rockpaperscissors(self,elderthinks=False)# cant see elder choice
+            self.addpart(self.world)
+
+        # self.addpart( draw.obj_image('herobase',(640-240,530),scale=0.5) )
+        # self.addpart( draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
+        else:
+            self.addpart( draw.obj_image('herobase',(640,530),scale=0.5) )
+            animation1=draw.obj_animation('rps_herowalk','herobase',(640,360),record=True)
+            animation1.addimage('herowalk')
+            self.addpart(animation1)
+        # animation1=draw.obj_animation('rps_elderwalk','elderbase',(640,360),record=True)
+        # animation1.addimage('elderwalk')
+        # self.addpart(animation1)
+
 
 
 class obj_scene_lying(obj_testpage):
