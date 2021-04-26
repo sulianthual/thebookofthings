@@ -112,7 +112,16 @@ class obj_scene_ch3p3(page.obj_chapterpage):
         dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade'))
         dispgroup1.addpart('part2',draw.obj_image('angryface',(640,360)))
         dispgroup1.snapshot((640,360,200,200),'angryhead')
-
+        # save villain head drawing
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('angryhead',(640,360)) )
+        dispgroup1.addpart('part2',draw.obj_image('scar',(640,360)) )
+        dispgroup1.snapshot((640,360,200,200),'villainhead')
+        # save villain full body (slightly different than hero, because originally we could include partnerhair)
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
+        dispgroup2.snapshot((640,330,200,330),'villainbase')
 
 
 class obj_scene_ch3p4(page.obj_chapterpage):
@@ -124,10 +133,9 @@ class obj_scene_ch3p4(page.obj_chapterpage):
         self.text=[\
                  'Perfect, said the book of things. ',\
                 'We just need to give a name and gender to this ',('villain',share.colors.villain),'. '\
-               'And if you choose a girl we will add some hair for effect. ',
                    ]
-        y1=360+90
-        y2=520+100
+        y1=360+90-100
+        y2=520+100-100
         self.addpart( draw.obj_textbox('The villain was:',(180,y1)) )
         textchoice=draw.obj_textchoice('villain_he')
         textchoice.addchoice('1. A guy','he',(440,y1))
@@ -136,32 +144,10 @@ class obj_scene_ch3p4(page.obj_chapterpage):
         textchoice.addkey('villain_his',{'he':'his','she':'her','it':'its'})
         textchoice.addkey('villain_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
-        self.addpart( draw.obj_textbox("and the Villain\'s Name was:",(200,y2)) )
+        self.addpart( draw.obj_textbox("and the Villain\'s Name was:",(200+30,y2)) )
         self.addpart( draw.obj_textinput('villainname',25,(750,y2),color=share.colors.villain, legend='Villain Name') )
-        #
-        self.addpart( draw.obj_image('angryhead',(440,310),scale=0.25) )
-        self.addpart( draw.obj_image('scar',(440,310),scale=0.25) )
-        self.addpart( draw.obj_image('angryhead',(740,310),scale=0.25) )
-        self.addpart( draw.obj_image('scar',(740,310),scale=0.25) )
-        self.addpart( draw.obj_image('partnerhair',(740,310),scale=0.5) )
-        self.addpart( draw.obj_image('angryhead',(1040,310),scale=0.25) )
-        self.addpart( draw.obj_image('scar',(1040,310),scale=0.25) )
-    def endpage(self):
-        super().endpage()
-        # save villain head drawing
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('angryhead',(640,360)) )
-        dispgroup1.addpart('part2',draw.obj_image('scar',(640,360)) )
-        if share.datamanager.dictwords["villain_he"]=='she':
-            dispgroup1.addpart( 'part3',draw.obj_image('partnerhair',(640,360),scale=2) )
-            dispgroup1.snapshot((640,360,400,400),'villainhead')
-        else:
-            dispgroup1.snapshot((640,360,200,200),'villainhead')
-        # save villain full body
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,330,200,330),'villainbase')
+        # self.addpart( draw.obj_image('angryhead',(1150,y2),scale=0.5) )
+        # self.addpart( draw.obj_image('scar',(1150,y2),scale=0.5) )
 
 
 

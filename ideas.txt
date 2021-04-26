@@ -106,6 +106,7 @@ we learn that our most feared bugs are our best friends
 - Chapter 6: Add a game with parabolic shooting
              can be done easily with naval battle and a cannon
              (could have been arc and bow for hunting too)
+             or can be arc+bow on beach: multiple skeleton running from right to left (very slowly)
 
 - Chapter 7: Combine all previous minigames
              (dodge bullets, stomping, falling boulders...)
@@ -141,6 +142,9 @@ For this chapter DRAW AS YOU GO
     Also serves to make skeleton henchmens (and their boss=eyelid+pirate hat)
 - infiltrate the island: stealth minigames (move across and hide in furnitures/stuff)
 - get the treasure
+- the treasure is a pet snail?
+- alert of skeletons, start escape:
+  run on beach with skeletons behind (avoid obstacles like boulders, bushes...)
 - but get arrested with sailor: skeletons say he is a recidivist always trying to steal
 - get judged with sailor: but because can LIE get out of it (also maybe because can CHEAT)
                           can maybe even just blame sailor
@@ -155,6 +159,11 @@ For this chapter DRAW AS YOU GO
   if exiting and wanting to go back
 - add place where all drawings can be redone
 - add place where all games can be replayed (maybe free roaming once a region has been done?)
+- add new game plus: replay the game, but a few options are unlocked
+                    like making more complex drawings, adding hats/pets/clothes....
+                    and other small customizations
+                    as well as making some games slightly harder
+- when moving on map, remove all text? It is more beautiful
 
 ###################
 * General Story Arc:

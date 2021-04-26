@@ -526,7 +526,7 @@ class obj_scene_lyingdatabase(page.obj_chapterpage):
         self.statements['banana']=['I hate bananas','I love bananas']
         self.statements['shower']=['I never shower','I always shower']
         self.statements['teeth']=['I never brush my teeth','I always brush my teeth']
-        self.statements['spider']=['I am not afraid of spiders','I am scared of spiders']
+        self.statements['spider']=['I am not scared of spiders','I am scared of spiders']
         self.statements['booger']=['I dont eat my boogers','I eat my boogers']
         #
         ########################################
@@ -538,7 +538,7 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingstart())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingp1q1())
+        share.scenemanager.switchscene(obj_scene_lyingrule())
     def setup(self):
         # Pick up statements from large database
         self.statements=share.datamanager.temp.statements# full database
@@ -569,7 +569,48 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
         drawing.clear()# erase drawing
         self.addpart( drawing )
         # self.addpart( draw.obj_imageplacer(self,'bunnyhead') )
-        self.addpart( draw.obj_image('bunnyhead',(1069,298),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
+
+
+class obj_scene_lyingrule(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_lyingpart1())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_lyingp1q1())
+    def setup(self):
+        # load from data manager
+        self.statements=share.datamanager.temp.statements
+        self.statdict=share.datamanager.temp.statdict
+        self.statkeys=share.datamanager.temp.statkeys
+        self.stat01=share.datamanager.temp.stat01
+        fqstatdict=share.datamanager.temp.fqstatdict# former question asked
+        ###################
+        self.text=[\
+                    'Remember this too: ',\
+                    # '"to be ',('correct',share.colors.darkgreen),\
+                    # ', a statement must be ',('entirely correct',share.colors.darkgreen),'. ',\
+                    # ' A statement that is ',(' partly correct',share.colors.darkgreen),\
+                    # ' and ',(' partly wrong',share.colors.red),\
+                    # ' is ',('wrong',share.colors.red),'". ',\
+                    '"to be correct, a statement must be entirely correct. ',\
+                    ' A statement that is partly correct and partly wrong is wrong". ',\
+                    'For example: ',\
+                    '\n\n ',\
+                    '"',(self.statements[self.statkeys[0]][self.stat01[0]],share.colors.darkgreen),\
+                    (' and ',share.colors.item),\
+                    (self.statements[self.statkeys[1]][self.stat01[1]],share.colors.darkgreen),\
+                    '": this is ',('correct',share.colors.darkgreen),'. ',\
+                    '\n "',(self.statements[self.statkeys[0]][self.stat01[0]],share.colors.darkgreen),\
+                    (' and ',share.colors.item),\
+                    (self.statements[self.statkeys[1]][1-self.stat01[1]],share.colors.red),\
+                    '": this is ',('wrong',share.colors.red),'. ',\
+                   ]
+
+        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
+        self.addpart( drawing )
+        # self.addpart( draw.obj_imageplacer(self,'bunnyhead') )
+        self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
+
 
 class obj_scene_lyingfailpart1(page.obj_chapterpage):
     def prevpage(self):
@@ -604,6 +645,8 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_lyingp1q2())
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart1())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (1/3):   ']
     def setup(self):
         # load from data manager
         self.statements=share.datamanager.temp.statements
@@ -629,10 +672,7 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         else:
             share.datamanager.setword('truth_yesno','no')
         # Page text
-        self.text=['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),':   ']
-        # self.addpart( draw.obj_textbox( \
-        # self.statements[qstatkeys[0]][qstat01[0]]+' and '+\
-        # self.statements[qstatkeys[1]][qstat01[1]],(640,220) ) )
+        self.text=self.text_lyinggame()# from function
         #
         y1=190
         self.addpart( draw.obj_textbox( '" '+self.statements[qstatkeys[0]][qstat01[0]],(640-40,y1),xright=True ) )
@@ -667,12 +707,16 @@ class obj_scene_lyingp1q2(obj_scene_lyingp1q1):# child of lying 1
         share.scenemanager.switchscene(obj_scene_lyingp1q1())
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp1q3())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (2/3):   ']
 
 class obj_scene_lyingp1q3(obj_scene_lyingp1q1):# child of lying 1
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp1q2())
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1win())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (3/3):   ']
 
 class obj_scene_lyingpart1win(page.obj_chapterpage):
     def prevpage(self):
@@ -733,7 +777,7 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
         drawing.clear()# erase drawing
         self.addpart( drawing )
-        self.addpart( draw.obj_image('bunnyhead',(1069,298),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
 
 class obj_scene_lyingfailpart2(page.obj_chapterpage):
     def prevpage(self):
@@ -759,18 +803,25 @@ class obj_scene_lyingp2q1(obj_scene_lyingp1q1):# child of lying 1
         share.scenemanager.switchscene(obj_scene_lyingp2q2())
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart2())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (1/3):   ']
+
 
 class obj_scene_lyingp2q2(obj_scene_lyingp2q1):# child of lying 2
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp2q1())
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp2q3())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (2/3):   ']
 
 class obj_scene_lyingp2q3(obj_scene_lyingp2q1):# child of lying 2
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp2q2())
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingpart2win())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (3/3):   ']
 
 class obj_scene_lyingpart2win(page.obj_chapterpage):
     def prevpage(self):
@@ -835,7 +886,7 @@ class obj_scene_lyingpart3(page.obj_chapterpage):
         drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
         drawing.clear()# erase drawing
         self.addpart( drawing )
-        self.addpart( draw.obj_image('bunnyhead',(1069,298),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
 
 class obj_scene_lyingfailpart3(page.obj_chapterpage):
     def prevpage(self):
@@ -869,26 +920,37 @@ class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
             return share.datamanager.getword('choice_yesno') != share.datamanager.getword('truth_yesno')
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart3())
-    def setup(self):
-        super().setup()
-        self.text=['Now tell me if the following is "correct" ',\
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following is "correct" ',\
                     '(but ',\
                     ('lie',share.colors.red),' and give me the ',\
-                    ('wrong answer',share.colors.red),'): ',\
+                    ('wrong answer',share.colors.red),') (1/3): ',\
                     ]
+
 
 class obj_scene_lyingp3q2(obj_scene_lyingp3q1):# child of lying 3
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp3q1())
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp3q3())
-
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following is "correct" ',\
+                    '(but ',\
+                    ('lie',share.colors.red),' and give me the ',\
+                    ('wrong answer',share.colors.red),') (2/3): ',\
+                    ]
 
 class obj_scene_lyingp3q3(obj_scene_lyingp3q1):# child of lying 3
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp3q2())
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingend())
+    def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
+        return ['Now tell me if the following is "correct" ',\
+                    '(but ',\
+                    ('lie',share.colors.red),' and give me the ',\
+                    ('wrong answer',share.colors.red),') (3/3): ',\
+                    ]
 
 class obj_scene_lyingend(page.obj_chapterpage):
     def prevpage(self):
