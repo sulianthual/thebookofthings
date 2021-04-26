@@ -267,10 +267,13 @@ class obj_scene_ch6p14(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p15())
     def setup(self):
-        self.text=['This is what the hero riding the cow looks like. ',\
+        self.text=[\
+                   'Alert, said the skeletons. Someone is stealing our cow. And a chase began... ',\
+                  'Quick said the sailor, come reach the boat. ride the cow. ',\
+                  'This is what the hero riding the cow looks like. ',\
                    ]
         self.addpart(draw.obj_animation('ch1_hero1','heroridecow',(360,360)))
-        self.addpart(draw.obj_image('heroridecow',(640,360)) )
+        # self.addpart(draw.obj_image('heroridecow',(640,360)) )
 
 class obj_scene_ch6p15(page.obj_chapterpage):
     def prevpage(self):
@@ -302,8 +305,9 @@ class obj_scene_ch6p16(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p17())
     def setup(self):
         self.text=[\
-                   'Alert, said the skeletons. Someone is stealing our cow. And a chase began... ',\
-                  'Quick said the sailor, come reach the boat ',\
+                   'go back home. Leave the sailor in front of mailbox. He says can keep the ship. ',\
+                  'And last part of password is probably "sailor" ',\
+                 'Finish day (diner, serenade, kiss, go tosleep) happy because will save partner the next day ',\
                    ]
 
 class obj_scene_ch6p17(page.obj_chapterpage):
