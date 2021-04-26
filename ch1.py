@@ -114,16 +114,22 @@ class obj_scene_ch1p3(page.obj_chapterpage):
                    'and make ', ('{hero_him}',share.colors.hero),' look slightly to the right. ',\
                    ('Draw with [Left Mouse] and erase with [Backspace]',share.colors.instructions),', but you should know this by now.',\
                    ]
-        drawing=draw.obj_drawing('herohead',(640,450),legend='Draw a Happy Face')
+        self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
+        drawing=draw.obj_drawing('happyface',(640,450),legend='Draw a Happy Face',shadow=(200,200))
         self.addpart( drawing )
+        # drawing=draw.obj_drawing('herohead',(640,450),legend='Draw a Happy Face')
+        # self.addpart( drawing )
     def endpage(self):
         super().endpage()
-        # combine herohead+stickbody = herobase
-        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
+        # combine sitckhead+happyface=herohead
         dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
+        dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
+        dispgroup1.addpart('part2',draw.obj_image('happyface',(640,360)) )
+        dispgroup1.snapshot((640,360,200,200),'herohead')
+        # combine herohead+stickbody = herobase
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
         dispgroup1.snapshot((640,360,200,300),'herobase')
 
 

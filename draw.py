@@ -654,6 +654,9 @@ class obj_image:
         self.sprite.flip(self.fh,self.fv)
         self.sprite.scale(self.s)
         self.sprite.rotate(self.r)
+    def xytoxyini(self):# reinitialize initial coordinates to current ones
+        self.xini=self.x# (useful if adding existing images to a dispgroup)
+        self.yini=self.y
     def movetoxy(self,x,y):
         self.movetox(x)
         self.movetoy(y)

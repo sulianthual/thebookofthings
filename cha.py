@@ -193,7 +193,12 @@ class obj_scene_travel(obj_testpage):
         # self.addpart( draw.obj_drawing('horizon1',(640,360),shadow=(640,50),brush=share.brushes.smallpen) )
         # self.addpart( draw.obj_drawing('horizon2',(640+320,360),shadow=(320,50),brush=share.brushes.smallpen) )
         # self.addpart( draw.obj_drawing('horizon3',(640+320,360+180),shadow=(320,200),brush=share.brushes.smallpen) )
-
+        # self.addpart( draw.obj_drawing('beach1',(640,360),shadow=(640,50),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('beach2',(640,360),shadow=(320,50),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('beach3',(640,360-180),shadow=(320,200),brush=share.brushes.smallpen)
+        # self.addpart( draw.obj_drawing('beach4',(640,360),shadow=(320,50),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('horizon4',(640,360),shadow=(320,50),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('island1',(640,360),shadow=(600,250),brush=share.brushes.smallpen) )
 
 class obj_scene_dodgebullets(obj_testpage):
     def triggernextpage(self,controls):

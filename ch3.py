@@ -94,7 +94,7 @@ class obj_scene_ch3p3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p2())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p4())
+        share.scenemanager.switchscene(obj_scene_ch3p3a())
     def setup(self):
         self.text=[\
                   'Something isnt right, said the book of things. ',\
@@ -124,18 +124,32 @@ class obj_scene_ch3p3(page.obj_chapterpage):
         dispgroup2.snapshot((640,330,200,330),'villainbase')
 
 
-class obj_scene_ch3p4(page.obj_chapterpage):
+
+class obj_scene_ch3p3a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p3())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p4())
+    def setup(self):
+        self.text=['This is what the ',('villain',share.colors.villain),' looks like. ',\
+                   'Pretty scary! ',\
+                   'Lets move on to the next step. ',\
+                   ]
+        self.addpart(draw.obj_animation('ch1_hero1','villainbase',(360,360),record=True))
+
+
+class obj_scene_ch3p4(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p3a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p5())
     def setup(self):
         self.text=[\
-                 'Perfect, said the book of things. ',\
-                'We just need to give a name and gender to this ',('villain',share.colors.villain),'. '\
+                 'Now, said the book of things. ',\
+                'we just need to give a name and gender to this ',('villain',share.colors.villain),'. '\
                    ]
-        y1=360+90-100
-        y2=520+100-100
+        y1=360+90-200
+        y2=520+100-200
         self.addpart( draw.obj_textbox('The villain was:',(180,y1)) )
         textchoice=draw.obj_textchoice('villain_he')
         textchoice.addchoice('1. A guy','he',(440,y1))

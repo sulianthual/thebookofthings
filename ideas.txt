@@ -103,7 +103,11 @@ we learn that our most feared bugs are our best friends
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
              or freezing temperatures (draw a snowman!)
 
-- Chapter 6: Add a game with parabolic shooting
+- Chapter 6: to build the sailor ship, could do a fetch quest for wood
+             either chop wood (like flower pickup minigame)
+             or go directly see the bunny and ask him to chop it all
+
+- Somewhere...: Add a game with parabolic shooting ?
              can be done easily with naval battle and a cannon
              (could have been arc and bow for hunting too)
              or can be arc+bow on beach: multiple skeleton running from right to left (very slowly)
@@ -135,14 +139,15 @@ For this chapter DRAW AS YOU GO
 - unlike chapter 4,5, the sailor COMES to the hero house
   (to tell about the treasure). He heard of the hero from the 2 other grandmasters
   ( this is like the plot of Treasure Island )
-- draw sailor = eyelid + sailor hat (like the marin shadok!)
 - sailor says will give password if helps retrieve treasure
 - treasure is in skull island.
 -draw skull (serves as island).
     Also serves to make skeleton henchmens (and their boss=eyelid+pirate hat)
 - infiltrate the island: stealth minigames (move across and hide in furnitures/stuff)
-- get the treasure
-- the treasure is a pet snail?
+- get the treasure: the treasure is a cow.
+                    the skeletons keep it for its great milk
+                    the sailor is stealing it
+
 - alert of skeletons, start escape:
   run on beach with skeletons behind (avoid obstacles like boulders, bushes...)
 - but get arrested with sailor: skeletons say he is a recidivist always trying to steal

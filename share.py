@@ -30,6 +30,7 @@ colorkey=(128,0,128)# color used for transparency on images (purple)
 
 # Global variables
 #
+devaccess=True# user has access to developer mode (change here to False on game release)
 devmode=False # developer mode toggle
 dt=1# elapsed time since last frame (updated by game clock each frame)
 ipage=1# current page within a chapter (PUT THOSE IN a datb.pointers object or something)

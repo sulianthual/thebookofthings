@@ -398,11 +398,6 @@ class obj_scene_ch5p5a(page.obj_chapterpage):
         animation1=draw.obj_animation('ch5eldertalks1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
 
-
-
-
-
-
 class obj_scene_ch5p5b(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p5a())

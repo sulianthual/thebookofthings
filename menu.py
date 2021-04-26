@@ -85,9 +85,10 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(self.sprite_book)
         self.addpart(self.sprite_eraser)
         # devtools
-        self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
-        self.addpart(draw.obj_textbox('[F: Quick Access for Developer]',(640,700),fontsize='smaller'))
-        self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
+        if share.devaccess:
+            self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
+            self.addpart(draw.obj_textbox('[F: Quick Access for Developer]',(640,700),fontsize='smaller'))
+            self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
 
     def setup(self):
         super().setup()
@@ -150,17 +151,16 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(ch7.obj_scene_chapter7())
         if controls.esc and controls.escc:
             share.quitgame()
-        if controls.space and controls.spacec:
-            share.scenemanager.switchscene(tests.obj_scene_testmenu())
-        #
         #############################################3
-        # Access WIP: Jump to scene directly (remove in final version)
-        if controls.f and controls.fc:
-            #
-            # change current WIP scene here
-            quickscene=ch4.obj_scene_lyingstart()
-            #
-            share.scenemanager.switchscene(quickscene)
+        if share.devaccess:
+            if controls.space and controls.spacec:
+                share.scenemanager.switchscene(tests.obj_scene_testmenu())
+            if controls.f and controls.fc:
+                #
+                # change current WIP scene here
+                quickscene=ch6.obj_scene_ch6p15()
+                #
+                share.scenemanager.switchscene(quickscene)
         #############################################3
 
 
