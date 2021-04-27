@@ -528,17 +528,24 @@ class obj_scene_lyingdatabase(page.obj_chapterpage):
         self.statements['teeth']=['I never brush my teeth','I always brush my teeth']
         self.statements['spider']=['I am not scared of spiders','I am scared of spiders']
         self.statements['booger']=['I dont eat my boogers','I eat my boogers']
+        self.statements['underwear']=['I never wear dirty underwears','I always wear dirty underwears']
+        self.easymode=True# easy mode (or hard mode) for game
         #
         ########################################
         # Save the database in datamanger temp object
         share.datamanager.temp.statements=self.statements# full database
+        share.datamanager.temp.easymode=self.easymode
+
 
 
 class obj_scene_lyingpart1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingstart())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingrule())
+        if self.easymode:
+            share.scenemanager.switchscene(obj_scene_lyingp1q1())
+        else:
+            share.scenemanager.switchscene(obj_scene_lyingrule())# explain rule AND
     def setup(self):
         # Pick up statements from large database
         self.statements=share.datamanager.temp.statements# full database
@@ -555,11 +562,12 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
         share.datamanager.temp.statkeys=self.statkeys# keys of subset
         share.datamanager.temp.stat01=self.stat01# bool of subset
         share.datamanager.temp.fqstatdict={}# former questions asked (for later)
+        self.easymode=share.datamanager.temp.easymode# easy mode or not
         # Page Text
         self.text=[\
                     'This game plays in three rounds. For the first round, ',\
                     'here are three ',\
-                    ('correct statements',share.colors.darkgreen),' you need to remember. ',\
+                    ('true statements',share.colors.darkgreen),' you need to remember. ',\
                     'You can even take some notes at the bottom of the screen to help your memory. '
                    ]
         self.addpart( draw.obj_textbox( '1. '+self.statements[self.statkeys[0]][self.stat01[0]],(400,220),xleft=True,color=share.colors.darkgreen  ) )
@@ -572,7 +580,7 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
         self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
 
 
-class obj_scene_lyingrule(page.obj_chapterpage):
+class obj_scene_lyingrule(page.obj_chapterpage):# rule AND (forget if on easymode)
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1())
     def nextpage(self):
@@ -584,6 +592,7 @@ class obj_scene_lyingrule(page.obj_chapterpage):
         self.statkeys=share.datamanager.temp.statkeys
         self.stat01=share.datamanager.temp.stat01
         fqstatdict=share.datamanager.temp.fqstatdict# former question asked
+        self.easymode=share.datamanager.temp.easymode# easy mode or not
         ###################
         self.text=[\
                     'Remember this too: ',\
@@ -592,18 +601,18 @@ class obj_scene_lyingrule(page.obj_chapterpage):
                     # ' A statement that is ',(' partly correct',share.colors.darkgreen),\
                     # ' and ',(' partly wrong',share.colors.red),\
                     # ' is ',('wrong',share.colors.red),'". ',\
-                    '"to be correct, a statement must be entirely correct. ',\
-                    ' A statement that is partly correct and partly wrong is wrong". ',\
+                    '"to be true, a statement must be entirely true. ',\
+                    ' A statement that is partly true and partly false is false". ',\
                     'For example: ',\
                     '\n\n ',\
                     '"',(self.statements[self.statkeys[0]][self.stat01[0]],share.colors.darkgreen),\
                     (' and ',share.colors.item),\
                     (self.statements[self.statkeys[1]][self.stat01[1]],share.colors.darkgreen),\
-                    '": this is ',('correct',share.colors.darkgreen),'. ',\
+                    '": this is ',('true',share.colors.darkgreen),'. ',\
                     '\n "',(self.statements[self.statkeys[0]][self.stat01[0]],share.colors.darkgreen),\
                     (' and ',share.colors.item),\
                     (self.statements[self.statkeys[1]][1-self.stat01[1]],share.colors.red),\
-                    '": this is ',('wrong',share.colors.red),'. ',\
+                    '": this is ',('false',share.colors.red),'. ',\
                    ]
 
         drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
@@ -630,7 +639,10 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
 
 class obj_scene_lyingp1q1(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart1())
+        if self.easymode:
+            share.scenemanager.switchscene(obj_scene_lyingpart1())
+        else:
+            share.scenemanager.switchscene(obj_scene_lyingrule())# explain rule AND
     def nextpage(self):
         if self.nextpage_correctanswer():# custom correct answer function
             self.nextpage_lyinggame()# custom progression function
@@ -646,7 +658,13 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart1())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (1/3):   ']
+        return ['Now tell me if this is true or false (1/3):   ']
+    def textchoice_lyinggame(self):
+        y2=310
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('True','yes',(640-100,y2))
+        textchoice.addchoice('False','no',(640+100,y2))
+        self.addpart( textchoice )
     def setup(self):
         # load from data manager
         self.statements=share.datamanager.temp.statements
@@ -654,36 +672,59 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         self.statkeys=share.datamanager.temp.statkeys
         self.stat01=share.datamanager.temp.stat01
         fqstatdict=share.datamanager.temp.fqstatdict# former question asked
+        self.easymode=share.datamanager.temp.easymode# easy mode or not
         # random question (must be different form previous one)
-        qstatkeys=tool.randsample( list(self.statkeys)  , 2)# choose two statements
-        qstat01=[]
-        for i in range(2):
-            qstat01.append(tool.randchoice([0,1]))
-        qstatdict={}
-        for i in range(2):
-            qstatdict[qstatkeys[i]]=qstat01[i]
-        if fqstatdict.items() == qstatdict.items():# if same as last question, change it slightly
-            qstat01[1]=1-qstat01[1]# swap 0 1
-            qstatdict[qstatkeys[1]]=qstat01[1]
-        share.datamanager.temp.fqstatdict=qstatdict# save question asked for later
-        # Correct answer
-        if qstatdict.items() <= self.statdict.items():# dictionary is subset of larger one
-            share.datamanager.setword('truth_yesno','yes')
+        if not self.easymode:
+            # HARD MODE (combine two statements in an AND statement)
+            qstatkeys=tool.randsample( list(self.statkeys)  , 2)# choose two statements (hard mode)
+            qstat01=[]
+            for i in range(2):
+                qstat01.append(tool.randchoice([0,1]))
+            qstatdict={}
+            for i in range(2):
+                qstatdict[qstatkeys[i]]=qstat01[i]
+            if fqstatdict.items() == qstatdict.items():# if same as last question, change it slightly
+                qstat01[1]=1-qstat01[1]# swap 0 1
+                qstatdict[qstatkeys[1]]=qstat01[1]
+            share.datamanager.temp.fqstatdict=qstatdict# save question asked for later
+
+            # Correct answer
+            if qstatdict.items() <= self.statdict.items():# dictionary is subset of larger one
+                share.datamanager.setword('truth_yesno','yes')
+            else:
+                share.datamanager.setword('truth_yesno','no')
+            # Page text
+            self.text=self.text_lyinggame()# from function
+            #
+            y1=190
+            self.addpart( draw.obj_textbox( '" '+self.statements[qstatkeys[0]][qstat01[0]],(640-40,y1),xright=True ) )
+            self.addpart( draw.obj_textbox( ' and ',(640,y1),color=share.colors.item ) )
+            self.addpart( draw.obj_textbox( self.statements[qstatkeys[1]][qstat01[1]]+' "',(640+40,y1),xleft=True ) )
         else:
-            share.datamanager.setword('truth_yesno','no')
-        # Page text
-        self.text=self.text_lyinggame()# from function
+            # EASY MODE (only one statement)
+            qstatkeys=tool.randsample( list(self.statkeys)  , 1)# choose two statements (hard mode)
+            qstat01=[]
+            qstat01.append(tool.randchoice([0,1]))
+            qstatdict={}
+            qstatdict[qstatkeys[0]]=qstat01[0]
+            if fqstatdict.items() == qstatdict.items():# if same as last question, change it slightly
+                qstat01[0]=1-qstat01[0]# swap 0 1
+                qstatdict[qstatkeys[0]]=qstat01[0]
+            share.datamanager.temp.fqstatdict=qstatdict# save question asked for later
+
+            # Correct answer
+            if qstatdict.items() <= self.statdict.items():# dictionary is subset of larger one
+                share.datamanager.setword('truth_yesno','yes')
+            else:
+                share.datamanager.setword('truth_yesno','no')
+            # Page text
+            self.text=self.text_lyinggame()# from function
+            #
+            y1=190
+            self.addpart( draw.obj_textbox( '" '+self.statements[qstatkeys[0]][qstat01[0]]+'"',(640,y1), ) )
         #
-        y1=190
-        self.addpart( draw.obj_textbox( '" '+self.statements[qstatkeys[0]][qstat01[0]],(640-40,y1),xright=True ) )
-        self.addpart( draw.obj_textbox( ' and ',(640,y1),color=share.colors.item ) )
-        self.addpart( draw.obj_textbox( self.statements[qstatkeys[1]][qstat01[1]]+' "',(640+40,y1),xleft=True ) )
-        #
-        y2=310
-        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('Yes','yes',(640-100,y2))
-        textchoice.addchoice('No','no',(640+100,y2))
-        self.addpart( textchoice )
+        self.textchoice_lyinggame()# add textchoice
+
         drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Use your notes',brush=share.brushes.smallpen)
         self.addpart( drawing )
         # self.addpart( draw.obj_image('lyingnote',(640,530)) )
@@ -708,7 +749,7 @@ class obj_scene_lyingp1q2(obj_scene_lyingp1q1):# child of lying 1
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp1q3())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (2/3):   ']
+        return ['Now tell me if this is true or false (2/3):   ']
 
 class obj_scene_lyingp1q3(obj_scene_lyingp1q1):# child of lying 1
     def prevpage(self):
@@ -716,7 +757,7 @@ class obj_scene_lyingp1q3(obj_scene_lyingp1q1):# child of lying 1
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1win())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (3/3):   ']
+        return ['Now tell me if this is true or false (3/3):   ']
 
 class obj_scene_lyingpart1win(page.obj_chapterpage):
     def prevpage(self):
@@ -764,10 +805,11 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         share.datamanager.temp.statkeys=self.statkeys# keys of subset
         share.datamanager.temp.stat01=self.stat01# bool of subset
         share.datamanager.temp.fqstatdict={}# former questions asked (for later)
+        self.easymode=share.datamanager.temp.easymode# easy mode or not
         # Page Text
         self.text=['For the second round, ',('I will now be lying',share.colors.red),'. ',\
-                    ' Here are three ',\
-                    ('wrong statements',share.colors.red),' to remember. ',\
+                    'Let me tell you three statements. They are ',\
+                    ('all false ',share.colors.red),' because I am lying. ',\
                     'Once again, you can take some notes to help your memory. '
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
@@ -788,7 +830,7 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
         self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
                     ' You gave me the wrong answer. ',\
                     'For this second round, remember that ',\
-                    ('all my statements are wrong',share.colors.red),'. ',\
+                    ('all my statements are false',share.colors.red),'. ',\
                     'And I may suggest that you take some notes ',\
                     'at the bottom of the screen. ',\
                     'Now go back and win this second round, I know you can do it! ',\
@@ -804,7 +846,7 @@ class obj_scene_lyingp2q1(obj_scene_lyingp1q1):# child of lying 1
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart2())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (1/3):   ']
+        return ['Now tell me if this is true or false (1/3):   ']
 
 
 class obj_scene_lyingp2q2(obj_scene_lyingp2q1):# child of lying 2
@@ -813,7 +855,7 @@ class obj_scene_lyingp2q2(obj_scene_lyingp2q1):# child of lying 2
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp2q3())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (2/3):   ']
+        return ['Now tell me if this is true or false (2/3):   ']
 
 class obj_scene_lyingp2q3(obj_scene_lyingp2q1):# child of lying 2
     def prevpage(self):
@@ -821,7 +863,7 @@ class obj_scene_lyingp2q3(obj_scene_lyingp2q1):# child of lying 2
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingpart2win())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following statement is ',('Correct',share.colors.darkgreen),' (3/3):   ']
+        return ['Now tell me if this is true or false (3/3):   ']
 
 class obj_scene_lyingpart2win(page.obj_chapterpage):
     def prevpage(self):
@@ -872,12 +914,13 @@ class obj_scene_lyingpart3(page.obj_chapterpage):
         share.datamanager.temp.statkeys=self.statkeys# keys of subset
         share.datamanager.temp.stat01=self.stat01# bool of subset
         share.datamanager.temp.fqstatdict={}# former questions asked (for later)
+        self.easymode=share.datamanager.temp.easymode# easy mode or not
         # Page Text
         self.text=['For the last round, ',('I will be lying and so will you',share.colors.red),'! ',\
-                    'Remember these three ',\
-                    ('wrong statements',share.colors.red),'. ',\
-                    'But then, when answering my questions, always give me the ',\
-                    ('wrong answer',share.colors.red),'. ',\
+                    'I am giving you three ',\
+                    ('false statements',share.colors.red),', and ',\
+                    'you will only give me ',\
+                    ('wrong answers',share.colors.red),'. ',\
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
         self.addpart( draw.obj_textbox( '1. '+self.statements[self.statkeys[0]][1-self.stat01[0]],(400,220),xleft=True,color=share.colors.red  ) )
@@ -895,13 +938,11 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_lyingpart3())
     def setup(self):
         self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    ' You gave me the wrong answer. ',\
+                    'Well, you actually gave me the correct answer, but that isnt what I wanted. ',\
                     'For this third round, remember that ',\
-                    ('all my statements are wrong',share.colors.red),'. ',\
-                    'Then, remember to ',\
-                    ('always give me the wrong answer',share.colors.red),'. ',\
-                    'I may also suggest that you take some notes ',\
-                    'at the bottom of the screen. ',\
+                    ('all my statements are false',share.colors.red),' (I am lying), ',\
+                    'and that you must ',\
+                    ('always give me the wrong answer',share.colors.red),' (you are lying too). ',\
                     'Now go back and win this third round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -921,11 +962,16 @@ class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart3())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following is "correct" ',\
-                    '(but ',\
-                    ('lie',share.colors.red),' and give me the ',\
-                    ('wrong answer',share.colors.red),') (1/3): ',\
-                    ]
+        return ['Now tell me if this is true or false ',\
+                ' (but lie and give me the ',\
+                ('wrong answer',share.colors.red),') (1/3): ']
+    def textchoice_lyinggame(self):# textchoice is "ironic"
+        y2=310
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('"True"','yes',(640-100,y2))
+        textchoice.addchoice('"False"','no',(640+100,y2))
+        self.addpart( textchoice )
+
 
 
 class obj_scene_lyingp3q2(obj_scene_lyingp3q1):# child of lying 3
@@ -934,11 +980,9 @@ class obj_scene_lyingp3q2(obj_scene_lyingp3q1):# child of lying 3
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp3q3())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following is "correct" ',\
-                    '(but ',\
-                    ('lie',share.colors.red),' and give me the ',\
-                    ('wrong answer',share.colors.red),') (2/3): ',\
-                    ]
+        return ['Now tell me if this is true or false ',\
+                ' (but lie and give me the ',\
+                ('wrong answer',share.colors.red),') (2/3): ']
 
 class obj_scene_lyingp3q3(obj_scene_lyingp3q1):# child of lying 3
     def prevpage(self):
@@ -946,11 +990,9 @@ class obj_scene_lyingp3q3(obj_scene_lyingp3q1):# child of lying 3
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingend())
     def text_lyinggame(self):# question count (1/3, 2/3, 3/3)
-        return ['Now tell me if the following is "correct" ',\
-                    '(but ',\
-                    ('lie',share.colors.red),' and give me the ',\
-                    ('wrong answer',share.colors.red),') (3/3): ',\
-                    ]
+        return ['Now tell me if this is true or false ',\
+                ' (but lie and give me the ',\
+                ('wrong answer',share.colors.red),') (3/3): ']
 
 class obj_scene_lyingend(page.obj_chapterpage):
     def prevpage(self):

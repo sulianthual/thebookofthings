@@ -38,9 +38,12 @@ class obj_world:
         for i in self.actorlist: rule.addactor(i)
     def removerule(self,name):# remove rule from the world
         self.ruledict.pop(name,None)# removes element if exists (returns None otherwise)
-    def addactor(self,actor):# add actor to the world
-        self.actorlist.append(actor)
-        for i in self.ruledict.values(): i.addactor(actor)
+    def addactor(self,actor,foreground=True):# add actor to the world
+        if foreground:# add actor in foreground (end of list, updated and drawn last)
+            self.actorlist.append(actor)
+        else:# add actor in background (beginning of list, updated and drawn first)
+            self.actorlist.insert(0,actor)
+        for i in self.ruledict.values(): i.addactor(actor)# non-indexed
     def removeactor(self,actor):# remove actor from the world
         if actor in self.actorlist: self.actorlist.remove(actor)
         for i in self.ruledict.values(): i.removeactor(actor)
@@ -154,11 +157,12 @@ class obj_actor:
 #                       (rotate not done due to enlargen-memory issues)
 # *GRANDACTOR
 class obj_grandactor():
-    def __init__(self,creator,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False):
+    def __init__(self,creator,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False,foreground=True):
         # Creation
         self.creator=creator# created by world
         self.xini=xy[0]# initial position
         self.yini=xy[1]
+        self.foreground=foreground# if True, inserts in world to foreground, if False, in background
         # Setup and Birth
         self.setup()
         self.birth()# add self to world ONLY ONCE setup finished
@@ -190,8 +194,8 @@ class obj_grandactor():
         self.dicty={}
         # devtools
         self.devrect=core.obj_sprite_rect()
-    def birth(self):# add to world
-        self.creator.addactor(self)
+    def birth(self):# add to world (at given layer index)
+        self.creator.addactor(self,foreground=self.foreground)
         self.alive=True
     def kill(self):# remove from world
         self.creator.removeactor(self)
@@ -2538,38 +2542,6 @@ class obj_world_climbpeak(obj_world):
                 self.done=True# end of minigame
 
 
-####################################################################################################################
-
-# Mini Game: liar liar game
-# *LIAR *LIAR
-class obj_world_liarliar(obj_world):
-    def setup(self,**kwargs):
-        #
-        self.done=False# end of minigame
-        self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
-        self.win=True# game is won
-        # layering
-        self.staticactor=obj_grandactor(self,(640,360))# background
-        self.statement=obj_grandactor(self,(640,360))
-        #
-        # static
-        self.staticactor.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5) )
-        self.staticactor.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
-        #
-        # statements (boolean pairs)
-        self.statements=[]#
-        self.statements.append( ('I love apples','I hate apples') )
-        self.statements.append( ('I love bananas','I hate bananas') )
-        self.statements.append( ('I shower every day','I never shower') )
-        self.threestatements=[]
-        # self.statement.addpart('statement')
-    def update(self,controls):
-        super().update(controls)
-        # goal unreached
-        if not self.goal:
-            pass
-
-
 
 ####################################################################################################################
 
@@ -3028,6 +3000,234 @@ class obj_world_rockpaperscissors(obj_world):
                 if self.timerendloose.ring:
                     self.done=True# end of minigame
 
+
+####################################################################################################################
+#
+# # Mini Game: ride a cow
+# *RIDE *COW
+class obj_world_ridecow(obj_world):
+    def setup(self,**kwargs):
+
+
+        # combine herobase+cow=heroridecow
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5) )
+        dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
+        dispgroup1.snapshot((640,360+25,300,300-25),'heroridecow')
+        # combine herobase+cow=heroridecow
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5) )
+        dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
+        dispgroup1.snapshot((640,360+25,300,300-25),'heroridecowangry')
+        # cow alone in combo
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
+        dispgroup1.snapshot((640,360+25,300,300-25),'heroridecownohero')
+        # hero alone in combo
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5) )
+        dispgroup1.snapshot((640,360+25,300,300-25),'heroridecownocow')
+        ##########################33
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        # default parameters
+        self.heroxystart=(640,360)
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.hero=obj_grandactor(self,self.heroxystart)
+        self.staticactor.show=True
+        self.hero.show=True
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_donewin=obj_grandactor(self,(640,360))
+        self.text_donelost=obj_grandactor(self,(640,360))
+        self.text_undone.show=True
+        self.text_donewin.show=False
+        self.text_donelost.show=False
+
+        # static actor
+        self.staticactor.addpart( 'anim1', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360)) )
+        self.staticactor.addpart( 'anim2', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+100)) )
+        self.staticactor.addpart( 'anim3', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-100)) )
+        self.staticactor.addpart( 'anim4', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+200)) )
+        self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
+        # hero
+        self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]-50),scale=0.5) )
+        self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]-50),scale=0.5) )
+        self.hero.dict['img'].show=True
+        self.hero.dict['hurt'].show=False
+        self.hero.rx=100
+        self.hero.ry=50
+        self.heromx=5# move rate
+        self.heromy=5#
+        self.heroxmin=250# boundaries
+        self.heroxmax=1280-200
+        self.heroymin=200
+        self.heroymax=720-100
+        self.runspeed=5# moving speed of background and obstacles
+        self.herohurting=False# hero is hurting or not
+        self.timerhurting=tool.obj_timer(30)# animation for hero hurt (angry face)
+        # shots (they are actually obstacles)
+        self.nshots=50# number of shots before winning
+        self.ishots=self.nshots
+        self.shooting=True# shoot new ones or not
+        self.shots=[]# empty list
+        self.shottimer=tool.obj_timer(30)# time between obstacles
+        self.shottimer.start()
+        self.shotx0=1280+200
+        self.shoty0min=200
+        self.shoty0max=720-100
+        self.xkill=150# position at which they disappear
+        # health bar
+        self.maxherohealth=5# starting hero health
+        self.herohealth=self.maxherohealth# updated one
+        self.healthbar=obj_grandactor(self,(640,360),foreground=False)
+        for i in range(self.maxherohealth):
+            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75+150,150),scale=0.125) )
+
+        # timer for done part
+        self.timerendwin=tool.obj_timer(180)# goal to done
+        self.timerendloose=tool.obj_timer(180)# goal to done
+        self.loosemx=7# skeleton move rate if loose
+        self.winmx=3# hero move rate if wins
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[WASD] Move',(640,660),color=share.colors.instructions) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('You Escaped!',(640,360),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('The Cow Escaped!',(640,360),fontsize='huge') )
+        # devtool
+        self.staticactor.addpart( 'dev1', draw.obj_textbox('shots='+str(self.ishots),(1200,680),color=share.colors.red) )
+        self.staticactor.dict['dev1'].show=False
+        #
+        #
+    def makeshot(self,x,y,s):
+        shot=obj_grandactor(self,(x,y),foreground=False)
+        dice=tool.randchoice(['palmtree','rock','bush'],probas=[20,20,60])
+        if dice=='palmtree':
+            shot.addpart('img', draw.obj_image('palmtree',(x,y),scale=0.5,fliph=tool.randbool()) )
+            shot.hurts=True# does the obstacle hurt the hero
+            shot.rx,shot.ry=30,30# hitbox
+        elif dice=='rock':
+            shot.addpart('img', draw.obj_image('rock',(x,y),scale=0.35,fliph=tool.randbool()) )
+            shot.hurts=True
+            shot.rx,shot.ry=30,30# hitbox
+        elif dice=='bush':
+            shot.addpart('img', draw.obj_image('bush',(x,y),scale=0.25,fliph=tool.randbool()) )
+            shot.hurts=False# harmless
+            shot.rx,shot.ry=1,1# hitbox (irrelevant if harmless)
+        shot.speed=s# speed
+        self.shots.append(shot)
+    def killshot(self,shot):
+        self.shots.remove(shot)
+        shot.kill()
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            # move hero
+            if controls.a and self.hero.x>self.heroxmin:
+                self.hero.movex(-self.heromx)
+            if controls.d and self.hero.x<self.heroxmax:
+                self.hero.movex(self.heromx)
+            if controls.w and self.hero.y>self.heroymin:
+                self.hero.movey(-self.heromy)
+            if controls.s and self.hero.y<self.heroymax:
+                self.hero.movey(self.heromy)
+            # shots (obstacles)
+            self.shottimer.update()
+            if self.shooting and self.shottimer.ring:# generate
+                self.ishots -= 1
+                self.shoty0=tool.randint(self.shoty0min,self.shoty0max)
+                self.makeshot(self.shotx0,self.shoty0,-self.runspeed)
+                self.shottimer.start()# restart for next shot
+            if self.shots:# move left
+                for i in self.shots:
+                    i.movex(i.speed)
+            if self.shots:# kill shots
+                for i in self.shots:
+                    if i.x<self.xkill:
+                        self.killshot(i)
+            if self.ishots<0:# shot depletion
+                self.shooting=False
+            # shots hit the hero
+            if self.shots:# kill shots
+                for i in self.shots:
+                    if i.hurts and tool.checkrectcollide(self.hero,i):
+                        self.killshot(i)# remove shot
+                        self.herohealth -= 1# loose health
+                        self.herohurting=True# to hurting state
+                        self.timerhurting.start()
+                        self.hero.dict['img'].show=False
+                        self.hero.dict['hurt'].show=True
+                        # hero looses health or dies
+                        if self.herohealth>0:
+                            self.healthbar.dict['heart_'+str(self.herohealth)].show=False
+                        else:
+                            # switch to lost
+                            self.goal=True
+                            self.win=False
+                            self.healthbar.dict['heart_0'].show=False
+                            self.hero.dict['img'].show=True# hero on its own, stays static
+                            self.hero.dict['hurt'].show=True# cow on its own, will keep running
+                            self.hero.dict['img'].replaceimage('heroridecownocow')
+                            self.hero.dict['hurt'].replaceimage('heroridecownohero')
+                            self.timerendloose.start()
+                            self.text_undone.show=False
+                            self.text_donelost.show=True
+                            if self.shots:
+                                for i in self.shots:
+                                    i.dict['img'].show=False
+            # hero hurting
+            if self.herohurting:
+                self.timerhurting.update()
+                if self.timerhurting.ring:
+                    self.herohurting=False
+                    self.hero.dict['img'].show=True
+                    self.hero.dict['hurt'].show=False
+            # winning (end all shots)
+            if not self.shooting and len(self.shots)<1:# no more shots
+                self.goal=True
+                self.win=True
+                self.timerendwin.start()
+                self.healthbar.dict['heart_0'].show=True# in case lost on that frame
+                self.hero.dict['img'].show=True
+                self.hero.dict['hurt'].show=False
+                self.text_undone.show=False
+                self.text_donewin.show=True
+            # devtool (show number of shots)
+            if share.devmode:
+                self.staticactor.dict['dev1'].show=True
+                self.staticactor.dict['dev1'].replacetext('shots='+str(self.ishots))
+            else:
+                self.staticactor.dict['dev1'].show=False
+        else:
+            # goal reached state
+            if self.win:# won minigame
+                self.timerendwin.update()
+                # hero moves to the right (??)
+                self.hero.dict['img'].movex(self.winmx)
+                self.hero.dict['hurt'].movex(self.winmx)
+                self.staticactor.dict['anim1'].movex(-self.winmx)
+                self.staticactor.dict['anim2'].movex(-self.winmx)
+                self.staticactor.dict['anim3'].movex(-self.winmx)
+                self.staticactor.dict['anim4'].movex(-self.winmx)
+                self.staticactor.dict['anim5'].movex(-self.winmx)
+                if self.shots:# move all shots to the left
+                    for i in self.shots:
+                        i.movex(i.speed)
+                self.staticactor.dict['dev1'].show=share.devmode
+                if self.timerendwin.ring:
+                    self.done=True# end of minigame
+            else:# lost minigame
+                self.timerendloose.update()
+                # Move the skeletons to the right
+                self.hero.dict['hurt'].movex(self.loosemx)# move the cow to right
+                self.staticactor.dict['anim1'].movex(self.loosemx)
+                self.staticactor.dict['anim2'].movex(self.loosemx)
+                self.staticactor.dict['anim3'].movex(self.loosemx)
+                self.staticactor.dict['anim4'].movex(self.loosemx)
+                self.staticactor.dict['anim5'].movex(self.loosemx)
+                self.staticactor.dict['dev1'].show=share.devmode
+                if self.timerendloose.ring:
+                    self.done=True# end of minigame
 
 ####################################################################################################################
 

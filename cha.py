@@ -69,9 +69,10 @@ class obj_scene_arcademenu(page.obj_page):
         self.list.append(obj_scene_travel())
         self.list.append(obj_scene_dodgebullets())
         self.list.append(obj_scene_stompfight())
+        self.list.append(obj_scene_lying())
         self.list.append(obj_scene_climbing())
         self.list.append(obj_scene_rockpaperscissors())
-        self.list.append(obj_scene_lying())
+        self.list.append(obj_scene_ridecow())
         self.list.append(obj_scene_eating())
         self.list.append(obj_scene_serenade())
         self.list.append(obj_scene_kiss())
@@ -224,6 +225,14 @@ class obj_scene_stompfight(obj_testpage):
         self.addpart(self.world)
 
 
+class obj_scene_lying(obj_testpage):
+    def triggernextpage(self,controls):
+        return controls.enter and controls.enterc
+    def setup(self):
+        self.name='Lying'
+        self.text=['Lying: this game is not in a world but in a serie of pages']
+
+
 class obj_scene_climbing(obj_testpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
@@ -260,13 +269,15 @@ class obj_scene_rockpaperscissors(obj_testpage):
         # self.addpart(animation1)
 
 
-
-class obj_scene_lying(obj_testpage):
+class obj_scene_ridecow(obj_testpage):
     def triggernextpage(self,controls):
-        return controls.enter and controls.enterc
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.name='Lying'
-        self.text=['Lying: this game is not in a world but in a serie of pages']
+        self.name='Ride Cow'
+        self.text=['Ride Cow']
+        self.world=world.obj_world_ridecow(self)
+        self.addpart(self.world)
+
 
 
 class obj_scene_eating(obj_testpage):

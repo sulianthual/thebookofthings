@@ -259,7 +259,11 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5) )
         dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecow')
-
+        # combine herobase+cow=heroridecow
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5) )
+        dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
+        dispgroup1.snapshot((640,360+25,300,300-25),'heroridecowangry')
 
 class obj_scene_ch6p14(page.obj_chapterpage):
     def prevpage(self):
@@ -273,6 +277,7 @@ class obj_scene_ch6p14(page.obj_chapterpage):
                   'This is what the hero riding the cow looks like. ',\
                    ]
         self.addpart(draw.obj_animation('ch1_hero1','heroridecow',(360,360)))
+        self.addpart(draw.obj_animation('ch1_hero1','heroridecowangry',(360+300,360)))
         # self.addpart(draw.obj_image('heroridecow',(640,360)) )
 
 class obj_scene_ch6p15(page.obj_chapterpage):
@@ -283,20 +288,8 @@ class obj_scene_ch6p15(page.obj_chapterpage):
     def setup(self):
         self.text=['Test minigame skeleton chase (what it would look like)',\
                    ]
-        self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360),record=False))
-        self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+100)))
-        self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-100)))
-        self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+200)))
-        self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)))
-        # self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640-100,360),record=False))
-        # self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640+100,360),record=False))
-        # self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640-200,360),record=False))
-        # self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640+200,360),record=False))
-        # self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640-300,360),record=False))
-        # self.addpart(draw.obj_animation('ch6_skeletonrun','skeletonbase',(640+300,360),record=False))
-        self.addpart(draw.obj_animation('ch6_heroridecowtest','heroridecow',(640+300,360),record=False))
-        self.addpart(draw.obj_animation('ch6_heroridecowtest2','bush',(640+300,360),record=False))
-        self.addpart(draw.obj_animation('ch6_heroridecowtest2','bush',(640,360+200),record=False))
+        self.world=world.obj_world_ridecow(self)
+        self.addpart(self.world)
 
 class obj_scene_ch6p16(page.obj_chapterpage):
     def prevpage(self):
