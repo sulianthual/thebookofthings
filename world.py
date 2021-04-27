@@ -1779,8 +1779,8 @@ class obj_world_dodgegunshots(obj_world):
                 self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-i*50-10,720-25-50-5),scale=0.125) )
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('[W: Jump] [S: Crouch]',(640,660),color=share.colors.instructions) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('He is the one!',(640,660)) )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('He is the one!',(640,360),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(300)# goal to done
@@ -3002,6 +3002,329 @@ class obj_world_rockpaperscissors(obj_world):
 
 
 ####################################################################################################################
+# *BUSH *STEALTH
+#
+# A skeleton grand actor for the bushstealth game
+class obj_grandactor_bushstealthskeleton(obj_grandactor):
+    def setup(self):
+        super().setup()
+        self.state=0# states=0,1,2,3 for standing, thinking, walking, busting
+        self.faceright=True# looking right or left
+        self.timer=tool.obj_timer(50)# timer for switch states (first switch is quick)
+        self.timer.start()
+        self.mx=3# move rate
+        self.minvision=100# vision min distance (must be >)
+        self.maxvision=500# vision max distance (must be <)
+        # images
+        self.makebaseimages()
+        self.addpart('viewright', draw.obj_image('skeletonview',(self.x+250,self.y),path='premade') )
+        self.addpart('viewleft', draw.obj_image('skeletonview',(self.x-250,self.y),path='premade',fliph=True) )
+        self.dict['standing'].show=True
+        self.dict['walking'].show=False
+        self.dict['thinking'].show=False
+        self.dict['busting'].show=False
+        self.dict['bustingmark'].show=False
+        self.dict['viewright'].show=self.faceright
+        self.dict['viewleft'].show=not self.faceright
+        # boundaries (for walking)
+        self.xmin=200
+        self.xmax=1280-200
+    def makebaseimages(self):
+        self.addpart('standing', draw.obj_image('skeletonbase',(self.x,self.y),scale=0.5) )
+        self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase',(self.x,self.y)) )
+        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(self.x,self.y)) )
+        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+    def turnaround(self):
+        if self.faceright:
+            self.turnleft()
+        else:
+            self.turnright()
+    def turnleft(self):
+        self.faceright=False
+        self.dict['standing'].ifliph()
+        self.dict['walking'].ifliph()
+        self.dict['busting'].ifliph()
+        self.dict['viewright'].show=self.faceright
+        self.dict['viewleft'].show=not self.faceright
+    def turnright(self):
+        self.faceright=True
+        self.dict['standing'].ofliph()
+        self.dict['walking'].ofliph()
+        self.dict['busting'].ofliph()
+        self.dict['viewright'].show=self.faceright
+        self.dict['viewleft'].show=not self.faceright
+    def cansee(self,x):# check if can see target
+        if abs(x-self.x)<self.maxvision and abs(x-self.x)>self.minvision:# with min/max vision range
+            if (x>self.x and self.faceright) or (x<self.x and not self.faceright):# correct direction
+                return True
+            else:
+                return False
+        else:
+            return False
+    def bust(self,x):# bust a target
+        if x>self.x:
+            self.turnright()
+        else:
+            self.turnleft()
+        self.state=3# state 3=busting
+        self.timer.end()
+        self.dict['standing'].show=False
+        self.dict['walking'].show=False
+        self.dict['thinking'].show=False
+        self.dict['busting'].show=True
+        self.dict['bustingmark'].show=True
+    def update(self,controls):
+        super().update(controls)
+        self.timer.update()
+        if self.timer.ring:
+            # if was thinking, then turn around
+            # new state
+            if self.state==0:# standing
+                self.state=tool.randchoice([1,2],probas=[50,50])
+            elif self.state==1:# thinking
+                self.turnaround()# turn around
+                self.state=tool.randchoice([0,2],probas=[50,50])
+            elif self.state==2:# walking
+                self.state=tool.randchoice([0,1],probas=[50,50])
+            # new state duration
+            if self.state==0:# standing
+                self.timer.amount=150+tool.randint(0,100)
+            elif self.state==1:# thinking
+                self.timer.amount=50+tool.randint(0,100)
+            elif self.state==2:# walking
+                self.timer.amount=100+tool.randint(0,100)
+            # start next timer
+            self.timer.start()# next timer
+            # switch to new state
+            if self.state==0:# standing
+                self.dict['standing'].show=True
+                self.dict['walking'].show=False
+                self.dict['thinking'].show=False
+            elif self.state==1:# thinking
+                self.dict['standing'].show=True
+                self.dict['walking'].show=False
+                self.dict['thinking'].show=True
+            elif self.state==2:
+                self.dict['standing'].show=False
+                self.dict['walking'].show=True
+                self.dict['thinking'].show=False
+        # movement
+        if self.state==2:# walking
+            if self.faceright:
+                if self.x<self.xmax:
+                    self.movex(self.mx)
+                else:
+                    self.timer.forcering()
+            else:
+                if self.x>self.xmin:
+                    self.movex(-self.mx)
+                else:
+                    self.timer.forcering()
+
+
+# same but with a sailor hat
+class obj_grandactor_bushstealthskeleton_sailorhat(obj_grandactor_bushstealthskeleton):
+    def makebaseimages(self):
+        self.addpart('standing', draw.obj_image('skeletonbase_sailorhat',(self.x,self.y),scale=0.5) )
+        self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase_sailorhat',(self.x,self.y)) )
+        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase_sailorhat',(self.x,self.y)) )
+        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+
+# same but with partner hair
+class obj_grandactor_bushstealthskeleton_partnerhair(obj_grandactor_bushstealthskeleton):
+    def makebaseimages(self):
+        self.addpart('standing', draw.obj_image('skeletonbase_partnerhair',(self.x,self.y),scale=0.5) )
+        self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase_partnerhair',(self.x,self.y)) )
+        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase_partnerhair',(self.x,self.y)) )
+        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+
+
+# # Mini Game: bush stealth
+# *BUSH *STEALTH
+class obj_world_bushstealth(obj_world):
+    def setup(self,**kwargs):
+        ####################################
+        # combine skeletonhead+stickbody = skeletonbase
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
+        # dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
+        # dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
+        # dispgroup1.addpart('part6',draw.obj_image('scar',(640,200),scale=0.5) )
+        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
+        # skeleton with hair
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
+        dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
+        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
+        # skeleton with sailor hat
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
+        dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
+        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
+        ####################################
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.win=False# won or not
+        # default parameters
+        self.heroxystart=(180,600)
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.hero=obj_grandactor(self,self.heroxystart)
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_donewin=obj_grandactor(self,(640,360))
+        self.text_donelost=obj_grandactor(self,(640,360))
+        self.text_undone.show=True
+        self.text_donewin.show=False
+        self.text_donelost.show=False
+        # background
+        self.makebackground()# make the background
+        # hero
+        self.hero.addpart( 'standing', draw.obj_image('bush',self.heroxystart,scale=0.5) )
+        self.hero.addpart( 'moving', draw.obj_animation('bushstealth_bushmove','bush',self.heroxystart) )
+        self.hero.addpart( 'movingspark', draw.obj_image('bushspark',(self.heroxystart[0],self.heroxystart[1]-100),path='premade') )
+        self.hero.dict['moving'].show=False
+        self.hero.dict['movingspark'].show=False
+        self.hero.dict['standing'].show=True
+        self.heromx=5# move rate
+        self.heroxmin=100# boundaries
+        self.heroxmax=1280-100
+        self.herostanding=True# hero is standing or moving
+        self.busted=False# hero has been busted
+        self.xwin=1280-110# location to reach (with +-10)
+        self.heromxwin=5# move rate (and direction) for animation when winning
+        # skeleton(s)
+        self.makeskeletons()
+        # text
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D]: Move',(640,660),color=share.colors.instructions) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('Stealthy!',(640,200),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('Busted!',(640,200),fontsize='huge') )
+        # timer for done part
+        self.timerendwin=tool.obj_timer(120)# goal to done
+        self.timerendloose=tool.obj_timer(120)# goal to done
+    def makebackground(self):
+        self.staticactor.addpart( 'img1', draw.obj_image('palmtree',(1148,291),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img2', draw.obj_image('palmtree',(1010,268),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( 'img3', draw.obj_image('floor6',(640,300),path='premade') )
+        self.staticactor.addpart( "img1a", draw.obj_image('bush',(890,342),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img2a", draw.obj_image('bush',(307,363),scale=0.27,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img3a", draw.obj_animation('bushstealth_moonmove','moon',(640,360),record=False) )
+
+        # self.staticactor.addpart( 'img4', draw.obj_image('floor6',(640,720-50),path='premade') )
+    def makeskeletons(self):
+        self.skeletons=[]
+        self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            # move hero
+            if controls.ac or controls.dc:# new input=change in stance
+                if controls.a or controls.d:# flip to moving
+                    self.herostanding=False
+                    self.hero.dict['moving'].show=True
+                    self.hero.dict['movingspark'].show=True
+                    self.hero.dict['standing'].show=False
+                    self.hero.dict['moving'].rewind()
+                    # flip orientation
+                    if controls.ac:
+                        self.hero.dict['moving'].ifliph()
+                        self.hero.dict['movingspark'].ifliph()
+                        self.hero.dict['standing'].ifliph()
+                    if controls.dc:
+                        self.hero.dict['moving'].ofliph()
+                        self.hero.dict['movingspark'].ofliph()
+                        self.hero.dict['standing'].ofliph()
+                else:# flip to standing
+                    self.herostanding=True
+                    self.hero.dict['moving'].show=False
+                    self.hero.dict['movingspark'].show=False
+                    self.hero.dict['standing'].show=True
+            # hero move and boundaries
+            if not self.herostanding:
+                if controls.a and self.hero.x>self.heroxmin:
+                    self.hero.movex(-self.heromx)
+                if controls.d and self.hero.x<self.heroxmax:
+                    self.hero.movex(self.heromx)
+                # check if is seen by any skeleton
+                for i in self.skeletons:
+                    if i.cansee(self.hero.x):
+                        self.busted=True
+                        self.goal=True
+                        self.win=False
+                        self.timerendloose.start()
+                        self.text_undone.show=False
+                        self.text_donelost.show=True
+            # win if reach the location
+            if abs(self.hero.x-self.xwin)<10:
+                self.goal=True
+                self.win=True
+                self.timerendwin.start()
+                self.text_undone.show=False
+                self.text_donewin.show=True
+        else:
+            # goal reached state
+            if self.win:# won minigame
+                self.timerendwin.update()
+                if self.timerendwin.ring:
+                    self.done=True# end of minigame
+                # hero keeps going to the right
+                self.hero.movex(self.heromxwin)
+
+            else:# lost minigame
+                self.timerendloose.update()
+                if self.timerendloose.ring:
+                    self.done=True# end of minigame
+                # busted animation
+                if self.busted:
+                    for i in self.skeletons:
+                        i.bust(self.hero.x)
+
+
+# Small variants
+class obj_world_bushstealth2(obj_world_bushstealth):
+    def makebackground(self):
+        self.staticactor.addpart( "img1", draw.obj_image('palmtree',(157,267),scale=0.36,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img2", draw.obj_image('palmtree',(298,284),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img4", draw.obj_image('palmtree',(860,261),scale=0.52,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img5", draw.obj_image('bush',(1035,519),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3a', draw.obj_image('floor7',(640,300),path='premade') )
+        self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640+300,360+10),record=False) )
+    def makeskeletons(self):
+        self.skeletons=[]
+        self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
+        skeleton2=obj_grandactor_bushstealthskeleton_sailorhat(self,(400,500),foreground=False)
+        skeleton2.turnaround()
+        self.skeletons.append( skeleton2   )
+
+
+# Small variants
+class obj_world_bushstealth3(obj_world_bushstealth):
+    def makebackground(self):
+        self.staticactor.addpart( "img1", draw.obj_image('mountain',(1157,236),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img2", draw.obj_image('mountain',(971,304),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img4", draw.obj_image('palmtree',(150,299),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img6", draw.obj_image('bush',(417,571),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3a', draw.obj_image('floor8',(640,300),path='premade') )
+        self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640-500,360+20),record=False) )
+    def makeskeletons(self):
+        self.skeletons=[]
+        self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
+        skeleton2=obj_grandactor_bushstealthskeleton_sailorhat(self,(300,500),foreground=False)
+        # skeleton2.turnaround()
+        self.skeletons.append( skeleton2   )
+        self.skeletons.append( obj_grandactor_bushstealthskeleton_partnerhair(self,(550,500),foreground=False)   )
+
+
+####################################################################################################################
 #
 # # Mini Game: ride a cow
 # *RIDE *COW
@@ -3055,8 +3378,8 @@ class obj_world_ridecow(obj_world):
         self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]-50),scale=0.5) )
         self.hero.dict['img'].show=True
         self.hero.dict['hurt'].show=False
-        self.hero.rx=100
-        self.hero.ry=50
+        self.hero.rx=75
+        self.hero.ry=25
         self.heromx=5# move rate
         self.heromy=5#
         self.heroxmin=250# boundaries
@@ -3077,7 +3400,7 @@ class obj_world_ridecow(obj_world):
         self.shoty0min=200
         self.shoty0max=720-100
         self.xkill=150# position at which they disappear
-        self.shotprobas=[20,20,60]# probas of palmtree, rock, bush...
+        self.shotprobas=[40,0,60]# probas of palmtree, rock, bush...
         # health bar
         self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one

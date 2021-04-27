@@ -228,23 +228,75 @@ class obj_scene_ch6p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p12())
     def setup(self):
         self.text=[\
-                   'Wait until night then infiltrate and steal the treasure. ',\
+                   'Wait until night then infiltrate and steal the treasure. Get in that bush said the sailor. ',\
                    ]
-
+        # self.addpart( draw.obj_imageplacer(self,'herobase','saislorbase','bush','palmtree','moon') )
+        self.addpart( draw.obj_image('sailorbase',(190,491),scale=0.55,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('herobase',(357,498),scale=0.55,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('bush',(792,554),scale=0.55,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1141,317),scale=0.57,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(973,302),scale=0.42,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('moon',(821,256),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch6_herotobush','herobase',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch6_herotobush2','herohead',(640,360),record=False,sync=animation1)
+        animation2.addimage('empty',path='premade')
+        animation3=draw.obj_animation('ch6_herotobush3','bush',(640,360),record=False,sync=animation1)
+        self.addpart( animation1 )
+        self.addpart( animation3 )
+        self.addpart( animation2 )
 
 class obj_scene_ch6p12(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p11())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p13())
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p12a())# win
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p12())# same one
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-                   'stealth minigame... ',\
-                   ]
+       self.text=['The hero infiltrated the skeleton\'s lair']
+       self.world=world.obj_world_bushstealth(self)
+       self.addpart(self.world)
+
+
+class obj_scene_ch6p12a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p12())
+    def nextpage(self):
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p12b())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p12a())# same one
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+       self.text=['...past several defenses']
+       self.world=world.obj_world_bushstealth2(self)
+       self.addpart(self.world)
+
+class obj_scene_ch6p12b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p12a())
+    def nextpage(self):
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p13())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p12b())# same one
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+       self.text=['...and even more']
+       self.world=world.obj_world_bushstealth3(self)
+       self.addpart(self.world)
+       # self.addpart( draw.obj_imageplacer(self,'bush','palmtree','mountain','moon',actor='staticactor') )
+       # self.addpart( draw.obj_drawing('floor8',(640,300),shadow=(640,50),brush=share.brushes.smallpen) )
 
 class obj_scene_ch6p13(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p12())
+        share.scenemanager.switchscene(obj_scene_ch6p12b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p14())
     def setup(self):

@@ -60,7 +60,6 @@ class obj_scene_arcademenu(page.obj_page):
 
     def loadtests(self):# load all mini-games
         #
-
         self.list.append(obj_scene_sunrise())
         self.list.append(obj_scene_wakeup())
         self.list.append(obj_scene_drinking())
@@ -72,6 +71,7 @@ class obj_scene_arcademenu(page.obj_page):
         self.list.append(obj_scene_lying())
         self.list.append(obj_scene_climbing())
         self.list.append(obj_scene_rockpaperscissors())
+        self.list.append(obj_scene_bushstealth())
         self.list.append(obj_scene_ridecow())
         self.list.append(obj_scene_eating())
         self.list.append(obj_scene_serenade())
@@ -269,6 +269,32 @@ class obj_scene_rockpaperscissors(obj_testpage):
         # self.addpart(animation1)
 
 
+class obj_scene_bushstealth(obj_testpage):
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def nextpage(self):
+        if not self.world.win:
+            share.scenemanager.switchscene(obj_scene_bushstealth())
+    def setup(self):
+        self.name='Bush Stealth'
+        self.text=['Bush Stealth']
+        self.world=world.obj_world_bushstealth(self)
+        # self.world=world.obj_world_bushstealth2(self)
+        # self.world=world.obj_world_bushstealth3(self)
+        # self.addpart(self.world)
+        # self.addpart( draw.obj_imageplacer(self,'skeletonbase','bush','palmtree','moon') )
+        # self.addpart( draw.obj_image('skeletonbase',(775,505),scale=0.53,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('skeletonbase',(640,360),scale=0.5) )
+        self.addpart( draw.obj_drawing('skeletonview',(640+250,360),shadow=(250,100),brush=share.brushes.tinypen) )
+        # self.addpart( draw.obj_drawing('bushspark',(640,360-100),shadow=(150,50)) )
+        # self.addpart( draw.obj_animation('bushstealth_skeletonmove','skeletonbase',(640,360),record=True) )
+        # self.addpart( draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(640,360),record=True) )
+        # self.addpart( draw.obj_drawing('floor6',(640,720-50),shadow=(640,50),brush=share.brushes.smallpen) )
+       # self.addpart( draw.obj_animation('bushstealth_moonmove','moon',(640,360),record=True) )
+       # self.addpart( draw.obj_imageplacer(self,'bush','palmtree','moon',actor='staticactor') )
+       # self.addpart( draw.obj_drawing('floor6',(640,300),shadow=(640,50),brush=share.brushes.smallpen) )
+       # self.addpart( draw.obj_image('floor6',(640,300)) )
+#
 class obj_scene_ridecow(obj_testpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done

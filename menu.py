@@ -158,7 +158,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.f and controls.fc:
                 #
                 # change current WIP scene here
-                quickscene=ch6.obj_scene_ch6p15()
+                quickscene=ch6.obj_scene_ch6p12()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -184,7 +184,7 @@ class obj_scene_settings(page.obj_page):
         #
         self.difficultyeasy=draw.obj_textbox('Difficulty: Easy (Coming Soon)',(640,380),fontsize='smaller')
         self.difficultymedium=draw.obj_textbox('Difficulty: Medium',(640,380),fontsize='smaller')
-        self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Soon)',(640,380),fontsize='smaller')
+        self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Sfoon)',(640,380),fontsize='smaller')
         self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
         self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
         self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')

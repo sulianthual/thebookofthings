@@ -145,6 +145,11 @@ class obj_timer:
             self.ring=False
             self.off=True
             if self.cycle: self.start()# restart if cycled
+    def forcering(self):# force timer to ring
+        self.on=True
+        self.ring=True
+        self.off=False
+        self.t=0
     def end(self):# force end to timer (cannot ring even if updated)
         self.on=False
         self.ring=False
