@@ -286,29 +286,37 @@ class obj_scene_ch6p15(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p16())
     def setup(self):
-        self.text=['Test minigame skeleton chase (what it would look like)',\
+        self.text=['cow minigame tutorial: avoid rocks and palm trees',\
                    ]
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
+        self.world.tutorial=True# is world tutorial
+
 
 class obj_scene_ch6p16(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p15())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p17())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-                   'go back home. Leave the sailor in front of mailbox. He says can keep the ship. ',\
-                  'And last part of password is probably "sailor" ',\
-                 'Finish day (diner, serenade, kiss, go tosleep) happy because will save partner the next day ',\
+        self.text=['cow minigame',\
                    ]
+        self.world=world.obj_world_ridecow(self)
+        self.addpart(self.world)
 
 class obj_scene_ch6p17(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p16())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p18())
-
+    def setup(self):
+        self.text=[\
+                   'go back home. Leave the sailor in front of mailbox. He says can keep the ship. ',\
+                  'And last part of password is probably "sailor" ',\
+                 'Finish day (diner, serenade, kiss, go tosleep) happy because will save partner the next day ',\
+                   ]
 
 class obj_scene_ch6p18(page.obj_chapterpage):
     def prevpage(self):

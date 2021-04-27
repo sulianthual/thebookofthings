@@ -3007,8 +3007,8 @@ class obj_world_rockpaperscissors(obj_world):
 # *RIDE *COW
 class obj_world_ridecow(obj_world):
     def setup(self,**kwargs):
-
-
+        # default parameter
+        self.tutorial=False# is tutorial of that game (cant win/loose)
         # combine herobase+cow=heroridecow
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5) )
@@ -3077,6 +3077,7 @@ class obj_world_ridecow(obj_world):
         self.shoty0min=200
         self.shoty0max=720-100
         self.xkill=150# position at which they disappear
+        self.shotprobas=[20,20,60]# probas of palmtree, rock, bush...
         # health bar
         self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
@@ -3100,7 +3101,7 @@ class obj_world_ridecow(obj_world):
         #
     def makeshot(self,x,y,s):
         shot=obj_grandactor(self,(x,y),foreground=False)
-        dice=tool.randchoice(['palmtree','rock','bush'],probas=[20,20,60])
+        dice=tool.randchoice(['palmtree','rock','bush'],probas=self.shotprobas)
         if dice=='palmtree':
             shot.addpart('img', draw.obj_image('palmtree',(x,y),scale=0.5,fliph=tool.randbool()) )
             shot.hurts=True# does the obstacle hurt the hero
@@ -3134,7 +3135,8 @@ class obj_world_ridecow(obj_world):
             # shots (obstacles)
             self.shottimer.update()
             if self.shooting and self.shottimer.ring:# generate
-                self.ishots -= 1
+                if not self.tutorial:# no shot depletion if tutorial
+                    self.ishots -= 1
                 self.shoty0=tool.randint(self.shoty0min,self.shoty0max)
                 self.makeshot(self.shotx0,self.shoty0,-self.runspeed)
                 self.shottimer.start()# restart for next shot
@@ -3152,14 +3154,16 @@ class obj_world_ridecow(obj_world):
                 for i in self.shots:
                     if i.hurts and tool.checkrectcollide(self.hero,i):
                         self.killshot(i)# remove shot
-                        self.herohealth -= 1# loose health
+                        if not self.tutorial:# no health depletion if tutorial
+                            self.herohealth -= 1# loose health
                         self.herohurting=True# to hurting state
                         self.timerhurting.start()
                         self.hero.dict['img'].show=False
                         self.hero.dict['hurt'].show=True
                         # hero looses health or dies
                         if self.herohealth>0:
-                            self.healthbar.dict['heart_'+str(self.herohealth)].show=False
+                            if not self.tutorial:# no loosing hearts on tutorial
+                                self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                         else:
                             # switch to lost
                             self.goal=True
