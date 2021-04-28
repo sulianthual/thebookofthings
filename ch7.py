@@ -58,4 +58,4 @@ class obj_scene_ch7p1(page.obj_chapterpage):
     def setup(self):
         self.text=['You have unlocked the credits! Access them from the menu. ',\
                    ]
-        share.datamanager.updateprogress(chapter=8)# chapter 8 (credits)
+        # share.datamanager.updateprogress(chapter=8)# chapter 8 (credits)

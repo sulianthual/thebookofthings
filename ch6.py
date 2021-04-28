@@ -903,7 +903,7 @@ class obj_scene_ch6p40(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p41())
     def setup(self):
         self.text=[\
-                   '"You made it squid!, I am so relieved, said " ',\
+                   '"You made it squid!, I am so relieved, said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
                    'Now quick, board the ship and lets get out of here". ',\
                    ]

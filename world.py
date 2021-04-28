@@ -3391,6 +3391,7 @@ class obj_world_ridecow(obj_world):
         ##########################33
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
+        self.win=False# won game
         # default parameters
         self.heroxystart=(640,360)
         # layering

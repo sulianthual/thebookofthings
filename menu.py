@@ -158,7 +158,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.f and controls.fc:
                 #
                 # change current WIP scene here
-                quickscene=ch6.obj_scene_ch6p25()
+                quickscene=ch6.obj_scene_ch6p39()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -176,7 +176,8 @@ class obj_scene_settings(page.obj_page):
         share.datamanager.loadsettings()# load current settings
         #
         self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
-        self.addpart( draw.obj_textbox('[Tab: Back] [Up/Down: Select] [Enter: Change]',(640,350),fontsize='smaller') )
+        self.addpart( draw.obj_textbox('[Tab: Back] [Up/Down: Select] [Enter: Change]',(640,
+        350),fontsize='smaller') )
         self.maxjpos=4# max pointer position
         self.jpos=0# pointer position
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
