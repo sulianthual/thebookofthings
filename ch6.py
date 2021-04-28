@@ -556,8 +556,7 @@ class obj_scene_ch6p24(page.obj_chapterpage):
                    'See, I lost my ',('treasure',share.colors.red),\
                    ' in a very spooky place called ',\
                    ('skull island',share.colors.location),'". ',\
-                   'I am shaking, said the book of things. ',\
-                   'Draw a ',('skull',share.colors.item),'. ',\
+                   'Draw a ',('skull',share.colors.item),', said the book of things. ',\
                    ]
         self.addpart( draw.obj_drawing('skeletonhead',(640,450),legend='Skull (Facing Right)',shadow=(200,200)) )
     def endpage(self):
@@ -596,11 +595,11 @@ class obj_scene_ch6p25(page.obj_chapterpage):
         self.text=['"The, err, slight problem with ',\
                     ('skull island',share.colors.location),\
                     ' is that it is inhabited by ',\
-                    ('spooky skeletons',share.colors.red),'. ',\
+                    ('spooky skeletons',share.colors.red),', said ',\
+                    ('{sailorname}',share.colors.sailor),'. ',\
                     'These guys stole my ',\
                     ('treasure',share.colors.red),' and I really need it back. ',\
-                    'Now lets get going squid, said ',\
-                    ('{sailorname}',share.colors.sailor),'".',\
+                    'Now lets get going squid". ',\
                    ]
         self.addpart(draw.obj_animation('ch1_hero1','skeletonbase',(360,360)))
         self.addpart(draw.obj_animation('ch1_hero1','skeletonbase',(360-300,360)))
@@ -678,7 +677,7 @@ class obj_scene_ch6p29(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p30())
     def setup(self):
         self.text=[\
-                   '"Good luck squid! I stay be on the radio if you need any help. ',\
+                   '"Good luck squid! I will be on the radio if you need any help. ',\
                    'Now get in that bush and start sneaking. ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','saislorbase','bush','palmtree','moon') )
@@ -885,7 +884,10 @@ class obj_scene_ch6p39(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p40())
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p40())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p39())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
