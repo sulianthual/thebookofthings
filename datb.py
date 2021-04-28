@@ -54,10 +54,12 @@ class obj_colors:
         self.hero=self.red# hero text color
         self.partner=self.pink
         self.villain=self.brown
+        self.password=self.red# password color
         self.bug=self.maroon
         self.bunny=self.darkorange
         self.elder=self.darkgray
         self.sailor=self.lightblue
+        self.cow=self.blue
         self.item=self.blue# items (bed, fish,etc...)
         self.location=self.darkgreen# locations
         self.action=self.green# actions text (??? not used)

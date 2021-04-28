@@ -105,6 +105,11 @@ we learn that our most feared bugs are our best friends
 
 - Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
 
+
+- Chapter 6: should cannon and parachute hero into island (from the boat)
+             make minigame where has to aim the cannon (A,D), shoot (W)
+            then open parachute at the right time (S). Should fall vertically to correct area (the island)
+
 - Somewhere...: Add a game with parabolic shooting ?
              can be done easily with naval battle and a cannon
              (could have been arc and bow for hunting too)
@@ -239,25 +244,7 @@ skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
 
 ####################################################################################################################
-####################################################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+###################################################################################################################
 ####################################################################################################################
 ####################################################################################################################
 # Some drafts

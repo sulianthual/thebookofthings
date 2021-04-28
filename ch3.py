@@ -541,7 +541,7 @@ class obj_scene_ch3p21(page.obj_chapterpage):
                   ('evil castle',share.colors.location),' and said: ',\
                   'Muahaha, my ',\
                   ('castle',share.colors.location),' is locked tight and protected by a ',\
-                  ('password',share.colors.item),'. ',\
+                  ('password',share.colors.password),'. ',\
                   'You will never get in!".  ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
@@ -561,7 +561,8 @@ class obj_scene_ch3p22(page.obj_chapterpage):
         self.text=[\
                   '"The  ',('castle',share.colors.location),'\'s ',\
                   ('ass',share.colors.item),' (automated security system) blasted: ',\
-                  'Lockdown Engaged. Password Required to open castle. Please Enter password". ',\
+                  'Lockdown Engaged. Password Required to open castle. Please Enter ',\
+                  ('password',share.colors.password),'". ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
         self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -663,7 +664,7 @@ class obj_scene_ch3p25(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"Having failed to unlock the  ',('evil lair',share.colors.location),', ',\
+                '"Having failed to unlock the  ',('castle',share.colors.location),', ',\
                 ('{heroname}',share.colors.hero),' travelled back ',
                 ('home',share.colors.location),'". ',\
                    ]
@@ -886,10 +887,9 @@ class obj_scene_ch3p38(page.obj_chapterpage):
                    'It turns out that ', \
                    ('{villainname}',share.colors.villain),\
                    ' learned all ',('{villain_his}',share.colors.villain),\
-                   ' evil ways from three grand masters. ',\
-                   'They are called the ',('Grandmasters of Deceit',share.colors.villain),'. ',\
-                   ' Apparently, theses masters hold the clues to the evil castle\'s ',\
-                   ('password',share.colors.item),'". ',\
+                   ' evil ways from three ',('Grandmasters of Deceit',share.colors.villain),'. ',\
+                   ' Apparently, theses ',('grandmasters',share.colors.villain),' hold the clues to the evil castle\'s ',\
+                   ('password',share.colors.password),'". ',\
                    ]
         self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )

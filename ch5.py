@@ -77,12 +77,13 @@ class obj_scene_ch5p1a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p1b())
     def setup(self):
         self.text=[\
-                  '"Today, ',('{heroname}',share.colors.hero),\
+                  '"The first part of the password is ',('"fight"',share.colors.password),'. ',\
+                  'Today, ',('{heroname}',share.colors.hero),\
                    ' and ',('{hero_his}',share.colors.hero),\
                    ' friend the ',('{bug}',share.colors.bug),\
                     ' are on their way to meet the ',\
                     ('Grandmaster of Deceit',share.colors.villain),\
-                    ' that lives in the north."',\
+                    ' that lives in the north, and to figure out the rest of the password". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -213,9 +214,10 @@ class obj_scene_ch5p1h(page.obj_chapterpage):
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                   '\nYou are truly a great ',\
                   ('liar',share.colors.villain),'. ',\
-                    'Come back anytime to the ',\
+                    'Come back anytime to my ',\
                     ('magical cave',share.colors.location),' if you want ',\
                     'more training in the ',('evil ways',share.colors.villain),'. ',\
+                      'And remember my motto, "fight in any situation". ',\
                   '\n\nsigned: ',('{bunnyname}',share.colors.bunny),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
@@ -390,8 +392,8 @@ class obj_scene_ch5p5b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p5c())
     def setup(self):
         self.text=[\
-                    '"Oh, so you want to know the  ',('password',share.colors.item),\
-                    ' of ',('{villainname}',share.colors.villain),'\'s ',\
+                    '"Oh, so you want to know the  ',('password',share.colors.password),\
+                    ' that opens ',('{villainname}',share.colors.villain),'\'s ',\
                     ('castle',share.colors.location),'. ',\
                     ' Well I might certainly help, said ',\
                     ('{eldername}',share.colors.elder),'. ',\
@@ -435,10 +437,9 @@ class obj_scene_ch5p5d(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                '"Now, lets figure out that ',\
-               ('password',share.colors.item),', said ',('{eldername}',share.colors.elder),'. ',\
-               'Tell you what, if you win my game of ',('rock-paper-scissors',share.colors.item),\
-               ', I will teach you something very ',\
-               ('useful',share.colors.item),', hi hi hi". ',\
+               ('password',share.colors.password),', said ',('{eldername}',share.colors.elder),'. ',\
+               'Tell you what, i will tell it to you if you win my game of ',\
+               ('rock-paper-scissors',share.colors.item),', hi hi hi". ',\
                   ]
         self.addpart( draw.obj_animation('ch5eldertalks4','elderbase',(640,360),record=False) )
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -738,10 +739,8 @@ class obj_scene_ch5pp23(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"What a ',('strong willed',share.colors.hero),' character, said ',('{eldername}',share.colors.elder),'. ',\
-               'Receive my ',('teaching',share.colors.hero),'! ',\
-               'My secret for success is ',('perseverance',share.colors.item),'. ',\
-               ('PER-SE-VE-RANCE',share.colors.item),\
-               '! ','Look, you came all the way here, you climbed this peak ',\
+               'Hear my motto: ',('"always perservere!"',share.colors.password),'. ',\
+               'That is what you did, you came all the way here, you climbed this peak ',\
                ' and even when you were loosing you never gave up.',\
                ' You had it in you all this time!"',\
                   ]
@@ -768,11 +767,11 @@ class obj_scene_ch5pp24(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5pp24fail())
     def setup(self):
         self.text=[\
-               '"So yeah, I am pretty sure the castle\'s',\
-               ' password ',' is ',\
-               ('"perseverance"',share.colors.item),', said ',\
+               '"So yeah, I am pretty sure the second part of the castle\'s',\
+               ' password is ',\
+               ('"perservere"',share.colors.password),', said ',\
                ('{eldername}',share.colors.elder),'. ',\
-               'May that be an important lesson for you. ',\
+               'Thats my motto, "always perservere!". ',\
                'Ok you gotta go now, goodbye!" ',\
                   ]
         self.addpart( draw.obj_animation('ch5eldertalks3','elderbase',(640,360)) )
@@ -800,7 +799,7 @@ class obj_scene_ch5pp24fail(page.obj_chapterpage):
         self.text=[\
                'That doesnt seem to be the story, said the book of things. ',\
                'Apparently, you have just been taught how important it is to ',\
-               ('perservere',share.colors.item),' in life. ',\
+               ('"always perservere"',share.colors.password),'. ',\
                'So I suggest you go back and do just that. ',\
                   ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
@@ -847,9 +846,9 @@ class obj_scene_ch5pp25fail(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5pp25())
     def setup(self):
         self.text=[\
-               'Nope, that doesnt look like the story, said the book of things. ',\
+               'Nope, that doesnt seem to be the story, said the book of things. ',\
                'Apparently, you have just been taught how important it is to ',\
-               ('perservere',share.colors.item),' in life. ',\
+               ('"always perservere"',share.colors.password),'. ',\
                'So I suggest you go back and do just that. ',\
                   ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
@@ -897,7 +896,7 @@ class obj_scene_ch5pp26fail(page.obj_chapterpage):
         self.text=[\
                'Well, that is not how the story should go, said the book of things. ',\
                'Apparently, you have just been taught how important it is to ',\
-               ('perservere',share.colors.item),' in life. ',\
+               ('"always perservere"',share.colors.password),'. ',\
                'So I suggest you go back and do just that. ',\
                   ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
@@ -916,10 +915,9 @@ class obj_scene_ch5pp27(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                '"OWWWW, said ',('{eldername}',share.colors.elder),', you young punks have no respect! ',\
-               'Fine, I will teach you my real secret. ',\
-               ('perseverance',share.colors.item),' will only get you so far, the real secret for success is ',\
-               ('cheating',share.colors.hero),'. ',\
-               ('CHEA-TING',share.colors.hero),'! It\'s that simple. ',\
+               'Fine, I will teach you my secret. ',\
+               ('perseverance',share.colors.password),' will only get you so far, what you really need is ',\
+               ('cheating',share.colors.password),'". ',\
                   ]
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
         animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)
@@ -938,7 +936,7 @@ class obj_scene_ch5pp28(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5pp28a())
     def setup(self):
         self.text=[\
-               'Seriously, when playing you can ',\
+               'When playing you can ',\
                ('peek at at other\'s bubble',share.colors.instructions),\
                ' to know what they are thinking. ',\
               'You can then ',('counter their hand at the last moment',share.colors.instructions),\
@@ -1023,11 +1021,8 @@ class obj_scene_ch5pp28b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5pp29())
     def setup(self):
         self.text=[\
-               '"Tell you what, I dont really know the castle\'s ',\
-               ('password',share.colors.item),': ',\
-                'if it is related to me I guess it must be ',('"elder"',share.colors.item),'. ',\
-               'But before leaving, we should play one last game of ',\
-               ('rock-paper-scissors',share.colors.item),\
+               '"Tell you what, lets play one last game of ',\
+               ('rock-paper-scissors',share.colors.item),'. ',\
                'If you ',('cheat',share.colors.hero),\
                ' fair and square you will at least learn something useful". ',\
                   ]
@@ -1131,10 +1126,6 @@ class obj_scene_ch5pp31(page.obj_chapterpage):
         self.addpart(self.world)
 
 
-####
-
-
-
 
 class obj_scene_ch5p21(page.obj_chapterpage):
     def prevpage(self):
@@ -1228,7 +1219,7 @@ class obj_scene_ch5p26(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Then, right before falling asleep, ',\
-                   ('{heroname}',share.colors.hero),' smiled hoping that ',\
+                   ('{heroname}',share.colors.hero),' smiled slightly hoping that ',\
                    ('{hero_he}',share.colors.hero),' would soon be able to rescue ',\
                    ('{partnername}',share.colors.partner),'".',\
                    ]

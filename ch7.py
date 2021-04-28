@@ -40,6 +40,8 @@ class obj_scene_ch7p0(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Chapter VII: Showtime   -----   ',\
                   '\n Sorry this chapter isnt ready yet, come back later. ',\
+                'The mottos are not fight-perservere-overcome, but lie-cheat-steal. ',\
+              'and the mottos: "lie in any situation. always cheat. steal everything" ',\
 
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)

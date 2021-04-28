@@ -1092,6 +1092,7 @@ class obj_world_travel(obj_world):
         self.minigame=None# add mini-game on the travel game (minigame='flowers',etc....)
         self.heroangry=False# angry face on hero
         self.addbeachquestionmark=False# add a question mark on the beach
+        self.addbeachmark=False# add a cross mark on the beach
         self.addsailorwait=False# add the sailor (waiting on the beach)
         self.noending=True# skip the completion part of minigame
         # scene tuning
@@ -1108,6 +1109,7 @@ class obj_world_travel(obj_world):
             if 'noending' in kwargs: self.noending=kwargs["noending"]
             if 'sailorwait' in kwargs: self.addsailorwait=kwargs["sailorwait"]
             if 'beachquestionmark' in kwargs: self.addbeachquestionmark=kwargs["beachquestionmark"]
+            if 'beachmark' in kwargs: self.addbeachmark=kwargs["beachmark"]
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
@@ -1306,6 +1308,8 @@ class obj_world_travel(obj_world):
                 self.staticactor02.addpart( 'ref', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
             if self.addbeachquestionmark:
                 self.staticactor02.addpart( 'refqmark', draw.obj_image('interrogationmark',(640,360-120),path='premade') )
+            if self.addbeachmark:
+                self.staticactor02.addpart( 'refmark', draw.obj_image('smallcross',(640,360-120),path='premade') )
             self.staticactor02.addpart( 'textref', draw.obj_textbox('beach',(640,360),color=share.colors.location) )
             self.staticactor02.addpart( "img1", draw.obj_image('palmtree',(1040,199),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor02.addpart( "img2", draw.obj_image('palmtree',(255,21),scale=0.5,rotate=0,fliph=True,flipv=False) )
@@ -1443,7 +1447,6 @@ class obj_world_travel(obj_world):
             self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
             self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
 
-
         self.herowalktimer=tool.obj_timer(10)# timer to alternate walk slides
         self.herowalkframe1=True# alternate True/False for two frames
         self.heromx=8#4# moving rate
@@ -1468,7 +1471,7 @@ class obj_world_travel(obj_world):
         #
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
-        if self.addsailorwait:# talk to a character
+        if self.addsailorwait or self.addbeachmark:# talk to a character
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Talk',(640,680),color=share.colors.instructions) )
         elif self.addbeachquestionmark:# investigate
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Investigate',(640,680),color=share.colors.instructions) )
@@ -1558,17 +1561,27 @@ class obj_world_travel(obj_world):
         super().update(controls)
         if not self.goal:
             # goal unreached state
-            # hero walking motion
-            if controls.d or controls.a or controls.w or controls.s:
-                self.herowalking=True
-            else:
+            # Hero motion
+            # Motion=sailing or not, walking or standing
+            self.herosailing=self.yhw>1080+self.ybm+10 and not (self.xhw>680 and self.yhw>1910)# separation land and sea (beach + skull island)
+            if self.herosailing:
                 self.herowalking=False
-                self.herowalktimer.start()# reset timer
-            if self.herowalking:
-                self.herowalktimer.update()
-                if self.herowalktimer.ring:
-                    self.herowalkframe1=not self.herowalkframe1
-                    self.herowalktimer.start()
+                self.hero.dict['boat_right'].show=self.herofaceright
+                self.hero.dict['boat_left'].show=not self.herofaceright
+                self.hero.dict['face_right'].show=False
+                self.hero.dict['face_left'].show=False
+                self.hero.dict['walk_right'].show=False
+                self.hero.dict['walk_left'].show=False
+            else:
+                self.hero.dict['boat_right'].show=False
+                self.hero.dict['boat_left'].show=False
+                # walking or standing
+                if controls.d or controls.a or controls.w or controls.s:
+                    self.herowalking=True
+                else:
+                    self.herowalking=False
+                # walking
+                if self.herowalking:
                     if not self.herowalkframe1:
                         self.hero.dict['face_right'].show=self.herofaceright
                         self.hero.dict['face_left'].show=not self.herofaceright
@@ -1579,18 +1592,18 @@ class obj_world_travel(obj_world):
                         self.hero.dict['face_left'].show=False
                         self.hero.dict['walk_right'].show=self.herofaceright
                         self.hero.dict['walk_left'].show=not self.herofaceright
-            # hero sailing motion
-            self.herosailing=self.yhw>1080+self.ybm+10 and not (self.xhw>680 and self.yhw>1910)# separation land and sea (beach + skull island)
-            if self.herosailing:
-                self.hero.dict['boat_right'].show=self.herofaceright
-                self.hero.dict['boat_left'].show=not self.herofaceright
-                self.hero.dict['face_right'].show=False
-                self.hero.dict['face_left'].show=False
-                self.hero.dict['walk_right'].show=False
-                self.hero.dict['walk_left'].show=False
-            else:
-                self.hero.dict['boat_right'].show=False
-                self.hero.dict['boat_left'].show=False
+                    # walking motion (2 frames)
+                    self.herowalktimer.update()
+                    if self.herowalktimer.ring:
+                        self.herowalkframe1=not self.herowalkframe1
+                        self.herowalktimer.start()
+                else:# standing
+                    self.hero.dict['face_right'].show=self.herofaceright
+                    self.hero.dict['face_left'].show=not self.herofaceright
+                    self.hero.dict['walk_right'].show=False
+                    self.hero.dict['walk_left'].show=False
+                    self.herowalktimer.start()# reset timer for next walking
+
             # partner visuals
             if self.addpartner or self.addsailor:
                 self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
@@ -3297,7 +3310,6 @@ class obj_world_bushstealth(obj_world):
                         i.bust(self.hero.x)
 
 
-# Small variants
 class obj_world_bushstealth2(obj_world_bushstealth):
     def makebackground(self):
         self.staticactor.addpart( "img1", draw.obj_image('palmtree',(157,267),scale=0.36,rotate=0,fliph=True,flipv=False) )
@@ -3308,14 +3320,27 @@ class obj_world_bushstealth2(obj_world_bushstealth):
         self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640+300,360+10),record=False) )
     def makeskeletons(self):
         self.skeletons=[]
-        self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
+        skeleton1=obj_grandactor_bushstealthskeleton_sailorhat(self,(800,500),foreground=False)
+        skeleton1.turnaround()
+        self.skeletons.append(skeleton1)
+
+class obj_world_bushstealth3(obj_world_bushstealth):
+    def makebackground(self):
+        self.staticactor.addpart( "img1", draw.obj_image('palmtree',(157,267),scale=0.36,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img2", draw.obj_image('palmtree',(298,284),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img4", draw.obj_image('palmtree',(860,261),scale=0.52,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img5", draw.obj_image('bush',(1035,519),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( 'img3a', draw.obj_image('floor7',(640,300),path='premade') )
+        self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640+300,360+10),record=False) )
+    def makeskeletons(self):
+        self.skeletons=[]
+        skeleton1=obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)
+        self.skeletons.append(skeleton1)
         skeleton2=obj_grandactor_bushstealthskeleton_sailorhat(self,(400,500),foreground=False)
         skeleton2.turnaround()
-        self.skeletons.append( skeleton2   )
+        self.skeletons.append(skeleton2)
 
-
-# Small variants
-class obj_world_bushstealth3(obj_world_bushstealth):
+class obj_world_bushstealth4(obj_world_bushstealth):
     def makebackground(self):
         self.staticactor.addpart( "img1", draw.obj_image('mountain',(1157,236),scale=0.54,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img2", draw.obj_image('mountain',(971,304),scale=0.41,rotate=0,fliph=False,flipv=False) )
@@ -3325,11 +3350,12 @@ class obj_world_bushstealth3(obj_world_bushstealth):
         self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640-500,360+20),record=False) )
     def makeskeletons(self):
         self.skeletons=[]
-        self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
-        skeleton2=obj_grandactor_bushstealthskeleton_sailorhat(self,(300,500),foreground=False)
-        # skeleton2.turnaround()
-        self.skeletons.append( skeleton2   )
-        self.skeletons.append( obj_grandactor_bushstealthskeleton_partnerhair(self,(550,500),foreground=False)   )
+        skeleton1=obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)
+        skeleton1.turnaround()
+        self.skeletons.append(skeleton1)
+        skeleton2=obj_grandactor_bushstealthskeleton_partnerhair(self,(550,500),foreground=False)
+        skeleton2.turnaround()
+        self.skeletons.append(skeleton2)
 
 
 ####################################################################################################################
@@ -3340,6 +3366,10 @@ class obj_world_ridecow(obj_world):
     def setup(self,**kwargs):
         # default parameter
         self.tutorial=False# is tutorial of that game (cant win/loose)
+        # scene tuning
+        if kwargs is not None:
+            if 'tutorial' in kwargs: self.tutorial=kwargs["tutorial"]# tutorial of game
+        #
         # combine herobase+cow=heroridecow
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5) )
@@ -3347,7 +3377,7 @@ class obj_world_ridecow(obj_world):
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecow')
         # combine herobase+cow=heroridecow
         dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5) )
+        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5,flipv=True) )
         dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecowangry')
         # cow alone in combo
@@ -3379,43 +3409,49 @@ class obj_world_ridecow(obj_world):
         self.staticactor.addpart( 'anim1', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360)) )
         self.staticactor.addpart( 'anim2', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+100)) )
         self.staticactor.addpart( 'anim3', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-100)) )
-        self.staticactor.addpart( 'anim4', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+200)) )
+        self.staticactor.addpart( 'anim4', draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+200)) )
         self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
         # hero
-        self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]-50),scale=0.5) )
-        self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]-50),scale=0.5) )
+        self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
+        self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
         self.hero.dict['img'].show=True
         self.hero.dict['hurt'].show=False
-        self.hero.rx=75
-        self.hero.ry=25
+        self.hero.rx=25
+        self.hero.ry=50#75#50
         self.heromx=5# move rate
         self.heromy=5#
         self.heroxmin=250# boundaries
         self.heroxmax=1280-200
-        self.heroymin=200
-        self.heroymax=720-100
-        self.runspeed=5# moving speed of background and obstacles
+        self.heroymin=200-50
+        self.heroymax=720-100-50
         self.herohurting=False# hero is hurting or not
-        self.timerhurting=tool.obj_timer(30)# animation for hero hurt (angry face)
+        self.timerhurting=tool.obj_timer(50)# animation for hero hurt (cant be hit during that time)
+        # Speed and shot
+
+        #
         # shots (they are actually obstacles)
-        self.nshots=50# number of shots before winning
+        self.nshots=100#50# number of shots before winning
         self.ishots=self.nshots
         self.shooting=True# shoot new ones or not
         self.shots=[]# empty list
-        self.shottimer=tool.obj_timer(30)# time between obstacles
+        self.shottimer=tool.obj_timer(20)#tool.obj_timer(30)# time between obstacles
+        self.runspeed=8#7#5# moving speed of background and obstacles
         self.shottimer.start()
         self.shotx0=1280+200
-        self.shoty0min=200
-        self.shoty0max=720-100
+        self.shoty0min=self.heroymin
+        self.shoty0max=self.heroymax
         self.xkill=150# position at which they disappear
-        self.shotprobas=[40,0,60]# probas of palmtree, rock, bush...
+        # self.shotprobas=[40,0,60]# probas of palmtree, rock, bush...
+        self.shotprobas=[50,0,50]# probas of palmtree, rock, bush...
         # health bar
         self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360),foreground=False)
         for i in range(self.maxherohealth):
             self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75+150,150),scale=0.125) )
-
+        if self.tutorial: # do not show the healthbar if tutorial
+            for i in range(self.maxherohealth):
+                self.healthbar.dict['heart_'+str(i)].show=False
         # timer for done part
         self.timerendwin=tool.obj_timer(180)# goal to done
         self.timerendloose=tool.obj_timer(180)# goal to done
@@ -3423,8 +3459,10 @@ class obj_world_ridecow(obj_world):
         self.winmx=3# hero move rate if wins
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('[WASD] Move',(640,660),color=share.colors.instructions) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('You Escaped!',(640,360),fontsize='huge') )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('The Cow Escaped!',(640,360),fontsize='huge') )
+        self.text_undone.addpart( 'progress', draw.obj_textbox('0%',(1090,640)) )
+        self.text_undone.addpart( 'progressimg', draw.obj_image('sailboat',(1280-75,720-75),scale=0.25) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('You made it!',(640,360),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('You got caught!',(640,360),fontsize='huge') )
         # devtool
         self.staticactor.addpart( 'dev1', draw.obj_textbox('shots='+str(self.ishots),(1200,680),color=share.colors.red) )
         self.staticactor.dict['dev1'].show=False
@@ -3436,11 +3474,11 @@ class obj_world_ridecow(obj_world):
         if dice=='palmtree':
             shot.addpart('img', draw.obj_image('palmtree',(x,y),scale=0.5,fliph=tool.randbool()) )
             shot.hurts=True# does the obstacle hurt the hero
-            shot.rx,shot.ry=30,30# hitbox
+            shot.rx,shot.ry=25,50# hitbox
         elif dice=='rock':
             shot.addpart('img', draw.obj_image('rock',(x,y),scale=0.35,fliph=tool.randbool()) )
             shot.hurts=True
-            shot.rx,shot.ry=30,30# hitbox
+            shot.rx,shot.ry=25,50# hitbox
         elif dice=='bush':
             shot.addpart('img', draw.obj_image('bush',(x,y),scale=0.25,fliph=tool.randbool()) )
             shot.hurts=False# harmless
@@ -3454,6 +3492,11 @@ class obj_world_ridecow(obj_world):
         super().update(controls)
         if not self.goal:
             # goal unreached state
+            # progress bar
+            textprogress=100-int(self.ishots/self.nshots*100)
+            textprogress=min(textprogress,100)
+            textprogress=max(textprogress,0)
+            self.text_undone.dict['progress'].replacetext( str(textprogress)+'%' )
             # move hero
             if controls.a and self.hero.x>self.heroxmin:
                 self.hero.movex(-self.heromx)
@@ -3483,7 +3526,8 @@ class obj_world_ridecow(obj_world):
             # shots hit the hero
             if self.shots:# kill shots
                 for i in self.shots:
-                    if i.hurts and tool.checkrectcollide(self.hero,i):
+                    # obstacle hits hero if: not hurting, obstacle hurts hero (not a bush), and they collide
+                    if not self.herohurting and i.hurts and tool.checkrectcollide(self.hero,i):
                         self.killshot(i)# remove shot
                         if not self.tutorial:# no health depletion if tutorial
                             self.herohealth -= 1# loose health
@@ -3540,11 +3584,11 @@ class obj_world_ridecow(obj_world):
                 # hero moves to the right (??)
                 self.hero.dict['img'].movex(self.winmx)
                 self.hero.dict['hurt'].movex(self.winmx)
-                self.staticactor.dict['anim1'].movex(-self.winmx)
-                self.staticactor.dict['anim2'].movex(-self.winmx)
-                self.staticactor.dict['anim3'].movex(-self.winmx)
-                self.staticactor.dict['anim4'].movex(-self.winmx)
-                self.staticactor.dict['anim5'].movex(-self.winmx)
+                # self.staticactor.dict['anim1'].movex(-self.winmx)
+                # self.staticactor.dict['anim2'].movex(-self.winmx)
+                # self.staticactor.dict['anim3'].movex(-self.winmx)
+                # self.staticactor.dict['anim4'].movex(-self.winmx)
+                # self.staticactor.dict['anim5'].movex(-self.winmx)
                 if self.shots:# move all shots to the left
                     for i in self.shots:
                         i.movex(i.speed)

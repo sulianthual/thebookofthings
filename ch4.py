@@ -59,7 +59,7 @@ class obj_scene_ch4p1(page.obj_chapterpage):
                      ('{villain_his}',share.colors.villain),' ',\
                      ('evil castle',share.colors.location),'. ',\
                      ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
-                     ('password',share.colors.item),'. ',\
+                     ('password',share.colors.password),'. ',\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         self.addpart( draw.obj_image('castle',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
@@ -91,7 +91,7 @@ class obj_scene_ch4p2(page.obj_chapterpage):
         self.text=[\
                   '"Luckily, ',('{heroname}',share.colors.hero),\
                    ' befriended a terrifying ',('{bug}',share.colors.bug),\
-                    ' who may know how to crack the castle\'s ',('password',share.colors.item),'. ',\
+                    ' who may know how to crack the castle\'s ',('password',share.colors.password),'. ',\
                     'Today, they are on their way to meet the ',\
                     ('Grandmaster of Deceit',share.colors.villain),\
                     ' that lives in the east."',\
@@ -267,7 +267,7 @@ class obj_scene_ch4p8(page.obj_chapterpage):
                     'From what I heard in ',('{villainname}',share.colors.villain),\
                     '\'s sleep, this grandmaster ',\
                     'holds the first clue to the evil castle\'s ',\
-                    ('password',share.colors.item),'". ',\
+                    ('password',share.colors.password),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -479,7 +479,7 @@ class obj_scene_ch4p17(page.obj_chapterpage):
                 '\'s pocket and whispered: ',\
                 'I think we are onto something, lets win this ',\
                 ('lying game',share.colors.villain),' then ask for the evil lair\'s ',\
-                ('password',share.colors.item),'". ',\
+                ('password',share.colors.password),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -1036,12 +1036,12 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p19())
     def setup(self):
         self.text=[\
-                    '"Oh, you want to know the  ',('password',share.colors.item),\
-                    ' of ',('{villainname}',share.colors.villain),'\'s ',\
+                    '"Oh, you want to know the  ',('password',share.colors.password),\
+                    ' that opens ',('{villainname}',share.colors.villain),'\'s ',\
                     ('castle',share.colors.location),'. ',\
-                    'Well sorry, I dont really know. ',\
+                    'Well sorry, I cant tell for sure. You see, ',\
                     ('{villainname}',share.colors.villain),' was a former student of mine, ',\
-                    'a bit mediocre but quite dedicated". ',\
+                    'and he was quite dedicated". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -1065,10 +1065,10 @@ class obj_scene_ch4p19(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p19a())
     def setup(self):
         self.text=[\
-                    '"I guess if the ',('password',share.colors.item),\
-                    ' is related to me, then it must be ',('"bunny"',share.colors.item),'. ',\
-                    'That\'s how smart ',\
-                    ('{villainname}',share.colors.villain),' is, for real. Well, goodbye now". ',\
+                    '"One thing is fore sure, ',('{villainname}',share.colors.villain),
+                    ' certainly remembers my motto which is "fight in any situation". ',\
+                    'Yes, that\'s it. I am pretty sure the first part of the password is ',\
+                    ('"fight"',share.colors.password),'. ',' Well, goodbye now". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -1097,12 +1097,9 @@ class obj_scene_ch4p19a(page.obj_chapterpage):
                 ' crawled out of ',('{heroname}',share.colors.hero),\
                 '\'s pocket and whispered: ',\
                 'Well done, ',('{heroname}',share.colors.hero),'. ',\
-                'Now that we know the first part of the ',('password',share.colors.item),\
-                ', we can return home. ',\
-                'Tomorrow, we will visit the second ',\
-                ('grandmaster of Deceit',share.colors.villain),\
-                ', and very soon we will be able to rescue ',\
-                ('{partnername}',share.colors.partner),'". ',\
+                'The first part of the password is ',('"fight"',share.colors.password),'. ',\
+                'Lets go home now, then tomorrow we will visit the second ',\
+                ('grandmaster',share.colors.villain),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -1257,8 +1254,8 @@ class obj_scene_ch4end(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4unlocknext())
     def setup(self):
         self.text=[\
-                    'And thats all for today, said the book of things. ',
-                   'The tension is killing me. I cant wait to find what happens tomorrow! ',\
+                    'And thats all for today, said the book of things. ',\
+                   'Lets wait and find what happens tomorrow. ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
