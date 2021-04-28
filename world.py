@@ -3194,6 +3194,7 @@ class obj_world_bushstealth(obj_world):
         self.text_donelost.show=False
         # background
         self.makebackground()# make the background
+        self.staticactor.addpart( 'imgarrow', draw.obj_image('arrowup',(1280-100,600),rotate=-90,path='premade') )
         # hero
         self.hero.addpart( 'standing', draw.obj_image('bush',self.heroxystart,scale=0.5) )
         self.hero.addpart( 'moving', draw.obj_animation('bushstealth_bushmove','bush',self.heroxystart) )
@@ -3781,7 +3782,13 @@ class obj_world_kiss(obj_world):
 # Mini Game: sunrise
 # *SUNSET *NIGHTFALL
 class obj_world_sunset(obj_world):
-    def setup(self):
+    def setup(self,**kwargs):
+        # default options
+        self.landtype='home'# default land type is hero home
+        # scene tuning
+        if kwargs is not None:
+            if 'type' in kwargs: self.landtype=kwargs["type"]
+        #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.ungoing=False# ungoing or back to start
@@ -3798,17 +3805,28 @@ class obj_world_sunset(obj_world):
         self.finishactor.show=False
         self.text_undone.show=True
         self.text_done.show=False
+
         # static actor
-        self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
-        #
-        self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
-        self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
-        self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
-        #
-        self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( "img2", draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( "img4", draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( "img5", draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        if self.landtype=='island':
+            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+            self.staticactor.addpart( "img1", draw.obj_image('sailboat',(296,445),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img3", draw.obj_image('palmtree',(991,448),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img4", draw.obj_image('palmtree',(1105,506),scale=0.33,rotate=0,fliph=True,flipv=False) )
+            self.staticactor.addpart( "img5", draw.obj_image('wave',(202,555),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img6", draw.obj_image('wave',(480,544),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img7", draw.obj_image('wave',(704,679),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img8", draw.obj_image('mountain',(671,438),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img9", draw.obj_image('islandsunset',(840,550),path='premade') )
+            self.staticactor.addpart( "img2", draw.obj_image('skeletonhead',(837,456),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        else:
+            self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
+            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+            self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
+            self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img2", draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
+            self.staticactor.addpart( "img4", draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img5", draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
         #
         # start actor
         self.startactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )

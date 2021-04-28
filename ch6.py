@@ -624,9 +624,28 @@ class obj_scene_ch6p27(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p26())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p28())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                   'Wait until night then infiltrate and steal the treasure. Get in that bush said the sailor. ',\
+                   '"Alright, said ',('{sailorname}',share.colors.sailor),'. ',\
+                   'First, we shall wait until night to infiltrate the island". ',\
+                   ]
+        self.world=world.obj_world_sunset(self,type='island')
+        self.addpart(self.world)
+        # self.addpart( draw.obj_drawing('islandsunset',(840,550),shadow=(400,150),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_imageplacer(self,'skeletonhead','palmtree','wave','cloud','sailboat','mountain',actor='staticactor') )
+
+
+
+class obj_scene_ch6p28(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p27())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p29())
+    def setup(self):
+        self.text=[\
+                   'Get in that bush and past the enemy defenses. I will be on the radio. ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','saislorbase','bush','palmtree','moon') )
         self.addpart( draw.obj_image('sailorbase',(190,491),scale=0.55,rotate=0,fliph=False,flipv=False) )
@@ -644,33 +663,50 @@ class obj_scene_ch6p27(page.obj_chapterpage):
         self.addpart( animation3 )
         self.addpart( animation2 )
 
-class obj_scene_ch6p28(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p27())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p29())
-
-
 class obj_scene_ch6p29(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p28())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p30())
-
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p30())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p29())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+       self.text=['Infiltrate the island']
+       self.world=world.obj_world_bushstealth(self)
+       self.addpart(self.world)
 
 class obj_scene_ch6p30(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p29())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p31())
-
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p31())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p30())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+       self.text=['Infiltrate the island']
+       self.world=world.obj_world_bushstealth2(self)
+       self.addpart(self.world)
 
 class obj_scene_ch6p31(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p30())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p32())
-
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p32())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p31())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+       self.text=['Infiltrate the island']
+       self.world=world.obj_world_bushstealth3(self)
+       self.addpart(self.world)
 
 class obj_scene_ch6p32(page.obj_chapterpage):
     def prevpage(self):
