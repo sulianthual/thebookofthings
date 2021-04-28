@@ -103,9 +103,7 @@ we learn that our most feared bugs are our best friends
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
              or freezing temperatures (draw a snowman!)
 
-- Chapter 6: to build the sailor ship, could do a fetch quest for wood
-             either chop wood (like flower pickup minigame)
-             or go directly see the bunny and ask him to chop it all
+- Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
 
 - Somewhere...: Add a game with parabolic shooting ?
              can be done easily with naval battle and a cannon
@@ -239,6 +237,25 @@ jump/duck. Simple for bullets (increase rythm)
 simple dinosaur game from google. just jump in time.
 skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
+
+####################################################################################################################
+####################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ####################################################################################################################

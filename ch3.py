@@ -269,7 +269,7 @@ class obj_scene_ch3p11(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The letter said:"',(163,83)) )
+        self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}

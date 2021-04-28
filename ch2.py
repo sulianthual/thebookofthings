@@ -242,7 +242,7 @@ class obj_scene_ch2p6c(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p7())
     def setup(self):
-        self.addpart( draw.obj_textbox('"The letter said:"',(163,83)) )
+        self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
         xmargin=150
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':740}# same as ={}

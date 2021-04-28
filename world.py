@@ -1091,6 +1091,7 @@ class obj_world_travel(obj_world):
         self.addsailor=False# add sailor walking with hero
         self.minigame=None# add mini-game on the travel game (minigame='flowers',etc....)
         self.heroangry=False# angry face on hero
+        self.addbeachquestionmark=False# add a question mark on the beach
         self.addsailorwait=False# add the sailor (waiting on the beach)
         self.noending=True# skip the completion part of minigame
         # scene tuning
@@ -1106,6 +1107,7 @@ class obj_world_travel(obj_world):
             if 'remove' in kwargs: self.removelist=kwargs["remove"]
             if 'noending' in kwargs: self.noending=kwargs["noending"]
             if 'sailorwait' in kwargs: self.addsailorwait=kwargs["sailorwait"]
+            if 'beachquestionmark' in kwargs: self.addbeachquestionmark=kwargs["beachquestionmark"]
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
@@ -1118,7 +1120,7 @@ class obj_world_travel(obj_world):
             elif self.wherestart=='peak':
                 self.xyhero=(0,-1080)
             elif self.wherestart=='beach':
-                self.xyhero=(0,1080-120)
+                self.xyhero=(-1280,1080-120)
             elif self.wherestart=='island':
                 self.xyhero=(1280,1080+1080)
             else:
@@ -1133,7 +1135,7 @@ class obj_world_travel(obj_world):
         elif self.whereends=='peak':
             self.xygoal=(0,-1080-80)
         elif self.whereends=='beach':
-            self.xygoal=(0,1080-120)
+            self.xygoal=(-1280,1080-120)
         elif self.whereends=='island':
             self.xygoal=(1280,1080+1080)
         elif self.whereends=='nowhere':# cant reach
@@ -1282,9 +1284,6 @@ class obj_world_travel(obj_world):
         #
         # south panel 1-2: beach south
         if self.chapter>=6:
-            if self.addsailorwait:
-                self.staticactor12.addpart( 'ref', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
-            self.staticactor12.addpart( 'textref', draw.obj_textbox('beach',(640,360),color=share.colors.location) )
             self.staticactor12.addpart( "img1", draw.obj_image('palmtree',(491,186),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.staticactor12.addpart( "img2", draw.obj_image('palmtree',(1145,176),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor12.addpart( "img1a", draw.obj_image('wave',(937,499),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -1303,6 +1302,11 @@ class obj_world_travel(obj_world):
         #
         # south panel 0-2: beach south west
         if self.chapter>=6:
+            if self.addsailorwait:
+                self.staticactor02.addpart( 'ref', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
+            if self.addbeachquestionmark:
+                self.staticactor02.addpart( 'refqmark', draw.obj_image('interrogationmark',(640,360-120),path='premade') )
+            self.staticactor02.addpart( 'textref', draw.obj_textbox('beach',(640,360),color=share.colors.location) )
             self.staticactor02.addpart( "img1", draw.obj_image('palmtree',(1040,199),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor02.addpart( "img2", draw.obj_image('palmtree',(255,21),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor02.addpart( "img3", draw.obj_image('palmtree',(776,3),scale=0.5,rotate=0,fliph=False,flipv=False) )
@@ -1466,8 +1470,11 @@ class obj_world_travel(obj_world):
         self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
         if self.addsailorwait:# talk to a character
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Talk',(640,680),color=share.colors.instructions) )
+        elif self.addbeachquestionmark:# investigate
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Investigate',(640,680),color=share.colors.instructions) )
         else:# enter a location
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Enter',(640,680),color=share.colors.instructions) )
+        #
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
         self.text_undoneenter.show=False

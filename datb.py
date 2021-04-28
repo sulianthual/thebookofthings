@@ -27,6 +27,7 @@ class obj_colors:
         self.black=(0,0,0)
         self.red=(220,0,0)# bit darker
         self.blue=(0,0,220)
+        self.lightblue=(100,100,220)
         self.green=(0,220,0)
         self.darkgreen=(0,100,0)
         self.gray=(150,150,150)
@@ -56,6 +57,7 @@ class obj_colors:
         self.bug=self.maroon
         self.bunny=self.darkorange
         self.elder=self.darkgray
+        self.sailor=self.lightblue
         self.item=self.blue# items (bed, fish,etc...)
         self.location=self.darkgreen# locations
         self.action=self.green# actions text (??? not used)

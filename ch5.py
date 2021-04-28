@@ -52,22 +52,7 @@ class obj_scene_ch5p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p1a())
     def setup(self):
         self.text=[\
-                  '"',
-                   ('{partnername}',share.colors.partner),' has been captured by the ',\
-                    ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),'. ',\
-                     ('{partner_he}',share.colors.partner),' is being held in  ',\
-                     ('{villain_his}',share.colors.villain),' ',\
-                     ('evil lair',share.colors.location),'. ',\
-                     ('{heroname}',share.colors.hero),' is on a quest to find a way in. ',\
-                   ]
-        # self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
-        # animation1=draw.obj_animation('ch3_villaincapture','villainbase',(640,360),record=False,scale=0.7)
-        # animation2=draw.obj_animation('ch3_villaincapture2','partnerbase',(640,360),record=False,sync=animation1,scale=0.7)
-        # self.addpart( animation1 )
-        # self.addpart( animation2 )
-
-        self.text=[\
-                  '"',
+                  '"',\
                   ('{heroname}',share.colors.hero),' is on a quest to ',\
                   ' figure out the password to ',('{villainname}',share.colors.villain),'\'s  ',\
                   ('castle',share.colors.location),' and rescue ',\
@@ -167,7 +152,7 @@ class obj_scene_ch5p1f(page.obj_chapterpage):
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' came back home and checked ',\
-                    ('{hero_his}',share.colors.hero),' mailbox.',\
+                    ('{hero_his}',share.colors.hero),' mailbox. ',\
                     ('{hero_he}',share.colors.hero),' had received ',\
                     'two ',' letters". ',\
                    ]
@@ -191,7 +176,7 @@ class obj_scene_ch5p1g(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The first letter said:"',(163,83)) )
+        self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -220,7 +205,7 @@ class obj_scene_ch5p1h(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The second letter said:"',(163+30,83)) )
+        self.addpart( draw.obj_textbox('"The second letter said:"',(50,83),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -298,7 +283,7 @@ class obj_scene_ch5p3b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p4())
     def setup(self):
         self.text=[\
-                '" When ',('{heroname}',share.colors.hero),\
+                '"When ',('{heroname}',share.colors.hero),\
                 ' reached the top of ',('highest peak',share.colors.location),\
                 ', he encountered a mysterious ',\
                 ('elder',share.colors.elder),'".',\
@@ -308,7 +293,7 @@ class obj_scene_ch5p3b(page.obj_chapterpage):
                    ]
         y1=360+90-100
         y2=520+100-100
-        self.addpart( draw.obj_textbox('The Elder was:',(180,y1)) )
+        self.addpart( draw.obj_textbox('The elder was:',(180,y1)) )
         textchoice=draw.obj_textchoice('elder_he')
         textchoice.addchoice('1. A guy','he',(440,y1))
         textchoice.addchoice('2. A girl','she',(740,y1))
@@ -316,7 +301,7 @@ class obj_scene_ch5p3b(page.obj_chapterpage):
         textchoice.addkey('elder_his',{'he':'his','she':'her','it':'its'})
         textchoice.addkey('elder_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
-        self.addpart( draw.obj_textbox("and the Elder\'s Name was:",(200,y2)) )
+        self.addpart( draw.obj_textbox("and the elder\'s name was:",(200,y2)) )
         self.addpart( draw.obj_textinput('eldername',25,(750,y2),color=share.colors.elder, legend='Elder Name') )
 
 
@@ -333,7 +318,7 @@ class obj_scene_ch5p4(page.obj_chapterpage):
                 'I suggest you draw a happy face and add some wrinkles and maybe a beard, ',\
                 'but that is entirely up to you. ',\
                    ]
-        self.addpart( draw.obj_drawing('elderhead',(640,450),legend='Draw the Elder') )
+        self.addpart( draw.obj_drawing('elderhead',(640,450),legend='Draw the elder (facing right)') )
     def endpage(self):
         super().endpage()
         # # save elder full body (slight offset made)
@@ -372,7 +357,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
         self.addpart( draw.obj_image('floor4',(1280-500,720-140),path='premade') )
         animation1=draw.obj_animation('ch5_meetelder','herobase',(640,360),record=False)
         self.addpart( animation1 )
-        self.addpart( draw.obj_animation('ch5_meetelder2','sun',(640,360),record=True,sync=animation1) )
+        self.addpart( draw.obj_animation('ch5_meetelder2','sun',(640,360),record=False,sync=animation1) )
         # self.addpart( draw.obj_imageplacer(self,'herobase','elderbase','cloud','sun','mountain') ) )
 
 

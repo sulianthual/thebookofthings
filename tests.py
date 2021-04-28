@@ -240,7 +240,7 @@ class obj_scene_testheadermaker(obj_testpage):
                   'Page must start above 0. Last nextpage is commented (for if next page doesnt exist) ',\
                    ]
         # self.addpart( draw.obj_headermaker('ch3',10,25) )# for chapter 3, page 10 to 25
-        self.addpart( draw.obj_headermaker('ch6',2,30) )# for chapter 3, page 10 to 25
+        self.addpart( draw.obj_headermaker('ch6',2,50) )# for chapter 3, page 10 to 25
 
 
 class obj_scene_interactivetext(obj_testpage):
@@ -304,13 +304,6 @@ class obj_scene_textchoice(obj_testpage):
         textchoice2.addchoice('2. two','two',(740,y2))
         textchoice2.addchoice('3. three','three',(1040,y2))
         self.addpart( textchoice2 )
-
-
-
-
-    def page(self,controls):
-        pass
-        # print(share.words.dict['test_he'])# can access key value directly
 
 
 class obj_scene_textbox(obj_testpage):
