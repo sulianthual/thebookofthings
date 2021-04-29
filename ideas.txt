@@ -96,15 +96,10 @@ we learn that our most feared bugs are our best friends
               start with one bunny, then up to 3 (the bunny multiplies)
 
 
-- Chapter 4: explain in lying minigame:
-            A statement is correct only if it is entirely correct.
-            A statement that is partially wrong is always wrong.
-
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
              or freezing temperatures (draw a snowman!)
 
 - Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
-
 
 - Chapter 6: should cannon and parachute hero into island (from the boat)
              make minigame where has to aim the cannon (A,D), shoot (W)
@@ -115,10 +110,14 @@ we learn that our most feared bugs are our best friends
              (could have been arc and bow for hunting too)
              or can be arc+bow on beach: multiple skeleton running from right to left (very slowly)
 
-- Chapter 7: Combine all previous minigames
-             (dodge bullets, stomping, falling boulders...)
-            then villain captures hero, and use lie-cheat-steal to win
-            1. lie to villain, 2. cheat him at rockpaperscissors, 3. steal his key/something
+- Chapter 7: Put dodge bullet fight again + likely stomping
+             may fight the villain+partner (if they are caught in bed cheating)
+
+
+- Chapter 7: Make a giant mech battle! villain transforms, then hero too when grandmasters come to help him
+             use only face of villain (same for hero), with drawings around
+             villain=castle head, trees for arms, mountains for shoulders
+             hero=house head, palm trees for arms, bushes for shoulders, maybe ships for shoes
 
 - Credits: Make a song about "lie, cheat and steal"
           Play it with everyone dancing, with a little ball like a karaoke

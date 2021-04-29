@@ -122,7 +122,12 @@ class obj_scene_ch3p3(page.obj_chapterpage):
         dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
         dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
         dispgroup2.snapshot((640,330,200,330),'villainbase')
-
+        # heroangry+zapaura=herozapped
+        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        dispgroup2.addpart('part2',draw.obj_image('angryhead',(640,200),scale=0.5) )
+        dispgroup2.addpart('part3',draw.obj_image('zapaura',(640,360),path='premade') )
+        dispgroup2.snapshot((640,360,200,300),'herozapped')
 
 
 class obj_scene_ch3p3a(page.obj_chapterpage):
@@ -569,7 +574,7 @@ class obj_scene_ch3p22(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('castlepassword',25,(380,260),color=share.colors.villain, legend='Castle Password',default=' ')
+        self.textinput=draw.obj_textinput('castlepassword',30,(380,260),color=share.colors.villain, legend='Castle Password',default=' ')
         self.addpart( self.textinput )
 
 class obj_scene_ch3p23(page.obj_chapterpage):
@@ -593,15 +598,6 @@ class obj_scene_ch3p23(page.obj_chapterpage):
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
-    def presetup(self):
-        super().presetup()
-        # heroangry+zapaura=herozapped
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('angryhead',(640,200),scale=0.5) )
-        dispgroup2.addpart('part3',draw.obj_image('zapaura',(640,360),path='premade') )
-        dispgroup2.snapshot((640,360,200,300),'herozapped')
-
 
 
 class obj_scene_ch3p24(page.obj_chapterpage):
@@ -623,7 +619,7 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('castlepassword',25,(380,260),color=share.colors.villain, legend='Castle Password',default=' ')
+        self.textinput=draw.obj_textinput('castlepassword',30,(380,260),color=share.colors.villain, legend='Castle Password',default=' ')
         self.addpart( self.textinput )
         y1=170
         # self.addpart( draw.obj_textbox('Leave:',(90,y1),xleft=True) )

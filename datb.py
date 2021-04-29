@@ -45,6 +45,7 @@ class obj_colors:
         self.devactor=(0,0,220)# blue (hitbox)
         # Colors game elements
         self.background=self.white# game background
+        self.text=self.black# regular text
         self.instructions=self.purple# any instruction text/element
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)

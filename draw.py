@@ -870,7 +870,7 @@ class obj_imageplacer:
 # *ANIMATION
 # Animation=base sprite  + temporal sequence of transformations (cyclic)
 class obj_animation:
-    def __init__(self,name,imgname,xy,record=False,scale=1,imgscale=1,imgfliph=False, sync=None,path='book'):
+    def __init__(self,name,imgname,xy,record=False,scale=1,imgscale=1,imgfliph=False,imgflipv=False, sync=None,path='book'):
         self.type='animation'
         self.name=name# animation name
         self.imgname=imgname# reference image (more can be added). Or can be text if textbox=True
@@ -885,6 +885,7 @@ class obj_animation:
         self.path=path# folder where images are found
         self.imgscale=imgscale# scale of ref image
         self.imgfliph=imgfliph# fliph of ref image
+        self.imgflipv=imgflipv# flipv of ref image
         self.setup()
         if scale != 1: self.scale(scale)
     def setup(self):
@@ -897,7 +898,7 @@ class obj_animation:
         self.show=True# show the animation or not (can be toggled on/off)
         # sprite list
         self.spritelist=[]
-        self.addimage(self.imgname,scale=self.imgscale,fliph=self.imgfliph,path=self.path)
+        self.addimage(self.imgname,scale=self.imgscale,fliph=self.imgfliph,flipv=self.imgflipv,path=self.path)
         self.rx,self.ry=self.spritelist[0].getrxry()
         # sprite
         self.sprite=core.obj_sprite_image()# the one that is played
@@ -911,11 +912,12 @@ class obj_animation:
         self.devlineseq=core.obj_sprite_linesequence()
         self.devxy=(self.x,self.y)
         self.devarea=(self.x,self.y, 2*self.rx, 2*self.ry )
-    def addimage(self,imgname,scale=1,fliph=False,path='book'):
+    def addimage(self,imgname,scale=1,fliph=False,flipv=False,path='book'):
         sprite=core.obj_sprite_image()
         sprite.load(path+'/'+imgname+'.png')
         if scale != 1: sprite.scale(scale)
         if fliph: sprite.fliph()
+        if flipv: sprite.flipv()
         self.spritelist.append(sprite)
     def replaceimage(self,imgname,index):
         if index >=0 and index<len(self.spritelist):

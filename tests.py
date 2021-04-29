@@ -139,6 +139,9 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['elderhead','cloud','lightningbolt','rock','paper','scissors']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
+        for c,value in enumerate(['sailorhead','skeletonhead','cow','sailboat','palmtree','wave']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        # y1+=dy1
         # for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
         #     self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
 
@@ -240,7 +243,7 @@ class obj_scene_testheadermaker(obj_testpage):
                   'Page must start above 0. Last nextpage is commented (for if next page doesnt exist) ',\
                    ]
         # self.addpart( draw.obj_headermaker('ch3',10,25) )# for chapter 3, page 10 to 25
-        self.addpart( draw.obj_headermaker('ch6',2,50) )# for chapter 3, page 10 to 25
+        self.addpart( draw.obj_headermaker('ch7',1,50) )# for chapter 3, page 10 to 25
 
 
 class obj_scene_interactivetext(obj_testpage):

@@ -114,6 +114,13 @@ def checkcirclecollide(a,b):
 def checkrectcollide(a,b):
     return abs(a.x-b.x)<a.rx+b.rx and abs(a.y-b.y)<a.ry+b.ry
 
+# compare two strings (ignore whitespaces, non alphabetical=(space)!#%&?,lowercase/uppercase)
+
+# ('Hai, this is a test', 'Hai ! this is a test')=True
+# ('Hai, this is a test', 'Hai this is a test')=True
+# ('Hai, this is a test', 'other string')=False
+def comparestringparts(a,b):
+    return [c for c in a.lower() if c.isalpha()] == [c for c in b.lower() if c.isalpha()]
 
 # Timer for any purpose
 class obj_timer:

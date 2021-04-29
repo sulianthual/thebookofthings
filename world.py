@@ -1217,7 +1217,7 @@ class obj_world_travel(obj_world):
         #
         # west panel 0-1: villain castle
         if self.chapter>=3:
-            self.staticactor01.addpart( 'textref', draw.obj_textbox('evil lair',(640,360+120),color=share.colors.location) )
+            self.staticactor01.addpart( 'textref', draw.obj_textbox('evil castle',(640,360+120),color=share.colors.location) )
             self.staticactor01.addpart( 'ref', draw.obj_image('castle',(640,360),scale=0.5) )
             #
             self.staticactor01.addpart( "img2", draw.obj_image('mountain',(845,587),scale=0.57,rotate=0,fliph=True,flipv=False) )
@@ -1454,8 +1454,8 @@ class obj_world_travel(obj_world):
         # goal(s) to reach
         self.hitboxes=[]# may track several locations
         self.goalarea=obj_grandactor(self,self.xygoal)
-        self.goalarea.rx=50
-        self.goalarea.ry=50
+        self.goalarea.rx=100
+        self.goalarea.ry=100
         self.hitboxes.append(self.goalarea)
         ####
         # End of Setup: place hero (move background+hitboxes)
@@ -1520,8 +1520,8 @@ class obj_world_travel(obj_world):
         if self.minigame=='logs':
             self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textlogs', self.logmessage  )
-            self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D], Chop with [Space]')
-            # self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
+            self.text_undone.dict['text1'].replacetext('[WASD: Move] [Space: Chop]')
+            # self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D]')
             for i in self.panels:# remove tree from panels and make them into individual grandactors
                 panellogkeys=[]# list of tree keys in this panel
                 for k in i.dict.keys():# browse elements
@@ -1530,8 +1530,8 @@ class obj_world_travel(obj_world):
                         passactor=obj_grandactor(self,(j.x,j.y))# make a new grandactor
                         j.xytoxyini()# reinitialize initial coordinates of image
                         passactor.addpart('img', j )# add flower image to it
-                        passactor.rx=50# hitbox
-                        passactor.ry=50
+                        passactor.rx=75# hitbox
+                        passactor.ry=75
                         self.logactors.append(passactor)
                         panellogkeys.append(k)
                 for j in panellogkeys:# remove trees from panels
@@ -1657,7 +1657,6 @@ class obj_world_travel(obj_world):
                         if tool.checkrectcollide(self.hero,i):
                             self.flowercount += 1
                             self.flowermessage.replacetext('You have collected '+str(self.flowercount)+'/'+str(self.flowerneed)+' flowers')
-
                             tokill.append(i)
                     for i in tokill:
                         self.floweractors.remove(i)
@@ -1679,7 +1678,7 @@ class obj_world_travel(obj_world):
                         self.logactors.remove(i)
                         i.clearparts()
                         i.kill()
-                else:# when obtained all flowers can reach goal
+                else:# when obtained all logs can reach goal
                     self.reachgoal(controls)
 
         else:
@@ -1698,10 +1697,12 @@ class obj_world_dodgegunshots(obj_world):
         # default options
         self.heroisangry=False# hero is angry during fight
         self.partnerisenemy=False# parnter is alongside enemy during fight
+        self.incastle=False# inside castle not outside
         # scene tuning
         if kwargs is not None:
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
             if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
+            if 'incastle' in kwargs: self.incastle=kwargs["incastle"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -1719,8 +1720,9 @@ class obj_world_dodgegunshots(obj_world):
         self.text_donewin.show=False
         self.text_donelost.show=False
         # static
-        self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
-        self.staticactor.addpart( 'sun', draw.obj_image('sun',(800,250),scale=0.4) )
+        if not self.incastle:
+            self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
+            self.staticactor.addpart( 'sun', draw.obj_image('sun',(800,250),scale=0.4) )
         # hero
         if not self.heroisangry:
             self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
@@ -1938,13 +1940,28 @@ class obj_world_dodgegunshots(obj_world):
 #*STOMP *FIGHT
 class obj_world_stompfight(obj_world):
     def setup(self,**kwargs):
+
+
+        ##########################3
+        # Premake necessary images
+        # combine stickkick+villainhead=villainkick
+        image1=draw.obj_image('stickkick',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('villainhead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,300,300),'villainkick')
+
+
         # default options
         self.heroisangry=False# hero is angry during fight
         self.partnerisenemy=False# parnter is alongside enemy during fight
+        self.tutorial=False# do the tutorial
         # scene tuning
         if kwargs is not None:
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
             if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
+            if 'tutorial' in kwargs: self.tutorial=kwargs["tutorial"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -2250,12 +2267,15 @@ class obj_world_stompfight(obj_world):
                 self.villainhitbox2.movetoxy( (self.villain.x+50,self.villain.y+50) )
             else:
                 self.villainhitbox2.movetoxy( (self.villain.x-50,self.villain.y+50) )
-            # villain hits hero or reverse
+            #
+            # villain hits hero
             if not self.herohurt and self.villainstate=='kick':
                 if tool.checkrectcollide(self.villainhitbox2,self.herohitbox1):# villain hits hero
-                    self.herohealth -= 1
+                    if not self.tutorial:# cant loose health on tutorial
+                        self.herohealth -= 1
                     if self.herohealth>0:
-                        self.healthbar.dict['heart_'+str(self.herohealth)].show=False
+                        if self.herohealth<self.maxherohealth:
+                            self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                         self.herohurt=True
                         self.hero.movetoy(self.yground)# put hero to ground
                         self.herov = 0# just stall
@@ -2276,14 +2296,16 @@ class obj_world_stompfight(obj_world):
                         self.hero.dict['stand_left'].show=False
                         self.hero.dict['hurt'].show=True
                         self.hero.dict['hurttext'].show=False
-
+            # hero hits the villain
             if not self.villainhurt and not self.villainstate=='kick' and self.herov>0:
             # if not self.villainhurt and self.herov>0:# easier version even when villain kicks
                 if tool.checkrectcollide(self.villainhitbox1,self.herohitbox2):# hero hits villain
-                    self.villainhealth -= 1
+                    if not self.tutorial:# cant loose health on tutorial
+                        self.villainhealth -= 1
                     if self.villainhealth>0:
-                        self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
-                        self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
+                        if self.villainhealth<self.maxvillainhealth:
+                            self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
+                            self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
                         self.villainhurt=True
                         self.villainstate='stand'
                         self.villaintimerhurt.start()
@@ -3308,6 +3330,13 @@ class obj_world_bushstealth(obj_world):
                 if self.busted:
                     for i in self.skeletons:
                         i.bust(self.hero.x)
+
+
+# base one but no enemy
+class obj_world_bushstealth0(obj_world_bushstealth):
+    def makeskeletons(self):
+        self.skeletons=[]
+
 
 
 class obj_world_bushstealth2(obj_world_bushstealth):

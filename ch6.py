@@ -191,8 +191,6 @@ class obj_scene_ch6p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p8())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
         self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
         xmargin=100
@@ -463,7 +461,7 @@ class obj_scene_ch6p19(page.obj_chapterpage):
                   '"The ',('{bug}',share.colors.bug),\
                   ' crawled out of ',('{heroname}',share.colors.hero),\
                   '\'s pocket and said: ',\
-                   ' It sounds like we have no choice, lets join this ',\
+                   'It sounds like we have no choice, lets join this ',\
                    ('grandmaster',share.colors.villain),'\'s crew. ',\
                     'Soon enough, ',('{sailor_he}',share.colors.villain),\
                     ' should tell us the last part of the castle\'s ',\
@@ -514,7 +512,7 @@ class obj_scene_ch6p22(page.obj_chapterpage):
         self.text=[\
                    '"Great job on getting that wood squid, said ',\
                    ('{sailorname}',share.colors.sailor),\
-                   '. Now lets start building". ',\
+                   '. Now lets start building our ship". ',\
                    'Well, draw a ',('sailboat',share.colors.item),\
                    ' said the book of things. ',\
                    ]
@@ -697,21 +695,36 @@ class obj_scene_ch6p29(page.obj_chapterpage):
         self.addpart( animation2 )
 
 
-
 class obj_scene_ch6p30(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p29())
     def nextpage(self):
         if self.world.win or share.devmode:
-            share.scenemanager.switchscene(obj_scene_ch6p31())
+            share.scenemanager.switchscene(obj_scene_ch6p30a())
         else:
             share.scenemanager.switchscene(obj_scene_ch6p30())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+       self.text=['Start Sneaking']
+       self.world=world.obj_world_bushstealth0(self)
+       self.addpart(self.world)
+
+class obj_scene_ch6p30a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p30())
+    def nextpage(self):
+        if self.world.win or share.devmode:
+            share.scenemanager.switchscene(obj_scene_ch6p31())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p30a())
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
        self.text=['Sneak past the skeletons']
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
+
 
 
 class obj_scene_ch6p31(page.obj_chapterpage):
@@ -1023,7 +1036,7 @@ class obj_scene_ch6p45(page.obj_chapterpage):
                   '"The ',('{bug}',share.colors.bug),\
                   ' crawled out of ',('{heroname}',share.colors.hero),\
                   '\'s pocket and said: ',\
-                   ' This is it, we have completed the castle\'s ',\
+                   'this is it, we have completed the castle\'s ',\
                    ('password',share.colors.password),'. It reads: ',\
                     ('fight persevere overcome',share.colors.password),\
                     '. Lets get a good night sleep and tomorrow we will finally rescue ',\
