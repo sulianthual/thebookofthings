@@ -3638,6 +3638,582 @@ class obj_world_ridecow(obj_world):
                 if self.timerendloose.ring:
                     self.done=True# end of minigame
 
+
+####################################################################################################################
+
+# Mech fight
+#*MECH *FIGHT
+class obj_world_mechfight(obj_world):
+    def setup(self,**kwargs):
+
+
+        ##########################3
+        # Premake necessary images
+        # villainmech armature
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
+        # villainmech complete
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature',(640,360)) )
+        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.snapshot((640,360,410,330),'villainmechbase')
+        # heromech armature
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        dispgroup1.snapshot((640,360,300,220),'heromecharmature')
+        # heromech complete
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
+        dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        dispgroup1.snapshot((640,360,410,330),'heromechbase')
+        # villainmech punch
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part5', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('mechpunch',(640,360),path='premade') )
+        dispgroup1.addpart( 'part8', draw.obj_image('gun',(233,373),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('cave',(585,619),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('cave',(838,617),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('lightningbolt',(907,479),scale=0.35,rotate=54,fliph=False,flipv=False) )
+        dispgroup1.snapshot((640-50,360,500-50,330),'villainmechpunch')
+        # heromech punch
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part5', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('mechpunch',(640,360),path='premade') )
+        dispgroup1.addpart( 'part7', draw.obj_image('fish',(233,373),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(585,619),scale=0.25,rotate=0,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('sailboat',(838,617),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('flower',(907,479),scale=0.35,rotate=54,fliph=True,flipv=True) )
+        dispgroup1.snapshot((640-50,360,500-50,330),'heromechpunch')
+        # villainmech block
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part5', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part7', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part9', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('mechblock',(640-200,360),path='premade') )
+        dispgroup1.addpart( 'part11', draw.obj_image('gun',(242,316),scale=0.3,rotate=66,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part12', draw.obj_image('lightningbolt',(378,324),scale=0.35,rotate=174,fliph=True,flipv=False) )
+        dispgroup1.snapshot((640-80,360,500-80,330),'villainmechblock')
+        # heromech block
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part6', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('mechblock',(640-200,360),path='premade') )
+        dispgroup1.addpart( 'part10', draw.obj_image('fish',(242,316),scale=0.3,rotate=-66,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('flower',(378,324),scale=0.35,rotate=174,fliph=False,flipv=True) )
+        dispgroup1.snapshot((640-80,360,500-80,330),'heromechblock')
+        # villainmech hit
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part5', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part6', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.addpart( 'part8', draw.obj_image('mechhit',(640,360-100),path='premade') )
+        dispgroup1.addpart( 'part10', draw.obj_image('gun',(467,104),scale=0.3,rotate=90,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('lightningbolt',(821,102),scale=0.35,fliph=True,flipv=True) )
+        dispgroup1.addpart( 'part12', draw.obj_image('mountain',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part13', draw.obj_image('mountain',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        dispgroup1.snapshot((640,360,300,350),'villainmechhit')
+        # heromech hit
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        dispgroup1.addpart( 'part7', draw.obj_image('mechhit',(640,360-100),path='premade') )
+        dispgroup1.addpart( 'part8', draw.obj_image('fish',(467,104),scale=0.3,rotate=90,fliph=True,flipv=True) )
+        dispgroup1.addpart( 'part9', draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        dispgroup1.snapshot((640,360,300,350),'heromechhit')
+        # Prompt Images
+
+        ##########################
+        # default options
+        self.tutorial=False# do the tutorial
+        # scene tuning
+        if kwargs is not None:
+            if 'tutorial' in kwargs: self.tutorial=kwargs["tutorial"]
+        #
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
+        self.win=False# game is won when goal is reached or not
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))# background
+        self.promptactor=obj_grandactor(self,(640,360))
+        self.actionactor=obj_grandactor(self,(640,360))
+        self.herohealthbar=obj_grandactor(self,(640,360))
+        self.villainhealthbar=obj_grandactor(self,(640,360))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_donewin=obj_grandactor(self,(640,360))
+        self.text_donelost=obj_grandactor(self,(640,360))
+        self.text_undone.show=True
+        self.text_donewin.show=False
+        self.text_donelost.show=False
+
+        # background
+        # self.staticactor.addpart( "img1", draw.obj_image('moon',(98,258),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        # self.staticactor.addpart( "img3", draw.obj_image('cloud',(1199,234),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        # self.staticactor.addpart( "img4", draw.obj_image('cloud',(1209,647),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        #
+        y1=80#680# for text
+        y1font='huge'# large
+        dx1=0# text horizontal spacing
+        y2=300# for the prompts
+        y3=200# healthbars
+        y4=200# end game messages
+        ###################
+        # prompt phase
+        self.promptactor.addpart( 'hero', draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        self.promptactor.addpart( 'villain',draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        self.promptactor.addpart( 'prompt', draw.obj_textbox(' ',(640,y2),fontsize='large') )# put nothing
+        self.promptactor.addpart( 'prompt_w', draw.obj_textbox('W',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_s', draw.obj_textbox('S',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_a', draw.obj_textbox('A',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_d', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
+        animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade')
+        self.promptactor.addpart( 'shrink', animation1 )
+        # self.promptactor.addpart( 'prompt', draw.obj_textbox('Prompt',(640,200),fontsize='huge',color=share.colors.red) )
+        self.promptactor.dict['hero'].show=True
+        self.promptactor.dict['villain'].show=True
+        self.promptactor.dict['prompt'].show=True
+        self.promptactor.dict['shrink'].show=True
+        self.promptactor.dict['shrink'].rewind()
+        self.whichprompt=tool.randint(0,3)
+        self.promptactor.dict['prompt_w'].show=self.whichprompt==0
+        self.promptactor.dict['prompt_s'].show=self.whichprompt==1
+        self.promptactor.dict['prompt_a'].show=self.whichprompt==2
+        self.promptactor.dict['prompt_d'].show=self.whichprompt==3
+        self.promptinput=False# an input has been entered for prompt
+        self.promptmatch=False# the current prompt was matched
+        self.promptphase=True# are we in countdown or action phase
+        self.prompttimer=tool.obj_timer(80)# countdown time
+        # self.prompttimer=tool.obj_timer(50)# countdown time
+        self.prompttimer.start()
+        #
+        #################
+        # action phase
+        animation1=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360))
+        animation1.addimage('heromechpunch')
+        self.actionactor.addpart('heropunch',animation1)
+        animation1=draw.obj_animation('mechfight_villainpunches1','villainmechbase',(640,360))
+        animation1.addimage('villainmechpunch')
+        self.actionactor.addpart('villainpunch',animation1)
+        animation1=draw.obj_animation('mechfight_heroblocks','heromechbase',(640,360))
+        animation1.addimage('heromechblock')
+        self.actionactor.addpart('heroblock',animation1)
+        animation1=draw.obj_animation('mechfight_villainblocks','villainmechbase',(640,360))
+        animation1.addimage('villainmechblock')
+        self.actionactor.addpart('villainblock',animation1)
+        animation1=draw.obj_animation('mechfight_villainpunches2','heromechbase',(640,360))
+        animation1.addimage('heromechhit')
+        self.actionactor.addpart('herohit',animation1)
+        animation1=draw.obj_animation('mechfight_heropunches2','villainmechbase',(640,360))
+        animation1.addimage('villainmechhit')
+        self.actionactor.addpart('villainhit',animation1)
+        animation1=draw.obj_animation('mechfight_herocountered','heromechbase',(640,360))
+        animation1.addimage('heromechpunch')
+        animation1.addimage('heromechhit')
+        self.actionactor.addpart('herocountered',animation1)
+        animation1=draw.obj_animation('mechfight_villaincountered','villainmechbase',(640,360))
+        animation1.addimage('villainmechpunch')
+        animation1.addimage('villainmechhit')
+        self.actionactor.addpart('villaincountered',animation1)
+
+        #
+        if not self.tutorial:
+            self.actionactor.addpart('heroattacks_text', draw.obj_textbox('Hero hits',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
+            self.actionactor.addpart('heroblocks_text', draw.obj_textbox('Hero counters',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
+            self.actionactor.addpart('villainattacks_text', draw.obj_textbox('Villain hits',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
+            self.actionactor.addpart('villainblocks_text', draw.obj_textbox('Villain counters',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
+        else:
+            self.actionactor.addpart('heroattacks_text', draw.obj_textbox(' ',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
+            self.actionactor.addpart('heroblocks_text', draw.obj_textbox(' ',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
+            self.actionactor.addpart('villainattacks_text', draw.obj_textbox(' ',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
+            self.actionactor.addpart('villainblocks_text', draw.obj_textbox(' ',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_wfail', draw.obj_textbox('W',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_sfail', draw.obj_textbox('S',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_afail', draw.obj_textbox('A',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_dfail', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_wwin', draw.obj_textbox('W',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('S',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('A',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='premade',scale=0.5) )
+        #
+        self.actionactor.dict['heropunch'].show=False
+        self.actionactor.dict['villainpunch'].show=False
+        self.actionactor.dict['heroblock'].show=False
+        self.actionactor.dict['villainblock'].show=False
+        self.actionactor.dict['herohit'].show=False
+        self.actionactor.dict['villainhit'].show=False
+        self.actionactor.dict['herocountered'].show=False
+        self.actionactor.dict['villaincountered'].show=False
+        self.actionactor.dict['heroattacks_text'].show=False
+        self.actionactor.dict['heroblocks_text'].show=False
+        self.actionactor.dict['villainattacks_text'].show=False
+        self.actionactor.dict['villainblocks_text'].show=False
+        self.actionactor.dict['cross'].show=False
+        self.actionactor.dict['prompt_wfail'].show=False
+        self.actionactor.dict['prompt_sfail'].show=False
+        self.actionactor.dict['prompt_afail'].show=False
+        self.actionactor.dict['prompt_dfail'].show=False
+        self.actionactor.dict['prompt_wwin'].show=False
+        self.actionactor.dict['prompt_swin'].show=False
+        self.actionactor.dict['prompt_awin'].show=False
+        self.actionactor.dict['prompt_dwin'].show=False
+        self.actionstate=0# 0,1,2,3 for hero hits, villain hits, hero blocks, villain blocks
+        self.actiontimer=tool.obj_timer(150)# action time ( but can be shorter)
+        self.actiontimer.start()
+        #
+        # healthbar hero
+        self.maxherohealth=7# starting hero health
+        self.herohealth=self.maxherohealth# updated one
+        self.maxvillainhealth=7# starting hero health
+        self.villainhealth=self.maxvillainhealth# updated one
+
+        for i in range(self.maxherohealth):
+            self.herohealthbar.addpart('heart_'+str(i), draw.obj_image('love',(40+i*75,y3),scale=0.125) )
+            self.herohealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcross',(40+i*75,y3),scale=0.75,path='premade') )
+            self.herohealthbar.dict['heartcross_'+str(i)].show=False
+        for i in range(self.maxvillainhealth):
+            self.villainhealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-40-i*75,y3),scale=0.125) )
+            self.villainhealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-40-i*75,y3),scale=0.125) )
+            self.villainhealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcross',(1280-40-i*75,y3),scale=0.75,path='premade') )
+            self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+        # text for winning
+        # self.text_undone.addpart( 'text1', draw.obj_textbox('Match the prompts',(640,680),color=share.colors.instructions) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('Super-Meca-Villain Destroyed',(640,y4),fontsize='large',color=share.colors.darkgreen) )
+        self.text_donewin.addpart( 'cloud1', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(816,386)) )
+        self.text_donewin.addpart( 'cloud2', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(1018,268)) )
+        self.text_donewin.addpart( 'cloud3', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(1188,330)) )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('Super-Meca-Hero Destroyed',(640,y4),fontsize='large',color=share.colors.red) )
+        self.text_donelost.addpart( 'cloud1', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(416,318)) )
+        self.text_donelost.addpart( 'cloud2', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(254,266)) )
+        self.text_donelost.addpart( 'cloud3', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(93,385)) )
+        self.text_donewin.addpart( 'villaindies', draw.obj_animation('mechfight_villaindies','villainmechbase',(640,360)) )
+        self.text_donewin.addpart( 'herostands',draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        self.text_donelost.addpart( 'herodies', draw.obj_animation('mechfight_herodies','heromechbase',(640,360)) )
+        self.text_donelost.addpart( 'villainstands',draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        # timer for done part
+        self.timerendwin=tool.obj_timer(200)# goal to done
+        self.timerendloose=tool.obj_timer(240)# goal to done
+
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # goal unreached state
+            if self.promptphase:
+                self.prompttimer.update()
+                # Reflex : match correct input here
+                if self.whichprompt==0:# press w
+                    if not self.promptinput:
+                        if controls.w and controls.wc:
+                            self.promptmatch=True# won
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_wwin'].show=True
+                            self.promptactor.dict['prompt_w'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                        elif (controls.s and controls.sc) or (controls.a and controls.ac) or (controls.d and controls.dc):
+                            self.promptmatch=False# lost
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_wfail'].show=True
+                            self.actionactor.dict['cross'].show=True
+                            self.promptactor.dict['prompt_w'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                elif self.whichprompt==1:# press s
+                    if not self.promptinput:
+                        if controls.s and controls.sc:
+                            self.promptmatch=True# won
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_swin'].show=True
+                            self.promptactor.dict['prompt_s'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                        elif (controls.w and controls.wc) or (controls.a and controls.ac) or (controls.d and controls.dc):
+                            self.promptmatch=False# lost
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_sfail'].show=True
+                            self.actionactor.dict['cross'].show=True
+                            self.promptactor.dict['prompt_s'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                elif self.whichprompt==2:# press a
+                    if not self.promptinput:
+                        if controls.a and controls.ac:
+                            self.promptmatch=True# won
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_awin'].show=True
+                            self.promptactor.dict['prompt_a'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                        elif (controls.w and controls.wc) or (controls.s and controls.sc) or (controls.d and controls.dc):
+                            self.promptmatch=False# lost
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_afail'].show=True
+                            self.actionactor.dict['cross'].show=True
+                            self.promptactor.dict['prompt_a'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                elif self.whichprompt==3:# press d
+                    if not self.promptinput:
+                        if controls.d and controls.dc:
+                            self.promptmatch=True# won
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_dwin'].show=True
+                            self.promptactor.dict['prompt_d'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                        elif (controls.w and controls.wc) or (controls.s and controls.sc) or (controls.a and controls.ac):
+                            self.promptmatch=False# lost
+                            self.promptinput=True
+                            self.actionactor.dict['prompt_dfail'].show=True
+                            self.actionactor.dict['cross'].show=True
+                            self.promptactor.dict['prompt_d'].show=False
+                            self.prompttimer.forcering()
+                            self.promptactor.dict['shrink'].pause()
+                #
+                # end of countdown
+                if self.prompttimer.ring:# flip to action
+                    # check if prompt was matched
+                    if not self.promptinput: # no input was given=fail
+                        self.promptmatch=False
+                        self.actionactor.dict['cross'].show=True
+                        self.promptactor.dict['shrink'].pause()
+                        if self.whichprompt==0:# press w
+                            self.actionactor.dict['prompt_wfail'].show=True
+                        elif self.whichprompt==1:# press s
+                            self.actionactor.dict['prompt_sfail'].show=True
+                        elif self.whichprompt==2:# press a
+                            self.actionactor.dict['prompt_afail'].show=True
+                        elif self.whichprompt==3:# press d
+                            self.actionactor.dict['prompt_dfail'].show=True
+                    # Action as result of prompt
+                    if self.promptmatch:# won
+                        self.actionstate=tool.randchoice([0,2])# hero punches villain, or hero blocks villain
+                    else:# lost
+                        self.actionstate=tool.randchoice([1,3])# villain punches hero, or villain blocks hero
+                    # switch to action phase
+                    self.promptphase=False
+                    self.actiontimer.start()
+                    self.promptactor.dict['hero'].show=False
+                    self.promptactor.dict['villain'].show=False
+                    self.promptactor.dict['prompt'].show=False
+                    self.promptactor.dict['prompt_w'].show=False
+                    self.promptactor.dict['prompt_a'].show=False
+                    self.promptactor.dict['prompt_d'].show=False
+                    self.promptactor.dict['prompt_s'].show=False
+                    # play correct animation
+                    if self.actionstate==0:# hero hits villain
+                        self.actionactor.dict['heropunch'].show=True
+                        self.actionactor.dict['villainhit'].show=True
+                        self.actionactor.dict['heropunch'].rewind()
+                        self.actionactor.dict['villainhit'].rewind()
+                        self.actionactor.dict['heroattacks_text'].show=True
+                    elif self.actionstate==1:# villain hits hero
+                        self.actionactor.dict['villainpunch'].show=True
+                        self.actionactor.dict['herohit'].show=True
+                        self.actionactor.dict['villainpunch'].rewind()
+                        self.actionactor.dict['herohit'].rewind()
+                        self.actionactor.dict['villainattacks_text'].show=True
+                    elif self.actionstate==2:# hero blocks villain
+                        self.actionactor.dict['villaincountered'].show=True
+                        self.actionactor.dict['heroblock'].show=True
+                        self.actionactor.dict['villaincountered'].rewind()
+                        self.actionactor.dict['heroblock'].rewind()
+                        self.actionactor.dict['heroblocks_text'].show=True
+                    if self.actionstate==3:# villain blocks hero
+                        self.actionactor.dict['herocountered'].show=True
+                        self.actionactor.dict['villainblock'].show=True
+                        self.actionactor.dict['herocountered'].rewind()
+                        self.actionactor.dict['villainblock'].rewind()
+                        self.actionactor.dict['villainblocks_text'].show=True
+                    # update health
+                    if self.actionstate==0:# hero hits villain
+                        if not self.tutorial:
+                            self.villainhealth -= 1
+                        if self.villainhealth>=0 and self.villainhealth<self.maxvillainhealth:
+                            self.villainhealthbar.dict['heartcross_'+str(self.villainhealth)].show=True
+                    elif self.actionstate==1:# villain hits hero
+                        if not self.tutorial:
+                            self.herohealth -= 1
+                        if self.herohealth>=0 and self.herohealth<self.maxherohealth:
+                            self.herohealthbar.dict['heartcross_'+str(self.herohealth)].show=True
+                    elif self.actionstate==2:# hero blocks villain
+                        if not self.tutorial:
+                            self.villainhealth -= 1
+                        if self.villainhealth>=0 and self.villainhealth<self.maxvillainhealth:
+                            self.villainhealthbar.dict['heartcross_'+str(self.villainhealth)].show=True
+                    if self.actionstate==3:# villain blocks hero
+                        if not self.tutorial:
+                            self.herohealth -= 1
+                        if self.herohealth>=0 and self.herohealth<self.maxherohealth:
+                            self.herohealthbar.dict['heartcross_'+str(self.herohealth)].show=True
+
+
+            else:# action phase
+                self.actiontimer.update()
+                if self.actiontimer.ring:# flip to countdown
+                    self.promptphase=True
+                    self.prompttimer.start()
+                    self.promptactor.dict['hero'].show=True
+                    self.promptactor.dict['villain'].show=True
+                    self.promptactor.dict['prompt'].show=True
+                    self.promptactor.dict['shrink'].unpause()# unpause
+                    self.promptactor.dict['shrink'].show=True
+                    self.promptactor.dict['shrink'].rewind()
+                    # random prompt
+                    self.whichprompt=tool.randint(0,3)
+                    self.promptactor.dict['prompt_w'].show=self.whichprompt==0
+                    self.promptactor.dict['prompt_s'].show=self.whichprompt==1
+                    self.promptactor.dict['prompt_a'].show=self.whichprompt==2
+                    self.promptactor.dict['prompt_d'].show=self.whichprompt==3
+                    self.promptmatch=False
+                    self.promptinput=False
+                    #
+                    self.actionactor.dict['heropunch'].show=False
+                    self.actionactor.dict['villainpunch'].show=False
+                    self.actionactor.dict['heroblock'].show=False
+                    self.actionactor.dict['villainblock'].show=False
+                    self.actionactor.dict['herohit'].show=False
+                    self.actionactor.dict['villainhit'].show=False
+                    self.actionactor.dict['herocountered'].show=False
+                    self.actionactor.dict['villaincountered'].show=False
+                    self.actionactor.dict['heroattacks_text'].show=False
+                    self.actionactor.dict['heroblocks_text'].show=False
+                    self.actionactor.dict['villainattacks_text'].show=False
+                    self.actionactor.dict['villainblocks_text'].show=False
+                    self.actionactor.dict['prompt_wfail'].show=False
+                    self.actionactor.dict['prompt_sfail'].show=False
+                    self.actionactor.dict['prompt_afail'].show=False
+                    self.actionactor.dict['prompt_dfail'].show=False
+                    self.actionactor.dict['prompt_wwin'].show=False
+                    self.actionactor.dict['prompt_swin'].show=False
+                    self.actionactor.dict['prompt_awin'].show=False
+                    self.actionactor.dict['prompt_dwin'].show=False
+                    self.actionactor.dict['cross'].show=False
+                    for i in range(self.maxherohealth):
+                        self.herohealthbar.dict['heartcross_'+str(i)].show=False
+                    for i in range(self.maxvillainhealth):
+                        self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+
+                    # hero check health
+                    if self.herohealth>0:
+                        if self.herohealth<self.maxherohealth:
+                            self.herohealthbar.dict['heart_'+str(self.herohealth)].show=False
+                    else:# dead=hero lost
+                        self.goal=True
+                        self.win=False
+                        self.timerendloose.start()
+                        self.text_undone.show=False
+                        self.text_donelost.show=True
+                        self.promptactor.dict['hero'].show=False
+                        self.promptactor.dict['villain'].show=False
+                        self.promptactor.dict['prompt'].show=False
+                        self.promptactor.dict['shrink'].show=False
+                        self.promptactor.dict['prompt_w'].show=False
+                        self.promptactor.dict['prompt_s'].show=False
+                        self.promptactor.dict['prompt_a'].show=False
+                        self.promptactor.dict['prompt_d'].show=False
+                        for i in range(self.maxherohealth):
+                            self.herohealthbar.dict['heart_'+str(i)].show=False
+                            self.herohealthbar.dict['heartcross_'+str(i)].show=False
+                        for i in range(self.maxvillainhealth):
+                            self.villainhealthbar.dict['heart_'+str(i)].show=False
+                            self.villainhealthbar.dict['heartscar_'+str(i)].show=False
+                            self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+
+                    # villain check health
+                    if self.villainhealth>0:
+                        if self.villainhealth<self.maxvillainhealth:
+                            self.villainhealthbar.dict['heart_'+str(self.villainhealth)].show=False
+                            self.villainhealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
+                    else:# dead=hero won
+                        self.goal=True
+                        self.win=True
+                        self.timerendwin.start()
+                        self.text_undone.show=False
+                        self.text_donewin.show=True
+                        self.promptactor.dict['hero'].show=False
+                        self.promptactor.dict['villain'].show=False
+                        self.promptactor.dict['prompt'].show=False
+                        self.promptactor.dict['shrink'].show=False
+                        self.promptactor.dict['prompt_w'].show=False
+                        self.promptactor.dict['prompt_s'].show=False
+                        self.promptactor.dict['prompt_a'].show=False
+                        self.promptactor.dict['prompt_d'].show=False
+                        for i in range(self.maxherohealth):
+                            self.herohealthbar.dict['heart_'+str(i)].show=False
+                            self.herohealthbar.dict['heartcross_'+str(i)].show=False
+                        for i in range(self.maxvillainhealth):
+                            self.villainhealthbar.dict['heart_'+str(i)].show=False
+                            self.villainhealthbar.dict['heartscar_'+str(i)].show=False
+                            self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+
+        else:
+            # goal reached state
+            if self.win:# won minigame
+                self.timerendwin.update()
+                if self.timerendwin.ring:
+                    self.done=True# end of minigame
+            else:# lost minigame
+                self.timerendloose.update()
+                if self.timerendloose.ring:
+                    self.done=True# end of minigame
+
+
 ####################################################################################################################
 
 

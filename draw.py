@@ -538,7 +538,6 @@ class obj_textbox:
         if self.ytop:
             tempo=self.sprite.getry()
             self.movey(tempo)
-
     def movetoxy(self,x,y):
         self.movetox(x)
         self.movetoy(y)
@@ -896,6 +895,7 @@ class obj_animation:
         self.r=0# rotation angle (default =0)
         self.s=1# scaling factor (default =1)
         self.show=True# show the animation or not (can be toggled on/off)
+        self.paused=False# if paused, always show the same frame
         # sprite list
         self.spritelist=[]
         self.addimage(self.imgname,scale=self.imgscale,fliph=self.imgfliph,flipv=self.imgflipv,path=self.path)
@@ -980,6 +980,7 @@ class obj_animation:
         self.rx,self.ry=self.spritelist[0].getrxry()
     def rewind(self,frame=None):
         self.sequence.rewindsequence(ta=frame)# rewind to frame ta
+        self.unpause()
     def display(self):
         if self.show:
             # read sequence
@@ -1023,8 +1024,13 @@ class obj_animation:
             self.devcrossref.display((0,0,255),(self.xini,self.yini),10)
         self.devcross.display(share.colors.devanimation,self.devxy,10)
         self.devrect.display(share.colors.devanimation,self.devarea)
+    def pause(self):
+        self.paused=True
+    def unpause(self):
+        self.paused=False
     def play(self,controls):
-        self.sequence.update(controls)
+        if not self.paused:
+            self.sequence.update(controls)# if paused, do not advance sequence
         self.display()
         if share.devmode: self.devtools()
     def update(self,controls):

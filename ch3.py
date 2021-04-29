@@ -504,7 +504,7 @@ class obj_scene_ch3p19death(page.obj_chapterpage):
                 'Now go back and try to act more "heroic". ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
 
 
 

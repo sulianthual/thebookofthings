@@ -1192,6 +1192,459 @@ class obj_scene_ch7p48(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p49())
     def setup(self):
+        self.text=['"Fight test: standing ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        self.addpart( draw.obj_image('heromechbase',(640-360,480),scale=0.6) )
+        self.addpart( draw.obj_image('villainmechbase',(640+360,480),scale=0.6) )
+
+class obj_scene_ch7p49(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p48())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p50())
+    def setup(self):
+        self.text=['"Fight test: base ']
+        # test
+        self.addpart( draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        self.addpart( draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        self.addpart( draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        self.addpart(  draw.obj_image('castle',(640,180),scale=0.35) )
+        self.addpart( draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        self.addpart(  draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        self.addpart(  draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        self.addpart(  draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        self.addpart(  draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        self.addpart(  draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+
+
+
+class obj_scene_ch7p50(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p49())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p51())
+    def setup(self):
+        self.text=['"Fight test: punch ']
+        # test
+        self.addpart( draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('castle',(640,180),scale=0.35) )
+        self.addpart( draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        self.addpart( draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        self.addpart( draw.obj_image('mechpunch',(640,360),path='premade') )
+        self.addpart( draw.obj_image('gun',(233,373),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cave',(585,619),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cave',(838,617),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('lightningbolt',(907,479),scale=0.35,rotate=54,fliph=False,flipv=False) )
+    def presetup(self):
+        super().presetup()
+        # villainmech punch
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part5', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('mechpunch',(640,360),path='premade') )
+        dispgroup1.addpart( 'part8', draw.obj_image('gun',(233,373),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('cave',(585,619),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('cave',(838,617),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('lightningbolt',(907,479),scale=0.35,rotate=54,fliph=False,flipv=False) )
+        dispgroup1.snapshot((640-50,360,500-50,330),'villainmechpunch')
+
+
+class obj_scene_ch7p51(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p50())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p52())
+    def setup(self):
+        self.text=['"Fight test: block ']
+        # test
+        self.addpart( draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        # self.addpart( draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        # self.addpart( draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        self.addpart(  draw.obj_image('castle',(640,180),scale=0.35) )
+        self.addpart( draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        self.addpart(  draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        self.addpart(  draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        self.addpart(  draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        #
+        # self.addpart(  draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        # self.addpart(  draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        #
+        #
+        # self.addpart( draw.obj_drawing('mechblock',(640-200,360),shadow=(200,200)) )
+        # self.addpart( draw.obj_image('mechblock',(640-200,360)) )
+        self.addpart( draw.obj_image('mechblock',(640-200,360),path='premade') )
+
+        #
+        # self.addpart( draw.obj_imageplacer(self,'gun','lightningbolt') )
+        self.addpart( draw.obj_image('gun',(242,316),scale=0.3,rotate=66,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('lightningbolt',(378,324),scale=0.35,rotate=174,fliph=True,flipv=False) )
+
+
+    def presetup(self):
+        super().presetup()
+        # villainmech block
+        dispgroup1=draw.obj_dispgroup((640,360))
+
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part5', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part7', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part9', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('mechblock',(640-200,360),path='premade') )
+        dispgroup1.addpart( 'part11', draw.obj_image('gun',(242,316),scale=0.3,rotate=66,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part12', draw.obj_image('lightningbolt',(378,324),scale=0.35,rotate=174,fliph=True,flipv=False) )
+        dispgroup1.snapshot((640-80,360,500-80,330),'villainmechblock')
+
+
+class obj_scene_ch7p52(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p51())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p53())
+    def setup(self):
+        self.text=['"Fight test: hit ']
+        # test
+        self.addpart( draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        # self.addpart( draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        # self.addpart( draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        self.addpart(  draw.obj_image('castle',(640,180),scale=0.35) )
+
+        self.addpart(  draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        self.addpart(  draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        #
+        # self.addpart(  draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        # self.addpart(  draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        # self.addpart( draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        # self.addpart(  draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        #
+        #
+        # self.addpart( draw.obj_drawing('mechhit',(640,360-100),shadow=(300,100)) )
+        # self.addpart( draw.obj_image('mechhit',(640,360-100)) )
+        self.addpart( draw.obj_image('mechhit',(640,360-100),path='premade') )
+
+        #
+        # self.addpart( draw.obj_imageplacer(self,'gun','lightningbolt','mountain') )
+        self.addpart( draw.obj_image('gun',(467,104),scale=0.3,rotate=90,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('lightningbolt',(821,102),scale=0.35,fliph=True,flipv=True) )
+        self.addpart( draw.obj_image('mountain',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('gun',(242,316),scale=0.3,rotate=66,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('lightningbolt',(378,324),scale=0.35,rotate=174,fliph=True,flipv=False) )
+
+    def presetup(self):
+        super().presetup()
+        # villainmech hit
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part5', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part6', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.addpart( 'part8', draw.obj_image('mechhit',(640,360-100),path='premade') )
+        dispgroup1.addpart( 'part10', draw.obj_image('gun',(467,104),scale=0.3,rotate=90,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('lightningbolt',(821,102),scale=0.35,fliph=True,flipv=True) )
+        dispgroup1.addpart( 'part12', draw.obj_image('mountain',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part13', draw.obj_image('mountain',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        dispgroup1.snapshot((640,360,300,350),'villainmechhit')
+
+
+class obj_scene_ch7p53(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p52())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p54())
+    def setup(self):
+        self.text=['"Fight test: hero base ']
+        self.addpart( draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade') )
+        self.addpart( draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        self.addpart( draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        self.addpart( draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        self.addpart( draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        self.addpart( draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        self.addpart( draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        self.addpart( draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
+        self.addpart( draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        self.addpart( draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        self.addpart( draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+
+class obj_scene_ch7p54(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p53())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p55())
+    def setup(self):
+        self.text=['"Fight test: hero punch ']
+        # test
+        self.addpart( draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        self.addpart( draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        self.addpart( draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        self.addpart( draw.obj_image('mechpunch',(640,360),path='premade') )
+        self.addpart( draw.obj_image('fish',(233,373),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sailboat',(585,619),scale=0.25,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('sailboat',(838,617),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(907,479),scale=0.35,rotate=54,fliph=True,flipv=True) )
+    def presetup(self):
+        super().presetup()
+        # heromech punch
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part5', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('mechpunch',(640,360),path='premade') )
+        dispgroup1.addpart( 'part7', draw.obj_image('fish',(233,373),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(585,619),scale=0.25,rotate=0,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('sailboat',(838,617),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('flower',(907,479),scale=0.35,rotate=54,fliph=True,flipv=True) )
+        dispgroup1.snapshot((640-50,360,500-50,330),'heromechpunch')
+
+class obj_scene_ch7p55(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p54())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p56())
+    def setup(self):
+        self.text=['"Fight test: hero block ']
+        # test
+        self.addpart( draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        self.addpart(  draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        self.addpart( draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        self.addpart(  draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        self.addpart(  draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        self.addpart(  draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        self.addpart( draw.obj_image('mechblock',(640-200,360),path='premade') )
+        self.addpart( draw.obj_image('fish',(242,316),scale=0.3,rotate=-66,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(378,324),scale=0.35,rotate=174,fliph=False,flipv=True) )
+    def presetup(self):
+        super().presetup()
+        # heromech block
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part6', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('mechblock',(640-200,360),path='premade') )
+        dispgroup1.addpart( 'part10', draw.obj_image('fish',(242,316),scale=0.3,rotate=-66,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('flower',(378,324),scale=0.35,rotate=174,fliph=False,flipv=True) )
+        dispgroup1.snapshot((640-80,360,500-80,330),'heromechblock')
+
+
+
+class obj_scene_ch7p56(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p55())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p57())
+    def setup(self):
+        self.text=['"Fight test: hero hit ']
+        # test
+        self.addpart( draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        self.addpart( draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        self.addpart( draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        self.addpart(  draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        self.addpart(  draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        self.addpart(  draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        self.addpart( draw.obj_image('mechhit',(640,360-100),path='premade') )
+        self.addpart( draw.obj_image('fish',(467,104),scale=0.3,rotate=90,fliph=True,flipv=True) )
+        self.addpart( draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+    def presetup(self):
+        super().presetup()
+        # heromech hit
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        dispgroup1.addpart( 'part7', draw.obj_image('mechhit',(640,360-100),path='premade') )
+        dispgroup1.addpart( 'part8', draw.obj_image('fish',(467,104),scale=0.3,rotate=90,fliph=True,flipv=True) )
+        dispgroup1.addpart( 'part9', draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part10', draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part11', draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        dispgroup1.snapshot((640,360,300,350),'heromechhit')
+
+class obj_scene_ch7p57(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p56())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p58())
+    def setup(self):
+        self.text=['"Fight test: standing ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+
+class obj_scene_ch7p58(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p57())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p59())
+    def setup(self):
+        self.text=['"Fight test: hero hits ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        # self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        animation1=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360),record=False)
+        animation1.addimage('heromechpunch')
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('mechfight_heropunches2','villainmechbase',(640,360),record=False,sync=animation1)
+        animation2.addimage('villainmechhit')
+        self.addpart( animation2 )
+
+
+class obj_scene_ch7p59(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p58())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p60())
+    def setup(self):
+        self.text=['"Fight test: villain hits ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        # self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+
+
+        # animation0=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360),record=False)
+        # animation0.addimage('heromechpunch')
+        # self.addpart( animation0 )
+        animation1=draw.obj_animation('mechfight_villainpunches1','villainmechbase',(640,360),record=False)
+        animation1.addimage('villainmechpunch')
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('mechfight_villainpunches2','heromechbase',(640,360),record=False,sync=animation1)
+        animation2.addimage('heromechhit')
+        self.addpart( animation2 )
+
+class obj_scene_ch7p60(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p59())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p61())
+    def setup(self):
+        self.text=['"Fight test: villain blocks ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        # self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        animation1=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360),record=False)
+        animation1.addimage('heromechpunch')
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('mechfight_villainblocks','villainmechbase',(640,360),record=False,sync=animation1)
+        animation2.addimage('villainmechblock')
+        self.addpart( animation2 )
+
+class obj_scene_ch7p61(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p60())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p62())
+    def setup(self):
+        self.text=['"Fight test: hero blocks ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        animation1=draw.obj_animation('mechfight_villainpunches1','villainmechbase',(640,360),record=False)
+        animation1.addimage('villainmechpunch')
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('mechfight_heroblocks','heromechbase',(640,360),record=False,sync=animation1)
+        animation2.addimage('heromechblock')
+        self.addpart( animation2 )
+
+class obj_scene_ch7p62(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p61())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p63())
+    def setup(self):
+        self.text=['"Fight test: hero dies ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        # animation1=draw.obj_animation('mechfight_herodies','heromechbase',(640,360),record=False)
+        # self.addpart( animation1 )
+
+        animation1=draw.obj_animation('mechfight_villaindies','villainmechbase',(640,360),record=False)
+        self.addpart( animation1 )
+
+
+class obj_scene_ch7p63(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p62())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p64())
+    def setup(self):
+        self.text=['"Fight test: villain counters ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        # self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+
+        animation2=draw.obj_animation('mechfight_villainblocks','villainmechbase',(640,360),record=False)
+        animation2.addimage('villainmechblock')
+        self.addpart( animation2 )
+
+        animation1=draw.obj_animation('mechfight_herocountered','heromechbase',(640,360),record=False,sync=animation2)
+        animation1.addimage('heromechpunch')
+        animation1.addimage('heromechhit')
+        self.addpart( animation1 )
+
+class obj_scene_ch7p64(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p63())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p65())
+    def setup(self):
+        self.text=['"Fight test: villain counters ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+
+        animation2=draw.obj_animation('mechfight_heroblocks','heromechbase',(640,360),record=False)
+        animation2.addimage('heromechblock')
+        self.addpart( animation2 )
+
+        animation1=draw.obj_animation('mechfight_villaincountered','villainmechbase',(640,360),record=False,sync=animation2)
+        animation1.addimage('villainmechpunch')
+        animation1.addimage('villainmechhit')
+        self.addpart( animation1 )
+
+class obj_scene_ch7p65(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p64())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p66())
+    def setup(self):
         self.text=['Here is how this fight works, said the book of things. ',\
                     'Enter the right command when prompted. ',\
                     ('Press Enter when you are ready to begin.',share.colors.instructions),\
@@ -1204,163 +1657,46 @@ class obj_scene_ch7p48(page.obj_chapterpage):
             animation1.addimage('empty',path='premade')
             self.addpart( animation1 )
 
-class obj_scene_ch7p49(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p48())
-    def nextpage(self):
-        if self.world.win or share.devmode:
-            share.scenemanager.switchscene(obj_scene_ch7p50())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch7p49death())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[]
-        self.world=world.obj_world_mechfight(self)
-        self.addpart(self.world)
-
-
-class obj_scene_ch7p49death(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p49())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p49())
-    def setup(self):
-        self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
-                'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
-                'Now go back and try to act more "heroic". ',\
-                   ]
-        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
-
-
-
-class obj_scene_ch7p50(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p49())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p51())
-    def setup(self):
-        self.text=['You won! The game ends soon ']
-
-
-class obj_scene_ch7p51(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p50())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p52())
-
-
-class obj_scene_ch7p52(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p51())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p53())
-
-
-
-class obj_scene_ch7p53(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p52())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p54())
-
-class obj_scene_ch7p54(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p53())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p55())
-
-class obj_scene_ch7p55(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p54())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p56())
-
-
-class obj_scene_ch7p56(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p55())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p57())
-
-
-class obj_scene_ch7p57(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p56())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p58())
-
-
-class obj_scene_ch7p58(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p57())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p59())
-
-
-
-class obj_scene_ch7p59(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p58())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p60())
-
-class obj_scene_ch7p60(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p59())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p61())
-
-class obj_scene_ch7p61(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p60())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p62())
-
-class obj_scene_ch7p62(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p61())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p63())
-
-
-class obj_scene_ch7p63(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p62())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p64())
-
-
-class obj_scene_ch7p64(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p63())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p65())
-
-
-class obj_scene_ch7p65(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p64())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p66())
-
-
 class obj_scene_ch7p66(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p65())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p67())
-
+    def setup(self):
+        self.text=['"Fight test: hero blocks ']
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase') )
+        # self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        # animation1=draw.obj_animation('mechfight_villainpunches1','villainmechbase',(640,360),record=False)
+        # animation1.addimage('villainmechpunch')
+        # self.addpart( animation1 )
+        # animation2=draw.obj_animation('mechfight_heroblocks','heromechbase',(640,360),record=False,sync=animation1)
+        animation2=draw.obj_animation('mechfight_heroblocks','heromechbase',(640,360),record=False)
+        animation2.addimage('heromechblock')
+        self.addpart( animation2 )
+        animation3=draw.obj_animation('mechfight_villaincountered','villainmechbase',(640,360),record=False,sync=animation2)
+        animation3.addimage('villainmechpunch')
+        animation3.addimage('villainmechhit')
+        self.addpart( animation3 )
 
 class obj_scene_ch7p67(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p66())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p68())
+    def setup(self):
+        self.text=['"Fight test: hero dies ']
+        self.addpart( draw.obj_imageplacer(self,'cloud','heromechbase') )
+        # self.addpart( draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
+        # self.addpart( draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        # animation1=draw.obj_animation('mechfight_herodies','heromechbase',(640,360),record=False)
+        # self.addpart( animation1 )
 
+        animation1=draw.obj_animation('mechfight_herodies','heromechbase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('mechfight_villaindies_cloud1','cloud',(640,360),record=False,sync=animation1)
+        animation2.addimage('empty',path='premade')
+        self.addpart( animation2 )
 
 class obj_scene_ch7p68(page.obj_chapterpage):
     def prevpage(self):
