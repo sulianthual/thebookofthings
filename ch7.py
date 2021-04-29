@@ -1009,7 +1009,20 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
         dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-
+        # villainmech complete no face
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1a', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part2a', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part3a', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        dispgroup1.addpart( 'part4a', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
 
 class obj_scene_ch7p42(page.obj_chapterpage):
     def prevpage(self):
@@ -1243,7 +1256,28 @@ class obj_scene_ch7p50(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p51())
     def setup(self):
-        self.text=['You won! The game ends soon ']
+        self.text=[\
+            '"The  ',('super-meca-villain',share.colors.villain),\
+            ' fell over and started smoking.  ',\
+            ('{villainname}',share.colors.villain),' got out of the mech and said: ',\
+            'Ugh, I guess you won. Well played, I admit my defeat".',\
+                ]
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase_noface','villainbase','moon','heromechbase','cloud','house','bush','pond','flower') )
+        self.addpart( draw.obj_image('villainmechbase_noface',(1029,524),scale=0.73,rotate=-118,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch7villainfrommec','villainbase',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        self.addpart( animation1 )
+        self.addpart( draw.obj_image('bush',(129,606),scale=0.52,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(760,582),scale=0.23,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(539,601),scale=0.27,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(195,310),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(349,603),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(412,627),scale=0.22,rotate=0,fliph=True,flipv=False) )
+        # animation2=draw.obj_animation('ch7villainfrommec_cloud1','cloud',(640,360),record=False,sync=animation1)
+        # self.addpart( animation2 )
+        self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(820,300),record=False,sync=animation1) )
+        self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(980,222),record=False,sync=animation1) )
+        self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(1202,320),record=False,sync=animation1) )
 
 
 class obj_scene_ch7p51(page.obj_chapterpage):
@@ -1251,6 +1285,25 @@ class obj_scene_ch7p51(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p50())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p52())
+    def setup(self):
+        self.text=[\
+            '"The  ',('grandmasters of deceit',share.colors.villain),' shouted: ',\
+            'Loooser, loooser! That was quite pitful ',('{villainname}',share.colors.villain),'. ',\
+            'You still have a lot to learn about the evil ways. ',\
+            'Now go back to training immediately!". ',\
+                ]
+        self.addpart( draw.obj_image('house',(1041,376),scale=0.48,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(869,277),scale=0.27,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(81,478),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(1174,607),scale=0.31,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(1078,555),scale=0.31,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(1184,499),scale=0.24,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch7_villainmech_masters1','bunnybase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch7_villainmech_masters2','elderbase',(640,360),record=False,sync=animation1)
+        self.addpart( animation2 )
+        animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
+        self.addpart( animation3 )
 
 
 class obj_scene_ch7p52(page.obj_chapterpage):
@@ -1258,209 +1311,134 @@ class obj_scene_ch7p52(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p51())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p53())
-
-
+    def setup(self):
+        self.text=[\
+            '"Now its time to party, said the  ',('grandmasters of deceit',share.colors.villain),'. ',\
+            'Absolutely everyone is here! ',\
+            'Why. Well, simply because it is the ',\
+            ('end of the story',share.colors.villain),' silly."',\
+                ]
+        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
 
 class obj_scene_ch7p53(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p52())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p54())
+    def setup(self):
+        self.text=[\
+            'Draw a cake, said the book things. It is time to celebrate! ',\
+                ]
+        self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200)) )
+
 
 class obj_scene_ch7p54(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p53())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p55())
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('A game by Sulian',(640,100),fontsize='large') )
+        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
 
 class obj_scene_ch7p55(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p54())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p56())
-
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('Thank you so much for playing',(640,100),fontsize='large') )
+        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
 
 class obj_scene_ch7p56(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p55())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p57())
-
-
-class obj_scene_ch7p57(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p56())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p58())
-
-
-class obj_scene_ch7p58(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p57())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p59())
-
-
-
-class obj_scene_ch7p59(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p58())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p60())
-
-class obj_scene_ch7p60(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p59())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p61())
-
-class obj_scene_ch7p61(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p60())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p62())
-
-class obj_scene_ch7p62(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p61())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p63())
-
-
-class obj_scene_ch7p63(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p62())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p64())
-
-
-class obj_scene_ch7p64(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p63())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p65())
-
-
-class obj_scene_ch7p65(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p64())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p66())
-
-
-class obj_scene_ch7p66(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p65())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p67())
-
-
-class obj_scene_ch7p67(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p66())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p68())
-
-
-class obj_scene_ch7p68(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p67())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p69())
-
-
-class obj_scene_ch7p69(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p68())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p70())
-
-
-class obj_scene_ch7p70(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p69())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p71())
-
-
-class obj_scene_ch7p71(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p70())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p72())
-
-
-class obj_scene_ch7p72(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p71())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p73())
-
-
-class obj_scene_ch7p73(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p72())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p74())
-
-
-class obj_scene_ch7p74(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p73())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p75())
-
-
-class obj_scene_ch7p75(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p74())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p76())
-
-
-class obj_scene_ch7p76(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p75())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p77())
-
-
-class obj_scene_ch7p77(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p76())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p78())
-
-
-class obj_scene_ch7p78(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p77())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p79())
-
-
-class obj_scene_ch7p79(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p78())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch7p80())
-
-
-
-
+        share.scenemanager.switchscene(obj_scene_ch7end())
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('The End',(640,100),fontsize='huge') )
+        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
 
 
 class obj_scene_ch7end(page.obj_chapterpage):
-    # def prevpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch7p50())
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p56())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7unlocknext())
+        share.scenemanager.switchscene(obj_scene_ch7endend())
+    # def nextpage(self):
+    #     share.scenemanager.switchscene(obj_scene_ch7unlocknext())
     def setup(self):
-        self.text=['Well done, said the book of things. ',\
-       'You finished the story! ',\
+        self.text=['This is goodbye, said the book of things. ',\
+                   'Come back anytime to play again. ',\
+                  'Till next time. ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
+class obj_scene_ch7endend(page.obj_chapterpage):
+    def setup(self):
+        self.text=['The book vanished... ']
 
 
 class obj_scene_ch7unlocknext(page.obj_chapterpage):
