@@ -3391,7 +3391,7 @@ class obj_world_ridecow(obj_world):
         ##########################33
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
-        self.win=False# won game
+        self.win=False# won/lost the game
         # default parameters
         self.heroxystart=(640,360)
         # layering
@@ -3419,8 +3419,8 @@ class obj_world_ridecow(obj_world):
         self.hero.dict['hurt'].show=False
         self.hero.rx=25
         self.hero.ry=50#75#50
-        self.heromx=5# move rate
-        self.heromy=5#
+        self.heromx=7#5# move rate
+        self.heromy=7#5#
         self.heroxmin=250# boundaries
         self.heroxmax=1280-200
         self.heroymin=200-50
@@ -3445,7 +3445,7 @@ class obj_world_ridecow(obj_world):
         # self.shotprobas=[40,0,60]# probas of palmtree, rock, bush...
         self.shotprobas=[50,0,50]# probas of palmtree, rock, bush...
         # health bar
-        self.maxherohealth=5# starting hero health
+        self.maxherohealth=14# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360),foreground=False)
         for i in range(self.maxherohealth):

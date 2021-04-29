@@ -283,7 +283,7 @@ class obj_scene_ch6p10(page.obj_chapterpage):
                    ]
         self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
         # self.addpart( draw.obj_drawing('paperframe',(440+200,400),shadow=(200,250)) )
-        self.addpart( draw.obj_image('paperframe',(440+200,400)) )
+        self.addpart( draw.obj_image('paperframe',(440+200,400),path='premade') )
 
 
 class obj_scene_ch6p11(page.obj_chapterpage):
@@ -873,7 +873,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
     def setup(self):
         self.text=['Here is how this works, said the book of things. ',\
                     'Avoid the palm trees and make it to the ship. ',\
-                    'Press Enter when you are ready to begin. ',\
+                    ('Press Enter when you are ready to begin.',share.colors.instructions),\
                    ]
         self.textkeys={'pos':(100,50),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True)
@@ -1046,7 +1046,7 @@ class obj_scene_ch6p46(page.obj_chapterpage):
                 ('{heroname}',share.colors.hero),' travelled back ',
                 ('home',share.colors.location),'". ',\
                    ]
-        self.world=world.obj_world_travel(self,start='beach',goal='home',chapter=6)
+        self.world=world.obj_world_travel(self,start='beach',goal='home',chapter=6,boat=True)
         self.addpart(self.world)
 
 class obj_scene_ch6p47(page.obj_chapterpage):
