@@ -17,7 +17,7 @@ import draw
 import page
 import world
 #
-import cha
+
 
 ##########################################################
 ##########################################################
@@ -33,7 +33,6 @@ class obj_scene_testmenu(page.obj_page):
         self.list=[]# list of tests
         self.loadtests()
         self.addpart(draw.obj_textbox('Appendix Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
-        self.addpart(draw.obj_textbox('[Space: Arcade]',(1120,700),fontsize='smaller'))
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
@@ -55,10 +54,8 @@ class obj_scene_testmenu(page.obj_page):
             if share.itest == -1: share.itest=self.listlen-1
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.itest],init=True)
-        if (controls.esc and controls.escc) :
+        if (controls.space and controls.spacec) :
             share.scenemanager.switchscene(share.titlescreen)
-        if (controls.space and controls.spacec):
-            share.scenemanager.switchscene(cha.obj_scene_arcademenu())
 
     def loadtests(self):# load all tests
         # developper
@@ -140,6 +137,9 @@ class obj_scene_alldrawings(obj_testpage):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
         for c,value in enumerate(['sailorhead','skeletonhead','cow','sailboat','palmtree','wave']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['cake']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         # y1+=dy1
         # for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):

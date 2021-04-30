@@ -29,44 +29,31 @@ No more advanced modular story! Only one linear story.
                     retrieve 3 parts of password in 3 locations (north,west,south)
 - Chapter VII: final fight against villain, rescue the princess
 
-
-##################
-* Some Plot Themes (that are funny, against the norms):
-
-- The sidekick is the most feared bug:
-we learn that our most feared bugs are our best friends
-- From 3 locations we learn to lie, cheat and steal:
-           with lying minigame (lie to win, with lying game)
-           with rock-paper-scissors (cheat to win, with rock paper scissors)
-           with stealing the treasure (steal in the skeletons lair)
-  (we are supposed to learn strength,wisdom and courage but it turns out differently)
-- think about other funny themes:
-           for example, partner is cheating with villain in final chapter, etc...
-- the password is: old smelly fart
-                   old =what the elder is
-                   smelly=what the west character is (a bunny, a mushroom, a flower?)
-                   fart=speed in nordic (what the sailor likes, to sail fast)
+###################
+* General Story Arc:
+Each day/chapter of the story follows somewhat an arc (even if varying in content):
+arc:     wake up -> morning game -> travel1 -> midday quest -> travel -> afternoon fight (game) -> travel2 -> aftermath -> ending
+phases:      *          morning             |                           afternoon               |        evening       *
+tension level: 0           2           1         2                 1           3                 1            2          0
+morning games: morning breakfast, fishing, hunting, drinking, picking up flowers (no consequences)
+midday quest: elder on mountain, gather crew, find villain's weakness....
+final fight: dodge bullets, stomp fight, cut rope stealthily, takedown henchmens....
+aftermath games: eat diner, serenade/kiss...(happy ending or not)
+travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
+travel2: X go back home, or to some location for an ending
+*** Add a quest (between morning game and afternoon fight)
 
 
 ##################
-* Game Map
-- hero house: remove the trees (keep them for west forest) and instead add a pond (for fishing) (???)
-- elder in highest peak: climb, play minigame (lie or rockpaperscissors), avoid falling boulders???
-- sailor(or pirate) in the south: quest is must retrieve treasure from ghost ship
-         draw skeletons (henchmen), infiltrate with stealth minigames
-         minigame stealth cut rope/open door (reuse drinking minigame)
-         the sailor is actually the baddie and gets arrested/judged by the peaceful skeletons (?)
-- magical forest in the west: character is a bunny, giant mushroom, flower????
+* Some Additions to Make (maybe later):
 
-
-##################
-* Some Additions to Make:
 - Chapter 1: draw the stickman (only give the shape of the head). Do positions:
     Standing (legs straigth, facing right)
     Walking (legs open)
     Crouching
     Jumping
     => Then have all movements needed with WASD.
+    => use the stickman base for all drawings
 - Motivate it with platform minigame
 
 - Chapter 1: Add a TV and antenna (draw)
@@ -79,13 +66,11 @@ we learn that our most feared bugs are our best friends
              add a tennis game to play against the partner
              make the garden the spot where could replay all minigames
 
+- Chapter 2: The music key should not be drawn, except by player.
+
 - Chapter 3: misses at least one drawing (?)
              could ask to draw the lightning bolt here maybe
              castle entrance would be spot to replay all minigames
-
-- Chapter 4: I am the grandmaster of deceipt of the east
-             some also call me the eastern bunny
-             (not to be confused with the easter bunny, that guy scares even me)
 
 - Chapter 4: the lying minigame should be a WORLD, not a series of PAGES
             this makes use of the datamanager.temp whish is messy
@@ -99,25 +84,24 @@ we learn that our most feared bugs are our best friends
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
              or freezing temperatures (draw a snowman!)
 
-- Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
+- Chapter 5: make climbing into 3 minigames (childs)
 
 - Chapter 6: should cannon and parachute hero into island (from the boat)
              make minigame where has to aim the cannon (A,D), shoot (W)
             then open parachute at the right time (S). Should fall vertically to correct area (the island)
+
+- Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
 
 - Somewhere...: Add a game with parabolic shooting ?
              can be done easily with naval battle and a cannon
              (could have been arc and bow for hunting too)
              or can be arc+bow on beach: multiple skeleton running from right to left (very slowly)
 
-- Chapter 7: Put dodge bullet fight again + likely stomping
-             may fight the villain+partner (if they are caught in bed cheating)
+-Somewhere: recycle the breakfast drinking minigame
+            (change the animations)
+            use it to cut a rope, or else stealthily
 
-
-- Chapter 7: Make a giant mech battle! villain transforms, then hero too when grandmasters come to help him
-             use only face of villain (same for hero), with drawings around
-             villain=castle head, trees for arms, mountains for shoulders
-             hero=house head, palm trees for arms, bushes for shoulders, maybe ships for shoes
+- World Map: path should not be drawn except by player
 
 - Credits: Make a song about "lie, cheat and steal"
           Play it with everyone dancing, with a little ball like a karaoke
@@ -135,110 +119,63 @@ we learn that our most feared bugs are our best friends
           (you can replace learn how to=> you need to, and so on...)
 
 
-##################
-* Chapter 6 Plot:
-For this chapter DRAW AS YOU GO
-- unlike chapter 4,5, the sailor COMES to the hero house
-  (to tell about the treasure). He heard of the hero from the 2 other grandmasters
-  ( this is like the plot of Treasure Island )
-- sailor says will give password if helps retrieve treasure
-- treasure is in skull island.
--draw skull (serves as island).
-    Also serves to make skeleton henchmens (and their boss=eyelid+pirate hat)
-- infiltrate the island: stealth minigames (move across and hide in furnitures/stuff)
-- get the treasure: the treasure is a cow.
-                    the skeletons keep it for its great milk
-                    the sailor is stealing it
-
-- alert of skeletons, start escape:
-  run on beach with skeletons behind (avoid obstacles like boulders, bushes...)
-- but get arrested with sailor: skeletons say he is a recidivist always trying to steal
-- get judged with sailor: but because can LIE get out of it (also maybe because can CHEAT)
-                          can maybe even just blame sailor
-- can go see sailor in jail later on (and keep his ship to sail yourself)
-
-- after chase on cow, the milk has turned to cream (temporarily)
-
 
 ##################
-* Technical
+* Other possible additions:
+
+- Cleanup drawings (should be EXTREMELY minimal). Remove for example:
+        music key chapter 2
+        map paths
+        floor on dodge bullets (has grass marks)
+        grass marks for stomp game too
+        chapter 3 electric shock on hero
+        alarm clock -> must be white
+        chapter 5 mountain peak with snow
+
+
+- allow player to name more stuff: like locations (the evil lair, home, the highest peak, etc...)
 - Make game website (thebookofthings.com). with game download etc...
 - remove unlock system (?)
 - in file progress, add part: this can tell which part of chapter is done,
   if exiting and wanting to go back
-- add place where all drawings can be redone
-- add place where all games can be replayed (maybe free roaming once a region has been done?)
+  - Main menu should be: "settings, drawings, chapters, continue"
+- add place where all drawings can be redone (maybe free roaming once region is unlocked)
 - add new game plus: replay the game, but a few options are unlocked
                     like making more complex drawings, adding hats/pets/clothes....
                     and other small customizations
                     as well as making some games slightly harder
 - when moving on map, remove all text? It is more beautiful
-
-###################
-* General Story Arc:
-Each day of the story should follow somewhat an arc (even if varying in content):
-arc:     wake up -> morning game -> travel1 -> midday quest -> travel -> final fight (game) -> travel2 -> aftermath -> ending
-phases:      *          morning             |                           afternoon               |        evening       *
-tension level: 0           2           1         2                 1           3                 1            2          0
-morning games: morning breakfast, fishing, hunting, drinking, picking up flowers (no consequences)
-midday quest: elder on mountain, gather crew, find villain's weakness....
-final fight: dodge bullets, stomp fight, cut rope stealthily, takedown henchmens....
-aftermath games: eat diner, serenade/kiss...(happy ending or not)
-travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
-travel2: X go back home, or to some location for an ending
-*** Add a quest (between morning game and afternoon fight)
-
-
-###################
-* Possible Story twists to add:
-- change point of view (hero, partner,villain,fish, hero in the future,...)
-- new setting like tropical island and treasure hunt (palm tree, ship, shark fins, cannon fight, islands...)(eyelid on everyone)
 - medieval setting with a fight for the partner=princess
 - space setting (villain is the father?) (space element on everyone)
-- the hero is an anti-hero
+- the hero is an anti-hero. partner rescues the hero
 - parodie (they are "playing" their adventure)
-- partner rescues the hero
-- the hero is evil, the villain is good, the partner is evil
 - the fish becomes a river spirit (is huge)
 - they are all super-heroes
 - the fabric of reality: break everything, swapping images randomly
 - add flavors to characters:
    the hero was "always angry", "dumb as a rock", etc...
     then it may just affect the story text with options, but still add a lot of depth to the story
-- lie, cheat and steal:
-  chapt 4 we can have the hero lie (then betray the partner by killing the villain and enslaving her)
-  chapt 5 the hero learn to cheat with the elder
-  chapt 6 the hero learns to steal the treasure
-  Remember to lie, cheat and steal becomes the game's memo!
-- add a mirror: in villain chapter? in hero's house?
-  easy to make a character reflection in the mirror
-- name stuff: like locations (the evil lair, home, the highest peak, etc...)
-- pickup flowers: in hero house vicinity. then put in vase, or just offer to partner
-                  draw bush and flowers at same time?
-- map: allow player to place items (e.g. place 3 trees near the hero house, etc...)
+- Somewhere: add a mirror in villain chapter? in his lair?
+            easy to make a character reflection in the mirror
+            the villain and mirror can have conversations, and the mirror can be his sidekick (to be defeated)
+- allow player to place items (e.g. place 3 trees near the hero house, etc...)
 
 ###################
-Mini Game Ideas
+* Possible minigame additions:
 Hunt = Arrow Parabolic Arc [A][D] then [W]
-Situation? = Flappy Bird [W]
-Fight = Play Pong [W][S]
-stomping game [A][D]+[W]. Just jump on each other
-Fight = Mash [A][D]
-Fight = Rock Paper Scissors (choose quickly on beat [A][W][D])
-Mario level= move [A][D] and jump [W]
+Flappy Bird [W]
+Play Pong [W][S] (tennis with partner)
+stomping game [A][D]+[W] (with bunny that multiplies, add several bunnies that stomp)
+Mario level= move [A][D] and jump [W] (kind of already done)
 avoid falling boulders=[A][D]
 space invaders=[A][D]
-Kissing=[S] at right time for Hero/Princess moving opposite up down on left/right side of screen
 Basketball=jump and shoot Holding [S] in moving hoop laterally
 Bait=guide monster to trap [WASD]. It charges straigth
 Shooter=Cannon on fast rotating wheel, shoot stuff with [W]
 Indiana jones ball behind=[A][D] to avoid obstacles
 breakout game (pad, ball and horizontal layers of bricks)
-rock paper scissors (like alex kid). Countdown 3-2-1, can see villain choice that is random except on 1
 helicopters for hero/villain with flappy bird and shooting
 writing game: type quickly text or answer to it. What is your favorite color? ...etc...
-jump/duck. Simple for bullets (increase rythm)
-simple dinosaur game from google. just jump in time.
 skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
 
@@ -246,565 +183,3 @@ Atari games: https://games.aarp.org/category/atari-games
 ###################################################################################################################
 ####################################################################################################################
 ####################################################################################################################
-# Some drafts
-
-
-
-####3 Alarm clock
-
-class obj_scene_ch4p9(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p8())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p10())
-    def setup(self):
-        self.text=[\
-                   'Maybe we can improve this situation at breakfast. ',\
-                  'Draw a ',('coffee cup',share.colors.item),'. Then, draw an ',\
-                  ('alarm clock',share.colors.item),'(draw around the panel). ',\
-                   ]
-        self.addpart( draw.obj_drawing('coffeecup',(200+50,450),legend='Coffee Cup',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock',shadow=(200,200)) )
-        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
-        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
-
-    def endpage(self):
-        super().endpage()
-        # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
-        image1=draw.obj_image('alarmclockext',(640,360))
-        image2=draw.obj_image('alarmclockfill',(640,360),path='premade')
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,200),'alarmclock')
-        # combine alarmclock+alarmclockcenter8am=alarmclock8am
-        image1=draw.obj_image('alarmclock',(640,360))
-        image2=draw.obj_image('alarmclockcenter8am',(640,360),path='premade')
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,200),'alarmclock8am')
-
-####################################################################################################################
-
-
-# old cleanup trash instead of fishing (for river spirit quest)
-
-
-class obj_scene_choosefishing(page.obj_chapterpage):
-    def prevpage(self):
-        if share.datamanager.getword('hero_breakfast')=='drink':
-            share.scenemanager.switchscene(obj_scene_breakfast_drinking())
-        else:
-            share.scenemanager.switchscene(obj_scene_breakfast_notdrinking())
-    def nextpage(self):
-        if share.datamanager.getword('hero_fishing')=='pickuptrash':
-            share.scenemanager.switchscene(obj_scene_fishing_trashcleanup())
-        else:
-            share.scenemanager.switchscene(obj_scene_fishing_withtrash())
-    def setup(self):
-        self.text=[\
-                '"',('{heroname}',share.colors.hero),\
-                'decided what to do next". ',\
-                   ]
-        y1=400
-        self.addpart( draw.obj_textbox('The hero decided to:',(180,y1)) )
-        textchoice=draw.obj_textchoice('hero_fishing')
-        textchoice.addchoice('1. go fishing','fish',(540,y1))
-        textchoice.addchoice('2. Pick up the trash in the river','pickuptrash',(940,y1))
-        self.addpart( textchoice )
-        # self.addpart( draw.obj_imageplacer(self, 'fish','drink','guitar' ) )
-        self.addpart( draw.obj_image('fish',(534,525),scale=0.21,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('drink',(834,577),scale=0.21,rotate=-126,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('drink',(945,591),scale=0.21,rotate=-60,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('guitar',(1045,564),scale=0.21,rotate=-122,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('drink',(935,495),scale=0.21,rotate=-242,fliph=False,flipv=False) )
-
-
-        class obj_scene_fishing_withtrash(page.obj_chapterpage):
-            def prevpage(self):
-                share.scenemanager.switchscene(obj_scene_choosefishing())
-            def nextpage(self):
-                share.scenemanager.switchscene(obj_scene_traveltolair())
-            def triggernextpage(self,controls):
-                return (share.devmode and controls.enter and controls.enterc) or self.world.done
-            def setup(self):
-                self.text=[\
-                            '"',('{heroname}',share.colors.hero),\
-                             ' went to the river and caught a fish".',
-                           ]
-                self.world=world.obj_world_fishing(self)
-                self.addpart(self.world)
-                self.addpart( draw.obj_image('drink',(99,649),scale=0.32,rotate=124,fliph=False,flipv=False) )
-                self.addpart( draw.obj_image('drink',(254,657),scale=0.32,rotate=244,fliph=False,flipv=False) )
-                self.addpart( draw.obj_image('guitar',(457,675),scale=0.32,rotate=250,fliph=False,flipv=False) )
-                self.addpart( draw.obj_image('coffeecup',(236,570),scale=0.32,rotate=146,fliph=False,flipv=False) )
-                self.addpart( draw.obj_image('drink',(69,544),scale=0.32,rotate=210,fliph=False,flipv=False) )
-
-
-class obj_scene_fishing_trashcleanup(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_choosefishing())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_traveltolair())
-    def setup(self):
-        self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
-                     ' went to the river and picked up all the trash. ',\
-                      'The fish was quite ',\
-                      ('pleased',share.colors.partner),' with that".',\
-                   ]
-        animation1=draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25)
-        self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5_pickuptrash1','love',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
-        self.addpart( animation2 )
-
-
-####################################################################################################################
-
-
-# draw elements for mini game fight with helicopters
-class obj_scene_ch3p9(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p8())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
-    def setup(self):
-        self.text=[\
-       This is going to be epic, said the book of things.
-       Draw an ',('helicopter',share.colors.item),'around the
-                 ('hero',share.colors.hero),'\' s head and a
-                 ('cloud',share.colors.item),\
-       for a battle in the skies.
-                   ]
-
-        self.addpart( draw.obj_drawing('helicopter',(400,450),legend='Helicopter (facing right)',shadow=(300,200)) )
-        self.addpart( draw.obj_image('herohead',(500,450),scale=0.5) )
-        self.addpart( draw.obj_drawing('cloud',(1000,450),legend='Cloud',shadow=(200,200)) )
-    def endpage(self):
-        super().endpage()
-        # save heropter =hero+helicopter
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('helicopter',(400,450)) )
-        dispgroup1.addpart('part2',draw.obj_image('herohead',(500,450),scale=0.5) )
-        dispgroup1.snapshot((400,450,300,200),'heropter')
-        # save villainpter=villain+helicopter
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('helicopter',(400,450)) )
-        dispgroup1.addpart('part2',draw.obj_image('villainhead',(500,450),scale=0.5) )
-        dispgroup1.snapshot((400,450,300,200),'villainpter')
-
-# Mini Game: fight in the air (like flapping)
-class obj_world_airfight(obj_world):
-    def setup(self):
-        self.done=False# end of minigame
-        self.goal=False# minigame goal reached
-        # boundaries
-        self.ymin=0+100
-        self.ymax=720-60
-        # sky background
-        # self.sky=obj_grandactor(self,(640,360))
-        # self.sky.addpart('img', draw.obj_image('cloud',(640,360),scale=0.5) )
-        # hero (some dynamics for flapping)
-        self.hero=obj_grandactor(self,(250,620))
-        self.hero.addpart('img', draw.obj_image('heropter',(250,620),scale=0.3) )
-        self.hero.addpart('imgr', draw.obj_image('heropter',(250,620),scale=0.3,rotate=15) )
-        self.hero.dict['img'].show=True
-        self.hero.dict['imgr'].show=False
-        self.herodt=1# hero time increment
-        self.herofy=0# hero force
-        self.herov=0# hero velocity
-        self.herog=1# gravity rate
-        self.herod=0.1# dissipation rate
-        self.heroj=20# jump rate
-        self.hero.rx=50# hitbox
-        self.hero.ry=30
-        self.hero.r=30
-        # villain (goes up and down in sin)
-        self.villain=obj_grandactor(self,(1280-150,360))
-        self.villain.addpart('img', draw.obj_image('villainpter',(1280-150,360),scale=0.5,fliph=True) )
-        self.villainp=1# sin period
-        self.villaina=0# time increment (angle )
-        self.villaintimert1=160# first shot timer
-        self.villaintimert2=40#80# consecutive shots
-        self.villaintimershoot=tool.obj_timer(self.villaintimert1,cycle=True)#timer between shots
-        self.villaintimershoot.start()
-        # cannonballs
-        self.cannonballs=[]# empty list
-        # health bar
-        self.maxherohealth=5# starting hero health
-        self.herohealth=self.maxherohealth# updated one
-        self.healthbar=obj_grandactor(self,(200,680))
-        for i in range(self.maxherohealth):
-            # self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,720-25),scale=0.125) )
-            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50,720-50-i*75),scale=0.125) )
-        # timer to done
-        self.timerend=tool.obj_timer(80)# goal to done
-    def makecannonball(self,x,y):
-        cannonball=obj_grandactor(self,(x,y))
-        cannonball.addpart('img', draw.obj_image('cannonball',(x,y),scale=0.5,path='premade') )
-        cannonball.rx=15# hitbox
-        cannonball.ry=15
-        cannonball.r=15
-        cannonball.speed=5#tool.randint(2,8)
-        self.cannonballs.append(cannonball)
-    def killcannonball(self,cannonball):
-        self.cannonballs.remove(cannonball)
-        cannonball.kill()
-    def update(self,controls):
-        super().update(controls)
-        if not self.goal:
-            # goal unreached state
-            # hero dynamics
-            self.herofy=0# force
-            self.herofy += self.herog# gravity
-            if controls.w and controls.wc:# flap
-                self.herofy -= self.heroj
-                self.herov=0# reset velocity
-            # hero dynamics
-            self.herov += self.herodt*(self.herofy-self.herod*self.herov)# dtv=g+flap-dv**2
-            self.hero.movey(self.herodt*self.herov)# dty=v
-            if self.herov<-5:
-                self.hero.dict['img'].show=False
-                self.hero.dict['imgr'].show=True
-            else:
-                self.hero.dict['img'].show=True
-                self.hero.dict['imgr'].show=False
-            # boundaries
-            if self.hero.y>self.ymax:
-                self.hero.movetoy(self.ymax)
-                self.herov *= -0.5# loss from bounce
-            elif self.hero.y<self.ymin:
-                self.hero.movetoy(self.ymin)
-                self.herov *= -0.5# losse from bounce
-            # villain
-            self.villain.movetoy( (1+tool.sin(self.villaina/self.villainp))/2*(self.ymax-self.ymin)+self.ymin )
-            self.villaina += 1
-            if self.villaina>360: self.villaina=0
-            #villainshoot
-            self.villaintimershoot.update()
-            if self.villaintimershoot.ring:
-                # faster consecutive shots after first one
-                self.villaintimershoot.amount=self.villaintimert2
-                self.makecannonball(self.villain.x-100,self.villain.y)
-            #cannonballs
-            if self.cannonballs:
-                for i in self.cannonballs:
-                    i.movex(-i.speed)
-                    if i.x<-50: self.killcannonball(i)# disappears on left edge of screen
-                    if tool.checkrectcollide(i,self.hero):# cannonball hits hero
-                        self.killcannonball(i)
-                        # hero looses health
-                        self.herohealth -= 1
-                        if self.herohealth>-1:
-                            self.healthbar.dict['heart_'+str(self.herohealth)].show=False
-        else:
-            # goal reached state
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
-
-
-
-
-####################################################################################################################
-
-
-# OLD MINI GAME: travel to lair following a pattern
-class obj_world_traveltolairOLD(obj_world):
-    def setup(self):
-        self.done=False# end of minigame
-        self.goal=False# minigame goal reached
-        self.staticactor=obj_grandactor(self,(640,360))# background
-        self.pathactor=obj_grandactor(self,(640,360))# below move actor
-        self.moveactor=obj_grandactor(self,(180,400))
-        self.text_undone=obj_grandactor(self,(640,360))# text always in front
-        self.text_done=obj_grandactor(self,(640,360))
-        # static
-        self.staticactor.addpart( 'img1', draw.obj_image('house',(100,340),scale=0.5) )
-        self.staticactor.addpart( 'img2', draw.obj_image('tower',(1280-100,340),scale=0.5) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('home',(100,470)) )
-        self.staticactor.addpart( 'text2', draw.obj_textbox('evil lair',(1280-100,470)) )
-        self.staticactor.addpart( 'img3', draw.obj_image('tree',(230,570),scale=0.5) )
-        self.staticactor.addpart( 'img4', draw.obj_image('tree',(100,720-100),scale=0.5) )
-        self.staticactor.addpart( 'img5', draw.obj_image('tree',(70,190),scale=0.35) )
-        self.staticactor.addpart( 'img6', draw.obj_image('mountain',(1280-100,580),scale=0.4) )
-        self.staticactor.addpart( 'img7', draw.obj_image('mountain',(990,720-100),scale=0.5) )
-        self.staticactor.addpart( 'img8', draw.obj_image('mountain',(1160,170),scale=0.35) )
-        self.staticactor.addpart( 'img9', draw.obj_image('mountain',(1030,120),scale=0.3) )
-        # hero
-        self.moveactor.addpart( 'img1', draw.obj_image('stickaura',(180,400),scale=0.25,path='premade') )
-        self.moveactor.addpart( 'img2', draw.obj_image('herobase',(180,400),scale=0.25) )
-        # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
-        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
-        self.text_undone.show=True
-        self.text_done.show=False
-        # timer
-        self.timerend=tool.obj_timer(80)# goal to done
-        # random path
-        # whichpath=tool.randint(1,2)
-        whichpath=2
-        if whichpath==1:
-            self.pathactor.addpart( 'img1', draw.obj_image('lair_path1',(640,400),path='premade') )
-            self.pathmoves=['r','u','r','d','l','d','r','u','r','d','r','u','r']
-            self.pathpos=[(240,400),(412,400),(424,219),(520,217),\
-            (520,526),(420,535),(417,608),(648,603),\
-            (627,209),(755,207),(742,499),(904,500),(897,383),(1037,383)]
-        elif whichpath==2:
-            # self.pathactor.addpart( 'img1', draw.obj_image('lair_path2',(640,400),path='premade') )
-            self.pathmoves=['r','d','r','u','r','d','r']
-            self.pathpos=[(242,407),(343,408),(349,637),(635,626),(637,142),(922,149),(919,480),(1031,463)]
-        # initialize
-        self.pathi=0
-        self.moveactor.movetoxy(self.pathpos[self.pathi])
-    def update(self,controls):
-        super().update(controls)
-        if not self.goal:
-            # goal unreached state
-            hasmoved=False
-            if controls.w and controls.wc and self.pathmoves[self.pathi]=='u':
-                self.pathi +=1
-                hasmoved=True
-            if controls.s and controls.sc and self.pathmoves[self.pathi]=='d':
-                self.pathi +=1
-                hasmoved=True
-            if controls.a and controls.ac and self.pathmoves[self.pathi]=='l':
-                self.pathi +=1
-                hasmoved=True
-            if controls.d and controls.dc and self.pathmoves[self.pathi]=='r':
-                self.pathi +=1
-                hasmoved=True
-            if hasmoved and self.pathi<len(self.pathpos):
-                self.moveactor.movetoxy(self.pathpos[self.pathi])
-                if self.pathi >= len(self.pathpos)-1:
-                    self.goal=True
-                    self.timerend.start()
-                    self.text_undone.show=False
-                    self.text_done.show=True
-        else:
-            # goal reached state
-            self.timerend.update()
-            if self.timerend.ring:
-                self.done=True# end of minigame
-
-
-
-
-
-#############################3
-#old : add pond and bushes directly in chapter 1 (too much
-
-
-class obj_scene_ch1p8a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8b())
-    def setup(self):
-        self.text=['Now, lets make a ',('house',share.colors.item),\
-                    ' surrounded by some ',('trees',share.colors.item),\
-                    ' where ',('{heroname}',share.colors.hero),' can live. ',\
-                   ]
-        self.addpart( draw.obj_textbox("The Hero\'s House was called:",(230,180)) )
-        self.addpart( draw.obj_textinput('housename',25,(750,180),color=share.colors.hero, legend=' ') )
-        self.addpart( draw.obj_drawing('house',(340,450),legend='Draw a House',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('tree',(940,450),legend='Draw a Tree',shadow=(200,200)) )
-
-class obj_scene_ch1p8b(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8a())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8c())
-
-    def setup(self):
-        self.text=[\
-                    'This what the ',('house',share.colors.item),\
-                    ' looks like so far.',\
-                      'It aint much but its a start, said the book of things. ',\
-                   ]
-        self.world=world.obj_world_travel(self,start='home',goal='nowhere',chapter=1,part=1)
-        self.addpart(self.world)
-
-
-class obj_scene_ch1p8c(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8b())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8d())
-    def setup(self):
-        self.text=['I think we could decorate a bit, said the book of things.',\
-                ' Lets add a ',('pond',share.colors.item),\
-                    ' nearby and a  few ',('bushes',share.colors.item),'. ',\
-                   ]
-        self.addpart( draw.obj_drawing('pond',(340,450),legend='Draw a Pond',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('bush',(940,450),legend='Draw a Bush',shadow=(200,200)) )
-
-
-
-class obj_scene_ch1p8d(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p8c())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch1p9())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                    'Slightly better! Now go to the ',
-                    ('pond',share.colors.item),'. ',\
-                   ]
-        self.world=world.obj_world_travel(self,start='home',goal='pond',chapter=1,part=2)
-        self.addpart(self.world)
-        # self.addpart( draw.obj_drawing('path3',(320,360),legend='Draw a Bush',shadow=(320,200),brush=share.brushes.smallpen) )
-        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','cloud','sun','bush',actor='staticactor10') ))
-
-
-
-########################################################
-# old stompfight explanation
-
-class obj_scene_ch3p11(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p10())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start())
-    def setup(self):
-        self.text=[\
-                  'Well done!, said the book of things. ',('{villainname}',share.colors.villain),\
-                ' has ran out of bullets. ',\
-                'But it isnt over yet. ',\
-                ('{villainname}',share.colors.villain),\
-                ' has started to fight ',('{heroname}',share.colors.hero),\
-                ' in hand-to-hand combat. ',\
-                   ]
-        self.addpart( draw.obj_image('floor2',(640,580+90),path='premade') )
-        self.addpart( draw.obj_image('herobase',(340,580),scale=0.35) )
-        self.addpart( draw.obj_image('villainbase',(940,580-12),scale=0.35,fliph=True) )
-    def endpage(self):
-        super().endpage()
-        # combine villainhead+stickkick for villain kick
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickkick',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,330,300,330),'villainkick')
-
-
-class obj_scene_ch3p12start(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p11())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start2())
-    def setup(self):
-        self.text=[\
-                  'These are the ',('hero',share.colors.hero),\
-                  '\'s and the ',('villain',share.colors.villain),\
-                  '\'s healthbars.',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-        self.world.villainhurt=True# hurt so cannot evolve
-        self.world.villain.dict['hurt'].show=False
-        self.world.text_undone.show=False
-        # self.addpart(draw.obj_image('circle1',(300,200),path='premade'))
-        self.addpart(draw.obj_image('show1',(480,370),path='premade',flipv=True))
-        # self.addpart(draw.obj_image('circle2',(990,200),path='premade'))
-        self.addpart(draw.obj_image('show2',(880,370),path='premade',flipv=True))
-
-class obj_scene_ch3p12start2(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
-    def triggernextpage(self,controls):
-        return controls.enter and controls.enterc
-    def setup(self):
-        self.text=[\
-                  'Move with [A][D] and jump with [W]. ',\
-                'Stomp on ',('{villainname}',share.colors.villain),\
-                ', but beware of ',('{villain_his}',share.colors.villain),\
-              ' kick. Press [Enter] to start the fight. ',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-        self.world.villainhurt=True# hurt so cannot evolve
-        self.world.villain.dict['hurt'].show=False
-        self.world.text_undone.show=False
-        self.addpart(draw.obj_textbox('[A,D: Move] [W: Jump]',(640,200),color=share.colors.instructions) )
-
-
-class obj_scene_ch3p12(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12start2())
-    def nextpage(self):
-        if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3p13())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch3p12death())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                  'Stomp the villain. ',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-        # drawing=draw.obj_drawing('floor2',(640,720-50),shadow=(640,50))
-        # drawing.brush.makebrush(share.brushes.smallpen)
-        # self.addpart(drawing)
-
-
-class obj_scene_ch3p12death(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p12())
-
-    def setup(self):
-        self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
-                'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
-                'Now go back and try to act more "heroic". ',\
-                   ]
-        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
-
-#
-3##############################3
-old stompfight
-
-
-
-class obj_scene_ch3play7(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play6())
-    def nextpage(self):
-        if self.world.win:
-            share.scenemanager.switchscene(obj_scene_ch3play8())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch3play7death())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
-    def setup(self):
-        self.text=[\
-                  '"..then they fought with fists." ',\
-                   ]
-        self.world=world.obj_world_stompfight(self)
-        self.addpart(self.world)
-
-class obj_scene_ch3play7death(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play7())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3play7())
-    def setup(self):
-        self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
-                'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
-                'Now go back and try to act more "heroic". ',\
-                   ]
-        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),scale=1.5) )

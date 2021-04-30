@@ -960,7 +960,7 @@ class obj_scene_ch7p41(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p42())
     def setup(self):
-        self.text=['"Now watch this: ',('super-meca-{villainname}',share.colors.villain),', assemble!". ']
+        self.text=['"Now watch this: ',('super-mech-{villainname}',share.colors.villain),', assemble!". ']
         # Mech buildup
         animation1=draw.obj_animation('ch7_villainmech_assemble1','villainbase',(640,360),record=False)
         animation1.addimage('villainmecharmature')
@@ -1031,7 +1031,7 @@ class obj_scene_ch7p42(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p43())
     def setup(self):
         self.text=['"and now: ',\
-                ('super-meca-villain',share.colors.villain),', expand!". ']
+                ('super-mech-villain',share.colors.villain),', expand!". ']
         #
         # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','cloud','moon') )
         # self.addpart( draw.obj_image('herobase',(503,629),scale=0.25,rotate=0,fliph=False,flipv=False) )
@@ -1056,7 +1056,7 @@ class obj_scene_ch7p43(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p44())
     def setup(self):
         self.text=['"Muahaha, this is too easy, said ',('{villainname}',share.colors.villain),\
-                    '. My ',('super-meca-villain',share.colors.villain),\
+                    '. My ',('super-mech-villain',share.colors.villain),\
                     ' is going to crush you like a worm. ',\
                     'Prepare to die!','". ']
         #
@@ -1107,7 +1107,7 @@ class obj_scene_ch7p45(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p46())
     def setup(self):
-        self.text=['"Lets goooo, said the grandmasters: ',('super-meca-hero',share.colors.hero),', assemble!". ']
+        self.text=['"Lets goooo, said the grandmasters: ',('super-mech-hero',share.colors.hero),', assemble!". ']
 
         # Mech buildup
         animation1=draw.obj_animation('ch7_villainmech_assemble1','herobase',(640,360),record=False,imgfliph=True)
@@ -1168,7 +1168,7 @@ class obj_scene_ch7p46(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p47())
     def setup(self):
-        self.text=['"and now: ',('super-meca-hero',share.colors.hero),', expand!". ']
+        self.text=['"and now: ',('super-mech-hero',share.colors.hero),', expand!". ']
         # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase','house','flower','pond','cloud','moon') )
         self.addpart( draw.obj_image('moon',(105,229),scale=0.34,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(744,568),scale=0.28,rotate=0,fliph=False,flipv=False) )
@@ -1257,7 +1257,7 @@ class obj_scene_ch7p50(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p51())
     def setup(self):
         self.text=[\
-            '"The  ',('super-meca-villain',share.colors.villain),\
+            '"The  ',('super-mech-villain',share.colors.villain),\
             ' fell over and started smoking.  ',\
             ('{villainname}',share.colors.villain),' got out of the mech and said: ',\
             'Ugh, I guess you won. Well played, I admit my defeat".',\

@@ -121,9 +121,9 @@ class obj_datamanager:
         self.loadwords()
         self.filesettings='book/settings.txt'
         self.loadsettings()
-        self.fileunlocks='book/unlocks.txt'
-        self.loadunlocks()
         self.temp=obj_datatemp()# object for temporal data storage (by anyone anytime)
+    def getdevaccess(self):# tell if user has developper access (from reading settings.txt)
+        return self.devaccess
     def erasebook(self):
         files = tool.oslistdir('book')
         if '.gitignore' in files: files.remove('.gitignore')# do not erase git file
@@ -132,7 +132,6 @@ class obj_datamanager:
         self.saveprogress()
         self.loadwords()# reset words
         self.savewords()
-        self.saveunlocks()
         self.savesettings()# conserve current settings
     #
     def getprogress(self):
@@ -150,6 +149,8 @@ class obj_datamanager:
         else:
             # default progress
             self.chapter=0
+            self.saveprogress()
+
     def updateprogress(self,chapter=None):
         if chapter:
             self.chapter=max(self.chapter,chapter)
@@ -165,6 +166,8 @@ class obj_datamanager:
                 f1.write(str(self.domusic)+'\n')#value
                 f1.write('dosound'+'\n')#key
                 f1.write(str(self.dosound)+'\n')#value
+                f1.write('devaccess'+'\n')#key
+                f1.write(str(self.devaccess)+'\n')#value
     def loadsettings(self):
         if tool.ospathexists(self.filesettings):
             with open(self.filesettings,'r+') as f1:
@@ -180,12 +183,18 @@ class obj_datamanager:
                 line=f1.readline()# dosound
                 line=f1.readline()
                 self.dosound=line=='True'+'\n'
+                line=f1.readline()# dosound
+                line=f1.readline()
+                self.devaccess=line=='True'+'\n'
         else:
             # default settings
             self.leveldifficulty=1# 0,1,2 for easy, medium, hard
             self.donative=True# 1280x720(native) or adapted resolution
             self.domusic=False# music on/off
             self.dosound=False# sound on/off
+            self.devaccess=False# User has no dev access by default
+            # write down default settings
+            self.savesettings()
     #
     # words written by user
     def getwords(self):
@@ -213,40 +222,9 @@ class obj_datamanager:
         else:
             # default words (empty)
             self.dictwords={}
-    #
-    # unlocks in story (obsolete)
-    # organized into:
-    #
-    def unlocked(self,wordkey):
-        if (wordkey in self.dictunlocks) and self.dictunlocks[wordkey]=='True':
-            return True
-        else:
-            return False
-    def unlock(self,wordkey):
-        self.dictunlocks[wordkey]='True'
-        self.saveunlocks()# resave everything?
-    def lock(self,wordkey):
-        self.dictunlocks[wordkey]='False'
-        self.saveunlocks()# resave everything?
-    def setunlock(self,wordkey,wordvalue):
-        self.writeunlock(wordkey,wordvalue)
-    def writeunlock(self,wordkey,wordvalue):
-        self.dictunlock[wordkey]=wordvalue
-    def saveunlocks(self):# save keywords to file
-        with open(self.fileunlocks,'w') as f1:
-            for i in self.dictunlocks.items():# iterate over tuples =(key,value)
-                f1.write(str(i[0])+'\n')#key
-                f1.write(str(i[1])+'\n')#value
-    def loadunlocks(self):# load keywords from file
-        if tool.ospathexists(self.fileunlocks):
-            self.dictunlocks={}
-            with open(self.fileunlocks,'r') as f1:
-                matrix=f1.read().splitlines()
-                for i in range(int(len(matrix)/2)):# read alternated key,value on lines
-                    self.dictunlocks[matrix[i*2]]=matrix[i*2+1]
-        else:
-            # default unlocks (empty)
-            self.dictunlocks={}
+            # save if empty
+            self.savewords()
+
 
 # Temp object for datamanager: store any temporal data here
 # (under share.datamanager.temp.something=True)

@@ -30,7 +30,7 @@ colorkey=(128,0,128)# color used for transparency on images (purple)
 
 # Global variables
 #
-devaccess=True# user has access to developer mode (change here to False on game release)
+devaccess=False# user has access to developer mode (cant change here, must change MANUALLY in the settings file)
 devmode=False # developer mode toggle
 dt=1# elapsed time since last frame (updated by game clock each frame)
 ipage=1# current page within a chapter (PUT THOSE IN a datb.pointers object or something)
@@ -55,13 +55,14 @@ quitgame=core.obj_quit()# function quit game
 fonts=datb.obj_fonts()# text fonts
 colors=datb.obj_colors()# dictionary of colors
 brushes=datb.obj_brushes()# brushes used for drawing
-
 #
-
-
+# Devtools
+devaccess=datamanager.getdevaccess()# ask datamanager if user has dev access (edit file settings.txt to allow)
+#
 # Scenes
 scenemanager=core.obj_scenemanager()# game scene manager (switch scenes+quit...)
 titlescreen=menu.obj_scene_titlescreen()# menu object has only ONE instance
 scenemanager.switchscene(titlescreen)# set starting scene
+
 
 ##########################################################

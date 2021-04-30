@@ -3811,7 +3811,7 @@ class obj_world_mechfight(obj_world):
         dx1=0# text horizontal spacing
         y2=300# for the prompts
         y3=200# healthbars
-        y4=200# end game messages
+        y4=80# end game messages
         ###################
         # prompt phase
         self.promptactor.addpart( 'hero', draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
@@ -3872,10 +3872,10 @@ class obj_world_mechfight(obj_world):
 
         #
         if not self.tutorial:
-            self.actionactor.addpart('heroattacks_text', draw.obj_textbox('Hero hits',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
-            self.actionactor.addpart('heroblocks_text', draw.obj_textbox('Hero counters',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
-            self.actionactor.addpart('villainattacks_text', draw.obj_textbox('Villain hits',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
-            self.actionactor.addpart('villainblocks_text', draw.obj_textbox('Villain counters',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
+            self.actionactor.addpart('heroattacks_text', draw.obj_textbox('super-mech-hero hits',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
+            self.actionactor.addpart('heroblocks_text', draw.obj_textbox('super-mech-hero counters',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
+            self.actionactor.addpart('villainattacks_text', draw.obj_textbox('super-mech-villain hits',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
+            self.actionactor.addpart('villainblocks_text', draw.obj_textbox('super-mech-villain counters',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
         else:
             self.actionactor.addpart('heroattacks_text', draw.obj_textbox(' ',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
             self.actionactor.addpart('heroblocks_text', draw.obj_textbox(' ',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
@@ -3933,11 +3933,11 @@ class obj_world_mechfight(obj_world):
             self.villainhealthbar.dict['heartcross_'+str(i)].show=False
         # text for winning
         # self.text_undone.addpart( 'text1', draw.obj_textbox('Match the prompts',(640,680),color=share.colors.instructions) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('Super-Meca-Villain Destroyed',(640,y4),fontsize='large',color=share.colors.darkgreen) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('super-mech-villain destroyed',(640,y4),fontsize='huge',color=share.colors.darkgreen) )
         self.text_donewin.addpart( 'cloud1', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(816,386)) )
         self.text_donewin.addpart( 'cloud2', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(1018,268)) )
         self.text_donewin.addpart( 'cloud3', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(1188,330)) )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('Super-Meca-Hero Destroyed',(640,y4),fontsize='large',color=share.colors.red) )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('super-mech-hero destroyed',(640,y4),fontsize='huge',color=share.colors.red) )
         self.text_donelost.addpart( 'cloud1', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(416,318)) )
         self.text_donelost.addpart( 'cloud2', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(254,266)) )
         self.text_donelost.addpart( 'cloud3', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(93,385)) )
