@@ -245,7 +245,7 @@ class obj_scene_testheadermaker(obj_testpage):
                   'Page must start above 0. Last nextpage is commented (for if next page doesnt exist) ',\
                    ]
         # self.addpart( draw.obj_headermaker('ch3',10,25) )# for chapter 3, page 10 to 25
-        self.addpart( draw.obj_headermaker('ch7',50,80) )# for chapter 3, page 10 to 25
+        self.addpart( draw.obj_headermaker('ch5',1,80) )# for chapter 3, page 10 to 25
 
 
 class obj_scene_interactivetext(obj_testpage):
