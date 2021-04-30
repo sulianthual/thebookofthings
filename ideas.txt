@@ -45,6 +45,34 @@ travel2: X go back home, or to some location for an ending
 
 
 ##################
+* General cleanup to do:
+
+- page numbering: chapter 4 and 5 in particular
+                  redo it clean
+                  
+- images snapshots: either at drawing creation, or at world setup.
+                    but not somewhere else or can be inconsistent when redraws
+- text cleanup: consistent colors (separate for name, he/she)
+                look for all tipos
+                text could be in .txt files using a call function that reads them
+                it would avoid crashes when tipos, and could have french/spanish versions easier to make
+
+- control scheme: decide on one scheme for playing:
+                  drawing with LMouse+backspace (should put backspace as a button on screen)
+                  minigames: WASD (replace with: arrows or WASD)
+                             only one game uses WASD+Space (log gathering chapt 6)
+                             maybe WASD only is best if one day wants to make mobile game version
+
+- Chapter 4: the lying minigame should be a WORLD, not a series of PAGES
+            this makes use of the datamanager.temp whish is messy
+            (for example, we cant skip to middle of game because it skips initialization)
+
+- tff file: cannot do interrogation marks. correct the file
+is there a unicode text for arrow? could use universal symbol instead of up, left,right,down or WASD
+
+- drawing brush: sometimes slowdown or wont draw (doesnt register initial click). Like at mechanics more closely
+
+##################
 * Some Additions to Make (maybe later):
 
 - Chapter 1: draw the stickman (only give the shape of the head). Do positions:
@@ -71,10 +99,6 @@ travel2: X go back home, or to some location for an ending
 - Chapter 3: misses at least one drawing (?)
              could ask to draw the lightning bolt here maybe
              castle entrance would be spot to replay all minigames
-
-- Chapter 4: the lying minigame should be a WORLD, not a series of PAGES
-            this makes use of the datamanager.temp whish is messy
-            (for example, we cant skip to middle of game because it skips initialization)
 
 - Chapter 4: add the stomping minigame with the bunny (just adapt it)
               the bunny jumps over the hero
@@ -131,6 +155,11 @@ travel2: X go back home, or to some location for an ending
         chapter 3 electric shock on hero
         alarm clock -> must be white
         chapter 5 mountain peak with snow
+
+
+- allow player to choose text font at beginning
+
+- allow player to use color on drawings??? (maybe in a new game plus)
 
 
 - allow player to name more stuff: like locations (the evil lair, home, the highest peak, etc...)

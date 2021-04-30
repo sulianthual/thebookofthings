@@ -256,9 +256,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                  '"',\
-                    ('{heroname}',share.colors.hero),' travelled to the ',\
-                  ('highest peak',share.colors.location),' in the north". ',\
+                  'go to the highest peak in the north',\
                    ]
         self.world=world.obj_world_travel(self,start='home',goal='peak',chapter=5)
         self.addpart(self.world)
@@ -287,7 +285,8 @@ class obj_scene_ch5p3b(page.obj_chapterpage):
         self.text=[\
                 '"When ',('{heroname}',share.colors.hero),\
                 ' reached the top of ',('highest peak',share.colors.location),\
-                ', he encountered a mysterious ',\
+                ', ',('{hero_he}',share.colors.hero),\
+                ' encountered a mysterious ',\
                 ('elder',share.colors.elder),'".',\
                'Fascinating, said the book of things. ',\
                 'Choose a name and gender for this ',\
@@ -607,9 +606,7 @@ class obj_scene_ch5pp18(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-               '"Now lets play, said ',('{eldername}',share.colors.elder),'". ',\
-                  ]
+        self.text=['"Now lets play, said ',('{eldername}',share.colors.elder),'". ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True)
         self.addpart(self.world)
 
@@ -672,9 +669,7 @@ class obj_scene_ch5pp20(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-               '"Alright, lets play again, said ',('{eldername}',share.colors.elder),'". ',\
-                  ]
+        self.text=['"Alright, lets play again, said ',('{eldername}',share.colors.elder),'". ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True)
         self.addpart(self.world)
 
@@ -761,7 +756,7 @@ class obj_scene_ch5pp24(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5pp23())
     def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
+        if share.devmode or share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch5pp25())
         else:
             share.scenemanager.switchscene(obj_scene_ch5pp24fail())
@@ -777,7 +772,7 @@ class obj_scene_ch5pp24(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch5eldertalks3','elderbase',(640,360)) )
         y1=240
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
-        textchoice=draw.obj_textchoice('yesno',default='yes')
+        textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
         self.addpart( textchoice )
@@ -814,7 +809,7 @@ class obj_scene_ch5pp25(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5pp24())
     def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
+        if share.devmode or share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch5pp26())
         else:
             share.scenemanager.switchscene(obj_scene_ch5pp25fail())
@@ -826,7 +821,7 @@ class obj_scene_ch5pp25(page.obj_chapterpage):
                   ]
         y1=240
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
-        textchoice=draw.obj_textchoice('yesno',default='yes')
+        textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes!','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
         self.addpart( textchoice )
@@ -862,7 +857,7 @@ class obj_scene_ch5pp26(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5pp25())
     def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
+        if share.devmode or share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch5pp27())
         else:
             share.scenemanager.switchscene(obj_scene_ch5pp26fail())
@@ -874,7 +869,7 @@ class obj_scene_ch5pp26(page.obj_chapterpage):
                   ]
         y1=240
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
-        textchoice=draw.obj_textchoice('yesno',default='yes')
+        textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. YEEEES!','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
         self.addpart( textchoice )
@@ -1048,8 +1043,8 @@ class obj_scene_ch5pp29(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-               '"Now lets play". ']
+        # self.text=['"Now lets play". ']
+        self.text=[]
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)
 class obj_scene_ch5pp29fail(page.obj_chapterpage):
@@ -1117,11 +1112,7 @@ class obj_scene_ch5pp31(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-                '"',\
-                ('{heroname}',share.colors.hero),' travelled back ',
-                ('home',share.colors.location),'". ',\
-                   ]
+        self.text=['go back home']
         self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
         self.addpart(self.world)
 

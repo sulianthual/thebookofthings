@@ -158,8 +158,8 @@ class obj_datamanager:
     #
     def savesettings(self):
         with open(self.filesettings,'w') as f1:
-                f1.write('difficulty'+'\n')#key
-                f1.write(str(self.leveldifficulty)+'\n')#value
+                f1.write('easymode'+'\n')#key
+                f1.write(str(self.easymode)+'\n')#value
                 f1.write('donative'+'\n')#key
                 f1.write(str(self.donative)+'\n')#value
                 f1.write('domusic'+'\n')#key
@@ -173,7 +173,7 @@ class obj_datamanager:
             with open(self.filesettings,'r+') as f1:
                 line=f1.readline()# difficulty
                 line=f1.readline()
-                self.leveldifficulty=int(line)
+                self.easymode=line=='True'+'\n'
                 line=f1.readline()# donative
                 line=f1.readline()
                 self.donative=line=='True'+'\n'
@@ -188,7 +188,7 @@ class obj_datamanager:
                 self.devaccess=line=='True'+'\n'
         else:
             # default settings
-            self.leveldifficulty=1# 0,1,2 for easy, medium, hard
+            self.easymode=True# easy or hard mode
             self.donative=True# 1280x720(native) or adapted resolution
             self.domusic=False# music on/off
             self.dosound=False# sound on/off

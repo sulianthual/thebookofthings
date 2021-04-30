@@ -23,6 +23,7 @@ from math import pi as math_pi
 from math import cos as math_cos
 from math import sin as math_sin
 from math import atan2 as math_atan2
+from math import sqrt as math_sqrt
 from random import randint as random_randint
 from random import choices as random_randchoice# choices not choice
 from random import sample as random_randsample
@@ -55,6 +56,8 @@ def angle(a_xy,b_xy):# angle between points a=(x,y) and b=(x,y)
     return math_atan2(b_xy[1]-a_xy[1],b_xy[0]-a_xy[0])*180/pi()# in DEG
 def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y) in radian
     return math_atan2(b.y-a.y,b.x-a.x)*180/pi()# in DEG
+def sqrt(x):
+    return math_sqrt(x)
 
 # module random
 def randint(minrange,maxrange):# returns integer within range with equal probabilities

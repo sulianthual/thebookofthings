@@ -54,7 +54,7 @@ class obj_scene_testmenu(page.obj_page):
             if share.itest == -1: share.itest=self.listlen-1
         if (controls.enter and controls.enterc):
             share.scenemanager.switchscene(self.list[share.itest],init=True)
-        if (controls.space and controls.spacec) :
+        if (controls.tab and controls.tabc) :
             share.scenemanager.switchscene(share.titlescreen)
 
     def loadtests(self):# load all tests
@@ -89,6 +89,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testworld())
         self.list.append(obj_scene_testworldgrandactor())
         self.list.append(obj_scene_testrigidbody())
+        self.list.append(obj_scene_testbreakfastdrinking())
         #
         self.listlen=len(self.list)
 
@@ -152,6 +153,7 @@ class obj_scene_testmessage(obj_testpage):
         self.text=[(self.name,share.colors.red),': ',\
                    '\n\nThis is an appendix for tests by the Game Developer. ',\
                    'If you are not the Game Developer get out of here!',\
+                   '\n ',\
                    ]
         self.textkeys={}# defaut text formatting
 
@@ -660,6 +662,22 @@ class obj_scene_testrigidbody(obj_testpage):
         if controls.d and controls.dc: self.rigidbody.forcex(5)
         if controls.q and controls.qc: self.rigidbody.stall()
         if controls.e and controls.ec: self.rigidbody.stall()
+
+
+
+
+class obj_scene_testbreakfastdrinking(obj_testpage):
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+    def setup(self):
+        self.name='Minigame breakfast drinking'
+        self.text=['Minigame breakfast drinking: ',\
+                   'This game is unused but could be easily recycled to some stealth minigame (cutting some rope, pickpocketing, stabbing....) ',\
+                   ]
+        self.world=world.obj_world_breakfastdrinking(self)
+        self.addpart(self.world)
+
+
 
 ####################################################################################################################
 

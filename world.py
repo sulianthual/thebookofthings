@@ -973,12 +973,12 @@ class obj_world_eatfish(obj_world):
         self.text1=obj_grandactor(self,(640,360))
         self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] and [D] to Eat',(640,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390)) )
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390),fontsize='large') )
         self.text1.show=True
         self.text2.show=False
         # textbox crunch
         self.text3=obj_grandactor(self,(640,360))
-        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(860,180),scale=1.5) )
+        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(860,180),fontsize='large') )
         self.text3.show=False
         # timer for eating
         self.timer=tool.obj_timer(50)
@@ -1449,8 +1449,9 @@ class obj_world_travel(obj_world):
 
         self.herowalktimer=tool.obj_timer(10)# timer to alternate walk slides
         self.herowalkframe1=True# alternate True/False for two frames
-        self.heromx=8#4# moving rate
-        self.heromy=8#4# moving rate
+        self.herospeed=6# hero walking speed
+        self.heromx=self.herospeed# moving rate
+        self.heromy=self.herospeed# moving rate
         # goal(s) to reach
         self.hitboxes=[]# may track several locations
         self.goalarea=obj_grandactor(self,self.xygoal)
@@ -1470,13 +1471,13 @@ class obj_world_travel(obj_world):
             k.movey(360-self.yhw)
         #
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Move with [W][A][S][D]',(640,680),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[WASD: Move]',(640,680),color=share.colors.instructions) )
         if self.addsailorwait or self.addbeachmark:# talk to a character
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Talk',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[Enter: Talk]',(640,680),color=share.colors.instructions) )
         elif self.addbeachquestionmark:# investigate
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Investigate',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[Enter: Investigate]',(640,680),color=share.colors.instructions) )
         else:# enter a location
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('Press [Enter] to Enter',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[Enter: Go Inside]',(640,680),color=share.colors.instructions) )
         #
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
@@ -1520,7 +1521,7 @@ class obj_world_travel(obj_world):
         if self.minigame=='logs':
             self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textlogs', self.logmessage  )
-            self.text_undone.dict['text1'].replacetext('[WASD: Move] [Space: Chop]')
+            self.text_undone.dict['text1'].replacetext('[WASD: Move] [Enter: Chop]')
             # self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D]')
             for i in self.panels:# remove tree from panels and make them into individual grandactors
                 panellogkeys=[]# list of tree keys in this panel
@@ -1610,6 +1611,14 @@ class obj_world_travel(obj_world):
                 self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
                 self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
                 self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
+            # tune the walking speed if diagonal:
+            if (controls.w or controls.s) and (controls.a or controls.d):
+                self.heromx=self.herospeed/tool.sqrt(2)
+                self.heromy=self.herospeed/tool.sqrt(2)
+            else:
+                self.heromx=self.herospeed# moving rate
+                self.heromy=self.herospeed# moving rate
+
             # move the world (not the hero!)
             if controls.a:
                 if self.xhw>self.xhwmin:# boundary
@@ -1670,7 +1679,7 @@ class obj_world_travel(obj_world):
                     tokill=[]
                     for i in self.logactors:
                         if tool.checkrectcollide(self.hero,i):
-                            if controls.space and controls.spacec:
+                            if controls.enter and controls.enterc:
                                 self.logcount += 1
                                 self.logmessage.replacetext('You have collected '+str(self.logcount)+'/'+str(self.logneed)+' logs')
                                 tokill.append(i)
@@ -1680,6 +1689,7 @@ class obj_world_travel(obj_world):
                         i.kill()
                 else:# when obtained all logs can reach goal
                     self.reachgoal(controls)
+                    self.text_undone.dict['text1'].replacetext('[WASD: Move]')
 
         else:
             # goal reached state
@@ -2380,7 +2390,7 @@ class obj_world_climbpeak(obj_world):
         self.staticactor.addpart( 'img5',draw.obj_image('mountain',(779,624),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img6',draw.obj_image('mountain',(1070,605),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img7',draw.obj_image('mountain',(1203,585),scale=0.38,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'text1', draw.obj_textbox('Lets go!',(585,212)) )
+        self.staticactor.addpart( 'text1', draw.obj_textbox('Climb the Peak',(585,212)) )
         # platforms
         self.platforms=[]
         self.platformsxy=[(1110,195),(813,385),(457,575)]
@@ -2662,7 +2672,7 @@ class obj_world_rockpaperscissors(obj_world):
         self.instructions.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('[S]: Start Game',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('[S]: Start Game',(640,360),color=share.colors.instructions) )
         self.instructions.addpart( 'textn', draw.obj_textbox('[S]: Next Round',(640,660),color=share.colors.instructions) )
         self.instructions.addpart( 'texte', draw.obj_textbox('[S]: End Game',(640,660),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True

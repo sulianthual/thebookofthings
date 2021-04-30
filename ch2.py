@@ -265,7 +265,8 @@ class obj_scene_ch2p7(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'Aww that is so sweet, said the book of things. ',\
-                   ('{heroname}',share.colors.hero),' wants to show his love too. ',\
+                   ('{heroname}',share.colors.hero),' wants to show ',\
+                   ('{hero_his}',share.colors.hero),' love too. ',\
                    'Draw a ',('saxophone',share.colors.item),' and ',('music notes',share.colors.item),\
                    ' so ',('{hero_he}',share.colors.hero),' can play ',\
                    ('{partnername}',share.colors.partner),' a serenade. ',\

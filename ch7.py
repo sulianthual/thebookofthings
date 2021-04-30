@@ -190,7 +190,7 @@ class obj_scene_ch7p7(page.obj_chapterpage):
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                   '\nCongratulations on completing all our challenges. ',\
                     'The password to the castle is: ',('"fight persevere overcome"',share.colors.password),'.',\
-                    ' Good luck fighting',('{villainname}',share.colors.villain),'. ',\
+                    ' Good luck fighting ',('{villainname}',share.colors.villain),'. ',\
                   '\n\nsigned: ',('the grandmasters of deceit',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
@@ -250,11 +250,7 @@ class obj_scene_ch7p10(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
-        self.text=[\
-                '"',\
-                ('{heroname}',share.colors.hero),' went to the ',
-                ('castle',share.colors.location),'". ',\
-                   ]
+        self.text=['go to the castle in the west']
         self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=7,boat=True)
         self.addpart(self.world)
 
@@ -269,8 +265,7 @@ class obj_scene_ch7p11(page.obj_chapterpage):
                 '"',\
                 ('{heroname}',share.colors.hero),' arrived at the ',\
                 ('evil castle',share.colors.location),'. ',\
-                  'The  castle\'s ',\
-                  ('ass',share.colors.item),' (automated security system) blasted: ',\
+                  'The  castle\'s ass (automated security system) blasted: ',\
                   'Oh, it is you again. Have you figured out my password yet". ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
@@ -302,8 +297,8 @@ class obj_scene_ch7p12(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Please enter ',('password',share.colors.password),', blasted the castle\'s ass. ',\
-                '(remember it is ',('"fight persevere overcome"',share.colors.password),\
-                ', whispered the ',('{bug}',share.colors.bug),')". ',\
+                'Remember it is ',('"fight persevere overcome"',share.colors.password),\
+                ', whispered the ',('{bug}',share.colors.bug),'". ',\
 
                    ]
         # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
@@ -410,18 +405,18 @@ class obj_scene_ch7p16(page.obj_chapterpage):
                   ('"overcome"',share.colors.text),'. ',\
                   'These are the teachings that the grandmasters gave to ',('{villainname}',share.colors.villain),\
                    ', and that ',('{villain_he}',share.colors.villain),\
-                    ' must have used in ',('{villain_his}',share.colors.villain),\
+                    ' has used in ',('{villain_his}',share.colors.villain),\
                     ' password. ',\
                     '"']
         x1=640
         y1=360
         dy1=55
-        self.addpart( draw.obj_textbox('fight',(x1,y1),xright=True,color=share.colors.blue) )
-        self.addpart( draw.obj_textbox('   in any situation',(x1,y1),xleft=True) )
+        self.addpart( draw.obj_textbox('fight',(x1-20,y1),xright=True,color=share.colors.villain) )
+        self.addpart( draw.obj_textbox(' in any situation',(x1-20,y1),xleft=True) )
         self.addpart( draw.obj_textbox('always',(x1,y1+dy1),xright=True) )
-        self.addpart( draw.obj_textbox('   persevere',(x1,y1+dy1),xleft=True,color=share.colors.blue) )
-        self.addpart( draw.obj_textbox('overcome',(x1,y1+2*dy1),xright=True,color=share.colors.blue) )
-        self.addpart( draw.obj_textbox('   everything',(x1,y1+2*dy1),xleft=True) )
+        self.addpart( draw.obj_textbox(' persevere',(x1,y1+dy1),xleft=True,color=share.colors.villain) )
+        self.addpart( draw.obj_textbox('overcome',(x1+32,y1+2*dy1),xright=True,color=share.colors.villain) )
+        self.addpart( draw.obj_textbox(' everything',(x1+32,y1+2*dy1),xleft=True) )
         # self.addpart(draw.obj_imageplacer(self,'bunnyhead','elderhead','sailorhead'))
         self.addpart( draw.obj_image('bunnyhead',(369,544),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('elderhead',(259,351),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -448,15 +443,15 @@ class obj_scene_ch7p17(page.obj_chapterpage):
                   ('"lie"',share.colors.red),', ',\
                   ('"cheat"',share.colors.red),' and ',\
                   ('"steal"',share.colors.red),'!". ']
-        x1=640
+        x1=640-30
         y1=360
         dy1=55
-        self.addpart( draw.obj_textbox('lie',(x1,y1),xright=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox('   in any situation',(x1,y1),xleft=True) )
-        self.addpart( draw.obj_textbox('always',(x1,y1+dy1),xright=True) )
-        self.addpart( draw.obj_textbox('   cheat',(x1,y1+dy1),xleft=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox('steal',(x1,y1+2*dy1),xright=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox('   everything',(x1,y1+2*dy1),xleft=True) )
+        self.addpart( draw.obj_textbox('lie',(x1-20,y1),xright=True,color=share.colors.red) )
+        self.addpart( draw.obj_textbox(' in any situation',(x1-20,y1),xleft=True) )
+        self.addpart( draw.obj_textbox('always',(x1+30,y1+dy1),xright=True) )
+        self.addpart( draw.obj_textbox(' cheat',(x1+30,y1+dy1),xleft=True,color=share.colors.red) )
+        self.addpart( draw.obj_textbox('steal',(x1+7,y1+2*dy1),xright=True,color=share.colors.red) )
+        self.addpart( draw.obj_textbox(' everything',(x1+7,y1+2*dy1),xleft=True) )
         self.addpart( draw.obj_image('bunnyhead',(369,544),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('elderhead',(259,351),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('sailorhead',(131,511),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -490,8 +485,8 @@ class obj_scene_ch7p18(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Well, try this new ',('password',share.colors.password),', said the ',\
-                  ('{bug}',share.colors.bug),'. ',\
-                'Remember it is ',('"lie cheat steal"',share.colors.password),\
+                  ('{bug}',share.colors.bug),': ',\
+                ('"lie cheat steal"',share.colors.password),\
                 '". ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
@@ -553,7 +548,7 @@ class obj_scene_ch7p20(page.obj_chapterpage):
         self.text=[\
                   '"Quick, said the ',\
                   ('{bug}',share.colors.bug),', lets get in and kick ',\
-                ('{villainname}',share.colors.password),'\'s ass. ',\
+                ('{villainname}',share.colors.password),'\'s butt. ',\
                 '". ',\
                    ]
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -577,8 +572,8 @@ class obj_scene_ch7p21(page.obj_chapterpage):
                   '"',\
                   ('{heroname}',share.colors.hero),' met ',\
                     ('{villainname}',share.colors.villain),' inside the castle. ',\
-                  ('{villainname}',share.colors.villain),' said: you here !!! How did you get inside. ',\
-                  ' Well it doesnt matter, you will have to ',\
+                  ('{villainname}',share.colors.villain),' said: ',\
+                  'Perfect, I was just waiting for you. You will have to ',\
                   ('fight',share.colors.villain),' me if you want ',\
                    ('{partnername}',share.colors.partner),' back". ',\
                    ]
@@ -630,7 +625,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p25())
     def setup(self):
         self.text=['Here is how this works, said the book of things. ',\
-                    'Stomp on the villain when he is not kicking. ',\
+                    'Stomp on the villain when ',('{villain_he}',share.colors.text),' is not kicking. ',\
                     ('Press Enter when you are ready to begin.',share.colors.instructions),\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
@@ -888,7 +883,7 @@ class obj_scene_ch7p38(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"...when ',\
-                   ('{heroname}',share.colors.hero),' heard a knock on the door". ',\
+                   ('{heroname}',share.colors.hero),' heard a knock on the door. ',\
                    'Who could it possibly be at this hour".',\
                    ]
         self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
@@ -1288,7 +1283,7 @@ class obj_scene_ch7p51(page.obj_chapterpage):
     def setup(self):
         self.text=[\
             '"The  ',('grandmasters of deceit',share.colors.villain),' shouted: ',\
-            'Loooser, loooser! That was quite pitful ',('{villainname}',share.colors.villain),'. ',\
+            'Loooser, loooser! That was quite pitiful ',('{villainname}',share.colors.villain),'. ',\
             'You still have a lot to learn about the evil ways. ',\
             'Now go back to training immediately!". ',\
                 ]
@@ -1319,9 +1314,6 @@ class obj_scene_ch7p52(page.obj_chapterpage):
             ('end of the story',share.colors.villain),' silly."',\
                 ]
         self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
@@ -1343,7 +1335,7 @@ class obj_scene_ch7p53(page.obj_chapterpage):
         self.text=[\
             'Draw a cake, said the book things. It is time to celebrate! ',\
                 ]
-        self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200),brush=share.brushes.smallpen) )
 
 
 class obj_scene_ch7p54(page.obj_chapterpage):
@@ -1353,11 +1345,8 @@ class obj_scene_ch7p54(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p55())
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('A game by Sulian',(640,100),fontsize='large') )
+        self.addpart ( draw.obj_textbox('A game by Sulian...',(640,100),fontsize='large') )
         self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
@@ -1370,6 +1359,30 @@ class obj_scene_ch7p54(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
+        # self.addpart(draw.obj_imageplacer(self,'house','flower','bush','pond','castle','tree','mountain','cave','tree','palmtree','sailboat','wave','skeletonhead','moon','cloud'))
+        #
+        self.addpart( draw.obj_image('mountain',(79,110),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(186,119),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(245,205),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(198,198),scale=0.15,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(531,299),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        y1=60
+        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
 
 class obj_scene_ch7p55(page.obj_chapterpage):
     def prevpage(self):
@@ -1378,11 +1391,8 @@ class obj_scene_ch7p55(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p56())
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('Thank you so much for playing',(640,100),fontsize='large') )
+        self.addpart ( draw.obj_textbox('Thank you so much for playing...',(640,100),fontsize='large') )
         self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
@@ -1395,6 +1405,30 @@ class obj_scene_ch7p55(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
+        #
+        self.addpart( draw.obj_image('mountain',(79,110),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(186,119),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(245,205),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(198,198),scale=0.15,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(531,299),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        y1=60
+        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
+
 
 class obj_scene_ch7p56(page.obj_chapterpage):
     def prevpage(self):
@@ -1405,9 +1439,6 @@ class obj_scene_ch7p56(page.obj_chapterpage):
         self.text=[]
         self.addpart ( draw.obj_textbox('The End',(640,100),fontsize='huge') )
         self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('moon',(811,233),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1133,235),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(610,257),scale=0.29,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
@@ -1420,6 +1451,29 @@ class obj_scene_ch7p56(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
+        #
+        self.addpart( draw.obj_image('mountain',(79,110),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(186,119),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(245,205),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(198,198),scale=0.15,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(531,299),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        y1=60
+        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
 
 
 class obj_scene_ch7end(page.obj_chapterpage):
@@ -1431,7 +1485,7 @@ class obj_scene_ch7end(page.obj_chapterpage):
     #     share.scenemanager.switchscene(obj_scene_ch7unlocknext())
     def setup(self):
         self.text=['This is goodbye, said the book of things. ',\
-                   'Come back anytime to play again. ',\
+                   'But come back anytime to play again. ',\
                   'Till next time. ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )

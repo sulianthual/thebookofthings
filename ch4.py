@@ -55,7 +55,7 @@ class obj_scene_ch4p1(page.obj_chapterpage):
                   '"',
                    ('{partnername}',share.colors.partner),' has been captured by the ',\
                     ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),', and ',\
-                     ('{partner_he}',share.colors.partner),' is being held in  ',\
+                     ('{partner_he}',share.colors.partner),' is being held in ',\
                      ('{villain_his}',share.colors.villain),' ',\
                      ('evil castle',share.colors.location),'. ',\
                      ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
@@ -211,7 +211,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',\
-                    ('{heroname}',share.colors.hero),' checked his ',\
+                    ('{heroname}',share.colors.hero),' checked ',\
                     ('{hero_his}',share.colors.hero),' mailbox. ',\
                     ('{hero_he}',share.colors.hero),' had received ',\
                     'a ',' letter". ',\
@@ -295,9 +295,7 @@ class obj_scene_ch4p10(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                'Moving on: "',\
-                ('{heroname}',share.colors.hero),' travelled to the ',\
-                ('magical cave',share.colors.location),' in the east". ',\
+                'go to the magical cave in the east',\
                    ]
         self.world=world.obj_world_travel(self,start='home',goal='forest',chapter=4)
         self.addpart(self.world)
@@ -1114,9 +1112,7 @@ class obj_scene_ch4p20(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"',\
-                ('{heroname}',share.colors.hero),' travelled back ',
-                ('home',share.colors.location),'". ',\
+                'go back home',\
                    ]
         self.world=world.obj_world_travel(self,start='forest',goal='home',chapter=4)
         self.addpart(self.world)

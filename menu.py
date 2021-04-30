@@ -85,9 +85,13 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(self.sprite_eraser)
         # devtools
         if share.devaccess:
-            self.addpart(draw.obj_textbox('[Ctrl: Toggle Dev Mode]',(130,700),fontsize='smaller'))
-            self.addpart(draw.obj_textbox('[F: Quick Access for Developer]',(640,700),fontsize='smaller'))
-            self.addpart(draw.obj_textbox('[Space: Appendix Developer Tests]',(1120,700),fontsize='smaller'))
+            textmat=['Developper Access is on:','(edit settings.txt to change)',\
+            '[Ctrl: Toggle Dev Mode]','[F: Quick Access Scene]','[Space: Appendix of Tests]']
+            x1,y1,dy1=30,500,30
+            for i in textmat:
+                self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
+                y1 += dy1
+
 
     def setup(self):
         super().setup()
@@ -182,9 +186,8 @@ class obj_scene_settings(page.obj_page):
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
         #
-        self.difficultyeasy=draw.obj_textbox('Difficulty: Easy (Coming Soon)',(640,380),fontsize='smaller')
-        self.difficultymedium=draw.obj_textbox('Difficulty: Medium',(640,380),fontsize='smaller')
-        self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Sfoon)',(640,380),fontsize='smaller')
+        self.difficultyeasy=draw.obj_textbox('Difficulty: Easy ',(640,380),fontsize='smaller')
+        self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Soon)',(640,380),fontsize='smaller')
         self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
         self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
         self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
@@ -193,11 +196,9 @@ class obj_scene_settings(page.obj_page):
         self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,470),fontsize='smaller')
         self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
         self.addpart( self.difficultyeasy )
-        self.addpart( self.difficultymedium )
         self.addpart( self.difficultyhard )
-        self.difficultyeasy.show=share.datamanager.leveldifficulty == 0
-        self.difficultymedium.show=share.datamanager.leveldifficulty == 1
-        self.difficultyhard.show=share.datamanager.leveldifficulty == 2
+        self.difficultyeasy.show=share.datamanager.easymode
+        self.difficultyhard.show=not share.datamanager.easymode
         self.addpart( self.screennative )
         self.addpart( self.screenadapted )
         self.screennative.show=share.datamanager.donative
@@ -219,15 +220,9 @@ class obj_scene_settings(page.obj_page):
             self.sprite_pointer.movetoy(380+self.jpos*30)
         # change difficulty
         if self.jpos==0 and (controls.enter and controls.enterc):
-            if share.datamanager.leveldifficulty == 0:
-                share.datamanager.leveldifficulty=1
-            elif share.datamanager.leveldifficulty == 1:
-                share.datamanager.leveldifficulty=2
-            else:
-                share.datamanager.leveldifficulty=0
-            self.difficultyeasy.show=share.datamanager.leveldifficulty == 0
-            self.difficultymedium.show=share.datamanager.leveldifficulty == 1
-            self.difficultyhard.show=share.datamanager.leveldifficulty == 2
+            share.datamanager.easymode=not share.datamanager.easymode
+            self.difficultyeasy.show=share.datamanager.easymode
+            self.difficultyhard.show=not share.datamanager.easymode
             share.datamanager.savesettings()# save settings
         # change display
         if self.jpos==1 and (controls.enter and controls.enterc):

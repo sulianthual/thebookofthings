@@ -236,11 +236,12 @@ class obj_scene_ch3p9(page.obj_chapterpage):
                     ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
-        animation1=draw.obj_animation('ch3_villaincapture','villainbase',(640,360),record=False,scale=0.7)
-        animation2=draw.obj_animation('ch3_villaincapture2','partnerbase',(640,360),record=False,sync=animation1,scale=0.7)
+        animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
+        animation1.addimage('villainholdspartner')
         self.addpart( animation1 )
+        animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
+        animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
-
 
 class obj_scene_ch3p10(page.obj_chapterpage):
     def prevpage(self):
@@ -281,7 +282,8 @@ class obj_scene_ch3p11(page.obj_chapterpage):
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                     '\nI have captured ',('{partnername}',share.colors.partner),'. ',\
-                     'She is in my ',('evil lair',share.colors.location),'. ',\
+                    ('{partner_he}',share.colors.partner),\
+                     ' is in my evil lair. ',\
                      '\nDont even think about coming to rescue ',\
                      ('{partner_him}',share.colors.partner),'. ',\
                     '\nMuahahahaha, ',\
@@ -300,8 +302,7 @@ class obj_scene_ch3p12(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   'Fantastic, said the book of things. A great disruptive event for our story. ',\
-                 'Let continue: "The ',('evil lair',share.colors.location),\
-                 ' was a castle in the mountains". '\
+                 'Let continue: "The evil lair was a castle in the mountains". '\
                  'Draw an ',('castle',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
@@ -320,8 +321,7 @@ class obj_scene_ch3p13(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                '"',('{heroname}',share.colors.hero),' travelled to the ',
-                ('evil lair',share.colors.location),' in the west."',\
+                'go to the castle in the west',\
                    ]
         self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3)
         self.addpart(self.world)
@@ -761,7 +761,7 @@ class obj_scene_ch3p31(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' was almost asleep, ',\
-                  '"when a small voice started whispering. "',\
+                  'when a small voice started whispering. "',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
         self.addpart( draw.obj_image('herobaseangry',(420,490), scale=0.7,rotate=80) )
@@ -878,9 +878,7 @@ class obj_scene_ch3p38(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p39())
     def setup(self):
         self.text=[\
-                   '"Well, ',('{villainname}',share.colors.villain),\
-                   ' sure talks a lot in ',('{villain_his}',share.colors.villain),' sleep. ',\
-                   'It turns out that ', \
+                   '"It turns out that ', \
                    ('{villainname}',share.colors.villain),\
                    ' learned all ',('{villain_his}',share.colors.villain),\
                    ' evil ways from three ',('Grandmasters of Deceit',share.colors.villain),'. ',\
