@@ -22,19 +22,19 @@ import tool
 
 # Template for any game scene (called a page in the book of things)
 class obj_page:
-    def __init__(self):
+    def __init__(self,**kwargs):
         # elements
         self.to_update=[]
         self.to_finish=[]
         # setup
         self.presetup()
-        self.setup()
+        self.setup(**kwargs)# potential kwargs passed to setup
         self.postsetup()
     # def __del__(self):
         # print('deleted: '+str(self))# pages are consistently deleted when no longer in use by scenemanager
     def presetup(self):# background
         self.addpart(draw.obj_pagebackground())
-    def setup(self):# custom elements
+    def setup(self,**kwargs):# custom elements
         pass
     def postsetup(self):# foreground
         self.addpart(draw.obj_pagedisplay_fps())
@@ -67,10 +67,10 @@ class obj_page:
 
 # chapter page template: a page in a chapter of the book
 class obj_chapterpage(obj_page):
-    def __init__(self):
+    def __init__(self,**kwargs):
         self.text=[]# Main body of text
         self.textkeys={}
-        super().__init__()
+        super().__init__(**kwargs)
     def postsetup(self):
         super().postsetup()
         self.addpart(draw.obj_pagedisplay_number())

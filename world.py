@@ -2365,6 +2365,88 @@ class obj_world_stompfight(obj_world):
 
 ####################################################################################################################
 
+# Mini Game: lying with bunny
+# This is not a world per say but a holder for game data
+#*LYING *BUNNY
+class obj_world_lying(obj_world):
+    def setup(self,**kwargs):
+        #
+        # Default Values
+        self.statements={}# full list of statements
+        self.statdict={}# dictionary of 3 statements among full list
+        self.statkeys=[]# key
+        self.stat01=[]# and value
+        self.fqstatdict={}# former question
+        self.easymode=True# easy mode (or hard mode) for game
+        #
+        # Statements Database
+        self.statements={}# marked with key, statement negative (0), statement positive (1)
+        self.statements['apple']=['I hate apples','I love apples']
+        self.statements['banana']=['I hate bananas','I love bananas']
+        self.statements['shower']=['I never shower','I always shower']
+        self.statements['teeth']=['I never brush my teeth','I always brush my teeth']
+        self.statements['spider']=['I am not scared of spiders','I am scared of spiders']
+        self.statements['booger']=['I dont eat my boogers','I eat my boogers']
+        self.statements['underwear']=['I never wear dirty underwears','I always wear dirty underwears']
+        # Make 3 random statements upon creation
+        self.makestatements()
+        #
+    def makestatements(self):
+        # Pick up 3 statements from large database
+        self.statkeys=[]# choose 3 keys for statements (must be unique)
+        self.statkeys=tool.randsample( list(self.statements)  , 3)
+        self.stat01=[]# for each key, select the True or False statement (0,1)
+        for i in range(3):
+            self.stat01.append(tool.randchoice([0,1]))
+        self.statdict={}
+        for i in range(3):
+            self.statdict[self.statkeys[i]]=self.stat01[i]
+    def getstatement(self,index,lying=False):# index is 0,1,2, tells truth by default
+        if index in [0,1,2]:
+            if not lying:
+                return self.statements[self.statkeys[index]][self.stat01[index]]
+            else:
+                return self.statements[self.statkeys[index]][1-self.stat01[index]]
+        else:
+            return 'wrong index'
+        #
+    def makequestion(self):
+        # Get a random question
+        self.qstatkeys=tool.randsample( list(self.statkeys)  , 1)# choose two statements (hard mode)
+        self.qstat01=[]
+        self.qstat01.append(tool.randchoice([0,1]))
+        self.qstatdict={}
+        self.qstatdict[self.qstatkeys[0]]=self.qstat01[0]
+        # If question same as last one, change it slightly
+        if  self.qstatdict.items() == self.fqstatdict.items():
+            self.qstat01[0]=1-self.qstat01[0]# swap 0 1
+            self.qstatdict[self.qstatkeys[0]]=self.qstat01[0]
+        # Determine correct answer to question in advance
+        if self.qstatdict.items() <= self.statdict.items():# dictionary is subset of larger one
+            share.datamanager.setword('truth_yesno','yes')
+        else:
+            share.datamanager.setword('truth_yesno','no')
+        # save current question for later
+        self.fqstatdict=self.qstatdict
+    def getquestion(self):
+        return self.statements[self.qstatkeys[0]][self.qstat01[0]]
+
+        if False:
+            print('###')
+            print('truth='+ str(self.statdict))
+            print('statment='+ str(qstatdict))
+            print('answer='+ str(self.nextpage_correctanswer()))
+    def isanswercorrect(self,lying=False):
+        if share.devmode:
+            return True
+        else:
+            if not lying:
+                return share.datamanager.getword('choice_yesno') == share.datamanager.getword('truth_yesno')
+            else:
+                return share.datamanager.getword('choice_yesno') != share.datamanager.getword('truth_yesno')
+
+####################################################################################################################
+
 
 # Mini Game: Climb Highest Peak
 #*CLIMB *CLIMBING *PEAK

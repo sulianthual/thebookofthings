@@ -232,12 +232,8 @@ class obj_datatemp:
     def __init__(self):
         self.setup()
     def setup(self):
-        # some temp data used for the lying game
-        self.statements={}
-        self.statdict={}
-        self.statkeys=[]
-        self.stat01=[]
-        self.fqstatdict={}
+        pass
+
 
 
 ####################################################################################################################

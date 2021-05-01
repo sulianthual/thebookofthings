@@ -24,10 +24,10 @@ import world
 
 # Test Menu
 class obj_scene_testmenu(page.obj_page):
-    def __init__(self):
-        super().__init__()
-    def setup(self):
-        super().setup()
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs)
+    def setup(self,**kwargs):
+        super().setup(**kwargs)
         share.ipage=1# current page number in chapter
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
@@ -90,6 +90,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testworldgrandactor())
         self.list.append(obj_scene_testrigidbody())
         self.list.append(obj_scene_testbreakfastdrinking())
+        self.list.append(obj_scene_testothers())
         #
         self.listlen=len(self.list)
 
@@ -677,7 +678,11 @@ class obj_scene_testbreakfastdrinking(obj_testpage):
         self.world=world.obj_world_breakfastdrinking(self)
         self.addpart(self.world)
 
-
+class obj_scene_testothers(obj_testpage):
+    def setup(self):
+        self.name='Other Tests'
+        self.text=['Other tests: ',\
+                   ]
 
 ####################################################################################################################
 
