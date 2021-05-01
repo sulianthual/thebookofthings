@@ -242,6 +242,16 @@ class obj_scene_ch3p9(page.obj_chapterpage):
         animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
+    def presetup(self):
+        super().presetup()
+        # villainbase+partnerbase=villainholdspartner
+        image1=draw.obj_image('villainbase',(640,360))
+        image2=draw.obj_image('partnerbase',(640-70,360+80),rotate=90)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,400,330),'villainholdspartner')
+
 
 class obj_scene_ch3p10(page.obj_chapterpage):
     def prevpage(self):
