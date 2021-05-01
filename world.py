@@ -4473,7 +4473,7 @@ class obj_world_kiss(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
-        self.timerend=tool.obj_timer(50)# goal to done
+        self.timerend=tool.obj_timer(100)# goal to done
     def triggerungoing(self,controls):
         return (controls.a and controls.d) and (controls.ac or controls.dc)
     def triggerstart(self,controls):
