@@ -72,15 +72,6 @@ class obj_scene_ch4p1(page.obj_chapterpage):
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
         # self.addpart( draw.obj_imageplacer(self,'castle','mountain') )
-    def presetup(self):
-        super().presetup()
-        # villainbase+partnerbase=villainholdspartner
-        image1=draw.obj_image('villainbase',(640,360))
-        image2=draw.obj_image('partnerbase',(640-70,360+80),rotate=90)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,400,330),'villainholdspartner')
 
 class obj_scene_ch4p2(page.obj_chapterpage):
     def prevpage(self):
@@ -117,29 +108,7 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock (draw the exterior)',shadow=(200,200)) )
         self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
         self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
-    def endpage(self):
-        super().endpage()
-        # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
-        image1=draw.obj_image('alarmclockext',(640,360))
-        image2=draw.obj_image('alarmclockfill',(640,360),path='premade')
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,200),'alarmclock')
-        # combine alarmclock+alarmclockcenter8am=alarmclock8am (morning)
-        image1=draw.obj_image('alarmclock',(640,360))
-        image2=draw.obj_image('alarmclockcenter8am',(640,360),path='premade')
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,200),'alarmclock8am')
-        # combine alarmclock+alarmclockcenter8am=alarmclock8am (night)
-        image1=draw.obj_image('alarmclock',(640,360))
-        image2=draw.obj_image('alarmclockcenter12am',(640,360),path='premade')
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,200),'alarmclock12am')
+
 
 class obj_scene_ch4p3(page.obj_chapterpage):
     def prevpage(self):
@@ -311,18 +280,7 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         self.textkeys={'pos':(50,200),'xmax':720}
         self.addpart( draw.obj_image('stickhead',(980,360+150-10),path='premade',scale=1.5) )
         self.addpart( draw.obj_drawing('bunnyface',(980,360-10),legend='Bunny Head (facing right)',shadow=(200,300)) )
-        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybase') )
-        # self.addpart( draw.obj_image('herobase',(165-50,571),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('tree',(359-50,498),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('tree',(665-50,651),scale=0.35,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('cave',(540-50,473),scale=0.57,rotate=0,fliph=False,flipv=False) )
-    def endpage(self):
-        super().endpage()
-        # save bunny head
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360+150),scale=1.5,path='premade'))
-        dispgroup1.addpart('part2',draw.obj_image('bunnyface',(640,360)))
-        dispgroup1.snapshot((640,360,200,300),'bunnyhead')
+
 
 class obj_scene_ch4p12(page.obj_chapterpage):
     def prevpage(self):
@@ -339,13 +297,7 @@ class obj_scene_ch4p12(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('bunnybody',(980,360+65),legend='Bunny body (facing right)',shadow=(200,105),brush=share.brushes.pen6) )
         self.addpart( draw.obj_image('bunnyhead',(980,360-150),scale=0.5) )
         self.addpart( draw.obj_textinput('bunnyname',25,(380,360),color=share.colors.bunny, legend='Bunny Name') )
-    def endpage(self):
-        super().endpage()
-        # save angry head
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('bunnybody',(640,360+65)))
-        dispgroup1.addpart('part2',draw.obj_image('bunnyhead',(640,360-150),scale=0.5))
-        dispgroup1.snapshot((640,295,200,235),'bunnybase')
+
 
 class obj_scene_ch4p13(page.obj_chapterpage):
     def prevpage(self):

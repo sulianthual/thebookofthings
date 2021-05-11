@@ -115,7 +115,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch2_love1','love',(940,240),scale=0.3))
 
 
-
+#*PARTNERBASE
 class obj_scene_ch2p4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p3())
@@ -130,33 +130,6 @@ class obj_scene_ch2p4(page.obj_chapterpage):
         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=True,scale=0.5))
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
-    def endpage(self):
-        super().endpage()
-        # combine stickbody+stickhead+partnerhair=partnerbasenoface
-        image1=draw.obj_image('stickbody',(640,460),path='premade')
-        image2=draw.obj_image('partnerhair',(640,200))
-        image3=draw.obj_image('stickhead',(640,200),path='premade')# hero instead of stick head
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,330,200,330),'partnerbasenoface')# 0 to 660 in height
-        # combine stickbody+herohead+partnerhair=partnerbase
-        image1=draw.obj_image('stickbody',(640,460),path='premade')
-        image2=draw.obj_image('partnerhair',(640,200))
-        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,330,200,330),'partnerbase')# 0 to 660 in height
-        #combine stickhead+partnerhair=parnerhead
-        image1=draw.obj_image('partnerhair',(640,200))
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,200,200,200),'partnerhead')
 
 
 class obj_scene_ch2p5(page.obj_chapterpage):

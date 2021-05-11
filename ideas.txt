@@ -55,11 +55,13 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-- Chapter 1 and following: do not use angry face on hero (or partner)
-                           is confusing when villain is drawn differently
 
 - images snapshots: either at drawing creation, or at world setup.
                     but not somewhere else or can be inconsistent when redraws
+                    Make a complete consistency check
+  => HUGE problem is: if an image has several parts, redoing ANY of them means needs to snapshot
+  => MAKE DATABASE OF drawing finish:
+  - function automatically called on drawing finish: does all depending snapshots each time
 
 - text cleanup: consistent colors (separate for name, he/she)
                 look for all tipos

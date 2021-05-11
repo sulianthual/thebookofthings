@@ -1052,22 +1052,6 @@ class obj_world_travel(obj_world):
         dispgroup2.addpart('part2',image2)
         dispgroup2.addpart('part3',image3)
         dispgroup2.snapshot((640,330,200,330),'partnerwalk')
-        # combine stickhead+angryface+stickbody = herobaseangry
-        image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('stickhead',(640,200),path='premade')
-        image3=draw.obj_image('angryface',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.addpart('part3',image3)
-        dispgroup1.snapshot((640,360,200,300),'herobaseangry')
-        # combine angryhead+stickwalk = herowalkangry
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('angryhead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalkangry')
         # combine sailorhead+stickwalk = sailorwalk
         dispgroup2=draw.obj_dispgroup((640,360))
         dispgroup2.addpart('part1',draw.obj_image('stickwalk',(640,460),path='premade') )
@@ -1090,7 +1074,6 @@ class obj_world_travel(obj_world):
         self.addpartner=False# add partner walking with hero
         self.addsailor=False# add sailor walking with hero
         self.minigame=None# add mini-game on the travel game (minigame='flowers',etc....)
-        self.heroangry=False# angry face on hero
         self.addbeachquestionmark=False# add a question mark on the beach
         self.addbeachmark=False# add a cross mark on the beach
         self.addsailorwait=False# add the sailor (waiting on the beach)
@@ -1104,7 +1087,6 @@ class obj_world_travel(obj_world):
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# option partner walks with hero
             if 'sailor' in kwargs: self.addsailor=kwargs["sailor"]# option sailor walks with hero
             if 'minigame' in kwargs: self.minigame=kwargs["minigame"]# option add minigame
-            if 'heroangry' in kwargs: self.heroangry=kwargs["heroangry"]
             if 'remove' in kwargs: self.removelist=kwargs["remove"]
             if 'noending' in kwargs: self.noending=kwargs["noending"]
             if 'sailorwait' in kwargs: self.addsailorwait=kwargs["sailorwait"]
@@ -1419,16 +1401,10 @@ class obj_world_travel(obj_world):
             self.hero.addpart( 'pface_left', draw.obj_image('sailorbase',(640+30,360-30),scale=0.25,fliph=True) )
             self.hero.addpart( 'pwalk_right', draw.obj_image('sailorwalk',(640+30,360-30),scale=0.25) )
             self.hero.addpart( 'pwalk_left', draw.obj_image('sailorwalk',(640+30,360-30),scale=0.25,fliph=True) )
-        if self.heroangry:
-            self.hero.addpart( 'face_right', draw.obj_image('herobaseangry',(640,360),scale=0.25) )
-            self.hero.addpart( 'face_left', draw.obj_image('herobaseangry',(640,360),scale=0.25,fliph=True) )
-            self.hero.addpart( 'walk_right', draw.obj_image('herowalkangry',(640,360),scale=0.25) )
-            self.hero.addpart( 'walk_left', draw.obj_image('herowalkangry',(640,360),scale=0.25,fliph=True) )
-        else:
-            self.hero.addpart( 'face_right', draw.obj_image('herobase',(640,360),scale=0.25) )
-            self.hero.addpart( 'face_left', draw.obj_image('herobase',(640,360),scale=0.25,fliph=True) )
-            self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(640,360),scale=0.25) )
-            self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(640,360),scale=0.25,fliph=True) )
+        self.hero.addpart( 'face_right', draw.obj_image('herobase',(640,360),scale=0.25) )
+        self.hero.addpart( 'face_left', draw.obj_image('herobase',(640,360),scale=0.25,fliph=True) )
+        self.hero.addpart( 'walk_right', draw.obj_image('herowalk',(640,360),scale=0.25) )
+        self.hero.addpart( 'walk_left', draw.obj_image('herowalk',(640,360),scale=0.25,fliph=True) )
         self.hero.addpart( 'boat_right', draw.obj_image('sailboat',(640,360),scale=0.25) )
         self.hero.addpart( 'boat_left', draw.obj_image('sailboat',(640,360),scale=0.25,fliph=True) )
 
@@ -4314,8 +4290,8 @@ class obj_world_mechfight(obj_world):
 class obj_world_serenade(obj_world):
     def setup(self,**kwargs):
         # default options
-        self.addpartner=True# add the partner
-        self.heroangry=False# angry face on hero
+        self.addpartner=True# add the partnercd
+        self.heroangry=False# hero is angry
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options

@@ -314,18 +314,6 @@ class obj_scene_ch5p15(page.obj_chapterpage):
                 'but that is entirely up to you. ',\
                    ]
         self.addpart( draw.obj_drawing('elderhead',(640,450),legend='Draw the elder (facing right)') )
-    def endpage(self):
-        super().endpage()
-        # # save elder full body (slight offset made)
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,330,200,330),'elderbase')
-        # save elder full body (This is the CORRECT way, is used for some animations)
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,360,200,300),'elderbase2')
 
 
 class obj_scene_ch5p16(page.obj_chapterpage):

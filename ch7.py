@@ -969,43 +969,7 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         animation8=draw.obj_animation('ch7_villainmech_assemble_tpp','castle',(640,360),record=False)
         animation8.addimage('empty',path='premade')
         self.addpart( animation8 )
-        # Mech buildup
-    def presetup(self):
-        super().presetup()
-        # villainmech armature
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
-        dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
-        # villainmech complete
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature',(640,360)) )
-        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-        dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-        # villainmech complete no face
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1a', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part2a', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        dispgroup1.addpart( 'part3a', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-        dispgroup1.addpart( 'part4a', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
-        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-        dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
+
 
 class obj_scene_ch7p42(page.obj_chapterpage):
     def prevpage(self):
@@ -1117,32 +1081,6 @@ class obj_scene_ch7p45(page.obj_chapterpage):
         animation8=draw.obj_animation('ch7_villainmech_assemble_tpp','house',(640,360),record=False)
         animation8.addimage('empty',path='premade')
         self.addpart( animation8 )
-        # Mech buildup
-    def presetup(self):
-        super().presetup()
-        # heromech armature
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
-        dispgroup1.snapshot((640,360,300,220),'heromecharmature')
-        # heromech complete
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
-        dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
-        dispgroup1.snapshot((640,360,410,330),'heromechbase')
-
 
 
 class obj_scene_ch7p46(page.obj_chapterpage):

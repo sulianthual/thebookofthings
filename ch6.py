@@ -73,15 +73,6 @@ class obj_scene_ch6p1(page.obj_chapterpage):
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
         # self.addpart( draw.obj_imageplacer(self,'castle','mountain') )
-    def presetup(self):
-        super().presetup()
-        # villainbase+partnerbase=villainholdspartner
-        image1=draw.obj_image('villainbase',(640,360))
-        image2=draw.obj_image('partnerbase',(640-70,360+80),rotate=90)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,400,330),'villainholdspartner')
 
 
 class obj_scene_ch6p2(page.obj_chapterpage):
@@ -339,13 +330,6 @@ class obj_scene_ch6p14(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         self.addpart( draw.obj_drawing('sailorface',(640,450),legend='Draw the sailor (facing right)',shadow=(200,200)) )
-    def endpage(self):
-        super().endpage()
-        # combine sitckhead+sailorface=sailorbaldhead
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('sailorface',(640,360)) )
-        dispgroup1.snapshot((640,360,200,200),'sailorbaldhead')
 
 
 class obj_scene_ch6p15(page.obj_chapterpage):
@@ -364,19 +348,7 @@ class obj_scene_ch6p15(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailorbaldhead',(640+300,450)) )
         self.addpart( draw.obj_drawing('sailorhat',(640+300,450-200),shadow=(250,150)) )
         self.addpart( draw.obj_textbox('Add a sailor hat',(640+300,680),color=share.colors.instructions) )
-    def endpage(self):
-        super().endpage()
-        # save sailor head
-        dispgroup1=draw.obj_dispgroup((640,450))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('sailorbaldhead',(640,450),scale=1))
-        dispgroup1.addpart('part2',draw.obj_image('sailorhat',(640,450-200)))
-        dispgroup1.snapshot((640,325+50,250,275),'sailorhead')
-        # combine herohead+stickbody = herobase
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('sailorbaldhead',(640,200),scale=0.5))
-        dispgroup1.addpart('part3',draw.obj_image('sailorhat',(640,200-100),scale=0.5))
-        dispgroup1.snapshot((640,360-15,200,300+15),'sailorbase')
+
 
 class obj_scene_ch6p16(page.obj_chapterpage):
     def prevpage(self):
@@ -542,31 +514,6 @@ class obj_scene_ch6p24(page.obj_chapterpage):
                    '(oh and dont draw bones under it, i dont want a pirate flag). ',\
                    ]
         self.addpart( draw.obj_drawing('skeletonhead',(640,450),legend='Skull (Facing Right)',shadow=(200,200)) )
-    def endpage(self):
-        super().endpage()
-        # combine skeletonhead+stickbody = skeletonbase
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-        # dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
-        # dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
-        # dispgroup1.addpart('part6',draw.obj_image('scar',(640,200),scale=0.5) )
-        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
-        # skeleton with hair
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-        dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
-        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
-        # skeleton with sailor hat
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-        dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
-        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
 
 
 class obj_scene_ch6p25(page.obj_chapterpage):
@@ -773,13 +720,6 @@ class obj_scene_ch6p34(page.obj_chapterpage):
                    ('cow',share.colors.cow),'. ',\
                    ]
         self.addpart( draw.obj_drawing('cow',(640,450),legend='Draw a Cow (Facing Right)',shadow=(300,200),brush=share.brushes.pen6) )
-    def endpage(self):
-        super().endpage()
-        # combine herobase+cow=heroridecow
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5) )
-        dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
-        dispgroup1.snapshot((640,360+25,300,300-25),'heroridecow')
 
 
 class obj_scene_ch6p35(page.obj_chapterpage):

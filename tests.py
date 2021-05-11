@@ -555,6 +555,7 @@ class obj_scene_testdispgroupsnapshot(obj_testpage):
         self.text=['Display group Snapshot: saves an image of a dispgroup (in designated area of screen). ',\
                    'Only works for images (useful to combine them). ',\
                    'Move dispgroup with [arrows]. Take a snapshot with [f] (prints the center area).',\
+                   'Note: the snapshot manager (in datb) automatically remakes all related snapshots each time a drawing is remade',\
                    ]
         self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup.addpart( "key_element1", draw.obj_image('testimage1',(440,360)) )# add image

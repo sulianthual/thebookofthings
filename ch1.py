@@ -85,25 +85,12 @@ class obj_scene_ch1p2(page.obj_chapterpage):
                    ', that I made all by myself. I call it the "Stickman".',\
                    ' It is near perfect, but you could still improve on it a little. ',\
                    ]
-        # Creation of stickman from snapshot (combines head and body)
-        if False:
-            # self.addpart( draw.obj_drawing('stickhead',(640,360),shadow=(100,100)) )# draw
-            # self.addpart( draw.obj_drawing('stickbody',(940,360),shadow=(200,200)) )
-            image1=draw.obj_image('stickbody',(640,460),path='premade')# snapshot
-            image2=draw.obj_image('stickhead',(640,200),path='premade')
-            dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup1.addpart('part1',image1)
-            dispgroup1.addpart('part2',image2)
-            # self.addpart(dispgroup1)# preview
-            dispgroup1.snapshot((640,360,200,300),'stickbase',path='premade')
-            # self.addpart(draw.obj_image('stickbase',(940,360),path='premade'))#
-        #
         animation1=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
         self.addpart(animation1)
 
 
 
-
+#*HEROHEAD *HEROBASE
 class obj_scene_ch1p3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p2())
@@ -117,21 +104,6 @@ class obj_scene_ch1p3(page.obj_chapterpage):
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         drawing=draw.obj_drawing('happyface',(640,450),legend='Draw a Happy Face',shadow=(200,200))
         self.addpart( drawing )
-        # drawing=draw.obj_drawing('herohead',(640,450),legend='Draw a Happy Face')
-        # self.addpart( drawing )
-    def endpage(self):
-        super().endpage()
-        # combine sitckhead+happyface=herohead
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('happyface',(640,360)) )
-        dispgroup1.snapshot((640,360,200,200),'herohead')
-        # combine herohead+stickbody = herobase
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
-        dispgroup1.snapshot((640,360,200,300),'herobase')
-
 
 class obj_scene_ch1p4(page.obj_chapterpage):
     def prevpage(self):
@@ -239,13 +211,6 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         if False:# not for player
             hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360),brush=share.brushes.smallpen)
             self.addpart(hookline)
-    def endpage(self):
-        super().endpage()
-        # combine hero+fish into: hero holding fish
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,452), scale=0.7))
-        dispgroup1.addpart('part2',draw.obj_image('fish',(776,486), scale=0.4,rotate=-90))
-        dispgroup1.snapshot((700,452,200,260),'herobasefish')
 
 class obj_scene_ch1p10(page.obj_chapterpage):
     def prevpage(self):

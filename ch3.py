@@ -90,6 +90,7 @@ class obj_scene_ch3p2(page.obj_chapterpage):
         drawing=draw.obj_drawing('scar',(640,450),legend='Add a big scar',shadow=(200,200))
         self.addpart( drawing)
 
+#*VILLAINBASE
 class obj_scene_ch3p3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p2())
@@ -105,30 +106,6 @@ class obj_scene_ch3p3(page.obj_chapterpage):
         self.addpart( draw.obj_image('scar',(640,450)) )
         drawing=draw.obj_drawing('angryface',(640,450),legend='Draw an angry face',shadow=(200,200))
         self.addpart( drawing)
-    def endpage(self):
-        super().endpage()
-        # save angry head
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade'))
-        dispgroup1.addpart('part2',draw.obj_image('angryface',(640,360)))
-        dispgroup1.snapshot((640,360,200,200),'angryhead')
-        # save villain head drawing
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('angryhead',(640,360)) )
-        dispgroup1.addpart('part2',draw.obj_image('scar',(640,360)) )
-        dispgroup1.snapshot((640,360,200,200),'villainhead')
-        # save villain full body (slightly different than hero, because originally we could include partnerhair)
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
-        dispgroup2.snapshot((640,330,200,330),'villainbase')
-        # heroangry+zapaura=herozapped
-        dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('angryhead',(640,200),scale=0.5) )
-        dispgroup2.addpart('part3',draw.obj_image('zapaura',(640,360),path='premade') )
-        dispgroup2.snapshot((640,360,200,300),'herozapped')
-
 
 class obj_scene_ch3p3a(page.obj_chapterpage):
     def prevpage(self):
@@ -242,15 +219,7 @@ class obj_scene_ch3p9(page.obj_chapterpage):
         animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
-    def presetup(self):
-        super().presetup()
-        # villainbase+partnerbase=villainholdspartner
-        image1=draw.obj_image('villainbase',(640,360))
-        image2=draw.obj_image('partnerbase',(640-70,360+80),rotate=90)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,400,330),'villainholdspartner')
+
 
 
 class obj_scene_ch3p10(page.obj_chapterpage):
@@ -372,29 +341,6 @@ class obj_scene_ch3p15(page.obj_chapterpage):
         drawing2=draw.obj_drawing('bullet',(1280-200-50,450),legend='Bullet (facing right)',shadow=(200,200))
         drawing2.brush.makebrush(share.brushes.bigpen)
         self.addpart(drawing2)
-    def endpage(self):
-        super().endpage()
-        # herohead+stickcrouch =herocrouch
-        image1=draw.obj_image('stickcrouch',(940,360),path='premade')
-        image2=draw.obj_image('herohead',(800,360),scale=0.5,rotate=90)
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((940,360,300,200),'herocrouch')# 0 to 660 in height
-        # villainhead+stickshootcrouch =villainshootcrouch (beware larger if girl)
-        image1=draw.obj_image('stickshootcrouch',(640,360+100),path='premade')
-        image2=draw.obj_image('villainhead',(640,360),scale=0.5,fliph=True)
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360+100-50,300,250),'villainshootcrouch')# 0 to 660 in height
-        # villainbase+gun =villainbasegun (for cutscenes)
-        image1=draw.obj_image('villainbase',(640,330))
-        image2=draw.obj_image('gun',(640+180,330),scale=0.4)
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640+50,330,200+50,330),'villainbasegun')# 0 to 660 in height
 
 
 class obj_scene_ch3p16(page.obj_chapterpage):
@@ -668,7 +614,7 @@ class obj_scene_ch3p25(page.obj_chapterpage):
                 ('{heroname}',share.colors.hero),' travelled back ',
                 ('home',share.colors.location),'". ',\
                    ]
-        self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=3,heroangry=True)
+        self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=3)
         self.addpart(self.world)
 
 class obj_scene_ch3p26(page.obj_chapterpage):

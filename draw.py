@@ -301,6 +301,8 @@ class obj_drawing:
             self.sprite.clear()
             self.sprite.blitfrom(self.sprite_base,0,0)# back
         self.sprite.save('book/'+self.name+'.png')
+        # call the snapshot manager to redraw any related image
+        share.snapshotmanager.remake(self.name)
 
 
 # Tool for drawing with the mouse
