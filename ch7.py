@@ -1261,7 +1261,7 @@ class obj_scene_ch7p53(page.obj_chapterpage):
         self.text=[\
             'Draw a cake, said the book things. It is time to celebrate! ',\
                 ]
-        self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200),brush=share.brushes.smallpen) )
+        self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200)) )
 
 
 class obj_scene_ch7p54(page.obj_chapterpage):
