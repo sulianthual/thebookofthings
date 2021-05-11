@@ -61,7 +61,7 @@ class obj_scene_ch2p1(page.obj_chapterpage):
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation1=draw.obj_animation('ch2_summary','herobase',(640,360),record=False,scale=0.7)
         animation1.addimage('herobasefish')
-        animation2=draw.obj_animation('ch2_summary2','sun',(640,360),record=True,sync=animation1,scale=0.5)
+        animation2=draw.obj_animation('ch2_summary2','sun',(640,360),record=False,sync=animation1,scale=0.5)
         animation2.addimage('moon',scale=0.5)
         self.addpart(animation2)
         self.addpart(animation1)
@@ -111,7 +111,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the Partner\'s Name was:",(200,y2)) )
         self.addpart( draw.obj_textinput('partnername',25,(750,y2),color=share.colors.hero, legend='Partner Name') )
-        self.addpart(draw.obj_animation('ch2_love1','love',(640,240),record=True,scale=0.3))
+        self.addpart(draw.obj_animation('ch2_love1','love',(640,240),record=False,scale=0.3))
         self.addpart(draw.obj_animation('ch2_love1','love',(340,240),scale=0.3))
         self.addpart(draw.obj_animation('ch2_love1','love',(940,240),scale=0.3))
 
@@ -129,7 +129,7 @@ class obj_scene_ch2p4(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner\'s Hair',shadow=(200,200),brush=share.brushes.smallpen) )
         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
-        self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=True,scale=0.5))
+        self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=False,scale=0.5))
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
 
 
@@ -149,7 +149,7 @@ class obj_scene_ch2p5(page.obj_chapterpage):
         self.addpart(animation1)
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
         self.addpart(draw.obj_animation('ch2_herobase1','herobase',(640,360),scale=0.75,record=False,sync=animation1))
-        self.addpart(draw.obj_animation('ch2_partnerbasenoface','partnerbasenoface',(640,360),scale=0.75,record=True,sync=animation1))
+        self.addpart(draw.obj_animation('ch2_partnerbasenoface','partnerbasenoface',(640,360),scale=0.75,record=False,sync=animation1))
 
 
 class obj_scene_ch2p6(page.obj_chapterpage):
@@ -264,7 +264,7 @@ class obj_scene_ch2p8(page.obj_chapterpage):
             self.addpart( drawing )
         self.world=world.obj_world_serenade(self)# serenade mini-game
         self.addpart(self.world)
-        # self.addpart(draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3,record=True))
+        # self.addpart(draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3,record=False))
         # self.addpart( draw.obj_imageplacer(self,'saxophone','guitar','herobase') )
 
 
@@ -285,7 +285,7 @@ class obj_scene_ch2p9(page.obj_chapterpage):
         animation1=draw.obj_animation('ch2_partner2','partnerbase',(640,360),scale=0.7,record=False)
         self.addpart(animation1)
         self.addpart(draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4,record=False,sync=animation1))
-        self.addpart(draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4,record=True,sync=animation1))
+        self.addpart(draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4,record=False,sync=animation1))
 
 
 
@@ -397,7 +397,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
-        # self.addpart( draw.obj_animation('ch2_sunrise','sun',(640,360),record=True) )
+        # self.addpart( draw.obj_animation('ch2_sunrise','sun',(640,360),record=False) )
 
 
 class obj_scene_ch2play1a(page.obj_chapterpage):
@@ -537,7 +537,7 @@ class obj_scene_ch2play5a(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
-        # animation1=draw.obj_animation('ch2_sunset','sun',(640,360),record=True)
+        # animation1=draw.obj_animation('ch2_sunset','sun',(640,360),record=False)
         # animation1.addimage('moon')
         # self.addpart( animation1 )
 

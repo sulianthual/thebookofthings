@@ -881,7 +881,7 @@ class obj_scene_ch7p38(page.obj_chapterpage):
         animation1= draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5)
         self.addpart(animation1)
         # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase') )
-        animation2=draw.obj_animation('ch7_knockondoor','interrogationmark',(840,360),record=True,sync=animation1,path='premade')
+        animation2=draw.obj_animation('ch7_knockondoor','interrogationmark',(840,360),record=False,sync=animation1,path='premade')
         self.addpart(animation2)
 
 
@@ -1133,7 +1133,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
         self.addpart(self.world)
         if False:
             self.addpart( draw.obj_image('mechfightcircle',(640,360),scale=0.75,path='premade') )
-            animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360),record=True,path='premade')
+            animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360),record=False,path='premade')
             animation1.addimage('empty',path='premade')
             self.addpart( animation1 )
 

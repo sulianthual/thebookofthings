@@ -921,7 +921,7 @@ class obj_scene_ch6p43(page.obj_chapterpage):
         self.addpart(animation1)
         animation2=draw.obj_animation('ch6sailortalks3love','cow',(640,360),record=False,sync=animation1)
         self.addpart(animation2)
-        animation3=draw.obj_animation('ch6sailortalks3love2','love',(640,360),record=True,sync=animation2)
+        animation3=draw.obj_animation('ch6sailortalks3love2','love',(640,360),record=False,sync=animation2)
         animation3.addimage('empty',path='premade')
         self.addpart(animation3)
 

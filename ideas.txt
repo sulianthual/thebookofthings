@@ -55,10 +55,6 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-- text cleanup: consistent colors (separate for name, he/she)
-                look for all tipos
-
-
 - clean record=True all animations
 
 - control scheme: decide on one scheme for playing:

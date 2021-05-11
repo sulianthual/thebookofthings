@@ -117,7 +117,7 @@ class obj_scene_ch3p3a(page.obj_chapterpage):
                    'Pretty scary! ',\
                    'Lets move on to the next step. ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_hero1','villainbase',(360,360),record=True))
+        self.addpart(draw.obj_animation('ch1_hero1','villainbase',(360,360),record=False))
 
 
 class obj_scene_ch3p4(page.obj_chapterpage):
@@ -815,7 +815,7 @@ class obj_scene_ch3p37(page.obj_chapterpage):
         self.addpart( draw.obj_image('villainbase',(1280-420,490), scale=0.7,rotate=80,fliph=True) )
         animation1=draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5)
         self.addpart( animation1 )
-        self.addpart( draw.obj_animation('ch3_bugtalks2','bug',(640,360),record=True,sync=animation1) )
+        self.addpart( draw.obj_animation('ch3_bugtalks2','bug',(640,360),record=False,sync=animation1) )
 
 
 class obj_scene_ch3p38(page.obj_chapterpage):
@@ -834,7 +834,7 @@ class obj_scene_ch3p38(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(640,360),record=True,path='premade') )
+        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(640,360),record=False,path='premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='premade') )

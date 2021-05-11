@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+record=Falserecord=False#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # The Book of Things
@@ -70,7 +70,7 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         textchoice.addkey('hero_his',{'he':'his','she':'her','it':'its'})
         textchoice.addkey('hero_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
-        self.addpart(draw.obj_animation('ch1_pen2','pen',(1180,400),record=True,scale=0.5))
+        self.addpart(draw.obj_animation('ch1_pen2','pen',(1180,400),record=False,scale=0.5))
 
 
 
@@ -116,7 +116,7 @@ class obj_scene_ch1p4(page.obj_chapterpage):
                    'Indeed, ',('{hero_he}',share.colors.hero2),' looks very cool. ',\
                    'Lets move on to the next step. ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_hero1','herobase',(360,360),record=True))
+        self.addpart(draw.obj_animation('ch1_hero1','herobase',(360,360),record=False))
 
 
 
@@ -150,7 +150,7 @@ class obj_scene_ch1p6(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
         self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
-        # self.addpart(draw.obj_animation('ch1_heroawakes','herobase',(640,360),record=True,scale=0.7))
+        # self.addpart(draw.obj_animation('ch1_heroawakes','herobase',(640,360),record=False,scale=0.7))
         # self.addpart( draw.obj_image('herobase',(903,452), scale=0.7) )
 
 
@@ -241,7 +241,7 @@ class obj_scene_ch1p11(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero2),\
                     ' went fishing and caught a ',('fish',share.colors.item2),'". ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=True))
+        self.addpart(draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=False))
 
 
 
@@ -264,8 +264,8 @@ class obj_scene_ch1p12(page.obj_chapterpage):
         self.world.timerend.amount=100# longer cutscene for first time playing
         # self.addpart( draw.obj_image('fish',(900,400), scale=1,rotate=-45) )
         # self.addpart( draw.obj_image('herobase',(340,400), scale=0.7) )
-        # self.addpart(draw.obj_animation('ch1_heroeats1','herobase',(640,360),record=True,imgscale=0.7))
-        # animation2=draw.obj_animation('ch1_eatsounds','says_crunch',(360,360),record=True,sync=self.world.animation1,path='premade')
+        # self.addpart(draw.obj_animation('ch1_heroeats1','herobase',(640,360),record=False,imgscale=0.7))
+        # animation2=draw.obj_animation('ch1_eatsounds','says_crunch',(360,360),record=False,sync=self.world.animation1,path='premade')
         # animation2.addimage('says_miam')
         # animation2.addimage('says_gulp')
         # animation2.addimage('says_empty')
