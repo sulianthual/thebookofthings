@@ -206,8 +206,6 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p7())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
                   '"',\
@@ -216,7 +214,6 @@ class obj_scene_ch4p6(page.obj_chapterpage):
                     ('{hero_he}',share.colors.hero),' had received ',\
                     'a ',' letter". ',\
                    ]
-        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
@@ -230,8 +227,6 @@ class obj_scene_ch4p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p8())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
         self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
         xmargin=100
@@ -249,7 +244,6 @@ class obj_scene_ch4p7(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
         self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
-        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
 
 
 class obj_scene_ch4p8(page.obj_chapterpage):

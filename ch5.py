@@ -142,8 +142,6 @@ class obj_scene_ch5p6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p7())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
                   '"',\
@@ -152,7 +150,6 @@ class obj_scene_ch5p6(page.obj_chapterpage):
                     ('{hero_he}',share.colors.hero),' had received ',\
                     'two ',' letters". ',\
                    ]
-        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
@@ -169,8 +166,6 @@ class obj_scene_ch5p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p8())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
         self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
         xmargin=100
@@ -186,7 +181,6 @@ class obj_scene_ch5p7(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
         self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
-        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
 
 
 class obj_scene_ch5p8(page.obj_chapterpage):
@@ -194,8 +188,6 @@ class obj_scene_ch5p8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p7())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p9())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.w and controls.wc)
     def setup(self):
         self.addpart( draw.obj_textbox('"The second letter said:"',(50,83),xleft=True) )
         xmargin=100
@@ -213,7 +205,6 @@ class obj_scene_ch5p8(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
         self.addpart( draw.obj_image('bunnyhead',(1065,305-50),scale=0.5) )
-        self.addpart(draw.obj_textbox('Press [W] to Continue',(640,670),color=share.colors.instructions))
 
 
 class obj_scene_ch5p9(page.obj_chapterpage):
@@ -887,8 +878,8 @@ class obj_scene_ch5p32(page.obj_chapterpage):
         self.text=[\
                '"OWWWW, said ',('{eldername}',share.colors.elder),', you young punks have no respect! ',\
                'Fine, I will teach you my secret. ',\
-               ('perseverance',share.colors.password),' will only get you so far, what you really need is ',\
-               ('cheating',share.colors.password),'". ',\
+               ('perseverance',share.colors.red),' will only get you so far, what you really need is ',\
+               ('cheating',share.colors.red),'". ',\
                   ]
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
         animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)
@@ -908,8 +899,8 @@ class obj_scene_ch5p33(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p34())
     def setup(self):
         self.text=[\
-               'When playing you can ',\
-               ('peek at at other\'s bubble',share.colors.instructions),\
+                ('Cheat',share.colors.red),' by ',\
+               ('peeking at other\'s bubble',share.colors.instructions),\
                ' to know what they are thinking. ',\
               'You can then ',('counter their hand at the last moment',share.colors.instructions),\
               ', but you gotta be quick. ',\

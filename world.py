@@ -1557,7 +1557,7 @@ class obj_world_travel(obj_world):
         else:
             self.text_undone.show=True
             self.text_undoneenter.show=False
-    #
+    ####
     def update(self,controls):
         super().update(controls)
         if not self.goal:

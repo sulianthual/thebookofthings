@@ -254,7 +254,7 @@ class obj_scene_ch2p6c(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
         self.addpart( draw.obj_image('partnerhead',(1065,305),scale=0.5) )
-        self.addpart( draw.obj_image('love',(431,545),scale=0.25) )
+        self.addpart( draw.obj_image('love',(716,546),scale=0.25) )
 
 
 class obj_scene_ch2p7(page.obj_chapterpage):
@@ -469,8 +469,6 @@ class obj_scene_ch2play3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3a())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
                    '"Then, ',('{heroname}',share.colors.hero),' received a letter from ',\
@@ -478,7 +476,6 @@ class obj_scene_ch2play3(page.obj_chapterpage):
                    ('{partner_he}',share.colors.partner),' loved ',\
                    ('{hero_him}',share.colors.hero),' very very much". ',\
                    ]
-        self.addpart(draw.obj_textbox('Press [S] to Continue',(640,660),color=share.colors.instructions))
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)

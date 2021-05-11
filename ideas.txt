@@ -19,8 +19,7 @@ No more advanced physics! Only simple goofy minigames
 No more advanced drawings! Only simple and goofy.
 No more advanced modular story! Only one linear story.
 
-
-###################
+###
 * Game Progression:
 - Chapter I, II: set hero, partner, home (story setting)
 - Chapter III: villain captures partner (disruption)
@@ -29,7 +28,7 @@ No more advanced modular story! Only one linear story.
                     retrieve 3 parts of password in 3 locations (north,west,south)
 - Chapter VII: final fight against villain, rescue the princess
 
-###################
+###
 * General Story Arc:
 Each day/chapter of the story follows somewhat an arc (even if varying in content):
 arc:     wake up -> morning game -> travel1 -> midday quest -> travel -> afternoon fight (game) -> travel2 -> aftermath -> ending
@@ -43,19 +42,28 @@ travel1: home to evil lair, or other (pirate island, iceberg?? space station??,t
 travel2: X go back home, or to some location for an ending
 *** Add a quest (between morning game and afternoon fight)
 
+###
+* Drawings:
+DO NOT propose shadows for drawings, it makes people lazy and skip drawing (defeating the purpose)
+
+###
+* Minigames:
+DO NOT add complex minigames that require a physics engine (e.g. platformer, brawler...)
+It is NOT worth it to do with pygame (too painful to build from ground up)
+It should be done in NEXT games with other softwares that do this more easily (godot,etc...)
 
 ##################
-* General cleanup to do:
+* Final changes to make:
 
-- page numbering: chapter 4 and 5 in particular
-                  redo it clean
-                  
+- Chapter 1 and following: do not use angry face on hero (or partner)
+                           is confusing when villain is drawn differently
+
 - images snapshots: either at drawing creation, or at world setup.
                     but not somewhere else or can be inconsistent when redraws
+
 - text cleanup: consistent colors (separate for name, he/she)
                 look for all tipos
-                text could be in .txt files using a call function that reads them
-                it would avoid crashes when tipos, and could have french/spanish versions easier to make
+
 
 - control scheme: decide on one scheme for playing:
                   drawing with LMouse+backspace (should put backspace as a button on screen)
@@ -63,17 +71,46 @@ travel2: X go back home, or to some location for an ending
                              only one game uses WASD+Space (log gathering chapt 6)
                              maybe WASD only is best if one day wants to make mobile game version
 
-- Chapter 4: the lying minigame should be a WORLD, not a series of PAGES
-            this makes use of the datamanager.temp whish is messy
-            (for example, we cant skip to middle of game because it skips initialization)
 
-- tff file: cannot do interrogation marks. correct the file
-is there a unicode text for arrow? could use universal symbol instead of up, left,right,down or WASD
+
 
 - drawing brush: sometimes slowdown or wont draw (doesnt register initial click). Like at mechanics more closely
 
+- add drawing option: erase last stroke (right click or eraser symbol next to drawing)
+
+
+
+- Cleanup drawings (should be EXTREMELY minimal). Remove for example:
+        music key chapter 2
+        map paths
+        floor on dodge bullets (has grass marks)
+        grass marks for stomp game too
+        chapter 3 electric shock on hero
+        alarm clock -> must be white
+        chapter 5 mountain peak with snow
+
+- Draw the stickman yourself (in chapter 1)
+
+- Controls: choose keys in settings
+            assign generalized keys: controls.gu=up...
+            gu,gd,gr,gl=directions
+            gn,gp,gq=next,previous,quit (enter,tab,esc)
+            gm (and gmx,gmy)=mouse 1 (and mouse x, mouse y)
+            gc=ctrl (developper mode)
+
+- Add better character customization (influences text only):
+  name, gender, catchphrase, temper (choose one), favorite/hated item, etc...
+
+- Add sound and music
+
+- Add epilogue: free roaming and replay any minigame
+
+
+
 ##################
-* Some Additions to Make (maybe later):
+* Other Ideas (maybe later or never):
+
+- tff file: cannot do text for interrogation marks. correct the file ?
 
 - Chapter 1: draw the stickman (only give the shape of the head). Do positions:
     Standing (legs straigth, facing right)
@@ -116,6 +153,8 @@ is there a unicode text for arrow? could use universal symbol instead of up, lef
 
 - Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
 
+- Chapter 7: extend it reusing all games from previous chapter (e.g. sneak in villains room, etc...)
+
 - Somewhere...: Add a game with parabolic shooting ?
              can be done easily with naval battle and a cannon
              (could have been arc and bow for hunting too)
@@ -124,8 +163,6 @@ is there a unicode text for arrow? could use universal symbol instead of up, lef
 -Somewhere: recycle the breakfast drinking minigame
             (change the animations)
             use it to cut a rope, or else stealthily
-
-- World Map: path should not be drawn except by player
 
 - Credits: Make a song about "lie, cheat and steal"
           Play it with everyone dancing, with a little ball like a karaoke
@@ -142,24 +179,18 @@ is there a unicode text for arrow? could use universal symbol instead of up, lef
           you will come around if you LIE, CHEAT AND STEAL!
           (you can replace learn how to=> you need to, and so on...)
 
+- World Map: path should not be drawn except by player
 
+- french/spanish translation
+
+- new game plus (more options in text, customize characters with hats/clothes...)
 
 ##################
-* Other possible additions:
-
-- Cleanup drawings (should be EXTREMELY minimal). Remove for example:
-        music key chapter 2
-        map paths
-        floor on dodge bullets (has grass marks)
-        grass marks for stomp game too
-        chapter 3 electric shock on hero
-        alarm clock -> must be white
-        chapter 5 mountain peak with snow
-
+* Even more ideas:
 
 - allow player to choose text font at beginning
 
-- allow player to use color on drawings??? (maybe in a new game plus)
+- allow player to use color on drawings???
 
 
 - allow player to name more stuff: like locations (the evil lair, home, the highest peak, etc...)
