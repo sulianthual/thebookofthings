@@ -55,11 +55,11 @@ class obj_scene_ch4p1(page.obj_chapterpage):
                   '"',
                    ('{partnername}',share.colors.partner),' has been captured by the ',\
                     ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),', and ',\
-                     ('{partner_he}',share.colors.partner),' is being held in ',\
-                     ('{villain_his}',share.colors.villain),' ',\
-                     ('evil castle',share.colors.location),'. ',\
+                     ('{partner_he}',share.colors.partner2),' is being held in ',\
+                     ('{villain_his}',share.colors.villain2),' ',\
+                     ('evil castle',share.colors.location2),'. ',\
                      ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
-                     ('password',share.colors.password),'. ',\
+                     ('password',share.colors.password2),'. ',\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         self.addpart( draw.obj_image('castle',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
@@ -81,10 +81,10 @@ class obj_scene_ch4p2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Luckily, ',('{heroname}',share.colors.hero),\
-                   ' befriended a terrifying ',('{bug}',share.colors.bug),\
-                    ' who may know how to crack the castle\'s ',('password',share.colors.password),'. ',\
-                    'Today, they are on their way to meet the ',\
-                    ('Grandmaster of Deceit',share.colors.villain),\
+                   ' has befriended a terrifying ',('{bug}',share.colors.bug),\
+                    ' who may know how to crack the castle\'s ',('password',share.colors.password2),'. ',\
+                    'Today, they are on their way to meet a ',\
+                    ('grandmaster of deceit',share.colors.grandmaster),\
                     ' that lives in the east."',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
@@ -99,10 +99,10 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'First, lets make sure ',('{heroname}',share.colors.hero),' wakes up on time for ', \
-                   ('{hero_his}',share.colors.hero),' adventure, said the book of things.',\
+                   ('{hero_his}',share.colors.hero2),' adventure, said the book of things. ',\
                    'Draw a ',('night stand',share.colors.item),\
                    ' and an ',('alarm clock',share.colors.item),\
-                   ' to wake ',('{hero_him}',share.colors.hero),'. ',\
+                   ' to wake ',('{hero_him}',share.colors.hero2),' up. ',\
                    ]
         self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='Night Stand',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock (draw the exterior)',shadow=(200,200)) )
@@ -120,7 +120,7 @@ class obj_scene_ch4p3(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                'Alright lets go, said the book of things: ',\
-                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+                '"once upon a Time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' that lived in a house. ',\
                 'It was morning and the sun was rising". ',\
                    ]
@@ -139,7 +139,7 @@ class obj_scene_ch4p4(page.obj_chapterpage):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
                 'woke up from bed with ',\
-                ('{hero_his}',share.colors.hero),\
+                ('{hero_his}',share.colors.hero2),\
                 ' new friend the ',('{bug}',share.colors.bug),'." ',\
                    ]
         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
@@ -179,8 +179,8 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' checked ',\
-                    ('{hero_his}',share.colors.hero),' mailbox. ',\
-                    ('{hero_he}',share.colors.hero),' had received ',\
+                    ('{hero_his}',share.colors.hero2),' mailbox. ',\
+                    ('{hero_he}',share.colors.hero2),' had received ',\
                     'a ',' letter". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -205,10 +205,9 @@ class obj_scene_ch4p7(page.obj_chapterpage):
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                     '\nWasup. Last time I checked, ',('{partnername}',share.colors.partner),\
                     ' is still being held hostage in my ',\
-                     ('evil lair',share.colors.location),'. Come save ',\
-                     ('{partner_him}',share.colors.partner),' if you dare. ',\
-                     'Whenever. ',\
-                    '\nMuahahahaha, ',\
+                     ('evil castle',share.colors.location2),'. Come save ',\
+                     ('{partner_him}',share.colors.partner2),' if you dare. ',\
+                     'Whenever, muahahahaha. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
@@ -226,11 +225,11 @@ class obj_scene_ch4p8(page.obj_chapterpage):
                   ' crawled out of ',('{heroname}',share.colors.hero),\
                   '\'s pocket and said: ',\
                    ' Alright, today we need to head east and meet the first ',\
-                   ('Grandmaster of Deceit',share.colors.villain),'. ',\
+                   ('grandmaster of deceit',share.colors.grandmaster),'. ',\
                     'From what I heard in ',('{villainname}',share.colors.villain),\
                     '\'s sleep, this grandmaster ',\
                     'holds the first clue to the evil castle\'s ',\
-                    ('password',share.colors.password),'". ',\
+                    ('password',share.colors.password2),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -270,10 +269,10 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p12())
     def setup(self):
         self.text=[\
-                '"Arrived at the ',('magical cave',share.colors.location),', ',\
+                '"Arrived at the ',('magical cave',share.colors.location2),', ',\
                 ('{heroname}',share.colors.hero),' met a curious character. ',\
                 'It was an extremely cute ',('bunny',share.colors.bunny),'". ',\
-                'Well, I know for sure there\'s never been anything wrong with bunnies in caves, ',\
+                'Well, there has never absolutely ever been anything wrong with bunnies in caves, ',\
                 'said the book of things. ',\
                 'Go on, draw the ',('bunny',share.colors.bunny),'\'s head. ',\
                    ]
@@ -310,7 +309,7 @@ class obj_scene_ch4p13(page.obj_chapterpage):
                 '"',('{heroname}',share.colors.hero),\
                 ' met a ',('bunny',share.colors.bunny),' called ',\
                 ('{bunnyname}',share.colors.bunny),\
-                ' at the ',('magical cave',share.colors.location),'. ',\
+                ' at the ',('magical cave',share.colors.location2),'. ',\
                 ('{heroname}',share.colors.hero),' said: ',\
                 ' wow, you are so cute, can I pet you". ',\
                    ]
@@ -336,8 +335,8 @@ class obj_scene_ch4p14(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"Ha! You think I am cute!, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                'Well, look carefully at all these trees. Poof, they are all gone! ',\
-                'I just chopped them with my ',('little paw',share.colors.bunny),'. ',\
+                'Well, look carefully at all these trees. Poof, they are all gone. ',\
+                'I just chopped them with my LITTLE PAW! ',\
                 'Do you still want to pet me now". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
@@ -381,7 +380,7 @@ class obj_scene_ch4p15(page.obj_chapterpage):
                 '"Hahaha, said the ',('bunny',share.colors.bunny),'. ',\
                 'Do not underestimate me. ',\
                 'I am ',('{bunnyname}',share.colors.bunny),\
-                ', the ',('grandmaster of deceit',share.colors.villain),\
+                ', the ',('grandmaster of deceit',share.colors.grandmaster),\
                 ' from the east! ',\
                 'Tremble before me". ',\
                    ]
@@ -397,7 +396,7 @@ class obj_scene_ch4p16(page.obj_chapterpage):
         self.text=[\
                 '"Well, I also teach some great evil ways, said ',\
                 ('{bunnyname}',share.colors.bunny),'. ',\
-                'Tell you what, if you manage to win my ',('lying game',share.colors.villain),\
+                'Tell you what, if you manage to win my ',('lying game',share.colors.grandmaster2),\
                 ' you can ask me anything". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
@@ -422,8 +421,8 @@ class obj_scene_ch4p17(page.obj_chapterpage):
                 ' crawled out of ',('{heroname}',share.colors.hero),\
                 '\'s pocket and whispered: ',\
                 'I think we are onto something, lets win this ',\
-                ('lying game',share.colors.villain),' then ask for the evil lair\'s ',\
-                ('password',share.colors.password),'". ',\
+                ('lying game',share.colors.grandmaster2),' then ask for the evil lair\'s ',\
+                ('password',share.colors.password2),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -442,9 +441,8 @@ class obj_scene_lyingstart(page.obj_chapterpage):
         self.text=[\
                 '"Alright, said ',\
                 ('{bunnyname}',share.colors.bunny),'. ',\
-                'here is how the ',('lying game',share.colors.villain),\
-                ' works. It is all about having a good memory and mastering the ',\
-                ('art of lying',share.colors.villain),'". ',\
+                'here is how the ',('lying game',share.colors.grandmaster2),\
+                ' works. It is all about having a good memory and mastering the art of lying." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -556,7 +554,7 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
         self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
                     ' You gave me the wrong answer. ',\
                     'If your memory is that bad you can always ',\
-                    ('take some notes',share.colors.darkgreen),' at the bottom of the screen. ',\
+                    ('take some notes',share.colors.instructions),' at the bottom of the screen. ',\
                     'Now go back and win this first round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -572,7 +570,7 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won the ',\
-                    ('first round',share.colors.villain),'! ',\
+                    ('first round',share.colors.grandmaster2),'! ',\
                    ]
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -676,7 +674,7 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won the ',\
-                    ('second round',share.colors.villain),'! ',\
+                    ('second round',share.colors.grandmaster2),'! ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -799,10 +797,10 @@ class obj_scene_lyingend(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
-                    'you won my ',('lying game',share.colors.villain),'! ',\
+                    'you won my ',('lying game',share.colors.grandmaster2),'! ',\
                     ' You are truly a ',\
-                    ('great deceiver',share.colors.villain),' that can ',\
-                    ('lie',share.colors.villain),' like no equal. ',\
+                    ('great deceiver',share.colors.grandmaster2),' that can ',\
+                    ('lie',share.colors.grandmaster),' like no equal. ',\
                     'Now ask me anything".',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
@@ -836,9 +834,9 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p19())
     def setup(self):
         self.text=[\
-                    '"Oh, you want to know the  ',('password',share.colors.password),\
+                    '"Oh, you want to know the  ',('password',share.colors.password2),\
                     ' that opens ',('{villainname}',share.colors.villain),'\'s ',\
-                    ('castle',share.colors.location),'. ',\
+                    ('castle',share.colors.location2),'. ',\
                     'Well sorry, I cant tell for sure. You see, ',\
                     ('{villainname}',share.colors.villain),' was a former student of mine, ',\
                     'and he was quite dedicated". ',\
@@ -896,10 +894,10 @@ class obj_scene_ch4p19a(page.obj_chapterpage):
                 '"The ',('{bug}',share.colors.bug),\
                 ' crawled out of ',('{heroname}',share.colors.hero),\
                 '\'s pocket and whispered: ',\
-                'Well done, ',('{heroname}',share.colors.hero),'. ',\
-                'The first part of the password is ',('"fight"',share.colors.password),'. ',\
-                'Lets go home now, then tomorrow we will visit the second ',\
-                ('grandmaster',share.colors.villain),'". ',\
+                'Well done! Now we know that ',\
+                'the first part of the password is ',('"fight"',share.colors.password),'. ',\
+                'Lets go home, then tomorrow we will visit the second ',\
+                ('grandmaster',share.colors.grandmaster),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -932,8 +930,8 @@ class obj_scene_ch4p21(page.obj_chapterpage):
         self.text=[\
                    '"Back at home, ',\
                    ('{heroname}',share.colors.hero),' was sad again. ',\
-                   ('{hero_he}',share.colors.hero), ' though about how ',\
-                   ('{hero_he}',share.colors.hero),' used to charm ',\
+                   ('{hero_he}',share.colors.hero2), ' though about how ',\
+                   ('{hero_he}',share.colors.hero2),' used to charm ',\
                    ('{partnername}',share.colors.partner),' with a serenade. ',\
                    ]
         self.world=world.obj_world_serenade(self,partner=False,heroangry=True)
@@ -950,7 +948,7 @@ class obj_scene_ch4p22(page.obj_chapterpage):
         self.text=[\
                    '"Then, ',\
                    ('{heroname}',share.colors.hero),' remembered how ',\
-                   ('{hero_him}',share.colors.hero),' and ',\
+                   ('{hero_he}',share.colors.hero2),' and ',\
                    ('{partnername}',share.colors.partner),' used to kiss". ',\
                    ]
         self.world=world.obj_world_kiss(self,noending=True)
@@ -968,7 +966,7 @@ class obj_scene_ch4p23(page.obj_chapterpage):
                    ('{partnername}',share.colors.partner),' wasnt there, and ',\
                    ('{heroname}',share.colors.hero),' was only kissing the ',\
                    ('{bug}',share.colors.bug),' that had crawled out of ',\
-                   ('{hero_his}',share.colors.hero),' pocket". ',\
+                   ('{hero_his}',share.colors.hero2),' pocket". ',\
                    ]
 
         # self.addpart( draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
@@ -992,8 +990,8 @@ class obj_scene_ch4p24(page.obj_chapterpage):
                     '"In the evening, ',\
                     ('{heroname}',share.colors.hero),\
                     ' ate the ',\
-                    ('fish',share.colors.item),' that ',\
-                    ('{hero_he}',share.colors.hero),' had caught in the pond".',\
+                    ('fish',share.colors.item2),' that ',\
+                    ('{hero_he}',share.colors.hero2),' had caught in the pond".',\
                    ]
         self.world=world.obj_world_eatfish(self,heroangry=True)
         self.addpart(self.world)
@@ -1036,8 +1034,8 @@ class obj_scene_ch4p27(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Then, right before falling asleep, ',\
-                   ('{heroname}',share.colors.hero),' smiled thinking about how ',\
-                   ('{hero_he}',share.colors.hero),' might be able to rescue ',\
+                   ('{heroname}',share.colors.hero),' smiled slightly thinking about how ',\
+                   ('{hero_he}',share.colors.hero2),' might rescue ',\
                    ('{partnername}',share.colors.partner),' the next day".',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )

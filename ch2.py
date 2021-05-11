@@ -55,8 +55,8 @@ class obj_scene_ch2p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p2())
     def setup(self):
         self.text=['Lets see here... " The ',('hero',share.colors.hero),\
-                    ' woke up... mmmh... caught a ',('fish',share.colors.item),', ate it ',\
-                    'and went back to ',('bed',share.colors.item),'". '\
+                    ' woke up... mmmh... caught a ',('fish',share.colors.item2),', ate it ',\
+                    'and went back to ',('bed',share.colors.item2),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation1=draw.obj_animation('ch2_summary','herobase',(640,360),record=False,scale=0.7)
@@ -75,11 +75,12 @@ class obj_scene_ch2p2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'Well, this ',('{heroname}',share.colors.hero),' feels a bit lonely, said the book of things, ',\
-                  ('{hero_he}',share.colors.hero),' could surely use some company. ',\
-                 'In fact, I want ',('{hero_him}',share.colors.hero),' to be madly in ',\
-                 ('love',share.colors.partner),' with someone. ',\
+                  ('{hero_he}',share.colors.hero2),' could surely use some company. ',\
+                 'In fact, I want ',('{hero_him}',share.colors.hero2),' to be madly in ',\
+                 ('love',share.colors.partner2),' with someone. ',\
                  'This will certainly make the story more interesting. ',\
-                 'Lets start by drawing a heart for ',('love',share.colors.partner),'. ',\
+                 'Lets start by drawing a ',\
+                 ('love heart',share.colors.item),'. ',\
                    ]
         self.addpart( draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200),brush=share.brushes.bigpen) )
 
@@ -92,10 +93,10 @@ class obj_scene_ch2p3(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                  'Now, lets add this to the story: ',\
-                '"',('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero),\
-                ' and ',('{hero_his}',share.colors.hero),' ',\
+                '"',('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero2),\
+                ' and ',('{hero_his}',share.colors.hero2),' ',\
                 ('partner',share.colors.partner),' were madly in ',\
-                ('love',share.colors.partner),'". '\
+                ('love',share.colors.partner2),'". '\
                 'We just need to give a name and gender for this ',('partner',share.colors.partner),'. '\
                    ]
         y1=360
@@ -123,8 +124,8 @@ class obj_scene_ch2p4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p5())
     def setup(self):
         self.text=['Lets use our "stickman" for ',('{partnername}',share.colors.partner),', said the book of things. ',\
-                   'First, draw some pretty hair around ', ('{partner_his}',share.colors.partner),' head. ',\
-                   'Something that ',('{heroname}',share.colors.hero),' will fall in ',('love',share.colors.partner),' with. '\
+                   'First, draw some pretty hair around ', ('{partner_his}',share.colors.partner2),' head. ',\
+                   'Something that ',('{heroname}',share.colors.hero),' will fall in ',('love',share.colors.partner2),' with. '\
                    ]
         self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner\'s Hair',shadow=(200,200),brush=share.brushes.smallpen) )
         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
@@ -158,7 +159,7 @@ class obj_scene_ch2p6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p6a())
     def setup(self):
         self.text=[\
-                   'Uh...Well...aint ',('{partner_he}',share.colors.partner),' pretty. '\
+                   'Uh...Well...aint ',('{partner_he}',share.colors.partner2),' pretty. '\
                    'See, we had some budget cuts so we are a bit short on drawings. ',\
                   'So  ',('{heroname}',share.colors.hero),' and ',\
                  ('{partnername}',share.colors.partner),' do look alike a bit, ',\
@@ -181,7 +182,7 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
         self.text=[\
                    'First thing first, ',('{heroname}',share.colors.hero),' and ',\
                    ('{partnername}',share.colors.partner),' want to send each other some ',\
-                   ('love',share.colors.partner),' letters. ',\
+                   ('love',share.colors.partner2),' letters. ',\
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
                    ]
         self.textkeys={'pos':(500,50),'xmin':500}# same as ={}
@@ -197,8 +198,8 @@ class obj_scene_ch2p6b(page.obj_chapterpage):
         self.text=[\
                     'Great, lets write: "',\
                     ('{heroname}',share.colors.hero),' checked ',\
-                    ('{hero_his}',share.colors.hero),' mailbox. ',\
-                    ('{hero_he}',share.colors.hero),' had received ',\
+                    ('{hero_his}',share.colors.hero2),' mailbox. ',\
+                    ('{hero_he}',share.colors.hero2),' had received ',\
                     'a ',' letter". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','mailbox','mailletter') )
@@ -239,9 +240,9 @@ class obj_scene_ch2p7(page.obj_chapterpage):
         self.text=[\
                     'Aww that is so sweet, said the book of things. ',\
                    ('{heroname}',share.colors.hero),' wants to show ',\
-                   ('{hero_his}',share.colors.hero),' love too. ',\
+                   ('{hero_his}',share.colors.hero2),' love too. ',\
                    'Draw a ',('saxophone',share.colors.item),' and ',('music notes',share.colors.item),\
-                   ' so ',('{hero_he}',share.colors.hero),' can play ',\
+                   ' so ',('{hero_he}',share.colors.hero2),' can play ',\
                    ('{partnername}',share.colors.partner),' a serenade. ',\
                    ]
         self.addpart( draw.obj_drawing('saxophone',(340,450),legend='Saxophone (facing right)',shadow=(200,200)) )
@@ -278,8 +279,8 @@ class obj_scene_ch2p9(page.obj_chapterpage):
                    'Thats it, said the book of things. ',\
                    ('{heroname}',share.colors.hero),' has totally charmed ',\
                    ('{partnername}',share.colors.partner),' with ',\
-                   ('{hero_his}',share.colors.hero),' serenade. ',\
-                   'Its time to go for the ',('kiss',share.colors.partner),'! ',\
+                   ('{hero_his}',share.colors.hero2),' serenade. ',\
+                   'Its time to go for the ',('kiss',share.colors.partner2),'! ',\
                    ]
         animation1=draw.obj_animation('ch2_partner2','partnerbase',(640,360),scale=0.7,record=False)
         self.addpart(animation1)
@@ -311,7 +312,9 @@ class obj_scene_ch2p11(page.obj_chapterpage):
         self.text=[\
                   'Lets write down: "',('{heroname}',share.colors.hero),' charmed ',\
                    ('{partnername}',share.colors.partner),' with a serenade, and then they kissed". ',\
-                   'One last thing, lets draw a house with a pond where they live happily together. ',\
+                   'One last thing, lets draw a ',\
+                   ('house',share.colors.item),' with a ',\
+                   ('pond',share.colors.item),' where they live happily together. ',\
                    ]
         self.addpart( draw.obj_drawing('house',(340,450),legend='House',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('pond',(940,450),legend='Pond',shadow=(200,200)) )
@@ -323,7 +326,7 @@ class obj_scene_ch2p12(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p13())
     def setup(self):
         self.text=[\
-                  'This is what the house looks like, said the book of things. Move around a little to check it out. ',\
+                  'This is what the house looks like. Move around to check it out. ',\
                    ]
         self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,remove=['flower','bush','garden'])
         self.addpart(self.world)
@@ -336,7 +339,9 @@ class obj_scene_ch2p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p14())
     def setup(self):
         self.text=[\
-                   'Still a bit basic. Lets also add a few bushes around the pond, and some flowers to make a nice garden. ',\
+                   'Still a bit basic. Lets also add a few ',\
+                   ('bushes',share.colors.item),' around the pond, and some ',\
+                   ('flowers',share.colors.item),' to make a nice garden. ',\
                    ]
         self.addpart( draw.obj_drawing('bush',(340,450),legend='Bush',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('flower',(940,450),legend='Flower',shadow=(200,200)) )
@@ -362,15 +367,11 @@ class obj_scene_ch2play(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play1())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or (controls.s and controls.sc)
     def setup(self):
         self.text=[\
                     'That wraps it up nicely, said the book of things. ',\
                   'Lets read our story again to summarize. ',\
-                   'Press [S] to start. ',\
                    ]
-        self.addpart(draw.obj_textbox('Press [S] to Start',(640,660),color=share.colors.instructions))
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
         animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
@@ -409,9 +410,10 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
-                'woke up from ',('bed',share.colors.item),' ',\
-                'with ',('{hero_his}',share.colors.hero),\
-                ' partner called ',('{partnername}',share.colors.partner),'." ',\
+                'woke up from ',('bed',share.colors.item2),' ',\
+                'with ',('{hero_his}',share.colors.hero2),\
+                ' ',('partner',share.colors.partner),\
+                ' called ',('{partnername}',share.colors.partner),'." ',\
                    ]
         self.world=world.obj_world_wakeup(self,partner=True)
         self.addpart(self.world)
@@ -446,8 +448,8 @@ class obj_scene_ch2play3(page.obj_chapterpage):
         self.text=[\
                    '"Then, ',('{heroname}',share.colors.hero),' received a letter from ',\
                    ('{partnername}',share.colors.partner),' that said ',\
-                   ('{partner_he}',share.colors.partner),' loved ',\
-                   ('{hero_him}',share.colors.hero),' very very much". ',\
+                   ('{partner_he}',share.colors.partner2),' loved ',\
+                   ('{hero_him}',share.colors.hero2),' very very much". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -484,7 +486,7 @@ class obj_scene_ch2play3b(page.obj_chapterpage):
                     '"In the evening, ',\
                     ('{heroname}',share.colors.hero),' and ',\
                     ('{partnername}',share.colors.partner),' ate the ',\
-                    ('fish',share.colors.item),' for dinner". ',\
+                    ('fish',share.colors.item2),' for dinner". ',\
                    ]
         self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)

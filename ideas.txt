@@ -55,17 +55,11 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-
-- images snapshots: either at drawing creation, or at world setup.
-                    but not somewhere else or can be inconsistent when redraws
-                    Make a complete consistency check
-  => HUGE problem is: if an image has several parts, redoing ANY of them means needs to snapshot
-  => MAKE DATABASE OF drawing finish:
-  - function automatically called on drawing finish: does all depending snapshots each time
-
 - text cleanup: consistent colors (separate for name, he/she)
                 look for all tipos
 
+
+- clean record=True all animations
 
 - control scheme: decide on one scheme for playing:
                   drawing with LMouse+backspace (should put backspace as a button on screen)
@@ -74,7 +68,7 @@ It should be done in NEXT games with other softwares that do this more easily (g
                              maybe WASD only is best if one day wants to make mobile game version
 
 
-
+- worldmap: text on some white (covers roaming), or no text, or instructions (as keyword='go there...')
 
 - drawing brush: sometimes slowdown or wont draw (doesnt register initial click). Like at mechanics more closely
 
@@ -100,8 +94,13 @@ It should be done in NEXT games with other softwares that do this more easily (g
             gm (and gmx,gmy)=mouse 1 (and mouse x, mouse y)
             gc=ctrl (developper mode)
 
+- customize locations: give them names
+            items?: e.g. name the fish specie etc..
+
 - Add better character customization (influences text only):
-  name, gender, catchphrase, temper (choose one), favorite/hated item, etc...
+  name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
+
+
 
 - Add sound and music
 
