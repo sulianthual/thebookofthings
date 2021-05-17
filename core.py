@@ -68,7 +68,9 @@ class obj_scenemanager:
             if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
             if share.devmode and controls.mouse3 and controls.mouse3c:# print coordinates
                 print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
-            if controls.esc: share.quitgame()# QUICK QUIT: REMOVE ME IN FINAL VERSION
+            if controls.esc:
+                # share.quitgame()# QUICK QUIT: REMOVE ME IN FINAL VERSION
+                share.scenemanager.switchscene(share.titlescreen)# go back to menu
 
 
 ####################################################################################################################
@@ -437,6 +439,18 @@ class obj_controls:
         self.rc=False
         self.fc=False
         self.gc=False
+        # generalized keys (can be replaced)
+        self.setup_gkeys()
+    def setup_gkeys(self):
+        # generalized keys (arrows)
+        self.gu=False
+        self.gd=False
+        self.gl=False
+        self.gr=False
+        self.guc=False
+        self.gdc=False
+        self.glc=False
+        self.grc=False
     def edittext(self,text):# edit existing text with keyboard inputs
         for event in self.events:
             if event.type==pygame.KEYDOWN:
@@ -585,6 +599,16 @@ class obj_controls:
                     self.f, self.fc = False, True
                 elif event.key==pygame.K_g:
                     self.g, self.gc = False, True
+    def getgkeys(self):
+        self.gu=self.w or self.up
+        self.gd=self.s or self.down
+        self.gl=self.a or self.left
+        self.gr=self.d or self.right
+        #
+        self.guc=self.wc or self.upc
+        self.gdc=self.sc or self.downc
+        self.glc=self.ac or self.leftc
+        self.grc=self.dc or self.rightc
     def getquit(self):
         for event in self.events:
             if event.type==pygame.QUIT:
@@ -593,6 +617,7 @@ class obj_controls:
         self.getevents()# Important: only get events once per frame!
         self.getmouse()
         self.getkeys()
+        self.getgkeys()
         self.getquit()
 
 

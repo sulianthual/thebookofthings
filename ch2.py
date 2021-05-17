@@ -257,7 +257,7 @@ class obj_scene_ch2p8(page.obj_chapterpage):
         return (controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                   'Play the melody with [WASD] to serenade ',('{partnername}',share.colors.partner),'. '\
+                   'Play the melody with [arrows] to serenade ',('{partnername}',share.colors.partner),'. '\
                    ]
         if False:
             drawing=draw.obj_drawing('musicscore',(640,360),shadow=(300,100),brush=share.brushes.smallpen)

@@ -411,15 +411,15 @@ class obj_world_sunrise(obj_world):
         # finish actor
         self.finishactor.addpart( 'img1', draw.obj_image('sun',(660,300),scale=0.5) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to rise the sun',(1000,620),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [up] to rise the sun',(1000,620),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
-        return controls.w and controls.wc
+        return controls.gu and controls.guc
     def triggerstart(self,controls):
-        return not controls.w
+        return not controls.gu
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -524,15 +524,15 @@ class obj_world_wakeup(obj_world):
             self.finishactor.addpart( 'imgadd2', draw.obj_image('bug',(1168,595),scale=0.33) )
         self.finishactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(903,452),scale=0.7) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [D] to Wake up',(1100,480),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [right] to Wake up',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
-        return controls.d and controls.dc
+        return controls.gr and controls.grc
     def triggerstart(self,controls):
-        return not controls.d
+        return not controls.gr
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -656,9 +656,9 @@ class obj_world_breakfastdrinking(obj_world):
             self.partnertimer=tool.obj_timer(0)# dummy
         # text
         if self.addpartner:
-            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Sneak Drink',(640,690),color=share.colors.instructions) )
+            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [up] to Sneak Drink',(640,690),color=share.colors.instructions) )
         else:
-            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [W] to Drink',(640,690),color=share.colors.instructions) )
+            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [up] to Drink',(640,690),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
         self.text_undone.show=True
         self.text_done.show=False
@@ -745,7 +745,7 @@ class obj_world_breakfastdrinking(obj_world):
                     self.progressbar.show=False
                 # hero behavior
                 if self.herostate==0:# neutral
-                    if controls.w and controls.wc:# switch to drinking
+                    if controls.gu and controls.guc:# switch to drinking
                         self.herostate=1#
                         self.hero.dict['waiting'].show=False
                         self.hero.dict['happy'].show=False
@@ -757,7 +757,7 @@ class obj_world_breakfastdrinking(obj_world):
                     self.progress += 1# update progress
                     self.progressbar.dict['slide'].movetox(640+self.progress*self.progressmx)
                     self.progressbar.dict['textbox'].replacetext( str(int(self.progress/self.progressmax*100))+'%' )
-                    if not controls.w and controls.wc:# switch to happy
+                    if not controls.gu and controls.guc:# switch to happy
                         self.herostate=2#
                         self.herohappytimer.start()
                         self.hero.dict['waiting'].show=False
@@ -767,7 +767,7 @@ class obj_world_breakfastdrinking(obj_world):
                         self.hero.dict['busted'].show=False
                         self.hero.dict['finished'].show=False
                 elif self.herostate==2:# happy
-                    if controls.w and controls.wc:# switch to drinking
+                    if controls.gu and controls.guc:# switch to drinking
                         self.herostate=1#
                         self.hero.dict['waiting'].show=False
                         self.hero.dict['happy'].show=False
@@ -887,7 +887,7 @@ class obj_world_fishing(obj_world):
         self.timerend=tool.obj_timer(50)
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [S] to lower Hook',(1100,480),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [down] to lower Hook',(1100,480),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(840,500))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,480)) )
         self.text1.show=True
@@ -895,7 +895,7 @@ class obj_world_fishing(obj_world):
     def update(self,controls):
         super().update(controls)
         # hook
-        if controls.s and self.fishfree:
+        if controls.gd and self.fishfree:
             if self.hook.y<720-50: self.hook.movey(self.dydown)
         else:
             if self.hook.y>0+50: self.hook.movey(-self.dyup)
@@ -971,7 +971,7 @@ class obj_world_eatfish(obj_world):
         self.heroeat.show=False
         # text
         self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [A] and [D] to Eat',(640,660),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [left] and [right] to Eat',(640,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390),fontsize='large') )
         self.text1.show=True
@@ -995,11 +995,11 @@ class obj_world_eatfish(obj_world):
         super().update(controls)
         if not self.doneeating:
             if self.alternate_LR:
-                if controls.a and controls.ac:
+                if controls.gl and controls.glc:
                     self.eatfood()
                     self.alternate_LR=False
             else:
-                if controls.d and controls.dc:
+                if controls.gr and controls.grc:
                     self.eatfood()
                     self.alternate_LR=True
             if self.eating:
@@ -1447,13 +1447,13 @@ class obj_world_travel(obj_world):
             k.movey(360-self.yhw)
         #
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[WASD: Move]',(640,680),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows: move]',(640,680),color=share.colors.instructions) )
         if self.addsailorwait or self.addbeachmark:# talk to a character
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[Enter: Talk]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: talk]',(640,680),color=share.colors.instructions) )
         elif self.addbeachquestionmark:# investigate
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[Enter: Investigate]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: investigate]',(640,680),color=share.colors.instructions) )
         else:# enter a location
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[Enter: Go Inside]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: go inside]',(640,680),color=share.colors.instructions) )
         #
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
@@ -1553,7 +1553,7 @@ class obj_world_travel(obj_world):
                 self.hero.dict['boat_right'].show=False
                 self.hero.dict['boat_left'].show=False
                 # walking or standing
-                if controls.d or controls.a or controls.w or controls.s:
+                if controls.gl or controls.gr or controls.gu or controls.gd:
                     self.herowalking=True
                 else:
                     self.herowalking=False
@@ -1588,7 +1588,7 @@ class obj_world_travel(obj_world):
                 self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
                 self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
             # tune the walking speed if diagonal:
-            if (controls.w or controls.s) and (controls.a or controls.d):
+            if (controls.gu or controls.gd) and (controls.gl or controls.gr):
                 self.heromx=self.herospeed/tool.sqrt(2)
                 self.heromy=self.herospeed/tool.sqrt(2)
             else:
@@ -1596,7 +1596,7 @@ class obj_world_travel(obj_world):
                 self.heromy=self.herospeed# moving rate
 
             # move the world (not the hero!)
-            if controls.a:
+            if controls.gl:
                 if self.xhw>self.xhwmin:# boundary
                     self.xhw -= self.heromx
                     for j in self.panels:
@@ -1604,9 +1604,9 @@ class obj_world_travel(obj_world):
                             i.movex(self.heromx)
                     for k in self.hitboxes:
                         k.movex(self.heromx)
-                if controls.ac:
+                if controls.glc:
                     self.herofaceright=False
-            if controls.d:
+            if controls.gr:
                 if self.xhw<self.xhwmax:
                     self.xhw += self.heromx
                     for j in self.panels:
@@ -1614,9 +1614,9 @@ class obj_world_travel(obj_world):
                             i.movex(-self.heromx)
                     for k in self.hitboxes:
                         k.movex(-self.heromx)
-                    if controls.dc:
+                    if controls.grc:
                         self.herofaceright=True
-            if controls.w:
+            if controls.gu:
                 if self.yhw>self.yhwmin:
                     self.yhw -= self.heromy
                     for j in self.panels:
@@ -1624,7 +1624,7 @@ class obj_world_travel(obj_world):
                             i.movey(self.heromy)
                     for k in self.hitboxes:
                         k.movey(self.heromy)
-            if controls.s:
+            if controls.gd:
                 if self.yhw<self.yhwmax:
                     self.yhw += self.heromy
                     for j in self.panels:
@@ -1786,7 +1786,7 @@ class obj_world_dodgegunshots(obj_world):
             else:
                 self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-i*50-10,720-25-50-5),scale=0.125) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[W: Jump] [S: Crouch]',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[up: jump] [down: crouch]',(640,660),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('He is the one!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
         # timer for done part
@@ -1810,7 +1810,7 @@ class obj_world_dodgegunshots(obj_world):
             # hero dynamics
             self.herofy=0# force
             self.herofy += self.herog# gravity
-            if self.heromayjump and (controls.w and controls.wc):# jump
+            if self.heromayjump and (controls.gu and controls.guc):# jump
                 self.herofy -= self.heroj
                 self.herov=0# reset velocity
                 self.heromayjump=False# cant jump again
@@ -1823,8 +1823,8 @@ class obj_world_dodgegunshots(obj_world):
                 self.herov = 0# just stall
                 self.heromayjump=True# may jump from ground
             # hero crouch
-            if controls.sc:
-                if controls.s:# switch to crouch
+            if controls.gdc:
+                if controls.gd:# switch to crouch
                     self.herocrouch=True
                     self.hero.dict['stand'].show=False
                     self.hero.dict['crouch'].show=True
@@ -2068,7 +2068,7 @@ class obj_world_stompfight(obj_world):
             self.vealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-150-i*75,self.ybar),scale=0.125) )
             self.vealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-150-i*75,self.ybar),scale=0.125) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(640,self.ybar),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows: move and jump]',(640,self.ybar),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,self.ybar)) )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
         # timer for done part
@@ -2081,13 +2081,13 @@ class obj_world_stompfight(obj_world):
             #
             if not self.herohurt:
                 # hero dynamics y
-                if self.heromayjump and (controls.w and controls.wc):# start jump (click button)
+                if self.heromayjump and (controls.gu and controls.guc):# start jump (click button)
                     self.herov=0# reset velocity
                     self.herovj=self.heroivj# reset jump velocity
                     self.heromayjump=False# cant jump again
                     self.heromayholdjump=True# can hold this jump
                     self.heroholdjumptimer.start()
-                if self.heromayholdjump and controls.w:# hold jump (hold button)
+                if self.heromayholdjump and controls.gu:# hold jump (hold button)
                     self.herovj *= self.herodvj# factor jump velocity
                     self.herov -= self.herovj
                     self.heroholdjumptimer.update()
@@ -2100,16 +2100,16 @@ class obj_world_stompfight(obj_world):
                     self.herov = 0# just stall
                     self.heromayjump=True# may jump from ground again
                 # hero dynamics x
-                if controls.a:#
+                if controls.gl:#
                     self.hero.movex(-self.heromx)
-                    if controls.ac:# flip left
+                    if controls.glc:# flip left
                         self.hero.dict['stand_right'].show=False
                         self.hero.dict['stand_left'].show=True
                         self.hero.dict['hurt'].show=False
                         self.hero.dict['hurttext'].show=False
-                if controls.d:
+                if controls.gr:
                     self.hero.movex(self.heromx)
-                    if controls.dc:# flip right
+                    if controls.grc:# flip right
                         self.hero.dict['stand_right'].show=True
                         self.hero.dict['stand_left'].show=False
                         self.hero.dict['hurt'].show=False
@@ -2482,7 +2482,7 @@ class obj_world_climbpeak(obj_world):
         # goal hitbox
         self.goalhitbox=obj_grandactor(self,(1110,100))
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D: Move] [W: Jump]',(980,510),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows: move and jump]',(980,510),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox(' ',(980,510)) )
         # levels
         self.startlevel=False# start playing new level
@@ -2582,17 +2582,17 @@ class obj_world_climbpeak(obj_world):
             # hero
             # initial move (press one button to initiate movement in each level)
             if not self.startlevel:
-                if controls.ac or controls.dc or controls.sc or controls.wc:
+                if controls.glc or controls.grc or controls.gdc or controls.guc:
                     self.startlevel=True
             if self.startlevel:
                 # hero dynamics y
-                if self.heromayjump and (controls.w and controls.wc):# jump (click button)
+                if self.heromayjump and (controls.gu and controls.guc):# jump (click button)
                     self.herov=0# reset velocity
                     self.herovj=self.heroivj# reset jump velocity
                     self.heromayjump=False# cant jump again
                     self.heromayholdjump=True# can hold this jump
                     self.heroholdjumptimer.start()
-                if self.heromayholdjump and controls.w:# jump (hold button)
+                if self.heromayholdjump and controls.gu:# jump (hold button)
                     self.herovj *= self.herodvj# factor jump velocity
                     self.herov -= self.herovj
                     self.heroholdjumptimer.update()
@@ -2617,14 +2617,14 @@ class obj_world_climbpeak(obj_world):
                 # apply movement
                 self.hero.movey(self.herov)# dty=v
                 # hero dynamics x
-                if controls.a:#
+                if controls.gl:#
                     self.hero.movex(-self.heromx)
-                    if controls.ac:# flip left
+                    if controls.glc:# flip left
                         self.hero.dict['stand_right'].show=False
                         self.hero.dict['stand_left'].show=True
-                if controls.d:
+                if controls.gr:
                     self.hero.movex(self.heromx)
-                    if controls.dc:# flip right
+                    if controls.grc:# flip right
                         self.hero.dict['stand_right'].show=True
                         self.hero.dict['stand_left'].show=False
                 if self.hero.x<self.xmin:# boundaries
@@ -2727,12 +2727,12 @@ class obj_world_rockpaperscissors(obj_world):
         # self.staticactor.addpart( 'img5a', draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
         # self.staticactor.addpart( 'img6a', draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
         # instructions
-        self.instructions.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('[S]: Start Game',(640,360),color=share.colors.instructions) )
-        self.instructions.addpart( 'textn', draw.obj_textbox('[S]: Next Round',(640,660),color=share.colors.instructions) )
-        self.instructions.addpart( 'texte', draw.obj_textbox('[S]: End Game',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texta', draw.obj_textbox('[left]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textw', draw.obj_textbox('[up]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textd', draw.obj_textbox('[right]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('[down]: Start Game',(640,360),color=share.colors.instructions) )
+        self.instructions.addpart( 'textn', draw.obj_textbox('[down]: Next Round',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texte', draw.obj_textbox('[down]: End Game',(640,660),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
         self.instructions.dict['textw'].show=True
         self.instructions.dict['textd'].show=True
@@ -2845,23 +2845,23 @@ class obj_world_rockpaperscissors(obj_world):
         if not self.goal:
             if not self.checking: # deciding state
                 # print('VALUE='+str(self.icountdown)+'----:'+str(self.countdowntimer.t))
-                if controls.a and controls.ac:
+                if controls.gl and controls.glc:
                     self.herochoice=0
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
-                elif controls.w and controls.wc:
+                elif controls.gu and controls.guc:
                     self.herochoice=1
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
-                elif controls.d and controls.dc:
+                elif controls.gr and controls.grc:
                     self.herochoice=2
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
                 if not self.countdowning:# not countdown
-                    if (controls.s and controls.sc) or self.icountdown<3:
+                    if (controls.gd and controls.gdc) or self.icountdown<3:
                         self.countdowning=True# flip to countdown
                         self.icountdown=3
                         self.countdowntimer.amount=self.countdowntime# default time
@@ -3022,7 +3022,7 @@ class obj_world_rockpaperscissors(obj_world):
                     if self.herohealth==0 or self.elderhealth==0:# endgame message
                         self.instructions.dict['textn'].show=False
                         self.instructions.dict['texte'].show=True
-                if controls.s and controls.sc:# flip back to deciding state (or to end of the game)
+                if controls.gd and controls.gdc:# flip back to deciding state (or to end of the game)
                     if self.herohealth==0:# elder won entire game
                         self.goal=True
                         self.win=False
@@ -3315,7 +3315,7 @@ class obj_world_bushstealth(obj_world):
         # skeleton(s)
         self.makeskeletons()
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[A,D]: Move',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows]: move',(640,660),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Stealthy!',(640,200),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('Busted!',(640,200),fontsize='huge') )
         # timer for done part
@@ -3338,19 +3338,19 @@ class obj_world_bushstealth(obj_world):
         if not self.goal:
             # goal unreached state
             # move hero
-            if controls.ac or controls.dc:# new input=change in stance
-                if controls.a or controls.d:# flip to moving
+            if controls.glc or controls.grc:# new input=change in stance
+                if controls.gl or controls.gr:# flip to moving
                     self.herostanding=False
                     self.hero.dict['moving'].show=True
                     self.hero.dict['movingspark'].show=True
                     self.hero.dict['standing'].show=False
                     self.hero.dict['moving'].rewind()
                     # flip orientation
-                    if controls.ac:
+                    if controls.glc:
                         self.hero.dict['moving'].ifliph()
                         self.hero.dict['movingspark'].ifliph()
                         self.hero.dict['standing'].ifliph()
-                    if controls.dc:
+                    if controls.grc:
                         self.hero.dict['moving'].ofliph()
                         self.hero.dict['movingspark'].ofliph()
                         self.hero.dict['standing'].ofliph()
@@ -3361,9 +3361,9 @@ class obj_world_bushstealth(obj_world):
                     self.hero.dict['standing'].show=True
             # hero move and boundaries
             if not self.herostanding:
-                if controls.a and self.hero.x>self.heroxmin:
+                if controls.gl and self.hero.x>self.heroxmin:
                     self.hero.movex(-self.heromx)
-                if controls.d and self.hero.x<self.heroxmax:
+                if controls.gr and self.hero.x<self.heroxmax:
                     self.hero.movex(self.heromx)
                 # check if is seen by any skeleton
                 for i in self.skeletons:
@@ -3556,7 +3556,7 @@ class obj_world_ridecow(obj_world):
         self.loosemx=7# skeleton move rate if loose
         self.winmx=3# hero move rate if wins
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[WASD] Move',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows]: move',(640,660),color=share.colors.instructions) )
         self.text_undone.addpart( 'progress', draw.obj_textbox('0%',(1090,640)) )
         self.text_undone.addpart( 'progressimg', draw.obj_image('sailboat',(1280-75,720-75),scale=0.25) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('You made it!',(640,360),fontsize='huge') )
@@ -3596,13 +3596,13 @@ class obj_world_ridecow(obj_world):
             textprogress=max(textprogress,0)
             self.text_undone.dict['progress'].replacetext( str(textprogress)+'%' )
             # move hero
-            if controls.a and self.hero.x>self.heroxmin:
+            if controls.gl and self.hero.x>self.heroxmin:
                 self.hero.movex(-self.heromx)
-            if controls.d and self.hero.x<self.heroxmax:
+            if controls.gr and self.hero.x<self.heroxmax:
                 self.hero.movex(self.heromx)
-            if controls.w and self.hero.y>self.heroymin:
+            if controls.gu and self.hero.y>self.heroymin:
                 self.hero.movey(-self.heromy)
-            if controls.s and self.hero.y<self.heroymax:
+            if controls.gd and self.hero.y<self.heroymax:
                 self.hero.movey(self.heromy)
             # shots (obstacles)
             self.shottimer.update()
@@ -3885,10 +3885,10 @@ class obj_world_mechfight(obj_world):
         self.promptactor.addpart( 'hero', draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
         self.promptactor.addpart( 'villain',draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
         self.promptactor.addpart( 'prompt', draw.obj_textbox(' ',(640,y2),fontsize='large') )# put nothing
-        self.promptactor.addpart( 'prompt_w', draw.obj_textbox('W',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_s', draw.obj_textbox('S',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_a', draw.obj_textbox('A',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_d', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_w', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_s', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_a', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_d', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.black) )
         animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade')
         self.promptactor.addpart( 'shrink', animation1 )
         # self.promptactor.addpart( 'prompt', draw.obj_textbox('Prompt',(640,200),fontsize='huge',color=share.colors.red) )
@@ -3949,14 +3949,14 @@ class obj_world_mechfight(obj_world):
             self.actionactor.addpart('heroblocks_text', draw.obj_textbox(' ',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
             self.actionactor.addpart('villainattacks_text', draw.obj_textbox(' ',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
             self.actionactor.addpart('villainblocks_text', draw.obj_textbox(' ',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_wfail', draw.obj_textbox('W',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_sfail', draw.obj_textbox('S',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_afail', draw.obj_textbox('A',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_dfail', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_wwin', draw.obj_textbox('W',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('S',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('A',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_wfail', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_sfail', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_afail', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_dfail', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.red) )
+        self.actionactor.addpart( 'prompt_wwin', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
         self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='premade',scale=0.5) )
         #
         self.actionactor.dict['heropunch'].show=False
@@ -4026,14 +4026,14 @@ class obj_world_mechfight(obj_world):
                 # Reflex : match correct input here
                 if self.whichprompt==0:# press w
                     if not self.promptinput:
-                        if controls.w and controls.wc:
+                        if controls.gu and controls.guc:
                             self.promptmatch=True# won
                             self.promptinput=True
                             self.actionactor.dict['prompt_wwin'].show=True
                             self.promptactor.dict['prompt_w'].show=False
                             self.prompttimer.forcering()
                             self.promptactor.dict['shrink'].pause()
-                        elif (controls.s and controls.sc) or (controls.a and controls.ac) or (controls.d and controls.dc):
+                        elif (controls.gd and controls.gdc) or (controls.gl and controls.glc) or (controls.gr and controls.grc):
                             self.promptmatch=False# lost
                             self.promptinput=True
                             self.actionactor.dict['prompt_wfail'].show=True
@@ -4043,14 +4043,14 @@ class obj_world_mechfight(obj_world):
                             self.promptactor.dict['shrink'].pause()
                 elif self.whichprompt==1:# press s
                     if not self.promptinput:
-                        if controls.s and controls.sc:
+                        if controls.gd and controls.gdc:
                             self.promptmatch=True# won
                             self.promptinput=True
                             self.actionactor.dict['prompt_swin'].show=True
                             self.promptactor.dict['prompt_s'].show=False
                             self.prompttimer.forcering()
                             self.promptactor.dict['shrink'].pause()
-                        elif (controls.w and controls.wc) or (controls.a and controls.ac) or (controls.d and controls.dc):
+                        elif (controls.gu and controls.guc) or (controls.gl and controls.glc) or (controls.gr and controls.grc):
                             self.promptmatch=False# lost
                             self.promptinput=True
                             self.actionactor.dict['prompt_sfail'].show=True
@@ -4060,14 +4060,14 @@ class obj_world_mechfight(obj_world):
                             self.promptactor.dict['shrink'].pause()
                 elif self.whichprompt==2:# press a
                     if not self.promptinput:
-                        if controls.a and controls.ac:
+                        if controls.gl and controls.glc:
                             self.promptmatch=True# won
                             self.promptinput=True
                             self.actionactor.dict['prompt_awin'].show=True
                             self.promptactor.dict['prompt_a'].show=False
                             self.prompttimer.forcering()
                             self.promptactor.dict['shrink'].pause()
-                        elif (controls.w and controls.wc) or (controls.s and controls.sc) or (controls.d and controls.dc):
+                        elif (controls.gu and controls.guc) or (controls.gd and controls.gdc) or (controls.gr and controls.grc):
                             self.promptmatch=False# lost
                             self.promptinput=True
                             self.actionactor.dict['prompt_afail'].show=True
@@ -4077,14 +4077,14 @@ class obj_world_mechfight(obj_world):
                             self.promptactor.dict['shrink'].pause()
                 elif self.whichprompt==3:# press d
                     if not self.promptinput:
-                        if controls.d and controls.dc:
+                        if controls.gr and controls.grc:
                             self.promptmatch=True# won
                             self.promptinput=True
                             self.actionactor.dict['prompt_dwin'].show=True
                             self.promptactor.dict['prompt_d'].show=False
                             self.prompttimer.forcering()
                             self.promptactor.dict['shrink'].pause()
-                        elif (controls.w and controls.wc) or (controls.s and controls.sc) or (controls.a and controls.ac):
+                        elif (controls.gu and controls.guc) or (controls.gd and controls.gdc) or (controls.gl and controls.glc):
                             self.promptmatch=False# lost
                             self.promptinput=True
                             self.actionactor.dict['prompt_dfail'].show=True
@@ -4325,16 +4325,16 @@ class obj_world_serenade(obj_world):
         for i in range(self.melody.melodylength):
             inote=tool.randint(1,4)
             if inote==1:
-                note='W'
+                note='U'
                 ynote=1.5
             elif inote==2:
-                note='A'
+                note='L'
                 ynote=-0.5
             elif inote==3:
-                note='S'
+                note='D'
                 ynote=-1.5
             elif inote==4:
-                note='D'
+                note='R'
                 ynote=0.5
             self.melody.melodynotes.append(note)
             position=(640+melodyx[i]*melodydx,380-ynote*melodydy)
@@ -4363,7 +4363,7 @@ class obj_world_serenade(obj_world):
         self.floatinglove.show=False
         # textbox under
         self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Play Melody with [W][A][S][D]',(640,660),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',draw.obj_textbox('Play Melody with [arrows]',(640,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Beautiful!',(640,660)) )
         self.text1.show=True
@@ -4374,14 +4374,14 @@ class obj_world_serenade(obj_world):
         super().update(controls)
         if not self.doneplaying:
             # current note played
-            if controls.w and controls.wc:
-                playednote='W'
-            elif controls.a and controls.ac:
-                playednote='A'
-            elif controls.s and controls.sc:
-                playednote='S'
-            elif controls.d and controls.dc:
+            if controls.gu and controls.guc:
+                playednote='U'
+            elif controls.gl and controls.glc:
+                playednote='L'
+            elif controls.gd and controls.gdc:
                 playednote='D'
+            elif controls.gr and controls.grc:
+                playednote='R'
             else:
                 playednote=False
             # current melody
@@ -4445,15 +4445,15 @@ class obj_world_kiss(obj_world):
         self.finishactor.addpart( 'anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
 
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [A]+[D] to kiss',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [left]+[right] to kiss',(640,660),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
         self.timerend=tool.obj_timer(100)# goal to done
     def triggerungoing(self,controls):
-        return (controls.a and controls.d) and (controls.ac or controls.dc)
+        return (controls.gl and controls.gr) and (controls.glc or controls.grc)
     def triggerstart(self,controls):
-        return not (controls.a and controls.d)
+        return not (controls.gl and controls.gr)
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -4555,15 +4555,15 @@ class obj_world_sunset(obj_world):
         # finish actor
         self.finishactor.addpart( 'img1', draw.obj_image('moon',(660,270),scale=0.5) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [S] to lower the sun',(1000,620),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [down] to lower the sun',(1000,620),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
-        return controls.s and controls.sc
+        return controls.gd and controls.gdc
     def triggerstart(self,controls):
-        return not controls.s
+        return not controls.gd
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -4666,15 +4666,15 @@ class obj_world_gotobed(obj_world):
         else:
             self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [A] to go to Sleep',(1100,480),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('hold [left] to go to sleep',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
     def triggerungoing(self,controls):
-        return controls.a and controls.ac
+        return controls.gl and controls.glc
     def triggerstart(self,controls):
-        return not controls.a
+        return not controls.gl
     def update(self,controls):
         super().update(controls)
         if not self.goal:

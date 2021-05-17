@@ -164,11 +164,11 @@ class obj_scene_ch1p7(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                  '... Huh...well, you actually need to hold [D] to wake ',\
+                  '... Huh...well, you actually need to hold [right] to wake ',\
                   ('{heroname}',share.colors.hero),\
                   ' from ',('bed',share.colors.item2),', said the book of things. ',\
                   ('{hero_he}',share.colors.hero2),' is quite lazy you know. ',\
-                  ' And dont release [D] too soon or ',('{hero_he}',share.colors.hero2),\
+                  ' And dont release [right] too soon or ',('{hero_he}',share.colors.hero2),\
                   ' will go straight back to sleep. ',\
                   ' When ',('{heroname}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
@@ -220,7 +220,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         return (share.devmode and controls.enter and controls.enterc) or self.world.done
     def setup(self):
         self.text=[\
-                    ' Lower the hook with [S] and catch a fish. ',\
+                    ' Lower the hook with [down] and catch a fish. ',\
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
@@ -257,7 +257,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
                     ' Moving on, said the book of things. Lets write down: ',\
                     ' "',('{heroname}',share.colors.hero),' ate the ',
                     ('fish',share.colors.item2),' for dinner." ',\
-                    'Do it by ',('alternating [A] and [D]',share.colors.black),'. ',\
+                    'Do it by ',('alternating [left] and [right]',share.colors.black),'. ',\
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
@@ -285,7 +285,7 @@ class obj_scene_ch1p13(page.obj_chapterpage):
                     'Nicely done, said the book of things. ',\
                     'That wraps it up for our first day. Now, lets put our ',\
                     ('hero',share.colors.hero),' back to sleep. ',\
-                    ' Hold [A], and dont release',\
+                    ' Hold [left], and dont release',\
                     ' or this procrastinator will stay awake all night. ',\
                    ]
         self.world=world.obj_world_gotobed(self,addmoon=False)

@@ -37,10 +37,11 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        self.text=['One Could Press [Enter] to Continue, or [Tab] to go back. It was always like that.',\
+        self.text=['One Could Press [Enter] to Continue, [Tab] to go back, or [Esc] to go back to the menu. It was always like that.',\
                    '\n']
-        self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,500),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('Press [Tab] to Go Back',(640,600),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Enter] to Continue',(640,400),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Tab] to Go Back',(640,500),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Esc] to return to menu',(640,600),color=share.colors.instructions))
 
 
 

@@ -55,7 +55,8 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-- clean record=True all animations
+- GAME extremely slow when finishing page with drawing: recheck this code!
+
 
 - control scheme: decide on one scheme for playing:
                   drawing with LMouse+backspace (should put backspace as a button on screen)

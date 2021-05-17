@@ -52,7 +52,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('By Sul',(1210,670),fontsize='smaller')
         self.sprite_pointer=draw.obj_textbox('---',(500-100,410),fontsize='smaller')
-        self.sprite_info=draw.obj_textbox('[Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
+        self.sprite_info=draw.obj_textbox('[Esc: Exit] [Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
         self.sprite_settings=draw.obj_textbox('Settings',(540,380),fontsize='smaller',xleft=True)
         self.sprite_start=draw.obj_textbox('Start New Book',(540,410),fontsize='smaller',xleft=True)
         self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(540,410),fontsize='smaller',xleft=True)
@@ -161,7 +161,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.f and controls.fc:
                 #
                 # change current WIP scene here
-                quickscene=ch7.obj_scene_ch7p24()
+                quickscene=ch2.obj_scene_ch2p8()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
