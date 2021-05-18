@@ -1,6 +1,6 @@
 # Ignore everything in this directory
 book/*
-# Ignore this file
+# Ignore these files
 !.gitignore
-
+!book/.gitkeep
 
