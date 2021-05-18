@@ -55,22 +55,6 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-
-- drawing brush: sometimes slowdown or wont draw (doesnt register initial click). Like at mechanics more closely
-
-- add drawing option: erase last stroke (right click or eraser symbol next to drawing)
-
-
-
-- Cleanup drawings (should be EXTREMELY minimal). Remove for example:
-        music key chapter 2
-        map paths
-        floor on dodge bullets (has grass marks)
-        grass marks for stomp game too
-        chapter 3 electric shock on hero
-        alarm clock -> must be white
-        chapter 5 mountain peak with snow
-
 - Draw the stickman yourself (in chapter 1)
 
 - Controls: choose keys in settings

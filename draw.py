@@ -225,7 +225,9 @@ class obj_drawing:
         self.setup()
     def setup(self):
         # drawing tools
-        self.mousedraw=obj_mousedraw()# mouse drawing tool
+        self.mousexr=0
+        self.mouseyr=0
+        # self.mousedraw=obj_mousedraw()# mouse drawing tool
         self.brush=core.obj_sprite_brush()
         if not self.brushtype:# default brush type
             self.brush.makebrush(share.brushes.pen)
@@ -246,10 +248,13 @@ class obj_drawing:
             self.sprite_base=core.obj_sprite_image()
             self.sprite_base.makeempty(self.rx,self.ry)
             self.sprite_base.blitfrom(self.base.sprite,0,0)
-        # drawing
+        # drawing first layer
         self.sprite=core.obj_sprite_image()
         term=self.sprite.load('book/'+self.name+'.png',failsafe=False)
         if not term: self.clear()# drawing did not load
+        # drawing layers
+        self.layers=[]# list of layers (each one is a sprite)
+        self.layers.append(self.sprite)
         # frame
         self.sprite_frame=core.obj_sprite_rect()
         self.makeframe()
@@ -258,17 +263,14 @@ class obj_drawing:
         if self.legend: self.makelegend(self.legend)
         # devtools
         self.devcross=core.obj_sprite_cross()
-    def clear(self):
+    def clear(self):# clear self.sprite=first layer
         self.sprite.makeempty(self.rx,self.ry)
         self.sprite.clear()
         self.sprite.blitfrom(self.sprite_shadow,0,0)
     def draw(self,controls):
-        if controls.mouse1:
-            self.mousedraw(controls,controls.mouse1,controls.mouse1c,self.sprite,self.brush,self.x,self.y)
-        # if controls.mouse3:# draw shadow for dev
-        #     self.mousedraw(controls,controls.mouse3,controls.mouse3c,self.sprite,self.shadowbrush,self.x,self.y)
-        if controls.backspace and controls.backspacec and tool.isinrect(controls.mousex,controls.mousey,self.rect):
-            self.clear()
+        self.mousedraw(controls)# new internal function
+        # if share.devmode and controls.mouse3 and controls.mouse3c:# change to shadow brush (dev only)
+        #     self.brush=self.shadowbrush
     def basedraw(self):
         if self.base:
             self.sprite_base.clear()
@@ -285,7 +287,9 @@ class obj_drawing:
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
         if self.base: self.sprite_base.display(self.x,self.y)
-        self.sprite.display(self.x,self.y)
+        # self.sprite.display(self.x,self.y)
+        for i in self.layers:
+            i.display(self.x,self.y)
         self.sprite_frame.display(share.colors.drawing,(self.x,self.y,2*self.rx,2*self.ry))
         if self.legend: self.sprite_legend.display(self.xl,self.yl)
     def devtools(self):
@@ -296,6 +300,10 @@ class obj_drawing:
         self.display()
         if share.devmode: self.devtools()
     def finish(self):
+        # merge layers to sprite
+        for i in self.layers:
+            self.sprite.blitfrom(i,0,0)# back
+        # manage if base
         if self.base:
             self.sprite_base.blitfrom(self.sprite,0,0)# to base
             self.sprite.clear()
@@ -303,32 +311,40 @@ class obj_drawing:
         self.sprite.save('book/'+self.name+'.png')
         # call the snapshot manager to redraw any related image
         share.snapshotmanager.remake(self.name)
-
-
-# Tool for drawing with the mouse
-class obj_mousedraw:
-    def __init__(self):
-        self.mousexr=0
-        self.mouseyr=0
-    def __call__(self,controls,controlhold,controlclick,sprite,sprite_brush,x,y):
-        if controlhold:# button held or just pressed
-            xoff=int(x-sprite.getrx()+sprite_brush.getrx())
-            yoff=int(y-sprite.getry()+sprite_brush.getry())
-            sprite.blitfrom(sprite_brush,controls.mousex-xoff,controls.mousey-yoff)
-            if controlclick:# button just pressed
-                self.mousexr=controls.mousex# record mouse position
-                self.mouseyr=controls.mousey
-            else:# button held
-                # draw line between current and last mouse position
+    def mousedraw(self,controls):
+        if controls.mouse1 and tool.isinrect(controls.mousex,controls.mousey,self.rect):
+            sprite=self.layers[-1]# last sprite from layers
+            xoff=int(self.x-sprite.getrx()+self.brush.getrx())
+            yoff=int(self.y-sprite.getry()+self.brush.getry())
+            if controls.mouse1c:
+                # add new layer
+                newsprite=core.obj_sprite_image()
+                newsprite.makeempty(sprite.getrx(),sprite.getry())
+                newsprite.clear()
+                self.layers.append(newsprite)
+                # draw
+                newsprite.blitfrom(self.brush,controls.mousex-xoff,controls.mousey-yoff)
+            else:
+                # draw line between current and last mouse position (each pixel)
                 dx=controls.mousex-self.mousexr
                 dy=controls.mousey-self.mouseyr
                 dist=max(abs(dx),abs(dy))
                 for i in range(dist):
                     xi = int( self.mousexr + float(i)/dist*dx)
                     yi = int( self.mouseyr + float(i)/dist*dy)
-                    sprite.blitfrom(sprite_brush,xi-xoff,yi-yoff)
-                self.mousexr=controls.mousex
-                self.mouseyr=controls.mousey
+                    sprite.blitfrom(self.brush,xi-xoff,yi-yoff)
+                # draw
+                sprite.blitfrom(self.brush,controls.mousex-xoff,controls.mousey-yoff)
+        else:
+            if controls.mouse2 and controls.mouse2c and tool.isinrect(controls.mousex,controls.mousey,self.rect):
+                # remove last layer (except if first layer)
+                if len(self.layers)>1:
+                    del self.layers[-1]
+                else:
+                    self.clear()# erase self.sprite=first layer
+        # always record current mouse position as old
+        self.mousexr=controls.mousex
+        self.mouseyr=controls.mousey
 
 
 ####################################################################################################################

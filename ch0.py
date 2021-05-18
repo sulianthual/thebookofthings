@@ -53,12 +53,12 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p3())
     def setup(self):
         self.text=['There was going to be a pen. ',\
-                   'The pen was drawn with [Left Mouse] and erased with [Backspace].',\
+                   'The pen was drawn with [Left Mouse] and erased with [Right Mouse].',\
                    ]
         self.textkeys={'pos':(50,50),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
         self.addpart( draw.obj_drawing('pendraw',(940,360),legend=' Draw a Pen') )
         self.addpart(draw.obj_textbox('Hold [Left Mouse] to Draw',(420,500),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('Press [Backspace] to Erase',(420,600),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('Press [Right Mouse] to Erase',(420,600),color=share.colors.instructions))
     def endpage(self):
         super().endpage()
         # image pen is actually 66% scale of drawing
@@ -87,7 +87,7 @@ class obj_scene_ch0p4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p5())
     def setup(self):
         self.text=['Along with the pen, there was going to be an eraser.',\
-                   '\nThe eraser was drawn with [Left Mouse] and erased with [Backspace]',\
+                   '\nThe eraser was drawn with [Left Mouse] and erased with [Right Mouse]',\
                    ]
         self.addpart( draw.obj_drawing('eraserdraw',(900,450), legend='Draw an Eraser') )
         self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )

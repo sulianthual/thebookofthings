@@ -99,7 +99,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
     def setup(self):
         self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', said the book of things, ',\
                    'and make ', ('{hero_him}',share.colors.hero2),' look slightly to the right. ',\
-                   ('Draw with [Left Mouse] and erase with [Backspace]',share.colors.instructions),', but you should know this by now.',\
+                   ('Draw with [Left Mouse] and erase with [Right Mouse]',share.colors.instructions),', but you should know this by now.',\
                    ]
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         drawing=draw.obj_drawing('happyface',(640,450),legend='Draw a Happy Face',shadow=(200,200))
