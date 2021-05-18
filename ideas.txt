@@ -55,14 +55,8 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-- Draw the stickman yourself (in chapter 1)
+- Add epilogue: free roaming and replay any minigame
 
-- Controls: choose keys in settings
-            assign generalized keys: controls.gu=up...
-            gu,gd,gr,gl=directions
-            gn,gp,gq=next,previous,quit (enter,tab,esc)
-            gm (and gmx,gmy)=mouse 1 (and mouse x, mouse y)
-            gc=ctrl (developper mode)
 
 - customize locations: give them names
             items?: e.g. name the fish specie etc..
@@ -70,11 +64,11 @@ It should be done in NEXT games with other softwares that do this more easily (g
 - Add better character customization (influences text only):
   name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
 
-
-
 - Add sound and music
 
-- Add epilogue: free roaming and replay any minigame
+- correct gitignore for pyinstaller
+
+- compile with pyinstaller: linux, windows, mac
 
 
 
