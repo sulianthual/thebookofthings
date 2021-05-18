@@ -195,7 +195,7 @@ class obj_scene_testdevmodeinfo(obj_testpage):
                    ('drawing',share.colors.drawing),', ',\
                    ('textinput',share.colors.textinput),', except for ',\
                    ('textchoice',share.colors.textchoice),\
-                   'not affected. ',\
+                   ' not affected. ',\
                    'You can also print mouse position in terminal with [Middle Mouse]. ',\
                    ]
         self.addpart( draw.obj_textinput('test1',20,(260,300),legend='textinput') )
@@ -388,6 +388,7 @@ class obj_scene_testimage(obj_testpage):
             'An imagefill is an image of single color (preferentially the background) used to make layering. ',\
             'Press [r]: Image can quickly be saved and loaded which includes the transformations. ',\
             'Image drawn by player are in folder /book, but one can also read from /data or from /premade. ',\
+            'If image doesnt exist the error image is read.  ',\
                    ]
         self.image1=draw.obj_image('testimage1',(440,520), scale=2)# (can scale at creation)
         self.image2=draw.obj_image('testimage2',(840,520))

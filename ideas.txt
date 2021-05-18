@@ -55,17 +55,6 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-- GAME extremely slow when finishing page with drawing: recheck this code!
-
-
-- control scheme: decide on one scheme for playing:
-                  drawing with LMouse+backspace (should put backspace as a button on screen)
-                  minigames: WASD (replace with: arrows or WASD)
-                             only one game uses WASD+Space (log gathering chapt 6)
-                             maybe WASD only is best if one day wants to make mobile game version
-
-
-- worldmap: text on some white (covers roaming), or no text, or instructions (as keyword='go there...')
 
 - drawing brush: sometimes slowdown or wont draw (doesnt register initial click). Like at mechanics more closely
 

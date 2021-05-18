@@ -138,7 +138,7 @@ class obj_scene_ch0p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def setup(self):
-        self.text=['There was going to be a book. A very mysterious book [draw].',\
+        self.text=['There was going to be a book. A very mysterious book.',\
                    ]
         self.addpart( draw.obj_drawing('bookdraw',(640,390), legend='Draw an Open Book') )
         self.addpart( draw.obj_animation('penmove3','pen',(640-100,360)) )

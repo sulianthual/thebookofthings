@@ -454,15 +454,15 @@ class obj_scene_ch5p22(page.obj_chapterpage):
                '"Alright, said ',('{eldername}',share.colors.elder),', this is how it works. ',\
                'The ',('bubble',share.colors.instructions),\
                ' above your head shows what you are thinking about. ',\
-               'Select rock, paper or scissors with [A][W][D]". ',\
+               'Select rock, paper or scissors with [arrows]". ',\
                   ]
         self.dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup1.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
         self.dispgroup1.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
         self.dispgroup1.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
-        self.dispgroup1.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'texta', draw.obj_textbox('[left]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textw', draw.obj_textbox('[up]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textd', draw.obj_textbox('[right]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'interrogationmark', draw.obj_image('interrogationmark',(1280-100-50,320),path='premade') )
@@ -509,9 +509,9 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         self.dispgroup1.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
         self.dispgroup1.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
         self.dispgroup1.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
-        self.dispgroup1.addpart( 'texta', draw.obj_textbox('[A]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textw', draw.obj_textbox('[W]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textd', draw.obj_textbox('[D]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'texta', draw.obj_textbox('[left]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textw', draw.obj_textbox('[up]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textd', draw.obj_textbox('[right]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'interrogationmark', draw.obj_image('interrogationmark',(1280-100-50,320),path='premade') )

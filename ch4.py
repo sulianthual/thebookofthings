@@ -145,7 +145,7 @@ class obj_scene_ch4p4(page.obj_chapterpage):
         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
         self.addpart(self.world)
         # self.addpart( draw.obj_image('bed',(440,500),scale=0.75) )
-        # self.addpart( draw.obj_textbox('Hold [D] to Wake up',(1100,480),color=share.colors.instructions) )
+        # self.addpart( draw.obj_textbox('Hold [right] to Wake up',(1100,480),color=share.colors.instructions) )
         # animation1=draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7)
         # self.addpart(animation1)
         # animation2=draw.obj_animation('ch4_heroawakesbug','bug',(640,360),record=False,sync=animation1)

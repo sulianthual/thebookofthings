@@ -352,7 +352,7 @@ class obj_scene_ch3p16(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   'This is how the gunfight works, said the book of things. Make ',\
-                  ('{heroname}',share.colors.hero),' jump with [W] and crouch with [S].',\
+                  ('{heroname}',share.colors.hero),' jump with [up] and crouch with [down].',\
                    ]
         self.world=world.obj_world_dodgegunshots(self)# Wake up hero mini-game
         self.addpart(self.world)

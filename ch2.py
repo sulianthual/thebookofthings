@@ -298,7 +298,7 @@ class obj_scene_ch2p10(page.obj_chapterpage):
         return (controls.enter and controls.enterc) or self.world.done# quick skip
     def setup(self):
         self.text=[\
-                   'Hold [A]+[D] to make them kiss.   ',\
+                   'Hold [left]+[right] to make them kiss.   ',\
                    ]
         self.world=world.obj_world_kiss(self,noending=False)# kiss mini-game
         self.addpart(self.world)

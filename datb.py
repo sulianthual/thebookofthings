@@ -54,32 +54,32 @@ class obj_colors:
         self.textchoice=(180,0,0)# text input box
         # Colors for story
         self.hero=self.red# hero text color
-        self.hero2=self.darkgray# hero in secondary context (he/him..)
+        self.hero2=self.text# hero in secondary context (he/him..)
         self.partner=self.pink
-        self.partner2=self.darkgray
+        self.partner2=self.text
         #
         self.villain=self.brown
-        self.villain2=self.darkgray
+        self.villain2=self.text
         self.bug=self.maroon
-        self.bug2=self.darkgray
+        self.bug2=self.text
         self.password=self.red# password color
-        self.password2=self.darkgray
+        self.password2=self.text
         #
         self.grandmaster=self.red
-        self.grandmaster2=self.darkgray
+        self.grandmaster2=self.text
         self.bunny=self.darkorange
-        self.bunny2=self.darkgray
+        self.bunny2=self.text
         self.elder=self.darkgray
-        self.elder2=self.darkgray
+        self.elder2=self.text
         self.sailor=self.lightblue
-        self.sailor2=self.darkgray
+        self.sailor2=self.text
         #
         self.skeleton=self.maroon
-        self.skeleton2=self.darkgray
+        self.skeleton2=self.text
         self.cow=self.blue
-        self.cow2=self.darkgray
+        self.cow2=self.text
         #
-        self.item=self.blue# items (when prompted to draw)
+        self.item=self.instructions# items (when prompted to draw)
         self.item2=self.text# items in secondary context
         self.location=self.darkgreen# locations
         self.location2=self.text
