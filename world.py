@@ -1064,6 +1064,7 @@ class obj_world_travel(obj_world):
 
         self.done=False# end of minigame
         self.goal=False# destination reached
+        self.goalname=None# name of reached goal (if multiple)
         #
         # Default parameters
         self.wherestart='home'# where the hero starts
@@ -1110,6 +1111,7 @@ class obj_world_travel(obj_world):
             else:
                 self.xyhero=(0,0)
         #
+        self.multiplegoals=False# single end goal/location
         if self.whereends=='home':# goal position
             self.xygoal=(0,0)
         elif self.whereends=='castle':
@@ -1122,10 +1124,19 @@ class obj_world_travel(obj_world):
             self.xygoal=(-1280,1080-120)
         elif self.whereends=='island':
             self.xygoal=(1280,1080+1080)
+        elif self.whereends=='everywhere':# multiple possible locations
+            self.multiplegoals=True
+            self.allxygoals={}
+            self.allxygoals['home']=(0,0)
+            self.allxygoals['castle']=(-1280,0)
+            self.allxygoals['forest']=(1280,0)
+            self.allxygoals['peak']=(0,-1080-80)
+            self.allxygoals['beach']=(-1280,1080-120)
+            self.allxygoals['island']=(1280,1080+1080)
         elif self.whereends=='nowhere':# cant reach
             self.xygoal=(1280+300,0)
         else:
-            self.xygoal=(1280+300,0)
+            self.xygoal=(1280+300,0)# cant reach
         #
         # layering
         self.staticactor00=obj_grandactor(self,(640,360))
@@ -1196,6 +1207,8 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( "img6", draw.obj_image('bush',(523,170),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
+        if self.chapter>=8:
+            self.staticactor11.addpart( 'refroam', draw.obj_image('partnerbase',(640-150,360),scale=0.25) )
         #
         # west panel 0-1: villain castle
         if self.chapter>=3:
@@ -1214,8 +1227,10 @@ class obj_world_travel(obj_world):
                 self.staticactor01.addpart( "img12", draw.obj_image('cloud',(794,59),scale=0.26,rotate=0,fliph=True,flipv=False) )
                 self.staticactor01.addpart( "img13", draw.obj_image('cloud',(421,69),scale=0.32,rotate=0,fliph=False,flipv=False) )
                 self.staticactor01.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        if self.chapter>=8:
+            self.staticactor01.addpart( 'refroam', draw.obj_image('villainbase',(640-150,360),scale=0.25) )
         #
-        # east panel 2-1: magical forest and peak
+        # east panel 2-1: magical forest and cave
         if self.chapter>=4:
             self.staticactor21.addpart( 'textref', draw.obj_textbox('magical cave',(640,360+120),color=share.colors.location) )
             self.staticactor21.addpart( 'ref', draw.obj_image('cave',(640,360),scale=0.5) )
@@ -1236,6 +1251,8 @@ class obj_world_travel(obj_world):
             self.staticactor21.addpart( "img14", draw.obj_image('tree',(682,624),scale=0.36,rotate=0,fliph=False,flipv=False) )
             self.staticactor21.addpart( "img15", draw.obj_image('tree',(129,131),scale=0.36,rotate=0,fliph=True,flipv=False) )
             self.staticactor21.addpart( "img16", draw.obj_image('tree',(185,644),scale=0.36,rotate=0,fliph=True,flipv=False) )
+        if self.chapter>=8:
+            self.staticactor21.addpart( 'refroam', draw.obj_image('bunnybase',(640+150,360),scale=0.25,fliph=True) )
         #
         # north panel 1-0: highest peak
         if self.chapter>=5:
@@ -1247,6 +1264,8 @@ class obj_world_travel(obj_world):
             self.staticactor10.addpart( "img3a", draw.obj_image('lightningbolt',(640,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
             self.staticactor10.addpart( "img4a", draw.obj_image('lightningbolt',(500,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
             self.staticactor10.addpart( "img5a", draw.obj_image('lightningbolt',(800,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
+        # if self.chapter>=8:
+        #     self.staticactor10.addpart( 'refroam', draw.obj_image('elderbase',(640,200+100),scale=0.25) )
         # north east panel 2-0: sun and horizon
         if self.chapter>=5:
             self.staticactor20.addpart( "img1", draw.obj_image('sun',(1009,167),scale=0.68,rotate=0,fliph=False,flipv=False) )
@@ -1299,7 +1318,9 @@ class obj_world_travel(obj_world):
             self.staticactor02.addpart( "img1a", draw.obj_image('wave',(281,341),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor02.addpart( "img2a", draw.obj_image('wave',(501,610),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor02.addpart( "img3a", draw.obj_image('wave',(1062,511),scale=0.4,rotate=0,fliph=False,flipv=False) )
-            self.staticactor02.addpart( "img4a", draw.obj_image('cloud',(998,705),scale=0.4,rotate=0,fliph=False,flipv=False) )        #
+            self.staticactor02.addpart( "img4a", draw.obj_image('cloud',(998,705),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        if self.chapter>=8:
+            self.staticactor02.addpart( 'refroam', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
         # south-south east panel 2-3: island south east
         if self.chapter>=6:
             self.staticactor23.addpart( 'textref', draw.obj_textbox('Skull Island',(640,360+120),color=share.colors.location) )
@@ -1430,10 +1451,19 @@ class obj_world_travel(obj_world):
         self.heromy=self.herospeed# moving rate
         # goal(s) to reach
         self.hitboxes=[]# may track several locations
-        self.goalarea=obj_grandactor(self,self.xygoal)
-        self.goalarea.rx=100
-        self.goalarea.ry=100
-        self.hitboxes.append(self.goalarea)
+        if not self.multiplegoals:
+            self.goalarea=obj_grandactor(self,self.xygoal)
+            self.goalarea.rx=100
+            self.goalarea.ry=100
+            self.hitboxes.append(self.goalarea)
+        else:
+            self.allgoalareas={}# dictionary of goal objects
+            for i in self.allxygoals.keys():
+                goalarea=obj_grandactor(self,self.allxygoals[i])
+                goalarea.rx=100
+                goalarea.ry=100
+                self.allgoalareas[i]=goalarea
+                self.hitboxes.append(goalarea)
         ####
         # End of Setup: place hero (move background+hitboxes)
         self.xhw=self.xyhero[0]# relative to world (0,0 = house)
@@ -1452,6 +1482,8 @@ class obj_world_travel(obj_world):
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: talk]',(640,680),color=share.colors.instructions) )
         elif self.addbeachquestionmark:# investigate
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: investigate]',(640,680),color=share.colors.instructions) )
+        elif self.chapter>=8:
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: interact]',(640,680),color=share.colors.instructions) )
         else:# enter a location
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: go inside]',(640,680),color=share.colors.instructions) )
         #
@@ -1517,22 +1549,44 @@ class obj_world_travel(obj_world):
                 self.hitboxes.append(k)
     #
     def reachgoal(self,controls):# check contact with goal
-        if tool.checkrectcollide(self.hero,self.goalarea):# contact with goal
-            self.text_undone.show=False# message to enter on contact
-            self.text_undoneenter.show=True
-            if controls.enter and controls.enterc:# enter goal
-                if self.noending:
-                    self.goal=True
-                    self.done=True
-                else:
-                    self.goal=True
-                    self.timerend.start()
-                    self.text_undone.show=False
-                    self.text_undoneenter.show=False
-                    self.text_done.show=True
-        else:
+        if not self.multiplegoals:
+            if tool.checkrectcollide(self.hero,self.goalarea):# contact with goal
+                self.text_undone.show=False# message to enter on contact
+                self.text_undoneenter.show=True
+                if controls.enter and controls.enterc:# enter goal
+                    if self.noending:
+                        self.goal=True
+                        self.done=True
+                    else:
+                        self.goal=True
+                        self.timerend.start()
+                        self.text_undone.show=False
+                        self.text_undoneenter.show=False
+                        self.text_done.show=True
+            else:
+                self.text_undone.show=True
+                self.text_undoneenter.show=False
+        else:# multiple end locations
             self.text_undone.show=True
             self.text_undoneenter.show=False
+            for i in self.allxygoals.keys():
+                if tool.checkrectcollide(self.hero,self.allgoalareas[i]):# contact with goal
+                    self.text_undone.show=False# message to enter on contact
+                    self.text_undoneenter.show=True
+                    if controls.enter and controls.enterc:# enter goal
+                        if self.noending:
+                            self.goal=True
+                            self.goalname=i
+                            self.done=True
+                        else:
+                            self.goal=True
+                            self.goalname=i
+                            self.timerend.start()
+                            self.text_undone.show=False
+                            self.text_undoneenter.show=False
+                            self.text_done.show=True
+
+
     ####
     def update(self,controls):
         super().update(controls)

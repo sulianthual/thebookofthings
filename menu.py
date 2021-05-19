@@ -27,6 +27,7 @@ import ch4
 import ch5
 import ch6
 import ch7
+import ch8
 
 
 
@@ -63,6 +64,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(540,560),fontsize='smaller',xleft=True)
         self.sprite_ch6=draw.obj_textbox('Chapter VI: Treasure Hunt',(540,590),fontsize='smaller',xleft=True)
         self.sprite_ch7=draw.obj_textbox('Chapter VII: Showtime',(540,620),fontsize='smaller',xleft=True)
+        self.sprite_ch8=draw.obj_textbox('Epilogue',(540,650),fontsize='smaller',xleft=True)
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pointer)
         self.addpart(self.sprite_info)
@@ -76,6 +78,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(self.sprite_ch5)
         self.addpart(self.sprite_ch6)
         self.addpart(self.sprite_ch7)
+        self.addpart(self.sprite_ch8)
         # decorations
         self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
@@ -112,6 +115,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_ch5.show=self.maxchapter>4
         self.sprite_ch6.show=self.maxchapter>5
         self.sprite_ch7.show=self.maxchapter>6
+        self.sprite_ch8.show=self.maxchapter>7
         # update decorations (chapter dependent)
         share.display.reseticon()# window icon
         self.sprite_pen.replaceimage('pen')
@@ -152,6 +156,8 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(ch6.obj_scene_chapter6())
             elif self.ichapter==7:
                 share.scenemanager.switchscene(ch7.obj_scene_chapter7())
+            elif self.ichapter==8:
+                share.scenemanager.switchscene(ch8.obj_scene_chapter8())
         if controls.esc and controls.escc:
             share.quitgame()
         #############################################3
@@ -161,7 +167,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.f and controls.fc:
                 #
                 # change current WIP scene here
-                quickscene=tests.obj_scene_testdrawing()
+                quickscene=ch8.obj_scene_ch8northtop()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3

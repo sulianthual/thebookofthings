@@ -1405,8 +1405,6 @@ class obj_scene_ch7end(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p56())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7endend())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch7unlocknext())
     def setup(self):
         self.text=['This is goodbye, said the book of things. ',\
                    'But come back anytime to play again. ',\
@@ -1415,6 +1413,10 @@ class obj_scene_ch7end(page.obj_chapterpage):
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
 
 class obj_scene_ch7endend(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7end())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7unlocknext())
     def setup(self):
         self.text=['The book vanished... ']
 
@@ -1423,6 +1425,7 @@ class obj_scene_ch7unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7end())
     def setup(self):
-        self.text=['You have unlocked the credits! Access them from the menu. ',\
+        self.text=['You have unlocked the ',\
+                    ('epilogue',share.colors.instructions),'! Access it from the menu. ',\
                    ]
-        # share.datamanager.updateprogress(chapter=8)# chapter 8 (credits)
+        share.datamanager.updateprogress(chapter=8)# chapter 8 (epilogue))
