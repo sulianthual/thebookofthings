@@ -181,8 +181,9 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def setup(self):
         self.text=[\
-                'A game by Sulian Thual.  ',\
-                'Thank you for playing.',\
+                'The book of things: a game by Sulian Thual, from 2021. ',\
+                'Made with pygame. ',\
+                'Thank you for playing. ',\
                    ]
         self.addpart( draw.obj_image('cake',(640,450)) )
 
@@ -452,13 +453,13 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
         textchoice.addchoice('1. Yes','yes',(450,y1))
         textchoice.addchoice('2. No','no',(660,y1))
         self.addpart( textchoice )
-        self.addpart( draw.obj_image('moon',(105,229),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(744,568),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1264,440),scale=0.27,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(546,419),scale=0.27,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('villainmechbase',(960,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('heromechbase',(300,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
-
+        #
+        self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
+        self.addpart( animation1 )
 
 class obj_scene_ch8mechfight(page.obj_chapterpage):
     def prevpage(self):
@@ -487,12 +488,12 @@ class obj_scene_ch8mechreplay(page.obj_chapterpage):
         textchoice.addchoice('1. Yes','yes',(450,y1))
         textchoice.addchoice('2. No','no',(660,y1))
         self.addpart( textchoice )
-        self.addpart( draw.obj_image('moon',(105,229),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(744,568),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1264,440),scale=0.27,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(546,419),scale=0.27,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('villainmechbase',(960,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('heromechbase',(300,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
+        self.addpart( animation1 )
 
 
 class obj_scene_ch8mechbye(page.obj_chapterpage):
@@ -502,12 +503,12 @@ class obj_scene_ch8mechbye(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
     def setup(self):
         self.text=['"Alright bye". ']
-        self.addpart( draw.obj_image('moon',(105,229),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(744,568),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1264,440),scale=0.27,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(546,419),scale=0.27,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('villainmechbase',(960,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('heromechbase',(300,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
+        self.addpart( animation1 )
 
 
 ###########

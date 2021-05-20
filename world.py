@@ -3989,10 +3989,14 @@ class obj_world_mechfight(obj_world):
         self.promptactor.addpart( 'hero', draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
         self.promptactor.addpart( 'villain',draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
         self.promptactor.addpart( 'prompt', draw.obj_textbox(' ',(640,y2),fontsize='large') )# put nothing
-        self.promptactor.addpart( 'prompt_w', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_s', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_a', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_d', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.black) )
+        # self.promptactor.addpart( 'prompt_w', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.black) )
+        # self.promptactor.addpart( 'prompt_s', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
+        # self.promptactor.addpart( 'prompt_a', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.black) )
+        # self.promptactor.addpart( 'prompt_d', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.black) )
+        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrow',(640,y2),path='premade',scale=1) )
+        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrow',(640,y2),path='premade',scale=1,flipv=True) )
+        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrow',(640,y2),path='premade',scale=1,rotate=90) )
+        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrow',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
         animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade')
         self.promptactor.addpart( 'shrink', animation1 )
         # self.promptactor.addpart( 'prompt', draw.obj_textbox('Prompt',(640,200),fontsize='huge',color=share.colors.red) )
@@ -4053,14 +4057,22 @@ class obj_world_mechfight(obj_world):
             self.actionactor.addpart('heroblocks_text', draw.obj_textbox(' ',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
             self.actionactor.addpart('villainattacks_text', draw.obj_textbox(' ',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
             self.actionactor.addpart('villainblocks_text', draw.obj_textbox(' ',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_wfail', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_sfail', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_afail', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_dfail', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.red) )
-        self.actionactor.addpart( 'prompt_wwin', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        # self.actionactor.addpart( 'prompt_wfail', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.red) )
+        # self.actionactor.addpart( 'prompt_sfail', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.red) )
+        # self.actionactor.addpart( 'prompt_afail', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.red) )
+        # self.actionactor.addpart( 'prompt_dfail', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.red) )
+        # self.actionactor.addpart( 'prompt_wwin', draw.obj_textbox('U',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        # self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        # self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        # self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
+        self.actionactor.addpart( 'prompt_wfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1) )
+        self.actionactor.addpart( 'prompt_sfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1,flipv=True) )
+        self.actionactor.addpart( 'prompt_afail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1,rotate=90) )
+        self.actionactor.addpart( 'prompt_dfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
+        self.actionactor.addpart( 'prompt_wwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1) )
+        self.actionactor.addpart( 'prompt_swin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1,flipv=True) )
+        self.actionactor.addpart( 'prompt_awin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1,rotate=90) )
+        self.actionactor.addpart( 'prompt_dwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
         self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='premade',scale=0.5) )
         #
         self.actionactor.dict['heropunch'].show=False
@@ -4445,7 +4457,16 @@ class obj_world_serenade(obj_world):
             self.melody.addpart("imgnotebase_"+str(i), draw.obj_image('musicnotesquare',position,path='premade') )
             self.melody.addpart("imgnoteplay_"+str(i), draw.obj_image('musicnotesquare_played',position,path='premade') )
             self.melody.dict["imgnoteplay_"+str(i)].show=False
-            self.melody.addpart("textboxnote_"+str(i), draw.obj_textbox(note,position) )
+            # self.melody.addpart("textboxnote_"+str(i), draw.obj_textbox(note,position) )
+            if note=='U':
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35) )
+            elif note=='D':
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35,flipv=True) )
+            elif note=='L':
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35,rotate=90) )
+            elif note=='R':
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35,rotate=90,fliph=True) )
+
         self.melody.melodyi=0# index of completed note (must reach melodylength)
         # floating notes
         self.floatingnotes=obj_grandactor(self,(640,360))
