@@ -51,7 +51,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         super().presetup()
         # menu
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
-        self.sprite_author=draw.obj_textbox('By Sul',(1210,670),fontsize='smaller')
+        self.sprite_author=draw.obj_textbox('V1.0',(1210,670),fontsize='smaller')
         self.sprite_pointer=draw.obj_textbox('---',(500-100,410),fontsize='smaller')
         self.sprite_info=draw.obj_textbox('[Esc: Exit] [Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
         self.sprite_settings=draw.obj_textbox('Settings',(540,380),fontsize='smaller',xleft=True)

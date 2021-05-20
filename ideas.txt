@@ -55,18 +55,12 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
-- Add epilogue: free roaming and replay any minigame
-
-
 - customize locations: give them names
-            items?: e.g. name the fish specie etc..
 
 - Add better character customization (influences text only):
   name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
 
 - Add sound and music
-
-- correct gitignore for pyinstaller
 
 - compile with pyinstaller: linux, windows, mac
 
