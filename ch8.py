@@ -641,7 +641,7 @@ class obj_scene_ch8westreplay(page.obj_chapterpage):
         self.text=[\
                 '"Nicely done, said ',\
                 ('{villainname}',share.colors.villain),'. ',\
-                'Do you to fight again." ',\
+                'Do you to want to fight again." ',\
                    ]
         y1=200
         textchoice=draw.obj_textchoice('numchoice',default='3')

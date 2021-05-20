@@ -2186,12 +2186,7 @@ class obj_world_stompfight(obj_world):
                     self.heroholdjumptimer.update()
                     if self.heroholdjumptimer.ring:
                         self.heromayholdjump=False
-                self.herov += self.herovg# gravity
-                self.hero.movey(self.herov)# dty=v (dt=1)
-                if self.hero.y>self.yground:# hero is on ground
-                    self.hero.movetoy(self.yground)
-                    self.herov = 0# just stall
-                    self.heromayjump=True# may jump from ground again
+
                 # hero dynamics x
                 if controls.gl:#
                     self.hero.movex(-self.heromx)
@@ -2215,6 +2210,15 @@ class obj_world_stompfight(obj_world):
                     self.hero.dict['stand_left'].show=False
                     self.hero.dict['hurt'].show=False
                     self.hero.dict['hurttext'].show=False
+
+            # fall (even if hurt)
+            self.herov += self.herovg# gravity
+            self.hero.movey(self.herov)# dty=v (dt=1)
+            if self.hero.y>self.yground:# hero is on ground
+                self.hero.movetoy(self.yground)
+                self.herov = 0# just stall
+                self.heromayjump=True# may jump from ground again
+            # boundaries
             if self.hero.x<self.xmin:# boundaries
                 self.hero.movetox(self.xmin)
             elif self.hero.x>self.xmax:
@@ -2347,79 +2351,85 @@ class obj_world_stompfight(obj_world):
             else:
                 self.villainhitbox2.movetoxy( (self.villain.x-50,self.villain.y+50) )
             #
-            # villain hits hero
-            if not self.herohurt and self.villainstate=='kick':
-                if tool.checkrectcollide(self.villainhitbox2,self.herohitbox1):# villain hits hero
-                    if not self.tutorial:# cant loose health on tutorial
-                        self.herohealth -= 1
-                    if self.herohealth>0:
-                        if self.herohealth<self.maxherohealth:
+            #
+            # Hero and Villain hit each other
+            if not self.herohurt and not self.villainhurt:
+            #
+                # villain hits hero (state kick and stand)
+                if self.villainstate in ['stand','kick']:
+                #
+                    if tool.checkrectcollide(self.villainhitbox2,self.herohitbox1):# villain hits hero
+                        if not self.tutorial:# cant loose health on tutorial
+                            self.herohealth -= 1
+                        if self.herohealth>0:
+                            if self.herohealth<self.maxherohealth:
+                                self.healthbar.dict['heart_'+str(self.herohealth)].show=False
+                            self.herohurt=True
+                            self.hero.movetoy(self.yground)# put hero to ground
+                            self.herov = 0# just stall
+                            self.heromayjump=True# may jump from ground again
+                            self.hero.dict['stand_right'].show=False
+                            self.hero.dict['stand_left'].show=False
+                            self.hero.dict['hurt'].show=True
+                            self.hero.dict['hurttext'].show=True
+                            self.herohurttimer.start()
+                        else:# dead hero
                             self.healthbar.dict['heart_'+str(self.herohealth)].show=False
-                        self.herohurt=True
-                        self.hero.movetoy(self.yground)# put hero to ground
-                        self.herov = 0# just stall
-                        self.heromayjump=True# may jump from ground again
-                        self.hero.dict['stand_right'].show=False
-                        self.hero.dict['stand_left'].show=False
-                        self.hero.dict['hurt'].show=True
-                        self.hero.dict['hurttext'].show=True
-                        self.herohurttimer.start()
-                    else:# dead hero
-                        self.healthbar.dict['heart_'+str(self.herohealth)].show=False
-                        self.goal=True
-                        self.win=False
-                        self.timerendloose.start()
-                        self.text_undone.show=False
-                        self.text_donelost.show=True
-                        self.hero.dict['stand_right'].show=False
-                        self.hero.dict['stand_left'].show=False
-                        self.hero.dict['hurt'].show=True
-                        self.hero.dict['hurttext'].show=False
-            # hero hits the villain
-            if not self.villainhurt and not self.villainstate=='kick' and self.herov>0:
-            # if not self.villainhurt and self.herov>0:# easier version even when villain kicks
-                if tool.checkrectcollide(self.villainhitbox1,self.herohitbox2):# hero hits villain
-                    if not self.tutorial:# cant loose health on tutorial
-                        self.villainhealth -= 1
-                    if self.villainhealth>0:
-                        if self.villainhealth<self.maxvillainhealth:
+                            self.goal=True
+                            self.win=False
+                            self.timerendloose.start()
+                            self.text_undone.show=False
+                            self.text_donelost.show=True
+                            self.hero.dict['stand_right'].show=False
+                            self.hero.dict['stand_left'].show=False
+                            self.hero.dict['hurt'].show=True
+                            self.hero.dict['hurttext'].show=False
+                #
+                # hero hits the villain (only state rest)
+                else:
+                    if tool.checkrectcollide(self.villainhitbox1,self.herohitbox2):# hero hits villain
+                        if not self.tutorial:# cant loose health on tutorial
+                            self.villainhealth -= 1
+                        if self.villainhealth>0:
+                            if self.villainhealth<self.maxvillainhealth:
+                                self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
+                                self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
+                            self.villainhurt=True
+                            self.villainstate='stand'
+                            self.villaintimerhurt.start()
+                            self.villain.dict['stand_right'].show=False
+                            self.villain.dict['stand_left'].show=False
+                            self.villain.dict['kick_right'].show=False
+                            self.villain.dict['kick_left'].show=False
+                            self.villain.dict['hurt'].show=True
+                            self.villain.dict['hurttext'].show=True
+                            if self.partnerisenemy:
+                                self.villain.dict['partnerstand_right'].show=False
+                                self.villain.dict['partnerstand_left'].show=False
+                                self.villain.dict['partnerkick_right'].show=False
+                                self.villain.dict['partnerkick_left'].show=False
+                                self.villain.dict['partnerhurt'].show=True
+                        else:# dead villain
                             self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
                             self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
-                        self.villainhurt=True
-                        self.villainstate='stand'
-                        self.villaintimerhurt.start()
-                        self.villain.dict['stand_right'].show=False
-                        self.villain.dict['stand_left'].show=False
-                        self.villain.dict['kick_right'].show=False
-                        self.villain.dict['kick_left'].show=False
-                        self.villain.dict['hurt'].show=True
-                        self.villain.dict['hurttext'].show=True
-                        if self.partnerisenemy:
-                            self.villain.dict['partnerstand_right'].show=False
-                            self.villain.dict['partnerstand_left'].show=False
-                            self.villain.dict['partnerkick_right'].show=False
-                            self.villain.dict['partnerkick_left'].show=False
-                            self.villain.dict['partnerhurt'].show=True
-                    else:# dead villain
-                        self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
-                        self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
-                        self.goal=True
-                        self.win=True
-                        self.timerendwin.start()
-                        self.text_undone.show=False
-                        self.text_donewin.show=True
-                        self.villain.dict['stand_right'].show=False
-                        self.villain.dict['stand_left'].show=False
-                        self.villain.dict['kick_right'].show=False
-                        self.villain.dict['kick_left'].show=False
-                        self.villain.dict['hurt'].show=True
-                        self.villain.dict['hurttext'].show=False
-                        if self.partnerisenemy:
-                            self.villain.dict['partnerstand_right'].show=False
-                            self.villain.dict['partnerstand_left'].show=False
-                            self.villain.dict['partnerkick_right'].show=False
-                            self.villain.dict['partnerkick_left'].show=False
-                            self.villain.dict['partnerhurt'].show=True
+                            self.goal=True
+                            self.win=True
+                            self.timerendwin.start()
+                            self.text_undone.show=False
+                            self.text_donewin.show=True
+                            self.villain.dict['stand_right'].show=False
+                            self.villain.dict['stand_left'].show=False
+                            self.villain.dict['kick_right'].show=False
+                            self.villain.dict['kick_left'].show=False
+                            self.villain.dict['hurt'].show=True
+                            self.villain.dict['hurttext'].show=False
+                            if self.partnerisenemy:
+                                self.villain.dict['partnerstand_right'].show=False
+                                self.villain.dict['partnerstand_left'].show=False
+                                self.villain.dict['partnerkick_right'].show=False
+                                self.villain.dict['partnerkick_left'].show=False
+                                self.villain.dict['partnerhurt'].show=True
+        #
         else:
             # goal reached state
             if self.win:# won minigame
