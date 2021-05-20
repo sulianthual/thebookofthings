@@ -1098,6 +1098,12 @@ class obj_world_travel(obj_world):
         else:
             if self.wherestart=='home':# initial position of hero
                 self.xyhero=(0,0)
+            elif self.wherestart=='pond':
+                self.xyhero=(-320,-180)
+            elif self.wherestart=='atpartner':
+                self.xyhero=(870-640,570-360)
+            elif self.wherestart=='mech':
+                self.xyhero=(1100-640,10-360)
             elif self.wherestart=='castle':
                 self.xyhero=(-1280,0)
             elif self.wherestart=='forest':
@@ -1114,6 +1120,12 @@ class obj_world_travel(obj_world):
         self.multiplegoals=False# single end goal/location
         if self.whereends=='home':# goal position
             self.xygoal=(0,0)
+        elif self.whereends=='pond':
+            self.xygoal=(-320,-180)
+        elif self.whereends=='atpartner':
+            self.xygoal=(870-640,570-360)
+        elif self.whereends=='mech':
+            self.xygoal=(1100-640,10-360)
         elif self.whereends=='castle':
             self.xygoal=(-1280,0)
         elif self.whereends=='forest':
@@ -1128,6 +1140,9 @@ class obj_world_travel(obj_world):
             self.multiplegoals=True
             self.allxygoals={}
             self.allxygoals['home']=(0,0)
+            self.allxygoals['pond']=(-320,-180)
+            self.allxygoals['mech']=(1100-640,10-360)
+            self.allxygoals['atpartner']=(870-640,570-360)
             self.allxygoals['castle']=(-1280,0)
             self.allxygoals['forest']=(1280,0)
             self.allxygoals['peak']=(0,-1080-80)
@@ -1208,7 +1223,15 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
         if self.chapter>=8:
-            self.staticactor11.addpart( 'refroam', draw.obj_image('partnerbase',(640-150,360),scale=0.25) )
+            self.staticactor11.addpart( 'refcake', draw.obj_image('cake',(820,300),scale=0.25) )
+            self.staticactor11.addpart( 'refroam_bug', draw.obj_image('bug',(640-150,360),scale=0.25) )
+            self.staticactor11.addpart( 'refmark_home', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'refmark_pond', draw.obj_image('exclamationmarkred',(640-320,360-180),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'refroam_mech', draw.obj_image('villainmechbase_noface',(1100,10),scale=0.4,rotate=-118,fliph=False,flipv=False) )
+            self.staticactor11.addpart( 'refmark_mech', draw.obj_image('exclamationmarkred',(1100,10),scale=0.5,path='premade') )
+            #
+            self.staticactor11.addpart( 'refroam_partner', draw.obj_image('partnerbase',(870+70,570),scale=0.25,fliph=True) )
+            self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(870,570),scale=0.5,path='premade') )
         #
         # west panel 0-1: villain castle
         if self.chapter>=3:
@@ -1229,6 +1252,7 @@ class obj_world_travel(obj_world):
                 self.staticactor01.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
         if self.chapter>=8:
             self.staticactor01.addpart( 'refroam', draw.obj_image('villainbase',(640-150,360),scale=0.25) )
+            self.staticactor01.addpart( 'refmark_castle', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
         #
         # east panel 2-1: magical forest and cave
         if self.chapter>=4:
@@ -1253,6 +1277,7 @@ class obj_world_travel(obj_world):
             self.staticactor21.addpart( "img16", draw.obj_image('tree',(185,644),scale=0.36,rotate=0,fliph=True,flipv=False) )
         if self.chapter>=8:
             self.staticactor21.addpart( 'refroam', draw.obj_image('bunnybase',(640+150,360),scale=0.25,fliph=True) )
+            self.staticactor21.addpart( 'refmark_cave', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
         #
         # north panel 1-0: highest peak
         if self.chapter>=5:
@@ -1264,8 +1289,9 @@ class obj_world_travel(obj_world):
             self.staticactor10.addpart( "img3a", draw.obj_image('lightningbolt',(640,8),scale=0.33,rotate=0,fliph=True,flipv=False) )
             self.staticactor10.addpart( "img4a", draw.obj_image('lightningbolt',(500,31),scale=0.33,rotate=-34,fliph=True,flipv=False) )
             self.staticactor10.addpart( "img5a", draw.obj_image('lightningbolt',(800,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
-        # if self.chapter>=8:
-        #     self.staticactor10.addpart( 'refroam', draw.obj_image('elderbase',(640,200+100),scale=0.25) )
+        if self.chapter>=8:
+            self.staticactor10.addpart( 'refroam', draw.obj_image('elderbase',(640-150,200+100),scale=0.25) )
+            self.staticactor10.addpart( 'refmark_peak', draw.obj_image('exclamationmarkred',(640,360-50),scale=0.5,path='premade') )
         # north east panel 2-0: sun and horizon
         if self.chapter>=5:
             self.staticactor20.addpart( "img1", draw.obj_image('sun',(1009,167),scale=0.68,rotate=0,fliph=False,flipv=False) )
