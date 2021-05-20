@@ -453,8 +453,6 @@ class obj_scene_ch7p18(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p17())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p19())
-    def nextpage(self):
         trypassword=share.datamanager.getword('castlepassword')
         shouldpassword='lie cheat steal'
         if False:# devtools
@@ -1269,7 +1267,7 @@ class obj_scene_ch7p54(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p55())
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('A game by Sulian...',(640,100),fontsize='large') )
+        self.addpart ( draw.obj_textbox('A game by Sulian thual',(640,100),fontsize='large') )
         self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
         self.addpart( animation1 )

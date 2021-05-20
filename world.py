@@ -1104,6 +1104,8 @@ class obj_world_travel(obj_world):
                 self.xyhero=(870-640,570-360)
             elif self.wherestart=='mech':
                 self.xyhero=(1100-640,10-360)
+            elif self.wherestart=='cake':
+                self.xyhero=(210,-50)
             elif self.wherestart=='castle':
                 self.xyhero=(-1280,0)
             elif self.wherestart=='forest':
@@ -1126,6 +1128,8 @@ class obj_world_travel(obj_world):
             self.xygoal=(870-640,570-360)
         elif self.whereends=='mech':
             self.xygoal=(1100-640,10-360)
+        elif self.whereends=='cake':
+            self.xygoal=(210,-50)
         elif self.whereends=='castle':
             self.xygoal=(-1280,0)
         elif self.whereends=='forest':
@@ -1142,6 +1146,7 @@ class obj_world_travel(obj_world):
             self.allxygoals['home']=(0,0)
             self.allxygoals['pond']=(-320,-180)
             self.allxygoals['mech']=(1100-640,10-360)
+            self.allxygoals['cake']=(210,-50)
             self.allxygoals['atpartner']=(870-640,570-360)
             self.allxygoals['castle']=(-1280,0)
             self.allxygoals['forest']=(1280,0)
@@ -1223,7 +1228,10 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
         if self.chapter>=8:
-            self.staticactor11.addpart( 'refcake', draw.obj_image('cake',(820,300),scale=0.25) )
+            self.staticactor11.addpart( 'refcake', draw.obj_image('cake',(640+210,360-50),scale=0.25) )
+            self.staticactor11.addpart( 'refmark_cake', draw.obj_image('exclamationmarkred',(640+210,360-50),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'textrefcake', draw.obj_textbox('Credits',(640+210,360-50+60),color=share.colors.location) )
+            #
             self.staticactor11.addpart( 'refroam_bug', draw.obj_image('bug',(640-150,360),scale=0.25) )
             self.staticactor11.addpart( 'refmark_home', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
             self.staticactor11.addpart( 'refmark_pond', draw.obj_image('exclamationmarkred',(640-320,360-180),scale=0.5,path='premade') )
@@ -1346,7 +1354,9 @@ class obj_world_travel(obj_world):
             self.staticactor02.addpart( "img3a", draw.obj_image('wave',(1062,511),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor02.addpart( "img4a", draw.obj_image('cloud',(998,705),scale=0.4,rotate=0,fliph=False,flipv=False) )
         if self.chapter>=8:
-            self.staticactor02.addpart( 'refroam', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
+            self.staticactor02.addpart( 'refroam', draw.obj_image('sailorbase',(640-70,360-120),scale=0.25) )
+            self.staticactor02.addpart( 'refroam_cow', draw.obj_image('cow',(640-70-100,360-120-200),scale=0.4) )
+            self.staticactor02.addpart( 'refmark_atsailor', draw.obj_image('exclamationmarkred',(640,360-120),scale=0.5,path='premade') )
         # south-south east panel 2-3: island south east
         if self.chapter>=6:
             self.staticactor23.addpart( 'textref', draw.obj_textbox('Skull Island',(640,360+120),color=share.colors.location) )
@@ -1361,6 +1371,9 @@ class obj_world_travel(obj_world):
             self.staticactor23.addpart( "img3a", draw.obj_image('wave',(329,11),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor23.addpart( "img4a", draw.obj_image('wave',(25,170),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor23.addpart( "img5a", draw.obj_image('cloud',(978,255),scale=0.4,rotate=0,fliph=True,flipv=False) )
+        if self.chapter>=8:
+            self.staticactor23.addpart( 'refroam', draw.obj_image('skeletonbase',(640+150,360),scale=0.25,fliph=True) )
+            self.staticactor23.addpart( 'refmark_island', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
         # south-south panel 1-3: just ocean
         if self.chapter>=6:
             self.staticactor13.addpart( "img1", draw.obj_image('wave',(1053,445),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -3591,6 +3604,7 @@ class obj_world_ridecow(obj_world):
         self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
         # hero
         self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
+        self.hero.addpart( 'img', draw.obj_animation('gameheroridecow','heroridecow',(self.heroxystart[0],self.heroxystart[1]),record=True) )
         self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
         self.hero.dict['img'].show=True
         self.hero.dict['hurt'].show=False
@@ -3622,7 +3636,7 @@ class obj_world_ridecow(obj_world):
         # self.shotprobas=[40,0,60]# probas of palmtree, rock, bush...
         self.shotprobas=[50,0,50]# probas of palmtree, rock, bush...
         # health bar
-        self.maxherohealth=14# starting hero health
+        self.maxherohealth=7# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360),foreground=False)
         for i in range(self.maxherohealth):
