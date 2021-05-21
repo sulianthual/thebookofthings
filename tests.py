@@ -318,9 +318,16 @@ class obj_scene_textbox(obj_testpage):
         self.text=[
             'Textbox Basics: Placed anywhere, can customize font and color. ',\
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
-            'Acts like an image: Can reset[space], move [arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
-            'Can rotate[f] but use sparingly (enlargens-memory issues). ',\
-            'Save an image of textbox[g] (useful to animate it). ',\
+            'Try it: ',\
+            '[arrows alone]:move. ',\
+            '[lmouse+arrows]:scale, rotate90. ',\
+            '[rmouse+left/right]:flip. ',\
+            '[rmouse+up]:rotate45 (use sparingly cf enlargens-memory issues). ',\
+            '[rmouse+down]:save an image (useful to animate). ',\
+            '[lmouse+rmouse]:reset. ',\
+
+
+
             'use options xleft,ytop such that given position is left-top instead of center. ',\
                    ]
         self.addpart(draw.obj_textbox('textbox',(340,260),color=share.colors.blue))#customize font and color
@@ -331,19 +338,24 @@ class obj_scene_textbox(obj_testpage):
         self.dx,self.dy=5,5
     def page(self,controls):
         self.textbox.update(controls)
-        if controls.right: self.textbox.movex(self.dx)
-        if controls.left: self.textbox.movex(-self.dx)
-        if controls.up: self.textbox.movey(-self.dy)
-        if controls.down: self.textbox.movey(self.dy)
-        if controls.e and controls.ec: self.textbox.fliph()# tests
-        if controls.q and controls.qc: self.textbox.flipv()# tests
-        if controls.a and controls.ac: self.textbox.rotate90(90)
-        if controls.d and controls.dc: self.textbox.rotate90(-90)
-        if controls.w and controls.wc: self.textbox.scale(2)
-        if controls.s and controls.sc: self.textbox.scale(0.5)
-        if controls.space and controls.spacec: self.textbox.setup()
-        if controls.f and controls.fc: self.textbox.rotate(45)
-        if controls.g and controls.gc: self.textbox.snapshot('testimagetextbox',path='book')
+        #
+        if controls.gm1:
+            if controls.gu and controls.guc: self.textbox.scale(2)
+            if controls.gd and controls.gdc: self.textbox.scale(0.5)
+            if controls.gl and controls.glc: self.textbox.rotate90(90)
+            if controls.gr and controls.grc: self.textbox.rotate90(-90)
+            if controls.gm2: self.textbox.setup()
+        elif controls.gm2:
+            if controls.gu and controls.guc: self.textbox.rotate(45)
+            if controls.gd and controls.gdc: self.textbox.snapshot('testimagetextbox',path='book')
+            if controls.gl and controls.glc: self.textbox.fliph()
+            if controls.gr and controls.grc: self.textbox.flipv()
+        else:
+            if controls.gu: self.textbox.movey(-self.dy)
+            if controls.gd: self.textbox.movey(self.dy)
+            if controls.gl: self.textbox.movex(-self.dx)
+            if controls.gr: self.textbox.movex(self.dx)
+
 
 # Scene: test draw something
 class obj_scene_testdrawing(obj_testpage):
@@ -382,10 +394,13 @@ class obj_scene_testimage(obj_testpage):
     def setup(self):
         self.name='Image Basics'
         self.text=['Image Basics: ',\
-            'Test transformations here like move [Arrows], flip [q,e], scale [w,s], rotate90 [a,d], reset [space]. ',\
-            'Can rotate [f] but use sparingly: it enlargens image each time leading to memory issues. ',\
-            'An imagefill is an image of single color (preferentially the background) used to make layering. ',\
-            'Press [r]: Image can quickly be saved and loaded which includes the transformations. ',\
+            'Try it: ',\
+            '[arrows alone]:move. ',\
+            '[lmouse+arrows]:scale, rotate90. ',\
+            '[rmouse+left/right]:flip. ',\
+            '[rmouse+up]:rotate45 (use sparingly cf enlargens-memory issues). ',\
+            '[rmouse+down]:save/load (includes transformations). ',\
+            '[lmouse+rmouse]: reset. ',\
             'Image drawn by player are in folder /book, but one can also read from /data or from /premade. ',\
             'If image doesnt exist the error image is read.  ',\
                    ]
@@ -398,21 +413,25 @@ class obj_scene_testimage(obj_testpage):
         self.addpart(draw.obj_imagefill((share.colors.background,200,300),(260,360)))# filler on top
         self.addpart(self.image1)
     def page(self,controls):
-        if controls.right: self.image2.movex(5)
-        if controls.left: self.image2.movex(-5)
-        if controls.up: self.image2.movey(-5)
-        if controls.down: self.image2.movey(5)
-        if controls.e and controls.ec: self.image2.fliph()# tests
-        if controls.q and controls.qc: self.image2.flipv()# tests
-        if controls.a and controls.ac: self.image2.rotate90(90)
-        if controls.d and controls.dc: self.image2.rotate90(-90)
-        if controls.w and controls.wc: self.image2.scale(2)
-        if controls.s and controls.sc: self.image2.scale(0.5)
-        if controls.space and controls.spacec: self.image2.setup()
-        if controls.f and controls.fc: self.image2.rotate(45)
-        if controls.r and controls.rc: # save and load
-            self.image2.save('testimage1')
-            self.image1.load('testimage1')
+        #
+        if controls.gm1:
+            if controls.gu and controls.guc: self.image2.scale(2)
+            if controls.gd and controls.gdc: self.image2.scale(0.5)
+            if controls.gl and controls.glc: self.image2.rotate90(90)
+            if controls.gr and controls.grc: self.image2.rotate90(-90)
+            if controls.gm2: self.image2.setup()
+        elif controls.gm2:
+            if controls.gu and controls.guc: self.image2.rotate(45)
+            if controls.gd and controls.gdc:
+                self.image2.save('testimage1')
+                self.image1.load('testimage1')
+            if controls.gl and controls.glc: self.image2.fliph()
+            if controls.gr and controls.grc: self.image2.flipv()
+        else:
+            if controls.gu: self.image2.movey(-5)
+            if controls.gd: self.image2.movey(5)
+            if controls.gl: self.image2.movex(-5)
+            if controls.gr: self.image2.movex(5)
 
 
 # Scene: test image placer
@@ -489,41 +508,50 @@ class obj_scene_testanimationplayback(obj_testpage):
     def setup(self):
         self.name='Animation Playback'
         self.text=[(self.name,share.colors.red),': ',\
-                   'During playback, animation accepts permanent changes: move,flip, scale, rotate90,rotate. ',\
-                   'use rotate sparingly (enlargens leading to potential memory issues). ',\
-                   'Always record animation WITHOUT any permanent changes. ',\
-                   'Test permanent changes here: [Arrows] Move, [w,s] scale, [a,d] rotate90, [f,g] rotate45, [q,e] flip. ',\
-                   'The permanent changes modify animation movements too',\
+                   'During playback, animation accepts additional transformations. ',\
+                   'Always record animation WITHOUT these transformations. ',\
+                   'Try it: ',\
+                   '[arrows alone]:move. ',\
+                   '[lmouse+arrows]:scale, rotate90. ',\
+                   '[rmouse+left/right]:flip. ',\
+                   '[rmouse+up/down]:rotate45 (use sparingly cf enlargen memory issue). ',\
+                   '[lmouse+rmouse]: reset. ',\
                    ]
         self.animation=draw.obj_animation('testanimation1','testimage1',(640,360))
         self.dx,self.dy=5,5
     def page(self,controls):
         self.animation.update(controls)# manual update
-        if controls.right: self.animation.movex(self.dx)
-        if controls.left: self.animation.movex(-self.dx)
-        if controls.up: self.animation.movey(-self.dy)
-        if controls.down: self.animation.movey(self.dy)
-        if controls.e and controls.ec: self.animation.fliph()# tests
-        if controls.q and controls.qc: self.animation.flipv()# tests
-        if controls.a and controls.ac: self.animation.rotate90(90)
-        if controls.d and controls.dc: self.animation.rotate90(-90)
-        if controls.f and controls.fc: self.animation.rotate(45)
-        if controls.g and controls.gc: self.animation.rotate(-45)
-        if controls.w and controls.wc: self.animation.scale(2)
-        if controls.s and controls.sc: self.animation.scale(0.5)
-        if controls.space and controls.spacec: self.animation.setup()
         #
+        if controls.gm1:
+            if controls.gu and controls.guc: self.animation.scale(2)
+            if controls.gd and controls.gdc: self.animation.scale(0.5)
+            if controls.gl and controls.glc: self.animation.rotate90(90)
+            if controls.gr and controls.grc: self.animation.rotate90(-90)
+            if controls.gm2: self.animation.setup()
+        elif controls.gm2:
+            if controls.gu and controls.guc: self.animation.rotate(45)
+            if controls.gd and controls.gdc: self.animation.rotate(-45)
+            if controls.gl and controls.glc: self.animation.fliph()
+            if controls.gr and controls.grc: self.animation.flipv()
+        else:
+            if controls.gu: self.animation.movey(-self.dy)
+            if controls.gd: self.animation.movey(self.dy)
+            if controls.gl: self.animation.movex(-self.dx)
+            if controls.gr: self.animation.movex(self.dx)
+
 
 # Scene: test dispgroup move
 class obj_scene_testdispgroup(obj_testpage):
     def setup(self):
         self.name='Display group'
-        self.text=['Display Group (or dispgroup): A group of elements that can be transformed while conserving its structure. ',\
-                   'accepted elements are: textbox, image, animation. ',\
-                   'Test here applying permanent changes to the dispgroup: [arrow keys] to move. ',\
-                   '[q] and [e] to flip. [w] and [s] to 2x scale (dont repeat, it degrades images). ',\
-                   '[a] and [d] for rotate90. [f] [g] to rotate 45 (dont repeat, it enlargens images).',\
-                   ' Reset this page with [space]. ',\
+        self.text=['Display Group (or dispgroup): A group of elements (textboxes,images or animations)',\
+                    ' that can be transformed while conserving general structure. ',\
+                   'Try it: ',\
+                   '[arrows alone]:move. ',\
+                   '[lmouse+arrows]:scale, rotate90. ',\
+                   '[rmouse+left/right]:flip. ',\
+                   '[rmouse+up/down]:rotate45 (use sparingly cf enlargen memory issue). ',\
+                   '[lmouse+rmouse]: reset. ',\
                    ]
         self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup.addpart( "key_element1", draw.obj_image('testimage1',(440,360)) )# add image
@@ -533,28 +561,29 @@ class obj_scene_testdispgroup(obj_testpage):
         self.dx,self.dy=5,5
     def page(self,controls):
         self.dispgroup.update(controls)
-        if controls.right: self.dispgroup.movex(self.dx)
-        if controls.left: self.dispgroup.movex(-self.dx)
-        if controls.up: self.dispgroup.movey(-self.dy)
-        if controls.down: self.dispgroup.movey(self.dy)
-        if controls.w and controls.wc: self.dispgroup.scale(2)
-        if controls.s and controls.sc: self.dispgroup.scale(0.5)
-        if controls.a and controls.ac: self.dispgroup.rotate90(90)
-        if controls.d and controls.dc: self.dispgroup.rotate90(-90)
-        if controls.f and controls.fc: self.dispgroup.rotate(45)
-        if controls.g and controls.gc: self.dispgroup.rotate(-45)
-        if controls.e and controls.ec: self.dispgroup.fliph()
-        if controls.q and controls.qc: self.dispgroup.flipv()
-        if controls.space  and controls.space: self.setup()
-
+        if controls.gm1:
+            if controls.gu and controls.guc: self.dispgroup.scale(2)
+            if controls.gd and controls.gdc: self.dispgroup.scale(0.5)
+            if controls.gl and controls.glc: self.dispgroup.rotate90(90)
+            if controls.gr and controls.grc: self.dispgroup.rotate90(-90)
+            if controls.gm2: self.setup()
+        elif controls.gm2:
+            if controls.gu and controls.guc: self.dispgroup.rotate(45)
+            if controls.gd and controls.gdc: self.dispgroup.rotate(-45)
+            if controls.gl and controls.glc: self.dispgroup.fliph()
+            if controls.gr and controls.grc: self.dispgroup.flipv()
+        else:
+            if controls.gu: self.dispgroup.movey(-self.dy)
+            if controls.gd: self.dispgroup.movey(self.dy)
+            if controls.gl: self.dispgroup.movex(-self.dx)
+            if controls.gr: self.dispgroup.movex(self.dx)
 
 # Scene: test dispgroup snapshot
 class obj_scene_testdispgroupsnapshot(obj_testpage):
     def setup(self):
         self.name='Display group Snapshot'
-        self.text=['Display group Snapshot: saves an image of a dispgroup (in designated area of screen). ',\
-                   'Only works for images (useful to combine them). ',\
-                   'Move dispgroup with [arrows]. Take a snapshot with [f] (prints the center area).',\
+        self.text=['Display group Snapshot: snapshots a dispgroup (only its images). Useful to combine several drawings/images. ',\
+                   'Try it: [arrows]: move. [lmouse]: take a snapshot (and refresh it on page).',\
                    'Note: the snapshot manager (in datb) automatically remakes all related snapshots each time a drawing is remade',\
                    ]
         self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
@@ -567,17 +596,19 @@ class obj_scene_testdispgroupsnapshot(obj_testpage):
         # image of snapshot
         self.snapshot=draw.obj_image('testsnapshot',(640,360))
         self.addpart(self.snapshot)
+        self.dx,self.dy=5,5
     def page(self,controls):
         self.dispgroup.update(controls)
-        if controls.right: self.dispgroup.movex(5)
-        if controls.left: self.dispgroup.movex(-5)
-        if controls.up: self.dispgroup.movey(-5)
-        if controls.down: self.dispgroup.movey(5)
-        if controls.f  and controls.fc:
+        if controls.gu: self.dispgroup.movey(-self.dy)
+        if controls.gd: self.dispgroup.movey(self.dy)
+        if controls.gl: self.dispgroup.movex(-self.dx)
+        if controls.gr: self.dispgroup.movex(self.dx)
+        if controls.gm1 and controls.gm1c:
             self.dispgroup.snapshot(self.snaprect,self.snapimage)# take snapshot
             self.removepart(self.snapshot)# refresh image of snapshot on page
             self.snapshot=draw.obj_image('testsnapshot',(640,360))
             self.addpart(self.snapshot)
+
 
 class obj_scene_testworld(obj_testpage):
     def setup(self):
@@ -599,10 +630,11 @@ class obj_scene_testworld(obj_testpage):
     def page(self,controls):
         self.world.update(controls)
         # non rigid-body
-        if controls.right: self.rigidbody.movex(5)
-        if controls.left: self.rigidbody.movex(-5)
-        if controls.up: self.rigidbody.movey(-5)
-        if controls.down: self.rigidbody.movey(5)
+        if controls.gu: self.rigidbody.movey(-5)
+        if controls.gd: self.rigidbody.movey(5)
+        if controls.gl: self.rigidbody.movex(-5)
+        if controls.gr: self.rigidbody.movex(5)
+
 
 class obj_scene_testworldgrandactor(obj_testpage):
     def setup(self):
@@ -613,8 +645,12 @@ class obj_scene_testworldgrandactor(obj_testpage):
                    'it has a hitbox (r,rx,ry), ',\
                    'it can have elements (textbox, image, animation or dispgroup), ',\
                    'and it can be transformed.',\
-                   'Try permanent transformations here: move [arrows], scale [w,s], rotate90 [a,d], flip [q,e]. ',\
-                   'Toggle Dev mode with [Ctrl] to see grand actors hit boxes.',\
+                  'Try it: ',\
+                  '[arrows alone]:move. ',\
+                  '[lmouse+arrows]:scale, rotate90. ',\
+                  '[rmouse+left/right]:flip. ',\
+                  '[lmouse+rmouse]: reset. ',\
+                  '[ctrl]: toggle dev mode (see grand actor hit box). ',\
                    ]
         self.world=world.obj_world(self)# world template
         self.hero=world.obj_grandactor(self.world,(640,360))# a grand actor
@@ -623,27 +659,33 @@ class obj_scene_testworldgrandactor(obj_testpage):
         self.hero.scale(0.5)
     def page(self,controls):
         self.world.update(controls)
-        if controls.right: self.hero.movex(5)
-        if controls.left: self.hero.movex(-5)
-        if controls.down: self.hero.movey(5)
-        if controls.up: self.hero.movey(-5)
-        if controls.w and controls.wc: self.hero.scale(2)
-        if controls.s and controls.sc: self.hero.scale(0.5)
-        if controls.a and controls.ac: self.hero.rotate90(90)
-        if controls.d and controls.dc: self.hero.rotate90(-90)
-        if controls.q and controls.qc: self.hero.fliph()
-        if controls.e and controls.ec: self.hero.flipv()
+        if controls.gm1:
+            if controls.gu and controls.guc: self.hero.scale(2)
+            if controls.gd and controls.gdc: self.hero.scale(0.5)
+            if controls.gl and controls.glc: self.hero.rotate90(90)
+            if controls.gr and controls.grc: self.hero.rotate90(-90)
+            if controls.gm2: self.setup()
+        elif controls.gm2:
+            if controls.gl and controls.glc: self.hero.fliph()
+            if controls.gr and controls.grc: self.hero.flipv()
+        else:
+            if controls.gu: self.hero.movey(-5)
+            if controls.gd: self.hero.movey(5)
+            if controls.gl: self.hero.movex(-5)
+            if controls.gr: self.hero.movex(5)
+
+
 
 class obj_scene_testrigidbody(obj_testpage):
     def setup(self):
         self.name='Actors with Rigid Bodies'
         self.text=['Actors with Rigid Bodies: ',\
-                   'A grand actor can have a rigidbody dynamics that induce additional movement. ',\
-                   'External forces start rigidbody dynamics, and internal friction slows the actor ',\
-                   'back to stalling.  ',\
-                   'If stalling the actor can still be moved like a non rigidbody. '\
-                   'Test move with [arrows] (non-rigidbody), force with [WASD] (rigidbody), ',\
-                   'stall with [q,e]. ',\
+                   'a grand actor with rigidbody dynamics (external forces, internal friction). ',\
+                  'Try it: ',\
+                  '[arrows alone]:move. ',\
+                  '[lmouse+arrows]:apply forces. ',\
+                  '[rmouse]: force stall. ',\
+                  '[lmouse+rmouse]: reset. ',\
                    ]
         self.world=world.obj_world(self)# world template
         self.world.addrule('rule_rigidbody_bdry',world.obj_rule_bdry_bounces_rigidbody(self.world) )
@@ -652,20 +694,19 @@ class obj_scene_testrigidbody(obj_testpage):
         self.rigidbody.addpart( 'img',draw.obj_image('testimage1',(640,360)) )
     def page(self,controls):
         self.world.update(controls)
-        # non rigid-body
-        if controls.right: self.rigidbody.movex(5)
-        if controls.left: self.rigidbody.movex(-5)
-        if controls.up: self.rigidbody.movey(-5)
-        if controls.down: self.rigidbody.movey(5)
-        # rigid-body
-        if controls.w and controls.wc: self.rigidbody.forcey(-5)
-        if controls.s and controls.sc: self.rigidbody.forcey(5)
-        if controls.a and controls.ac: self.rigidbody.forcex(-5)
-        if controls.d and controls.dc: self.rigidbody.forcex(5)
-        if controls.q and controls.qc: self.rigidbody.stall()
-        if controls.e and controls.ec: self.rigidbody.stall()
-
-
+        if controls.gm1:
+            if controls.gu and controls.guc: self.rigidbody.forcey(-5)
+            if controls.gd and controls.gdc: self.rigidbody.forcey(5)
+            if controls.gl and controls.glc: self.rigidbody.forcex(-5)
+            if controls.gr and controls.grc: self.rigidbody.forcex(5)
+            if controls.gm2: self.setup()
+        elif controls.gm2:
+            self.rigidbody.stall()
+        else:
+            if controls.gu: self.rigidbody.movey(-5)
+            if controls.gd: self.rigidbody.movey(5)
+            if controls.gl: self.rigidbody.movex(-5)
+            if controls.gr: self.rigidbody.movex(5)
 
 
 class obj_scene_testbreakfastdrinking(obj_testpage):
