@@ -73,8 +73,6 @@ class obj_chapterpage(obj_page):
         super().__init__(**kwargs)
     def postsetup(self):
         super().postsetup()
-        self.addpart(draw.obj_pagedisplay_number())
-        self.addpart(draw.obj_pagedisplay_note('[Tab: Back]  [Enter: Continue]'))
         term=draw.obj_pagedisplay_text()
         term.make(self.text,**self.textkeys)# rebuild main text
         self.addpart(term)
@@ -84,11 +82,11 @@ class obj_chapterpage(obj_page):
         self.callnextpage(controls)
         self.callexitpage(controls)
     def triggerprevpage(self,controls):
-        return controls.tab and controls.tabc
+        return controls.gb and controls.gbc
     def triggerexitpage(self,controls):
-        return controls.esc and controls.escc
+        return controls.gq and controls.gqc
     def triggernextpage(self,controls):
-        return controls.enter and controls.enterc
+        return controls.ga and controls.gac
     def callprevpage(self,controls):
         if self.triggerprevpage(controls):
             self.preendpage()# template

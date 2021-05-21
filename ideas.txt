@@ -55,6 +55,8 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ##################
 * Final changes to make:
 
+- generalized and simplified controls
+
 - customize locations: give them names
 
 - Add better character customization (influences text only):

@@ -116,7 +116,7 @@ class obj_scene_ch4p3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                'Alright lets go, said the book of things: ',\
@@ -134,7 +134,7 @@ class obj_scene_ch4p4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p5())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
@@ -160,7 +160,7 @@ class obj_scene_ch4p5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p6())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
@@ -254,7 +254,7 @@ class obj_scene_ch4p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p11())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 'go to the magical cave in the east',\
@@ -909,7 +909,7 @@ class obj_scene_ch4p20(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p21())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 'go back home',\
@@ -925,7 +925,7 @@ class obj_scene_ch4p21(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p22())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"Back at home, ',\
@@ -943,7 +943,7 @@ class obj_scene_ch4p22(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p23())
     def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"Then, ',\
@@ -984,7 +984,7 @@ class obj_scene_ch4p24(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p25())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"In the evening, ',\
@@ -1002,7 +1002,7 @@ class obj_scene_ch4p25(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p26())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 '"It was already night".',\
@@ -1016,7 +1016,7 @@ class obj_scene_ch4p26(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p27())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"',\

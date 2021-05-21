@@ -53,7 +53,11 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('V1.0',(1210,670),fontsize='smaller')
         self.sprite_pointer=draw.obj_textbox('---',(500-100,410),fontsize='smaller')
-        self.sprite_info=draw.obj_textbox('[Esc: Exit] [Up/Down: Select]  [Enter: Choose]',(640,350),fontsize='smaller')
+        tempo= '['+share.datamanager.controlname('quit')+': exit] '
+        tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
+        tempo+= '['+share.datamanager.controlname('action')+': choose] '
+        self.sprite_info=draw.obj_textbox(tempo,(640,350),fontsize='smaller')
+        # self.sprite_info=draw.obj_textbox('[Esc: Exit] [Up/Down: Select] [Enter: Choose]',(640,350),fontsize='smaller')
         self.sprite_settings=draw.obj_textbox('Settings',(540,380),fontsize='smaller',xleft=True)
         self.sprite_start=draw.obj_textbox('Start New Book',(540,410),fontsize='smaller',xleft=True)
         self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(540,410),fontsize='smaller',xleft=True)
@@ -88,13 +92,14 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.addpart(self.sprite_eraser)
         # devtools
         if share.devaccess:
-            textmat=['Developper Access is on:','(edit settings.txt to change)',\
-            '[Ctrl: Toggle Dev Mode]','[F: Quick Access Scene]','[Space: Appendix of Tests]']
+            tempo1= '['+share.datamanager.controlname('dev')+': toggle dev mode] '
+            tempo2= '['+share.datamanager.controlname('right')+': appendix of tests] '
+            tempo3= '['+share.datamanager.controlname('left')+': quick access scene] '
+            textmat=['Developper Access is on:','(edit settings.txt to change)',tempo1,tempo2,tempo3]
             x1,y1,dy1=30,500,30
             for i in textmat:
                 self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
                 y1 += dy1
-
 
     def setup(self):
         super().setup()
@@ -129,15 +134,15 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_pen.movetoy(360+self.ichapter*30)
 
     def page(self,controls):
-        if (controls.s and controls.sc) or (controls.down and controls.downc):
+        if controls.gd and controls.gdc:
             self.ichapter=min(self.ichapter+1,self.maxchapter)
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
-        if (controls.w and controls.wc) or (controls.up and controls.upc):
+        if controls.gu and controls.guc:
             self.ichapter=max(self.ichapter-1,-1)
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
-        if controls.enter  and controls.enterc:
+        if controls.ga  and controls.gac:
             if self.ichapter==-1:
                 share.scenemanager.switchscene(obj_scene_settings())
             elif self.ichapter==0:
@@ -158,16 +163,16 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(ch7.obj_scene_chapter7())
             elif self.ichapter==8:
                 share.scenemanager.switchscene(ch8.obj_scene_chapter8())
-        if controls.esc and controls.escc:
+        if controls.gq and controls.gqc:
             share.quitgame()
         #############################################3
         if share.devaccess:
-            if controls.space and controls.spacec:
+            if controls.gr and controls.grc:
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
-            if controls.f and controls.fc:
+            if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch8.obj_scene_ch8mechfight()
+                quickscene=ch5.obj_scene_ch5p24()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -185,8 +190,11 @@ class obj_scene_settings(page.obj_page):
         share.datamanager.loadsettings()# load current settings
         #
         self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
-        self.addpart( draw.obj_textbox('[Tab: Back] [Up/Down: Select] [Enter: Change]',(640,
-        350),fontsize='smaller') )
+        tempo= '['+share.datamanager.controlname('back')+': back] '
+        tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
+        tempo+= '['+share.datamanager.controlname('action')+': change] '
+        self.addpart( draw.obj_textbox(tempo,(640,350),fontsize='smaller') )
+        #
         self.maxjpos=4# max pointer position
         self.jpos=0# pointer position
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
@@ -218,20 +226,20 @@ class obj_scene_settings(page.obj_page):
         self.soundoff.show=not share.datamanager.dosound
         self.soundon.show=share.datamanager.dosound
     def page(self,controls):
-        if (controls.s and controls.sc) or (controls.down and controls.downc):
+        if controls.gd and controls.gdc:
             self.jpos=min(self.jpos+1,self.maxjpos)
             self.sprite_pointer.movetoy(380+self.jpos*30)
-        if (controls.w and controls.wc) or (controls.up and controls.upc):
+        if controls.gu and controls.guc:
             self.jpos=max(self.jpos-1,0)
             self.sprite_pointer.movetoy(380+self.jpos*30)
         # change difficulty
-        if self.jpos==0 and (controls.enter and controls.enterc):
+        if self.jpos==0 and (controls.ga and controls.gac):
             share.datamanager.easymode=not share.datamanager.easymode
             self.difficultyeasy.show=share.datamanager.easymode
             self.difficultyhard.show=not share.datamanager.easymode
             share.datamanager.savesettings()# save settings
         # change display
-        if self.jpos==1 and (controls.enter and controls.enterc):
+        if self.jpos==1 and (controls.ga and controls.gac):
             share.datamanager.donative= not share.datamanager.donative
             self.screennative.show=share.datamanager.donative
             self.screenadapted.show=not share.datamanager.donative
@@ -241,22 +249,22 @@ class obj_scene_settings(page.obj_page):
                 share.display.reset(native=False)
             share.datamanager.savesettings()# save settings
         # change music
-        if self.jpos==2 and (controls.enter and controls.enterc):
+        if self.jpos==2 and (controls.ga and controls.gac):
             share.datamanager.domusic=not share.datamanager.domusic
             self.musicoff.show=not share.datamanager.domusic
             self.musicon.show=share.datamanager.domusic
             share.datamanager.savesettings()# save settings
         # change sound
-        if self.jpos==3 and (controls.enter and controls.enterc):
+        if self.jpos==3 and (controls.ga and controls.gac):
             share.datamanager.dosound=not share.datamanager.dosound
             self.soundoff.show=not share.datamanager.dosound
             self.soundon.show=share.datamanager.dosound
             share.datamanager.savesettings()# save settings
         # erase book
-        if self.jpos==4 and (controls.enter and controls.enterc):
+        if self.jpos==4 and (controls.ga and controls.gac):
             share.scenemanager.switchscene(obj_scene_erasebook())
         # back to titlescreen
-        if (controls.tab and controls.tabc):
+        if (controls.gb and controls.gbc):
             share.scenemanager.switchscene(share.titlescreen,init=True)
 
 
@@ -271,11 +279,16 @@ class obj_scene_erasebook(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
     def triggernextpage(self,controls):
-        return controls.enter and controls.space and controls.lctrl
+        return controls.gl and controls.gu and controls.gr and controls.ga
     def setup(self):
-        self.text=['Press [Enter+Space+Ctrl] to erase the book. ',\
+        tempo= 'Press ['+share.datamanager.controlname('left')
+        tempo+= '+'+share.datamanager.controlname('up')
+        tempo+= '+'+share.datamanager.controlname('right')
+        tempo+= '+'+share.datamanager.controlname('action')
+        tempo+= '] to erase the book.'
+        self.text=[tempo,\
                     'You will loose all your drawings and progress. ',\
-                    '[Tab: Back]',\
+                    '[',share.datamanager.controlname('back'),': back]',\
                     ]
 
 
@@ -285,8 +298,8 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
     def setup(self):
-        self.text=['The book has vanished.',\
-                   '[Tab: Back]']
+        self.text=['The book has vanished. ',\
+                   '[',share.datamanager.controlname('back'),': back]']
         share.datamanager.erasebook()
 
 

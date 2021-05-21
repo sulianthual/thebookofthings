@@ -243,7 +243,26 @@ class obj_datamanager:
             self.dictwords={}
             # save if empty
             self.savewords()
-
+    #
+    # control names
+    def controlname(self,name):
+        # control names
+        self.dictcontrolnames={}
+        self.dictcontrolnames['up']='up test'
+        self.dictcontrolnames['down']='down test'
+        self.dictcontrolnames['left']='left test'
+        self.dictcontrolnames['right']='right test'
+        self.dictcontrolnames['action']='enter test'
+        self.dictcontrolnames['back']='tab test'
+        self.dictcontrolnames['quit']='esc test'
+        self.dictcontrolnames['dev']='lctrl test'
+        self.dictcontrolnames['mouse1']='left mouse test'
+        self.dictcontrolnames['mouse2']='right mouse test'
+        self.dictcontrolnames['arrows']='arrows test'
+        self.dictcontrolnames['mouse']='mouse test'
+        self.dictcontrolnames['keyboard']='keyboard test'
+        #
+        return self.dictcontrolnames[name]
 
 # Temp object for datamanager: store any temporal data here
 # (under share.datamanager.temp.something=True)

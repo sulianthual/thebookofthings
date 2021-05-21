@@ -52,13 +52,16 @@ class obj_scene_ch1p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p2())
     def setup(self):
+        tempo1='['+share.datamanager.controlname('mouse1')+']'
+        tempom='['+share.datamanager.controlname('mouse')+']'
+        tempok='['+share.datamanager.controlname('keyboard')+']'
         self.text=[\
                    'Lets write this, said the book of things: "Once upon a time, there was a ',('hero',share.colors.hero),'". ',\
                    'Simple and to the point. ',\
                    'Well, lets give this ',('hero',share.colors.hero2),' a proper name and gender.',\
                   '\n\n ',\
-                  ('Hover over the name box below with [MOUSE] then type a name using the [KEYBOARD]. ',share.colors.instructions),\
-                 ('Then, choose a gender with [LEFT MOUSE]. ',share.colors.instructions),\
+                  ('Hover over the name box below with the '+tempom+' then type a name using the '+tempok+'. ',share.colors.instructions),\
+                 ('Then, choose a gender with '+tempo1+'. ',share.colors.instructions),\
                    ]
         self.addpart( draw.obj_textbox("The Hero\'s Name was:",(200,460)) )
         self.addpart( draw.obj_textinput('heroname',25,(750,460),color=share.colors.hero, legend='Hero Name') )
@@ -97,9 +100,11 @@ class obj_scene_ch1p3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p4())
     def setup(self):
+        tempo1='['+share.datamanager.controlname('mouse1')+']'
+        tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', said the book of things, ',\
                    'and make ', ('{hero_him}',share.colors.hero2),' look slightly to the right. ',\
-                   ('Draw with [Left Mouse] and erase with [Right Mouse]',share.colors.instructions),', but you should know this by now.',\
+                   ('Draw with '+tempo1+' and erase with '+tempo2+'',share.colors.instructions),', but you should know this by now.',\
                    ]
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         drawing=draw.obj_drawing('happyface',(640,450),legend='Draw a Happy Face',shadow=(200,200))
@@ -161,14 +166,15 @@ class obj_scene_ch1p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p8())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        tempor='['+share.datamanager.controlname('right')+']'
         self.text=[\
-                  '... Huh...well, you actually need to hold [right] to wake ',\
+                  '... Huh...well, you actually need to hold '+tempor+' to wake ',\
                   ('{heroname}',share.colors.hero),\
                   ' from ',('bed',share.colors.item2),', said the book of things. ',\
                   ('{hero_he}',share.colors.hero2),' is quite lazy you know. ',\
-                  ' And dont release [right] too soon or ',('{hero_he}',share.colors.hero2),\
+                  ' And dont release '+tempor+' too soon or ',('{hero_he}',share.colors.hero2),\
                   ' will go straight back to sleep. ',\
                   ' When ',('{heroname}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
@@ -217,10 +223,11 @@ class obj_scene_ch1p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p11())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        tempo='['+share.datamanager.controlname('down')+']'
         self.text=[\
-                    ' Lower the hook with [down] and catch a fish. ',\
+                    ' Lower the hook with '+tempo+' and catch a fish. ',\
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
@@ -251,13 +258,15 @@ class obj_scene_ch1p12(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p13())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        tempol='['+share.datamanager.controlname('left')+']'
+        tempor='['+share.datamanager.controlname('right')+']'
         self.text=[\
                     ' Moving on, said the book of things. Lets write down: ',\
                     ' "',('{heroname}',share.colors.hero),' ate the ',
                     ('fish',share.colors.item2),' for dinner." ',\
-                    'Do it by ',('alternating [left] and [right]',share.colors.black),'. ',\
+                    'Do it by ',('alternating '+tempol+' and '+tempor+'',share.colors.black),'. ',\
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
@@ -279,13 +288,14 @@ class obj_scene_ch1p13(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p14())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        tempol='['+share.datamanager.controlname('left')+']'
         self.text=[\
                     'Nicely done, said the book of things. ',\
                     'That wraps it up for our first day. Now, lets put our ',\
                     ('hero',share.colors.hero),' back to sleep. ',\
-                    ' Hold [left], and dont release',\
+                    ' Hold '+tempol+', and dont release',\
                     ' or this procrastinator will stay awake all night. ',\
                    ]
         self.world=world.obj_world_gotobed(self,addmoon=False)
@@ -338,7 +348,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play2())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
@@ -359,7 +369,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play3())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
@@ -375,7 +385,7 @@ class obj_scene_ch1play3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"',\
@@ -392,7 +402,7 @@ class obj_scene_ch1play4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1playend())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"And at night, ',('{heroname}',share.colors.hero),' went back to ',\

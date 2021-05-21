@@ -254,10 +254,11 @@ class obj_scene_ch2p8(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p9())
     def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
+        tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
-                   'Play the melody with [arrows] to serenade ',('{partnername}',share.colors.partner),'. '\
+                   'Play the melody with the '+tempo+' to serenade ',('{partnername}',share.colors.partner),'. '\
                    ]
         if False:
             drawing=draw.obj_drawing('musicscore',(640,360),shadow=(300,100),brush=share.brushes.smallpen)
@@ -295,10 +296,12 @@ class obj_scene_ch2p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p11())
     def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done# quick skip
+        return (controls.ga and controls.gac) or self.world.done# quick skip
     def setup(self):
+        tempol='['+share.datamanager.controlname('left')+']'
+        tempor='['+share.datamanager.controlname('right')+']'
         self.text=[\
-                   'Hold [left]+[right] to make them kiss.   ',\
+                   'Hold '+tempol+'+'+tempor+' to make them kiss.   ',\
                    ]
         self.world=world.obj_world_kiss(self,noending=False)# kiss mini-game
         self.addpart(self.world)
@@ -387,7 +390,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play1a())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
@@ -406,7 +409,7 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play2())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
@@ -428,7 +431,7 @@ class obj_scene_ch2play2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
@@ -480,7 +483,7 @@ class obj_scene_ch2play3b(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"In the evening, ',\
@@ -498,7 +501,7 @@ class obj_scene_ch2play4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' charmed ',\
@@ -515,7 +518,7 @@ class obj_scene_ch2play5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play5a())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"...and then they kissed".   ',\
@@ -530,7 +533,7 @@ class obj_scene_ch2play5a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play6())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 '"It was already night".',\
@@ -547,7 +550,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"',\

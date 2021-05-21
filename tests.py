@@ -46,15 +46,15 @@ class obj_scene_testmenu(page.obj_page):
         else:
             self.sprite_pointer.movetox(460)
             self.sprite_pointer.movetoy(130+(share.itest-self.nrow+1)*30)
-        if (controls.s and controls.sc) or (controls.down and controls.downc):
+        if controls.gd and controls.gdc:
             share.itest += 1
             if share.itest == self.listlen: share.itest=0
-        if (controls.w and controls.wc) or (controls.up and controls.upc):
+        if controls.gu and controls.guc:
             share.itest -= 1
             if share.itest == -1: share.itest=self.listlen-1
-        if (controls.enter and controls.enterc):
+        if controls.ga and controls.gac:
             share.scenemanager.switchscene(self.list[share.itest],init=True)
-        if (controls.tab and controls.tabc) :
+        if controls.gb and controls.gbc:
             share.scenemanager.switchscene(share.titlescreen)
 
     def loadtests(self):# load all tests
@@ -196,7 +196,7 @@ class obj_scene_testdevmodeinfo(obj_testpage):
                    ('textinput',share.colors.textinput),', except for ',\
                    ('textchoice',share.colors.textchoice),\
                    ' not affected. ',\
-                   'You can also print mouse position in terminal with [Middle Mouse]. ',\
+                   'You can also print mouse position in terminal with [Right Mouse]. ',\
                    ]
         self.addpart( draw.obj_textinput('test1',20,(260,300),legend='textinput') )
         self.addpart( draw.obj_drawing('testimage1',(260,500),legend='drawing') )
@@ -318,7 +318,7 @@ class obj_scene_textbox(obj_testpage):
         self.text=[
             'Textbox Basics: Placed anywhere, can customize font and color. ',\
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
-            'Acts like an image: Can reset[space], move [Arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
+            'Acts like an image: Can reset[space], move [arrows], flip [q,e], scale[w,s], rotate90 [a,d]. ',\
             'Can rotate[f] but use sparingly (enlargens-memory issues). ',\
             'Save an image of textbox[g] (useful to animate it). ',\
             'use options xleft,ytop such that given position is left-top instead of center. ',\
@@ -350,8 +350,7 @@ class obj_scene_testdrawing(obj_testpage):
     def setup(self):
         self.name='Drawing Basics'
         self.text=['Drawing Basics: Draw with [Left Mouse], Erase with [Right Mouse] ',\
-                   '(only when the mouse is in drawing area). ',\
-                   'You can draw shadows with [Middle Mouse] too. ',\
+                   '(when mouse is in drawing area). ',\
                    'Drawing can have a legend, that accepts keywords like ',\
                    ('{test1}',share.colors.green),' (but not colors). ',\
                    'Drawings are saved in folder ./book. ',\
@@ -671,7 +670,7 @@ class obj_scene_testrigidbody(obj_testpage):
 
 class obj_scene_testbreakfastdrinking(obj_testpage):
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.name='Minigame breakfast drinking'
         self.text=['Minigame breakfast drinking: ',\

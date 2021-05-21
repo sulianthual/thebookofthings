@@ -94,7 +94,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 'Ok here we go, lets write: "It was the next day and the sun was rising".',\
@@ -109,7 +109,7 @@ class obj_scene_ch5p4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p5())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
@@ -127,7 +127,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p6())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
@@ -233,7 +233,7 @@ class obj_scene_ch5p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p11())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                   'go to the highest peak in the north',\
@@ -249,7 +249,7 @@ class obj_scene_ch5p11(page.obj_chapterpage):
         # share.scenemanager.switchscene(obj_scene_ch5p12())
         share.scenemanager.switchscene(obj_scene_ch5p14())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[]
         self.world=world.obj_world_climbpeak(self)
@@ -391,7 +391,7 @@ class obj_scene_ch5p19(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p20())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                     '"First, lets cover my fee, said ',('{eldername}',share.colors.elder),'. ',\
@@ -450,19 +450,20 @@ class obj_scene_ch5p22(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p23())
     def setup(self):
+        tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
                '"Alright, said ',('{eldername}',share.colors.elder),', this is how it works. ',\
                'The ',('bubble',share.colors.instructions),\
                ' above your head shows what you are thinking about. ',\
-               'Select rock, paper or scissors with [arrows]". ',\
+               'Change it with the '+tempo+'". ',\
                   ]
         self.dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup1.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
         self.dispgroup1.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
         self.dispgroup1.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
-        self.dispgroup1.addpart( 'texta', draw.obj_textbox('[left]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textw', draw.obj_textbox('[up]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textd', draw.obj_textbox('[right]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'interrogationmark', draw.obj_image('interrogationmark',(1280-100-50,320),path='premade') )
@@ -509,9 +510,9 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         self.dispgroup1.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
         self.dispgroup1.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5,) )
         self.dispgroup1.addpart( 'elder', draw.obj_image('elderbase',(640+240,530),scale=0.5,fliph=True) )
-        self.dispgroup1.addpart( 'texta', draw.obj_textbox('[left]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textw', draw.obj_textbox('[up]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.dispgroup1.addpart( 'textd', draw.obj_textbox('[right]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.dispgroup1.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
         self.dispgroup1.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'etalkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
         self.dispgroup1.addpart( 'interrogationmark', draw.obj_image('interrogationmark',(1280-100-50,320),path='premade') )
@@ -523,7 +524,7 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         self.dispgroup1.dict['rock'].show=self.herochoice==0
         self.dispgroup1.dict['paper'].show=self.herochoice==1
         self.dispgroup1.dict['scissors'].show=self.herochoice==2
-        for i in range(3):
+        for i in range(1):
             self.dispgroup1.addpart('hero_'+str(i), draw.obj_image('love',(640-300+i*75,240),scale=0.125) )
             self.dispgroup1.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
             self.dispgroup1.addpart('herocross_'+str(i), draw.obj_image('smallcross',(640-300+i*75,240),path='premade') )
@@ -558,10 +559,10 @@ class obj_scene_ch5p24(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p25())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=['"Now lets play, said ',('{eldername}',share.colors.elder),'". ']
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1,elderhealth=1)
         self.addpart(self.world)
 
 
@@ -622,10 +623,10 @@ class obj_scene_ch5p26(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p27())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=['"Alright, lets play again, said ',('{eldername}',share.colors.elder),'". ']
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2,elderhealth=1)
         self.addpart(self.world)
 
 
@@ -988,7 +989,7 @@ class obj_scene_ch5p36(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch5p36fail())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         # self.text=['"Now lets play". ']
         self.text=[]
@@ -1054,7 +1055,7 @@ class obj_scene_ch5p38(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p39())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=['go back home']
         self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
@@ -1067,7 +1068,7 @@ class obj_scene_ch5p39(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p40())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"Back at home, ',\
@@ -1087,7 +1088,7 @@ class obj_scene_ch5p40(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p41())
     def triggernextpage(self,controls):
-        return (controls.enter and controls.enterc) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"Then, ',\
@@ -1122,7 +1123,7 @@ class obj_scene_ch5p42(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p43())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                 '"It was already night".',\
@@ -1137,7 +1138,7 @@ class obj_scene_ch5p43(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p44())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.enter and controls.enterc) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"',\

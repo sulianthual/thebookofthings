@@ -411,7 +411,8 @@ class obj_world_sunrise(obj_world):
         # finish actor
         self.finishactor.addpart( 'img1', draw.obj_image('sun',(660,300),scale=0.5) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [up] to rise the sun',(1000,620),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('Hold ['+share.datamanager.controlname('up')+'] to rise the sun',(1000,620),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
@@ -524,7 +525,8 @@ class obj_world_wakeup(obj_world):
             self.finishactor.addpart( 'imgadd2', draw.obj_image('bug',(1168,595),scale=0.33) )
         self.finishactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(903,452),scale=0.7) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [right] to Wake up',(1100,480),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('Hold ['+share.datamanager.controlname('right')+'] to Wake up',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
@@ -656,9 +658,11 @@ class obj_world_breakfastdrinking(obj_world):
             self.partnertimer=tool.obj_timer(0)# dummy
         # text
         if self.addpartner:
-            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [up] to Sneak Drink',(640,690),color=share.colors.instructions) )
+            self.text_undone.addpart( 'text1', \
+            draw.obj_textbox('Hold ['+share.datamanager.controlname('up')+'] to Sneak Drink',(640,690),color=share.colors.instructions) )
         else:
-            self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [up] to Drink',(640,690),color=share.colors.instructions) )
+            self.text_undone.addpart( 'text1', \
+            draw.obj_textbox('Hold ['+share.datamanager.controlname('up')+'] to Drink',(640,690),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Wasted!',(640,690)) )
         self.text_undone.show=True
         self.text_done.show=False
@@ -887,7 +891,8 @@ class obj_world_fishing(obj_world):
         self.timerend=tool.obj_timer(50)
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Hold [down] to lower Hook',(1100,480),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',\
+        draw.obj_textbox('Hold ['+share.datamanager.controlname('down')+'] to lower Hook',(1100,480),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(840,500))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,480)) )
         self.text1.show=True
@@ -971,7 +976,9 @@ class obj_world_eatfish(obj_world):
         self.heroeat.show=False
         # text
         self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Alternate [left] and [right] to Eat',(640,660),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',\
+        draw.obj_textbox('Alternate ['+share.datamanager.controlname('left')+\
+        '] and ['+share.datamanager.controlname('right')+'] to Eat',(640,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390),fontsize='large') )
         self.text1.show=True
@@ -1516,15 +1523,16 @@ class obj_world_travel(obj_world):
             k.movey(360-self.yhw)
         #
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows: move]',(640,680),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move]',(640,680),color=share.colors.instructions) )
         if self.addsailorwait or self.addbeachmark:# talk to a character
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: talk]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': talk]',(640,680),color=share.colors.instructions) )
         elif self.addbeachquestionmark:# investigate
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: investigate]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions) )
         elif self.chapter>=8:
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: interact]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions) )
         else:# enter a location
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('[enter: go inside]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions) )
         #
         self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
@@ -1568,7 +1576,7 @@ class obj_world_travel(obj_world):
         if self.minigame=='logs':
             self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textlogs', self.logmessage  )
-            self.text_undone.dict['text1'].replacetext('[WASD: Move] [Enter: Chop]')
+            self.text_undone.dict['text1'].replacetext('['+share.datamanager.controlname('arrows')+': move] ['+share.datamanager.controlname('action')+': chop]')
             # self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D]')
             for i in self.panels:# remove tree from panels and make them into individual grandactors
                 panellogkeys=[]# list of tree keys in this panel
@@ -1592,7 +1600,7 @@ class obj_world_travel(obj_world):
             if tool.checkrectcollide(self.hero,self.goalarea):# contact with goal
                 self.text_undone.show=False# message to enter on contact
                 self.text_undoneenter.show=True
-                if controls.enter and controls.enterc:# enter goal
+                if controls.ga and controls.gac:# enter goal
                     if self.noending:
                         self.goal=True
                         self.done=True
@@ -1612,7 +1620,7 @@ class obj_world_travel(obj_world):
                 if tool.checkrectcollide(self.hero,self.allgoalareas[i]):# contact with goal
                     self.text_undone.show=False# message to enter on contact
                     self.text_undoneenter.show=True
-                    if controls.enter and controls.enterc:# enter goal
+                    if controls.ga and controls.gac:# enter goal
                         if self.noending:
                             self.goal=True
                             self.goalname=i
@@ -1748,7 +1756,7 @@ class obj_world_travel(obj_world):
                     tokill=[]
                     for i in self.logactors:
                         if tool.checkrectcollide(self.hero,i):
-                            if controls.enter and controls.enterc:
+                            if controls.ga and controls.gac:
                                 self.logcount += 1
                                 self.logmessage.replacetext('You have collected '+str(self.logcount)+'/'+str(self.logneed)+' logs')
                                 tokill.append(i)
@@ -1758,7 +1766,7 @@ class obj_world_travel(obj_world):
                         i.kill()
                 else:# when obtained all logs can reach goal
                     self.reachgoal(controls)
-                    self.text_undone.dict['text1'].replacetext('[WASD: Move]')
+                    self.text_undone.dict['text1'].replacetext('['+share.datamanager.controlname('arrows')+']: move]')
 
         else:
             # goal reached state
@@ -1879,7 +1887,9 @@ class obj_world_dodgegunshots(obj_world):
             else:
                 self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-i*50-10,720-25-50-5),scale=0.125) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[up: jump] [down: crouch]',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('['+share.datamanager.controlname('up')+\
+        ': jump] ['+share.datamanager.controlname('down')+': crouch]',(640,660),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('He is the one!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
         # timer for done part
@@ -2161,7 +2171,8 @@ class obj_world_stompfight(obj_world):
             self.vealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-150-i*75,self.ybar),scale=0.125) )
             self.vealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-150-i*75,self.ybar),scale=0.125) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows: move and jump]',(640,self.ybar),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move and jump]',(640,self.ybar),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,self.ybar)) )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
         # timer for done part
@@ -2585,7 +2596,8 @@ class obj_world_climbpeak(obj_world):
         # goal hitbox
         self.goalhitbox=obj_grandactor(self,(1110,100))
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows: move and jump]',(980,510),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move and jump]',(980,510),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox(' ',(980,510)) )
         # levels
         self.startlevel=False# start playing new level
@@ -2785,12 +2797,16 @@ class obj_world_rockpaperscissors(obj_world):
         self.elderalwaysloose=False# elder always looses (chooses bad counter at last moment)
         self.elderthinks=True# can see what the elder is thinking
         self.elderpeaks=False# elder peaks on last countdown to counter
+        self.herohealth=3# health bar
+        self.elderhealth=3#
         # scene tuning
         if kwargs is not None:
             if 'elderwins' in kwargs: self.elderalwayswin=kwargs["elderwins"]
             if 'elderlooses' in kwargs: self.elderalwaysloose=kwargs["elderlooses"]
             if 'elderthinks' in kwargs: self.elderthinks=kwargs["elderthinks"]
             if 'elderpeaks' in kwargs: self.elderpeaks=kwargs["elderpeaks"]
+            if 'herohealth' in kwargs: self.herohealth=kwargs["herohealth"]
+            if 'elderhealth' in kwargs: self.elderhealth=kwargs["elderhealth"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -2830,12 +2846,12 @@ class obj_world_rockpaperscissors(obj_world):
         # self.staticactor.addpart( 'img5a', draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
         # self.staticactor.addpart( 'img6a', draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
         # instructions
-        self.instructions.addpart( 'texta', draw.obj_textbox('[left]: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textw', draw.obj_textbox('[up]: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textd', draw.obj_textbox('[right]: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('[down]: Start Game',(640,360),color=share.colors.instructions) )
-        self.instructions.addpart( 'textn', draw.obj_textbox('[down]: Next Round',(640,660),color=share.colors.instructions) )
-        self.instructions.addpart( 'texte', draw.obj_textbox('[down]: End Game',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,530),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('down')+']: start game',(640,360),color=share.colors.instructions) )
+        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('down')+']: next round',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('down')+']: end game',(640,660),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
         self.instructions.dict['textw'].show=True
         self.instructions.dict['textd'].show=True
@@ -2922,14 +2938,13 @@ class obj_world_rockpaperscissors(obj_world):
             self.countdowntimelast=self.countdowntime
         self.countdowntimer=tool.obj_timer(self.countdowntime)# timer
         # healthbars
-        self.herohealth=3#
-        self.elderhealth=3#
-        for i in range(3):
+        for i in range(self.herohealth):
             self.healthbar.addpart('hero_'+str(i), draw.obj_image('love',(640-300+i*75,240),scale=0.125) )
-            self.healthbar.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
             self.healthbar.addpart('herocross_'+str(i), draw.obj_image('largecross',(640-300+i*75,240),scale=0.5,path='premade') )
-            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('largecross',(640+300-i*75,240),scale=0.5,path='premade') )
             self.healthbar.dict['herocross_'+str(i)].show=False
+        for i in range(self.elderhealth):
+            self.healthbar.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
+            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('largecross',(640+300-i*75,240),scale=0.5,path='premade') )
             self.healthbar.dict['eldercross_'+str(i)].show=False
         # text
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,660),fontsize='huge') )
@@ -3199,8 +3214,9 @@ class obj_world_rockpaperscissors(obj_world):
                     self.result.dict['scissorspaper'].show=False
                     self.instructions.dict['textn'].show=False
                     self.instructions.dict['texte'].show=False
-                    for i in range(3):
+                    for i in range(self.herohealth):
                         self.healthbar.dict['herocross_'+str(i)].show=False
+                    for i in range(self.elderhealth):
                         self.healthbar.dict['eldercross_'+str(i)].show=False
         else:
             # goal reached state
@@ -3418,7 +3434,7 @@ class obj_world_bushstealth(obj_world):
         # skeleton(s)
         self.makeskeletons()
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows]: move',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('['+share.datamanager.controlname('arrows')+']: move',(640,660),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Stealthy!',(640,200),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('Busted!',(640,200),fontsize='huge') )
         # timer for done part
@@ -3614,7 +3630,7 @@ class obj_world_ridecow(obj_world):
         self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
         # hero
         self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
-        self.hero.addpart( 'img', draw.obj_animation('gameheroridecow','heroridecow',(self.heroxystart[0],self.heroxystart[1]),record=True) )
+        self.hero.addpart( 'img', draw.obj_animation('gameheroridecow','heroridecow',(self.heroxystart[0],self.heroxystart[1])) )
         self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
         self.hero.dict['img'].show=True
         self.hero.dict['hurt'].show=False
@@ -3660,7 +3676,7 @@ class obj_world_ridecow(obj_world):
         self.loosemx=7# skeleton move rate if loose
         self.winmx=3# hero move rate if wins
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('[arrows]: move',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('['+share.datamanager.controlname('arrows')+']: move',(640,660),color=share.colors.instructions) )
         self.text_undone.addpart( 'progress', draw.obj_textbox('0%',(1090,640)) )
         self.text_undone.addpart( 'progressimg', draw.obj_image('sailboat',(1280-75,720-75),scale=0.25) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('You made it!',(640,360),fontsize='huge') )
@@ -4488,7 +4504,7 @@ class obj_world_serenade(obj_world):
         self.floatinglove.show=False
         # textbox under
         self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',draw.obj_textbox('Play Melody with [arrows]',(640,660),color=share.colors.instructions) )
+        self.text1.addpart( 'textbox1',draw.obj_textbox('play melody with ['+share.datamanager.controlname('arrows')+']',(640,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Beautiful!',(640,660)) )
         self.text1.show=True
@@ -4570,7 +4586,9 @@ class obj_world_kiss(obj_world):
         self.finishactor.addpart( 'anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
 
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [left]+[right] to kiss',(640,660),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', \
+        draw.obj_textbox('Hold ['+share.datamanager.controlname('left')+\
+        ']+['+share.datamanager.controlname('right')+'] to kiss',(640,660),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
@@ -4680,7 +4698,7 @@ class obj_world_sunset(obj_world):
         # finish actor
         self.finishactor.addpart( 'img1', draw.obj_image('moon',(660,270),scale=0.5) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold [down] to lower the sun',(1000,620),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('Hold ['+share.datamanager.controlname('down')+'] to lower the sun',(1000,620),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
@@ -4791,7 +4809,7 @@ class obj_world_gotobed(obj_world):
         else:
             self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
         # text
-        self.text_undone.addpart( 'text1', draw.obj_textbox('hold [left] to go to sleep',(1100,480),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1', draw.obj_textbox('hold ['+share.datamanager.controlname('left')+'] to go to sleep',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part

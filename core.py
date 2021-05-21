@@ -65,11 +65,10 @@ class obj_scenemanager:
         if controls.quit: share.quitgame()
         # devtools:
         if share.devaccess:
-            if controls.lctrl and controls.lctrlc: share.devmode = not share.devmode# toggle dev mode
-            if share.devmode and controls.mouse3 and controls.mouse3c:# print coordinates
-                print( '('+str(controls.mousex)+','+str(controls.mousey)+')')
-            if controls.esc:
-                # share.quitgame()# QUICK QUIT: REMOVE ME IN FINAL VERSION
+            if controls.gdev and controls.gdevc: share.devmode = not share.devmode# toggle dev mode
+            if share.devmode and controls.gm2 and controls.gm2c:# print coordinates
+                print( '('+str(controls.gmx)+','+str(controls.gmy)+')')
+            if controls.gq:
                 share.scenemanager.switchscene(share.titlescreen)# go back to menu
 
 
@@ -442,15 +441,33 @@ class obj_controls:
         # generalized keys (can be replaced)
         self.setup_gkeys()
     def setup_gkeys(self):
-        # generalized keys (arrows)
-        self.gu=False
-        self.gd=False
-        self.gl=False
-        self.gr=False
+        # generalized keys
+        # (see corresponding names in datb.obj_datamanager)
+        self.gu=False# up
+        self.gd=False# down
+        self.gl=False# left
+        self.gr=False# right
+        self.ga=False# action
+        self.gb=False# back
+        self.gq=False# quit
+        self.gdev=False# dev key
+        self.gm1=False# mouse 1
+        self.gm2=False# mouse 2
+        self.gmx=0# mouse x
+        self.gmy=0# mouse y
+        #
         self.guc=False
         self.gdc=False
         self.glc=False
         self.grc=False
+        self.gac=False
+        self.gbc=False
+        self.gqc=False
+        self.gdevc=False
+        self.gm1c=False
+        self.gm2c=False
+
+
     def edittext(self,text):# edit existing text with keyboard inputs
         for event in self.events:
             if event.type==pygame.KEYDOWN:
@@ -604,11 +621,26 @@ class obj_controls:
         self.gd=self.s or self.down
         self.gl=self.a or self.left
         self.gr=self.d or self.right
+        self.ga=self.enter
+        self.gb=self.tab
+        self.gq=self.esc
+        self.gdev=self.lctrl
+        self.gm1=self.mouse1
+        self.gm2=self.mouse2
+        self.gmx=self.mousex
+        self.gmy=self.mousey
         #
         self.guc=self.wc or self.upc
         self.gdc=self.sc or self.downc
         self.glc=self.ac or self.leftc
         self.grc=self.dc or self.rightc
+        self.gac=self.enterc
+        self.gbc=self.tabc
+        self.gqc=self.escc
+        self.gdevc=self.lctrlc
+        self.gm1c=self.mouse1c
+        self.gm2c=self.mouse2c
+        #
     def getquit(self):
         for event in self.events:
             if event.type==pygame.QUIT:

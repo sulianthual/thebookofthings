@@ -53,34 +53,6 @@ class obj_pagedisplay_fps:
         self.display()
 
 
-# display page number (obsolete)
-class obj_pagedisplay_number:
-    def __init__(self):
-        self.type='pagenumber'
-        self.sprite=core.obj_sprite_text()
-        self.make()
-    def make(self):
-        text='Page '+str(share.ipage)
-        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
-    def display(self):
-        # self.sprite.display(1190,680)# bottom right
-        self.sprite.display(640,30)# top middle
-    def update(self,controls):
-        self.display()
-
-# display recurrent page note
-class obj_pagedisplay_note:
-    def __init__(self,text):
-        self.type='pagenote'
-        self.sprite=core.obj_sprite_text()
-        self.make(text)
-    def make(self,text):
-        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
-    def display(self):
-        self.sprite.display(1140,30)
-    def update(self,controls):
-        self.display()
-
 ####################################################################################################################
 
 
@@ -233,8 +205,6 @@ class obj_drawing:
             self.brush.makebrush(share.brushes.pen)
         else:# specify brush type
             self.brush.makebrush(self.brushtype)
-        self.shadowbrush=core.obj_sprite_brush()
-        self.shadowbrush.makebrush(share.brushes.shadowpen)
         # shadow (start of the drawing)
         self.sprite_shadow=core.obj_sprite_image()
         if self.shadow:
@@ -269,8 +239,6 @@ class obj_drawing:
         self.sprite.blitfrom(self.sprite_shadow,0,0)
     def draw(self,controls):
         self.mousedraw(controls)# new internal function
-        # if share.devmode and controls.mouse3 and controls.mouse3c:# change to shadow brush (dev only)
-        #     self.brush=self.shadowbrush
     def basedraw(self):
         if self.base:
             self.sprite_base.clear()
@@ -312,39 +280,39 @@ class obj_drawing:
         # call the snapshot manager to redraw any related image
         share.snapshotmanager.remake(self.name)
     def mousedraw(self,controls):
-        if controls.mouse1 and tool.isinrect(controls.mousex,controls.mousey,self.rect):
+        if controls.gm1 and tool.isinrect(controls.gmx,controls.gmy,self.rect):
             sprite=self.layers[-1]# last sprite from layers
             xoff=int(self.x-sprite.getrx()+self.brush.getrx())
             yoff=int(self.y-sprite.getry()+self.brush.getry())
-            if controls.mouse1c:
+            if controls.gm1c:
                 # add new layer
                 newsprite=core.obj_sprite_image()
                 newsprite.makeempty(sprite.getrx(),sprite.getry())
                 newsprite.clear()
                 self.layers.append(newsprite)
                 # draw
-                newsprite.blitfrom(self.brush,controls.mousex-xoff,controls.mousey-yoff)
+                newsprite.blitfrom(self.brush,controls.gmx-xoff,controls.gmy-yoff)
             else:
                 # draw line between current and last mouse position (each pixel)
-                dx=controls.mousex-self.mousexr
-                dy=controls.mousey-self.mouseyr
+                dx=controls.gmx-self.mousexr
+                dy=controls.gmy-self.mouseyr
                 dist=max(abs(dx),abs(dy))
                 for i in range(dist):
                     xi = int( self.mousexr + float(i)/dist*dx)
                     yi = int( self.mouseyr + float(i)/dist*dy)
                     sprite.blitfrom(self.brush,xi-xoff,yi-yoff)
                 # draw
-                sprite.blitfrom(self.brush,controls.mousex-xoff,controls.mousey-yoff)
+                sprite.blitfrom(self.brush,controls.gmx-xoff,controls.gmy-yoff)
         else:
-            if controls.mouse2 and controls.mouse2c and tool.isinrect(controls.mousex,controls.mousey,self.rect):
+            if controls.gm2 and controls.gm2c and tool.isinrect(controls.gmx,controls.gmy,self.rect):
                 # remove last layer (except if first layer)
                 if len(self.layers)>1:
                     del self.layers[-1]
                 else:
                     self.clear()# erase self.sprite=first layer
         # always record current mouse position as old
-        self.mousexr=controls.mousex
-        self.mouseyr=controls.mousey
+        self.mousexr=controls.gmx
+        self.mouseyr=controls.gmy
 
 
 ####################################################################################################################
@@ -385,7 +353,7 @@ class obj_textinput:
             share.datamanager.writeword(self.key,'')
             self.text=''
     def changetext(self,controls):
-        if tool.isinrect(controls.mousex,controls.mousey,self.rect):
+        if tool.isinrect(controls.gmx,controls.gmy,self.rect):
             self.text=controls.edittext(self.text)# edit text
             # Note: apparently no need to filter special characters ( \, ', ", {, }, etc )
             if len(self.text)>self.nchar: self.text=self.text[:self.nchar-1]# control max size
@@ -464,19 +432,12 @@ class obj_textchoice:
                 self.ichoice=c
                 break
     def changechoice(self,controls):
-        if controls.mouse1 and controls.mouse1c:
+        if controls.gm1 and controls.gm1c:
             for c,i in enumerate(self.choices):
                 value,sprite,spriterect,xy,size,area=i
-                if tool.isinrect(controls.mousex,controls.mousey,area):
+                if tool.isinrect(controls.gmx,controls.gmy,area):
                     self.ichoice=c
                     break
-        # removed wasd controls: interferes with typing names on same screen
-        # if (controls.d and controls.dc) or (controls.s and controls.sc):
-        #     self.ichoice += 1
-        #     if self.ichoice>len(self.choices)-1: self.ichoice=0
-        # if (controls.a and controls.ac) or (controls.w and controls.wc):
-        #     self.ichoice -= 1
-        #     if self.ichoice<0: self.ichoice=len(self.choices)-1
     def choicetodict(self):# write key choice in words dict
         if self.choices:
             value,img,sprite,spriterect,size,area=self.choices[self.ichoice]
@@ -800,7 +761,7 @@ class obj_imageplacer:
         if self.fv == True: self.pointer.flipv()
     def placefrompointer(self,controls):# place image on screen
         self.dispgroup.addpart('img_'+str(self.iplaced),\
-        obj_image(self.imglist[self.iimg],(controls.mousex,controls.mousey),\
+        obj_image(self.imglist[self.iimg],(controls.gmx,controls.gmy),\
         scale=self.s,rotate=self.r,fliph=self.fh,flipv=self.fv) )
         self.iplaced += 1
         if self.actor is None:# format for adding content to page
@@ -808,7 +769,7 @@ class obj_imageplacer:
             '        '\
             +'self.addpart( '\
             +'draw.obj_image(\''+str(self.imglist[self.iimg])+'\','\
-            +'('+str(controls.mousex)+','+str(controls.mousey)\
+            +'('+str(controls.gmx)+','+str(controls.gmy)\
             +'),scale='+str(round(self.s,2))+',rotate='+str(self.r)\
             +',fliph='+str(self.fh)+',flipv='+str(self.fv)\
             +') )'\
@@ -819,7 +780,7 @@ class obj_imageplacer:
             +'self.'+str(self.actor)+'.addpart( '\
             +'"img'+str(self.iplaced)+'", '\
             +'draw.obj_image(\''+str(self.imglist[self.iimg])+'\','\
-            +'('+str(controls.mousex)+','+str(controls.mousey)\
+            +'('+str(controls.gmx)+','+str(controls.gmy)\
             +'),scale='+str(round(self.s,2))+',rotate='+str(self.r)\
             +',fliph='+str(self.fh)+',flipv='+str(self.fv)\
             +') )'\
@@ -872,11 +833,11 @@ class obj_imageplacer:
         self.pointer.update(controls)
         if self.retransform:
             self.retransformpointer()
-        self.pointer.movetoxy(controls.mousex,controls.mousey)
+        self.pointer.movetoxy(controls.gmx,controls.gmy)
         if self.activemode:
-            if controls.mouse1 and controls.mouse1c:
+            if controls.gm1 and controls.gm1c:
                 self.placefrompointer(controls)
-            if controls.mouse2 and controls.mouse2c:
+            if controls.gm2 and controls.gm2c:
                 self.removefrompointer(controls)
             if controls.space and controls.spacec:
                 self.finish()# save content
@@ -1114,7 +1075,7 @@ class obj_animationsequence:
     def recordsequence(self,controls):
         if controls.backspace and controls.backspacec: self.clearsequence()
         if controls.r and controls.rc: self.savesequence()
-        self.xa,self.ya=(controls.mousex-self.xini),(controls.mousey-self.yini)
+        self.xa,self.ya=(controls.gmx-self.xini),(controls.gmy-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
         if controls.e and controls.ec: self.fva = not self.fva
         if controls.a: self.ra += self.dddra
@@ -1127,11 +1088,11 @@ class obj_animationsequence:
         if self.ia > len(self.creator.spritelist)-1: self.ia =0
         if self.ia<0: self.ia=len(self.creator.spritelist)-1
         self.frame=[self.ta,self.xa,self.ya,self.fha,self.fva,self.ra,self.sa,self.ia]
-        if controls.mouse1:
+        if controls.gm1:
             if not self.maxlength or len(self.data)<self.maxlength:
                 self.data.append(self.frame)
                 self.ta += 1
-        if controls.mouse2 and not controls.mouse1:# rewind synced animation (if any)
+        if controls.gm2 and not controls.gm1:# rewind synced animation (if any)
         # to record anim2 synced to anim1, 1) hold mouse2 (freezes anim1 to anim2 current frame)
         # 2) hold mouse1 (record anim2 while playing anim1 in sync)
         # 3) optionally unhold mouse2
