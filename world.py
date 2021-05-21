@@ -2855,9 +2855,9 @@ class obj_world_rockpaperscissors(obj_world):
         self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,530),fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('down')+']: start game',(640,360),color=share.colors.instructions) )
-        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('down')+']: next round',(640,660),color=share.colors.instructions) )
-        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('down')+']: end game',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,360),color=share.colors.instructions) )
+        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,660),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
         self.instructions.dict['textw'].show=True
         self.instructions.dict['textd'].show=True
@@ -2985,7 +2985,7 @@ class obj_world_rockpaperscissors(obj_world):
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
                 if not self.countdowning:# not countdown
-                    if (controls.gd and controls.gdc) or self.icountdown<3:
+                    if (controls.ga and controls.gac) or self.icountdown<3:
                         self.countdowning=True# flip to countdown
                         self.icountdown=3
                         self.countdowntimer.amount=self.countdowntime# default time
@@ -3146,7 +3146,7 @@ class obj_world_rockpaperscissors(obj_world):
                     if self.herohealth==0 or self.elderhealth==0:# endgame message
                         self.instructions.dict['textn'].show=False
                         self.instructions.dict['texte'].show=True
-                if controls.gd and controls.gdc:# flip back to deciding state (or to end of the game)
+                if controls.ga and controls.gac:# flip back to deciding state (or to end of the game)
                     if self.herohealth==0:# elder won entire game
                         self.goal=True
                         self.win=False

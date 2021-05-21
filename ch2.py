@@ -254,7 +254,7 @@ class obj_scene_ch2p8(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p9())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
@@ -296,7 +296,7 @@ class obj_scene_ch2p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p11())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done# quick skip
+        return (share.devmode and controls.ga and controls.gac) or self.world.done# quick skip
     def setup(self):
         tempol='['+share.datamanager.controlname('left')+']'
         tempor='['+share.datamanager.controlname('right')+']'

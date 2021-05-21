@@ -641,7 +641,7 @@ class obj_scene_ch3p27(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p28())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done# quick skip
+        return (share.devmode and controls.ga and controls.gac) or self.world.done# quick skip
     def setup(self):
         self.text=[\
                    '"Then, ',\

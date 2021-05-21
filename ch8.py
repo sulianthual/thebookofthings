@@ -805,7 +805,7 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8northreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=['"Alright lets play, said ',('{eldername}',share.colors.elder),'". ']
         self.world=world.obj_world_rockpaperscissors(self)

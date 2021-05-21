@@ -943,7 +943,7 @@ class obj_scene_ch4p22(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p23())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
                    '"Then, ',\

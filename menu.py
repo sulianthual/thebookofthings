@@ -200,8 +200,8 @@ class obj_scene_settings(page.obj_page):
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
         #
-        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty ',(640,380),fontsize='smaller')
-        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty',(640,380),fontsize='smaller')
+        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(640,380),fontsize='smaller')
+        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(640,380),fontsize='smaller')
         self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
         self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
         self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
