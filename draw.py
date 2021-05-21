@@ -797,7 +797,7 @@ class obj_imageplacer:
             f1.write(' '+'\n')
     def update(self,controls):
         self.retransform=False
-        if controls.g and controls.gc:
+        if controls.t and controls.tc:
             self.activemode=not self.activemode
         if self.activemode:
             if controls.e and controls.ec:
@@ -839,7 +839,7 @@ class obj_imageplacer:
                 self.placefrompointer(controls)
             if controls.gm2 and controls.gm2c:
                 self.removefrompointer(controls)
-            if controls.space and controls.spacec:
+            if controls.r and controls.rc:
                 self.finish()# save content
 
 ####################################################################################################################
@@ -1055,7 +1055,7 @@ class obj_animationsequence:
         self.dddsa=1# increment
     def update(self,controls):
         if self.record:# ability to record
-            if share.devmode and controls.space and controls.spacec: self.recording= not self.recording
+            if share.devmode and controls.t and controls.tc: self.recording= not self.recording
         if self.recording:
             self.recordsequence(controls)# record mode
         else:
@@ -1084,7 +1084,7 @@ class obj_animationsequence:
         if controls.s: self.sa -= self.dddsa
         # change rotation/scaling increment
         if controls.f and controls.fc: self.ia += 1 # change sprite
-        if controls.g and controls.gc: self.ia -= 1
+        if controls.g and controls.gc: self.ia -= 1 # change sprite
         if self.ia > len(self.creator.spritelist)-1: self.ia =0
         if self.ia<0: self.ia=len(self.creator.spritelist)-1
         self.frame=[self.ta,self.xa,self.ya,self.fha,self.fva,self.ra,self.sa,self.ia]

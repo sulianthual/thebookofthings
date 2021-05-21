@@ -32,7 +32,7 @@ class obj_scene_testmenu(page.obj_page):
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
-        self.addpart(draw.obj_textbox('Appendix Developer Tests [Enter: Read] [Tab: Back]',(640,50),fontsize='medium'))
+        self.addpart(draw.obj_textbox('Appendix Developer Tests [space: Read] [Tab: Back]',(640,50),fontsize='medium'))
         for i,test in enumerate(self.list[:self.nrow-1]):
             self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
@@ -325,9 +325,6 @@ class obj_scene_textbox(obj_testpage):
             '[rmouse+up]:rotate45 (use sparingly cf enlargens-memory issues). ',\
             '[rmouse+down]:save an image (useful to animate). ',\
             '[lmouse+rmouse]:reset. ',\
-
-
-
             'use options xleft,ytop such that given position is left-top instead of center. ',\
                    ]
         self.addpart(draw.obj_textbox('textbox',(340,260),color=share.colors.blue))#customize font and color
@@ -442,9 +439,9 @@ class obj_scene_testimageplacer(obj_testpage):
                     'the file book/aaa.txt is edited live, and the code can be quickly copied to a page. ',\
                    '[W,S or Up,Down:scale], [A,D or Left,Right:rotate], [Q,E: flip], [F: browse image], [Backspace: Reset].',\
                    ' [LMouse: Place Image], [RMouse: Remove Last Image]',\
-                   ' [Space or Exit Page: Output to Code File]',\
+                   ' [R or Exit Page: Output to Code File]',\
                    '. These commands are received only in active mode: .',\
-                   ' [G: Toggle Active Mode ]',\
+                   ' [T: Toggle Active Mode ]',\
                    ]
         self.addpart( draw.obj_imageplacer(self, 'testimage1','testimage2' ) )
 
@@ -464,7 +461,7 @@ class obj_scene_testimageplacer(obj_testpage):
 class obj_scene_testanimation(obj_testpage):
     def setup(self):
         self.name='Animation Basics'
-        self.text=['Animation Basics: Animation has two modes, Record and Playback. Toggle Mode with [Space]. ',\
+        self.text=['Animation Basics: Animation has two modes, Record and Playback. Toggle Mode with [T]. ',\
                    '\n(You must be in Dev Mode to do so, which is Toggled by [CTRL]). ',\
                     '\n-- While in Record Mode:',\
                     '\nRed Line tracks image center for all frames.',\
@@ -474,7 +471,7 @@ class obj_scene_testanimation(obj_testpage):
                     '\n[A-D]: Rotate around center',\
                     '\n[W-S]: Scale',\
                     '\n[Q-E]: Flip Horizontal/Vertical',\
-                    '\n[F]: Change Image (if several exist)',\
+                    '\n[F-G]: Change Image (if several exist)',\
                     '\n[R]: Save Animation to File (!)',\
                     '\n[Left-Right]/[Up-Down]: Tune Rotate/Scale Rates',\
                    '\n-- While in Playback Mode: Animation loop-plays.',\

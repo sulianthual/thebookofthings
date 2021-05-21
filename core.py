@@ -380,18 +380,68 @@ class obj_sprite_font:
 # Manages Input controls
 class obj_controls:
     def __init__(self):
-        # special
         self.events=pygame.event.get()
+        self.setup_quit()
+        self.setup_mouse()
+        self.setup_keys()
+        self.setup_gkeys()
+    def getevents(self):
+        self.events=pygame.event.get()
+    def setup_quit(self):
         self.quit=False
+    def getquit(self):
+        for event in self.events:
+            if event.type==pygame.QUIT:
+                self.quit=True
+    def setup_mouse(self):
         # mouse
         self.mousescaling=(1,1)#(= (1,1) unless screen is scaled)
         self.mousex=0
         self.mousey=0
         self.mouse1=False# pressed or not
         self.mouse2=False
-        self.mouse3=False
-        self.mouse4=False
-        self.mouse5=False
+        # self.mouse3=False
+        # self.mouse4=False
+        # self.mouse5=False
+        # booleans to detect if change on frame
+        self.mouse1c=False# changed or not
+        self.mouse2c=False
+        # self.mouse3c=False
+        # self.mouse4c=False
+        # self.mouse5c=False
+    def getmouse(self):
+        self.mouse1c=False# left click
+        self.mouse2c=False# right click
+        # self.mouse3c=False# middle click
+        # self.mouse4c=False#middle up
+        # self.mouse5c=False# middle down
+        (self.mousex,self.mousey)=pygame.mouse.get_pos()
+        self.mousex=int(self.mousex*self.mousescaling[0])# scale input if screen is stretched
+        self.mousey=int(self.mousey*self.mousescaling[1])# must remain an integer!!)
+        for event in self.events:
+            if event.type==pygame.MOUSEBUTTONDOWN:
+                if event.button==1:
+                    self.mouse1, self.mouse1c = True, True
+                elif event.button==3:
+                    self.mouse2, self.mouse2c = True, True
+                # elif event.button==2:
+                #     self.mouse3, self.mouse3c = True, True
+                # elif event.button==4:
+                #     self.mouse4, self.mouse4c = True, True
+                # elif event.button==5:
+                #     self.mouse5, self.mouse5c = True, True
+            elif event.type==pygame.MOUSEBUTTONUP:
+                if event.button==1:
+                    self.mouse1, self.mouse1c = False, True
+                elif event.button==3:
+                    self.mouse2, self.mouse2c = False, True
+                # elif event.button==2:
+                #     self.mouse3, self.mouse3c = False, True
+                # elif event.button==4:
+                #     self.mouse4, self.mouse4c = False, True
+                # elif event.button==5:
+                #     self.mouse5, self.mouse5c = False, True
+    def setup_keys(self):
         # keys
         self.esc=False
         self.enter=False
@@ -410,15 +460,10 @@ class obj_controls:
         self.q=False
         self.e=False
         self.r=False
+        self.t=False
         self.f=False
         self.g=False
-        # booleans to detect if change on frame
-        self.mouse1c=False# changed or not
-        self.mouse2c=False
-        self.mouse3c=False
-        self.mouse4c=False
-        self.mouse5c=False
-        # keys
+        #
         self.escc=False
         self.enterc=False
         self.backspacec=False
@@ -436,87 +481,9 @@ class obj_controls:
         self.qc=False
         self.ec=False
         self.rc=False
+        self.tc=False
         self.fc=False
         self.gc=False
-        # generalized keys (can be replaced)
-        self.setup_gkeys()
-    def setup_gkeys(self):
-        # generalized keys
-        # (see corresponding names in datb.obj_datamanager)
-        self.gu=False# up
-        self.gd=False# down
-        self.gl=False# left
-        self.gr=False# right
-        self.ga=False# action
-        self.gb=False# back
-        self.gq=False# quit
-        self.gdev=False# dev key
-        self.gm1=False# mouse 1
-        self.gm2=False# mouse 2
-        self.gmx=0# mouse x
-        self.gmy=0# mouse y
-        #
-        self.guc=False
-        self.gdc=False
-        self.glc=False
-        self.grc=False
-        self.gac=False
-        self.gbc=False
-        self.gqc=False
-        self.gdevc=False
-        self.gm1c=False
-        self.gm2c=False
-
-
-    def edittext(self,text):# edit existing text with keyboard inputs
-        for event in self.events:
-            if event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_BACKSPACE:# Pressed once
-                    # text = ''#remove all
-                    text = text[:-1]# remove last character
-                elif event.key == pygame.K_RETURN:# Enter (nothing happens)
-                    pass
-                elif event.key==pygame.K_ESCAPE:# Esc (nothing happens)
-                    pass
-                elif event.key==pygame.K_TAB:# Tab (nothing happens)
-                    pass
-                else:
-                    text += event.unicode# record text
-        return text
-    def getevents(self):
-        self.events=pygame.event.get()
-    def getmouse(self):
-        self.mouse1c=False# left click
-        self.mouse2c=False# right click
-        self.mouse3c=False# middle click
-        self.mouse4c=False#middle up
-        self.mouse5c=False# middle down
-        (self.mousex,self.mousey)=pygame.mouse.get_pos()
-        self.mousex=int(self.mousex*self.mousescaling[0])# scale input if screen is stretched
-        self.mousey=int(self.mousey*self.mousescaling[1])# must remain an integer!!)
-        for event in self.events:
-            if event.type==pygame.MOUSEBUTTONDOWN:
-                if event.button==1:
-                    self.mouse1, self.mouse1c = True, True
-                elif event.button==3:
-                    self.mouse2, self.mouse2c = True, True
-                elif event.button==2:
-                    self.mouse3, self.mouse3c = True, True
-                elif event.button==4:
-                    self.mouse4, self.mouse4c = True, True
-                elif event.button==5:
-                    self.mouse5, self.mouse5c = True, True
-            elif event.type==pygame.MOUSEBUTTONUP:
-                if event.button==1:
-                    self.mouse1, self.mouse1c = False, True
-                elif event.button==3:
-                    self.mouse2, self.mouse2c = False, True
-                elif event.button==2:
-                    self.mouse3, self.mouse3c = False, True
-                elif event.button==4:
-                    self.mouse4, self.mouse4c = False, True
-                elif event.button==5:
-                    self.mouse5, self.mouse5c = False, True
     def getkeys(self):
         self.escc=False
         self.enterc=False
@@ -535,6 +502,7 @@ class obj_controls:
         self.qc=False
         self.ec=False
         self.rc=False
+        self.tc=False
         self.fc=False
         self.gc=False
         for event in self.events:
@@ -573,6 +541,8 @@ class obj_controls:
                     self.e, self.ec = True, True
                 elif event.key==pygame.K_r:
                     self.r, self.rc = True, True
+                elif event.key==pygame.K_t:
+                    self.t, self.tc = True, True
                 elif event.key==pygame.K_f:
                     self.f, self.fc = True, True
                 elif event.key==pygame.K_g:
@@ -612,16 +582,45 @@ class obj_controls:
                     self.e, self.ec = False, True
                 elif event.key==pygame.K_r:
                     self.r, self.rc = False, True
+                elif event.key==pygame.K_t:
+                    self.t, self.tc = False, True
                 elif event.key==pygame.K_f:
                     self.f, self.fc = False, True
                 elif event.key==pygame.K_g:
                     self.g, self.gc = False, True
+    def setup_gkeys(self):
+        # generalized keys
+        # (see corresponding names in datb.obj_datamanager)
+        self.gu=False# up
+        self.gd=False# down
+        self.gl=False# left
+        self.gr=False# right
+        self.ga=False# action
+        self.gb=False# back
+        self.gq=False# quit
+        self.gdev=False# dev key
+        self.gm1=False# mouse 1
+        self.gm2=False# mouse 2
+        self.gmx=0# mouse x
+        self.gmy=0# mouse y
+        #
+        self.guc=False
+        self.gdc=False
+        self.glc=False
+        self.grc=False
+        self.gac=False
+        self.gbc=False
+        self.gqc=False
+        self.gdevc=False
+        self.gm1c=False
+        self.gm2c=False
     def getgkeys(self):
+        # generalized keys
         self.gu=self.w or self.up
         self.gd=self.s or self.down
         self.gl=self.a or self.left
         self.gr=self.d or self.right
-        self.ga=self.enter
+        self.ga=self.space
         self.gb=self.tab
         self.gq=self.esc
         self.gdev=self.lctrl
@@ -634,17 +633,27 @@ class obj_controls:
         self.gdc=self.sc or self.downc
         self.glc=self.ac or self.leftc
         self.grc=self.dc or self.rightc
-        self.gac=self.enterc
+        self.gac=self.spacec
         self.gbc=self.tabc
         self.gqc=self.escc
         self.gdevc=self.lctrlc
         self.gm1c=self.mouse1c
         self.gm2c=self.mouse2c
-        #
-    def getquit(self):
+    def edittext(self,text):# edit existing text with keyboard inputs
         for event in self.events:
-            if event.type==pygame.QUIT:
-                self.quit=True
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_BACKSPACE:# Pressed once
+                    # text = ''#remove all
+                    text = text[:-1]# remove last character
+                elif event.key == pygame.K_RETURN:# Enter (nothing happens)
+                    pass
+                elif event.key==pygame.K_ESCAPE:# Esc (nothing happens)
+                    pass
+                elif event.key==pygame.K_TAB:# Tab (nothing happens)
+                    pass
+                else:
+                    text += event.unicode# record text
+        return text
     def update(self):
         self.getevents()# Important: only get events once per frame!
         self.getmouse()
