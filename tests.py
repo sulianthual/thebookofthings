@@ -437,7 +437,7 @@ class obj_scene_testimageplacer(obj_testpage):
         self.name='Image Placer'
         self.text=['Image Placer: allows developer to quickly place images on screen. ',\
                     'the file book/aaa.txt is edited live, and the code can be quickly copied to a page. ',\
-                   '[W,S or Up,Down:scale], [A,D or Left,Right:rotate], [Q,E: flip], [F: browse image], [Backspace: Reset].',\
+                   '[W,S or Up,Down:scale], [A,D or Left,Right:rotate], [Q,E: flip], [F: browse image], [G: Reset].',\
                    ' [LMouse: Place Image], [RMouse: Remove Last Image]',\
                    ' [R or Exit Page: Output to Code File]',\
                    '. These commands are received only in active mode: .',\
@@ -466,12 +466,12 @@ class obj_scene_testanimation(obj_testpage):
                     '\n-- While in Record Mode:',\
                     '\nRed Line tracks image center for all frames.',\
                     '\nBlue cross shows animation reference position.',\
-                    '\n[BackSpace]: Erase all frames',\
+                    '\n[G]: Erase all frames',\
                     '\n[Hold LMouse]: Append new frames',\
                     '\n[A-D]: Rotate around center',\
                     '\n[W-S]: Scale',\
                     '\n[Q-E]: Flip Horizontal/Vertical',\
-                    '\n[F-G]: Change Image (if several exist)',\
+                    '\n[F]: Change Image (if several exist)',\
                     '\n[R]: Save Animation to File (!)',\
                     '\n[Left-Right]/[Up-Down]: Tune Rotate/Scale Rates',\
                    '\n-- While in Playback Mode: Animation loop-plays.',\

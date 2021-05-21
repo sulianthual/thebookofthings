@@ -46,8 +46,8 @@ iidea=0# idea menu index
 core.initialize()# start game engine (pygame)
 clock=core.obj_clock()# game clock
 screen=core.obj_screen()# display buffer screen
-controls=core.obj_controls()# mouse/keyboard controls
 datamanager=datb.obj_datamanager()# data manager (display, music,etc...)
+controls=core.obj_controls()# mouse/keyboard controls
 snapshotmanager=datb.obj_snapshotmanager()# snapshot manager (manages dependencies for images that combine drawings)
 display=core.obj_display()# window display (pygame.display.update)
 quitgame=core.obj_quit()# function quit game

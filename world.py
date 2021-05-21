@@ -2040,7 +2040,13 @@ class obj_world_stompfight(obj_world):
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.snapshot((640,360,300,300),'villainkick')
-
+        # combine stickkick+herohead=herokick
+        image1=draw.obj_image('stickkick',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('herohead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,300,300),'herokick')
 
         # default options
         self.heroisangry=False# hero is angry during fight

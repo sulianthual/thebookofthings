@@ -172,7 +172,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=tests.obj_scene_testrigidbody()
+                quickscene=ch8.obj_scene_ch8west()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -190,7 +190,7 @@ class obj_scene_settings(page.obj_page):
         share.datamanager.loadsettings()# load current settings
         #
         self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
-        tempo= '['+share.datamanager.controlname('back')+': back] '
+        tempo= '['+share.datamanager.controlname('back')+'/'+share.datamanager.controlname('quit')+': back] '
         tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
         tempo+= '['+share.datamanager.controlname('action')+': change] '
         self.addpart( draw.obj_textbox(tempo,(640,350),fontsize='smaller') )
@@ -200,8 +200,8 @@ class obj_scene_settings(page.obj_page):
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
         #
-        self.difficultyeasy=draw.obj_textbox('Difficulty: Easy ',(640,380),fontsize='smaller')
-        self.difficultyhard=draw.obj_textbox('Difficulty: Hard (Coming Soon)',(640,380),fontsize='smaller')
+        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty ',(640,380),fontsize='smaller')
+        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty',(640,380),fontsize='smaller')
         self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
         self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
         self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
@@ -209,10 +209,10 @@ class obj_scene_settings(page.obj_page):
         self.soundoff=draw.obj_textbox('Sound: Off',(640,470),fontsize='smaller')
         self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,470),fontsize='smaller')
         self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
-        self.addpart( self.difficultyeasy )
-        self.addpart( self.difficultyhard )
-        self.difficultyeasy.show=share.datamanager.easymode
-        self.difficultyhard.show=not share.datamanager.easymode
+        self.addpart( self.keyboardqwerty )
+        self.addpart( self.keyboardazerty )
+        self.keyboardqwerty.show=not share.datamanager.doazerty
+        self.keyboardazerty.show=share.datamanager.doazerty
         self.addpart( self.screennative )
         self.addpart( self.screenadapted )
         self.screennative.show=share.datamanager.donative
@@ -234,9 +234,10 @@ class obj_scene_settings(page.obj_page):
             self.sprite_pointer.movetoy(380+self.jpos*30)
         # change difficulty
         if self.jpos==0 and (controls.ga and controls.gac):
-            share.datamanager.easymode=not share.datamanager.easymode
-            self.difficultyeasy.show=share.datamanager.easymode
-            self.difficultyhard.show=not share.datamanager.easymode
+            share.datamanager.doazerty=not share.datamanager.doazerty
+            share.controls.azerty=share.datamanager.doazerty# change controls as well
+            self.keyboardqwerty.show=not share.datamanager.doazerty
+            self.keyboardazerty.show=share.datamanager.doazerty
             share.datamanager.savesettings()# save settings
         # change display
         if self.jpos==1 and (controls.ga and controls.gac):
@@ -264,9 +265,8 @@ class obj_scene_settings(page.obj_page):
         if self.jpos==4 and (controls.ga and controls.gac):
             share.scenemanager.switchscene(obj_scene_erasebook())
         # back to titlescreen
-        if (controls.gb and controls.gbc):
+        if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
             share.scenemanager.switchscene(share.titlescreen,init=True)
-
 
 ####################################################################################################################
 ####################################################################################################################

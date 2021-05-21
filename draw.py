@@ -823,7 +823,7 @@ class obj_imageplacer:
                 if self.iimg>self.nimglist-1: self.iimg=0
                 self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
                 self.retransform=True
-            if controls.backspace and controls.backspacec:# reset
+            if controls.g and controls.gc:# reset
                 self.iimg=0# index
                 self.s=1
                 self.r=0
@@ -1073,7 +1073,7 @@ class obj_animationsequence:
         else:
             self.setupframe()# backup default frame
     def recordsequence(self,controls):
-        if controls.backspace and controls.backspacec: self.clearsequence()
+        if controls.g and controls.gc: self.clearsequence()
         if controls.r and controls.rc: self.savesequence()
         self.xa,self.ya=(controls.gmx-self.xini),(controls.gmy-self.yini)
         if controls.q and controls.qc: self.fha = not self.fha
@@ -1084,7 +1084,6 @@ class obj_animationsequence:
         if controls.s: self.sa -= self.dddsa
         # change rotation/scaling increment
         if controls.f and controls.fc: self.ia += 1 # change sprite
-        if controls.g and controls.gc: self.ia -= 1 # change sprite
         if self.ia > len(self.creator.spritelist)-1: self.ia =0
         if self.ia<0: self.ia=len(self.creator.spritelist)-1
         self.frame=[self.ta,self.xa,self.ya,self.fha,self.fva,self.ra,self.sa,self.ia]

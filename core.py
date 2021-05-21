@@ -68,7 +68,7 @@ class obj_scenemanager:
             if controls.gdev and controls.gdevc: share.devmode = not share.devmode# toggle dev mode
             if share.devmode and controls.gm2 and controls.gm2c:# print coordinates
                 print( '('+str(controls.gmx)+','+str(controls.gmy)+')')
-            if controls.gq:
+            if controls.gq and controls.gqc:
                 share.scenemanager.switchscene(share.titlescreen)# go back to menu
 
 
@@ -380,6 +380,7 @@ class obj_sprite_font:
 # Manages Input controls
 class obj_controls:
     def __init__(self):
+        self.azerty=share.datamanager.doazerty# azerty mode (modified by datb/datamanager)
         self.events=pygame.event.get()
         self.setup_quit()
         self.setup_mouse()
@@ -463,6 +464,7 @@ class obj_controls:
         self.t=False
         self.f=False
         self.g=False
+        self.z=False
         #
         self.escc=False
         self.enterc=False
@@ -484,6 +486,7 @@ class obj_controls:
         self.tc=False
         self.fc=False
         self.gc=False
+        self.zc=False
     def getkeys(self):
         self.escc=False
         self.enterc=False
@@ -505,6 +508,7 @@ class obj_controls:
         self.tc=False
         self.fc=False
         self.gc=False
+        self.zc=False
         for event in self.events:
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
@@ -547,6 +551,8 @@ class obj_controls:
                     self.f, self.fc = True, True
                 elif event.key==pygame.K_g:
                     self.g, self.gc = True, True
+                elif event.key==pygame.K_z:
+                    self.z, self.zc = True, True
             elif event.type==pygame.KEYUP:
                 if event.key==pygame.K_ESCAPE:
                     self.esc, self.escc = False, True
@@ -588,6 +594,8 @@ class obj_controls:
                     self.f, self.fc = False, True
                 elif event.key==pygame.K_g:
                     self.g, self.gc = False, True
+                elif event.key==pygame.K_z:
+                    self.z, self.zc = False, True
     def setup_gkeys(self):
         # generalized keys
         # (see corresponding names in datb.obj_datamanager)
@@ -616,30 +624,68 @@ class obj_controls:
         self.gm2c=False
     def getgkeys(self):
         # generalized keys
-        self.gu=self.w or self.up
-        self.gd=self.s or self.down
-        self.gl=self.a or self.left
-        self.gr=self.d or self.right
-        self.ga=self.space
+        if self.azerty:
+            self.gu=self.z or self.up
+            self.gd=self.s or self.down
+            self.gl=self.q or self.left
+            self.gr=self.d or self.right
+            self.guc=self.zc or self.upc
+            self.gdc=self.sc or self.downc
+            self.glc=self.qc or self.leftc
+            self.grc=self.dc or self.rightc
+        else:
+            self.gu=self.w or self.up
+            self.gd=self.s or self.down
+            self.gl=self.a or self.left
+            self.gr=self.d or self.right
+            self.guc=self.wc or self.upc
+            self.gdc=self.sc or self.downc
+            self.glc=self.ac or self.leftc
+            self.grc=self.dc or self.rightc
+        #
+        self.ga=self.space or self.enter
         self.gb=self.tab
         self.gq=self.esc
         self.gdev=self.lctrl
+        self.gac=self.spacec or self.enterc
+        self.gbc=self.tabc
+        self.gqc=self.escc
+        self.gdevc=self.lctrlc
+        #
         self.gm1=self.mouse1
         self.gm2=self.mouse2
         self.gmx=self.mousex
         self.gmy=self.mousey
-        #
-        self.guc=self.wc or self.upc
-        self.gdc=self.sc or self.downc
-        self.glc=self.ac or self.leftc
-        self.grc=self.dc or self.rightc
-        self.gac=self.spacec
-        self.gbc=self.tabc
-        self.gqc=self.escc
-        self.gdevc=self.lctrlc
         self.gm1c=self.mouse1c
         self.gm2c=self.mouse2c
+
+    def nogkeys(self): # inhibit generalized inputs
+        # (useful when editing text)
+        self.gu=False
+        self.gd=False
+        self.gl=False
+        self.gr=False
+        self.ga=False
+        self.gb=False
+        # self.gq=False# dont inhibit
+        # self.gdev=False# dont inhibit
+        # self.gm1=False# dont inhibit
+        # self.gm2=False# dont inhibit
+        #
+        self.guc=False
+        self.gdc=False
+        self.glc=False
+        self.grc=False
+        self.gac=False
+        self.gbc=False
+        # self.gqc=False
+        # self.gdevc=False
+        # self.gm1c=False# dont inhibit
+
+        # self.gm2c=False# dont inhibit
     def edittext(self,text):# edit existing text with keyboard inputs
+    # Beware of interaction with other inputs (e.g. space!)
+        self.nogkeys()# inhibit generalized inputs
         for event in self.events:
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_BACKSPACE:# Pressed once
@@ -654,6 +700,7 @@ class obj_controls:
                 else:
                     text += event.unicode# record text
         return text
+
     def update(self):
         self.getevents()# Important: only get events once per frame!
         self.getmouse()

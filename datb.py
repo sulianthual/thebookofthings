@@ -177,8 +177,8 @@ class obj_datamanager:
     #
     def savesettings(self):
         with open(self.filesettings,'w') as f1:
-                f1.write('easymode'+'\n')#key
-                f1.write(str(self.easymode)+'\n')#value
+                f1.write('doazerty'+'\n')#key
+                f1.write(str(self.doazerty)+'\n')#value
                 f1.write('donative'+'\n')#key
                 f1.write(str(self.donative)+'\n')#value
                 f1.write('domusic'+'\n')#key
@@ -192,7 +192,7 @@ class obj_datamanager:
             with open(self.filesettings,'r+') as f1:
                 line=f1.readline()# difficulty
                 line=f1.readline()
-                self.easymode=line=='True'+'\n'
+                self.doazerty=line=='True'+'\n'
                 line=f1.readline()# donative
                 line=f1.readline()
                 self.donative=line=='True'+'\n'
@@ -207,7 +207,7 @@ class obj_datamanager:
                 self.devaccess=line=='True'+'\n'
         else:
             # default settings
-            self.easymode=True# easy or hard mode
+            self.doazerty=False# qwerty keyboard
             self.donative=True# 1280x720(native) or adapted resolution
             self.domusic=False# music on/off
             self.dosound=False# sound on/off
@@ -252,7 +252,7 @@ class obj_datamanager:
         self.dictcontrolnames['down']='down'
         self.dictcontrolnames['left']='left'
         self.dictcontrolnames['right']='right'
-        self.dictcontrolnames['action']='space'
+        self.dictcontrolnames['action']='enter/space'
         self.dictcontrolnames['back']='tab'
         self.dictcontrolnames['quit']='esc'
         self.dictcontrolnames['dev']='lctrl'
