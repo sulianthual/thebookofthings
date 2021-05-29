@@ -24,8 +24,10 @@ import tool
 class obj_page:
     def __init__(self,**kwargs):
         # elements
-        self.to_update=[]
-        self.to_finish=[]
+        self.to_update=[]# elements to manage at page update
+        self.to_finish=[]# elements to manage at page finish
+        # unique page elements (one per page therefore are overwritten)
+        self.pagemusic=draw.obj_music(None)# silence by default
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup
@@ -40,6 +42,7 @@ class obj_page:
         self.addpart(draw.obj_pagedisplay_fps())
     def addpart(self,element):
         term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup','imageplacer',\
+              'sound',\
               'rectangle',\
               'pagebackground','pagefps','pagetext',\
               'world']
@@ -47,6 +50,8 @@ class obj_page:
             self.to_update.append(element)
         if element.type in ['drawing','textinput','textchoice','imageplacer']:
             self.to_finish.append(element)
+        if element.type=='music':# override page music (unique element)
+            self.pagemusic=element
     def removepart(self,element):
         for i in [self.to_update,self.to_finish]:
             if element in i: i.remove(element)
@@ -56,12 +61,15 @@ class obj_page:
         self.postpage(controls)
     def prepage(self,controls):# background
         for i in self.to_update: i.update(controls)
+        if self.pagemusic:
+            self.pagemusic.update(controls)
     def page(self,controls):# custom updates
         pass
     def postpage(self,controls):# foreground
         pass
     def preendpage(self):# before exiting page
         for i in self.to_finish: i.finish()
+
 
 
 

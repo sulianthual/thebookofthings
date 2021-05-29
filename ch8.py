@@ -82,6 +82,7 @@ class obj_scene_ch8roam(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_travel(self,start=self.start,goal='everywhere',chapter=8,boat=True)
         self.addpart(self.world)
+
 ###########
 # home
 class obj_scene_ch8home(page.obj_chapterpage):

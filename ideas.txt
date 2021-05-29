@@ -52,10 +52,10 @@ DO NOT add complex minigames that require a physics engine (e.g. platformer, bra
 It is NOT worth it to do with pygame (too painful to build from ground up)
 It should be done in NEXT games with other softwares that do this more easily (godot,etc...)
 
+
+
 ##################
 * Final changes to make:
-
-- generalized and simplified controls
 
 - customize locations: give them names
 
@@ -64,12 +64,24 @@ It should be done in NEXT games with other softwares that do this more easily (g
 
 - Add sound and music
 
+- chapter 1: draw the stickman entirely
+             remove most additional drawings
+
 - compile with pyinstaller: linux, windows, mac
 
-
+- game spinoffs:
+ kind of doom
+ kind of zelda
+ kind of mario
+ (draw/record game assets then play dumbed down/funny version)
 
 ##################
 * Other Ideas (maybe later or never):
+
+- fps game: with simple shooting + arrows to move
+            should be fairly simple to code, just enemies/items with small animations
+            and that are always facing the player (only scale and fliph them)
+
 
 - tff file: cannot do text for interrogation marks. correct the file ?
 

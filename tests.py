@@ -23,6 +23,7 @@ import world
 ##########################################################
 
 # Test Menu
+# Note: All tests are init on menu init (which is problematic, loads all assets at once)
 class obj_scene_testmenu(page.obj_page):
     def __init__(self,**kwargs):
         super().__init__(**kwargs)
@@ -91,6 +92,9 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testrigidbody())
         self.list.append(obj_scene_testbreakfastdrinking())
         self.list.append(obj_scene_testothers())
+        # audio
+        self.list.append(obj_scene_testmusic())
+        self.list.append(obj_scene_testsounds())
         #
         self.listlen=len(self.list)
 
@@ -722,6 +726,39 @@ class obj_scene_testothers(obj_testpage):
         self.name='Other Tests'
         self.text=['Other tests: ',\
                    ]
+
+class obj_scene_testmusic(obj_testpage):
+    def setup(self):
+        self.name='Music'
+        self.text=['Music: ',\
+                    '\n\n1) Each page has a unique music, which addpart() overrides. Default is silence (music=None) ',\
+                    '\n2) If a page has new music, the new music is played ',\
+                    '\n3) If a page has same music as previous ones, previous music keeps playing (without rewinding) ',\
+                    '\n\nMusic is managed globally on a single music channel. ',\
+                    'Page music is launched on first page update instead of page init and setup (to avoid playing several musics if several pages are preloaded)',\
+                    ]
+        self.addpart( draw.obj_music('test') )
+        # self.addpart( draw.obj_music(None) )# mute music
+
+class obj_scene_testmusic2(obj_testpage):
+    def setup(self):
+        self.name='Music'
+        self.text=['Music: same music as previous page: smooth transition',\
+                    ]
+        self.addpart( draw.obj_music('test') )
+
+
+class obj_scene_testsounds(obj_testpage):
+    def setup(self):
+        self.name='Sounds'
+        self.text=['Sounds: can add sounds to a page. ',\
+                'Try it: [Up: play sound]',\
+                    ]
+        self.sound1=draw.obj_sound('test')# sound is loaded but not played
+        self.addpart( self.sound1 )
+    def page(self,controls):
+        if controls.gu and controls.guc: self.sound1.play()
+
 
 ####################################################################################################################
 

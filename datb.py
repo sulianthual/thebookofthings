@@ -129,6 +129,40 @@ class obj_brushes:
 
 ####################################################################################################################
 
+# musics database
+# (musics have an indirect name in the code)
+class obj_musics:
+    def __init__(self):
+        self.dict={}
+        self.setup()
+    def setup(self):
+        self.dict['error']='error.mp3'
+        self.dict['test']='POL-mali-maafe-short.mp3'
+    def getmusicfilename(self,name):
+        if name in self.dict.keys():
+          return self.dict[name]
+        else:
+          return self.dict['error']
+
+
+# sounds database
+# (sounds have an indirect name in the code)
+class obj_sounds:
+    def __init__(self):
+        self.dict={}
+        self.setup()
+    def setup(self):
+        self.dict['error']='error.ogg'
+        self.dict['test']='phaseJump1.ogg'
+    def getsoundfilename(self,name):
+        if name in self.dict.keys():
+          return self.dict[name]
+        else:
+          return self.dict['error']
+
+
+####################################################################################################################
+
 # Data Manager: manages all data files
 # flieprogress: last unlocked chapter
 # filewords: dictionary of textinputs,textchoices written in the book of things (by the player)

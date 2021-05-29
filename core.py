@@ -27,8 +27,16 @@ import tool
 
 # initialize game engine
 def initialize():
+    #
+    # New: audio
+    pygame.mixer.pre_init(22050, -16, 2, 1024)
+    pygame.mixer.init()
+    #
+    #
     pygame.init()# init all modules (we could select them if they are not all used)
     # pygame.time.wait(200)# wait 200 ms (to let some modules like pygame.font initialize entirely)
+
+
 
 # Quit Game Procedure
 class obj_quit:
@@ -70,6 +78,74 @@ class obj_scenemanager:
                 print( '('+str(controls.gmx)+','+str(controls.gmy)+')')
             if controls.gq and controls.gqc:
                 share.scenemanager.switchscene(share.titlescreen)# go back to menu
+
+####################################################################################################################
+####################################################################################################################
+# Audio players
+
+# Music Player
+# Musics are not unique to pages, they are managed globally
+class obj_musicplayer:
+    def __init__(self):
+        self.setup()
+    def setup(self):
+        self.name=None# current music being played (None=silence)
+    def change(self,name):# change music (new music=change, None=silence, same as before=continue)
+        if name is None:
+            self.name=None
+            self.stop()
+        else:
+            if name != self.name:
+                self.load(name)
+                self.play()
+    def load(self,name):
+        self.name=name
+        path='musics/'+share.musics.getmusicfilename(name)
+        if tool.ospathexists(path):
+            pygame.mixer.music.load(path)
+        else:
+            self.name='error'
+            pygame.mixer.music.load('error.mp3')
+    def play(self):
+        pygame.mixer.music.play(-1)# loop
+    def pause(self):
+        pygame.mixer.music.pause()
+    def rewind(self):
+        pygame.mixer.music.rewind()
+    def stop(self):
+        pygame.mixer.music.stop()
+    def set_volume(self,volume):
+        pygame.mixer.music.set_volume(volume)
+
+
+# Sound Player
+# sounds are unique to pages, they are managed locally (like image sprites)
+class obj_soundplayer:
+    def __init__(self):
+        self.setup()
+    def setup(self):
+        self.nchannels=16# max number of channels allowed
+        pygame.mixer.set_num_channels(self.nchannels)# set number of channels
+    def load(self,name):# load sound in memory
+        filename=share.sounds.getsoundfilename(name)
+
+# pygame sound sprite
+# acts much like an image sprite:
+# - is (loaded/forgotten by pages)
+# - created/called by a draw.obj_sound
+class obj_soundsprite:
+    def __init__(self,name):
+        self.name=name
+        self.setup()
+    def setup(self):
+        self.filename=share.sounds.getsoundfilename(self.name)
+        self.sound=pygame.mixer.Sound('sounds/'+self.filename)# pygame sound (loaded to a channel)
+    def play(self):
+        self.sound.play()
+    def stop(self):
+        self.sound.stop()
+    def set_volume(self,volume):
+        self.sound.set_volume(volume)
 
 
 ####################################################################################################################

@@ -9,6 +9,9 @@
 #         (drawing,textinput,textchoice,textbox,image,animation,dispgroup)
 #         (pagebackground,pagefps,pagenumber,pagenote,pagetext)
 #         (only one not included here is the hitbox from actors)
+#
+#         New: now also manages audio, music and sounds placed on a page
+#
 ##########################################################
 ##########################################################
 
@@ -1339,6 +1342,45 @@ class obj_dispgroup:
         if share.devmode: self.devtools()
     def update(self,controls):
         self.play(controls)
+
+
+####################################################################################################################
+# Audio
+
+
+# A music placed in a game page
+# *MUSIC
+# Notes:
+# - if a page has no new music, the old one keeps playing.
+# - music is changed on first update (instead of at init and setup, because page could be preloaded)
+#
+class obj_music:
+    def __init__(self,name):# start new drawing (load or new)
+        self.type='music'
+        self.name=name# music name
+        self.setup()
+    def setup(self):
+        self.changed=False
+    def update(self,controls):
+        if not self.changed:
+            share.musicplayer.change(self.name)
+            self.changed=True
+
+
+
+# A sound placed in a game page
+# *SOUND
+class obj_sound:
+    def __init__(self,name):
+        self.type='sound'
+        self.name=name# sound name
+        self.setup()
+    def setup(self):
+        self.soundsprite=core.obj_soundsprite(self.name)# associated sound sprite
+    def play(self):
+        self.soundsprite.play()
+    def update(self,controls):
+        pass
 
 
 ####################################################################################################################
