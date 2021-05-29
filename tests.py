@@ -734,6 +734,7 @@ class obj_scene_testmusic(obj_testpage):
                     '\n\n1) Each page has a unique music, which addpart() overrides. Default is silence (music=None) ',\
                     '\n2) If a page has new music, the new music is played ',\
                     '\n3) If a page has same music as previous ones, previous music keeps playing (without rewinding) ',\
+                    '\n4) If a page has no music, previous music stops (if any) ',\
                     '\n\nMusic is managed globally on a single music channel. ',\
                     'Page music is launched on first page update instead of page init and setup (to avoid playing several musics if several pages are preloaded)',\
                     ]
