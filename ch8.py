@@ -180,15 +180,15 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                'The book of things: a game by Sulian Thual, from 2021. ',\
-                'Made with pygame. ',\
-                'Thank you for playing. ',\
+                'Thank you for playing the book of things. See full list of credits in the settings menu. ',\
                    ]
-        self.addpart( draw.obj_image('cake',(640,450)) )
-
-
+        self.world=world.obj_world_eatfish(self,cake=True)
+        self.addpart(self.world)
+        # self.addpart( draw.obj_image('cake',(640,450)) )
 
 
 ###########

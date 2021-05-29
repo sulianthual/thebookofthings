@@ -135,11 +135,15 @@ class obj_scene_realtitlescreen(page.obj_page):
 
     def page(self,controls):
         if controls.gd and controls.gdc:
-            self.ichapter=min(self.ichapter+1,self.maxchapter)
+            # self.ichapter=min(self.ichapter+1,self.maxchapter)
+            self.ichapter +=1
+            if self.ichapter>self.maxchapter: self.ichapter=-1
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
         if controls.gu and controls.guc:
-            self.ichapter=max(self.ichapter-1,-1)
+            # self.ichapter=max(self.ichapter-1,-1)
+            self.ichapter -=1
+            if self.ichapter<-1: self.ichapter=self.maxchapter
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
         if controls.ga  and controls.gac:
@@ -195,7 +199,7 @@ class obj_scene_settings(page.obj_page):
         tempo+= '['+share.datamanager.controlname('action')+': change] '
         self.addpart( draw.obj_textbox(tempo,(640,350),fontsize='smaller') )
         #
-        self.maxjpos=4# max pointer position
+        self.maxjpos=5# max pointer position
         self.jpos=0# pointer position
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
@@ -209,6 +213,7 @@ class obj_scene_settings(page.obj_page):
         self.soundoff=draw.obj_textbox('Sound: Off',(640,470),fontsize='smaller')
         self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,470),fontsize='smaller')
         self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
+        self.addpart( draw.obj_textbox('Credits',(640,530),fontsize='smaller') )
         self.addpart( self.keyboardqwerty )
         self.addpart( self.keyboardazerty )
         self.keyboardqwerty.show=not share.datamanager.doazerty
@@ -227,10 +232,14 @@ class obj_scene_settings(page.obj_page):
         self.soundon.show=share.datamanager.dosound
     def page(self,controls):
         if controls.gd and controls.gdc:
-            self.jpos=min(self.jpos+1,self.maxjpos)
+            # self.jpos=min(self.jpos+1,self.maxjpos)
+            self.jpos +=1
+            if self.jpos>self.maxjpos: self.jpos=0
             self.sprite_pointer.movetoy(380+self.jpos*30)
         if controls.gu and controls.guc:
-            self.jpos=max(self.jpos-1,0)
+            # self.jpos=max(self.jpos-1,0)
+            self.jpos -=1
+            if self.jpos<0: self.jpos=self.maxjpos
             self.sprite_pointer.movetoy(380+self.jpos*30)
         # change difficulty
         if self.jpos==0 and (controls.ga and controls.gac):
@@ -264,9 +273,29 @@ class obj_scene_settings(page.obj_page):
         # erase book
         if self.jpos==4 and (controls.ga and controls.gac):
             share.scenemanager.switchscene(obj_scene_erasebook())
+        # read game credits
+        if self.jpos==5 and (controls.ga and controls.gac):
+            share.scenemanager.switchscene(obj_scene_creditscreen())
         # back to titlescreen
         if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
             share.scenemanager.switchscene(share.titlescreen,init=True)
+
+####################################################################################################################
+####################################################################################################################
+# Credits
+# *CREDITS
+
+class obj_scene_creditscreen(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
+    def setup(self):
+        self.text=['Credits: ',\
+                    '\n\nThe book of things: a game by Sulian Thual (created 2020). ',\
+                    'Made with Pygame. ',\
+                    'All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). ',\
+                   '[',share.datamanager.controlname('back'),': back]']
 
 ####################################################################################################################
 ####################################################################################################################

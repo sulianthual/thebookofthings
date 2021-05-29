@@ -928,17 +928,20 @@ class obj_world_fishing(obj_world):
 ####################################################################################################################
 
 # Mini Game: Eat Fish
+# *EAT
 class obj_world_eatfish(obj_world):
     def setup(self,**kwargs):
         # default options
         self.addpartner=False
         self.eldereats=False# replace hero with elder as eater
         self.heroisangry=False# angry face on hero
+        self.eatcake=False# eat cake insteaf of fish
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
-            if 'eldereats' in kwargs: self.eldereats=kwargs["eldereats"]# partner options
-            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# partner options
+            if 'eldereats' in kwargs: self.eldereats=kwargs["eldereats"]
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
+            if 'cake' in kwargs: self.eatcake=kwargs["cake"]
         #
         self.done=False# mini game is finished
         self.doneeating=False# done eating
@@ -949,7 +952,10 @@ class obj_world_eatfish(obj_world):
         # fish
         self.fish=obj_grandactor(self,(640,360))
         self.fishscale=1# initial size of fish
-        self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
+        if self.eatcake:
+            self.fish.addpart( 'img_fish',draw.obj_image('cake',(800,450), scale=self.fishscale) )
+        else:
+            self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
         # hero eating or not eating
         self.herostand=obj_grandactor(self,(640,360))
         if self.addpartner:# add partner
@@ -997,7 +1003,10 @@ class obj_world_eatfish(obj_world):
         self.bites -=1
         self.fishscale *= 0.8
         self.fish.removepart( 'img_fish')
-        self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
+        if self.eatcake:
+            self.fish.addpart( 'img_fish',draw.obj_image('cake',(800,450), scale=self.fishscale) )
+        else:
+            self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
     def update(self,controls):
         super().update(controls)
         if not self.doneeating:
