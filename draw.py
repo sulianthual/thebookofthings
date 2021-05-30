@@ -1405,5 +1405,99 @@ class obj_sound:
     def update(self,controls):
         pass
 
+# Place sounds alongside an animation with developper tools (arrows etc...)
+# writes code output in file book/aaa.txt
+# *SOUNDPLACER
+class obj_soundplacer:
+    def __init__(self,animation,*args):
+        self.type='soundplacer'
+        self.animation=animation# associated animation (must be on page)
+        self.maxsounds=4# max number of sounds (for arrows)
+        self.soundnames=[]
+        if args is not None:# args is the list of soundnames
+            for c,i in enumerate(args):
+                if c<=self.maxsounds-1:
+                    self.soundnames.append(i)
+        self.setup()
+    def setup(self):
+        self.soundlist=[]
+        self.soundexists=[False] * self.maxsounds# if sound exists
+        self.soundrecords=[ [] for _ in range(self.maxsounds) ]# list of frames where sound placed
+        for c,i in enumerate(self.soundnames):
+            self.soundlist.append(obj_sound(i))
+            self.soundexists[c]=True
+        # output code
+        self.filecode='book/aaa.txt'
+    def triggersounds(self,controls,index):
+        # play sounds with controls (arrows)
+        if index==0:
+            return controls.gl and controls.glc
+        elif index==1:
+            return controls.gu and controls.guc
+        elif index==2:
+            return controls.gr and controls.grc
+        elif index==3:
+            return controls.gd and controls.gdc
+        else:
+            return False
+    def quickreplay(self):# quick replay as animation replays
+        ta=self.getanimationframe()
+        for i in range(self.maxsounds):
+            if self.soundexists[i]:
+                if ta in self.soundrecords[i]:
+                    self.soundlist[i].play()
+    def update(self,controls):
+        # rewind animation (rmouse)
+        if controls.gm2:
+            self.animation.rewind(frame=1)# to frame=1 because can put first heard sound there
+        # play sounds with controls (arrows)
+        for i in range(self.maxsounds):
+            if self.soundexists[i] and self.triggersounds(controls,i):
+                # self.soundlist[i].play()
+                self.soundrecords[i].append(self.getanimationframe())
+        # quick replay (outside of rewind animation)
+        if not controls.gm2:
+            self.quickreplay()
+        # clear sequences
+        if controls.g and controls.gc:
+            self.soundrecords=[ [] for _ in range(self.maxsounds) ]# list of frames where sound placed
+        # output code
+        if controls.r and controls.rc:
+            self.outputcode()
+    def outputcode(self):
+        with open(self.filecode,'w+') as f1:
+
+            f1.write(' '+'\n')
+            for i in range(self.maxsounds):
+                if self.soundexists[i] and len(self.soundrecords[i])>0:
+                    f1.write('        '+'animation.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )'+'\n')
+            f1.write(' '+'\n')
+    def getanimationframe(self):
+        return self.animation.sequence.ta
+
+
+
 
 ####################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#

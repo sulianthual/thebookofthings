@@ -132,21 +132,28 @@ class obj_scene_realtitlescreen(page.obj_page):
         # pointer
         self.sprite_pointer.movetoy(410+self.ichapter*30)
         self.sprite_pen.movetoy(360+self.ichapter*30)
-
+        #
+        self.addpart( draw.obj_music('menu') )
+        self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
+        self.addpart( self.sound_menugo )
+        #
     def page(self,controls):
         if controls.gd and controls.gdc:
+            self.sound_menugo.play()
             # self.ichapter=min(self.ichapter+1,self.maxchapter)
             self.ichapter +=1
             if self.ichapter>self.maxchapter: self.ichapter=-1
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
         if controls.gu and controls.guc:
+            self.sound_menugo.play()
             # self.ichapter=max(self.ichapter-1,-1)
             self.ichapter -=1
             if self.ichapter<-1: self.ichapter=self.maxchapter
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
         if controls.ga  and controls.gac:
+            self.sound_menugo.play()
             if self.ichapter==-1:
                 share.scenemanager.switchscene(obj_scene_settings())
             elif self.ichapter==0:
@@ -176,7 +183,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=tests.obj_scene_testsounds()
+                quickscene=tests.obj_scene_testsoundplacer()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -186,10 +193,12 @@ class obj_scene_realtitlescreen(page.obj_page):
 ####################################################################################################################
 # Settings Menu
 class obj_scene_settings(page.obj_page):
-    def __init__(self):
-        super().__init__()
-    def presetup(self):
-        super().presetup()
+    def setup(self,**kwargs):
+        self.tosoundon=False# start page when turning back sound on
+        # options
+        if (kwargs is not None) and ('tosoundon' in kwargs):
+            self.tosoundon=kwargs["tosoundon"]
+
         # Default settings
         share.datamanager.loadsettings()# load current settings
         #
@@ -201,6 +210,8 @@ class obj_scene_settings(page.obj_page):
         #
         self.maxjpos=5# max pointer position
         self.jpos=0# pointer position
+        if self.tosoundon:# turning back sound
+            self.jpos=3
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
         #
@@ -235,19 +246,31 @@ class obj_scene_settings(page.obj_page):
         self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
         self.addpart( draw.obj_textbox('Credits',(640,530),fontsize='smaller') )
         #
+        self.addpart( draw.obj_music('menu') )
+        self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
+        self.addpart( self.sound_menugo )
+        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
+        self.addpart( self.sound_menuback )
+        if self.tosoundon:
+            self.sound_menuback.play()
+
+        #
     def page(self,controls):
         if controls.gd and controls.gdc:
+            self.sound_menugo.play()
             # self.jpos=min(self.jpos+1,self.maxjpos)
             self.jpos +=1
             if self.jpos>self.maxjpos: self.jpos=0
             self.sprite_pointer.movetoy(380+self.jpos*30)
         if controls.gu and controls.guc:
+            self.sound_menugo.play()
             # self.jpos=max(self.jpos-1,0)
             self.jpos -=1
             if self.jpos<0: self.jpos=self.maxjpos
             self.sprite_pointer.movetoy(380+self.jpos*30)
         # change difficulty
         if self.jpos==0 and (controls.ga and controls.gac):
+            self.sound_menuback.play()
             share.datamanager.doazerty=not share.datamanager.doazerty
             share.controls.azerty=share.datamanager.doazerty# change controls as well
             self.keyboardqwerty.show=not share.datamanager.doazerty
@@ -255,6 +278,7 @@ class obj_scene_settings(page.obj_page):
             share.datamanager.savesettings()# save settings
         # change display
         if self.jpos==1 and (controls.ga and controls.gac):
+            self.sound_menuback.play()
             share.datamanager.donative= not share.datamanager.donative
             self.screennative.show=share.datamanager.donative
             self.screenadapted.show=not share.datamanager.donative
@@ -283,14 +307,18 @@ class obj_scene_settings(page.obj_page):
             self.soundoff.show=not share.datamanager.dosound
             self.soundon.show=share.datamanager.dosound
             share.datamanager.savesettings()# save settings
+            share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))# reload scene
         # erase book
         if self.jpos==4 and (controls.ga and controls.gac):
+            self.sound_menugo.play()
             share.scenemanager.switchscene(obj_scene_erasebook())
         # read game credits
         if self.jpos==5 and (controls.ga and controls.gac):
+            self.sound_menugo.play()
             share.scenemanager.switchscene(obj_scene_creditscreen())
         # back to titlescreen
         if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
+            self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,init=True)
 
 
@@ -302,15 +330,20 @@ class obj_scene_settings(page.obj_page):
 class obj_scene_creditscreen(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
+        self.sound_menuback.play()
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_settings())
+        pass
     def setup(self):
         self.text=['Credits: ',\
                     '\n\nThe book of things: a game by Sulian Thual (created 2020). ',\
                     'Made with Pygame. ',\
                     'All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). ',\
                    '[',share.datamanager.controlname('back'),': back]']
-
+        #
+        self.addpart( draw.obj_music('menu') )
+        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
+        self.addpart( self.sound_menuback )
+                #
 ####################################################################################################################
 ####################################################################################################################
 # Erase Book
@@ -319,8 +352,10 @@ class obj_scene_creditscreen(page.obj_chapterpage):
 class obj_scene_erasebook(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
+        self.sound_menuback.play()
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
+        self.sound_menuback.play()
     def triggernextpage(self,controls):
         return controls.gl and controls.gu and controls.gr and controls.ga
     def setup(self):
@@ -333,18 +368,28 @@ class obj_scene_erasebook(page.obj_chapterpage):
                     'You will loose all your drawings and progress. ',\
                     '[',share.datamanager.controlname('back'),': back]',\
                     ]
-
+        #
+        self.addpart( draw.obj_music('menu') )
+        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
+        self.addpart( self.sound_menuback )
+        #
 
 class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
+        self.sound_menuback.play()
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
+        self.sound_menuback.play()
     def setup(self):
         self.text=['The book has vanished. ',\
                    '[',share.datamanager.controlname('back'),': back]']
         share.datamanager.erasebook()
-
+        #
+        self.addpart( draw.obj_music('menu') )
+        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
+        self.addpart( self.sound_menuback )
+        #
 
 ####################################################################################################################
 ####################################################################################################################

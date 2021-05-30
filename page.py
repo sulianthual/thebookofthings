@@ -41,7 +41,8 @@ class obj_page:
     def postsetup(self):# foreground
         self.addpart(draw.obj_pagedisplay_fps())
     def addpart(self,element):
-        term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup','imageplacer',\
+        term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup',\
+              'imageplacer','soundplacer',\
               'sound',\
               'rectangle',\
               'pagebackground','pagefps','pagetext',\

@@ -140,6 +140,9 @@ class obj_musics:
         #
         self.dict['error']=( 'error.mp3' , 1 )
         self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.5 )
+        self.dict['menu']=( 'POL-doggo-brothers-short.mp3' , 0.5 )
+
+
         #
     def getmusicfilename(self,name):
         if name in self.dict.keys():
@@ -165,6 +168,12 @@ class obj_sounds:
         self.dict['error']=( 'error.ogg' , 1 )
         self.dict['test1']=( 'phaseJump1.ogg' , 1 )
         self.dict['test2']=( 'footstep_grass_001.ogg' , 1 )
+        self.dict['test3a']=( 'female_light_1.ogg' , 1 )
+        self.dict['test3b']=( 'female_light_2.ogg' , 1 )
+        self.dict['test3c']=( 'female_light_3.ogg' , 1 )
+        self.dict['test3d']=( 'female_light_4.ogg' , 1 )
+        self.dict['menugo']=( 'drop_001.ogg' , 1 )
+        self.dict['menuback']=( 'drop_004.ogg' , 1 )
         #
     def getsoundfilename(self,name):
         if name in self.dict.keys():

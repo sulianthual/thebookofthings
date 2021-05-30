@@ -95,6 +95,7 @@ class obj_scene_testmenu(page.obj_page):
         # audio
         self.list.append(obj_scene_testmusic())
         self.list.append(obj_scene_testsounds())
+        self.list.append(obj_scene_testsoundplacer())
         #
         self.listlen=len(self.list)
 
@@ -745,9 +746,9 @@ class obj_scene_testmusic(obj_testpage):
 class obj_scene_testsounds(obj_testpage):
     def setup(self):
         self.name='Sounds'
-        self.text=['Sounds: can add sounds to a page.',\
-                ' Can add sound to an animation (specify frames where played). ',\
-                'Try it: [Up: play sound]',\
+        self.text=['Sounds:',\
+                ' \n\n1) Can add sound to an animation (specify frames where played). ',\
+                ' \n2) Can add sounds to a page, then call them. Try it: [Up: play sound]',\
                     ]
         self.sound1=draw.obj_sound('test1')# sound is loaded but not played
         self.addpart( self.sound1 )
@@ -760,6 +761,27 @@ class obj_scene_testsounds(obj_testpage):
     def page(self,controls):
         if controls.gu and controls.guc: self.sound1.play()
 
+class obj_scene_testsoundplacer(obj_testpage):
+    def setup(self):
+        self.name='Sound Placer'
+        self.text=['Sound Placer:',\
+                    'generate code to easily place sounds alongside animation. Output code is in book/aaa.txt',\
+                    '\n\n[Rmouse]=rewind animation ',\
+                    '\n[Arrows]=record sound ',\
+                    '\n[G]=clear all sounds ',\
+                    '\n[R]=output code ',\
+                    ]
+        # animation
+        self.addpart( draw.obj_music('menu') )
+        animation=draw.obj_animation('testanimation1','testimage1',(340,360))
+        self.addpart(animation)
+        # sound placer
+        self.addpart( draw.obj_soundplacer(animation,'test3a','test3b','test3c','test3d') )
+        #
+        # example of code from book/aaa.txt to copy on page
+        # animation.addsound( "test3a", [45] )
+        # animation.addsound( "test3b", [74, 85] )
+        # animation.addsound( "test3c", [101] )
 
 
 ####################################################################################################################
