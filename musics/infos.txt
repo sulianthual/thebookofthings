@@ -1,0 +1,6 @@
+ 
+for batch processing files in folder (wav to mp3):
+for i in *.wav; do ffmpeg -i "$i" -f mp3 "${i%.*}.mp3"; done
+
+all musics from playonloop.com 
+

@@ -77,7 +77,8 @@ class obj_scenemanager:
             if share.devmode and controls.gm2 and controls.gm2c:# print coordinates
                 print( '('+str(controls.gmx)+','+str(controls.gmy)+')')
             if controls.gq and controls.gqc:
-                share.scenemanager.switchscene(share.titlescreen)# go back to menu
+                share.quitgame()# quit directly
+                # share.scenemanager.switchscene(share.titlescreen)# go back to menu
 
 ####################################################################################################################
 ####################################################################################################################
@@ -166,8 +167,11 @@ class obj_soundsprite:
         self.sound=pygame.mixer.Sound(path)# pygame sound (loaded to a channel)
         volume=share.sounds.getsoundvolume(self.name)
         self.set_volume(self.mastervolume*volume)
-    def play(self):
-        self.sound.play()
+    def play(self,loop=False):
+        if loop:
+            self.sound.play(-1)
+        else:
+            self.sound.play()
     def stop(self):
         self.sound.stop()
     def set_volume(self,volume):
@@ -802,6 +806,12 @@ class obj_controls:
                 else:
                     text += event.unicode# record text
         return text
+    def iskeydown(self):# tell if a key is being pressed (any key)
+        istrue=False
+        for event in self.events:
+            if event.type==pygame.KEYDOWN:
+                istrue=True
+        return istrue
 
     def update(self):
         self.getevents()# Important: only get events once per frame!

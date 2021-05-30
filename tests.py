@@ -747,7 +747,7 @@ class obj_scene_testsounds(obj_testpage):
     def setup(self):
         self.name='Sounds'
         self.text=['Sounds:',\
-                ' \n\n1) Can add sound to an animation (specify frames where played). ',\
+                ' \n\n1) Can add sound to an animation (specify frames where played). The sounds are playing once every 2 animation loops. ',\
                 ' \n2) Can add sounds to a page, then call them. Try it: [Up: play sound]',\
                     ]
         self.sound1=draw.obj_sound('test1')# sound is loaded but not played

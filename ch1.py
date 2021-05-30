@@ -88,8 +88,10 @@ class obj_scene_ch1p2(page.obj_chapterpage):
                    ', that I made all by myself. I call it the "Stickman".',\
                    ' It is near perfect, but you could still improve on it a little. ',\
                    ]
-        animation1=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
-        self.addpart(animation1)
+        animation=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
+        self.addpart(animation)
+        # self.addpart( draw.obj_soundplacer(animation,'tadah') )
+        animation.addsound( "tadah", [10] )
 
 
 
@@ -121,7 +123,11 @@ class obj_scene_ch1p4(page.obj_chapterpage):
                    'Indeed, ',('{hero_he}',share.colors.hero2),' looks very cool. ',\
                    'Lets move on to the next step. ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_hero1','herobase',(360,360),record=False))
+        animation=draw.obj_animation('ch1_hero1','herobase',(360,360),record=False)
+        self.addpart(animation)
+        # self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
+        animation.addsound( "cute1", [28] )
+        animation.addsound( "cute2", [222] )
 
 
 
@@ -157,6 +163,13 @@ class obj_scene_ch1p6(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
         # self.addpart(draw.obj_animation('ch1_heroawakes','herobase',(640,360),record=False,scale=0.7))
         # self.addpart( draw.obj_image('herobase',(903,452), scale=0.7) )
+        # self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
+        animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=True)
+        self.addpart(animation)
+        # self.addpart( draw.obj_soundplacer(animation,'snore1','snore2') )
+        # animation.addsound( "snore1", [10] )
+        animation.addsound( "snore1", [18, 172] )
+        animation.addsound( "snore2", [78, 225] )
 
 
 # mini game wake up
@@ -193,9 +206,11 @@ class obj_scene_ch1p8(page.obj_chapterpage):
                     ' Well done, said the book of things. ',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
-        # self.addpart( draw.obj_image('herobase',(903,452), scale=0.7) )
-        # self.addpart( draw.obj_textbox('Good Morning!',(1100,480)) )
-        self.addpart(draw.obj_animation('ch1_awaken','herobase',(640,360),record=False,scale=0.7))
+        animation=draw.obj_animation('ch1_awaken','herobase',(640,360),record=False,scale=0.7)
+        self.addpart(animation)
+        self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
+        animation.addsound( "cute1", [69] )
+        animation.addsound( "cute2", [280] )
 
 
 

@@ -45,8 +45,8 @@ class obj_scene_ch8p0(page.obj_chapterpage):
 ###########
 # roam to different locations
 class obj_scene_ch8roam(page.obj_chapterpage):
-    def prevpage(self):
-        pass
+    def triggerprevpage(self,controls):# (prefer over an empty prevpage)
+        return False
     def nextpage(self):
         if self.world.goalname=='home':
             share.scenemanager.switchscene(obj_scene_ch8home())
@@ -159,8 +159,8 @@ class obj_scene_ch8homesleep4(page.obj_chapterpage):
         self.addpart(self.world)
 
 class obj_scene_ch8homebye(page.obj_chapterpage):
-    def prevpage(self):
-        pass
+    def triggerprevpage(self,controls):# (prefer over an empty prevpage)
+        return False
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='home'))
     def setup(self):

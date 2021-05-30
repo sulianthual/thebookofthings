@@ -140,7 +140,7 @@ class obj_musics:
         #
         self.dict['error']=( 'error.mp3' , 1 )
         self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.5 )
-        self.dict['menu']=( 'POL-doggo-brothers-short.mp3' , 0.5 )
+        self.dict['menu']=( 'POL-you-and-me-short.mp3' , 0.5 )
 
 
         #
@@ -165,15 +165,42 @@ class obj_sounds:
     def setup(self):
         # dictionary= tuples of filename, volume level
         #
-        self.dict['error']=( 'error.ogg' , 1 )
+        self.dict['error']=( 'error.ogg' , 1 )# error is missing sound
+        # self.dict['menugo']=( 'drop_001.ogg' , 1 )# browse menu and pages (forward)
+        # self.dict['menuback']=( 'drop_004.ogg' , 1 )# browse menu and pages (back)
+        self.dict['menugo']=( 'bookFlip3.ogg' , 1 )# browse menu and pages (forward)
+        self.dict['menuback']=( 'bookFlip2.ogg' , 1 )# browse menu and pages (back)
+
+        # tests
         self.dict['test1']=( 'phaseJump1.ogg' , 1 )
         self.dict['test2']=( 'footstep_grass_001.ogg' , 1 )
         self.dict['test3a']=( 'female_light_1.ogg' , 1 )
         self.dict['test3b']=( 'female_light_2.ogg' , 1 )
         self.dict['test3c']=( 'female_light_3.ogg' , 1 )
         self.dict['test3d']=( 'female_light_4.ogg' , 1 )
-        self.dict['menugo']=( 'drop_001.ogg' , 1 )
-        self.dict['menuback']=( 'drop_004.ogg' , 1 )
+        # drawing
+        self.dict['drawstart']=( 'click_001.ogg' , 0.2 )# when draws (looped)
+        self.dict['drawerase']=( 'switch_005.ogg' , 1 )# erase
+        # textchoice
+        self.dict['textchoicego']=( 'drop_001.ogg' , 1 )# change a textchoice
+        # textinput
+        self.dict['textinputkeyboard']=( 'click_002.ogg' , 1 )# keyboard sound when entering text
+
+
+        # ch0
+        self.dict['mysterious']=( 'sfx_sound_vaporizing.wav' , 1 )
+        # self.dict['mysterious']=( 'sfx_menu_select4.wav' , 1 )
+        # ch1
+        self.dict['tadah']=( 'sfx_menu_select4.wav' , 1 )
+        self.dict['cute1']=( 'cute_03.ogg' , 1 )
+        self.dict['cute2']=( 'cute_09.ogg' , 1 )
+        self.dict['snore1']=( 'snore.ogg' , 1 )
+        self.dict['snore2']=( 'weird_05.ogg' , 1 )
+        self.dict['wake1']=( 'grunt_03.ogg' , 1 )
+        self.dict['wake2']=( 'misc_09.ogg' , 1 )
+
+
+
         #
     def getsoundfilename(self,name):
         if name in self.dict.keys():

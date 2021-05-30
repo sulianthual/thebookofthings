@@ -417,6 +417,7 @@ class obj_world_sunrise(obj_world):
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
+        self.timer.start()# reset ungoing timer
     def triggerungoing(self,controls):
         return controls.gu and controls.guc
     def triggerstart(self,controls):
@@ -531,8 +532,15 @@ class obj_world_wakeup(obj_world):
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
+        self.timer.start()# reset ungoing timer
+        # audio
+        self.soundstart=draw.obj_sound('wake1')
+        self.soundback=draw.obj_sound('snore1')
+        self.sounddone=draw.obj_sound('wake2')
+
     def triggerungoing(self,controls):
-        return controls.gr and controls.grc
+        # return controls.gr and controls.grc
+        return controls.gr
     def triggerstart(self,controls):
         return not controls.gr
     def update(self,controls):
@@ -542,11 +550,11 @@ class obj_world_wakeup(obj_world):
             if not self.ungoing:
                 # start substate
                 if self.triggerungoing(controls):# flip to ungoing
+                    self.soundstart.play()
                     self.ungoing=True
                     self.startactor.show=False
                     self.ungoingactor.show=True
                     self.finishactor.show=False
-                    self.timer.start()# reset ungoing timer
                     self.ungoingactor.dict["anim1"].rewind()
                     if self.addpartner:
                         self.ungoingactor.dict["animadd1"].rewind()
@@ -555,13 +563,17 @@ class obj_world_wakeup(obj_world):
             else:
                 # ungoing substate
                 self.timer.update()
+                print(self.timer.t)
                 if self.triggerstart(controls):# flip to start
+                    self.soundback.play()
                     self.ungoing=False
                     self.startactor.show=True
                     self.ungoingactor.show=False
                     self.finishactor.show=False
+                    self.timer.start()# reset ungoing timer
                 if self.timer.ring:# flip to goal reached
                     self.goal=True
+                    self.sounddone.play()
                     self.timerend.start()
                     self.startactor.show=False
                     self.ungoingactor.show=False
@@ -4608,6 +4620,7 @@ class obj_world_kiss(obj_world):
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
         self.timerend=tool.obj_timer(100)# goal to done
+        self.timer.start()# reset ungoing timer
     def triggerungoing(self,controls):
         return (controls.gl and controls.gr) and (controls.glc or controls.grc)
     def triggerstart(self,controls):
@@ -4718,6 +4731,7 @@ class obj_world_sunset(obj_world):
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
+        self.timer.start()# reset ungoing timer
     def triggerungoing(self,controls):
         return controls.gd and controls.gdc
     def triggerstart(self,controls):
@@ -4829,6 +4843,7 @@ class obj_world_gotobed(obj_world):
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
+        self.timer.start()# reset ungoing timer
     def triggerungoing(self,controls):
         return controls.gl and controls.glc
     def triggerstart(self,controls):

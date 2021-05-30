@@ -153,9 +153,11 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
         if controls.ga  and controls.gac:
-            self.sound_menugo.play()
+            # for unknown reasons, sound already played when going to chapter (!?)
+            # self.sound_menugo.play()
             if self.ichapter==-1:
                 share.scenemanager.switchscene(obj_scene_settings())
+                self.sound_menugo.play()
             elif self.ichapter==0:
                 share.scenemanager.switchscene(ch0.obj_scene_prologue())
             elif self.ichapter==1:
@@ -183,7 +185,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=tests.obj_scene_testsoundplacer()
+                quickscene=ch0.obj_scene_ch0p3()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -198,10 +200,9 @@ class obj_scene_settings(page.obj_page):
         # options
         if (kwargs is not None) and ('tosoundon' in kwargs):
             self.tosoundon=kwargs["tosoundon"]
-
         # Default settings
         share.datamanager.loadsettings()# load current settings
-        #
+        # Text
         self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
         tempo= '['+share.datamanager.controlname('back')+'/'+share.datamanager.controlname('quit')+': back] '
         tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
@@ -330,9 +331,8 @@ class obj_scene_settings(page.obj_page):
 class obj_scene_creditscreen(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
-        self.sound_menuback.play()
-    def nextpage(self):
-        pass
+    def triggernextpage(self,controls):
+        return False
     def setup(self):
         self.text=['Credits: ',\
                     '\n\nThe book of things: a game by Sulian Thual (created 2020). ',\
@@ -341,9 +341,8 @@ class obj_scene_creditscreen(page.obj_chapterpage):
                    '[',share.datamanager.controlname('back'),': back]']
         #
         self.addpart( draw.obj_music('menu') )
-        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
-        self.addpart( self.sound_menuback )
-                #
+
+
 ####################################################################################################################
 ####################################################################################################################
 # Erase Book
@@ -352,10 +351,8 @@ class obj_scene_creditscreen(page.obj_chapterpage):
 class obj_scene_erasebook(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
-        self.sound_menuback.play()
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
-        self.sound_menuback.play()
     def triggernextpage(self,controls):
         return controls.gl and controls.gu and controls.gr and controls.ga
     def setup(self):
@@ -370,25 +367,20 @@ class obj_scene_erasebook(page.obj_chapterpage):
                     ]
         #
         self.addpart( draw.obj_music('menu') )
-        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
-        self.addpart( self.sound_menuback )
         #
 
 class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
-        self.sound_menuback.play()
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
-        self.sound_menuback.play()
     def setup(self):
         self.text=['The book has vanished. ',\
                    '[',share.datamanager.controlname('back'),': back]']
         share.datamanager.erasebook()
         #
         self.addpart( draw.obj_music('menu') )
-        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
-        self.addpart( self.sound_menuback )
+
         #
 
 ####################################################################################################################

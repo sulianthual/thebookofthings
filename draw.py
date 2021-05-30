@@ -236,6 +236,10 @@ class obj_drawing:
         if self.legend: self.makelegend(self.legend)
         # devtools
         self.devcross=core.obj_sprite_cross()
+        # audio
+        self.sounddrawstart=obj_sound('drawstart')
+        self.sounddrawerase=obj_sound('drawerase')
+        #
     def clear(self):# clear self.sprite=first layer
         self.sprite.makeempty(self.rx,self.ry)
         self.sprite.clear()
@@ -284,6 +288,8 @@ class obj_drawing:
         share.snapshotmanager.remake(self.name)
     def mousedraw(self,controls):
         if controls.gm1 and tool.isinrect(controls.gmx,controls.gmy,self.rect):
+            # play sound
+            self.sounddrawstart.play(loop=True)
             sprite=self.layers[-1]# last sprite from layers
             xoff=int(self.x-sprite.getrx()+self.brush.getrx())
             yoff=int(self.y-sprite.getry()+self.brush.getry())
@@ -307,7 +313,10 @@ class obj_drawing:
                 # draw
                 sprite.blitfrom(self.brush,controls.gmx-xoff,controls.gmy-yoff)
         else:
+            self.sounddrawstart.stop()
             if controls.gm2 and controls.gm2c and tool.isinrect(controls.gmx,controls.gmy,self.rect):
+                # play sound
+                self.sounddrawerase.play()
                 # remove last layer (except if first layer)
                 if len(self.layers)>1:
                     del self.layers[-1]
@@ -347,6 +356,9 @@ class obj_textinput:
         if self.legend: self.makelegend(self.legend)
         # devtools
         self.devcross=core.obj_sprite_cross()
+        # audio
+        self.soundkeyboard=obj_sound('textinputkeyboard')
+        #
     def setdefault(self,default):
         share.datamanager.writeword(self.key,default)
     def texttodict(self):# text to/from dictionary
@@ -358,6 +370,7 @@ class obj_textinput:
     def changetext(self,controls):
         if tool.isinrect(controls.gmx,controls.gmy,self.rect):
             self.text=controls.edittext(self.text)# edit text
+            if controls.iskeydown(): self.soundkeyboard.play()
             # Note: apparently no need to filter special characters ( \, ', ", {, }, etc )
             if len(self.text)>self.nchar: self.text=self.text[:self.nchar-1]# control max size
     def makeframe(self):
@@ -412,6 +425,9 @@ class obj_textchoice:
         self.xmargin=20
         self.ymargin=10
         self.keytodict(self.key)
+        # audio
+        self.soundgo=obj_sound('textchoicego')
+        #
     def setdefault(self,default):
         share.datamanager.writeword(self.key,default)
     def keytodict(self,key):# write key in dictionary if not there
@@ -439,6 +455,7 @@ class obj_textchoice:
             for c,i in enumerate(self.choices):
                 value,sprite,spriterect,xy,size,area=i
                 if tool.isinrect(controls.gmx,controls.gmy,area):
+                    self.soundgo.play()
                     self.ichoice=c
                     break
     def choicetodict(self):# write key choice in words dict
@@ -891,6 +908,9 @@ class obj_animation:
         self.sounddict={}# sounds by names
         self.sounddict_frames={}# corresponding frames where played
         self.sounddict_islist={}# frames are a list or integer
+        self.soundonloop=True# sound on this animation loop (alternates between True and False)
+        self.nsilentloops=0# how many silent loops for a non silent one (1 or 2 is good)
+        self.isilentloops=0# counter for silent loops
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
@@ -974,6 +994,8 @@ class obj_animation:
         self.rx,self.ry=self.spritelist[0].getrxry()
     def rewind(self,frame=None):
         self.sequence.rewindsequence(ta=frame)# rewind to frame ta
+        self.soundonloop=True# reset sound on loops
+        self.isilentloops=0
         self.unpause()
     def display(self):
         if self.show:
@@ -1007,13 +1029,25 @@ class obj_animation:
             self.devxy=(xd,yd)
             self.devarea=(xd,yd, 2*self.sprite.getrx(), 2*self.sprite.getry() )
             # play sounds
-            for i in self.sounddict_frames.keys():
-                if self.sounddict_islist[i]:# list of frames
-                    if ta in self.sounddict_frames[i]:
-                        self.sounddict[i].play()
-                else:# single frame
-                    if ta ==self.sounddict_frames[i]:
-                        self.sounddict[i].play()
+            if self.nsilentloops>0:
+                if ta==0:# new loop
+                    if self.soundonloop:# played last loop
+                        self.soundonloop=False
+                        self.isilentloops=0# reset counter
+                    else:
+                        self.isilentloops +=1# increment counter
+                        if self.isilentloops >= self.nsilentloops:
+                            self.soundonloop=True
+            else:# no silent loops at all
+                self.soundonloop=True
+            if self.soundonloop:
+                for i in self.sounddict_frames.keys():
+                    if self.sounddict_islist[i]:# list of frames
+                        if ta in self.sounddict_frames[i]:
+                            self.sounddict[i].play()
+                    else:# single frame
+                        if ta ==self.sounddict_frames[i]:
+                            self.sounddict[i].play()
     def devtools(self):
         if self.sequence.recording:
             if self.sequence.data and len(self.sequence.data)>1:
@@ -1400,8 +1434,10 @@ class obj_sound:
     def setup(self):
         mastervol=share.soundplayer.getmastervolume()
         self.soundsprite=core.obj_soundsprite(self.name,mastervol)# associated sound sprite
-    def play(self):
-        self.soundsprite.play()
+    def play(self,loop=False):
+        self.soundsprite.play(loop)
+    def stop(self):
+        self.soundsprite.stop()
     def update(self,controls):
         pass
 
@@ -1464,14 +1500,18 @@ class obj_soundplacer:
         # output code
         if controls.r and controls.rc:
             self.outputcode()
-    def outputcode(self):
+    def outputcode(self):# output in aaa.txt and also on screen
         with open(self.filecode,'w+') as f1:
-
             f1.write(' '+'\n')
+            print('###')
+            print(' ')
             for i in range(self.maxsounds):
                 if self.soundexists[i] and len(self.soundrecords[i])>0:
                     f1.write('        '+'animation.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )'+'\n')
+                    print('        '+'animation.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )')
             f1.write(' '+'\n')
+            print(' ')
+        # also print on screen (faster)
     def getanimationframe(self):
         return self.animation.sequence.ta
 

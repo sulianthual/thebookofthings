@@ -27,7 +27,7 @@ class obj_page:
         self.to_update=[]# elements to manage at page update
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
-        self.pagemusic=draw.obj_music(None)# silence by default
+        self.pagemusic=draw.obj_music('menu')# menu music by default
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup
@@ -80,6 +80,12 @@ class obj_chapterpage(obj_page):
         self.text=[]# Main body of text
         self.textkeys={}
         super().__init__(**kwargs)
+    def presetup(self):
+        super().presetup()
+        self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
+        self.addpart( self.sound_menugo )
+        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
+        self.addpart( self.sound_menuback )
     def postsetup(self):
         super().postsetup()
         term=draw.obj_pagedisplay_text()
@@ -100,19 +106,19 @@ class obj_chapterpage(obj_page):
         if self.triggerprevpage(controls):
             self.preendpage()# template
             self.endpage()# customized
-            share.ipage -= 1
+            self.sound_menuback.play()
             self.prevpage()# switch to prev page
     def callexitpage(self,controls):
         if self.triggerexitpage(controls): # go back to main menu
             self.preendpage()# template
             self.endpage()# customized
-            share.ipage = 1
+            self.sound_menuback.play()
             self.exitpage()
     def callnextpage(self,controls):
         if self.triggernextpage(controls):
             self.preendpage()# template
             self.endpage()# customized
-            share.ipage += 1
+            self.sound_menugo.play()
             self.nextpage()# switch to next page
     def endpage(self):# when exit page
         pass
