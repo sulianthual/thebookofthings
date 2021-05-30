@@ -176,7 +176,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=tests.obj_scene_testmusic()
+                quickscene=tests.obj_scene_testsounds()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -206,30 +206,35 @@ class obj_scene_settings(page.obj_page):
         #
         self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(640,380),fontsize='smaller')
         self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(640,380),fontsize='smaller')
-        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
-        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
-        self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
-        self.musicon=draw.obj_textbox('Music: On (Coming Soon)',(640,440),fontsize='smaller')
-        self.soundoff=draw.obj_textbox('Sound: Off',(640,470),fontsize='smaller')
-        self.soundon=draw.obj_textbox('Sound: On (Coming Soon)',(640,470),fontsize='smaller')
-        self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
-        self.addpart( draw.obj_textbox('Credits',(640,530),fontsize='smaller') )
         self.addpart( self.keyboardqwerty )
         self.addpart( self.keyboardazerty )
         self.keyboardqwerty.show=not share.datamanager.doazerty
         self.keyboardazerty.show=share.datamanager.doazerty
+        #
+        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
+        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
         self.addpart( self.screennative )
         self.addpart( self.screenadapted )
         self.screennative.show=share.datamanager.donative
         self.screenadapted.show=not share.datamanager.donative
+        #
+        self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
+        self.musicon=draw.obj_textbox('Music: On',(640,440),fontsize='smaller')
         self.addpart( self.musicoff )
         self.addpart( self.musicon )
         self.musicoff.show=not share.datamanager.domusic
         self.musicon.show=share.datamanager.domusic
+        #
+        self.soundoff=draw.obj_textbox('Sound: Off',(640,470),fontsize='smaller')
+        self.soundon=draw.obj_textbox('Sound: On',(640,470),fontsize='smaller')
         self.addpart( self.soundoff )
         self.addpart( self.soundon )
         self.soundoff.show=not share.datamanager.dosound
         self.soundon.show=share.datamanager.dosound
+        #
+        self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
+        self.addpart( draw.obj_textbox('Credits',(640,530),fontsize='smaller') )
+        #
     def page(self,controls):
         if controls.gd and controls.gdc:
             # self.jpos=min(self.jpos+1,self.maxjpos)
@@ -258,15 +263,23 @@ class obj_scene_settings(page.obj_page):
             else:
                 share.display.reset(native=False)
             share.datamanager.savesettings()# save settings
-        # change music
+        # toggle music
         if self.jpos==2 and (controls.ga and controls.gac):
             share.datamanager.domusic=not share.datamanager.domusic
+            if share.datamanager.domusic:
+                share.musicplayer.setmastervolume(1)
+            else:
+                share.musicplayer.setmastervolume(0)
             self.musicoff.show=not share.datamanager.domusic
             self.musicon.show=share.datamanager.domusic
             share.datamanager.savesettings()# save settings
-        # change sound
+        # toggle sound
         if self.jpos==3 and (controls.ga and controls.gac):
             share.datamanager.dosound=not share.datamanager.dosound
+            if share.datamanager.dosound:
+                share.soundplayer.setmastervolume(1)
+            else:
+                share.soundplayer.setmastervolume(0)
             self.soundoff.show=not share.datamanager.dosound
             self.soundon.show=share.datamanager.dosound
             share.datamanager.savesettings()# save settings
@@ -279,6 +292,7 @@ class obj_scene_settings(page.obj_page):
         # back to titlescreen
         if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
             share.scenemanager.switchscene(share.titlescreen,init=True)
+
 
 ####################################################################################################################
 ####################################################################################################################

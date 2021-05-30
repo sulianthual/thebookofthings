@@ -741,27 +741,26 @@ class obj_scene_testmusic(obj_testpage):
         self.addpart( draw.obj_music('test') )
         # self.addpart( draw.obj_music(None) )# mute music
 
-class obj_scene_testmusic2(obj_testpage):
-    def setup(self):
-        self.name='Music'
-        self.text=['Music: same music as previous page: smooth transition',\
-                    ]
-        self.addpart( draw.obj_music('test') )
-
 
 class obj_scene_testsounds(obj_testpage):
     def setup(self):
         self.name='Sounds'
-        self.text=['Sounds: can add sounds to a page. ',\
+        self.text=['Sounds: can add sounds to a page.',\
+                ' Can add sound to an animation (specify frames where played). ',\
                 'Try it: [Up: play sound]',\
                     ]
-        self.sound1=draw.obj_sound('test')# sound is loaded but not played
+        self.sound1=draw.obj_sound('test1')# sound is loaded but not played
         self.addpart( self.sound1 )
+        #
+        animation1=draw.obj_animation('testanimation1','testimage1',(340,360))
+        self.addpart(animation1)
+        # animation1.addsound('test2',[0,10])# frame 0 not played on first read
+        # animation1.addsound('test2',[1,10])# play on frame 1 and 10
+        animation1.addsound('test2',20)# works too if single frame
     def page(self,controls):
         if controls.gu and controls.guc: self.sound1.play()
 
 
+
 ####################################################################################################################
-
-
 ####################################################################################################################

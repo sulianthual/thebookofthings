@@ -887,6 +887,10 @@ class obj_animation:
         self.sprite.makeempty(self.rx,self.ry)
         # sequence
         self.sequence=obj_animationsequence(self,self.name,(self.xini,self.yini),self.record,maxlength=self.maxlength)
+        # sounds
+        self.sounddict={}# sounds by names
+        self.sounddict_frames={}# corresponding frames where played
+        self.sounddict_islist={}# frames are a list or integer
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
@@ -907,6 +911,14 @@ class obj_animation:
             self.spritelist[index].flip(self.fh,self.fv)
             self.spritelist[index].scale(self.s)
             self.spritelist[index].rotate(self.r)
+    def addsound(self,soundname,framelist):# add a sound (give name and framelist=[0,10] frames at which is played)
+        self.sounddict[soundname]=obj_sound(soundname)
+        self.sounddict_frames[soundname]=framelist
+        self.sounddict_islist[soundname]=isinstance(framelist, list)# is list, else assumed integer
+    def removesound(self,soundname):
+        self.sounddict.pop(soundname, None)
+        self.sounddict_frames.pop(soundname, None)
+        self.sounddict_islist.pop(soundname, None)
     def movetox(self,x):
         self.x=x
     def movetoy(self,y):
@@ -994,6 +1006,14 @@ class obj_animation:
             # devtools
             self.devxy=(xd,yd)
             self.devarea=(xd,yd, 2*self.sprite.getrx(), 2*self.sprite.getry() )
+            # play sounds
+            for i in self.sounddict_frames.keys():
+                if self.sounddict_islist[i]:# list of frames
+                    if ta in self.sounddict_frames[i]:
+                        self.sounddict[i].play()
+                else:# single frame
+                    if ta ==self.sounddict_frames[i]:
+                        self.sounddict[i].play()
     def devtools(self):
         if self.sequence.recording:
             if self.sequence.data and len(self.sequence.data)>1:
@@ -1172,6 +1192,8 @@ class obj_animationsequence:
                                 break
                         linenumber +=1
             self.length=len(self.data)
+
+
 
 
 ####################################################################################################################
@@ -1376,7 +1398,8 @@ class obj_sound:
         self.name=name# sound name
         self.setup()
     def setup(self):
-        self.soundsprite=core.obj_soundsprite(self.name)# associated sound sprite
+        mastervol=share.soundplayer.getmastervolume()
+        self.soundsprite=core.obj_soundsprite(self.name,mastervol)# associated sound sprite
     def play(self):
         self.soundsprite.play()
     def update(self,controls):

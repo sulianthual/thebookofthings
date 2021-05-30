@@ -136,13 +136,21 @@ class obj_musics:
         self.dict={}
         self.setup()
     def setup(self):
-        self.dict['error']='error.mp3'
-        self.dict['test']='POL-mali-maafe-short.mp3'
+        # dictionary= tuples of filename, volume level
+        #
+        self.dict['error']=( 'error.mp3' , 1 )
+        self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.5 )
+        #
     def getmusicfilename(self,name):
         if name in self.dict.keys():
-          return self.dict[name]
+          return self.dict[name][0]
         else:
-          return self.dict['error']
+          return self.dict['error'][0]
+    def getmusicvolume(self,name):
+        if name in self.dict.keys():
+          return self.dict[name][1]
+        else:
+          return self.dict['error'][1]
 
 
 # sounds database
@@ -152,14 +160,22 @@ class obj_sounds:
         self.dict={}
         self.setup()
     def setup(self):
-        self.dict['error']='error.ogg'
-        self.dict['test']='phaseJump1.ogg'
+        # dictionary= tuples of filename, volume level
+        #
+        self.dict['error']=( 'error.ogg' , 1 )
+        self.dict['test1']=( 'phaseJump1.ogg' , 1 )
+        self.dict['test2']=( 'footstep_grass_001.ogg' , 1 )
+        #
     def getsoundfilename(self,name):
         if name in self.dict.keys():
-          return self.dict[name]
+          return self.dict[name][0]
         else:
-          return self.dict['error']
-
+          return self.dict['error'][0]
+    def getsoundvolume(self,name):
+        if name in self.dict.keys():
+          return self.dict[name][1]
+        else:
+          return self.dict['error'][1]
 
 ####################################################################################################################
 

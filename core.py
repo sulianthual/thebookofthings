@@ -90,6 +90,12 @@ class obj_musicplayer:
         self.setup()
     def setup(self):
         self.name=None# current music being played (None=silence)
+        # volume=mastervolume*filevolume
+        if share.datamanager.domusic:# launch options
+            self.mastervolume=1# master volume for music (changed in settings, ref=1)
+        else:
+            self.mastervolume=0
+        self.musicfilevolume=1# volume specific to current music file being played
     def change(self,name):# change music (new music=change, None=silence, same as before=continue)
         if name is None:
             self.name=None
@@ -101,11 +107,12 @@ class obj_musicplayer:
     def load(self,name):
         self.name=name
         path='musics/'+share.musics.getmusicfilename(name)
-        if tool.ospathexists(path):
-            pygame.mixer.music.load(path)
-        else:
+        if not tool.ospathexists(path):
             self.name='error'
-            pygame.mixer.music.load('error.mp3')
+            path='musics/'+share.musics.getmusicfilename(self.name)
+        pygame.mixer.music.load(path)
+        self.musicfilevolume=share.musics.getmusicvolume(self.name)
+        self.set_volume(self.mastervolume*self.musicfilevolume)
     def play(self):
         pygame.mixer.music.play(-1)# loop
     def pause(self):
@@ -116,6 +123,12 @@ class obj_musicplayer:
         pygame.mixer.music.stop()
     def set_volume(self,volume):
         pygame.mixer.music.set_volume(volume)
+    def set_volume_mult(self,volumemult):# set volume using multiplier
+        volume=pygame.mixer.music.get_volume()
+        pygame.mixer.music.set_volume(volume*volumemult)
+    def setmastervolume(self,volume):
+        self.mastervolume=volume
+        self.set_volume(self.mastervolume*self.musicfilevolume)
 
 
 # Sound Player
@@ -124,22 +137,35 @@ class obj_soundplayer:
     def __init__(self):
         self.setup()
     def setup(self):
-        self.nchannels=16# max number of channels allowed
-        pygame.mixer.set_num_channels(self.nchannels)# set number of channels
-    def load(self,name):# load sound in memory
-        filename=share.sounds.getsoundfilename(name)
+        if share.datamanager.dosound:# launch options
+            self.mastervolume=1# master volume for sounds (changed in settings, ref=1)
+        else:
+            self.mastervolume=0
+        # self.nchannels=16# max number of channels allowed
+        # pygame.mixer.set_num_channels(self.nchannels)# set number of channels
+    def getmastervolume(self):# return mastervolume
+        return self.mastervolume
+    def setmastervolume(self,volume):
+        self.mastervolume=volume
+
 
 # pygame sound sprite
 # acts much like an image sprite:
 # - is (loaded/forgotten by pages)
 # - created/called by a draw.obj_sound
 class obj_soundsprite:
-    def __init__(self,name):
+    def __init__(self,name,mastervolume):
         self.name=name
+        self.mastervolume=mastervolume# mastervolume from soundplayer
         self.setup()
     def setup(self):
-        self.filename=share.sounds.getsoundfilename(self.name)
-        self.sound=pygame.mixer.Sound('sounds/'+self.filename)# pygame sound (loaded to a channel)
+        path='sounds/'+share.sounds.getsoundfilename(self.name)
+        if not tool.ospathexists(path):
+            self.name='error'
+            path='sounds/'+share.sounds.getsoundfilename(self.name)
+        self.sound=pygame.mixer.Sound(path)# pygame sound (loaded to a channel)
+        volume=share.sounds.getsoundvolume(self.name)
+        self.set_volume(self.mastervolume*volume)
     def play(self):
         self.sound.play()
     def stop(self):
