@@ -137,10 +137,11 @@ class obj_musics:
         self.setup()
     def setup(self):
         # dictionary= tuples of filename, volume level
+        # ONLY USE WAV (in 16 bit)
         #
-        self.dict['error']=( 'error.mp3' , 1 )
-        self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.5 )
-        self.dict['menu']=( 'POL-you-and-me-short.mp3' , 0.5 )
+        self.dict['error']=( 'error.wav' , 1 )
+        self.dict['test']=( 'POL-mali-maafe-short.wav' , 0.5 )
+        self.dict['menu']=( 'POL-you-and-me-short.wav' , 0.5 )
 
 
         #

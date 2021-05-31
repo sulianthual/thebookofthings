@@ -1,6 +1,23 @@
- 
-for batch processing files in folder (wav to mp3):
-for i in *.wav; do ffmpeg -i "$i" -f mp3 "${i%.*}.mp3"; done
+###############################
+Musics:
 
-all musics from playonloop.com 
+All from PlayOnLoop.com
 
+Credit example 1:
+Background music from PlayOnLoop.com
+Licensed under Creative Commons by Attribution 4.0
+
+Credit example 2:
+Music: “Galactic Trek”, from PlayOnLoop.com
+Licensed under Creative Commons by Attribution 4.0
+
+Note:
+
+from the website these wav are in 32 bit pcm. They dont work with some pygame versions (e.g. 1.9.6)
+so convert them to 16 bit, just run:
+
+for i in *.wav; do ffmpeg -i "$i" -f wav "${i%.*}.wav"; done
+
+DO NOT USE MP3: not compatible with pygame 2.0.0 and later versions
+
+###############################
