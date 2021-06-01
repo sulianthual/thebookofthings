@@ -27,6 +27,8 @@ class obj_scene_chapter8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8p0())
     def triggernextpage(self,controls):
         return True
+    def soundnextpage(self):
+        pass# no sound
 
 class obj_scene_ch8p0(page.obj_chapterpage):
     def nextpage(self):
@@ -73,6 +75,8 @@ class obj_scene_ch8roam(page.obj_chapterpage):
 
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self,**kwargs):
         # starting position
         if (kwargs is not None) and ('start' in kwargs):

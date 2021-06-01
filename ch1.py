@@ -28,6 +28,8 @@ class obj_scene_chapter1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p0())
     def triggernextpage(self,controls):
         return True
+    def soundnextpage(self):
+        pass# no sound
 
 class obj_scene_ch1p0(page.obj_chapterpage):
     def nextpage(self):
@@ -125,9 +127,10 @@ class obj_scene_ch1p4(page.obj_chapterpage):
                    ]
         animation=draw.obj_animation('ch1_hero1','herobase',(360,360),record=False)
         self.addpart(animation)
-        # self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
-        animation.addsound( "cute1", [28] )
-        animation.addsound( "cute2", [222] )
+        # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3') )
+        animation.addsound( "hero1", [28] )
+        animation.addsound( "hero2", [222] )
+        animation.addsound( "hero3", [124] )
 
 
 
@@ -160,16 +163,16 @@ class obj_scene_ch1p6(page.obj_chapterpage):
                   '". We are off to a great start, said the book of things. ',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
-        self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
+        # self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
         # self.addpart(draw.obj_animation('ch1_heroawakes','herobase',(640,360),record=False,scale=0.7))
         # self.addpart( draw.obj_image('herobase',(903,452), scale=0.7) )
         # self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
-        animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=True)
+        animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
         self.addpart(animation)
         # self.addpart( draw.obj_soundplacer(animation,'snore1','snore2') )
-        # animation.addsound( "snore1", [10] )
-        animation.addsound( "snore1", [18, 172] )
-        animation.addsound( "snore2", [78, 225] )
+        animation.addsound( "snore1", [14] )
+        animation.addsound( "snore2", [134] )
+
 
 
 # mini game wake up
@@ -180,6 +183,8 @@ class obj_scene_ch1p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p8())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempor='['+share.datamanager.controlname('right')+']'
         self.text=[\
@@ -208,9 +213,11 @@ class obj_scene_ch1p8(page.obj_chapterpage):
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
         animation=draw.obj_animation('ch1_awaken','herobase',(640,360),record=False,scale=0.7)
         self.addpart(animation)
-        self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
-        animation.addsound( "cute1", [69] )
-        animation.addsound( "cute2", [280] )
+        # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3') )
+        animation.addsound( "hero1", [17] )
+        animation.addsound( "hero2", [265] )
+        animation.addsound( "hero3", [220] )
+
 
 
 
@@ -239,6 +246,8 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p11())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempo='['+share.datamanager.controlname('down')+']'
         self.text=[\
@@ -246,7 +255,10 @@ class obj_scene_ch1p10(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=100# longer cutscene for first time playing
+        #
+        # animation=draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25)
+        # self.addpart(animation)
+        # self.addpart( draw.obj_soundplacer(animation,'fishing_swim') )
 
 
 
@@ -263,7 +275,12 @@ class obj_scene_ch1p11(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero2),\
                     ' went fishing and caught a ',('fish',share.colors.item2),'". ',\
                    ]
-        self.addpart(draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=False))
+        animation=draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=False)
+        self.addpart(animation)
+        # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3','hero4') )
+        animation.addsound( "hero2", [22] )
+        animation.addsound( "hero3", [193] )
+        animation.addsound( "hero4", [82,240],skip=1 )
 
 
 
@@ -274,6 +291,8 @@ class obj_scene_ch1p12(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p13())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempol='['+share.datamanager.controlname('left')+']'
         tempor='['+share.datamanager.controlname('right')+']'
@@ -285,7 +304,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
-        self.world.timerend.amount=100# longer cutscene for first time playing
+        # self.world.timerend.amount=100# longer cutscene for first time playing
         # self.addpart( draw.obj_image('fish',(900,400), scale=1,rotate=-45) )
         # self.addpart( draw.obj_image('herobase',(340,400), scale=0.7) )
         # self.addpart(draw.obj_animation('ch1_heroeats1','herobase',(640,360),record=False,imgscale=0.7))
@@ -304,6 +323,8 @@ class obj_scene_ch1p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p14())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempol='['+share.datamanager.controlname('left')+']'
         self.text=[\
@@ -364,6 +385,8 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1play2())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                 '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
@@ -385,6 +408,8 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1play3())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),\
@@ -401,6 +426,8 @@ class obj_scene_ch1play3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1play4())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                     '"',\
@@ -418,6 +445,8 @@ class obj_scene_ch1play4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1playend())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                    '"And at night, ',('{heroname}',share.colors.hero),' went back to ',\
@@ -451,6 +480,9 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
                     ('Chapter II',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
 
 
 

@@ -512,7 +512,11 @@ class obj_world_wakeup(obj_world):
         # start actor
         if self.addpartner:# add partner
             self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
-        self.startactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(420,490),scale=0.7,rotate=80) )
+        # self.startactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(420,490),scale=0.7,rotate=80) )
+        animation=animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
+        animation.addsound( "snore1", [14] )
+        animation.addsound( "snore2", [134] )
+        self.startactor.addpart( 'anim1', animation )
         # ungoing actor
         if self.addpartner:# add partner in love
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes',self.partnerbaseimg,(640+100,360-50),scale=0.7) )
@@ -535,7 +539,6 @@ class obj_world_wakeup(obj_world):
         self.timer.start()# reset ungoing timer
         # audio
         self.soundstart=draw.obj_sound('wake1')
-        self.soundback=draw.obj_sound('snore1')
         self.sounddone=draw.obj_sound('wake2')
 
     def triggerungoing(self,controls):
@@ -563,14 +566,14 @@ class obj_world_wakeup(obj_world):
             else:
                 # ungoing substate
                 self.timer.update()
-                print(self.timer.t)
                 if self.triggerstart(controls):# flip to start
-                    self.soundback.play()
+                    # self.soundback.play()
                     self.ungoing=False
                     self.startactor.show=True
                     self.ungoingactor.show=False
                     self.finishactor.show=False
                     self.timer.start()# reset ungoing timer
+                    self.startactor.dict["anim1"].rewind()
                 if self.timer.ring:# flip to goal reached
                     self.goal=True
                     self.sounddone.play()
@@ -892,7 +895,9 @@ class obj_world_fishing(obj_world):
         self.fishfree=True# fish not caugth (yet)
         # fish animation
         self.fish=obj_grandactor(self,(640,360))
-        self.fish.addpart( 'anim_fish',draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25) )
+        animation=draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25)
+        # animation.addsound( "fishing_swim", [13, 97, 258, 316, 510, 565, 734, 766] )
+        self.fish.addpart( 'anim_fish',animation )
         # fish hit box
         self.fishbox=obj_grandactor(self,(340,360))
         self.fishbox.actortype='fish'
@@ -900,7 +905,7 @@ class obj_world_fishing(obj_world):
         self.fishbox.ry=30
         self.fishbox.r=30
         # short timer at end
-        self.timerend=tool.obj_timer(50)
+        self.timerend=tool.obj_timer(90)# 50
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
         self.text1.addpart( 'textbox1',\
@@ -909,13 +914,28 @@ class obj_world_fishing(obj_world):
         self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,480)) )
         self.text1.show=True
         self.text2.show=False
+        #
+        self.soundreel=draw.obj_sound('fishing_reel')
+        self.soundcatch=draw.obj_sound('fishing_catch')
+        # ambience sounds (add to page!)
+        # self.soundambience=draw.obj_sound('fishing')
+        # self.creator.addpart(self.soundambience)
+        # self.soundambience.play(loop=True)
+
     def update(self,controls):
         super().update(controls)
         # hook
         if controls.gd and self.fishfree:
-            if self.hook.y<720-50: self.hook.movey(self.dydown)
+            if controls.gdc:
+                self.soundreel.play(loop=True)
+            if self.hook.y<720-50:
+                self.hook.movey(self.dydown)
+            else:
+                self.soundreel.stop()
         else:
+            self.soundreel.stop()
             if self.hook.y>0+50: self.hook.movey(-self.dyup)
+
         # fish swims:
         if self.fishfree:
             # fish box
@@ -930,11 +950,13 @@ class obj_world_fishing(obj_world):
                 self.hook.dict['img_fish'].show=True
                 self.timerend.start()
                 self.fishfree=False
+                self.soundcatch.play()
         else:
             # end of mini-game
             self.timerend.update()
             if self.timerend.ring:
                 self.done=True
+
 
 
 ####################################################################################################################
@@ -1009,7 +1031,14 @@ class obj_world_eatfish(obj_world):
         self.timer=tool.obj_timer(50)
         # short timer after done eating
         self.timerend=tool.obj_timer(50)
+        #
+        self.soundeat=draw.obj_sound('eat')
+        self.soundeatend=draw.obj_sound('eatend')
     def eatfood(self):
+        if self.bites in [6,4,2]:
+            self.soundeat.play()
+        elif self.bites==1:
+            self.soundeatend.play()
         self.eating=True
         self.timer.start()
         self.bites -=1
@@ -4538,6 +4567,17 @@ class obj_world_serenade(obj_world):
         self.text2.show=False
         # short timer after done playing
         self.timerend=tool.obj_timer(100)
+        #
+        self.soundnoted=draw.obj_sound('noted')
+        self.soundnotel=draw.obj_sound('notel')
+        self.soundnoter=draw.obj_sound('noter')
+        self.soundnoteu=draw.obj_sound('noteu')
+        # ambience sounds (add to page!)
+        self.soundambience=draw.obj_sound('serenade')
+        self.creator.addpart(self.soundambience)
+        self.soundambience.play(loop=True)
+
+
     def update(self,controls):
         super().update(controls)
         if not self.doneplaying:
@@ -4561,13 +4601,23 @@ class obj_world_serenade(obj_world):
                 if self.melody.melodyi > self.melody.melodylength-1:# completed melody
                     self.doneplaying=True
                     self.timerend.start()
+                if playednote=='U':
+                    self.soundnoteu.play()
+                elif playednote=='L':
+                    self.soundnotel.play()
+                elif playednote=='D':
+                    self.soundnoted.play()
+                elif playednote=='R':
+                    self.soundnoter.play()
+
         else:# done playing
             self.text1.show=False
             self.text2.show=True
             self.floatingnotes.show=False
             self.floatinglove.show=True
             self.timerend.update()
-            if self.timerend.ring: self.done=True
+            if self.timerend.ring:
+                self.done=True
 
 
 ####################################################################################################################
@@ -4774,7 +4824,7 @@ class obj_world_sunset(obj_world):
 ####################################################################################################################
 
 # Mini Game: go to bed
-# *GO TO BED *BED *SLEEP
+# *GOTO BED *BED *SLEEP
 class obj_world_gotobed(obj_world):
     def setup(self,**kwargs):
         # default options
@@ -4844,6 +4894,10 @@ class obj_world_gotobed(obj_world):
         self.timer=tool.obj_timer(80)# ungoing part
         self.timerend=tool.obj_timer(50)# goal to done
         self.timer.start()# reset ungoing timer
+        # audio
+        self.soundstart=draw.obj_sound('wake1')
+        self.sounddone=draw.obj_sound('wake2')
+        #
     def triggerungoing(self,controls):
         return controls.gl and controls.glc
     def triggerstart(self,controls):
@@ -4855,6 +4909,7 @@ class obj_world_gotobed(obj_world):
             if not self.ungoing:
                 # start substate
                 if self.triggerungoing(controls):# flip to ungoing
+                    self.soundstart.play()
                     self.ungoing=True
                     self.startactor.show=False
                     self.ungoingactor.show=True
@@ -4878,6 +4933,7 @@ class obj_world_gotobed(obj_world):
                         self.startactor.dict["animadd1"].rewind()
                 if self.timer.ring:# flip to goal reached
                     self.goal=True
+                    self.sounddone.play()
                     self.startactor.show=False
                     self.ungoingactor.show=False
                     self.finishactor.show=True

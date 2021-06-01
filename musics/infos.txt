@@ -18,6 +18,7 @@ so convert them to 16 bit, just run:
 
 for i in *.wav; do ffmpeg -i "$i" -f wav "${i%.*}.wav"; done
 
-DO NOT USE MP3: not compatible with pygame 2.0.0 and later versions
+for now the mp3 do not work with never pygame version 2.0.0 (this is a bug)
+so maybe use mp3 in final version on condition that this is corrected
 
 ###############################

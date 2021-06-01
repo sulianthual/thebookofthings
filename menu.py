@@ -185,7 +185,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch0.obj_scene_ch0p3()
+                quickscene=ch1.obj_scene_ch1p13()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3

@@ -747,9 +747,12 @@ class obj_scene_testsounds(obj_testpage):
     def setup(self):
         self.name='Sounds'
         self.text=['Sounds:',\
-                ' \n\n1) Can add sound to an animation (specify frames where played). The sounds are playing once every 2 animation loops. ',\
-                ' \n2) Can add sounds to a page, then call them. Try it: [Up: play sound]',\
+                ' \n\n1) Can add sounds to a page, then call them. Try it: [Up: play sound]',\
+                ' \n\n2) Can add sound to an animation (specify frames where played). ',\
+                ' By default, sounds are played each animation loop. Specificy skip>0 to play silent loops in between (affects all animation sounds) ',\
+                ' \n\n3) Sounds can be looped. For example to do a background ambience into a page. If added to page, they are automatically stopped upon page exit (with finish()). ',\
                     ]
+        self.addpart( draw.obj_music(None) )# mute music (this is optional)
         self.sound1=draw.obj_sound('test1')# sound is loaded but not played
         self.addpart( self.sound1 )
         #
@@ -757,9 +760,18 @@ class obj_scene_testsounds(obj_testpage):
         self.addpart(animation1)
         # animation1.addsound('test2',[0,10])# frame 0 not played on first read
         # animation1.addsound('test2',[1,10])# play on frame 1 and 10
-        animation1.addsound('test2',20)# works too if single frame
+        # animation1.addsound('test2',20)# works too if single frame
+        animation1.addsound('test2',20,skip=1)# animation skips playing any sound every 1 loop
+        # ambience sound
+        self.sound3=draw.obj_sound('test3')
+        self.addpart( self.sound3 )
+        self.launched=False
     def page(self,controls):
         if controls.gu and controls.guc: self.sound1.play()
+        if not self.launched:# (launch at first update because appendix screen loads all setups)
+            self.launched=True
+            self.sound3.play(loop=True)# loops, but will stop upon page exit
+
 
 class obj_scene_testsoundplacer(obj_testpage):
     def setup(self):

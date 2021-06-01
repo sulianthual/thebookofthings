@@ -87,8 +87,9 @@ class obj_scene_ch0p3(page.obj_chapterpage):
         self.addpart( animation )
         #
         self.addpart( draw.obj_music('menu') )
-        # self.addpart( draw.obj_soundplacer(animation,'drawstart') )
-        animation.addsound( "drawstart", list(range(5,45))+list(range(100,120)) )
+        # self.addpart( draw.obj_soundplacer(animation,'pen') )
+        animation.addsound( "pen", [12, 113, 132],skip=1 )
+
 
 
 # Scene: Draw Eraser
@@ -124,15 +125,15 @@ class obj_scene_ch0p5(page.obj_chapterpage):
         self.text=['The pen and eraser looked like this, and they were very happy.',\
                    'They danced together all day.',\
                    ]
-        animation1=draw.obj_animation('penmove2','pen',(640,360))
-        animation2=draw.obj_animation('erasermove','eraser',(640,360),sync=animation1)
-        self.addpart( animation1 )
+        animation=draw.obj_animation('penmove2','pen',(640,360))
+        animation2=draw.obj_animation('erasermove','eraser',(640,360),sync=animation)
+        self.addpart( animation )
         self.addpart( animation2 )
         #
         self.addpart( draw.obj_music('menu') )
-        animation1.addsound( "drawstart", list(range(5,25))+list(range(50,80)) )
-        animation2.addsound( "drawerase", [120,150] )
-
+        # self.addpart( draw.obj_soundplacer(animation,'pen','eraser') )
+        animation.addsound( "pen", [22, 49] )
+        animation.addsound( "eraser", [75],skip=1 )
 
 class obj_scene_ch0p6(page.obj_chapterpage):
     def prevpage(self):
@@ -144,14 +145,16 @@ class obj_scene_ch0p6(page.obj_chapterpage):
                    'And when there would be nothing again, it was unclear how the eraser would be erased.',\
                    ' But it didnt matter much right now because there were many more things to draw and erase.',\
                    ]
-        animation1=draw.obj_animation('penmove2a','pen',(640,360))
-        animation2=draw.obj_animation('erasermovea','eraser',(640,360),sync=animation1)
-        self.addpart( animation1 )
+        animation=draw.obj_animation('penmove2a','pen',(640,360))
+        animation2=draw.obj_animation('erasermovea','eraser',(640,360),sync=animation)
+        self.addpart( animation )
         self.addpart( animation2 )
         #
         self.addpart( draw.obj_music('menu') )
-        animation1.addsound( "drawstart", list(range(5,35))+list(range(60,90))+list(range(100,130)) )
-        animation2.addsound( "drawerase", [180,210,230,290,320,340] )
+        # self.addpart( draw.obj_soundplacer(animation,'pen','eraser') )
+        animation.addsound( "pen", [26, 99] )
+        animation.addsound( "eraser", [236, 311],skip=1 )
+
 
 
 class obj_scene_ch0p7(page.obj_chapterpage):
@@ -187,9 +190,10 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         animation=draw.obj_animation('bookmove','book',(640,360))
         self.addpart( animation )
         #
-        self.addpart( draw.obj_music('menu') )
+        # self.addpart( draw.obj_music('menu') )
+        self.addpart( draw.obj_music('tension') )
         # self.addpart( draw.obj_soundplacer(animation,'mysterious') )
-        animation.addsound( "mysterious", [1] )
+        # animation.addsound( "bookreveal", [50],skip=1 )
 
 class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
@@ -202,6 +206,8 @@ class obj_scene_ch0end(page.obj_chapterpage):
         share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
         #
         # self.addpart( draw.obj_music('menu') )
+        self.addpart( draw.obj_music('tension') )
+        # self.addpart( draw.obj_music(None) )
 
 
 

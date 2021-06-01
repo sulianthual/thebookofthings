@@ -27,6 +27,8 @@ class obj_scene_chapter6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p0())
     def triggernextpage(self,controls):
         return True
+    def soundnextpage(self):
+        pass# no sound
 
 
 
@@ -106,6 +108,8 @@ class obj_scene_ch6p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p4())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                 'Lets get started: "It was the next day and the sun was rising".',\
@@ -1074,3 +1078,14 @@ class obj_scene_ch6unlocknext(page.obj_chapterpage):
                     ('Chapter VII',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=7)# chapter 7 becomes available
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
+
+
+
+
+
+
+#
+        

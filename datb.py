@@ -135,15 +135,6 @@ class obj_musics:
     def __init__(self):
         self.dict={}
         self.setup()
-    def setup(self):
-        # dictionary= tuples of filename, volume level
-        # in final version should use wav (to mp3)
-        #
-        self.dict['error']=( 'error.wav' , 1 )
-        self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.5 )
-        self.dict['menu']=( 'POL-you-and-me-short.mp3' , 0.5 )
-
-
         #
     def getmusicfilename(self,name):
         if name in self.dict.keys():
@@ -155,6 +146,21 @@ class obj_musics:
           return self.dict[name][1]
         else:
           return self.dict['error'][1]
+    def setup(self):
+        # dictionary= tuples of filename, volume level
+        # in final version should use wav (to mp3)
+        #
+        self.dict['error']=( 'error.wav' , 1 )
+        self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.3 )
+        self.dict['menu']=( 'POL-you-and-me-short.mp3' , 0.3 )
+        self.dict['tension']=( 'dungeon_ambient_1.ogg' , 1 )
+        # serenade
+        self.dict['serenade']=( 'record_player_loop.wav' , 1 )
+
+        #
+
+
+
 
 
 # sounds database
@@ -167,38 +173,67 @@ class obj_sounds:
         # dictionary= tuples of filename, volume level
         #
         self.dict['error']=( 'error.ogg' , 1 )# error is missing sound
-        # self.dict['menugo']=( 'drop_001.ogg' , 1 )# browse menu and pages (forward)
-        # self.dict['menuback']=( 'drop_004.ogg' , 1 )# browse menu and pages (back)
-        self.dict['menugo']=( 'bookFlip3.ogg' , 1 )# browse menu and pages (forward)
-        self.dict['menuback']=( 'bookFlip2.ogg' , 1 )# browse menu and pages (back)
+        self.dict['menugo']=( 'drop_001.ogg' , 1 )# browse menu and pages (forward)
+        self.dict['menuback']=( 'drop_004.ogg' , 1 )# browse menu and pages (back)
+        # self.dict['menugo']=( 'bookFlip3.ogg' , 1 )# browse menu and pages (forward)
+        # self.dict['menuback']=( 'bookFlip2.ogg' , 1 )# browse menu and pages (back)
 
         # tests
         self.dict['test1']=( 'phaseJump1.ogg' , 1 )
         self.dict['test2']=( 'footstep_grass_001.ogg' , 1 )
+        self.dict['test3']=( 'desert-ambience.ogg' , 1 )# looped
         self.dict['test3a']=( 'female_light_1.ogg' , 1 )
         self.dict['test3b']=( 'female_light_2.ogg' , 1 )
         self.dict['test3c']=( 'female_light_3.ogg' , 1 )
         self.dict['test3d']=( 'female_light_4.ogg' , 1 )
         # drawing
-        self.dict['drawstart']=( 'click_001.ogg' , 0.2 )# when draws (looped)
-        self.dict['drawerase']=( 'switch_005.ogg' , 1 )# erase
+        # self.dict['drawstart']=( 'click_001.ogg' , 0.2 )# when draws (looped)
+        # self.dict['drawerase']=( 'switch_005.ogg' , 1 )# erase
+        self.dict['drawstart']=( 'pen1.ogg' , 0.2 )# when draws (different sounds, looped or not possible)
+        self.dict['drawerase']=( 'bookFlip2.ogg' , 1 )# erase
         # textchoice
-        self.dict['textchoicego']=( 'drop_001.ogg' , 1 )# change a textchoice
+        self.dict['textchoicego']=( 'bookFlip3.ogg' , 1 )# change a textchoice
         # textinput
         self.dict['textinputkeyboard']=( 'click_002.ogg' , 1 )# keyboard sound when entering text
-
-
+        #
+        ### SPECIFIC TO ALL
+        self.dict['unlock']=( 'Cure.ogg' , 1 )
+        ### SPECIFIC TO CHAPTERS
         # ch0
-        self.dict['mysterious']=( 'sfx_sound_vaporizing.wav' , 1 )
-        # self.dict['mysterious']=( 'sfx_menu_select4.wav' , 1 )
+        self.dict['pen']=( 'pen2.ogg' , 1 )
+        self.dict['eraser']=( 'bookFlip2.ogg' , 1 )
+        # self.dict['bookreveal']=( 'magical_1.ogg' , 1 )
+        self.dict['bookreveal']=( 'sfx_menu_select4.wav' , 1 )
         # ch1
         self.dict['tadah']=( 'sfx_menu_select4.wav' , 1 )
-        self.dict['cute1']=( 'cute_03.ogg' , 1 )
-        self.dict['cute2']=( 'cute_09.ogg' , 1 )
+        self.dict['hero1']=( 'cute_03.ogg' , 1 )
+        self.dict['hero2']=( 'haha01.wav' , 1 )
+        self.dict['hero3']=( 'sniff.wav' , 1 )
+        self.dict['hero4']=( 'haha_laugh1.wav' , 1 )
         self.dict['snore1']=( 'snore.ogg' , 1 )
-        self.dict['snore2']=( 'weird_05.ogg' , 1 )
-        self.dict['wake1']=( 'grunt_03.ogg' , 1 )
-        self.dict['wake2']=( 'misc_09.ogg' , 1 )
+        self.dict['snore2']=( 'snore1.ogg' , 1 )
+        # self.dict['wake1']=( 'grunt_03.ogg' , 1 )
+        # self.dict['wake2']=( 'misc_09.ogg' , 1 )
+        self.dict['wake1']=( 'scream-6.ogg' , 2 )
+        self.dict['wake2']=( 'human_05.ogg' , 1 )
+        # serenade
+        self.dict['noted']=( 'note_1.ogg' , 1 )
+        self.dict['notel']=( 'note_3.ogg' , 1 )
+        self.dict['noter']=( 'note_5.ogg' , 1 )
+        self.dict['noteu']=( 'note_8.ogg' , 1 )
+        self.dict['serenade']=( 'record_player_loop.wav' , 1 )# loop
+        # fishing
+        self.dict['fishing']=( 'forest-ambience.wav' , 1 )# loop
+        # self.dict['fishing']=( 'birds-isaiah658.ogg' , 1 )# loop
+        self.dict['fishing_reel']=( 'Fidget_Spinner2.wav' , 1 )
+        self.dict['fishing_catch']=( '1up 3 - Sound effects Pack 2.ogg' , 1 )
+        # eat fish
+        self.dict['eat']=( 'eatgulp2.wav' , 1 )
+        self.dict['eatend']=( 'eat_burp.wav' , 1 )
+
+
+
+        # gotobed
 
 
 

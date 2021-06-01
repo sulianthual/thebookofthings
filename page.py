@@ -28,6 +28,7 @@ class obj_page:
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
         self.pagemusic=draw.obj_music('menu')# menu music by default
+        # self.pagemusic=draw.obj_music(None)# menu music by default
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup
@@ -49,7 +50,7 @@ class obj_page:
               'world']
         if element.type in term:
             self.to_update.append(element)
-        if element.type in ['drawing','textinput','textchoice','imageplacer']:
+        if element.type in ['drawing','textinput','textchoice','imageplacer','sound']:
             self.to_finish.append(element)
         if element.type=='music':# override page music (unique element)
             self.pagemusic=element
@@ -102,23 +103,29 @@ class obj_chapterpage(obj_page):
         return controls.gq and controls.gqc
     def triggernextpage(self,controls):
         return controls.ga and controls.gac
+    def soundprevpage(self):
+        self.sound_menuback.play()
+    def soundexitpage(self):
+        self.sound_menuback.play()
+    def soundnextpage(self):
+        self.sound_menugo.play()
     def callprevpage(self,controls):
         if self.triggerprevpage(controls):
             self.preendpage()# template
             self.endpage()# customized
-            self.sound_menuback.play()
+            self.soundprevpage()
             self.prevpage()# switch to prev page
     def callexitpage(self,controls):
         if self.triggerexitpage(controls): # go back to main menu
             self.preendpage()# template
             self.endpage()# customized
-            self.sound_menuback.play()
+            self.soundexitpage()
             self.exitpage()
     def callnextpage(self,controls):
         if self.triggernextpage(controls):
             self.preendpage()# template
             self.endpage()# customized
-            self.sound_menugo.play()
+            self.soundnextpage()
             self.nextpage()# switch to next page
     def endpage(self):# when exit page
         pass

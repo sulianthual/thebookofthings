@@ -288,12 +288,14 @@ class obj_drawing:
         share.snapshotmanager.remake(self.name)
     def mousedraw(self,controls):
         if controls.gm1 and tool.isinrect(controls.gmx,controls.gmy,self.rect):
-            # play sound
-            self.sounddrawstart.play(loop=True)
+
             sprite=self.layers[-1]# last sprite from layers
             xoff=int(self.x-sprite.getrx()+self.brush.getrx())
             yoff=int(self.y-sprite.getry()+self.brush.getry())
             if controls.gm1c:
+                # play sound
+                # self.sounddrawstart.play()
+                self.sounddrawstart.play(loop=True)
                 # add new layer
                 newsprite=core.obj_sprite_image()
                 newsprite.makeempty(sprite.getrx(),sprite.getry())
@@ -816,51 +818,52 @@ class obj_imageplacer:
                 f1.write(i+'\n')#
             f1.write(' '+'\n')
     def update(self,controls):
-        self.retransform=False
-        if controls.t and controls.tc:
-            self.activemode=not self.activemode
-        if self.activemode:
-            if controls.e and controls.ec:
-                self.fh=not self.fh
-                self.retransform=True
-            if controls.q and controls.qc:
-                self.fv=not self.fv
-                self.retransform=True
-            if controls.a or controls.left:
-                self.r += 2
-                self.retransform=True
-            if controls.d or controls.right:
-                self.r -= 2
-                self.retransform=True
-            if controls.w or controls.up:
-                self.s *= 1.05
-                self.retransform=True
-            if controls.s or controls.down:
-                self.s *= 0.95
-                self.retransform=True
-            if controls.f and controls.fc:# change image
-                self.iimg += 1
-                if self.iimg>self.nimglist-1: self.iimg=0
-                self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
-                self.retransform=True
-            if controls.g and controls.gc:# reset
-                self.iimg=0# index
-                self.s=1
-                self.r=0
-                self.fh=False
-                self.fv=False
-                self.retransform=True
-        self.pointer.update(controls)
-        if self.retransform:
-            self.retransformpointer()
-        self.pointer.movetoxy(controls.gmx,controls.gmy)
-        if self.activemode:
-            if controls.gm1 and controls.gm1c:
-                self.placefrompointer(controls)
-            if controls.gm2 and controls.gm2c:
-                self.removefrompointer(controls)
-            if controls.r and controls.rc:
-                self.finish()# save content
+        if share.devaccess:
+            self.retransform=False
+            if controls.t and controls.tc:
+                self.activemode=not self.activemode
+            if self.activemode:
+                if controls.e and controls.ec:
+                    self.fh=not self.fh
+                    self.retransform=True
+                if controls.q and controls.qc:
+                    self.fv=not self.fv
+                    self.retransform=True
+                if controls.a or controls.left:
+                    self.r += 2
+                    self.retransform=True
+                if controls.d or controls.right:
+                    self.r -= 2
+                    self.retransform=True
+                if controls.w or controls.up:
+                    self.s *= 1.05
+                    self.retransform=True
+                if controls.s or controls.down:
+                    self.s *= 0.95
+                    self.retransform=True
+                if controls.f and controls.fc:# change image
+                    self.iimg += 1
+                    if self.iimg>self.nimglist-1: self.iimg=0
+                    self.pointer.replaceimage(self.imglist[self.iimg])# replace with image from folder /book
+                    self.retransform=True
+                if controls.g and controls.gc:# reset
+                    self.iimg=0# index
+                    self.s=1
+                    self.r=0
+                    self.fh=False
+                    self.fv=False
+                    self.retransform=True
+            self.pointer.update(controls)
+            if self.retransform:
+                self.retransformpointer()
+            self.pointer.movetoxy(controls.gmx,controls.gmy)
+            if self.activemode:
+                if controls.gm1 and controls.gm1c:
+                    self.placefrompointer(controls)
+                if controls.gm2 and controls.gm2c:
+                    self.removefrompointer(controls)
+                if controls.r and controls.rc:
+                    self.finish()# save content
 
 ####################################################################################################################
 
@@ -931,10 +934,12 @@ class obj_animation:
             self.spritelist[index].flip(self.fh,self.fv)
             self.spritelist[index].scale(self.s)
             self.spritelist[index].rotate(self.r)
-    def addsound(self,soundname,framelist):# add a sound (give name and framelist=[0,10] frames at which is played)
+    def addsound(self,soundname,framelist,skip=None):# add a sound (give name and framelist=[0,10] frames at which is played)
         self.sounddict[soundname]=obj_sound(soundname)
         self.sounddict_frames[soundname]=framelist
         self.sounddict_islist[soundname]=isinstance(framelist, list)# is list, else assumed integer
+        if skip:
+            self.nsilentloops=skip# how manu times loop is silent (affects all all other sounds too)
     def removesound(self,soundname):
         self.sounddict.pop(soundname, None)
         self.sounddict_frames.pop(soundname, None)
@@ -1434,12 +1439,19 @@ class obj_sound:
     def setup(self):
         mastervol=share.soundplayer.getmastervolume()
         self.soundsprite=core.obj_soundsprite(self.name,mastervol)# associated sound sprite
+        self.playing=False
     def play(self,loop=False):
         self.soundsprite.play(loop)
+        self.playing=True
     def stop(self):
-        self.soundsprite.stop()
+        if self.playing:
+            self.soundsprite.stop()
+            self.playing=False
     def update(self,controls):
         pass
+    def finish(self):
+        self.stop()# stop upon quiting page
+        # print('stopped='+self.name)
 
 # Place sounds alongside an animation with developper tools (arrows etc...)
 # writes code output in file book/aaa.txt
@@ -1483,23 +1495,24 @@ class obj_soundplacer:
                 if ta in self.soundrecords[i]:
                     self.soundlist[i].play()
     def update(self,controls):
-        # rewind animation (rmouse)
-        if controls.gm2:
-            self.animation.rewind(frame=1)# to frame=1 because can put first heard sound there
-        # play sounds with controls (arrows)
-        for i in range(self.maxsounds):
-            if self.soundexists[i] and self.triggersounds(controls,i):
-                # self.soundlist[i].play()
-                self.soundrecords[i].append(self.getanimationframe())
-        # quick replay (outside of rewind animation)
-        if not controls.gm2:
-            self.quickreplay()
-        # clear sequences
-        if controls.g and controls.gc:
-            self.soundrecords=[ [] for _ in range(self.maxsounds) ]# list of frames where sound placed
-        # output code
-        if controls.r and controls.rc:
-            self.outputcode()
+        if share.devaccess:
+            # rewind animation (rmouse)
+            if controls.gm2:
+                self.animation.rewind(frame=1)# to frame=1 because can put first heard sound there
+            # play sounds with controls (arrows)
+            for i in range(self.maxsounds):
+                if self.soundexists[i] and self.triggersounds(controls,i):
+                    # self.soundlist[i].play()
+                    self.soundrecords[i].append(self.getanimationframe())
+            # quick replay (outside of rewind animation)
+            if not controls.gm2:
+                self.quickreplay()
+            # clear sequences
+            if controls.g and controls.gc:
+                self.soundrecords=[ [] for _ in range(self.maxsounds) ]# list of frames where sound placed
+            # output code
+            if controls.r and controls.rc:
+                self.outputcode()
     def outputcode(self):# output in aaa.txt and also on screen
         with open(self.filecode,'w+') as f1:
             f1.write(' '+'\n')

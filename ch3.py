@@ -27,6 +27,8 @@ class obj_scene_chapter3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p0())
     def triggernextpage(self,controls):
         return True
+    def soundnextpage(self):
+        pass# no sound
 
 
 class obj_scene_ch3p0(page.obj_chapterpage):
@@ -896,4 +898,7 @@ class obj_scene_ch3unlocknext(page.obj_chapterpage):
                     ('Chapter IV',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=4)# chapter 4 becomes available
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
 #

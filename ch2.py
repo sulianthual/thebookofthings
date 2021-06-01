@@ -29,6 +29,8 @@ class obj_scene_chapter2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p0())
     def triggernextpage(self,controls):
         return True
+    def soundnextpage(self):
+        pass# no sound
 
 
 
@@ -255,6 +257,8 @@ class obj_scene_ch2p8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p9())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
@@ -267,7 +271,8 @@ class obj_scene_ch2p8(page.obj_chapterpage):
         self.addpart(self.world)
         # self.addpart(draw.obj_animation('ch2_musicnote1','musicnote',(640,500),scale=0.3,record=False))
         # self.addpart( draw.obj_imageplacer(self,'saxophone','guitar','herobase') )
-
+        #
+        # self.addpart( draw.obj_music('serenade') )
 
 
 class obj_scene_ch2p9(page.obj_chapterpage):
@@ -583,7 +588,9 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
                     ('Chapter III',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
-
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
 
 
 #
