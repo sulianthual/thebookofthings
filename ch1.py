@@ -40,13 +40,19 @@ class obj_scene_ch1p0(page.obj_chapterpage):
                   'The book of things said: "Today, we are going to write an amazing story. ',\
                   'Lets start by writing the first page." ',\
                    ]
-        animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
-        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
-        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
-        self.addpart(animation1)
+        animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
+        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
+        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation,scale=0.5)
+        self.addpart(animation)
         self.addpart(animation2)
         self.addpart(animation3)
-
+        # self.addpart( draw.obj_soundplacer(animation,'book1','book2','pen','eraser') )
+        animation.addsound( "book1", [46, 95] )
+        animation.addsound( "book2", [63] )
+        animation.addsound( "pen", [199] )
+        animation.addsound( "eraser", [185],skip=1 )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 class obj_scene_ch1p1(page.obj_chapterpage):
     def prevpage(self):
@@ -76,6 +82,8 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         textchoice.addkey('hero_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart(draw.obj_animation('ch1_pen2','pen',(1180,400),record=False,scale=0.5))
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -94,6 +102,8 @@ class obj_scene_ch1p2(page.obj_chapterpage):
         self.addpart(animation)
         # self.addpart( draw.obj_soundplacer(animation,'tadah') )
         animation.addsound( "tadah", [10] )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -113,6 +123,8 @@ class obj_scene_ch1p3(page.obj_chapterpage):
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         drawing=draw.obj_drawing('happyface',(640,450),legend='Draw a Happy Face',shadow=(200,200))
         self.addpart( drawing )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 class obj_scene_ch1p4(page.obj_chapterpage):
     def prevpage(self):
@@ -131,6 +143,8 @@ class obj_scene_ch1p4(page.obj_chapterpage):
         animation.addsound( "hero1", [28] )
         animation.addsound( "hero2", [222] )
         animation.addsound( "hero3", [124] )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -148,6 +162,8 @@ class obj_scene_ch1p5(page.obj_chapterpage):
                    ]
         drawing=draw.obj_drawing('bed',(640,450),legend='Draw a Bed',shadow=(400,200))
         self.addpart( drawing )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -172,6 +188,8 @@ class obj_scene_ch1p6(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation,'snore1','snore2') )
         animation.addsound( "snore1", [14] )
         animation.addsound( "snore2", [134] )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -198,6 +216,8 @@ class obj_scene_ch1p7(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_wakeup(self,sun=False)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -217,6 +237,8 @@ class obj_scene_ch1p8(page.obj_chapterpage):
         animation.addsound( "hero1", [17] )
         animation.addsound( "hero2", [265] )
         animation.addsound( "hero3", [220] )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -235,9 +257,9 @@ class obj_scene_ch1p9(page.obj_chapterpage):
                    ]
         self.addpart(draw.obj_drawing('hook',(240,450),legend='Draw a Hook',shadow=(200,200)))
         self.addpart(draw.obj_drawing('fish',(940,450),legend='Draw a Fish (Facing Left)',shadow=(300,200)))
-        if False:# not for player
-            hookline=draw.obj_drawing('hookline',(540,360),legend='Hook',shadow=(30,360),brush=share.brushes.smallpen)
-            self.addpart(hookline)
+        #
+        self.addpart( draw.obj_music('ch1') )
+
 
 class obj_scene_ch1p10(page.obj_chapterpage):
     def prevpage(self):
@@ -256,9 +278,8 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
         #
-        # animation=draw.obj_animation('fishmove1','fish',(640,360),imgscale=0.25)
-        # self.addpart(animation)
-        # self.addpart( draw.obj_soundplacer(animation,'fishing_swim') )
+        self.addpart( draw.obj_music('ch1') )
+
 
 
 
@@ -281,6 +302,8 @@ class obj_scene_ch1p11(page.obj_chapterpage):
         animation.addsound( "hero2", [22] )
         animation.addsound( "hero3", [193] )
         animation.addsound( "hero4", [82,240],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 
@@ -304,16 +327,8 @@ class obj_scene_ch1p12(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
-        # self.world.timerend.amount=100# longer cutscene for first time playing
-        # self.addpart( draw.obj_image('fish',(900,400), scale=1,rotate=-45) )
-        # self.addpart( draw.obj_image('herobase',(340,400), scale=0.7) )
-        # self.addpart(draw.obj_animation('ch1_heroeats1','herobase',(640,360),record=False,imgscale=0.7))
-        # animation2=draw.obj_animation('ch1_eatsounds','says_crunch',(360,360),record=False,sync=self.world.animation1,path='premade')
-        # animation2.addimage('says_miam')
-        # animation2.addimage('says_gulp')
-        # animation2.addimage('says_empty')
-        # self.addpart(animation2)
-
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 class obj_scene_ch1p13(page.obj_chapterpage):
@@ -336,6 +351,8 @@ class obj_scene_ch1p13(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_gotobed(self,addmoon=False)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 class obj_scene_ch1p14(page.obj_chapterpage):
@@ -354,6 +371,8 @@ class obj_scene_ch1p14(page.obj_chapterpage):
         # self.addpart(draw.obj_drawing('sun',(340,450),legend='Sun',shadow=(200,200)))
         self.addpart(draw.obj_drawing('sun',(300+50,450),legend='Sun',shadow=(300,200)))
         self.addpart(draw.obj_drawing('moon',(1280-200-50,450),legend='Moon',shadow=(200,200)))
+        #
+        self.addpart( draw.obj_music('ch1') )
 
 
 ##########################################################
@@ -370,12 +389,19 @@ class obj_scene_ch1play(page.obj_chapterpage):
         self.text=[\
                    'Now, lets read again our story to summarize, said the book of things. ',\
                    ]
-        animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
-        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
-        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
-        self.addpart(animation1)
+        animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
+        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
+        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation,scale=0.5)
+        self.addpart(animation)
         self.addpart(animation2)
         self.addpart(animation3)
+        #
+        self.addpart( draw.obj_music('tension') )
+        # self.addpart( draw.obj_soundplacer(animation,'book1','book2','pen','eraser') )
+        animation.addsound( "book1", [46] )
+        animation.addsound( "book2", [55] )
+        animation.addsound( "pen", [189] )
+        animation.addsound( "eraser", [199] )
 
 
 class obj_scene_ch1play1(page.obj_chapterpage):
@@ -397,6 +423,8 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         # self.addpart(draw.obj_animation('ch1_sun','sun',(640,360),record=False,scale=0.5))
         self.world=world.obj_world_wakeup(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch1play') )
 
 
 
@@ -418,6 +446,8 @@ class obj_scene_ch1play2(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch1play') )
 
 class obj_scene_ch1play3(page.obj_chapterpage):
     def prevpage(self):
@@ -436,6 +466,8 @@ class obj_scene_ch1play3(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch1play') )
 
 
 class obj_scene_ch1play4(page.obj_chapterpage):
@@ -454,6 +486,8 @@ class obj_scene_ch1play4(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch1play') )
 
 
 class obj_scene_ch1playend(page.obj_chapterpage):
@@ -468,6 +502,8 @@ class obj_scene_ch1playend(page.obj_chapterpage):
                    'But tomorrow we will make this story even better! ',\
                    ]
         self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 
@@ -483,6 +519,8 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
         sound1=draw.obj_sound('unlock')
         self.addpart(sound1)
         sound1.play()
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 

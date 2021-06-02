@@ -1460,7 +1460,7 @@ class obj_soundplacer:
     def __init__(self,animation,*args):
         self.type='soundplacer'
         self.animation=animation# associated animation (must be on page)
-        self.maxsounds=4# max number of sounds (for arrows)
+        self.maxsounds=7# max number of sounds (for arrows+q,e,f)
         self.soundnames=[]
         if args is not None:# args is the list of soundnames
             for c,i in enumerate(args):
@@ -1476,16 +1476,24 @@ class obj_soundplacer:
             self.soundexists[c]=True
         # output code
         self.filecode='book/aaa.txt'
+        # toggle record sounds
+        self.recordingsounds=True
     def triggersounds(self,controls,index):
-        # play sounds with controls (arrows)
+        # play sounds with controls (wasd)
         if index==0:
-            return controls.gl and controls.glc
+            return controls.a and controls.ac
         elif index==1:
-            return controls.gu and controls.guc
+            return controls.w and controls.wc
         elif index==2:
-            return controls.gr and controls.grc
+            return controls.d and controls.dc
         elif index==3:
-            return controls.gd and controls.gdc
+            return controls.s and controls.sc
+        elif index==4:
+            return controls.q and controls.qc
+        elif index==5:
+            return controls.e and controls.ec
+        elif index==6:
+            return controls.f and controls.fc
         else:
             return False
     def quickreplay(self):# quick replay as animation replays
@@ -1496,14 +1504,19 @@ class obj_soundplacer:
                     self.soundlist[i].play()
     def update(self,controls):
         if share.devaccess:
+            # toggle record mode
+            if controls.t and controls.tc:
+                self.recordingsounds= not self.recordingsounds
             # rewind animation (rmouse)
             if controls.gm2:
                 self.animation.rewind(frame=1)# to frame=1 because can put first heard sound there
             # play sounds with controls (arrows)
             for i in range(self.maxsounds):
                 if self.soundexists[i] and self.triggersounds(controls,i):
-                    # self.soundlist[i].play()
-                    self.soundrecords[i].append(self.getanimationframe())
+                    if self.recordingsounds:
+                        self.soundrecords[i].append(self.getanimationframe())
+                    else:
+                        self.soundlist[i].play()
             # quick replay (outside of rewind animation)
             if not controls.gm2:
                 self.quickreplay()

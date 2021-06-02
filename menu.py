@@ -133,7 +133,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_pointer.movetoy(410+self.ichapter*30)
         self.sprite_pen.movetoy(360+self.ichapter*30)
         #
-        self.addpart( draw.obj_music('menu') )
+        self.addpart( draw.obj_music('tension') )
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
         self.addpart( self.sound_menugo )
         #
@@ -153,11 +153,9 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.sprite_pointer.movetoy(410+self.ichapter*30)
             self.sprite_pen.movetoy(360+self.ichapter*30)
         if controls.ga  and controls.gac:
-            # for unknown reasons, sound already played when going to chapter (!?)
-            # self.sound_menugo.play()
+            self.sound_menugo.play()
             if self.ichapter==-1:
                 share.scenemanager.switchscene(obj_scene_settings())
-                self.sound_menugo.play()
             elif self.ichapter==0:
                 share.scenemanager.switchscene(ch0.obj_scene_prologue())
             elif self.ichapter==1:
@@ -185,7 +183,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch1.obj_scene_ch1p13()
+                quickscene=ch2.obj_scene_ch2p1()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -246,15 +244,15 @@ class obj_scene_settings(page.obj_page):
         #
         self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
         self.addpart( draw.obj_textbox('Credits',(640,530),fontsize='smaller') )
-        #
-        self.addpart( draw.obj_music('menu') )
+
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
         self.addpart( self.sound_menugo )
         self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
         self.addpart( self.sound_menuback )
         if self.tosoundon:
             self.sound_menuback.play()
-
+        #
+        self.addpart( draw.obj_music('tension') )
         #
     def page(self,controls):
         if controls.gd and controls.gdc:
@@ -338,9 +336,10 @@ class obj_scene_creditscreen(page.obj_chapterpage):
                     '\n\nThe book of things: a game by Sulian Thual (created 2020). ',\
                     'Made with Pygame. ',\
                     'All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). ',\
+                    'Sounds from opengameart.com and freesound.com (License CC0). ',\
                    '[',share.datamanager.controlname('back'),': back]']
         #
-        self.addpart( draw.obj_music('menu') )
+        self.addpart( draw.obj_music('tension') )
 
 
 ####################################################################################################################
@@ -366,7 +365,7 @@ class obj_scene_erasebook(page.obj_chapterpage):
                     '[',share.datamanager.controlname('back'),': back]',\
                     ]
         #
-        self.addpart( draw.obj_music('menu') )
+        self.addpart( draw.obj_music('tension') )
         #
 
 class obj_scene_erasebookconfirmed(page.obj_chapterpage):
@@ -379,7 +378,7 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
                    '[',share.datamanager.controlname('back'),': back]']
         share.datamanager.erasebook()
         #
-        self.addpart( draw.obj_music('menu') )
+        self.addpart( draw.obj_music('tension') )
 
         #
 

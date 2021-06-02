@@ -27,8 +27,8 @@ class obj_page:
         self.to_update=[]# elements to manage at page update
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
-        self.pagemusic=draw.obj_music('menu')# menu music by default
-        # self.pagemusic=draw.obj_music(None)# menu music by default
+        # self.pagemusic=draw.obj_music('menu')# menu music by default
+        self.pagemusic=draw.obj_music(None)# menu music by default
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup

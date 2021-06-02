@@ -227,8 +227,10 @@ class obj_scene_testpagefunctions(obj_testpage):
                    'Managed elements are updated and displayed by the page in the order they were added,',\
                    ' which determines their layering, ',\
                    'and finished (=saved) on page exit if necessary. ',\
-                   'In \"page\" one can add additional update commands for an element. '
-                   ' Elements can be managed manually but is is not recommended ',\
+                   ' Elements can alo be managed manually (not recommended). ',\
+                   'Page object should only be created when switching with scenemanager (because elements starts loading/playing during init). ',\
+                   '(Note: this is not respected by obj_scene_testmenu in loadtests). ',\
+                   '',\
                    ]
         # managed elements can be: drawing,textinput,textbox,image,animation,dispgroup,world
         # element must have matching self.type to be managed by obj_page
@@ -763,7 +765,7 @@ class obj_scene_testsounds(obj_testpage):
         # animation1.addsound('test2',20)# works too if single frame
         animation1.addsound('test2',20,skip=1)# animation skips playing any sound every 1 loop
         # ambience sound
-        self.sound3=draw.obj_sound('test3')
+        self.sound3=draw.obj_sound('test4')
         self.addpart( self.sound3 )
         self.launched=False
     def page(self,controls):
@@ -779,16 +781,17 @@ class obj_scene_testsoundplacer(obj_testpage):
         self.text=['Sound Placer:',\
                     'generate code to easily place sounds alongside animation. Output code is in book/aaa.txt',\
                     '\n\n[Rmouse]=rewind animation ',\
-                    '\n[Arrows]=record sound ',\
-                    '\n[G]=clear all sounds ',\
-                    '\n[R]=output code ',\
+                    '\n[T]=toggle record mode (default on) ',\
+                    '\n[wasd,q,e,f]=play sound (or record in record mode) ',\
+                    '\n[G]=clear all recorded sounds ',\
+                    '\n[R]=output code from recorded sounds',\
                     ]
         # animation
         self.addpart( draw.obj_music('menu') )
         animation=draw.obj_animation('testanimation1','testimage1',(340,360))
         self.addpart(animation)
         # sound placer
-        self.addpart( draw.obj_soundplacer(animation,'test3a','test3b','test3c','test3d') )
+        self.addpart( draw.obj_soundplacer(animation,'test3a','test3b','test3c','test3d','test1','test2','test3') )# up to 7 sound inputs at same time
         #
         # example of code from book/aaa.txt to copy on page
         # animation.addsound( "test3a", [45] )
