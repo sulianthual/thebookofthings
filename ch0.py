@@ -24,6 +24,8 @@ import world
 class obj_scene_prologue(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p1())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['-----   Prologue: The book of things   -----   ',\
@@ -38,6 +40,7 @@ class obj_scene_ch0p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_prologue())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
+
     def setup(self):
         tempo1='['+share.datamanager.controlname('action')+']'
         tempo2='['+share.datamanager.controlname('back')+']'
@@ -46,6 +49,10 @@ class obj_scene_ch0p1(page.obj_chapterpage):
         self.addpart(draw.obj_textbox('press '+tempo1+' to continue',(640,400),color=share.colors.instructions))
         self.addpart(draw.obj_textbox('press '+tempo2+' to go back',(640,500),color=share.colors.instructions))
         self.addpart(draw.obj_textbox('press '+tempo3+' to return to menu',(640,600),color=share.colors.instructions))
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('ch0') )
 
@@ -202,17 +209,28 @@ class obj_scene_ch0p8(page.obj_chapterpage):
 class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
-    # def nextpage(self):
-    #     share.scenemanager.switchscene(obj_scene_ch0unlocknext())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):
         self.text=['And so the book began...',\
                    ]
-        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
         #
         self.addpart( draw.obj_music('tension') )
 
 
-
+class obj_scene_ch0unlocknext(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
+    def setup(self):
+        self.text=['You have unlocked a new chapter, ',\
+                    ('Chapter I',share.colors.instructions),'! Access it from the menu. ',\
+                   ]
+        share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 

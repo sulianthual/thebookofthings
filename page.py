@@ -23,24 +23,26 @@ import tool
 # Template for any game scene (called a page in the book of things)
 class obj_page:
     def __init__(self,**kwargs):
+        self.initstart(**kwargs)
+    def initstart(self,**kwargs):# start
         # elements
         self.to_update=[]# elements to manage at page update
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
-        # self.pagemusic=draw.obj_music('menu')# menu music by default
         self.pagemusic=draw.obj_music(None)# menu music by default
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup
         self.postsetup()
-    # def __del__(self):
-        # print('deleted: '+str(self))# pages are consistently deleted when no longer in use by scenemanager
     def presetup(self):# background
         self.addpart(draw.obj_pagebackground())
     def setup(self,**kwargs):# custom elements
         pass
     def postsetup(self):# foreground
         self.addpart(draw.obj_pagedisplay_fps())
+    #
+    def pagename(self):# page has a name for scene inventories (optional)
+        return None
     def addpart(self,element):
         term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup',\
               'imageplacer','soundplacer',\
@@ -57,6 +59,9 @@ class obj_page:
     def removepart(self,element):
         for i in [self.to_update,self.to_finish]:
             if element in i: i.remove(element)
+    # def __del__(self):# not needed: pages are consistently deleted when no longer in use
+        # print('deleted: '+str(self))
+    #
     def update(self,controls):
         self.prepage(controls)
         self.page(controls)
@@ -77,10 +82,10 @@ class obj_page:
 
 # chapter page template: a page in a chapter of the book
 class obj_chapterpage(obj_page):
-    def __init__(self,**kwargs):
+    def initstart(self,**kwargs):
         self.text=[]# Main body of text
         self.textkeys={}
-        super().__init__(**kwargs)
+        super().initstart(**kwargs)
     def presetup(self):
         super().presetup()
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
@@ -130,11 +135,11 @@ class obj_chapterpage(obj_page):
     def endpage(self):# when exit page
         pass
     def prevpage(self):# actions to prev page (replace here)**
-        share.scenemanager.switchscene(share.titlescreen,init=True)
+        share.scenemanager.switchscene(share.titlescreen,initstart=True)
     def exitpage(self):
-        share.scenemanager.switchscene(share.titlescreen,init=True)
+        share.scenemanager.switchscene(share.titlescreen,initstart=True)
     def nextpage(self):# actions to next page (replace here)**
-        share.scenemanager.switchscene(share.titlescreen,init=True)
+        share.scenemanager.switchscene(share.titlescreen,initstart=True)
 
 
 ####################################################################################################################

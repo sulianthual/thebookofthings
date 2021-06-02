@@ -25,21 +25,24 @@ import world
 # Test Menu
 # Note: All tests are init on menu init (which is problematic, loads all assets at once)
 class obj_scene_testmenu(page.obj_page):
-    def __init__(self,**kwargs):
-        super().__init__(**kwargs)
-    def setup(self,**kwargs):
-        super().setup(**kwargs)
+    def setup(self):
         share.ipage=1# current page number in chapter
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
         self.addpart(draw.obj_textbox('Appendix Developer Tests [space: Read] [Tab: Back]',(640,50),fontsize='medium'))
         for i,test in enumerate(self.list[:self.nrow-1]):
-            self.addpart(draw.obj_textbox(test.name,(250,130+i*30),fontsize='smaller'))
+            self.addpart(draw.obj_textbox(test.pagename(),(250,130+i*30),fontsize='smaller'))
         for i,test in enumerate(self.list[self.nrow-1:]):
-            self.addpart(draw.obj_textbox(test.name,(640,130+i*30),fontsize='smaller'))
+            self.addpart(draw.obj_textbox(test.pagename(),(640,130+i*30),fontsize='smaller'))
         self.sprite_pointer=draw.obj_textbox('---',(640,360),fontsize='smaller')# moved around
         self.addpart(self.sprite_pointer)
+        #
+        self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
+        self.addpart( self.sound_menugo )
+        self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
+        self.addpart( self.sound_menuback )
+        #
     def page(self,controls):
         if share.itest<self.nrow-1:
             self.sprite_pointer.movetox(60)
@@ -48,14 +51,18 @@ class obj_scene_testmenu(page.obj_page):
             self.sprite_pointer.movetox(460)
             self.sprite_pointer.movetoy(130+(share.itest-self.nrow+1)*30)
         if controls.gd and controls.gdc:
+            self.sound_menugo.play()
             share.itest += 1
             if share.itest == self.listlen: share.itest=0
         if controls.gu and controls.guc:
+            self.sound_menugo.play()
             share.itest -= 1
             if share.itest == -1: share.itest=self.listlen-1
         if controls.ga and controls.gac:
-            share.scenemanager.switchscene(self.list[share.itest],init=True)
+            self.sound_menugo.play()
+            share.scenemanager.switchscene(self.list[share.itest],initstart=True)
         if controls.gb and controls.gbc:
+            self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen)
 
     def loadtests(self):# load all tests
@@ -100,11 +107,19 @@ class obj_scene_testmenu(page.obj_page):
         self.listlen=len(self.list)
 
 
-# Template for test page = chapter page with slightly modified functionalities
+
+
+# Template for test page = chapter page with modified functionalities
+#
+# 1) Does not initstart at init (allows to make inventory of empty testpages)
+#    (as a result **kwargs are omitted by init)
+# 2) pagename() is used to make an inventory of testpages
+#
 class obj_testpage(page.obj_chapterpage):
-    def __init__(self):
-        self.name='Unamed'# needs name to display on test menu
-        super().__init__()
+    def __init__(self,**kwargs):
+        pass# no initstart
+    def pagename(self):
+        return 'Test Page'
     def presetup(self):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
@@ -121,8 +136,9 @@ class obj_testpage(page.obj_chapterpage):
 # All Tests Here
 
 class obj_scene_alldrawings(obj_testpage):
+    def pagename(self):
+        return 'All Drawings'
     def setup(self):
-        self.name='All Drawings'
         y1=50
         dy1=100
         x1=50
@@ -154,9 +170,10 @@ class obj_scene_alldrawings(obj_testpage):
 
 
 class obj_scene_testmessage(obj_testpage):
+    def pagename(self):
+        return 'Message from the Developer'
     def setup(self):
-        self.name='Message from the Developer'
-        self.text=[(self.name,share.colors.red),': ',\
+        self.text=['Message from the Developer: ',\
                    '\n\nThis is an appendix for tests by the Game Developer. ',\
                    'If you are not the Game Developer get out of here!',\
                    '\n ',\
@@ -165,9 +182,10 @@ class obj_scene_testmessage(obj_testpage):
 
 
 class obj_scene_testdevnotes(obj_testpage):
+    def pagename(self):
+        return 'Developper Notes'
     def setup(self):
-        self.name='Developper Notes'
-        self.text=[(self.name,share.colors.red),': ',\
+        self.text=['Developper Notes: ',\
                    ('\n\nFile Structure: ',share.colors.red),\
                     'main=execute program. ',\
                     'share=store global variables. ',\
@@ -186,8 +204,9 @@ class obj_scene_testdevnotes(obj_testpage):
 
 
 class obj_scene_testdevmodeinfo(obj_testpage):
+    def pagename(self):
+        return 'Devmode'
     def setup(self):
-        self.name='Devmode'
         self.text=['Developper Mode (devmode): ',\
                    'Toggle devmode with [CTRL]. ',\
                    'While in devmode additional information is displayed on screen, like centers and edges. ',\
@@ -220,16 +239,16 @@ class obj_scene_testdevmodeinfo(obj_testpage):
 
 # Scene: page basics
 class obj_scene_testpagefunctions(obj_testpage):
+    def pagename(self):
+        return 'Page Basics'
     def setup(self):
-        self.name='Page Basics'
         self.text=['Pages Basics: each page in the book is a scene from a template (see obj_page). ',\
                    'In \"setup\", addpart(element) adds element to list of managed elements. ',\
                    'Managed elements are updated and displayed by the page in the order they were added,',\
                    ' which determines their layering, ',\
                    'and finished (=saved) on page exit if necessary. ',\
                    ' Elements can alo be managed manually (not recommended). ',\
-                   'Page object should only be created when switching with scenemanager (because elements starts loading/playing during init). ',\
-                   '(Note: this is not respected by obj_scene_testmenu in loadtests). ',\
+                   'Page object should only be created when switching with scenemanager (except testpages). ',\
                    '',\
                    ]
         # managed elements can be: drawing,textinput,textbox,image,animation,dispgroup,world
@@ -244,10 +263,12 @@ class obj_scene_testpagefunctions(obj_testpage):
     def endpage(self):
         self.drawing.finish()# non-managed elements must be finished here (textinput and drawings...)
 
+
 # Scene: page basics
 class obj_scene_testheadermaker(obj_testpage):
+    def pagename(self):
+        return 'Header Maker'
     def setup(self):
-        self.name='Header Maker'
         self.text=['Header Maker: add this to quickly build the code headers for pages in a chapter. ',\
                    'check the file book/aaa.txt for the code output. ',\
                   'Page must start above 0. Last nextpage is commented (for if next page doesnt exist) ',\
@@ -257,8 +278,9 @@ class obj_scene_testheadermaker(obj_testpage):
 
 
 class obj_scene_interactivetext(obj_testpage):
+    def pagename(self):
+        return 'Text Basics'
     def setup(self):
-        self.name='Text Basics'
         self.text=['Text Basics: self.text on page is displayed with automatic return to line (or with antislash-n). ',\
                    'It can have colors like : '\
                     ' The ', ('Hero',share.colors.red), ' was ', ('happy',share.colors.blue),'. ',\
@@ -271,8 +293,9 @@ class obj_scene_interactivetext(obj_testpage):
 
 
 class obj_scene_textinput(obj_testpage):
+    def pagename(self):
+        return 'Text input'
     def setup(self):
-        self.name='Text input'
         self.text=[
             'textinput: Hover over the text box to input with keyboard. [Backspace] erases all.',\
             'This saves keywords in the game dictionary (words.txt) to be reused like:',\
@@ -289,8 +312,9 @@ class obj_scene_textinput(obj_testpage):
 
 
 class obj_scene_textchoice(obj_testpage):
+    def pagename(self):
+        return 'Text Choice'
     def setup(self):
-        self.name='Text Choice'
         self.text=[
             'textchoice: Hover with [Mouse] and click with [Left Mouse] to select among choices. ',\
             'The current choice is the circled one. ',\
@@ -320,8 +344,9 @@ class obj_scene_textchoice(obj_testpage):
 
 
 class obj_scene_textbox(obj_testpage):
+    def pagename(self):
+        return 'Textbox Basics'
     def setup(self):
-        self.name='Textbox Basics'
         self.text=[
             'Textbox Basics: Placed anywhere, can customize font and color. ',\
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
@@ -363,8 +388,9 @@ class obj_scene_textbox(obj_testpage):
 
 # Scene: test draw something
 class obj_scene_testdrawing(obj_testpage):
+    def pagename(self):
+        return 'Drawing Basics'
     def setup(self):
-        self.name='Drawing Basics'
         self.text=['Drawing Basics: Draw with [Left Mouse], Erase with [Right Mouse] ',\
                    '(when mouse is in drawing area). ',\
                    'Drawing can have a legend, that accepts keywords like ',\
@@ -380,8 +406,9 @@ class obj_scene_testdrawing(obj_testpage):
 
 # Scene: test several drawings at the same time
 class obj_scene_testdrawingbase(obj_testpage):
+    def pagename(self):
+        return 'Drawing Base'
     def setup(self):
-        self.name='Drawing Base'
         self.text=['Drawing Base: A drawing can be the base for other drawing ',\
                    '(of same dimensions). The other drawing should better have no shadows.',\
                    'Small glitches happen when coming back to existing drawings with base: in that case just erase and restart. ',\
@@ -395,8 +422,9 @@ class obj_scene_testdrawingbase(obj_testpage):
 
 # Scene: test show image
 class obj_scene_testimage(obj_testpage):
+    def pagename(self):
+        return 'Image Basics'
     def setup(self):
-        self.name='Image Basics'
         self.text=['Image Basics: ',\
             'Try it: ',\
             '[arrows alone]:move. ',\
@@ -440,8 +468,9 @@ class obj_scene_testimage(obj_testpage):
 
 # Scene: test image placer
 class obj_scene_testimageplacer(obj_testpage):
+    def pagename(self):
+        return 'Image Placer'
     def setup(self):
-        self.name='Image Placer'
         self.text=['Image Placer: allows developer to quickly place images on screen. ',\
                     'the file book/aaa.txt is edited live, and the code can be quickly copied to a page. ',\
                    '[W,S or Up,Down:scale], [A,D or Left,Right:rotate], [Q,E: flip], [F: browse image], [G: Reset].',\
@@ -461,13 +490,15 @@ class obj_scene_testimageplacer(obj_testpage):
         # self.staticactor.addpart( "img1", draw.obj_image('testimage1',(402,473),scale=1,rotate=0,fliph=False,flipv=False) )
         # self.staticactor.addpart( "img2", draw.obj_image('testimage2',(777,377),scale=1,rotate=0,fliph=False,flipv=False) )
 
+
 #########################################################################
 # Tests Animations
 
 # Scene: test create/show animation
 class obj_scene_testanimation(obj_testpage):
+    def pagename(self):
+        return 'Animation Basics'
     def setup(self):
-        self.name='Animation Basics'
         self.text=['Animation Basics: Animation has two modes, Record and Playback. Toggle Mode with [T]. ',\
                    '\n(You must be in Dev Mode to do so, which is Toggled by [CTRL]). ',\
                     '\n-- While in Record Mode:',\
@@ -491,9 +522,10 @@ class obj_scene_testanimation(obj_testpage):
 
 # Scene: test animation alongside animation
 class obj_scene_testanimationanimation(obj_testpage):
+    def pagename(self):
+        return 'Animation Sync'
     def setup(self):
-        self.name='Animation Sync'
-        self.text=[(self.name,share.colors.red),': ',\
+        self.text=['Animation Sync: ',\
                    'Use \"sync\" to ensure an animation 2  has the same duration as animation 1. ',\
                    'To record: 1) hold RMouse (rewinds animation 1 to current frame of animation 2),',\
                    ' 2) Hold LMouse (starts recording animation 2 while playing animation1), ',\
@@ -509,9 +541,10 @@ class obj_scene_testanimationanimation(obj_testpage):
 
 # Scene: test create/show animation
 class obj_scene_testanimationplayback(obj_testpage):
+    def pagename(self):
+        return 'Animation Playback'
     def setup(self):
-        self.name='Animation Playback'
-        self.text=[(self.name,share.colors.red),': ',\
+        self.text=['Animation Playback: ',\
                    'During playback, animation accepts additional transformations. ',\
                    'Always record animation WITHOUT these transformations. ',\
                    'Try it: ',\
@@ -546,8 +579,9 @@ class obj_scene_testanimationplayback(obj_testpage):
 
 # Scene: test dispgroup move
 class obj_scene_testdispgroup(obj_testpage):
+    def pagename(self):
+        return 'Display group'
     def setup(self):
-        self.name='Display group'
         self.text=['Display Group (or dispgroup): A group of elements (textboxes,images or animations)',\
                     ' that can be transformed while conserving general structure. ',\
                    'Try it: ',\
@@ -584,8 +618,9 @@ class obj_scene_testdispgroup(obj_testpage):
 
 # Scene: test dispgroup snapshot
 class obj_scene_testdispgroupsnapshot(obj_testpage):
+    def pagename(self):
+        return 'Display group Snapshot'
     def setup(self):
-        self.name='Display group Snapshot'
         self.text=['Display group Snapshot: snapshots a dispgroup (only its images). Useful to combine several drawings/images. ',\
                    'Try it: [arrows]: move. [lmouse]: take a snapshot (and refresh it on page).',\
                    'Note: the snapshot manager (in datb) automatically remakes all related snapshots each time a drawing is remade',\
@@ -615,8 +650,9 @@ class obj_scene_testdispgroupsnapshot(obj_testpage):
 
 
 class obj_scene_testworld(obj_testpage):
+    def pagename(self):
+        return 'World Basics'
     def setup(self):
-        self.name='World Basics'
         self.text=['World Basics: ',\
                    'A World has actors in it as well as rules that manage interaction between actors. ',\
                    'The world checks all rules, and the rules may check and modify actors (but the actors dont check on rules). ',\
@@ -641,8 +677,9 @@ class obj_scene_testworld(obj_testpage):
 
 
 class obj_scene_testworldgrandactor(obj_testpage):
+    def pagename(self):
+        return 'World Grand Actor'
     def setup(self):
-        self.name='World Grand Actor'
         self.text=['World Grand Actor: ',\
                    'A simple actor (obj_actor) does basic functions. ',\
                    'A grand actor (obj_grandactor) is more elaborate: ',\
@@ -681,8 +718,9 @@ class obj_scene_testworldgrandactor(obj_testpage):
 
 
 class obj_scene_testrigidbody(obj_testpage):
+    def pagename(self):
+        return 'Actors with Rigid Bodies'
     def setup(self):
-        self.name='Actors with Rigid Bodies'
         self.text=['Actors with Rigid Bodies: ',\
                    'a grand actor with rigidbody dynamics (external forces, internal friction). ',\
                   'Try it: ',\
@@ -714,10 +752,11 @@ class obj_scene_testrigidbody(obj_testpage):
 
 
 class obj_scene_testbreakfastdrinking(obj_testpage):
+    def pagename(self):
+        return 'Minigame breakfast drinking'
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-        self.name='Minigame breakfast drinking'
         self.text=['Minigame breakfast drinking: ',\
                    'This game is unused but could be easily recycled to some stealth minigame (cutting some rope, pickpocketing, stabbing....) ',\
                    ]
@@ -725,14 +764,16 @@ class obj_scene_testbreakfastdrinking(obj_testpage):
         self.addpart(self.world)
 
 class obj_scene_testothers(obj_testpage):
+    def pagename(self):
+        return 'Other Tests'
     def setup(self):
-        self.name='Other Tests'
         self.text=['Other tests: ',\
                    ]
 
 class obj_scene_testmusic(obj_testpage):
+    def pagename(self):
+        return 'Music'
     def setup(self):
-        self.name='Music'
         self.text=['Music: ',\
                     '\n\n1) Each page has a unique music, which addpart() overrides. Default is silence (music=None) ',\
                     '\n2) If a page has new music, the new music is played ',\
@@ -746,15 +787,16 @@ class obj_scene_testmusic(obj_testpage):
 
 
 class obj_scene_testsounds(obj_testpage):
+    def pagename(self):
+        return 'Sounds'
     def setup(self):
-        self.name='Sounds'
         self.text=['Sounds:',\
                 ' \n\n1) Can add sounds to a page, then call them. Try it: [Up: play sound]',\
                 ' \n\n2) Can add sound to an animation (specify frames where played). ',\
                 ' By default, sounds are played each animation loop. Specificy skip>0 to play silent loops in between (affects all animation sounds) ',\
-                ' \n\n3) Sounds can be looped. For example to do a background ambience into a page. If added to page, they are automatically stopped upon page exit (with finish()). ',\
+                ' \n\n3) Sounds can be looped. For example to do a background ambience into a page (on top of music). ',\
+                '\n\n4) All Sounds added to page are automatically stopped upon page exit (with finish()). '
                     ]
-        self.addpart( draw.obj_music(None) )# mute music (this is optional)
         self.sound1=draw.obj_sound('test1')# sound is loaded but not played
         self.addpart( self.sound1 )
         #
@@ -762,22 +804,21 @@ class obj_scene_testsounds(obj_testpage):
         self.addpart(animation1)
         # animation1.addsound('test2',[0,10])# frame 0 not played on first read
         # animation1.addsound('test2',[1,10])# play on frame 1 and 10
-        # animation1.addsound('test2',20)# works too if single frame
-        animation1.addsound('test2',20,skip=1)# animation skips playing any sound every 1 loop
+        animation1.addsound('test2',[1,10,20,30])# works too if single frame
+        # animation1.addsound('test2',20,skip=1)# animation skips playing any sound every 1 loop
         # ambience sound
         self.sound3=draw.obj_sound('test4')
         self.addpart( self.sound3 )
-        self.launched=False
+        self.sound3.play(loop=True)
     def page(self,controls):
         if controls.gu and controls.guc: self.sound1.play()
-        if not self.launched:# (launch at first update because appendix screen loads all setups)
-            self.launched=True
-            self.sound3.play(loop=True)# loops, but will stop upon page exit
+
 
 
 class obj_scene_testsoundplacer(obj_testpage):
+    def pagename(self):
+        return 'Sound Placer'
     def setup(self):
-        self.name='Sound Placer'
         self.text=['Sound Placer:',\
                     'generate code to easily place sounds alongside animation. Output code is in book/aaa.txt',\
                     '\n\n[Rmouse]=rewind animation ',\
@@ -787,7 +828,6 @@ class obj_scene_testsoundplacer(obj_testpage):
                     '\n[R]=output code from recorded sounds',\
                     ]
         # animation
-        self.addpart( draw.obj_music('menu') )
         animation=draw.obj_animation('testanimation1','testimage1',(340,360))
         self.addpart(animation)
         # sound placer

@@ -35,9 +35,7 @@ import ch8
 ##########################################################
 
 # Reference to titlescreen
-class obj_scene_titlescreen:
-    def __init__(self):
-        pass
+class obj_scene_titlescreen(page.obj_page):
     def update(self,controls):
         # reloads main menu every time
         share.scenemanager.switchscene(obj_scene_realtitlescreen())
@@ -45,8 +43,6 @@ class obj_scene_titlescreen:
 
 # Main Menu
 class obj_scene_realtitlescreen(page.obj_page):
-    def __init__(self):
-        super().__init__()
     def presetup(self):
         super().presetup()
         # menu
@@ -183,7 +179,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch2.obj_scene_ch2p1()
+                quickscene=ch1.obj_scene_ch1p14()
                 #
                 share.scenemanager.switchscene(quickscene)
         #############################################3
@@ -318,7 +314,7 @@ class obj_scene_settings(page.obj_page):
         # back to titlescreen
         if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
             self.sound_menuback.play()
-            share.scenemanager.switchscene(share.titlescreen,init=True)
+            share.scenemanager.switchscene(share.titlescreen,initstart=True)
 
 
 ####################################################################################################################

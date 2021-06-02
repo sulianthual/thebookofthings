@@ -160,7 +160,7 @@ class obj_musics:
         self.dict['ch1play']=( 'POL-blob-tales-short.mp3' , 0.2 )
         # ch2
         self.dict['ch2']=( 'POL-pet-park-short.mp3' , 0.2 )
-        self.dict['ch2play']=( 'POL-frozen-village-short.mp3' , 0.2 )
+        self.dict['ch2play']=( 'POL-pet-park-short.mp3' , 0.2 )
         # ch3
         self.dict['ch3']=( 'POL-jazzy-duck-short.mp3' , 0.2 )
         self.dict['ch3play']=( 'POL-jazzy-duck-short.mp3' , 0.2 )
@@ -188,7 +188,7 @@ class obj_sounds:
         self.dict['menugo']=( 'general/drop_001.ogg' , 1 )# browse menu and pages (forward)
         self.dict['menuback']=( 'general/drop_004.ogg' , 1 )# browse menu and pages (back)
         self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
-        self.dict['tadah']=( 'general/sfx_menu_select4.wav' , 1 )# reveal something cool
+        # self.dict['tadah']=( 'general/sfx_menu_select4.wav' , 1 )# reveal something cool
         #
         # draw functions (draw, enter text, etc)
         self.dict['drawstart']=( 'draw/pen1.ogg' , 0.2 )# when draws (looped)

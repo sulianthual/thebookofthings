@@ -86,9 +86,8 @@ class obj_scene_ch2p1(page.obj_chapterpage):
         animation.addsound( "eatend", [288] )
         animation.addsound( "hero1", [122] )
         animation.addsound( "hero2", [135] )
-
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch2p2(page.obj_chapterpage):
@@ -108,7 +107,7 @@ class obj_scene_ch2p2(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('love',(640,450),legend='Love Heart',shadow=(300,200),brush=share.brushes.bigpen) )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('ch2') )
 
 
 class obj_scene_ch2p3(page.obj_chapterpage):

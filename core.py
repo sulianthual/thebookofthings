@@ -65,9 +65,10 @@ class obj_clock:
 class obj_scenemanager:
     def __init__(self):
         self.scene=None# a scene object (called page in the book of things)
-    def switchscene(self,newscene,init=False):
+    def switchscene(self,newscene,initstart=False):
         self.scene=newscene
-        if init: self.scene.__init__()
+        if initstart:# reload page content
+            self.scene.initstart()
     def update(self,controls):
         self.scene.update(controls)# Update current scene
         if controls.quit: share.quitgame()

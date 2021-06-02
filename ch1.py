@@ -59,6 +59,8 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p0())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p2())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempom='['+share.datamanager.controlname('mouse')+']'
@@ -100,8 +102,10 @@ class obj_scene_ch1p2(page.obj_chapterpage):
                    ]
         animation=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
         self.addpart(animation)
-        # self.addpart( draw.obj_soundplacer(animation,'tadah') )
-        animation.addsound( "tadah", [10] )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('ch1') )
 
@@ -360,6 +364,8 @@ class obj_scene_ch1p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p13())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                    'And we finish with: "At night, the ',('hero',share.colors.hero),' went to back to bed". ',\
@@ -395,13 +401,18 @@ class obj_scene_ch1play(page.obj_chapterpage):
         self.addpart(animation)
         self.addpart(animation2)
         self.addpart(animation3)
-        #
-        self.addpart( draw.obj_music('tension') )
+
         # self.addpart( draw.obj_soundplacer(animation,'book1','book2','pen','eraser') )
         animation.addsound( "book1", [46] )
         animation.addsound( "book2", [55] )
         animation.addsound( "pen", [189] )
         animation.addsound( "eraser", [199] )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch1play1(page.obj_chapterpage):
