@@ -416,8 +416,12 @@ class obj_world_sunrise(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
-        self.timerend=tool.obj_timer(50)# goal to done
+        self.timerend=tool.obj_timer(80)# goal to done
         self.timer.start()# reset ungoing timer
+        #
+        self.soundstart=draw.obj_sound('sunrise_start')
+        self.soundend=draw.obj_sound('sunrise_end')
+
     def triggerungoing(self,controls):
         return controls.gu and controls.guc
     def triggerstart(self,controls):
@@ -429,6 +433,7 @@ class obj_world_sunrise(obj_world):
             if not self.ungoing:
                 # start substate
                 if self.triggerungoing(controls):# flip to ungoing
+                    self.soundstart.play()
                     self.ungoing=True
                     self.startactor.show=False
                     self.ungoingactor.show=True
@@ -451,6 +456,7 @@ class obj_world_sunrise(obj_world):
                     self.text_undone.show=False
                     self.text_done.show=True
                     self.timerend.start()
+                    self.soundend.play()
         else:
             # goal reached state
             self.timerend.update()
@@ -514,8 +520,8 @@ class obj_world_wakeup(obj_world):
             self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
         # self.startactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(420,490),scale=0.7,rotate=80) )
         animation=animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
-        animation.addsound( "snore1", [14] )
-        animation.addsound( "snore2", [134] )
+        animation.addsound( "wakeup_snore1", [14] )
+        animation.addsound( "wakeup_snore2", [134] )
         self.startactor.addpart( 'anim1', animation )
         # ungoing actor
         if self.addpartner:# add partner in love
@@ -535,11 +541,11 @@ class obj_world_wakeup(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
-        self.timerend=tool.obj_timer(50)# goal to done
+        self.timerend=tool.obj_timer(90)# goal to done
         self.timer.start()# reset ungoing timer
         # audio
-        self.soundstart=draw.obj_sound('wake1')
-        self.sounddone=draw.obj_sound('wake2')
+        self.soundstart=draw.obj_sound('wakeup_wake1')
+        self.sounddone=draw.obj_sound('wakeup_wake2')
 
     def triggerungoing(self,controls):
         # return controls.gr and controls.grc
@@ -1683,6 +1689,11 @@ class obj_world_travel(obj_world):
                             self.text_undoneenter.show=False
                             self.text_done.show=True
 
+        #
+        # ambience sounds (add to page!)
+        self.soundambience=draw.obj_sound('travel_ambience')
+        self.creator.addpart(self.soundambience)
+        self.soundambience.play(loop=True)# should die when exit page
 
     ####
     def update(self,controls):
@@ -4479,7 +4490,7 @@ class obj_world_serenade(obj_world):
     def setup(self,**kwargs):
         # default options
         self.addpartner=True# add the partnercd
-        self.heroangry=False# hero is angry
+        self.heroangry=False# hero is angry (and alone)
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
@@ -4566,16 +4577,22 @@ class obj_world_serenade(obj_world):
         self.text1.show=True
         self.text2.show=False
         # short timer after done playing
-        self.timerend=tool.obj_timer(100)
+        self.timerend=tool.obj_timer(130)
         #
         self.soundnoted=draw.obj_sound('noted')
         self.soundnotel=draw.obj_sound('notel')
         self.soundnoter=draw.obj_sound('noter')
         self.soundnoteu=draw.obj_sound('noteu')
+        if self.heroangry:
+            self.soundcheer=draw.obj_sound('serenade_cheeralone')
+        else:
+            self.soundcheer=draw.obj_sound('serenade_cheer')
+        #
         # ambience sounds (add to page!)
-        self.soundambience=draw.obj_sound('serenade')
+        self.soundambience=draw.obj_sound('serenade_ambience')
         self.creator.addpart(self.soundambience)
-        self.soundambience.play(loop=True)
+        self.soundambience.play(loop=True)# should die when exit page
+
 
 
     def update(self,controls):
@@ -4601,6 +4618,7 @@ class obj_world_serenade(obj_world):
                 if self.melody.melodyi > self.melody.melodylength-1:# completed melody
                     self.doneplaying=True
                     self.timerend.start()
+                    self.soundcheer.play()
                 if playednote=='U':
                     self.soundnoteu.play()
                 elif playednote=='L':
@@ -4654,8 +4672,10 @@ class obj_world_kiss(obj_world):
         self.startactor.addpart( 'img1', draw.obj_image('herobase',(240,400),scale=0.7) )
         self.startactor.addpart( 'img2', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7) )
         # ungoing actor)
-        self.ungoingactor.addpart( 'anim1', draw.obj_animation('ch2_kiss1','herobase',(640,360)) )
+        self.animation=draw.obj_animation('ch2_kiss1','herobase',(640,360))
+        self.ungoingactor.addpart( 'anim1', self.animation )
         self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','partnerbase',(640,360)) )
+        self.animation.addsound('kiss_kiss',100)
         # finish actor
         self.finishactor.addpart( 'img1', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
         self.finishactor.addpart( 'img2', draw.obj_image('herobase',(580,400),scale=0.7,rotate=-15) )
@@ -4669,8 +4689,12 @@ class obj_world_kiss(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
-        self.timerend=tool.obj_timer(100)# goal to done
+        self.timerend=tool.obj_timer(130)# goal to done
         self.timer.start()# reset ungoing timer
+        #
+        self.soundstart=draw.obj_sound('kiss_start')
+        self.soundend=draw.obj_sound('kiss_cheer')
+
     def triggerungoing(self,controls):
         return (controls.gl and controls.gr) and (controls.glc or controls.grc)
     def triggerstart(self,controls):
@@ -4689,6 +4713,7 @@ class obj_world_kiss(obj_world):
                     self.timer.start()# reset ungoing timer
                     self.ungoingactor.dict["anim1"].rewind()
                     self.ungoingactor.dict["anim2"].rewind()
+                    self.soundstart.play()
             else:
                 # ungoing substate
                 self.timer.update()
@@ -4709,6 +4734,7 @@ class obj_world_kiss(obj_world):
                         self.text_undone.show=False
                         self.text_done.show=True
                         self.timerend.start()
+                        self.soundend.play()
 
         else:
             # goal reached state
@@ -4780,8 +4806,12 @@ class obj_world_sunset(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
-        self.timerend=tool.obj_timer(50)# goal to done
+        self.timerend=tool.obj_timer(80)# goal to done
         self.timer.start()# reset ungoing timer
+        #
+        self.soundstart=draw.obj_sound('sunset_start')
+        self.soundend=draw.obj_sound('sunset_end')
+        #
     def triggerungoing(self,controls):
         return controls.gd and controls.gdc
     def triggerstart(self,controls):
@@ -4793,6 +4823,7 @@ class obj_world_sunset(obj_world):
             if not self.ungoing:
                 # start substate
                 if self.triggerungoing(controls):# flip to ungoing
+                    self.soundstart.play()
                     self.ungoing=True
                     self.startactor.show=False
                     self.ungoingactor.show=True
@@ -4815,6 +4846,7 @@ class obj_world_sunset(obj_world):
                     self.text_undone.show=False
                     self.text_done.show=True
                     self.timerend.start()
+                    self.soundend.play()
         else:
             # goal reached state
             self.timerend.update()
@@ -4892,11 +4924,11 @@ class obj_world_gotobed(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
-        self.timerend=tool.obj_timer(50)# goal to done
+        self.timerend=tool.obj_timer(80)# goal to done
         self.timer.start()# reset ungoing timer
         # audio
-        self.soundstart=draw.obj_sound('wake1')
-        self.sounddone=draw.obj_sound('wake2')
+        self.soundstart=draw.obj_sound('gotobed_start')
+        self.sounddone=draw.obj_sound('gotobed_end')
         #
     def triggerungoing(self,controls):
         return controls.gl and controls.glc

@@ -17,6 +17,157 @@ import draw
 ##########################################################
 ##########################################################
 
+# musics database
+# (musics have an indirect name in the code)
+class obj_musics:
+    def __init__(self):
+        self.dict={}
+        self.setup()
+        #
+    def getmusicfilename(self,name):
+        if name in self.dict.keys():
+          return self.dict[name][0]
+        else:
+          return self.dict['error'][0]
+    def getmusicvolume(self,name):
+        if name in self.dict.keys():
+          return self.dict[name][1]
+        else:
+          return self.dict['error'][1]
+    def setup(self):
+        # dictionary= tuples of filename, volume level
+        # in final version should use wav (to mp3)
+        #
+        # general
+        self.dict['error']=( 'general/error.wav' , 1 )
+        self.dict['tension']=( 'general/dungeon_ambient_1.ogg' , 1 )
+        # tests
+        self.dict['test']=( 'tests/POL-mali-maafe-short.mp3' , 0.3 )
+        # ch0
+        self.dict['ch0']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
+        # ch1
+        self.dict['ch1']=( 'ch1/POL-blob-tales-short.mp3' , 0.2 )
+        # ch2
+        self.dict['ch2']=( 'ch2/POL-pet-park-short.mp3' , 0.2 )
+        # ch3
+        self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
+        # others
+        #
+        # general
+
+
+
+# sounds database
+# (sounds have an indirect name in the code)
+class obj_sounds:
+    def __init__(self):
+        self.dict={}
+        self.setup()
+    def setup(self):
+        # dictionary= tuples of filename, volume level
+        #
+        # general use
+        self.dict['error']=( 'general/error.ogg' , 1 )# sound is missing
+        self.dict['menugo']=( 'general/drop_001.ogg' , 1 )# browse menu and pages (forward)
+        self.dict['menuback']=( 'general/drop_004.ogg' , 1 )# browse menu and pages (back)
+        self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
+        # self.dict['tadah']=( 'general/sfx_menu_select4.wav' , 1 )# reveal something cool
+        #
+        # draw functions (draw, enter text, etc)
+        self.dict['drawstart']=( 'draw/pen1.ogg' , 0.2 )# when draws (looped)
+        self.dict['drawerase']=( 'draw/bookFlip2.ogg' , 1 )# erase
+        self.dict['pen']=( 'draw/pen2.ogg' , 1 )# pen character
+        self.dict['eraser']=( 'draw/bookFlip2.ogg' , 1 )# eraser character
+        self.dict['textchoicego']=( 'draw/bookFlip3.ogg' , 1 )# change a textchoice
+        self.dict['textinputkeyboard']=( 'draw/click_002.ogg' , 1 )# keyboard sound when entering text
+        #
+        ### SPECIFIC TO CHAPTERS/CHARACTERS
+        # tests
+        self.dict['test1']=( 'tests/phaseJump1.ogg' , 1 )
+        self.dict['test2']=( 'tests/footstep_grass_001.ogg' , 1 )
+        self.dict['test3']=( 'tests/troll_01.ogg' , 1 )
+        self.dict['test4']=( 'tests/desert-ambience.ogg' , 1 )# looped
+        # self.dict['test3a']=( 'tests/female_light_1.ogg' , 1 )
+        # self.dict['test3b']=( 'tests/female_light_2.ogg' , 1 )
+        # self.dict['test3c']=( 'tests/female_light_3.ogg' , 1 )
+        # self.dict['test3d']=( 'tests/female_light_4.ogg' , 1 )
+        self.dict['test3a']=( 'tests/male_standard_1.ogg' , 0.1 )
+        self.dict['test3b']=( 'tests/male_standard_2.ogg' , 0.1 )
+        self.dict['test3c']=( 'tests/male_standard_3.ogg' , 0.1 )
+        self.dict['test3d']=( 'tests/male_standard_4.ogg' , 0.1 )
+        # ch0
+        self.dict['bookscene']=( 'book/link (3).wav' , 1 )# a scene with the book of things
+        self.dict['book1']=( 'book/unlink.wav' , 1 )
+        self.dict['book2']=( 'book/magnet_off (3).wav' , 1 )
+        self.dict['book3']=( 'book/link (3).wav' , 1 )
+        # ch1
+        # self.dict['hero1']=( 'hero/cute_03.ogg' , 1 )
+        self.dict['hero1']=( 'hero/grunt_male-grunt-disapprove.wav' , 1 )
+        self.dict['hero2']=( 'hero/haha01.wav' , 1 )
+        self.dict['hero3']=( 'hero/sniff.wav' , 1 )
+        self.dict['hero4']=( 'hero/grunt__oh-1.wav' , 1 )
+        self.dict['hero5']=( 'hero/haha_laugh1.wav' , 1 )
+        self.dict['hero6']=( 'hero/cough_02.ogg' , 1 )
+        # ch2
+        self.dict['partner1']=( 'partner/haha-girlp1.ogg' , 1 )
+        self.dict['partner2']=( 'partner/haha-girlp2.ogg' , 1 )
+        self.dict['partner3']=( 'partner/giggle_small-giggle.wav' , 1 )
+
+        #
+        ### SPECIFIC TO MINIGAMES
+        # sunrise
+        self.dict['sunrise_start']=( 'world/sunrise/1up3.ogg' , 1 )
+        self.dict['sunrise_end']=( 'world/sunrise/link (1).wav' , 0.5 )
+        # sunset
+        self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
+        self.dict['sunset_end']=( 'world/sunset/link (1).wav' , 0.5 )
+        # wakeup
+        self.dict['wakeup_snore1']=( 'world/wakeup/snore.ogg' , 1 )
+        self.dict['wakeup_snore2']=( 'world/wakeup/snore1.ogg' , 1 )
+        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.ogg' , 2 )
+        self.dict['wakeup_wake2']=( 'world/wakeup/yawn_male-yawnshorter.wav' , 1 )
+        # gotobed
+        self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
+        self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
+        # fishing
+        self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
+        self.dict['fishing_catch']=( 'world/fish/1up 3 - Sound effects Pack 2.ogg' , 1 )
+        # eating
+        self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
+        self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
+        # mail
+        self.dict['mailjump']=( 'world/mail/woosh-3.ogg' , 1 )
+        self.dict['mailopen']=( 'world/mail/paper_01.ogg' , 1 )
+        # serenade
+        self.dict['noted']=( 'world/serenade/note_1.ogg' , 1 )
+        self.dict['notel']=( 'world/serenade/note_3.ogg' , 1 )
+        self.dict['noter']=( 'world/serenade/note_5.ogg' , 1 )
+        self.dict['noteu']=( 'world/serenade/note_8.ogg' , 1 )
+        self.dict['serenade_ambience']=( 'world/serenade/record_player_loop.wav' , 1 )# loop
+        self.dict['serenade_cheer']=( 'world/serenade/cheer1.ogg' , 0.2 )
+        self.dict['serenade_cheeralone']=( 'world/serenade/clapalone1.ogg' , 1 )
+        # kiss
+        self.dict['kiss_start']=( 'world/kiss/scream-6.ogg' , 1 )
+        self.dict['kiss_kiss']=( 'world/kiss/kiss_cartoon-kiss-cjohnstone.wav' , 1 )
+        self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.ogg' , 0.5 )
+        # travel
+        self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.wav' , 0.5 )
+
+
+        #
+    def getsoundfilename(self,name):
+        if name in self.dict.keys():
+          return self.dict[name][0]
+        else:
+          return self.dict['error'][0]
+    def getsoundvolume(self,name):
+        if name in self.dict.keys():
+          return self.dict[name][1]
+        else:
+          return self.dict['error'][1]
+
+
+####################################################################################################################
 # Databases
 
 # colors database (RGB)
@@ -129,138 +280,6 @@ class obj_brushes:
 
 ####################################################################################################################
 
-# musics database
-# (musics have an indirect name in the code)
-class obj_musics:
-    def __init__(self):
-        self.dict={}
-        self.setup()
-        #
-    def getmusicfilename(self,name):
-        if name in self.dict.keys():
-          return self.dict[name][0]
-        else:
-          return self.dict['error'][0]
-    def getmusicvolume(self,name):
-        if name in self.dict.keys():
-          return self.dict[name][1]
-        else:
-          return self.dict['error'][1]
-    def setup(self):
-        # dictionary= tuples of filename, volume level
-        # in final version should use wav (to mp3)
-        #
-        self.dict['error']=( 'error.wav' , 1 )
-        self.dict['test']=( 'POL-mali-maafe-short.mp3' , 0.3 )
-        self.dict['menu']=( 'POL-you-and-me-short.mp3' , 0.2 )
-        # ch0
-        self.dict['ch0']=( 'POL-you-and-me-short.mp3' , 0.2 )
-        # ch1
-        self.dict['ch1']=( 'POL-blob-tales-short.mp3' , 0.2 )
-        self.dict['ch1play']=( 'POL-blob-tales-short.mp3' , 0.2 )
-        # ch2
-        self.dict['ch2']=( 'POL-pet-park-short.mp3' , 0.2 )
-        self.dict['ch2play']=( 'POL-pet-park-short.mp3' , 0.2 )
-        # ch3
-        self.dict['ch3']=( 'POL-jazzy-duck-short.mp3' , 0.2 )
-        self.dict['ch3play']=( 'POL-jazzy-duck-short.mp3' , 0.2 )
-        # others
-        # self.dict['serenade']=( 'record_player_loop.wav' , 0.3 )
-        #
-        # ot
-        self.dict['tension']=( 'dungeon_ambient_1.ogg' , 1 )
-
-
-
-
-
-# sounds database
-# (sounds have an indirect name in the code)
-class obj_sounds:
-    def __init__(self):
-        self.dict={}
-        self.setup()
-    def setup(self):
-        # dictionary= tuples of filename, volume level
-        #
-        # general use
-        self.dict['error']=( 'general/error.ogg' , 1 )# sound is missing
-        self.dict['menugo']=( 'general/drop_001.ogg' , 1 )# browse menu and pages (forward)
-        self.dict['menuback']=( 'general/drop_004.ogg' , 1 )# browse menu and pages (back)
-        self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
-        # self.dict['tadah']=( 'general/sfx_menu_select4.wav' , 1 )# reveal something cool
-        #
-        # draw functions (draw, enter text, etc)
-        self.dict['drawstart']=( 'draw/pen1.ogg' , 0.2 )# when draws (looped)
-        self.dict['drawerase']=( 'draw/bookFlip2.ogg' , 1 )# erase
-        self.dict['pen']=( 'draw/pen2.ogg' , 1 )# pen character
-        self.dict['eraser']=( 'draw/bookFlip2.ogg' , 1 )# eraser character
-        self.dict['textchoicego']=( 'draw/bookFlip3.ogg' , 1 )# change a textchoice
-        self.dict['textinputkeyboard']=( 'draw/click_002.ogg' , 1 )# keyboard sound when entering text
-        #
-        ### SPECIFIC TO CHAPTERS/CHARACTERS
-        # tests
-        self.dict['test1']=( 'tests/phaseJump1.ogg' , 1 )
-        self.dict['test2']=( 'tests/footstep_grass_001.ogg' , 1 )
-        self.dict['test3']=( 'tests/troll_01.ogg' , 1 )
-        self.dict['test4']=( 'tests/desert-ambience.ogg' , 1 )# looped
-        self.dict['test3a']=( 'tests/female_light_1.ogg' , 1 )
-        self.dict['test3b']=( 'tests/female_light_2.ogg' , 1 )
-        self.dict['test3c']=( 'tests/female_light_3.ogg' , 1 )
-        self.dict['test3d']=( 'tests/female_light_4.ogg' , 1 )
-        # ch0
-        self.dict['book2']=( 'book/magnet_off (3).wav' , 1 )
-        self.dict['book1']=( 'book/unlink.wav' , 1 )
-        self.dict['book3']=( 'book/link (3).wav' , 1 )
-        # ch1
-        # self.dict['hero1']=( 'hero/cute_03.ogg' , 1 )
-        self.dict['hero1']=( 'hero/grunt_male-grunt-disapprove.wav' , 1 )
-        self.dict['hero2']=( 'hero/haha01.wav' , 1 )
-        self.dict['hero3']=( 'hero/sniff.wav' , 1 )
-        self.dict['hero4']=( 'hero/haha_laugh1.wav' , 1 )
-        self.dict['hero5']=( 'hero/cough_02.ogg' , 1 )
-        self.dict['hero6']=( 'hero/grunt__oh-1.wav' , 1 )
-
-
-        #
-        ### SPECIFIC TO MINIGAMES
-        # wakeup
-        self.dict['snore1']=( 'world/wakeup/snore.ogg' , 1 )
-        self.dict['snore2']=( 'world/wakeup/snore1.ogg' , 1 )
-        self.dict['wake1']=( 'world/wakeup/scream-6.ogg' , 2 )
-        self.dict['wake2']=( 'world/wakeup/scream-3.ogg' , 1 )
-        # serenade
-        self.dict['noted']=( 'world/serenade/note_1.ogg' , 1 )
-        self.dict['notel']=( 'world/serenade/note_3.ogg' , 1 )
-        self.dict['noter']=( 'world/serenade/note_5.ogg' , 1 )
-        self.dict['noteu']=( 'world/serenade/note_8.ogg' , 1 )
-        self.dict['serenade']=( 'world/serenade/record_player_loop.wav' , 1 )# loop
-        # fishing
-        self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
-        self.dict['fishing_catch']=( 'world/fish/1up 3 - Sound effects Pack 2.ogg' , 1 )
-        # eating
-        self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
-        self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
-
-
-
-
-
-
-
-        #
-    def getsoundfilename(self,name):
-        if name in self.dict.keys():
-          return self.dict[name][0]
-        else:
-          return self.dict['error'][0]
-    def getsoundvolume(self,name):
-        if name in self.dict.keys():
-          return self.dict[name][1]
-        else:
-          return self.dict['error'][1]
-
-####################################################################################################################
 
 # Data Manager: manages all data files
 # flieprogress: last unlocked chapter

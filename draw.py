@@ -1096,7 +1096,7 @@ class obj_animationsequence:
         self.bscal=1.01# base for scaling = bscal**sa
         # sequence data
         self.data=[]
-        self.length=0
+        self.length=0# animation sequence length
         self.clearsequence()
         self.loadsequence(maxlength=self.maxlength)
     def clearsequence(self):
@@ -1447,6 +1447,7 @@ class obj_sound:
         if self.playing:
             self.soundsprite.stop()
             self.playing=False
+            # print('stop='+self.name)
     def update(self,controls):
         pass
     def finish(self):
@@ -1477,7 +1478,8 @@ class obj_soundplacer:
         # output code
         self.filecode='book/aaa.txt'
         # toggle record sounds
-        self.recordingsounds=True
+        self.recordingsounds=True# default on
+        #
     def triggersounds(self,controls,index):
         # play sounds with controls (wasd)
         if index==0:
@@ -1530,6 +1532,7 @@ class obj_soundplacer:
         with open(self.filecode,'w+') as f1:
             f1.write(' '+'\n')
             print('###')
+            print('animation lenght='+str(self.animation.sequence.length))
             print(' ')
             for i in range(self.maxsounds):
                 if self.soundexists[i] and len(self.soundrecords[i])>0:

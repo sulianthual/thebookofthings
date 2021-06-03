@@ -58,7 +58,8 @@ class obj_page:
             self.pagemusic=element
     def removepart(self,element):
         for i in [self.to_update,self.to_finish]:
-            if element in i: i.remove(element)
+            if element in i:
+                i.remove(element)
     # def __del__(self):# not needed: pages are consistently deleted when no longer in use
         # print('deleted: '+str(self))
     #
@@ -67,7 +68,8 @@ class obj_page:
         self.page(controls)
         self.postpage(controls)
     def prepage(self,controls):# background
-        for i in self.to_update: i.update(controls)
+        for i in self.to_update:
+            i.update(controls)
         if self.pagemusic:
             self.pagemusic.update(controls)
     def page(self,controls):# custom updates
@@ -75,7 +77,8 @@ class obj_page:
     def postpage(self,controls):# foreground
         pass
     def preendpage(self):# before exiting page
-        for i in self.to_finish: i.finish()
+        for i in self.to_finish:
+            i.finish()
 
 
 

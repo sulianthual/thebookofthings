@@ -37,12 +37,25 @@ class obj_scene_ch8p0(page.obj_chapterpage):
         self.text=['-----   Epilogue   -----   ',\
                    '\n Welcome back, said the book of things. Here you can roam the world freely and replay all the games. Have fun!  ',\
                    ]
-        animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
-        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
-        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
-        self.addpart(animation1)
+        animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
+        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
+        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation,scale=0.5)
+        self.addpart(animation)
         self.addpart(animation2)
         self.addpart(animation3)
+        #
+        # self.addpart( draw.obj_soundplacer(animation,'book1','book2','pen','eraser') )
+        animation.addsound( "book1", [46] )
+        animation.addsound( "book2", [63] )
+        animation.addsound( "pen", [199] )
+        animation.addsound( "eraser", [185],skip=1 )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('tension') )
+
 
 ###########
 # roam to different locations

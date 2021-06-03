@@ -200,10 +200,14 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         #
         # self.addpart( draw.obj_soundplacer(animation,'book1','book2','book3','book4') )
         animation.addsound( "book2", [33] )
-        animation.addsound( "book1", [14, 124, 145] )
-        animation.addsound( "book3", [166], skip=1 )
+        animation.addsound( "book1", [14, 124, 145],skip=1 )
+        # animation.addsound( "book3", [166], skip=1 )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch0') )
 
 
 class obj_scene_ch0end(page.obj_chapterpage):
@@ -211,6 +215,8 @@ class obj_scene_ch0end(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0unlocknext())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=['And so the book began...',\
                    ]
@@ -226,6 +232,7 @@ class obj_scene_ch0unlocknext(page.obj_chapterpage):
                     ('Chapter I',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
+        #
         sound1=draw.obj_sound('unlock')
         self.addpart(sound1)
         sound1.play()

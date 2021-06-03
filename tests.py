@@ -497,9 +497,9 @@ class obj_scene_testimageplacer(obj_testpage):
 # Scene: test create/show animation
 class obj_scene_testanimation(obj_testpage):
     def pagename(self):
-        return 'Animation Basics'
+        return 'Animation Record'
     def setup(self):
-        self.text=['Animation Basics: Animation has two modes, Record and Playback. Toggle Mode with [T]. ',\
+        self.text=['Animation Record: Animation has two modes, Record and Playback. Toggle Mode with [T]. ',\
                    '\n(You must be in Dev Mode to do so, which is Toggled by [CTRL]). ',\
                     '\n-- While in Record Mode:',\
                     '\nRed Line tracks image center for all frames.',\
@@ -821,16 +821,18 @@ class obj_scene_testsoundplacer(obj_testpage):
     def setup(self):
         self.text=['Sound Placer:',\
                     'generate code to easily place sounds alongside animation. Output code is in book/aaa.txt',\
-                    '\n\n[Rmouse]=rewind animation ',\
                     '\n[T]=toggle record mode (default on) ',\
-                    '\n[wasd,q,e,f]=play sound (or record in record mode) ',\
-                    '\n[G]=clear all recorded sounds ',\
                     '\n[R]=output code from recorded sounds',\
+                    '\n[G]=clear all recorded sounds ',\
+                    '\n[wasd,q,e,f]=play sound (or record in record mode) ',\
+                    '\n\n[Rmouse]=rewind animation ',\
                     ]
         # animation
         animation=draw.obj_animation('testanimation1','testimage1',(340,360))
         self.addpart(animation)
         # sound placer
+        # self.stuff=draw.obj_soundplacer(animation,'pen')
+        # self.addpart( draw.obj_soundplacer(animation,'pen') )
         self.addpart( draw.obj_soundplacer(animation,'test3a','test3b','test3c','test3d','test1','test2','test3') )# up to 7 sound inputs at same time
         #
         # example of code from book/aaa.txt to copy on page
