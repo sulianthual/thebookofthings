@@ -165,6 +165,8 @@ class obj_scene_ch2p5(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p6())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                    'This is coming up nicely, said the book of things. ',\
@@ -203,6 +205,11 @@ class obj_scene_ch2p6(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
         self.addpart(draw.obj_animation('ch2_herobase1','herobase',(640,360),scale=0.75,sync=animation))
         self.addpart(draw.obj_animation('ch2_partnerbasenoface','partnerbase',(640,360),scale=0.75,sync=animation))
+        #
+        #
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
         #
         animation.addsound( "partner1", [20] )
         animation.addsound( "partner2", [160],skip=1 )
@@ -706,7 +713,7 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
         self.addpart(sound1)
         sound1.play()
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 #

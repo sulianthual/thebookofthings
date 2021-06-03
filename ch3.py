@@ -105,14 +105,12 @@ class obj_scene_ch3p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p3())
     def setup(self):
         self.text=[\
-                   'Well this story looks a lot like a chick flick, said the book of things. ',\
-                   'I want more action, more suspense! ',\
-                   'Lets just add a ',('villain',share.colors.villain), '. ',\
-                 'This ',('villain',share.colors.villain),' has probably been hurt a lot,',\
-                 ' so lets start him by drawing a big ',('scar',share.colors.villain),' on our stickman. ',\
+                   'I want more action, more suspense! said the book of things. ',\
+                   'Lets add a ',('villain',share.colors.villain), ' to our story. ',\
+                    'Draw an ',('angry face',share.colors.villain),' and make it look slightly to the right. ',\
                    ]
-        self.addpart( draw.obj_image('herohead',(640,450)) )
-        drawing=draw.obj_drawing('scar',(640,450),legend='Add a big scar',shadow=(200,200))
+        self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2) )
+        drawing=draw.obj_drawing('angryface',(640,450),legend='Draw an angry face',shadow=(200,200))
         self.addpart( drawing)
         #
         self.addpart( draw.obj_music('ch3') )
@@ -127,12 +125,11 @@ class obj_scene_ch3p3(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   'Something isnt right, said the book of things. ',\
-                'This ',('villain',share.colors.villain),' is so evil he should be angry all the time. ',\
-                   'Draw an ',('angry face',share.colors.villain),' and make it look slightly to the right. ',\
+                 'This ',('villain',share.colors.villain),' has probably been hurt a lot,',\
+                 ' so lets add a big ',('scar',share.colors.villain),'. ',\
                    ]
-        self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2) )
-        self.addpart( draw.obj_image('scar',(640,450)) )
-        drawing=draw.obj_drawing('angryface',(640,450),legend='Draw an angry face',shadow=(200,200))
+        self.addpart( draw.obj_image('angryhead',(640,450)) )
+        drawing=draw.obj_drawing('scar',(640,450),legend='Add a big scar',shadow=(200,200))
         self.addpart( drawing)
         #
         self.addpart( draw.obj_music('ch3') )
@@ -397,7 +394,7 @@ class obj_scene_ch3p13(page.obj_chapterpage):
         self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('ch3') )
 
 
 class obj_scene_ch3p14(page.obj_chapterpage):

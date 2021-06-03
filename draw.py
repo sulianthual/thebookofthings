@@ -343,8 +343,7 @@ class obj_textinput:
         self.colorbox=share.colors.textinput# output box
         self.colorshow=self.color# text color to show
         self.legend=legend
-        self.empty=empty# overrides text if empty
-        self.setempty(self.empty)
+        self.empty=empty# default empty text (if nothing written)
         if default:# impose default choice (overrides empty)
             self.setdefault(default)
         self.setup()
@@ -370,9 +369,6 @@ class obj_textinput:
         # editmode
         self.editmode=False# in edit mode or not
         #
-    def setempty(self,empty):
-        if share.datamanager.getword(self.key)=='':
-            share.datamanager.writeword(self.key,empty)
     def setdefault(self,default):
         share.datamanager.writeword(self.key,default)
     def texttodict(self):# text to/from dictionary
@@ -380,7 +376,8 @@ class obj_textinput:
             self.text=share.datamanager.getword(self.key)
         else:# create key with empty text
             share.datamanager.writeword(self.key,'')
-            self.text=''
+            # self.text=''
+            self.text=self.empty
     def changetext(self,controls):
         # edit mode
         if self.editmode:

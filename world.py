@@ -519,10 +519,15 @@ class obj_world_wakeup(obj_world):
         if self.addpartner:# add partner
             self.startactor.addpart( 'imgadd1', draw.obj_image(self.partnerbaseimg,(420+100,490-50),scale=0.7,rotate=80) )
         # self.startactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(420,490),scale=0.7,rotate=80) )
-        animation=animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
+        animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360))
         animation.addsound( "wakeup_snore1", [14] )
         animation.addsound( "wakeup_snore2", [134] )
         self.startactor.addpart( 'anim1', animation )
+        self.startactor.addpart( 'anim1a', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),path='premade'))
+        self.startactor.addpart( 'anim1b', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),path='premade',imgscale=0.7))
+        self.startactor.addpart( 'anim1c', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),path='premade',imgscale=0.5))
+
+
         # ungoing actor
         if self.addpartner:# add partner in love
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes',self.partnerbaseimg,(640+100,360-50),scale=0.7) )
@@ -580,6 +585,9 @@ class obj_world_wakeup(obj_world):
                     self.finishactor.show=False
                     self.timer.start()# reset ungoing timer
                     self.startactor.dict["anim1"].rewind()
+                    self.startactor.dict["anim1a"].rewind()
+                    self.startactor.dict["anim1b"].rewind()
+                    self.startactor.dict["anim1c"].rewind()
                 if self.timer.ring:# flip to goal reached
                     self.goal=True
                     self.sounddone.play()
@@ -4935,6 +4943,11 @@ class obj_world_gotobed(obj_world):
             self.finishactor.addpart( 'img1', draw.obj_image('herobaseangry',(420,490),scale=0.7,rotate=80) )
         else:
             self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
+        self.finishactor.addpart( 'anim1a', draw.obj_image('sleepZ',(700,400),path='premade'))
+        self.finishactor.addpart( 'anim1b', draw.obj_image('sleepZ',(700+60,400-20),path='premade',scale=0.7))
+        self.finishactor.addpart( 'anim1c', draw.obj_image('sleepZ',(700+100,400-30),path='premade',scale=0.5))
+
+
         # text
         self.text_undone.addpart( 'text1', draw.obj_textbox('hold ['+share.datamanager.controlname('left')+'] to go to sleep',(1100,480),color=share.colors.instructions) )
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )

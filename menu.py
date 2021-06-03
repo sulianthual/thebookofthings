@@ -128,11 +128,15 @@ class obj_scene_realtitlescreen(page.obj_page):
         # pointer
         self.sprite_pointer.movetoy(410+self.ichapter*30)
         self.sprite_pen.movetoy(360+self.ichapter*30)
-        #
-        self.addpart( draw.obj_music('tension') )
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
         self.addpart( self.sound_menugo )
         #
+        # music
+        if self.maxchapter>0:
+            self.addpart( draw.obj_music('piano') )
+        else:
+            self.addpart( draw.obj_music('tension') )
+
     def page(self,controls):
         if controls.gd and controls.gdc:
             self.sound_menugo.play()
@@ -179,7 +183,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch3.obj_scene_ch3p21()
+                quickscene=ch1.obj_scene_ch1p6()
                 #
                 # share.scenemanager.switchscene(quickscene)
                 share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage
@@ -351,6 +355,8 @@ class obj_scene_erasebook(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
     def triggernextpage(self,controls):
         return controls.gl and controls.gu and controls.gr and controls.ga
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         tempo= 'Press ['+share.datamanager.controlname('left')
         tempo+= '+'+share.datamanager.controlname('up')
@@ -374,6 +380,10 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
         self.text=['The book has vanished. ',\
                    '[',share.datamanager.controlname('back'),': back]']
         share.datamanager.erasebook()
+        #
+        self.sound=draw.obj_sound('erasebook')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('tension') )
 

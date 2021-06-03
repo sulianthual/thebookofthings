@@ -189,16 +189,18 @@ class obj_scene_ch1p6(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
         # self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
-        # self.addpart(draw.obj_animation('ch1_heroawakes','herobase',(640,360),record=False,scale=0.7))
-        # self.addpart( draw.obj_image('herobase',(903,452), scale=0.7) )
-        # self.addpart( draw.obj_soundplacer(animation,'cute1','cute2') )
-        animation=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
-        self.addpart(animation)
-        # self.addpart( draw.obj_soundplacer(animation,'wakeup_snore1','wakeup_snore2') )
-        animation.addsound( "wakeup_snore1", [14] )
-        animation.addsound( "wakeup_snore2", [134] )
+        animation1=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
+        self.addpart(animation1)
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),record=True,sync=animation1,path='premade'))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),sync=animation1,path='premade',imgscale=0.7))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),sync=animation1,path='premade',imgscale=0.5))
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'wakeup_snore1','wakeup_snore2') )
+        animation1.addsound( "wakeup_snore1", [14] )
+        animation1.addsound( "wakeup_snore2", [134] )
         #
         self.addpart( draw.obj_music('ch1') )
+
 
 
 
@@ -536,11 +538,12 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
                     ('Chapter II',share.colors.instructions),'! Access it from the menu. ',\
                    ]
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
+        #
         sound1=draw.obj_sound('unlock')
         self.addpart(sound1)
         sound1.play()
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 

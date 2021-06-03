@@ -221,7 +221,7 @@ class obj_scene_ch0end(page.obj_chapterpage):
         self.text=['And so the book began...',\
                    ]
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0unlocknext(page.obj_chapterpage):
@@ -237,7 +237,7 @@ class obj_scene_ch0unlocknext(page.obj_chapterpage):
         self.addpart(sound1)
         sound1.play()
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 

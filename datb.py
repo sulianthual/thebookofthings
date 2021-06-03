@@ -75,6 +75,7 @@ class obj_sounds:
         self.dict['menugo']=( 'general/drop_001.ogg' , 1 )# browse menu and pages (forward)
         self.dict['menuback']=( 'general/drop_004.ogg' , 1 )# browse menu and pages (back)
         self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
+        self.dict['erasebook']=( 'general/link (3).wav' , 1 )# erase the book
         # self.dict['tadah']=( 'general/sfx_menu_select4.wav' , 1 )# reveal something cool
         #
         # draw functions (draw, enter text, etc)
