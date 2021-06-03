@@ -75,11 +75,11 @@ class obj_scene_ch1p1(page.obj_chapterpage):
                    'Simple and to the point. ',\
                    'Well, lets give this ',('hero',share.colors.hero2),' a proper name and gender.',\
                   '\n\n ',\
-                  ('Hover over the name box below with the '+tempom+' then type a name using the '+tempok+'. ',share.colors.instructions),\
-                 ('Then, choose a gender with '+tempo1+'. ',share.colors.instructions),\
+                  ('select the hero name with '+tempo1+' and type with the '+tempok+'. ',share.colors.instructions),\
+                 ('then, choose a gender with '+tempo1+'. ',share.colors.instructions),\
                    ]
         self.addpart( draw.obj_textbox("The Hero\'s Name was:",(200,460)) )
-        self.addpart( draw.obj_textinput('heroname',25,(750,460),color=share.colors.hero, legend='Hero Name') )
+        self.addpart( draw.obj_textinput('heroname',25,(750,460), legend='Hero Name') )
         self.addpart( draw.obj_textbox('and the hero was:',(180,580)) )
         textchoice=draw.obj_textchoice('hero_he')
         textchoice.addchoice('1. A guy','he',(440,580))
@@ -440,7 +440,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         self.world=world.obj_world_wakeup(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('piano') )
 
 
 
@@ -463,7 +463,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch1play3(page.obj_chapterpage):
     def prevpage(self):
@@ -483,7 +483,7 @@ class obj_scene_ch1play3(page.obj_chapterpage):
         self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch1play4(page.obj_chapterpage):
@@ -503,7 +503,7 @@ class obj_scene_ch1play4(page.obj_chapterpage):
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch1playend(page.obj_chapterpage):
@@ -523,7 +523,7 @@ class obj_scene_ch1playend(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 

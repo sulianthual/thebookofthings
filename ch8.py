@@ -552,7 +552,7 @@ class obj_scene_ch8west(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('castlepassword',30,(380,260),color=share.colors.password, legend='Castle Password',default=' ')
+        self.textinput=draw.obj_textinput('castlepassword',30,(380,260), legend='Castle Password',default=' ')
         self.addpart( self.textinput )
 
 

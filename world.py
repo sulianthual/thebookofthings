@@ -1955,8 +1955,17 @@ class obj_world_dodgegunshots(obj_world):
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
-        self.timerendloose=tool.obj_timer(300)# goal to done
-    def makecannonball(self,x,y):
+        self.timerendloose=tool.obj_timer(190)# goal to done
+        #
+        self.soundshoot=draw.obj_sound('dodgebullets_shoot')
+        self.soundhit=draw.obj_sound('dodgebullets_hit')
+        self.sounddie=draw.obj_sound('dodgebullets_die')
+        self.soundwin=draw.obj_sound('dodgebullets_win')
+        self.soundjump=draw.obj_sound('dodgebullets_jump')
+        self.soundcrouch=draw.obj_sound('dodgebullets_crouch')
+
+    def makecannonball(self,x,y):# shoot
+        self.soundshoot.play()
         cannonball=obj_grandactor(self,(x,y))
         cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=True) )
         cannonball.rx=15# hitbox
@@ -1975,6 +1984,7 @@ class obj_world_dodgegunshots(obj_world):
             self.herofy=0# force
             self.herofy += self.herog# gravity
             if self.heromayjump and (controls.gu and controls.guc):# jump
+                self.soundjump.play()
                 self.herofy -= self.heroj
                 self.herov=0# reset velocity
                 self.heromayjump=False# cant jump again
@@ -1992,6 +2002,7 @@ class obj_world_dodgegunshots(obj_world):
                     self.herocrouch=True
                     self.hero.dict['stand'].show=False
                     self.hero.dict['crouch'].show=True
+                    self.soundcrouch.play()
                 else:# switch to stand/jump
                     self.herocrouch=False
                     self.hero.dict['stand'].show=True
@@ -2033,6 +2044,7 @@ class obj_world_dodgegunshots(obj_world):
                     self.timerendwin.start()
                     self.text_undone.show=False
                     self.text_donewin.show=True
+                    self.soundwin.play()
             #cannonballs
             if self.cannonballs:
                 for i in self.cannonballs:
@@ -2052,9 +2064,11 @@ class obj_world_dodgegunshots(obj_world):
                         # hero looses health
                         self.herohealth -= 1
                         if self.herohealth>0:
+                            self.soundhit.play()
                             self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                         else:
                             # hero dies
+                            self.sounddie.play()
                             self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                             self.goal=True# end minigame
                             self.win=False# lost minigame
@@ -4694,6 +4708,7 @@ class obj_world_kiss(obj_world):
         #
         self.soundstart=draw.obj_sound('kiss_start')
         self.soundend=draw.obj_sound('kiss_cheer')
+        self.soundend2=draw.obj_sound('kiss_cheer2')
 
     def triggerungoing(self,controls):
         return (controls.gl and controls.gr) and (controls.glc or controls.grc)
@@ -4735,6 +4750,7 @@ class obj_world_kiss(obj_world):
                         self.text_done.show=True
                         self.timerend.start()
                         self.soundend.play()
+                        self.soundend2.play()
 
         else:
             # goal reached state

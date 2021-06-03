@@ -55,10 +55,6 @@ class obj_scene_ch2p0(page.obj_chapterpage):
         animation.addsound( "pen", [199] )
         animation.addsound( "eraser", [185],skip=1 )
         #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
         self.addpart( draw.obj_music('tension') )
 
 class obj_scene_ch2p1(page.obj_chapterpage):
@@ -139,7 +135,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         textchoice.addkey('partner_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the Partner\'s Name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('partnername',25,(750,y2),color=share.colors.hero, legend='Partner Name') )
+        self.addpart( draw.obj_textinput('partnername',25,(750,y2), legend='Partner Name') )
         self.addpart(draw.obj_animation('ch2_love1','love',(640,240),record=False,scale=0.3))
         self.addpart(draw.obj_animation('ch2_love1','love',(340,240),scale=0.3))
         self.addpart(draw.obj_animation('ch2_love1','love',(940,240),scale=0.3))
@@ -169,8 +165,6 @@ class obj_scene_ch2p5(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p6())
-    def soundnextpage(self):
-        pass# no sound
     def setup(self):
         self.text=[\
                    'This is coming up nicely, said the book of things. ',\
@@ -209,10 +203,6 @@ class obj_scene_ch2p6(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.5))
         self.addpart(draw.obj_animation('ch2_herobase1','herobase',(640,360),scale=0.75,sync=animation))
         self.addpart(draw.obj_animation('ch2_partnerbasenoface','partnerbase',(640,360),scale=0.75,sync=animation))
-        #
-        self.sound=draw.obj_sound('unlock')
-        self.addpart(self.sound)
-        self.sound.play()
         #
         animation.addsound( "partner1", [20] )
         animation.addsound( "partner2", [160],skip=1 )
@@ -445,6 +435,8 @@ class obj_scene_ch2p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p13())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                   'Great, said the book of things. What a lovely home. ',\
@@ -476,6 +468,10 @@ class obj_scene_ch2play(page.obj_chapterpage):
         self.addpart(animation2)
         self.addpart(animation3)
         #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('tension') )
 
 
@@ -496,7 +492,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play1a(page.obj_chapterpage):
@@ -517,7 +513,7 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
         self.world=world.obj_world_wakeup(self,partner=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 
@@ -538,7 +534,7 @@ class obj_scene_ch2play2(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 
@@ -565,7 +561,8 @@ class obj_scene_ch2play3(page.obj_chapterpage):
         animation.addsound( "hero2", [82] )
         animation.addsound( "mailjump", [7] )
         #
-        self.addpart( draw.obj_music('ch2') )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play3a(page.obj_chapterpage):
@@ -582,7 +579,7 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
         self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,partner=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play3b(page.obj_chapterpage):
@@ -602,7 +599,7 @@ class obj_scene_ch2play3b(page.obj_chapterpage):
         self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play4(page.obj_chapterpage):
@@ -620,7 +617,7 @@ class obj_scene_ch2play4(page.obj_chapterpage):
         self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 
@@ -638,7 +635,7 @@ class obj_scene_ch2play5(page.obj_chapterpage):
         self.world=world.obj_world_kiss(self,noending=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play5a(page.obj_chapterpage):
@@ -655,7 +652,7 @@ class obj_scene_ch2play5a(page.obj_chapterpage):
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play6(page.obj_chapterpage):
@@ -674,7 +671,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
         self.world=world.obj_world_gotobed(self,partner=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch2') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2playend(page.obj_chapterpage):
@@ -694,7 +691,7 @@ class obj_scene_ch2playend(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2unlocknext(page.obj_chapterpage):

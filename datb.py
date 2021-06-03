@@ -42,7 +42,7 @@ class obj_musics:
         self.dict['error']=( 'general/error.wav' , 1 )
         self.dict['tension']=( 'general/dungeon_ambient_1.ogg' , 1 )
         # tests
-        self.dict['test']=( 'tests/POL-mali-maafe-short.mp3' , 0.3 )
+        self.dict['test']=( 'tests/POL-mali-maafe-short.mp3' , 0.2 )
         # ch0
         self.dict['ch0']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
         # ch1
@@ -54,6 +54,10 @@ class obj_musics:
         # others
         #
         # general
+        self.dict['piano']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
+        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
+        self.dict['fight1']=( 'fight/POL-knock-out-short.mp3' , 0.2 )
+        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.mp3' , 0.2 )
 
 
 
@@ -78,8 +82,10 @@ class obj_sounds:
         self.dict['drawerase']=( 'draw/bookFlip2.ogg' , 1 )# erase
         self.dict['pen']=( 'draw/pen2.ogg' , 1 )# pen character
         self.dict['eraser']=( 'draw/bookFlip2.ogg' , 1 )# eraser character
-        self.dict['textchoicego']=( 'draw/bookFlip3.ogg' , 1 )# change a textchoice
+        self.dict['textchoicego']=( 'draw/bookFlip3.ogg' , 0.5 )# change a textchoice
         self.dict['textinputkeyboard']=( 'draw/click_002.ogg' , 1 )# keyboard sound when entering text
+        self.dict['textinputedit']=( 'draw/bookFlip3.ogg' , 1 )# when entering edit mode
+        self.dict['textinputdone']=( 'draw/maximize_006.ogg' , 0.5 )# when exiting edit mode
         #
         ### SPECIFIC TO CHAPTERS/CHARACTERS
         # tests
@@ -112,23 +118,32 @@ class obj_sounds:
         self.dict['partner1']=( 'partner/haha-girlp1.ogg' , 1 )
         self.dict['partner2']=( 'partner/haha-girlp2.ogg' , 1 )
         self.dict['partner3']=( 'partner/giggle_small-giggle.wav' , 1 )
-
+        self.dict['partner_scared']=( 'partner/grunt_female__oh-gah.wav' , 1 )
+        # ch3
+        self.dict['villain1']=( 'villain/grunt_01.ogg' , 1 )
+        self.dict['villain2']=( 'villain/haha_evil-laughshort.wav' , 0.5 )
+        self.dict['villain3']=( 'villain/grunt_03.ogg' , 1 )
+        self.dict['villain4']=( 'villain/monster_07.ogg' , 1 )
+        self.dict['castle_elec']=( 'castle/paralyzer-discharge-03.wav' , 1 )
+        self.dict['castle_hurt']=( 'castle/die_02.ogg' , 1 )
+        self.dict['castle1']=( 'castle/robot_1.ogg' , 0.5 )
+        self.dict['castle2']=( 'castle/robot_2.ogg' , 0.5 )
+        self.dict['castle3']=( 'castle/robot_3.ogg' , 0.5 )
+        self.dict['castle4']=( 'castle/robot_4.ogg' , 0.5 )
+        self.dict['castle5']=( 'castle/r2d2.wav' , 1 )
+        self.dict['castle6']=( 'castle/robot_classic-computing-sound_short.wav' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
         self.dict['sunrise_start']=( 'world/sunrise/1up3.ogg' , 1 )
         self.dict['sunrise_end']=( 'world/sunrise/link (1).wav' , 0.5 )
-        # sunset
-        self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
-        self.dict['sunset_end']=( 'world/sunset/link (1).wav' , 0.5 )
+
         # wakeup
         self.dict['wakeup_snore1']=( 'world/wakeup/snore.ogg' , 1 )
         self.dict['wakeup_snore2']=( 'world/wakeup/snore1.ogg' , 1 )
         self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.ogg' , 2 )
         self.dict['wakeup_wake2']=( 'world/wakeup/yawn_male-yawnshorter.wav' , 1 )
-        # gotobed
-        self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
-        self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
+
         # fishing
         self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
         self.dict['fishing_catch']=( 'world/fish/1up 3 - Sound effects Pack 2.ogg' , 1 )
@@ -149,10 +164,24 @@ class obj_sounds:
         # kiss
         self.dict['kiss_start']=( 'world/kiss/scream-6.ogg' , 1 )
         self.dict['kiss_kiss']=( 'world/kiss/kiss_cartoon-kiss-cjohnstone.wav' , 1 )
-        self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.ogg' , 0.5 )
+        self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.ogg' , 1 )
+        self.dict['kiss_cheer2']=( 'world/kiss/haha01.wav' , 1 )
         # travel
         self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.wav' , 0.5 )
+        # dodgebullets
+        self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.ogg' , 0.5 )
+        self.dict['dodgebullets_hit']=( 'world/dodgebullets/die_02.ogg' , 1 )
+        self.dict['dodgebullets_die']=( 'world/dodgebullets/die_04.ogg' , 1 )
+        self.dict['dodgebullets_win']=( 'world/dodgebullets/cheer1.ogg' , 0.5 )
+        self.dict['dodgebullets_jump']=( 'world/dodgebullets/sfx_movement_jump13.wav' , 0.5 )
+        self.dict['dodgebullets_crouch']=( 'world/dodgebullets/swish-9.wav' , 0.5 )
 
+        # sunset
+        self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
+        self.dict['sunset_end']=( 'world/sunset/link (1).wav' , 0.5 )
+        # gotobed
+        self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
+        self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
 
         #
     def getsoundfilename(self,name):
@@ -201,7 +230,7 @@ class obj_colors:
         self.instructions=self.purple# any instruction text/element
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)
-        self.textinput=(200,0,0)# text input (box)
+        self.textinput=(200,0,0)# text input (box and highlight)
         self.textchoice=(180,0,0)# text input box
         # Colors for story
         self.hero=self.red# hero text color

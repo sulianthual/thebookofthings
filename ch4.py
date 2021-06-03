@@ -312,7 +312,7 @@ class obj_scene_ch4p12(page.obj_chapterpage):
         self.textkeys={'pos':(50,100),'xmax':720}
         self.addpart( draw.obj_drawing('bunnybody',(980,360+65),legend='Bunny body (facing right)',shadow=(200,105),brush=share.brushes.pen6) )
         self.addpart( draw.obj_image('bunnyhead',(980,360-150),scale=0.5) )
-        self.addpart( draw.obj_textinput('bunnyname',25,(380,360),color=share.colors.bunny, legend='Bunny Name') )
+        self.addpart( draw.obj_textinput('bunnyname',25,(380,360), legend='Bunny Name') )
 
 
 class obj_scene_ch4p13(page.obj_chapterpage):

@@ -43,7 +43,7 @@ class obj_scene_ch6p0(page.obj_chapterpage):
         animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
         animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation,scale=0.5)
-        self.addpart(animation)
+        self.addpart(animation1)
         self.addpart(animation2)
         self.addpart(animation3)
         #
@@ -330,7 +330,7 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         textchoice.addkey('sailor_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the sailor\'s name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('sailorname',25,(750,y2),color=share.colors.sailor, legend='Sailor Name') )
+        self.addpart( draw.obj_textinput('sailorname',25,(750,y2), legend='Sailor Name') )
 
 class obj_scene_ch6p14(page.obj_chapterpage):
     def prevpage(self):

@@ -54,7 +54,7 @@ class obj_scene_ch0p1(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 # Scene: Draw Pen
@@ -80,7 +80,7 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         self.addpart(draw.obj_textbox('hold '+tempo1+' to draw',(420,400),color=share.colors.instructions))
         self.addpart(draw.obj_textbox('press '+tempo2+' to erase',(420,500),color=share.colors.instructions))
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0p3(page.obj_chapterpage):
@@ -96,7 +96,7 @@ class obj_scene_ch0p3(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation,'pen') )
         animation.addsound( "pen", [12, 113, 132],skip=1 )
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 # Scene: Draw Eraser
@@ -120,7 +120,7 @@ class obj_scene_ch0p4(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('eraserdraw',(900,450), legend='Draw an Eraser') )
         self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0p5(page.obj_chapterpage):
@@ -140,7 +140,7 @@ class obj_scene_ch0p5(page.obj_chapterpage):
         animation.addsound( "pen", [22, 49] )
         animation.addsound( "eraser", [75],skip=1 )
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0p6(page.obj_chapterpage):
@@ -162,7 +162,7 @@ class obj_scene_ch0p6(page.obj_chapterpage):
         animation.addsound( "pen", [26, 99] )
         animation.addsound( "eraser", [236, 311],skip=1 )
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0p7(page.obj_chapterpage):
@@ -183,7 +183,7 @@ class obj_scene_ch0p7(page.obj_chapterpage):
         self.addpart( draw.obj_animation('penmove3','pen',(640-100,360)) )
         self.addpart( draw.obj_animation('erasermove3','eraser',(640+100,360)) )
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0p8(page.obj_chapterpage):
@@ -207,7 +207,7 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch0') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0end(page.obj_chapterpage):

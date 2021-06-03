@@ -334,14 +334,18 @@ class obj_drawing:
 # A text input
 # *TEXTINPUT
 class obj_textinput:
-    def __init__(self,key,nchar,xy,color=(0,0,0),legend=None,default=None):
+    def __init__(self,key,nchar,xy,color=(0,0,0),legend=None,default=None,empty='...'):
         self.type='textinput'
         self.key=key# key from textinput that will be saved
         self.nchar=nchar# max number of characters
         self.x,self.y = xy# position
-        self.color=color
+        self.color=share.colors.text# text color
+        self.colorbox=share.colors.textinput# output box
+        self.colorshow=self.color# text color to show
         self.legend=legend
-        if default:# impose default choice
+        self.empty=empty# overrides text if empty
+        self.setempty(self.empty)
+        if default:# impose default choice (overrides empty)
             self.setdefault(default)
         self.setup()
     def setup(self):
@@ -353,6 +357,7 @@ class obj_textinput:
         # frame
         self.sprite_frame=core.obj_sprite_rect()
         self.makeframe()# make frame for text
+
         # legend
         self.sprite_legend=core.obj_sprite_text()
         if self.legend: self.makelegend(self.legend)
@@ -360,7 +365,14 @@ class obj_textinput:
         self.devcross=core.obj_sprite_cross()
         # audio
         self.soundkeyboard=obj_sound('textinputkeyboard')
+        self.soundedit=obj_sound('textinputedit')
+        self.soundnoedit=obj_sound('textinputdone')
+        # editmode
+        self.editmode=False# in edit mode or not
         #
+    def setempty(self,empty):
+        if share.datamanager.getword(self.key)=='':
+            share.datamanager.writeword(self.key,empty)
     def setdefault(self,default):
         share.datamanager.writeword(self.key,default)
     def texttodict(self):# text to/from dictionary
@@ -370,13 +382,38 @@ class obj_textinput:
             share.datamanager.writeword(self.key,'')
             self.text=''
     def changetext(self,controls):
-        if tool.isinrect(controls.gmx,controls.gmy,self.rect):
+        # edit mode
+        if self.editmode:
             self.text=controls.edittext(self.text)# edit text
-            if controls.iskeydown(): self.soundkeyboard.play()
+            if controls.iskeydown() and not controls.enterc:
+                self.soundkeyboard.play()
             # Note: apparently no need to filter special characters ( \, ', ", {, }, etc )
             if len(self.text)>self.nchar: self.text=self.text[:self.nchar-1]# control max size
+        # toggle edit mode (put AFTER edit mode functions)
+        if not self.editmode:
+            if tool.isinrect(controls.gmx,controls.gmy,self.rect):
+                if (controls.gm1 and controls.gm1c) or (controls.enter and controls.enterc):# flip to edit mode
+                    self.editmode = True
+                    self.colorshow=self.colorbox# same as box
+                    self.soundedit.play()
+                    if self.text==self.empty:
+                        self.text=''
+        else:
+            if (controls.gm1 and controls.gm1c) or (controls.enter and controls.enterc):# flip to non-edit mode
+                self.editmode=False
+                self.soundnoedit.play()
+                self.colorshow=self.color
+                if self.text=='':# like setempty
+                    self.text=self.empty
+            elif not tool.isinrect(controls.gmx,controls.gmy,self.rect):# to non-edit mode but no sound
+                self.editmode=False
+                self.colorshow=self.color
+                if self.text=='':# like setempty
+                    self.text=self.empty
+
+
     def makeframe(self):
-        self.sprite.make('W',self.font,self.color)# biggest character
+        self.sprite.make('W',self.font,self.colorshow)# biggest character
         self.rx=self.sprite.getrx()*self.nchar# biggest text size
         self.ry=self.sprite.getry()
         self.sprite_frame.make()
@@ -389,18 +426,20 @@ class obj_textinput:
         termx,termy=self.sprite_legend.getrxry()
         self.xl,self.yl =self.x, self.y+self.ry+termy
     def display(self):
-        self.sprite.make(self.text,self.font,self.color,bold=True)# rebuild sprite every display
+        self.sprite.make(self.text,self.font,self.colorshow,bold=True)# rebuild sprite every display
         self.sprite.display(self.x,self.y)
-        self.sprite_frame.display(share.colors.textinput,(self.x,self.y,2*self.rx,2*self.ry))
+        self.sprite_frame.display(self.colorbox,(self.x,self.y,2*self.rx,2*self.ry))
         if self.legend: self.sprite_legend.display(self.xl,self.yl)
     def devtools(self):
-        self.devcross.display(share.colors.textinput,(self.x,self.y),10,diagonal=True,thickness=6)
+        self.devcross.display(self.colorbox,(self.x,self.y),10,diagonal=True,thickness=6)
     def update(self,controls):
         self.changetext(controls)
         self.display()
         if share.devmode: self.devtools()
     def finish(self):
-        share.datamanager.writeword(self.key,self.text)
+        if self.text=='':# no empty words
+            self.text=self.empty
+        share.datamanager.writeword(self.key,self.text)# write down text to dictionary
         share.datamanager.savewords()
 
 
@@ -1536,8 +1575,8 @@ class obj_soundplacer:
             print(' ')
             for i in range(self.maxsounds):
                 if self.soundexists[i] and len(self.soundrecords[i])>0:
-                    f1.write('        '+'animation.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )'+'\n')
-                    print('        '+'animation.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )')
+                    f1.write('        '+'animation1.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )'+'\n')
+                    print('        '+'animation1.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )')
             f1.write(' '+'\n')
             print(' ')
         # also print on screen (faster)

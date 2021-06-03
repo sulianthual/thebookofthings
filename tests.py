@@ -308,7 +308,7 @@ class obj_scene_textinput(obj_testpage):
             'Try inputing test2={_test1_} without the underscores (test2 name will become test1 name). ',\
                    ]
         self.addpart( draw.obj_textinput('test1',20,(640,400),legend='name of test 1') )
-        self.addpart( draw.obj_textinput('test2',20,(640,600),legend='name of test 2. keyword value: {test2}') )
+        self.addpart( draw.obj_textinput('test2',20,(640,600),color=share.colors.blue,legend='name of test 2. keyword value: {test2}') )
 
 
 class obj_scene_textchoice(obj_testpage):

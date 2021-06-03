@@ -314,7 +314,7 @@ class obj_scene_ch5p14(page.obj_chapterpage):
         textchoice.addkey('elder_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the elder\'s name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('eldername',25,(750,y2),color=share.colors.elder, legend='Elder Name') )
+        self.addpart( draw.obj_textinput('eldername',25,(750,y2), legend='Elder Name') )
 
 
 class obj_scene_ch5p15(page.obj_chapterpage):
