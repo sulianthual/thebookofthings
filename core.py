@@ -119,6 +119,8 @@ class obj_musicplayer:
         pygame.mixer.music.play(-1)# loop
     def pause(self):
         pygame.mixer.music.pause()
+    def fadeout(self):
+        pygame.mixer.music.fadeout(1000)#
     def rewind(self):
         pygame.mixer.music.rewind()
     def stop(self):
@@ -149,6 +151,8 @@ class obj_soundplayer:
         return self.mastervolume
     def setmastervolume(self,volume):
         self.mastervolume=volume
+    def stop(self):# stop all sounds
+        pygame.mixer.stop()
 
 
 # pygame sound sprite

@@ -845,14 +845,21 @@ class obj_imageplacer:
             )
     def removefrompointer(self,controls):# remove last image from screen
         self.dispgroup.removepart('img_'+str(self.iplaced-1))
-        self.outputmatrix[:-1]
+        self.outputmatrix=self.outputmatrix[:-1]
         self.iplaced = max(self.iplaced-1,0)
-    def finish(self):# save output code
+    def removeall(self,controls):
+        for i in range(self.iplaced):
+            self.removefrompointer(controls)
+    def finish(self):# save output code (file and print on screen)
         with open(self.filecode,'w+') as f1:
             f1.write(' '+'\n')
+            print('###')
+            print(' '+'#')
             for i in self.outputmatrix:
                 f1.write(i+'\n')#
+                print(i)
             f1.write(' '+'\n')
+            print(' '+'#')
     def update(self,controls):
         if share.devaccess:
             self.retransform=False
@@ -884,11 +891,13 @@ class obj_imageplacer:
                     self.retransform=True
                 if controls.g and controls.gc:# reset
                     self.iimg=0# index
+                    self.pointer.replaceimage(self.imglist[self.iimg])
                     self.s=1
                     self.r=0
                     self.fh=False
                     self.fv=False
                     self.retransform=True
+                    self.removeall(controls)
             self.pointer.update(controls)
             if self.retransform:
                 self.retransformpointer()
@@ -1452,9 +1461,10 @@ class obj_dispgroup:
 # - music is changed on first update (instead of at init and setup, because page could be preloaded)
 #
 class obj_music:
-    def __init__(self,name):# start new drawing (load or new)
+    def __init__(self,name,fadeout=False):# start new drawing (load or new)
         self.type='music'
         self.name=name# music name
+        self.fadeout=fadeout# fadeout previous music or not
         self.setup()
     def setup(self):
         self.changed=False
@@ -1569,13 +1579,13 @@ class obj_soundplacer:
             f1.write(' '+'\n')
             print('###')
             print('animation lenght='+str(self.animation.sequence.length))
-            print(' ')
+            print('        '+'#')
             for i in range(self.maxsounds):
                 if self.soundexists[i] and len(self.soundrecords[i])>0:
                     f1.write('        '+'animation1.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )'+'\n')
                     print('        '+'animation1.addsound( "'+self.soundnames[i]+'", '+str(self.soundrecords[i])+' )')
             f1.write(' '+'\n')
-            print(' ')
+            print('        '+'#')
         # also print on screen (faster)
     def getanimationframe(self):
         return self.animation.sequence.ta

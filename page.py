@@ -36,6 +36,7 @@ class obj_page:
         self.postsetup()
     def presetup(self):# background
         self.addpart(draw.obj_pagebackground())
+        share.soundplayer.stop()# stop all sounds for safety
     def setup(self,**kwargs):# custom elements
         pass
     def postsetup(self):# foreground
@@ -78,7 +79,7 @@ class obj_page:
         pass
     def preendpage(self):# before exiting page
         for i in self.to_finish:
-            i.finish()
+            i.finish()# finish drawings/textinput/textchoice (saves them), sounds (stop them)
 
 
 

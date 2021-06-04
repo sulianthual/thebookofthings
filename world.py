@@ -1136,6 +1136,7 @@ class obj_world_travel(obj_world):
         self.done=False# end of minigame
         self.goal=False# destination reached
         self.goalname=None# name of reached goal (if multiple)
+        self.doambience=True# add ambience sounds to the world (forest sounds)
         #
         # Default parameters
         self.wherestart='home'# where the hero starts
@@ -1164,6 +1165,7 @@ class obj_world_travel(obj_world):
             if 'sailorwait' in kwargs: self.addsailorwait=kwargs["sailorwait"]
             if 'beachquestionmark' in kwargs: self.addbeachquestionmark=kwargs["beachquestionmark"]
             if 'beachmark' in kwargs: self.addbeachmark=kwargs["beachmark"]
+            if 'ambience' in kwargs: self.doambience=kwargs["ambience"]
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
@@ -1699,9 +1701,10 @@ class obj_world_travel(obj_world):
 
         #
         # ambience sounds (add to page!)
-        self.soundambience=draw.obj_sound('travel_ambience')
-        self.creator.addpart(self.soundambience)
-        self.soundambience.play(loop=True)# should die when exit page
+        if self.doambience:
+            self.soundambience=draw.obj_sound('travel_ambience')
+            self.creator.addpart(self.soundambience)
+            self.soundambience.play(loop=True)# should die when exit page
 
     ####
     def update(self,controls):
@@ -1854,11 +1857,13 @@ class obj_world_dodgegunshots(obj_world):
         self.heroisangry=False# hero is angry during fight
         self.partnerisenemy=False# parnter is alongside enemy during fight
         self.incastle=False# inside castle not outside
+        self.dotutorial=False# do the tutorial
         # scene tuning
         if kwargs is not None:
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
             if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
             if 'incastle' in kwargs: self.incastle=kwargs["incastle"]
+            if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -1875,6 +1880,8 @@ class obj_world_dodgegunshots(obj_world):
         self.text_undone.show=True
         self.text_donewin.show=False
         self.text_donelost.show=False
+        self.text_start=obj_grandactor(self,(640,360))# text message at start
+        self.text_start.show=True
         # static
         if not self.incastle:
             self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
@@ -1937,7 +1944,8 @@ class obj_world_dodgegunshots(obj_world):
         self.villaintimermin=50# min time
         self.villaintimerm=0.98# timer fact each shot
         self.villaintimershoot=tool.obj_timer(self.villaintimer,cycle=True)#timer between shots
-        self.villaintimershoot.start()
+        if not self.dotutorial:# cant start game if villain doesnt shoot
+            self.villaintimershoot.start()
         # cannonballs
         self.cannonballs=[]# empty list
         # health bar
@@ -1961,6 +1969,12 @@ class obj_world_dodgegunshots(obj_world):
         ': jump] ['+share.datamanager.controlname('down')+': crouch]',(640,660),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('He is the one!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
+        # fight message at beginning
+        self.timerfightmessage=tool.obj_timer(80)
+        if not self.dotutorial:
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.timerfightmessage.start()
+
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(190)# goal to done
@@ -1971,7 +1985,11 @@ class obj_world_dodgegunshots(obj_world):
         self.soundwin=draw.obj_sound('dodgebullets_win')
         self.soundjump=draw.obj_sound('dodgebullets_jump')
         self.soundcrouch=draw.obj_sound('dodgebullets_crouch')
-
+        #
+        if not self.dotutorial:
+            self.soundstart=draw.obj_sound('dodgebullets_start')
+            self.soundstart.play()# at start
+        #
     def makecannonball(self,x,y):# shoot
         self.soundshoot.play()
         cannonball=obj_grandactor(self,(x,y))
@@ -1987,6 +2005,11 @@ class obj_world_dodgegunshots(obj_world):
     def update(self,controls):
         super().update(controls)
         if not self.goal:
+            # fight message at beginning
+            if self.timerfightmessage.on:
+                self.timerfightmessage.update()
+                if self.timerfightmessage.ring:
+                    self.text_start.show=False
             # goal unreached state
             # hero dynamics
             self.herofy=0# force

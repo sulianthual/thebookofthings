@@ -795,7 +795,7 @@ class obj_scene_testsounds(obj_testpage):
                 ' \n\n2) Can add sound to an animation (specify frames where played). ',\
                 ' By default, sounds are played each animation loop. Specificy skip>0 to play silent loops in between (affects all animation sounds) ',\
                 ' \n\n3) Sounds can be looped. For example to do a background ambience into a page (on top of music). ',\
-                '\n\n4) All Sounds added to page are automatically stopped upon page exit (with finish()). '
+                '\n\n4) For safety, all sounds (notably looped) are stopped upon page init and page exit. '
                     ]
         self.sound1=draw.obj_sound('test1')# sound is loaded but not played
         self.addpart( self.sound1 )
@@ -809,7 +809,7 @@ class obj_scene_testsounds(obj_testpage):
         # ambience sound
         self.sound3=draw.obj_sound('test4')
         self.addpart( self.sound3 )
-        self.sound3.play(loop=True)
+        self.sound3.play(loop=True)# looped sound
     def page(self,controls):
         if controls.gu and controls.guc: self.sound1.play()
 

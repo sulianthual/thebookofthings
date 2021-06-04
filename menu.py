@@ -183,10 +183,10 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch1.obj_scene_ch1p6()
+                quickscene=ch3.obj_scene_ch3p37()
                 #
-                # share.scenemanager.switchscene(quickscene)
-                share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage
+                share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)
+                # share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage
         #############################################3
 
 
@@ -334,7 +334,7 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         return False
     def setup(self):
         self.text=['Credits: ',\
-                    '\n\nThe book of things: a game by Sulian Thual (created 2020). ',\
+                    '\n\nThe book of things: a game by Sulian Thual (circa 2020-2021). ',\
                     'Made with Pygame. ',\
                     'All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). ',\
                     'Sounds from opengameart.com and freesound.com (License CC0). ',\

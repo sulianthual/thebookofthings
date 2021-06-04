@@ -23,16 +23,8 @@ import world
 # *CHAPTER IV
 
 
+
 class obj_scene_chapter4(page.obj_chapterpage):
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p0())
-    def triggernextpage(self,controls):
-        return True
-    def soundnextpage(self):
-        pass# no sound
-
-
-class obj_scene_ch4p0(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def setup(self):
@@ -40,29 +32,25 @@ class obj_scene_ch4p0(page.obj_chapterpage):
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: well, lets continue our story where we left. ',\
                    ]
-        animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
-        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
-        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation,scale=0.5)
-        self.addpart(animation)
+        animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
+        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
+        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
+        self.addpart(animation1)
         self.addpart(animation2)
         self.addpart(animation3)
         #
-        # self.addpart( draw.obj_soundplacer(animation,'book1','book2','pen','eraser') )
-        animation.addsound( "book1", [46] )
-        animation.addsound( "book2", [63] )
-        animation.addsound( "pen", [199] )
-        animation.addsound( "eraser", [185],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','pen','eraser') )
+        animation1.addsound( "book1", [120] )
+        animation1.addsound( "pen", [199] )
+        animation1.addsound( "eraser", [185],skip=1 )
         #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
+
 
 
 class obj_scene_ch4p1(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p0())
+        share.scenemanager.switchscene(obj_scene_chapter4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p2())
     def setup(self):
@@ -1070,7 +1058,17 @@ class obj_scene_ch4end(page.obj_chapterpage):
                     'And thats all for today, said the book of things. ',\
                    'Lets wait and find what happens tomorrow. ',\
                    ]
-        self.addpart( draw.obj_animation('bookmove','book',(640,360)) )
+        animation1=draw.obj_animation('bookmove','book',(640,360))
+        self.addpart( animation1 )
+        #
+        animation1.addsound( "book3", [107] )
+        animation1.addsound( "book2", [270] )
+        animation1.addsound( "book1", [249],skip=1 )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
 
 
 class obj_scene_ch4unlocknext(page.obj_chapterpage):

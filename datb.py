@@ -58,6 +58,7 @@ class obj_musics:
         self.dict['villain']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
         self.dict['fight1']=( 'fight/POL-knock-out-short.mp3' , 0.2 )
         self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.mp3' , 0.2 )
+        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.mp3' , 0.1 )
 
 
 
@@ -76,7 +77,7 @@ class obj_sounds:
         self.dict['menuback']=( 'general/drop_004.ogg' , 1 )# browse menu and pages (back)
         self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
         self.dict['erasebook']=( 'general/link (3).wav' , 1 )# erase the book
-        # self.dict['tadah']=( 'general/sfx_menu_select4.wav' , 1 )# reveal something cool
+        self.dict['revealscary']=( 'general/reveal_reversed-suspenseful-harp-3shorter.wav' , 1 )# erase the book
         #
         # draw functions (draw, enter text, etc)
         self.dict['drawstart']=( 'draw/pen1.ogg' , 0.2 )# when draws (looped)
@@ -103,10 +104,10 @@ class obj_sounds:
         self.dict['test3c']=( 'tests/male_standard_3.ogg' , 0.1 )
         self.dict['test3d']=( 'tests/male_standard_4.ogg' , 0.1 )
         # ch0
-        self.dict['bookscene']=( 'book/link (3).wav' , 1 )# a scene with the book of things
-        self.dict['book1']=( 'book/unlink.wav' , 1 )
-        self.dict['book2']=( 'book/magnet_off (3).wav' , 1 )
-        self.dict['book3']=( 'book/link (3).wav' , 1 )
+        self.dict['bookscene']=( 'book/link (3).wav' , 0.5 )# a scene with the book of things
+        self.dict['book2']=( 'book/part (3).wav' , 0.7 )
+        self.dict['book1']=( 'book/wall (4).wav' , 1 )
+        self.dict['book3']=( 'book/wall (2).wav' , 1 )
         # ch1
         # self.dict['hero1']=( 'hero/cute_03.ogg' , 1 )
         self.dict['hero1']=( 'hero/grunt_male-grunt-disapprove.wav' , 1 )
@@ -119,7 +120,7 @@ class obj_sounds:
         self.dict['partner1']=( 'partner/haha-girlp1.ogg' , 1 )
         self.dict['partner2']=( 'partner/haha-girlp2.ogg' , 1 )
         self.dict['partner3']=( 'partner/giggle_small-giggle.wav' , 1 )
-        self.dict['partner_scared']=( 'partner/grunt_female__oh-gah.wav' , 1 )
+        self.dict['partner_scared']=( 'partner/grunt_female__oh-gah.wav' , 1 )# oh no for any purpose
         # ch3
         self.dict['villain1']=( 'villain/grunt_01.ogg' , 1 )
         self.dict['villain2']=( 'villain/haha_evil-laughshort.wav' , 0.5 )
@@ -133,18 +134,24 @@ class obj_sounds:
         self.dict['castle4']=( 'castle/robot_4.ogg' , 0.5 )
         self.dict['castle5']=( 'castle/r2d2.wav' , 1 )
         self.dict['castle6']=( 'castle/robot_classic-computing-sound_short.wav' , 1 )
+        self.dict['bug1']=( 'bug/move.wav' , 1 )
+        self.dict['bug2']=( 'bug/alien_09.ogg' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
         self.dict['sunrise_start']=( 'world/sunrise/1up3.ogg' , 1 )
-        self.dict['sunrise_end']=( 'world/sunrise/link (1).wav' , 0.5 )
-
+        self.dict['sunrise_end']=( 'world/sunrise/wall (2).wav' , 0.5 )
+        # sunset
+        self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
+        self.dict['sunset_end']=( 'world/sunset/wall (2).wav' , 0.5 )
         # wakeup
         self.dict['wakeup_snore1']=( 'world/wakeup/snore.ogg' , 1 )
         self.dict['wakeup_snore2']=( 'world/wakeup/snore1.ogg' , 1 )
-        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.ogg' , 2 )
+        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.ogg' , 1 )
         self.dict['wakeup_wake2']=( 'world/wakeup/yawn_male-yawnshorter.wav' , 1 )
-
+        # gotobed
+        self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
+        self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
         # fishing
         self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
         self.dict['fishing_catch']=( 'world/fish/1up 3 - Sound effects Pack 2.ogg' , 1 )
@@ -170,6 +177,7 @@ class obj_sounds:
         # travel
         self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.wav' , 0.5 )
         # dodgebullets
+        self.dict['dodgebullets_start']=( 'world/dodgebullets/fight_lowreverb.wav' , 1 )
         self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.ogg' , 0.5 )
         self.dict['dodgebullets_hit']=( 'world/dodgebullets/die_02.ogg' , 1 )
         self.dict['dodgebullets_die']=( 'world/dodgebullets/die_04.ogg' , 1 )
@@ -177,12 +185,8 @@ class obj_sounds:
         self.dict['dodgebullets_jump']=( 'world/dodgebullets/sfx_movement_jump13.wav' , 0.5 )
         self.dict['dodgebullets_crouch']=( 'world/dodgebullets/swish-9.wav' , 0.5 )
 
-        # sunset
-        self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
-        self.dict['sunset_end']=( 'world/sunset/link (1).wav' , 0.5 )
-        # gotobed
-        self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
-        self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
+
+
 
         #
     def getsoundfilename(self,name):

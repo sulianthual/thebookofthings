@@ -129,10 +129,11 @@ def comparestringparts(a,b):
 class obj_timer:
     def __init__(self,amount,cycle=False):
         self.amount=round(amount)
-        # 3 states for the timer: on, ring, off
+        # 3 states for the timer: on, ring (1 frame), off
         self.on=False# countdown happens
-        self.ring=False# (once when countdown finishes)
         self.off=True
+        self.ring=False# (once when countdown finishes)
+
         self.t=0# countdown time
         self.cycle=cycle# timer cycles (restarts automatically when done)
     def start(self,amount=None):# start (or restart) timer
@@ -149,12 +150,15 @@ class obj_timer:
         if self.on:
             self.t -= 1
             if self.t <0:
-                self.ring=True
                 self.on=False
-        elif self.ring:
-            self.ring=False
-            self.off=True
-            if self.cycle: self.start()# restart if cycled
+                self.ring=True
+                self.off=False
+        else:
+            if self.ring:
+                self.on=False
+                self.ring=False
+                self.off=True
+                if self.cycle: self.start()# restart if cycled
     def forcering(self):# force timer to ring
         self.on=True
         self.ring=True
@@ -166,8 +170,17 @@ class obj_timer:
         self.off=True
         self.t=0
 
+# once call for any purpose
+# on first call and creation return True
+# then always return False
+#
+class obj_once:
+    def __init__(self):
+        self.called=False
+    def __call__(self,caller,comparator):
+        return not self.called
+        self.called=True
 
 
-# BETTER: do timer manager with queries? (creates a new timer object here for each query)
 
 ####################################################################################################################

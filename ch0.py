@@ -195,13 +195,13 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         self.text=['It was the book of things. The book of all things were all things would be.',
                    'With the help of the pen and eraser, there would be many things to write in the book.',\
                    ]
-        animation=draw.obj_animation('bookmove','book',(640,360))
-        self.addpart( animation )
+        animation1=draw.obj_animation('bookmove','book',(640,360),record=False)
+        self.addpart( animation1 )
         #
-        # self.addpart( draw.obj_soundplacer(animation,'book1','book2','book3','book4') )
-        animation.addsound( "book2", [33] )
-        animation.addsound( "book1", [14, 124, 145],skip=1 )
-        # animation.addsound( "book3", [166], skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book3", [107] )
+        animation1.addsound( "book2", [270] )
+        animation1.addsound( "book1", [249],skip=1 )
         #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
