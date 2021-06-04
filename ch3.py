@@ -1252,8 +1252,7 @@ class obj_scene_ch3p40(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                   '"The ',('{bug}',share.colors.bug),\
-                   ' crawled back in ',('{heroname}',share.colors.hero),'\'s pocket. ',\
+                   '"',\
                    ('{heroname}',share.colors.hero),\
                    ' went back to bed a little happier, for tomorrow ',\
                    ('{hero_he}',share.colors.hero2),' may be able to rescue ',\
@@ -1267,7 +1266,7 @@ class obj_scene_ch3p40(page.obj_chapterpage):
 
 class obj_scene_ch3end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p39())
+        share.scenemanager.switchscene(obj_scene_ch3p40())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3unlocknext())
     def soundnextpage(self):
