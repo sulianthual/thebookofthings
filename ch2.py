@@ -551,15 +551,14 @@ class obj_scene_ch2play3(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
-        animation=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation.addimage('empty',path='premade')
-        self.addpart(animation)
-        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation) )
+        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
+        animation1.addimage('empty',path='premade')
+        self.addpart(animation1)
+        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
         #
-        # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3','hero4','hero5','hero6','mailjump') )
-        animation.addsound( "hero2", [82] )
-        animation.addsound( "mailjump", [7] )
-        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6','mailjump') )
+        animation1.addsound( "hero2", [82] )
+        animation1.addsound( "mailjump", [7] )
         #
         self.addpart( draw.obj_music('piano') )
 

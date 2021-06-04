@@ -47,10 +47,14 @@ class obj_musics:
         self.dict['ch0']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
         # ch1
         self.dict['ch1']=( 'ch1/POL-blob-tales-short.mp3' , 0.2 )
+        # self.dict['ch1']=( 'ch1/POL-smiley-island-short.mp3' , 0.2 )
         # ch2
         self.dict['ch2']=( 'ch2/POL-pet-park-short.mp3' , 0.2 )
         # ch3
         self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
+        # ch4
+        self.dict['ch4']=( 'ch4/POL-azure-waters-short.mp3' , 0.2 )
+        self.dict['ch4play']=( 'ch4/POL-chubby-cat-short.mp3' , 0.2 )
         # others
         #
         # general
@@ -58,7 +62,7 @@ class obj_musics:
         self.dict['villain']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
         self.dict['fight1']=( 'fight/POL-knock-out-short.mp3' , 0.2 )
         self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.mp3' , 0.2 )
-        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.mp3' , 0.1 )
+        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.mp3' , 0.2 )
 
 
 
@@ -149,6 +153,7 @@ class obj_sounds:
         self.dict['wakeup_snore2']=( 'world/wakeup/snore1.ogg' , 1 )
         self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.ogg' , 1 )
         self.dict['wakeup_wake2']=( 'world/wakeup/yawn_male-yawnshorter.wav' , 1 )
+        self.dict['wakeup_alarm']=( 'world/wakeup/alarm_03.ogg' , 0.4 )
         # gotobed
         self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
         self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )

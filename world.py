@@ -513,7 +513,9 @@ class obj_world_wakeup(obj_world):
         if self.addsun:
             self.staticactor.addpart( 'annim',draw.obj_animation('wakeup_sun','sun',(640,360)) )
         if self.addalarmclock:
-            self.staticactor.addpart( 'annim1',draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50)) )
+            animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
+            animation1.addsound( "wakeup_alarm", [5, 115] )
+            self.staticactor.addpart( 'annim1', animation1 )
             self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
         # start actor
         if self.addpartner:# add partner

@@ -397,18 +397,18 @@ class obj_scene_ch3p11(page.obj_chapterpage):
                    #  ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
-        animation=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
-        animation.addimage('villainholdspartner')
-        self.addpart( animation )
-        animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation)
+        animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
+        animation1.addimage('villainholdspartner')
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
         #
-        # self.addpart( draw.obj_soundplacer(animation,'villain1','villain2','villain3','villain4','partner_scared') )
-        animation.addsound( "villain1", [20] )
-        animation.addsound( "villain2", [300] )
-        animation.addsound( "villain3", [155] )
-        animation.addsound( "partner_scared", [228] )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
+        animation1.addsound( "villain1", [20] )
+        animation1.addsound( "villain2", [300] )
+        animation1.addsound( "villain3", [155] )
+        animation1.addsound( "partner_scared", [228] )
         #
         self.addpart( draw.obj_music('ch3') )
 
@@ -1206,6 +1206,8 @@ class obj_scene_ch3p39(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p38())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p39a())
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
         self.text=[\
                    '"The first ', ('grandmaster of deceit',share.colors.grandmaster),\
@@ -1233,12 +1235,13 @@ class obj_scene_ch3p39a(page.obj_chapterpage):
                    ', and it crawled back in ',('{heroname}',share.colors.hero),'\'s pocket". ',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
-        animation=draw.obj_animation('ch1_awaken','herobase',(640,360),record=False,scale=0.7)
-        self.addpart(animation)
-        # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3') )
-        animation.addsound( "hero1", [28] )
-        animation.addsound( "hero2", [170] )
-        animation.addsound( "hero3", [132] )
+        self.addpart( draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
+        animation1=draw.obj_animation('ch1_awaken','herobase',(640,360),scale=0.7)
+        self.addpart(animation1)
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -1261,7 +1264,7 @@ class obj_scene_ch3p40(page.obj_chapterpage):
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch3end(page.obj_chapterpage):
@@ -1269,8 +1272,6 @@ class obj_scene_ch3end(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p40())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3unlocknext())
-    def soundnextpage(self):
-        pass# no sound
     def setup(self):
         self.text=[\
                     'And thats all for today, said the book of things. ',
@@ -1282,11 +1283,7 @@ class obj_scene_ch3end(page.obj_chapterpage):
         animation1.addsound( "book3", [107] )
         animation1.addsound( "book2", [270] )
         animation1.addsound( "book1", [249],skip=1 )
-        #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
+
         self.addpart( draw.obj_music('piano') )
 
 
