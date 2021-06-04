@@ -140,6 +140,13 @@ class obj_sounds:
         self.dict['castle6']=( 'castle/robot_classic-computing-sound_short.wav' , 1 )
         self.dict['bug1']=( 'bug/move.wav' , 1 )
         self.dict['bug2']=( 'bug/alien_09.ogg' , 1 )
+        # ch4
+        self.dict['bunny1']=( 'bunny/cute_07.ogg' , 1 )
+        self.dict['bunny2']=( 'bunny/giggle__dumb-heh.wav' , 1 )
+        self.dict['bunny3']=( 'bunny/cute_08.ogg' , 1 )
+        self.dict['bunny4']=( 'bunny/grunt_femalegrunt1.wav' , 1 )
+        self.dict['bunny5']=( 'bunny/Pixie.wav' , 1 )
+        self.dict['bunny_hit']=( 'bunny/Punch4.ogg' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise

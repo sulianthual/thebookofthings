@@ -511,8 +511,8 @@ class obj_scene_ch1playend(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         animation1.addsound( "book3", [107] )
-        animation1.addsound( "book2", [270] )
-        animation1.addsound( "book1", [249],skip=1 )
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book1", [149] )
         #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)

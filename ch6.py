@@ -1070,13 +1070,14 @@ class obj_scene_ch6end(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         animation1.addsound( "book3", [107] )
-        animation1.addsound( "book2", [270] )
-        animation1.addsound( "book1", [249],skip=1 )
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book1", [149] )
         #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
         #
+        self.addpart( draw.obj_music('piano') )
 
 
 
@@ -1091,7 +1092,8 @@ class obj_scene_ch6unlocknext(page.obj_chapterpage):
         sound1=draw.obj_sound('unlock')
         self.addpart(sound1)
         sound1.play()
-
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 

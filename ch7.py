@@ -1419,13 +1419,14 @@ class obj_scene_ch7end(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         animation1.addsound( "book3", [107] )
-        animation1.addsound( "book2", [270] )
-        animation1.addsound( "book1", [249],skip=1 )
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book1", [149] )
         #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
         #
+        self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch7endend(page.obj_chapterpage):
     def prevpage(self):
@@ -1434,6 +1435,8 @@ class obj_scene_ch7endend(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7unlocknext())
     def setup(self):
         self.text=['The book vanished... ']
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch7unlocknext(page.obj_chapterpage):
@@ -1447,7 +1450,8 @@ class obj_scene_ch7unlocknext(page.obj_chapterpage):
         sound1=draw.obj_sound('unlock')
         self.addpart(sound1)
         sound1.play()
-
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 

@@ -1281,9 +1281,9 @@ class obj_scene_ch3end(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         animation1.addsound( "book3", [107] )
-        animation1.addsound( "book2", [270] )
-        animation1.addsound( "book1", [249],skip=1 )
-
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book1", [149] )
+        #
         self.addpart( draw.obj_music('piano') )
 
 
