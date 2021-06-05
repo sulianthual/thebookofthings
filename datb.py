@@ -155,8 +155,9 @@ class obj_sounds:
         self.dict['elder1']=( 'elder/grunt_malegrunt1.wav' , 1 )
         self.dict['elder2']=( 'elder/hahaha_elder.wav' , 1 )
         self.dict['elder3']=( 'elder/grunt_malegrunt3.wav' , 1 )
-        self.dict['elder4']=( 'elder/humanYell4.wav' , 1 )
-        self.dict['elder5']=( 'elder/grunt_malegrunt2.wav' , 1 )
+        self.dict['elder4']=( 'elder/haha_evil-man-laughing.wav' , 1 )
+        self.dict['elder5']=( 'elder/weird_07.ogg' , 1 )
+        self.dict['elder6']=( 'elder/weird_08.ogg' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -209,9 +210,15 @@ class obj_sounds:
         # climb
         self.dict['climb_jump']=( 'world/climb/sfx_movement_jump13.wav' , 0.3 )
         self.dict['climb_fall']=( 'world/climb/fall4.wav' , 1 )
-        # rps=rock paper scissors
+        # rps=rock paper scissors (8 sounds=max?)
         self.dict['rps_select']=( 'world/rps/select.ogg' , 1 )
         self.dict['rps_start']=( 'world/rps/fight_lowreverb.wav' , 1 )
+        self.dict['rps_count']=( 'world/rps/FX01.ogg' , 1 )
+        self.dict['rps_hit']=( 'world/rps/die_02.ogg' , 1 )
+        self.dict['rps_strike']=( 'world/rps/1up 3 - Sound effects Pack 2.ogg' , 1 )
+        self.dict['rps_tie']=( 'world/rps/alert.ogg' , 1 )
+        self.dict['rps_die']=( 'world/rps/die_04.ogg' , 1 )
+        self.dict['rps_win']=( 'world/rps/cheer1.ogg' , 0.2 )
 
 
 

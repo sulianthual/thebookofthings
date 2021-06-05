@@ -1976,7 +1976,6 @@ class obj_world_dodgegunshots(obj_world):
         if not self.dotutorial:
             self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
             self.timerfightmessage.start()
-
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(190)# goal to done
@@ -2918,6 +2917,8 @@ class obj_world_rockpaperscissors(obj_world):
         self.elderpeaks=False# elder peaks on last countdown to counter
         self.herohealth=3# health bar
         self.elderhealth=3#
+        self.dotutorial=False# do tutorial
+        self.tutorialnothinks=False# remove what hero/elder is thinking (for extended tutorial)
         # scene tuning
         if kwargs is not None:
             if 'elderwins' in kwargs: self.elderalwayswin=kwargs["elderwins"]
@@ -2926,6 +2927,8 @@ class obj_world_rockpaperscissors(obj_world):
             if 'elderpeaks' in kwargs: self.elderpeaks=kwargs["elderpeaks"]
             if 'herohealth' in kwargs: self.herohealth=kwargs["herohealth"]
             if 'elderhealth' in kwargs: self.elderhealth=kwargs["elderhealth"]
+            if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
+            if 'nothinks' in kwargs: self.tutorialnothinks=kwargs["nothinks"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -2970,20 +2973,25 @@ class obj_world_rockpaperscissors(obj_world):
         self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,530),fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,360),color=share.colors.instructions) )
-        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,660),color=share.colors.instructions) )
-        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,660),color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,350),color=share.colors.instructions) )
+        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,350),color=share.colors.instructions) )
+        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,350),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
         self.instructions.dict['textw'].show=True
         self.instructions.dict['textd'].show=True
         self.instructions.dict['texts'].show=True
         self.instructions.dict['textn'].show=False
         self.instructions.dict['texte'].show=False
+        if self.dotutorial:
+            self.instructions.dict['texts'].show=False
         # hero
         # self.hero.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='premade') )
         # self.hero.addpart( 'talkcloud', draw.obj_image('talkcloud',(200,320),path='premade') )
         self.hero.addpart( 'thinkcloud', draw.obj_rectangle((100+50,320),120,120,color=share.colors.drawing) )
-        self.hero.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
+        if self.dotutorial:
+            self.hero.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=share.colors.drawing) )
+        else:
+            self.hero.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=(0,0,0)) )
         self.hero.addpart( 'rock', draw.obj_image('rock',(100+50,320),scale=0.5) )
         self.hero.addpart( 'paper', draw.obj_image('paper',(100+50,320),scale=0.5) )
         self.hero.addpart( 'scissors', draw.obj_image('scissors',(100+50,320),scale=0.5) )
@@ -2998,7 +3006,10 @@ class obj_world_rockpaperscissors(obj_world):
         # self.elder.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(1280-200,320),fliph=True,path='premade') )
         # self.elder.addpart( 'talkcloud', draw.obj_image('talkcloud',(1280-200,320),fliph=True,path='premade') )
         self.elder.addpart( 'thinkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=share.colors.drawing) )
-        self.elder.addpart( 'talkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
+        if self.dotutorial:
+            self.elder.addpart( 'talkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=share.colors.drawing) )
+        else:
+            self.elder.addpart( 'talkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=(0,0,0)) )
 
         if self.elderthinks:# can see what elder is thinking
             self.elder.addpart( 'rock', draw.obj_image('rock',(1280-100-50,320),scale=0.5) )
@@ -3015,6 +3026,10 @@ class obj_world_rockpaperscissors(obj_world):
         self.elder.dict['scissors'].show=self.elderchoice==2
         self.elder.dict['thinkcloud'].show=False
         self.elder.dict['talkcloud'].show=True
+        if self.tutorialnothinks:
+            self.elder.dict['rock'].show=False
+            self.elder.dict['paper'].show=False
+            self.elder.dict['scissors'].show=False
         # show
         self.result.addpart( 'herorock', draw.obj_image('rock',(100+50,320),scale=0.5) )
         self.result.addpart( 'heropaper', draw.obj_image('paper',(100+50,320),scale=0.5) )
@@ -3033,10 +3048,14 @@ class obj_world_rockpaperscissors(obj_world):
         self.computedresults=False# has computed results (one frame each round)
         self.result.addpart( 'win',  draw.obj_image('largecross',(1280-100-50,320),path='premade')  )
         self.result.addpart( 'loose', draw.obj_image('largecross',(100+50,320),path='premade')  )
-        self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,350),fontsize='big',scale=0.9)  )
-        self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,350),fontsize='big',scale=0.9)  )
-        self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,350),fontsize='big',scale=0.9)  )
-        self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,350),fontsize='big')  )
+        # self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,350),fontsize='big',scale=0.9)  )
+        # self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,350),fontsize='big',scale=0.9)  )
+        # self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,350),fontsize='big',scale=0.9)  )
+        # self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,350),fontsize='big')  )
+        self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,80),fontsize='huge',scale=0.9)  )
+        self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,80),fontsize='huge',scale=0.9)  )
+        self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,80),fontsize='huge',scale=0.9)  )
+        self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,80),fontsize='huge')  )
         self.result.dict['win'].show=False
         self.result.dict['loose'].show=False
         self.result.dict['tie'].show=False
@@ -3051,29 +3070,30 @@ class obj_world_rockpaperscissors(obj_world):
         self.countdown.dict['2'].show=False
         self.countdown.dict['1'].show=False
         self.checking=False# checking result or not
-        self.countdowning=False# doing countdown or not
+        self.countdowning=False# doing countdown or not #######!!!CHANGED
         self.icountdown=3
         self.countdowntime=80
-        self.countdowntimelast=140# on last count, slightly more time to decide
+        self.countdowntimelast=90# on last count, slightly more time to decide
         if self.elderalwayswin or self.elderalwaysloose:# if win/loose just hurry it
             self.countdowntimelast=self.countdowntime
         self.countdowntimer=tool.obj_timer(self.countdowntime)# timer
         # healthbars
         for i in range(self.herohealth):
             self.healthbar.addpart('hero_'+str(i), draw.obj_image('love',(640-300+i*75,240),scale=0.125) )
-            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('largecross',(640-300+i*75,240),scale=0.5,path='premade') )
+            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('smallcrossred',(640-300+i*75,240),scale=0.5,path='premade') )
             self.healthbar.dict['herocross_'+str(i)].show=False
         for i in range(self.elderhealth):
             self.healthbar.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
-            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('largecross',(640+300-i*75,240),scale=0.5,path='premade') )
+            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('smallcrossred',(640+300-i*75,240),scale=0.5,path='premade') )
             self.healthbar.dict['eldercross_'+str(i)].show=False
         # text
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,660),fontsize='huge') )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('Defeat!',(640,360),fontsize='huge') )
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
-        self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
-        self.timerfightmessage.start()
+        if not self.dotutorial:
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.timerfightmessage.start()
         # endgame animations
         self.endgame.addpart( 'loose', draw.obj_animation('ch5_rpsloose','herobase',(640,360)) )
         self.endgame.addpart( 'win', draw.obj_animation('ch5_rpswin','elderbase',(640,360)) )
@@ -3086,7 +3106,14 @@ class obj_world_rockpaperscissors(obj_world):
         # audio
         self.soundselect=draw.obj_sound('rps_select')
         self.soundstart=draw.obj_sound('rps_start')
-        self.soundstart.play()# at start
+        if not self.dotutorial: self.soundstart.play()# at start
+        self.soundcount=draw.obj_sound('rps_count')
+        if not self.dotutorial: self.soundcount.play()# at start
+        self.soundhit=draw.obj_sound('rps_hit')
+        self.soundstrike=draw.obj_sound('rps_strike')
+        self.soundtie=draw.obj_sound('rps_tie')
+        self.sounddie=draw.obj_sound('rps_die')
+        self.soundwin=draw.obj_sound('rps_win')
 
     def update(self,controls):
         super().update(controls)
@@ -3118,8 +3145,7 @@ class obj_world_rockpaperscissors(obj_world):
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
                 if not self.countdowning:# not countdown
-                    # if (controls.ga and controls.gac) or self.icountdown<3:
-                    if True:
+                    if not self.dotutorial:
                         self.countdowning=True# flip to countdown
                         self.icountdown=3
                         self.countdowntimer.amount=self.countdowntime# default time
@@ -3149,6 +3175,7 @@ class obj_world_rockpaperscissors(obj_world):
                     self.countdowntimer.update()
                     if self.countdowntimer.ring:
                         if self.icountdown>1:# not the last round yet
+                            self.soundcount.play()
                             self.icountdown -=1
                             if self.icountdown==1:# slightly more time to decide on last count
                                 self.countdowntimer.amount=self.countdowntimelast
@@ -3259,6 +3286,7 @@ class obj_world_rockpaperscissors(obj_world):
                                 self.result.dict['scissorspaper'].show=True
                     if outcome==0:# hero wins
                         self.elderhealth -= 1
+                        self.soundstrike.play()
                         if self.elderhealth>-1:
                             self.healthbar.dict['elder_'+str(self.elderhealth)].show=False
                             self.healthbar.dict['eldercross_'+str(self.elderhealth)].show=True
@@ -3267,6 +3295,7 @@ class obj_world_rockpaperscissors(obj_world):
                         self.result.dict['tie'].show=False
                     elif outcome==1:# elder wins
                         self.herohealth -= 1
+                        self.soundhit.play()
                         if self.herohealth>-1:
                             self.healthbar.dict['hero_'+str(self.herohealth)].show=False
                             self.healthbar.dict['herocross_'+str(self.herohealth)].show=True
@@ -3274,6 +3303,7 @@ class obj_world_rockpaperscissors(obj_world):
                         self.result.dict['loose'].show=True
                         self.result.dict['tie'].show=False
                     else:# tie
+                        self.soundtie.play()
                         self.result.dict['win'].show=False
                         self.result.dict['loose'].show=False
                         self.result.dict['tie'].show=True
@@ -3282,6 +3312,7 @@ class obj_world_rockpaperscissors(obj_world):
                         self.instructions.dict['texte'].show=True
                 if controls.ga and controls.gac:# flip back to deciding state (or to end of the game)
                     if self.herohealth==0:# elder won entire game
+                        self.sounddie.play()
                         self.goal=True
                         self.win=False
                         self.timerendloose.start()
@@ -3292,6 +3323,7 @@ class obj_world_rockpaperscissors(obj_world):
                         self.endgame.dict['loose'].show=True
                         self.endgame.dict['loose'].rewind()
                     elif self.elderhealth==0:# hero won entire game
+                        self.soundwin.play()
                         self.goal=True
                         self.win=True
                         self.timerendwin.start()
@@ -3302,6 +3334,7 @@ class obj_world_rockpaperscissors(obj_world):
                         self.endgame.dict['win'].show=True
                         self.endgame.dict['win'].rewind()
                     else:# keep playing
+                        self.soundcount.play()
                         self.checking=False
                         self.countdowning=False
                         self.computedresults=False
