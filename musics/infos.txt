@@ -13,12 +13,14 @@ Licensed under Creative Commons by Attribution 4.0
 
 Note:
 
-from the website these wav are in 32 bit pcm. They dont work with some pygame versions (e.g. 1.9.6)
-so convert them to 16 bit, just run:
+1) from the website these wav are in 32 bit pcm. They dont work with some pygame versions (e.g. 1.9.6)
+for compatibility may convert them to wav 16 bit (in folder dats):
+for i in *.wav; do ffmpeg -i "$i" -f wav dats/"${i%.*}.wav"; done
+there is still inconsistencies where files play at different speeds depending on pygame version
 
-for i in *.wav; do ffmpeg -i "$i" -f wav "${i%.*}.wav"; done
+2) the mp3 do not work with never pygame version 2.0.0 
 
-for now the mp3 do not work with never pygame version 2.0.0 (this is a bug)
-so maybe use mp3 in final version on condition that this is corrected
+3) safest for compatibility is to convert everything to .ogg (in folder dats):
+for i in *.wav; do ffmpeg -i "$i" -f ogg dats/"${i%.*}.ogg"; done
 
 ###############################

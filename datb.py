@@ -41,37 +41,32 @@ class obj_musics:
         # general
         self.dict['error']=( 'general/error.wav' , 1 )
         self.dict['tension']=( 'general/dungeon_ambient_1.ogg' , 1 )
-        # tests
-        self.dict['test']=( 'tests/POL-mali-maafe-short.mp3' , 0.2 )
+        self.dict['test']=( 'general/dungeon_ambient_1.ogg' , 0.2 )
         # ch0
-        self.dict['piano']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
+        self.dict['piano']=( 'ch0/POL-you-and-me-short.ogg' , 0.2 )
         # ch1
-        self.dict['ch1']=( 'ch1/POL-blob-tales-short.mp3' , 0.2 )
+        self.dict['ch1']=( 'ch1/POL-blob-tales-short.ogg' , 0.2 )
         # ch2
-        self.dict['ch2']=( 'ch2/POL-pet-park-short.mp3' , 0.2 )
+        self.dict['ch2']=( 'ch2/POL-pet-park-short.ogg' , 0.2 )
         # ch3
-        self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
-        self.dict['fight1']=( 'ch3/POL-knock-out-short.mp3' , 0.2 )
-        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.mp3' , 0.2 )
-        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.mp3' , 0.2 )
+        self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )
+        self.dict['fight1']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )
+        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.ogg' , 0.2 )
+        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.ogg' , 0.2 )
         # ch4
-        self.dict['ch4']=( 'ch4/POL-azure-waters-short.mp3' , 0.2 )
-        self.dict['ch4play']=( 'ch4/POL-chubby-cat-short.mp3' , 0.2 )# lying game
+        self.dict['ch4']=( 'ch4/POL-azure-waters-short.ogg' , 0.2 )
+        self.dict['ch4play']=( 'ch4/POL-chubby-cat-short.ogg' , 0.2 )# lying game
         # ch5
-        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.mp3' , 0.2 )
-        self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.mp3' , 0.2 )# rps game
+        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.ogg' , 0.2 )
+        self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.ogg' , 0.2 )# rps game
         self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )
         # ch6
-        self.dict['ch6']=( 'ch6/POL-treasure-match-short.mp3' , 0.2 )
-        self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.mp3' , 0.2 )# stealth game
+        self.dict['ch6']=( 'ch6/POL-treasure-match-short.ogg' , 0.2 )
+        self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game
 
         # others
         #
         # general
-
-
-
-
 
 
 # sounds database
