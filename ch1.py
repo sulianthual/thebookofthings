@@ -430,6 +430,10 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         self.world=world.obj_world_wakeup(self)
         self.addpart(self.world)
         #
+        self.sound=draw.obj_sound('sunrise_end')# rooster
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('piano') )
 
 
@@ -492,6 +496,10 @@ class obj_scene_ch1play4(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)
+        #
+        self.sound=draw.obj_sound('sunset_end')# rooster
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('piano') )
 

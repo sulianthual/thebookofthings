@@ -467,7 +467,9 @@ class obj_scene_ch6p17(page.obj_chapterpage):
         animation1=draw.obj_animation('ch6sailortalks1','sailorbase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        self.addpart( draw.obj_music('ch6') )
+        self.addpart( draw.obj_soundplacer(animation1,'acc1','acc2','acc3','acc4') )
+        #
+        self.addpart( draw.obj_music(None) )
 
 
 class obj_scene_ch6p18(page.obj_chapterpage):

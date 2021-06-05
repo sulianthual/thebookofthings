@@ -36,7 +36,7 @@ class obj_musics:
           return self.dict['error'][1]
     def setup(self):
         # dictionary= tuples of filename, volume level
-        # in final version should use wav (to mp3)
+        # Use only ogg files!
         #
         # general
         self.dict['error']=( 'general/error.wav' , 1 )
@@ -77,6 +77,7 @@ class obj_sounds:
         self.setup()
     def setup(self):
         # dictionary= tuples of filename, volume level
+        # Only ogg (preferred) or wav files!
         #
         # general use
         self.dict['error']=( 'general/error.ogg' , 1 )# sound is missing
@@ -157,14 +158,21 @@ class obj_sounds:
         self.dict['elder4']=( 'elder/haha_evil-man-laughing.wav' , 1 )
         self.dict['elder5']=( 'elder/weird_07.ogg' , 1 )
         self.dict['elder6']=( 'elder/grunt_malegrunt2.wav' , 1 )
+        # ch6
+        self.dict['acc1']=( 'sailor/pirate-band-short1.wav' , 1 )
+        self.dict['acc2']=( 'sailor/pirate-band-short3.wav' , 1 )
+        self.dict['acc3']=( 'sailor/pirate-band-short2.wav' , 1 )
+        self.dict['acc4']=( 'sailor/pirate-band-short4.wav' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
         self.dict['sunrise_start']=( 'world/sunrise/1up3.ogg' , 1 )
-        self.dict['sunrise_end']=( 'world/sunrise/wall (2).wav' , 0.5 )
+        # self.dict['sunrise_end']=( 'world/sunrise/wall (2).wav' , 0.5 )
+        self.dict['sunrise_end']=( 'world/sunrise/rooster2.wav' , 0.5 )
         # sunset
         self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
-        self.dict['sunset_end']=( 'world/sunset/wall (2).wav' , 0.5 )
+        # self.dict['sunset_end']=( 'world/sunset/wall (2).wav' , 0.5 )
+        self.dict['sunset_end']=( 'world/sunset/howling_shorter.wav' , 1 )
         # wakeup
         self.dict['wakeup_snore1']=( 'world/wakeup/snore.ogg' , 1 )
         self.dict['wakeup_snore2']=( 'world/wakeup/snore1.ogg' , 1 )

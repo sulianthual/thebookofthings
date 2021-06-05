@@ -416,12 +416,12 @@ class obj_world_sunrise(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(100)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(100)# goal to done
         self.timer.start()# reset ungoing timer
         #
         self.soundstart=draw.obj_sound('sunrise_start')
         self.soundend=draw.obj_sound('sunrise_end')
-
+        #
     def triggerungoing(self,controls):
         return controls.gu and controls.guc
     def triggerstart(self,controls):
@@ -4914,7 +4914,7 @@ class obj_world_sunset(obj_world):
         self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(80)# ungoing part
-        self.timerend=tool.obj_timer(80)# goal to done
+        self.timerend=tool.obj_timer(120)# goal to done
         self.timer.start()# reset ungoing timer
         #
         self.soundstart=draw.obj_sound('sunset_start')
