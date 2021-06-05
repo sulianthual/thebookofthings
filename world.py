@@ -2720,6 +2720,9 @@ class obj_world_climbpeak(obj_world):
         self.timerend=tool.obj_timer(0)# goal to done
         # self.setlevel2()# Test
         # self.setlevel3()# Test
+        #
+        self.soundjump=draw.obj_sound('climb_jump')
+        self.soundfall=draw.obj_sound('climb_fall')
 
     def setlevel2(self):
         # clear stuff
@@ -2821,6 +2824,7 @@ class obj_world_climbpeak(obj_world):
                     self.heromayjump=False# cant jump again
                     self.heromayholdjump=True# can hold this jump
                     self.heroholdjumptimer.start()
+                    self.soundjump.play()
                 if self.heromayholdjump and controls.gu:# jump (hold button)
                     self.herovj *= self.herodvj# factor jump velocity
                     self.herov -= self.herovj
@@ -2838,6 +2842,7 @@ class obj_world_climbpeak(obj_world):
                         self.hero.movetoxy(self.heroxystart)
                         self.heromayjump=True# hero can jump (not if in the air)
                         self.startlevel=False
+                        self.soundfall.play()
                 # platforms
                 for i in self.platforms:
                     if tool.checkrectcollide(self.herohitbox2,i):
@@ -2938,6 +2943,8 @@ class obj_world_rockpaperscissors(obj_world):
         self.text_donelost=obj_grandactor(self,(640,360))
         self.text_donewin.show=False
         self.text_donelost.show=False
+        self.text_start=obj_grandactor(self,(640,360))# text message at start
+        self.text_start.show=True
         #
         # static
         self.staticactor.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
@@ -3063,6 +3070,10 @@ class obj_world_rockpaperscissors(obj_world):
         # text
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,660),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('Defeat!',(640,360),fontsize='huge') )
+        # fight message at beginning
+        self.timerfightmessage=tool.obj_timer(80)
+        self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+        self.timerfightmessage.start()
         # endgame animations
         self.endgame.addpart( 'loose', draw.obj_animation('ch5_rpsloose','herobase',(640,360)) )
         self.endgame.addpart( 'win', draw.obj_animation('ch5_rpswin','elderbase',(640,360)) )
@@ -3071,29 +3082,44 @@ class obj_world_rockpaperscissors(obj_world):
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(120)# goal to done
+        #
+        # audio
+        self.soundselect=draw.obj_sound('rps_select')
+        self.soundstart=draw.obj_sound('rps_start')
+        self.soundstart.play()# at start
+
     def update(self,controls):
         super().update(controls)
         # goal unreached
         if not self.goal:
+            # fight message at beginning
+            if self.timerfightmessage.on:
+                self.timerfightmessage.update()
+                if self.timerfightmessage.ring:
+                    self.text_start.show=False
             if not self.checking: # deciding state
                 # print('VALUE='+str(self.icountdown)+'----:'+str(self.countdowntimer.t))
                 if controls.gl and controls.glc:
+                    if not self.herochoice==0: self.soundselect.play()
                     self.herochoice=0
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
                 elif controls.gu and controls.guc:
+                    if not self.herochoice==1: self.soundselect.play()
                     self.herochoice=1
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
                 elif controls.gr and controls.grc:
+                    if not self.herochoice==2: self.soundselect.play()
                     self.herochoice=2
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
                 if not self.countdowning:# not countdown
-                    if (controls.ga and controls.gac) or self.icountdown<3:
+                    # if (controls.ga and controls.gac) or self.icountdown<3:
+                    if True:
                         self.countdowning=True# flip to countdown
                         self.icountdown=3
                         self.countdowntimer.amount=self.countdowntime# default time

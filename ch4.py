@@ -80,8 +80,12 @@ class obj_scene_ch4p1(page.obj_chapterpage):
         animation1.addsound( "villain2", [300] )
         animation1.addsound( "villain3", [155] )
         animation1.addsound( "partner_scared", [228] )
-
-        self.addpart( draw.obj_music('piano') )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('tension') )
 
 class obj_scene_ch4p2(page.obj_chapterpage):
     def prevpage(self):
@@ -104,10 +108,6 @@ class obj_scene_ch4p2(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116],skip=1 )
-        #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -241,7 +241,11 @@ class obj_scene_ch4p7(page.obj_chapterpage):
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
-        self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        #
+        animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
+        self.addpart(animation1)
+        animation1.addsound( "villain2", [100],skip=1 )
         #
         self.sound=draw.obj_sound('mailopen')
         self.addpart(self.sound)

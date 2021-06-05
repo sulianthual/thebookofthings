@@ -44,25 +44,29 @@ class obj_musics:
         # tests
         self.dict['test']=( 'tests/POL-mali-maafe-short.mp3' , 0.2 )
         # ch0
-        self.dict['ch0']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
+        self.dict['piano']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
         # ch1
         self.dict['ch1']=( 'ch1/POL-blob-tales-short.mp3' , 0.2 )
-        # self.dict['ch1']=( 'ch1/POL-smiley-island-short.mp3' , 0.2 )
         # ch2
         self.dict['ch2']=( 'ch2/POL-pet-park-short.mp3' , 0.2 )
         # ch3
         self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
+        self.dict['fight1']=( 'ch3/POL-knock-out-short.mp3' , 0.2 )
+        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.mp3' , 0.2 )
+        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.mp3' , 0.2 )
         # ch4
         self.dict['ch4']=( 'ch4/POL-azure-waters-short.mp3' , 0.2 )
-        self.dict['ch4play']=( 'ch4/POL-chubby-cat-short.mp3' , 0.2 )
+        self.dict['ch4play']=( 'ch4/POL-chubby-cat-short.mp3' , 0.2 )# lying game
+        # ch5
+        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.mp3' , 0.2 )
+        self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.mp3' , 0.2 )# rps game
+        self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )
         # others
         #
         # general
-        self.dict['piano']=( 'ch0/POL-you-and-me-short.mp3' , 0.2 )
-        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.mp3' , 0.2 )
-        self.dict['fight1']=( 'fight/POL-knock-out-short.mp3' , 0.2 )
-        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.mp3' , 0.2 )
-        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.mp3' , 0.2 )
+
+
+
 
 
 
@@ -147,6 +151,12 @@ class obj_sounds:
         self.dict['bunny4']=( 'bunny/grunt_femalegrunt1.wav' , 1 )
         self.dict['bunny5']=( 'bunny/Pixie.wav' , 1 )
         self.dict['bunny_hit']=( 'bunny/Punch4.ogg' , 1 )
+        # ch5
+        self.dict['elder1']=( 'elder/grunt_malegrunt1.wav' , 1 )
+        self.dict['elder2']=( 'elder/hahaha_elder.wav' , 1 )
+        self.dict['elder3']=( 'elder/grunt_malegrunt3.wav' , 1 )
+        self.dict['elder4']=( 'elder/humanYell4.wav' , 1 )
+        self.dict['elder5']=( 'elder/grunt_malegrunt2.wav' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -196,6 +206,12 @@ class obj_sounds:
         self.dict['dodgebullets_win']=( 'world/dodgebullets/cheer1.ogg' , 0.5 )
         self.dict['dodgebullets_jump']=( 'world/dodgebullets/sfx_movement_jump13.wav' , 0.5 )
         self.dict['dodgebullets_crouch']=( 'world/dodgebullets/swish-9.wav' , 0.5 )
+        # climb
+        self.dict['climb_jump']=( 'world/climb/sfx_movement_jump13.wav' , 0.3 )
+        self.dict['climb_fall']=( 'world/climb/fall4.wav' , 1 )
+        # rps=rock paper scissors
+        self.dict['rps_select']=( 'world/rps/select.ogg' , 1 )
+        self.dict['rps_start']=( 'world/rps/fight_lowreverb.wav' , 1 )
 
 
 

@@ -273,10 +273,12 @@ class obj_scene_ch2p6c(page.obj_chapterpage):
                     '\n\nsigned: ',('{partnername}',share.colors.partner),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
-        self.addpart( draw.obj_image('partnerhead',(1065,305),scale=0.5) )
+        # self.addpart( draw.obj_image('partnerhead',(1065,305),scale=0.5) )
         self.addpart( draw.obj_image('love',(716,546),scale=0.25) )
-        animation=draw.obj_animation('ch2_mailhead','partnerhead',(640,360),record=False)
-        self.addpart(animation)
+        #
+        animation1=draw.obj_animation('ch2_mailhead','partnerhead',(640,360))
+        self.addpart(animation1)
+        animation1.addsound( "partner1", [100],skip=1 )
         #
         self.sound=draw.obj_sound('mailopen')
         self.addpart(self.sound)

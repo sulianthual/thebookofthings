@@ -374,9 +374,17 @@ class obj_scene_ch3p10(page.obj_chapterpage):
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
-        self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        #
+        animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
+        self.addpart(animation1)
+        animation1.addsound( "villain2", [100],skip=1 )
         #
         self.addpart( draw.obj_music('ch3') )
+
+
+
+
 
 
 class obj_scene_ch3p11(page.obj_chapterpage):
