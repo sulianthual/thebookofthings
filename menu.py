@@ -183,7 +183,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 #
                 # change current WIP scene here
-                quickscene=ch5.obj_scene_ch5p33()
+                quickscene=ch6.obj_scene_ch6p22()
                 #
                 share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)
                 # share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage

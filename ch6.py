@@ -75,6 +75,18 @@ class obj_scene_ch6p1(page.obj_chapterpage):
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
         # self.addpart( draw.obj_imageplacer(self,'castle','mountain') )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
+        animation1.addsound( "villain1", [20] )
+        animation1.addsound( "villain2", [300] )
+        animation1.addsound( "villain3", [155] )
+        animation1.addsound( "partner_scared", [228] )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch6p2(page.obj_chapterpage):
@@ -99,6 +111,8 @@ class obj_scene_ch6p2(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346),imgscale=0.25,sync=animation1) )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark2','bunnyhead',(640,360),sync=animation1) )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch6p3(page.obj_chapterpage):
@@ -116,6 +130,8 @@ class obj_scene_ch6p3(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
+        # #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p4(page.obj_chapterpage):
@@ -134,6 +150,8 @@ class obj_scene_ch6p4(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p5(page.obj_chapterpage):
@@ -150,6 +168,8 @@ class obj_scene_ch6p5(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p6(page.obj_chapterpage):
@@ -174,6 +194,12 @@ class obj_scene_ch6p6(page.obj_chapterpage):
         animation2.addimage('empty',path='premade')
         self.addpart( animation2  )
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero2','mailjump') )
+        animation1.addsound( "hero2", [82,121] )
+        animation1.addsound( "mailjump", [7,51] )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p7(page.obj_chapterpage):
@@ -197,7 +223,17 @@ class obj_scene_ch6p7(page.obj_chapterpage):
                   '\n\nsigned: ',('{eldername}',share.colors.elder),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
-        self.addpart( draw.obj_image('elderhead',(1065,305),scale=0.5) )
+        # self.addpart( draw.obj_image('elderhead',(1065,305),scale=0.5) )
+        #
+        animation1=draw.obj_animation('ch2_mailhead','elderhead',(640,360),imgscale=0.7)
+        self.addpart(animation1)
+        animation1.addsound( "elder1", [100],skip=1 )
+        #
+        self.sound=draw.obj_sound('mailopen')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p8(page.obj_chapterpage):
@@ -219,7 +255,17 @@ class obj_scene_ch6p8(page.obj_chapterpage):
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
-        self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+        #
+        animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
+        self.addpart(animation1)
+        animation1.addsound( "villain2", [100],skip=1 )
+        #
+        self.sound=draw.obj_sound('mailopen')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p9(page.obj_chapterpage):
@@ -239,10 +285,13 @@ class obj_scene_ch6p9(page.obj_chapterpage):
         animation1=draw.obj_animation('ch2_mail1','paper',(640,360),record=False)
         animation1.addimage('empty',path='premade')
         self.addpart(animation1)
-        # animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),sync=animation1)
-        # animation2.addimage('empty',path='premade')
-        # self.addpart( animation2  )
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6','mailjump') )
+        animation1.addsound( "hero2", [82] )
+        animation1.addsound( "mailjump", [7] )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p10(page.obj_chapterpage):
@@ -261,6 +310,12 @@ class obj_scene_ch6p10(page.obj_chapterpage):
                     '\n\nsigned: unknown. ',\
                    ]
         self.addpart( draw.obj_image('paperframe',(440+200,400),path='premade') )
+        #
+        self.sound=draw.obj_sound('mailopen')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p11(page.obj_chapterpage):
@@ -276,6 +331,8 @@ class obj_scene_ch6p11(page.obj_chapterpage):
                     ]
         self.addpart( draw.obj_drawing('palmtree',(340,450),legend='Palm Tree',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('wave',(940,450),legend='Wave',shadow=(200,100)) )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p12(page.obj_chapterpage):
@@ -291,6 +348,12 @@ class obj_scene_ch6p12(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start='home',goal='beach',chapter=6,beachquestionmark=True)
         self.addpart(self.world)
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music(None) )
 
 
 class obj_scene_ch6p13(page.obj_chapterpage):
@@ -319,6 +382,13 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the sailor\'s name was:",(200,y2)) )
         self.addpart( draw.obj_textinput('sailorname',25,(750,y2), legend='Sailor Name') )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch6') )
+
 
 class obj_scene_ch6p14(page.obj_chapterpage):
     def prevpage(self):
@@ -334,6 +404,8 @@ class obj_scene_ch6p14(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         self.addpart( draw.obj_drawing('sailorface',(640,450),legend='Draw the sailor (facing right)',shadow=(200,200)) )
+
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p15(page.obj_chapterpage):
@@ -352,6 +424,8 @@ class obj_scene_ch6p15(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailorbaldhead',(640+300,450)) )
         self.addpart( draw.obj_drawing('sailorhat',(640+300,450-200),shadow=(250,150)) )
         self.addpart( draw.obj_textbox('Add a sailor hat',(640+300,680),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p16(page.obj_chapterpage):
@@ -374,6 +448,8 @@ class obj_scene_ch6p16(page.obj_chapterpage):
         animation1=draw.obj_animation('ch6_meetsailor','herobase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch6_meetsailor2','sun',(640,360),record=False,sync=animation1) )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p17(page.obj_chapterpage):
@@ -390,6 +466,9 @@ class obj_scene_ch6p17(page.obj_chapterpage):
                   ]
         animation1=draw.obj_animation('ch6sailortalks1','sailorbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        self.addpart( draw.obj_music('ch6') )
+
 
 class obj_scene_ch6p18(page.obj_chapterpage):
     def prevpage(self):
@@ -409,6 +488,8 @@ class obj_scene_ch6p18(page.obj_chapterpage):
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(968,411),scale=0.42,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_animation('ch6sailortalks3','sailorbase',(640,360+100),record=False) )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p19(page.obj_chapterpage):
@@ -428,7 +509,15 @@ class obj_scene_ch6p19(page.obj_chapterpage):
                     ('password',share.colors.password2),'". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
+        animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        animation1.addsound( "bug1", [15, 100] )
+        animation1.addsound( "bug2", [116],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch6') )
+
 
 class obj_scene_ch6p20(page.obj_chapterpage):
     def prevpage(self):
@@ -448,6 +537,9 @@ class obj_scene_ch6p20(page.obj_chapterpage):
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(968,411),scale=0.42,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_animation('ch6sailortalks3','sailorbase',(640,360+100),record=False) )
+        #
+        self.addpart( draw.obj_music('ch6') )
+
 
 class obj_scene_ch6p21(page.obj_chapterpage):
     def prevpage(self):
@@ -462,6 +554,9 @@ class obj_scene_ch6p21(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start=(-1280+100,1080-120),goal='beach',chapter=6,minigame='logs',sailorwait=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music(None) )
+
 
 class obj_scene_ch6p22(page.obj_chapterpage):
     def prevpage(self):
@@ -478,6 +573,13 @@ class obj_scene_ch6p22(page.obj_chapterpage):
                    ]
         self.textkeys={'pos':(50,200),'xmax':600}
         self.addpart( draw.obj_drawing('sailboat',(640+300,450-100),legend='Sailboat (facing right)',shadow=(300,300)) )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch6') )
+
 
 class obj_scene_ch6p23(page.obj_chapterpage):
     def prevpage(self):
@@ -500,6 +602,12 @@ class obj_scene_ch6p23(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch6sailortalks3','sailorbase',(640+50,360+100),record=False) )
         self.addpart( draw.obj_image('wave',(77,580),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(282,567),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch6p24(page.obj_chapterpage):
@@ -517,6 +625,9 @@ class obj_scene_ch6p24(page.obj_chapterpage):
                    'Draw a ',('skull',share.colors.skeleton),', said the book of things. ',\
                    ]
         self.addpart( draw.obj_drawing('skeletonhead',(640,450),legend='Skull (Facing Right)',shadow=(200,200)) )
+        #
+        self.addpart( draw.obj_music('ch6play') )
+        #
 
 
 class obj_scene_ch6p25(page.obj_chapterpage):
@@ -537,6 +648,9 @@ class obj_scene_ch6p25(page.obj_chapterpage):
         self.addpart(draw.obj_animation('ch1_hero1','skeletonbase',(360,360)))
         self.addpart(draw.obj_animation('ch1_hero1','skeletonbase',(360-300,360)))
         self.addpart(draw.obj_animation('ch1_hero1','skeletonbase_sailorhat',(360+300,360)))
+        #
+        self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch6p26(page.obj_chapterpage):
     def prevpage(self):
@@ -551,6 +665,8 @@ class obj_scene_ch6p26(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start='beach',goal='island',boat=True,chapter=6,sailor=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p27(page.obj_chapterpage):
@@ -569,6 +685,8 @@ class obj_scene_ch6p27(page.obj_chapterpage):
         self.addpart(self.world)
         # self.addpart( draw.obj_drawing('islandsunset',(840,550),shadow=(400,150),brush=share.brushes.smallpen) )
         # self.addpart( draw.obj_imageplacer(self,'skeletonhead','palmtree','wave','cloud','sailboat','mountain',actor='staticactor') )
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 
@@ -602,6 +720,9 @@ class obj_scene_ch6p28(page.obj_chapterpage):
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch6_skullobserve3','moon',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
+        #
+        self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch6p29(page.obj_chapterpage):
     def prevpage(self):
@@ -628,6 +749,8 @@ class obj_scene_ch6p29(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( animation3 )
         self.addpart( animation2 )
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p30(page.obj_chapterpage):
@@ -644,6 +767,9 @@ class obj_scene_ch6p30(page.obj_chapterpage):
        self.text=['Start Sneaking']
        self.world=world.obj_world_bushstealth0(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch6p30a(page.obj_chapterpage):
     def prevpage(self):
@@ -659,6 +785,8 @@ class obj_scene_ch6p30a(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
 
 
 
@@ -676,6 +804,8 @@ class obj_scene_ch6p31(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth2(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p32(page.obj_chapterpage):
@@ -692,6 +822,8 @@ class obj_scene_ch6p32(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth3(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p33(page.obj_chapterpage):
@@ -708,6 +840,8 @@ class obj_scene_ch6p33(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth4(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p34(page.obj_chapterpage):
@@ -723,6 +857,8 @@ class obj_scene_ch6p34(page.obj_chapterpage):
                    ('cow',share.colors.cow),'. ',\
                    ]
         self.addpart( draw.obj_drawing('cow',(640,450),legend='Draw a Cow (Facing Right)',shadow=(300,200),brush=share.brushes.pen6) )
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p35(page.obj_chapterpage):
@@ -748,6 +884,9 @@ class obj_scene_ch6p35(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(145,494),scale=0.44,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch6_cowwalks1','cow',(640,360),record=False)
         self.addpart(animation1)
+        #
+        self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch6p36(page.obj_chapterpage):
     def prevpage(self):
@@ -774,6 +913,8 @@ class obj_scene_ch6p36(page.obj_chapterpage):
         self.addpart(animation1)
         animation2=draw.obj_animation('ch6_heroalertgiven','herobase',(640,360),record=False,sync=animation1)
         self.addpart(animation2)
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p37(page.obj_chapterpage):
@@ -802,6 +943,8 @@ class obj_scene_ch6p37(page.obj_chapterpage):
         self.addpart( draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(1010,469),sync=animation1,imgfliph=True) )
         self.addpart( draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(1156,510),sync=animation1,imgfliph=True) )
         self.addpart( draw.obj_animation('ch6_heroalertgivenridecow','heroridecow',(640,360),sync=animation1, record=False) )
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p38(page.obj_chapterpage):
@@ -818,6 +961,8 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         self.textkeys={'pos':(100,50),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p39(page.obj_chapterpage):
@@ -834,6 +979,8 @@ class obj_scene_ch6p39(page.obj_chapterpage):
         self.text=['make it to the ship']
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p40(page.obj_chapterpage):
@@ -861,6 +1008,8 @@ class obj_scene_ch6p40(page.obj_chapterpage):
         animation1=draw.obj_animation('ch6_herocowtoship','heroridecow',(640,360),record=False)
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch6_herocowtoship2','moon',(640,360),record=False,sync=animation1) )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 
@@ -877,6 +1026,8 @@ class obj_scene_ch6p41(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_travel(self,start='island',goal='beach',boat=True,chapter=6,sailor=True,beachmark='True')
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 
@@ -902,6 +1053,8 @@ class obj_scene_ch6p42(page.obj_chapterpage):
         self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640+50,360+100),record=False)
         self.addpart(animation1)
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p43(page.obj_chapterpage):
@@ -929,6 +1082,8 @@ class obj_scene_ch6p43(page.obj_chapterpage):
         animation3=draw.obj_animation('ch6sailortalks3love2','love',(640,360),record=False,sync=animation2)
         animation3.addimage('empty',path='premade')
         self.addpart(animation3)
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p44(page.obj_chapterpage):
@@ -952,6 +1107,8 @@ class obj_scene_ch6p44(page.obj_chapterpage):
         self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640+50,360+100),record=False)
         self.addpart(animation1)
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p45(page.obj_chapterpage):
@@ -972,6 +1129,8 @@ class obj_scene_ch6p45(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
+        #
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p46(page.obj_chapterpage):
@@ -985,6 +1144,9 @@ class obj_scene_ch6p46(page.obj_chapterpage):
         self.text=['go back home']
         self.world=world.obj_world_travel(self,start='beach',goal='home',chapter=6,boat=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music(None) )
+
 
 class obj_scene_ch6p47(page.obj_chapterpage):
     def prevpage(self):
@@ -1004,6 +1166,8 @@ class obj_scene_ch6p47(page.obj_chapterpage):
         self.world=world.obj_world_serenade(self,partner=False)
         self.addpart(self.world)
         self.addpart( draw.obj_animation('ch5_serenadebug','bug',(640,360),record=False) )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch6p48(page.obj_chapterpage):
@@ -1022,6 +1186,8 @@ class obj_scene_ch6p48(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_kiss(self,noending=False)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch6p49(page.obj_chapterpage):
@@ -1037,6 +1203,8 @@ class obj_scene_ch6p49(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch6p50(page.obj_chapterpage):
@@ -1055,6 +1223,8 @@ class obj_scene_ch6p50(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_gotobed(self,bug=True,alarmclock=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch6end(page.obj_chapterpage):

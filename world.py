@@ -1168,6 +1168,7 @@ class obj_world_travel(obj_world):
             if 'beachquestionmark' in kwargs: self.addbeachquestionmark=kwargs["beachquestionmark"]
             if 'beachmark' in kwargs: self.addbeachmark=kwargs["beachmark"]
             if 'ambience' in kwargs: self.doambience=kwargs["ambience"]
+            #
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
@@ -1609,6 +1610,12 @@ class obj_world_travel(obj_world):
         # timer
         self.timerend=tool.obj_timer(50)# goal to done
         #
+        #
+        # ambience sounds (add to page!)
+        if self.doambience:
+            self.soundambience=draw.obj_sound('travel_ambience')
+            self.creator.addpart(self.soundambience)
+            self.soundambience.play(loop=True)# should die when exit page
         ##################3
         # minigame flowers
         # *FLOWERS
@@ -1700,13 +1707,6 @@ class obj_world_travel(obj_world):
                             self.text_undone.show=False
                             self.text_undoneenter.show=False
                             self.text_done.show=True
-
-        #
-        # ambience sounds (add to page!)
-        if self.doambience:
-            self.soundambience=draw.obj_sound('travel_ambience')
-            self.creator.addpart(self.soundambience)
-            self.soundambience.play(loop=True)# should die when exit page
 
     ####
     def update(self,controls):

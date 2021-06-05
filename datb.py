@@ -61,6 +61,10 @@ class obj_musics:
         self.dict['ch5']=( 'ch5/POL-king-of-coins-short.mp3' , 0.2 )
         self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.mp3' , 0.2 )# rps game
         self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )
+        # ch6
+        self.dict['ch6']=( 'ch6/POL-treasure-match-short.mp3' , 0.2 )
+        self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.mp3' , 0.2 )# stealth game
+
         # others
         #
         # general
@@ -157,7 +161,7 @@ class obj_sounds:
         self.dict['elder3']=( 'elder/grunt_malegrunt3.wav' , 1 )
         self.dict['elder4']=( 'elder/haha_evil-man-laughing.wav' , 1 )
         self.dict['elder5']=( 'elder/weird_07.ogg' , 1 )
-        self.dict['elder6']=( 'elder/weird_08.ogg' , 1 )
+        self.dict['elder6']=( 'elder/grunt_malegrunt2.wav' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise

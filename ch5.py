@@ -1187,6 +1187,13 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
         animation3.addimage('empty',path='premade')
         self.addpart( animation3 )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4','elder5','elder6') )
+        animation1.addsound( "elder1", [84] )
+        animation1.addsound( "elder2", [319] )
+        animation1.addsound( "elder5", [115] )
+        animation1.addsound( "elder6", [9] )
+        #
+
         self.addpart( draw.obj_music('ch5play') )
 
 
