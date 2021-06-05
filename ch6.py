@@ -404,7 +404,7 @@ class obj_scene_ch6p14(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
         self.addpart( draw.obj_drawing('sailorface',(640,450),legend='Draw the sailor (facing right)',shadow=(200,200)) )
-
+        #
         self.addpart( draw.obj_music('ch6') )
 
 
@@ -449,6 +449,13 @@ class obj_scene_ch6p16(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch6_meetsailor2','sun',(640,360),record=False,sync=animation1) )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5') )
+        animation1.addsound( "sailor4", [74],skip=1 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('ch6') )
 
 
@@ -467,9 +474,12 @@ class obj_scene_ch6p17(page.obj_chapterpage):
         animation1=draw.obj_animation('ch6sailortalks1','sailorbase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        self.addpart( draw.obj_soundplacer(animation1,'acc1','acc2','acc3','acc4') )
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5') )
+        animation1.addsound( "sailor2", [169] )
+        animation1.addsound( "sailor4", [110] )
+        animation1.addsound( "sailor5", [32],skip=1 )
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('ch6') )
 
 
 class obj_scene_ch6p18(page.obj_chapterpage):
@@ -489,7 +499,12 @@ class obj_scene_ch6p18(page.obj_chapterpage):
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(968,411),scale=0.42,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch6sailortalks3','sailorbase',(640,360+100),record=False) )
+        animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640,360+100),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5') )
+        animation1.addsound( "sailor2", [41, 153] )
+        animation1.addsound( "sailor4", [261] )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -538,7 +553,12 @@ class obj_scene_ch6p20(page.obj_chapterpage):
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(968,411),scale=0.42,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch6sailortalks3','sailorbase',(640,360+100),record=False) )
+        animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640,360+100),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5') )
+        animation1.addsound( "sailor2", [41, 153] )
+        animation1.addsound( "sailor4", [261] )
         #
         self.addpart( draw.obj_music('ch6') )
 

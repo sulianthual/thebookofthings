@@ -159,10 +159,12 @@ class obj_sounds:
         self.dict['elder5']=( 'elder/weird_07.ogg' , 1 )
         self.dict['elder6']=( 'elder/grunt_malegrunt2.wav' , 1 )
         # ch6
-        self.dict['acc1']=( 'sailor/pirate-band-short1.wav' , 1 )
-        self.dict['acc2']=( 'sailor/pirate-band-short3.wav' , 1 )
-        self.dict['acc3']=( 'sailor/pirate-band-short2.wav' , 1 )
-        self.dict['acc4']=( 'sailor/pirate-band-short4.wav' , 1 )
+
+        self.dict['sailor1']=( 'sailor/humanYell3.wav' , 1 )
+        self.dict['sailor2']=( 'sailor/uhuh.wav' , 1 )
+        self.dict['sailor3']=( 'sailor/humanYell4.wav' , 1 )
+        self.dict['sailor4']=( 'sailor/drunk-hic.ogg' , 1 )
+        self.dict['sailor5']=( 'sailor/pirate_arrshort2.wav' , 0.5 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
