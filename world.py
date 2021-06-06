@@ -2169,12 +2169,12 @@ class obj_world_stompfight(obj_world):
         # default options
         self.heroisangry=False# hero is angry during fight
         self.partnerisenemy=False# parnter is alongside enemy during fight
-        self.tutorial=False# do the tutorial
+        self.dotutorial=False# do the tutorial
         # scene tuning
         if kwargs is not None:
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
             if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
-            if 'tutorial' in kwargs: self.tutorial=kwargs["tutorial"]
+            if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -2494,7 +2494,7 @@ class obj_world_stompfight(obj_world):
                 if self.villainstate in ['stand','kick']:
                 #
                     if tool.checkrectcollide(self.villainhitbox2,self.herohitbox1):# villain hits hero
-                        if not self.tutorial:# cant loose health on tutorial
+                        if not self.dotutorial:# cant loose health on tutorial
                             self.herohealth -= 1
                         if self.herohealth>0:
                             if self.herohealth<self.maxherohealth:
@@ -2523,7 +2523,7 @@ class obj_world_stompfight(obj_world):
                 # hero hits the villain (only state rest)
                 else:
                     if tool.checkrectcollide(self.villainhitbox1,self.herohitbox2):# hero hits villain
-                        if not self.tutorial:# cant loose health on tutorial
+                        if not self.dotutorial:# cant loose health on tutorial
                             self.villainhealth -= 1
                         if self.villainhealth>0:
                             if self.villainhealth<self.maxvillainhealth:
@@ -2929,7 +2929,7 @@ class obj_world_rockpaperscissors(obj_world):
         self.herohealth=3# health bar
         self.elderhealth=3#
         self.dotutorial=False# do tutorial
-        self.tutorialnothinks=False# remove what hero/elder is thinking (for extended tutorial)
+        self.dotutorialnothinks=False# remove what hero/elder is thinking (for extended tutorial)
         # scene tuning
         if kwargs is not None:
             if 'elderwins' in kwargs: self.elderalwayswin=kwargs["elderwins"]
@@ -2939,7 +2939,7 @@ class obj_world_rockpaperscissors(obj_world):
             if 'herohealth' in kwargs: self.herohealth=kwargs["herohealth"]
             if 'elderhealth' in kwargs: self.elderhealth=kwargs["elderhealth"]
             if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
-            if 'nothinks' in kwargs: self.tutorialnothinks=kwargs["nothinks"]
+            if 'nothinks' in kwargs: self.dotutorialnothinks=kwargs["nothinks"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -3037,7 +3037,7 @@ class obj_world_rockpaperscissors(obj_world):
         self.elder.dict['scissors'].show=self.elderchoice==2
         self.elder.dict['thinkcloud'].show=False
         self.elder.dict['talkcloud'].show=True
-        if self.tutorialnothinks:
+        if self.dotutorialnothinks:
             self.elder.dict['rock'].show=False
             self.elder.dict['paper'].show=False
             self.elder.dict['scissors'].show=False
@@ -3694,7 +3694,6 @@ class obj_world_bushstealth(obj_world):
         i=tool.randchoice([self.soundmove1,self.soundmove2,self.soundmove3])
         i.play()
 
-
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -3840,10 +3839,12 @@ class obj_world_bushstealth4(obj_world_bushstealth):
 class obj_world_ridecow(obj_world):
     def setup(self,**kwargs):
         # default parameter
-        self.tutorial=False# is tutorial of that game (cant win/loose)
+        self.dotutorial=False# is tutorial of that game (cant win/loose)
+        self.dotrees=True# there are trees to hit (remove for tutorial parts)
         # scene tuning
         if kwargs is not None:
-            if 'tutorial' in kwargs: self.tutorial=kwargs["tutorial"]# tutorial of game
+            if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]# tutorial of game
+            if 'trees' in kwargs: self.dotrees=kwargs["trees"]
         #
         # combine herobase+cow=heroridecow
         dispgroup1=draw.obj_dispgroup((640,360))
@@ -3861,14 +3862,14 @@ class obj_world_ridecow(obj_world):
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecownohero')
         # hero alone in combo
         dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5) )
+        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5,flipv=True) )
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecownocow')
         ##########################33
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.win=False# won/lost the game
         # default parameters
-        self.heroxystart=(640,360)
+        self.heroxystart=(350,360)
         # layering
         self.staticactor=obj_grandactor(self,(640,360))
         self.hero=obj_grandactor(self,self.heroxystart)
@@ -3880,27 +3881,42 @@ class obj_world_ridecow(obj_world):
         self.text_undone.show=True
         self.text_donewin.show=False
         self.text_donelost.show=False
+        self.text_start=obj_grandactor(self,(640,360))# text message at start
+        self.text_start.show=True
 
         # static actor
         self.staticactor.addpart( 'anim1', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360)) )
         self.staticactor.addpart( 'anim2', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+100)) )
         self.staticactor.addpart( 'anim3', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-100)) )
-        self.staticactor.addpart( 'anim4', draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+200)) )
-        self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
+        #
+        # self.staticactor.addpart( 'anim4', draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+200)) )
+        animation1=draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+200))
+        animation1.addsound( "skeleton4", [1])
+        animation1.addsound( "skeleton2", [64],skip=3)# breathing (turned off if wins)
+        self.staticactor.addpart( 'anim4', animation1 )
+        #
+        # self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
+        animation2=draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200))
+        # animation2.addsound( "skeleton1", [1])
+        # animation2.addsound( "skeleton3", [31])
+        self.staticactor.addpart( 'anim5', animation2 )
+
         # hero
-        self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
-        self.hero.addpart( 'img', draw.obj_animation('gameheroridecow','heroridecow',(self.heroxystart[0],self.heroxystart[1])) )
-        self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
+        self.yhero=50# offset hitbox images for hero
+        # self.hero.addpart( 'img', draw.obj_image('heroridecow',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
+        self.hero.addpart( 'img', draw.obj_animation('gameheroridecow','heroridecow',(self.heroxystart[0],self.heroxystart[1]+self.yhero)) )
+        # self.hero.addpart( 'hurt', draw.obj_image('heroridecowangry',(self.heroxystart[0],self.heroxystart[1]),scale=0.5) )
+        self.hero.addpart( 'hurt', draw.obj_animation('gameheroridecow','heroridecowangry',(self.heroxystart[0],self.heroxystart[1]+self.yhero)) )
         self.hero.dict['img'].show=True
         self.hero.dict['hurt'].show=False
         self.hero.rx=25
         self.hero.ry=50#75#50
-        self.heromx=7#5# move rate
-        self.heromy=7#5#
-        self.heroxmin=250# boundaries
+        self.heromx=5# move rate
+        self.heromy=7#
+        self.heroxmin=300# boundaries
         self.heroxmax=1280-200
-        self.heroymin=200-50
-        self.heroymax=720-100-50
+        self.heroymin=50
+        self.heroymax=720-50
         self.herohurting=False# hero is hurting or not
         self.timerhurting=tool.obj_timer(50)# animation for hero hurt (cant be hit during that time)
         # Speed and shot
@@ -3911,24 +3927,28 @@ class obj_world_ridecow(obj_world):
         self.ishots=self.nshots
         self.shooting=True# shoot new ones or not
         self.shots=[]# empty list
-        self.shottimer=tool.obj_timer(20)#tool.obj_timer(30)# time between obstacles
+        self.shottimer=tool.obj_timer(20)#tool.obj_timer(20)# time between obstacles
         self.runspeed=8#7#5# moving speed of background and obstacles
         self.shottimer.start()
         self.shotx0=1280+200
-        self.shoty0min=self.heroymin
-        self.shoty0max=self.heroymax
+        self.shoty0min=self.heroymin-50
+        self.shoty0max=self.heroymax+50
         self.xkill=150# position at which they disappear
         # self.shotprobas=[40,0,60]# probas of palmtree, rock, bush...
-        self.shotprobas=[50,0,50]# probas of palmtree, rock, bush...
+        if self.dotrees:
+            # self.shotprobas=[25,25,50]# probas of palmtree, rock, bush...
+            self.shotprobas=[35,35,30]# probas of palmtree, rock, bush...
+        else:
+            self.shotprobas=[0,0,100]
         # health bar
-        self.maxherohealth=7# starting hero health
+        self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360),foreground=False)
         for i in range(self.maxherohealth):
-            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75+150,150),scale=0.125) )
-        if self.tutorial: # do not show the healthbar if tutorial
-            for i in range(self.maxherohealth):
-                self.healthbar.dict['heart_'+str(i)].show=False
+            if self.dotutorial:
+                self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75+130,150),scale=0.125) )
+            else:
+                self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,50),scale=0.125) )
         # timer for done part
         self.timerendwin=tool.obj_timer(180)# goal to done
         self.timerendloose=tool.obj_timer(180)# goal to done
@@ -3938,12 +3958,30 @@ class obj_world_ridecow(obj_world):
         self.text_undone.addpart( 'text1', draw.obj_textbox('['+share.datamanager.controlname('arrows')+']: move',(640,660),color=share.colors.instructions) )
         self.text_undone.addpart( 'progress', draw.obj_textbox('0%',(1090,640)) )
         self.text_undone.addpart( 'progressimg', draw.obj_image('sailboat',(1280-75,720-75),scale=0.25) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('You made it!',(640,360),fontsize='huge') )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('You got caught!',(640,360),fontsize='huge') )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('you made it!',(640,360),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('you died!',(640,360),fontsize='huge') )
+        # start message at beginning
+        self.timerfightmessage=tool.obj_timer(80)
+        if not self.dotutorial:
+            self.text_start.addpart( 'startmessage', draw.obj_animation('dodgebullets_fightmessage','messagestart',(640,360), path='premade') )
+            self.timerfightmessage.start()
+
         # devtool
         self.staticactor.addpart( 'dev1', draw.obj_textbox('shots='+str(self.ishots),(1200,680),color=share.colors.red) )
         self.staticactor.dict['dev1'].show=False
+        # audio
+        self.soundhit=draw.obj_sound('ridecow_hit')
+        self.creator.addpart(self.soundhit)
+        self.soundhitgasp=draw.obj_sound('ridecow_hitgasp')# add to hit sound
+        self.creator.addpart(self.soundhitgasp)
+        self.sounddie=draw.obj_sound('ridecow_die')
+        self.creator.addpart(self.sounddie)
+        self.soundwin=draw.obj_sound('ridecow_win')
+        self.creator.addpart(self.soundwin)
         #
+        if not self.dotutorial:
+            self.soundstart=draw.obj_sound('ridecow_start')
+            self.soundstart.play()# at start
         #
     def makeshot(self,x,y,s):
         shot=obj_grandactor(self,(x,y),foreground=False)
@@ -3953,9 +3991,9 @@ class obj_world_ridecow(obj_world):
             shot.hurts=True# does the obstacle hurt the hero
             shot.rx,shot.ry=25,50# hitbox
         elif dice=='rock':
-            shot.addpart('img', draw.obj_image('rock',(x,y),scale=0.35,fliph=tool.randbool()) )
+            shot.addpart('img', draw.obj_image('rock',(x,y),scale=0.25,fliph=tool.randbool()) )
             shot.hurts=True
-            shot.rx,shot.ry=25,50# hitbox
+            shot.rx,shot.ry=25,25# hitbox
         elif dice=='bush':
             shot.addpart('img', draw.obj_image('bush',(x,y),scale=0.25,fliph=tool.randbool()) )
             shot.hurts=False# harmless
@@ -3969,6 +4007,11 @@ class obj_world_ridecow(obj_world):
         super().update(controls)
         if not self.goal:
             # goal unreached state
+            # start message at beginning
+            if self.timerfightmessage.on:
+                self.timerfightmessage.update()
+                if self.timerfightmessage.ring:
+                    self.text_start.show=False
             # progress bar
             textprogress=100-int(self.ishots/self.nshots*100)
             textprogress=min(textprogress,100)
@@ -3986,7 +4029,7 @@ class obj_world_ridecow(obj_world):
             # shots (obstacles)
             self.shottimer.update()
             if self.shooting and self.shottimer.ring:# generate
-                if not self.tutorial:# no shot depletion if tutorial
+                if not self.dotutorial:# no shot depletion if tutorial
                     self.ishots -= 1
                 self.shoty0=tool.randint(self.shoty0min,self.shoty0max)
                 self.makeshot(self.shotx0,self.shoty0,-self.runspeed)
@@ -4006,7 +4049,7 @@ class obj_world_ridecow(obj_world):
                     # obstacle hits hero if: not hurting, obstacle hurts hero (not a bush), and they collide
                     if not self.herohurting and i.hurts and tool.checkrectcollide(self.hero,i):
                         self.killshot(i)# remove shot
-                        if not self.tutorial:# no health depletion if tutorial
+                        if not self.dotutorial:# no health depletion if tutorial
                             self.herohealth -= 1# loose health
                         self.herohurting=True# to hurting state
                         self.timerhurting.start()
@@ -4014,23 +4057,27 @@ class obj_world_ridecow(obj_world):
                         self.hero.dict['hurt'].show=True
                         # hero looses health or dies
                         if self.herohealth>0:
-                            if not self.tutorial:# no loosing hearts on tutorial
+                            self.soundhit.play()
+                            self.soundhitgasp.play()
+                            if not self.dotutorial:# no loosing hearts on tutorial
                                 self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                         else:
                             # switch to lost
+                            self.soundhit.play()
+                            self.sounddie.play()
                             self.goal=True
                             self.win=False
                             self.healthbar.dict['heart_0'].show=False
                             self.hero.dict['img'].show=True# hero on its own, stays static
                             self.hero.dict['hurt'].show=True# cow on its own, will keep running
-                            self.hero.dict['img'].replaceimage('heroridecownocow')
-                            self.hero.dict['hurt'].replaceimage('heroridecownohero')
+                            self.hero.dict['img'].replaceimage('heroridecownocow',0)# beware this is instead an animation
+                            self.hero.dict['hurt'].replaceimage('heroridecownohero',0)
                             self.timerendloose.start()
                             self.text_undone.show=False
                             self.text_donelost.show=True
-                            if self.shots:
-                                for i in self.shots:
-                                    i.dict['img'].show=False
+                            # if self.shots:
+                            #     for i in self.shots:
+                            #         i.dict['img'].show=False
             # hero hurting
             if self.herohurting:
                 self.timerhurting.update()
@@ -4048,6 +4095,12 @@ class obj_world_ridecow(obj_world):
                 self.hero.dict['hurt'].show=False
                 self.text_undone.show=False
                 self.text_donewin.show=True
+                self.soundwin.play()
+                # remove sounds from animations
+                self.staticactor.dict['anim4'].removesound( "skeleton4")
+                self.staticactor.dict['anim4'].removesound( "skeleton2")
+
+
             # devtool (show number of shots)
             if share.devmode:
                 self.staticactor.dict['dev1'].show=True
@@ -4227,10 +4280,10 @@ class obj_world_mechfight(obj_world):
 
         ##########################
         # default options
-        self.tutorial=False# do the tutorial
+        self.dotutorial=False# do the tutorial
         # scene tuning
         if kwargs is not None:
-            if 'tutorial' in kwargs: self.tutorial=kwargs["tutorial"]
+            if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -4322,7 +4375,7 @@ class obj_world_mechfight(obj_world):
         self.actionactor.addpart('villaincountered',animation1)
 
         #
-        if not self.tutorial:
+        if not self.dotutorial:
             self.actionactor.addpart('heroattacks_text', draw.obj_textbox('super-mech-hero hits',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
             self.actionactor.addpart('heroblocks_text', draw.obj_textbox('super-mech-hero counters',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
             self.actionactor.addpart('villainattacks_text', draw.obj_textbox('super-mech-villain hits',(640+dx1,y1),fontsize=y1font,color=share.colors.red) )
@@ -4541,22 +4594,22 @@ class obj_world_mechfight(obj_world):
                         self.actionactor.dict['villainblocks_text'].show=True
                     # update health
                     if self.actionstate==0:# hero hits villain
-                        if not self.tutorial:
+                        if not self.dotutorial:
                             self.villainhealth -= 1
                         if self.villainhealth>=0 and self.villainhealth<self.maxvillainhealth:
                             self.villainhealthbar.dict['heartcross_'+str(self.villainhealth)].show=True
                     elif self.actionstate==1:# villain hits hero
-                        if not self.tutorial:
+                        if not self.dotutorial:
                             self.herohealth -= 1
                         if self.herohealth>=0 and self.herohealth<self.maxherohealth:
                             self.herohealthbar.dict['heartcross_'+str(self.herohealth)].show=True
                     elif self.actionstate==2:# hero blocks villain
-                        if not self.tutorial:
+                        if not self.dotutorial:
                             self.villainhealth -= 1
                         if self.villainhealth>=0 and self.villainhealth<self.maxvillainhealth:
                             self.villainhealthbar.dict['heartcross_'+str(self.villainhealth)].show=True
                     if self.actionstate==3:# villain blocks hero
-                        if not self.tutorial:
+                        if not self.dotutorial:
                             self.herohealth -= 1
                         if self.herohealth>=0 and self.herohealth<self.maxherohealth:
                             self.herohealthbar.dict['heartcross_'+str(self.herohealth)].show=True

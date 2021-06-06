@@ -50,7 +50,7 @@ class obj_musics:
         self.dict['ch2']=( 'ch2/POL-pet-park-short.ogg' , 0.2 )
         # ch3
         self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )
-        self.dict['fight1']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )
+        self.dict['fight1']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )# dodge bullets
         self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.ogg' , 0.2 )
         self.dict['bug']=( 'ch3/POL-bomb-carrier-short.ogg' , 0.2 )
         # ch4
@@ -66,6 +66,7 @@ class obj_musics:
         self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
         #
         self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game
+        self.dict['race1']=( 'ch6/POL-tlalok-temple-short.ogg' , 0.2 )# ride cow game
         # self.dict['ch6play']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
 
         # others
@@ -173,6 +174,7 @@ class obj_sounds:
         self.dict['skeleton2']=( 'skeleton/ghost_SpiritShout.wav' , 0.4 )
         self.dict['skeleton4']=( 'skeleton/ghostshort1.wav' , 0.4 )
         self.dict['skeleton5']=( 'skeleton/ghost_scream1.wav' , 1 )
+        self.dict['cow']=( 'cow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -243,10 +245,18 @@ class obj_sounds:
         self.dict['stealth_bush1']=( 'world/stealth/rustle13.ogg' , 0.5 )
         self.dict['stealth_bush2']=( 'world/stealth/rustle14.ogg' , 0.5 )
         self.dict['stealth_bush3']=( 'world/stealth/rustle20.ogg' , 0.5 )
-        self.dict['stealth_alarm']=( 'world/stealth/alarmwtf-02.wav' , 0.5 )
         self.dict['stealth_next']=( 'world/stealth/Cure.ogg' , 0.5 )
         self.dict['stealth_win']=( 'world/stealth/cheer1.ogg' , 0.5 )
         # self.dict['stealth_alarm']=( 'skeleton/ghost_scream1.wav' , 1 )
+        self.dict['stealth_alarm']=( 'world/stealth/alarmwtf-02.wav' , 1 )
+        # ride cow
+        self.dict['ridecow_hit']=( 'world/ridecow/Punch4.ogg' , 1 )
+        self.dict['ridecow_hitgasp']=( 'world/ridecow/die_02.ogg' , 1 )
+        # self.dict['ridecow_die']=( 'world/ridecow/die_04.ogg' , 1 )
+        self.dict['ridecow_die']=( 'world/ridecow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
+        self.dict['ridecow_win']=( 'world/ridecow/cheer1.ogg' , 0.5 )
+        self.dict['ridecow_start']=( 'world/ridecow/fight_lowreverb.wav' , 1 )
+
 
 
 

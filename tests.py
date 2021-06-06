@@ -98,11 +98,12 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testworldgrandactor())
         self.list.append(obj_scene_testrigidbody())
         self.list.append(obj_scene_testbreakfastdrinking())
-        self.list.append(obj_scene_testothers())
         # audio
         self.list.append(obj_scene_testmusic())
         self.list.append(obj_scene_testsounds())
         self.list.append(obj_scene_testsoundplacer())
+        # draft
+        self.list.append(obj_scene_testothers())
         #
         self.listlen=len(self.list)
 
@@ -763,13 +764,6 @@ class obj_scene_testbreakfastdrinking(obj_testpage):
         self.world=world.obj_world_breakfastdrinking(self)
         self.addpart(self.world)
 
-class obj_scene_testothers(obj_testpage):
-    def pagename(self):
-        return 'Other Tests'
-    def setup(self):
-        self.text=['Other tests: ',\
-                   ]
-
 class obj_scene_testmusic(obj_testpage):
     def pagename(self):
         return 'Music'
@@ -839,6 +833,18 @@ class obj_scene_testsoundplacer(obj_testpage):
         # animation.addsound( "test3a", [45] )
         # animation.addsound( "test3b", [74, 85] )
         # animation.addsound( "test3c", [101] )
+
+
+class obj_scene_testothers(obj_testpage):
+    def pagename(self):
+        return 'Drafting Board'
+    def setup(self):
+        self.text=['Drafting Board: ',\
+                   ]
+        #
+        # Image from textbox
+        self.textbox=draw.obj_textbox('start!',(640,360),fontsize='huge')
+        self.textbox.snapshot('messagestart')
 
 
 ####################################################################################################################

@@ -30,6 +30,32 @@ import ch7
 import ch8
 
 
+##########################################################
+##########################################################
+# quickscene: access a scene directly from titlescreen (for developper only)
+
+class obj_quickscene():
+     def __call__(self):
+        #
+        # quickscene=ch1.obj_scene_ch1play1()
+        # quickscene=ch2.obj_scene_ch2p1()
+        # quickscene=ch3.obj_scene_ch3p1()
+        # quickscene=ch4.obj_scene_ch4p1()
+        # quickscene=ch5.obj_scene_ch5p1()
+        quickscene=ch6.obj_scene_ch6p43()
+        # quickscene=ch7.obj_scene_ch7p1()
+        # quickscene=ch8.obj_scene_ch8roam()
+        #
+        share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)
+        # share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage
+
+
+
+
+
+
+
+
 
 ##########################################################
 ##########################################################
@@ -96,6 +122,8 @@ class obj_scene_realtitlescreen(page.obj_page):
             for i in textmat:
                 self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
                 y1 += dy1
+        # devtools: quick scene
+        self.gotquickscene=obj_quickscene()
 
     def setup(self):
         super().setup()
@@ -181,19 +209,8 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gr and controls.grc:
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
             if controls.gl and controls.glc:
-                #
-                # change current WIP scene here
-                # quickscene=ch1.obj_scene_ch1play1()
-                # quickscene=ch2.obj_scene_ch2p1()
-                # quickscene=ch3.obj_scene_ch3p1()
-                # quickscene=ch4.obj_scene_ch4p1()
-                # quickscene=ch5.obj_scene_ch5p1()
-                quickscene=ch6.obj_scene_ch6p31()
-                # quickscene=ch7.obj_scene_ch7p1()
-                # quickscene=ch8.obj_scene_ch8roam()
-                #
-                share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)
-                # share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage
+                self.gotquickscene()
+
         #############################################3
 
 
