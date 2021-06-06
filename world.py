@@ -27,7 +27,7 @@ import draw
 class obj_world:
     def __init__(self,creator,**kwargs):
         self.type='world'
-        self.creator=creator# created by scene
+        self.creator=creator# created by scene (i.e. page)
         self.ruledict={}# dictionary of rules in the world (non-ordered)
         self.actorlist=[]# list of actors in the world (ordered for updates)
         self.setup(**kwargs)
@@ -1616,7 +1616,9 @@ class obj_world_travel(obj_world):
             self.soundambience=draw.obj_sound('travel_ambience')
             self.creator.addpart(self.soundambience)
             self.soundambience.play(loop=True)# should die when exit page
-        ##################3
+
+
+        #####
         # minigame flowers
         # *FLOWERS
         self.flowercount=0# picked flowers
@@ -1642,7 +1644,7 @@ class obj_world_travel(obj_world):
             for k in self.floweractors:# append flower actors to tracked hitboxes
                 self.hitboxes.append(k)
         #
-        #################
+        #####
         # minigame logs (go on logs an pickup with Space)
         # *LOG
         self.logcount=0# picked logs
@@ -1669,7 +1671,13 @@ class obj_world_travel(obj_world):
                     i.removepart(j)
             for k in self.logactors:# append log actors to tracked hitboxes
                 self.hitboxes.append(k)
+            #
+            self.soundlogchop=draw.obj_sound('travel_chop')
+            self.creator.addpart(self.soundlogchop)
+            self.soundlogchoplast=draw.obj_sound('travel_choplast')
+            self.creator.addpart(self.soundlogchoplast)
     #
+    #############################################################
     def reachgoal(self,controls):# check contact with goal
         if not self.multiplegoals:
             if tool.checkrectcollide(self.hero,self.goalarea):# contact with goal
@@ -1838,6 +1846,9 @@ class obj_world_travel(obj_world):
                         self.logactors.remove(i)
                         i.clearparts()
                         i.kill()
+                        self.soundlogchop.play()
+                        if self.logcount==self.logneed:
+                            self.soundlogchoplast.play()
                 else:# when obtained all logs can reach goal
                     self.reachgoal(controls)
                     self.text_undone.dict['text1'].replacetext('['+share.datamanager.controlname('arrows')+']: move]')
@@ -3431,12 +3442,21 @@ class obj_grandactor_bushstealthskeleton(obj_grandactor):
         # boundaries (for walking)
         self.xmin=200
         self.xmax=1280-200
+        # audio
+        self.makebasesounds()
     def makebaseimages(self):
         self.addpart('standing', draw.obj_image('skeletonbase',(self.x,self.y),scale=0.5) )
-        self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase',(self.x,self.y)) )
+        # self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase',(self.x,self.y)) )
+        animation1=draw.obj_animation('bushstealth_skeletonmove','skeletonbase',(self.x,self.y))
+        animation1.addsound("skeleton1", [5])
+        animation1.addsound("skeleton3", [40])
+        self.addpart('walking', animation1)
         self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
         self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(self.x,self.y)) )
         self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+    def makebasesounds(self):
+        self.soundthink=draw.obj_sound('skeleton2')
+        self.creator.creator.addpart(self.soundthink)# add to page (from hierarchy page>world>grandactor)
     def turnaround(self):
         if self.faceright:
             self.turnleft()
@@ -3507,6 +3527,7 @@ class obj_grandactor_bushstealthskeleton(obj_grandactor):
                 self.dict['standing'].show=True
                 self.dict['walking'].show=False
                 self.dict['thinking'].show=True
+                self.soundthink.play()
             elif self.state==2:
                 self.dict['standing'].show=False
                 self.dict['walking'].show=True
@@ -3529,20 +3550,33 @@ class obj_grandactor_bushstealthskeleton(obj_grandactor):
 class obj_grandactor_bushstealthskeleton_sailorhat(obj_grandactor_bushstealthskeleton):
     def makebaseimages(self):
         self.addpart('standing', draw.obj_image('skeletonbase_sailorhat',(self.x,self.y),scale=0.5) )
-        self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase_sailorhat',(self.x,self.y)) )
+        # self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase_sailorhat',(self.x,self.y)) )
+        animation1=draw.obj_animation('bushstealth_skeletonmove','skeletonbase_sailorhat',(self.x,self.y))
+        animation1.addsound("skeleton1", [5])
+        animation1.addsound("skeleton3", [40])
+        self.addpart('walking', animation1)
         self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
         self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase_sailorhat',(self.x,self.y)) )
         self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+    def makebasesounds(self):
+        self.soundthink=draw.obj_sound('skeleton4')
+        self.creator.creator.addpart(self.soundthink)# add to page (from hierarchy page>world>grandactor)
 
 # same but with partner hair
 class obj_grandactor_bushstealthskeleton_partnerhair(obj_grandactor_bushstealthskeleton):
     def makebaseimages(self):
         self.addpart('standing', draw.obj_image('skeletonbase_partnerhair',(self.x,self.y),scale=0.5) )
-        self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase_partnerhair',(self.x,self.y)) )
+        # self.addpart('walking', draw.obj_animation('bushstealth_skeletonmove','skeletonbase_partnerhair',(self.x,self.y)) )
+        animation1=draw.obj_animation('bushstealth_skeletonmove','skeletonbase_partnerhair',(self.x,self.y))
+        animation1.addsound("skeleton1", [5])
+        animation1.addsound("skeleton3", [40])
+        self.addpart('walking', animation1)
         self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
         self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase_partnerhair',(self.x,self.y)) )
         self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
-
+    def makebasesounds(self):
+        self.soundthink=draw.obj_sound('skeleton4')
+        self.creator.creator.addpart(self.soundthink)# add to page (from hierarchy page>world>grandactor)
 
 # # Mini Game: bush stealth
 # *BUSH *STEALTH
@@ -3573,6 +3607,19 @@ class obj_world_bushstealth(obj_world):
         dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
         dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
         ####################################
+        #
+        # default parameters
+        self.dowinsound=True# play a winning sound
+        self.soundwinname='stealth_next'# name of winning sound if any
+        # scene tuning
+        if kwargs is not None:
+            if 'winsound' in kwargs:# tell name of winning sound (or dont play if is None)
+                if kwargs["winsound"]:
+                    self.dowinsound=True
+                    self.soundwinname=kwargs["winsound"]
+                else:
+                    self.dowinsound=False
+        #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.win=False# won or not
@@ -3613,6 +3660,24 @@ class obj_world_bushstealth(obj_world):
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(120)# goal to done
+        #
+        #audio
+        self.soundmove1=draw.obj_sound('stealth_bush1')
+        self.creator.addpart(self.soundmove1)
+        self.soundmove2=draw.obj_sound('stealth_bush2')
+        self.creator.addpart(self.soundmove2)
+        self.soundmove3=draw.obj_sound('stealth_bush3')
+        self.creator.addpart(self.soundmove3)
+        self.timermovesound=tool.obj_timer(50)# timer for making sound when moving
+        self.timermovesound.start()
+        self.soundalarm=draw.obj_sound('stealth_alarm')
+        self.creator.addpart(self.soundalarm)
+        self.timeralarmsound=tool.obj_timer(80)# timer for repeating alarm sound
+        self.timeralarmsound.start()
+        if self.dowinsound:
+            self.soundwin=draw.obj_sound(self.soundwinname)
+            self.creator.addpart(self.soundwin)
+
     def makebackground(self):
         self.staticactor.addpart( 'img1', draw.obj_image('palmtree',(1148,291),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img2', draw.obj_image('palmtree',(1010,268),scale=0.34,rotate=0,fliph=True,flipv=False) )
@@ -3625,6 +3690,11 @@ class obj_world_bushstealth(obj_world):
     def makeskeletons(self):
         self.skeletons=[]
         self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
+    def makemovesound(self):# make a moving sound (choose randomly)
+        i=tool.randchoice([self.soundmove1,self.soundmove2,self.soundmove3])
+        i.play()
+
+
     def update(self,controls):
         super().update(controls)
         if not self.goal:
@@ -3637,12 +3707,15 @@ class obj_world_bushstealth(obj_world):
                     self.hero.dict['movingspark'].show=True
                     self.hero.dict['standing'].show=False
                     self.hero.dict['moving'].rewind()
+                    self.timermovesound.start()
                     # flip orientation
-                    if controls.glc:
+                    if controls.gl and controls.glc:
+                        self.makemovesound()
                         self.hero.dict['moving'].ifliph()
                         self.hero.dict['movingspark'].ifliph()
                         self.hero.dict['standing'].ifliph()
-                    if controls.grc:
+                    elif controls.gr and controls.grc:
+                        self.makemovesound()
                         self.hero.dict['moving'].ofliph()
                         self.hero.dict['movingspark'].ofliph()
                         self.hero.dict['standing'].ofliph()
@@ -3651,6 +3724,13 @@ class obj_world_bushstealth(obj_world):
                     self.hero.dict['moving'].show=False
                     self.hero.dict['movingspark'].show=False
                     self.hero.dict['standing'].show=True
+                    self.timermovesound.start()# reset timer
+            # move sounds
+            if not self.herostanding:
+                self.timermovesound.update()
+            if self.timermovesound.ring:
+                self.makemovesound()
+                self.timermovesound.start()
             # hero move and boundaries
             if not self.herostanding:
                 if controls.gl and self.hero.x>self.heroxmin:
@@ -3666,6 +3746,7 @@ class obj_world_bushstealth(obj_world):
                         self.timerendloose.start()
                         self.text_undone.show=False
                         self.text_donelost.show=True
+                        self.soundalarm.play()
             # win if reach the location
             if abs(self.hero.x-self.xwin)<10:
                 self.goal=True
@@ -3673,6 +3754,8 @@ class obj_world_bushstealth(obj_world):
                 self.timerendwin.start()
                 self.text_undone.show=False
                 self.text_donewin.show=True
+                if self.dowinsound:
+                    self.soundwin.play()
         else:
             # goal reached state
             if self.win:# won minigame
@@ -3690,14 +3773,17 @@ class obj_world_bushstealth(obj_world):
                 if self.busted:
                     for i in self.skeletons:
                         i.bust(self.hero.x)
+                # alarm sound
+                self.timeralarmsound.update()
+                if self.timeralarmsound.ring:
+                    self.soundalarm.play()
+                    self.timeralarmsound.start()
 
 
 # base one but no enemy
 class obj_world_bushstealth0(obj_world_bushstealth):
     def makeskeletons(self):
         self.skeletons=[]
-
-
 
 class obj_world_bushstealth2(obj_world_bushstealth):
     def makebackground(self):

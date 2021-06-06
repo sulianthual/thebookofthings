@@ -61,8 +61,12 @@ class obj_musics:
         self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.ogg' , 0.2 )# rps game
         self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )
         # ch6
-        self.dict['ch6']=( 'ch6/POL-treasure-match-short.ogg' , 0.2 )
+        # self.dict['ch6']=( 'ch6/POL-treasure-match-short.ogg' , 0.2 )# second choice
+        self.dict['ch6']=( 'ch6/POL-jazzy-duck-short.ogg' , 0.2 )# could use for ch7 instead
+        self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
+        #
         self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game
+        # self.dict['ch6play']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
 
         # others
         #
@@ -159,12 +163,16 @@ class obj_sounds:
         self.dict['elder5']=( 'elder/weird_07.ogg' , 1 )
         self.dict['elder6']=( 'elder/grunt_malegrunt2.wav' , 1 )
         # ch6
-
         self.dict['sailor1']=( 'sailor/humanYell3.wav' , 1 )
         self.dict['sailor2']=( 'sailor/uhuh.wav' , 1 )
         self.dict['sailor3']=( 'sailor/humanYell4.wav' , 1 )
         self.dict['sailor4']=( 'sailor/drunk-hic.ogg' , 1 )
         self.dict['sailor5']=( 'sailor/pirate_arrshort2.wav' , 0.5 )
+        self.dict['skeleton1']=( 'skeleton/wood_squeak_01.ogg' , 0.5 )
+        self.dict['skeleton3']=( 'skeleton/wood_squeak_02.ogg' , 0.5 )
+        self.dict['skeleton2']=( 'skeleton/ghost_SpiritShout.wav' , 0.4 )
+        self.dict['skeleton4']=( 'skeleton/ghostshort1.wav' , 0.4 )
+        self.dict['skeleton5']=( 'skeleton/ghost_scream1.wav' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -207,7 +215,9 @@ class obj_sounds:
         self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.ogg' , 1 )
         self.dict['kiss_cheer2']=( 'world/kiss/haha01.wav' , 1 )
         # travel
-        self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.wav' , 0.5 )
+        self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.ogg' , 1 )
+        self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.ogg' , 1 )
+        self.dict['travel_choplast']=( 'world/travel/Cure.ogg' , 1 )
         # dodgebullets
         self.dict['dodgebullets_start']=( 'world/dodgebullets/fight_lowreverb.wav' , 1 )
         self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.ogg' , 0.5 )
@@ -228,6 +238,16 @@ class obj_sounds:
         self.dict['rps_tie']=( 'world/rps/alert.ogg' , 1 )
         self.dict['rps_die']=( 'world/rps/die_04.ogg' , 1 )
         self.dict['rps_win']=( 'world/rps/cheer1.ogg' , 0.2 )
+        # stealth
+        self.dict['stealth_jumpinbush']=( 'world/stealth/scream-6.ogg' , 0.5 )# cutscene only
+        self.dict['stealth_bush1']=( 'world/stealth/rustle13.ogg' , 0.5 )
+        self.dict['stealth_bush2']=( 'world/stealth/rustle14.ogg' , 0.5 )
+        self.dict['stealth_bush3']=( 'world/stealth/rustle20.ogg' , 0.5 )
+        self.dict['stealth_alarm']=( 'world/stealth/alarmwtf-02.wav' , 0.5 )
+        self.dict['stealth_next']=( 'world/stealth/Cure.ogg' , 0.5 )
+        self.dict['stealth_win']=( 'world/stealth/cheer1.ogg' , 0.5 )
+        # self.dict['stealth_alarm']=( 'skeleton/ghost_scream1.wav' , 1 )
+
 
 
 
