@@ -420,7 +420,9 @@ class obj_world_sunrise(obj_world):
         self.timer.start()# reset ungoing timer
         #
         self.soundstart=draw.obj_sound('sunrise_start')
+        self.creator.addpart(self.soundstart)
         self.soundend=draw.obj_sound('sunrise_end')
+        self.creator.addpart(self.soundend)
         #
     def triggerungoing(self,controls):
         return controls.gu and controls.guc
@@ -552,7 +554,9 @@ class obj_world_wakeup(obj_world):
         self.timer.start()# reset ungoing timer
         # audio
         self.soundstart=draw.obj_sound('wakeup_wake1')
+        self.creator.addpart(self.soundstart)
         self.sounddone=draw.obj_sound('wakeup_wake2')
+        self.creator.addpart(self.sounddone)
 
     def triggerungoing(self,controls):
         # return controls.gr and controls.grc
@@ -932,11 +936,9 @@ class obj_world_fishing(obj_world):
         self.text2.show=False
         #
         self.soundreel=draw.obj_sound('fishing_reel')
+        self.creator.addpart(self.soundreel)
         self.soundcatch=draw.obj_sound('fishing_catch')
-        # ambience sounds (add to page!)
-        # self.soundambience=draw.obj_sound('fishing')
-        # self.creator.addpart(self.soundambience)
-        # self.soundambience.play(loop=True)
+        self.creator.addpart(self.soundcatch)
 
     def update(self,controls):
         super().update(controls)
@@ -1049,7 +1051,10 @@ class obj_world_eatfish(obj_world):
         self.timerend=tool.obj_timer(50)
         #
         self.soundeat=draw.obj_sound('eat')
+        self.creator.addpart(self.soundeat)
         self.soundeatend=draw.obj_sound('eatend')
+        self.creator.addpart(self.soundeatend)
+        #
     def eatfood(self):
         if self.bites in [6,4,2]:
             self.soundeat.play()
@@ -2841,7 +2846,9 @@ class obj_world_climbpeak(obj_world):
         # self.setlevel3()# Test
         #
         self.soundjump=draw.obj_sound('climb_jump')
+        self.creator.addpart(self.soundjump)
         self.soundfall=draw.obj_sound('climb_fall')
+        self.creator.addpart(self.soundfall)
 
     def setlevel2(self):
         # clear stuff
@@ -3225,15 +3232,25 @@ class obj_world_rockpaperscissors(obj_world):
         #
         # audio
         self.soundselect=draw.obj_sound('rps_select')
+        self.creator.addpart(self.soundselect)
         self.soundstart=draw.obj_sound('rps_start')
-        if not self.dotutorial: self.soundstart.play()# at start
+        self.creator.addpart(self.soundstart)
+        if not self.dotutorial:
+            self.soundstart.play()# at start
         self.soundcount=draw.obj_sound('rps_count')
-        if not self.dotutorial: self.soundcount.play()# at start
+        self.creator.addpart(self.soundcount)
+        if not self.dotutorial:
+            self.soundcount.play()# at start
         self.soundhit=draw.obj_sound('rps_hit')
+        self.creator.addpart(self.soundhit)
         self.soundstrike=draw.obj_sound('rps_strike')
+        self.creator.addpart(self.soundstrike)
         self.soundtie=draw.obj_sound('rps_tie')
+        self.creator.addpart(self.soundtie)
         self.sounddie=draw.obj_sound('rps_die')
+        self.creator.addpart(self.sounddie)
         self.soundwin=draw.obj_sound('rps_win')
+        self.creator.addpart(self.soundwin)
 
     def update(self,controls):
         super().update(controls)
@@ -4278,6 +4295,27 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
         dispgroup1.snapshot((640,360,410,330),'villainmechbase')
+        #
+        # villainmech complete no face
+        dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+        # dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        dispgroup1.snapshot((640,360,300,220),'villainmecharmature_noface')
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360)) )
+        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
+        #
         # heromech armature
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
@@ -4300,6 +4338,28 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
         dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
         dispgroup1.snapshot((640,360,410,330),'heromechbase')
+        #
+        # heromech complete no face
+        dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        dispgroup1.snapshot((640,360,300,220),'heromecharmature_noface')
+        dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360)) )
+        dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
+        dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
+        #
         # villainmech punch
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
@@ -4370,6 +4430,8 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part11', draw.obj_image('lightningbolt',(821,102),scale=0.35,fliph=True,flipv=True) )
         dispgroup1.addpart( 'part12', draw.obj_image('mountain',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part13', draw.obj_image('mountain',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part14', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='premade') )
+        dispgroup1.addpart( 'part15', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='premade') )
         dispgroup1.snapshot((640,360,300,350),'villainmechhit')
         # heromech hit
         dispgroup1=draw.obj_dispgroup((640,360))
@@ -4384,6 +4446,8 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part9', draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part10', draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part11', draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
+        dispgroup1.addpart( 'part12', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='premade') )
+        dispgroup1.addpart( 'part13', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='premade') )
         dispgroup1.snapshot((640,360,300,350),'heromechhit')
         # Prompt Images
 
@@ -4409,18 +4473,19 @@ class obj_world_mechfight(obj_world):
         self.text_undone.show=True
         self.text_donewin.show=False
         self.text_donelost.show=False
+        self.text_start=obj_grandactor(self,(640,360))# text message at start
+        self.text_start.show=True
 
         # background
         # self.staticactor.addpart( "img1", draw.obj_image('moon',(98,258),scale=0.4,rotate=0,fliph=False,flipv=False) )
         # self.staticactor.addpart( "img3", draw.obj_image('cloud',(1199,234),scale=0.35,rotate=0,fliph=True,flipv=False) )
         # self.staticactor.addpart( "img4", draw.obj_image('cloud',(1209,647),scale=0.29,rotate=0,fliph=False,flipv=False) )
         #
-        y1=80#680# for text
+        y1=140#80# for text
         y1font='huge'# large
         dx1=0# text horizontal spacing
         y2=300# for the prompts
-        y3=200# healthbars
-        y4=80# end game messages
+        y4=140#80# end game messages
         ###################
         # prompt phase
         self.promptactor.addpart( 'hero', draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
@@ -4468,21 +4533,36 @@ class obj_world_mechfight(obj_world):
         animation1=draw.obj_animation('mechfight_villainblocks','villainmechbase',(640,360))
         animation1.addimage('villainmechblock')
         self.actionactor.addpart('villainblock',animation1)
+        #
         animation1=draw.obj_animation('mechfight_villainpunches2','heromechbase',(640,360))
         animation1.addimage('heromechhit')
+        animation1.addsound( "mech_stomp", [10,105] )
+        animation1.addsound( "mech_contact", [55] )
+        animation1.addsound( "mech_hit", [55] )
         self.actionactor.addpart('herohit',animation1)
+        #
         animation1=draw.obj_animation('mechfight_heropunches2','villainmechbase',(640,360))
         animation1.addimage('villainmechhit')
+        animation1.addsound( "mech_stomp", [10,108] )
+        animation1.addsound( "mech_contact", [58] )
+        animation1.addsound( "mech_strike", [58] )
         self.actionactor.addpart('villainhit',animation1)
+        #
         animation1=draw.obj_animation('mechfight_herocountered','heromechbase',(640,360))
         animation1.addimage('heromechpunch')
         animation1.addimage('heromechhit')
+        animation1.addsound( "mech_stomp", [10,88] )
+        animation1.addsound( "mech_counter", [38] )
+        animation1.addsound( "mech_hit", [38] )
         self.actionactor.addpart('herocountered',animation1)
+        #
         animation1=draw.obj_animation('mechfight_villaincountered','villainmechbase',(640,360))
         animation1.addimage('villainmechpunch')
         animation1.addimage('villainmechhit')
+        animation1.addsound( "mech_stomp", [10,90] )
+        animation1.addsound( "mech_counter", [40] )
+        animation1.addsound( "mech_strike", [40] )
         self.actionactor.addpart('villaincountered',animation1)
-
         #
         if not self.dotutorial:
             self.actionactor.addpart('heroattacks_text', draw.obj_textbox('super-mech-hero hits',(640-dx1,y1),fontsize=y1font,color=share.colors.darkgreen) )
@@ -4538,19 +4618,25 @@ class obj_world_mechfight(obj_world):
         self.actiontimer.start()
         #
         # healthbar hero
-        self.maxherohealth=7# starting hero health
+        self.maxherohealth=1#5# starting hero health
         self.herohealth=self.maxherohealth# updated one
-        self.maxvillainhealth=7# starting hero health
+        self.maxvillainhealth=1#9# starting hero health
         self.villainhealth=self.maxvillainhealth# updated one
 
+        # health bar hero
+        if self.dotutorial:
+            self.ybar=150# for health bars and text
+        else:
+            self.ybar=50
+        self.herohealthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         for i in range(self.maxherohealth):
-            self.herohealthbar.addpart('heart_'+str(i), draw.obj_image('love',(40+i*75,y3),scale=0.125) )
-            self.herohealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcross',(40+i*75,y3),scale=0.75,path='premade') )
+            self.herohealthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
+            self.herohealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(150+i*75,self.ybar),scale=0.75,path='premade') )
             self.herohealthbar.dict['heartcross_'+str(i)].show=False
+        self.villainhealthbar.addpart('face', draw.obj_image('villainhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.maxvillainhealth):
-            self.villainhealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-40-i*75,y3),scale=0.125) )
-            self.villainhealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-40-i*75,y3),scale=0.125) )
-            self.villainhealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcross',(1280-40-i*75,y3),scale=0.75,path='premade') )
+            self.villainhealthbar.addpart('heart_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
+            self.villainhealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.75,path='premade') )
             self.villainhealthbar.dict['heartcross_'+str(i)].show=False
         # text for winning
         # self.text_undone.addpart( 'text1', draw.obj_textbox('Match the prompts',(640,680),color=share.colors.instructions) )
@@ -4562,18 +4648,52 @@ class obj_world_mechfight(obj_world):
         self.text_donelost.addpart( 'cloud1', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(416,318)) )
         self.text_donelost.addpart( 'cloud2', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(254,266)) )
         self.text_donelost.addpart( 'cloud3', draw.obj_animation('mechfight_villaindies_cloud1','cloud',(93,385)) )
-        self.text_donewin.addpart( 'villaindies', draw.obj_animation('mechfight_villaindies','villainmechbase',(640,360)) )
+        self.text_donewin.addpart( 'villaindies', draw.obj_animation('mechfight_villaindies','villainmechbase_noface',(640,360)) )
         self.text_donewin.addpart( 'herostands',draw.obj_image('heromechbase',(640-330,470),scale=0.75) )
-        self.text_donelost.addpart( 'herodies', draw.obj_animation('mechfight_herodies','heromechbase',(640,360)) )
+        self.text_donelost.addpart( 'herodies', draw.obj_animation('mechfight_herodies','heromechbase_noface',(640,360)) )
         self.text_donelost.addpart( 'villainstands',draw.obj_image('villainmechbase',(640+330,470),scale=0.75) )
+        # fight message at beginning
+        self.timerfightmessage=tool.obj_timer(80)
+        if not self.dotutorial:
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.timerfightmessage.start()
         # timer for done part
-        self.timerendwin=tool.obj_timer(200)# goal to done
+        self.timerendwin=tool.obj_timer(220)# goal to done
         self.timerendloose=tool.obj_timer(240)# goal to done
-
+        # audio
+        self.soundcorrect=draw.obj_sound('mech_correct')
+        self.creator.addpart(self.soundcorrect)
+        self.soundwrong=draw.obj_sound('mech_wrong')
+        self.creator.addpart(self.soundwrong)
+        # self.soundstomp=draw.obj_sound('mech_stomp')# added directly to animations
+        # self.creator.addpart(self.soundstomp)
+        # self.soundcontact=draw.obj_sound('mech_contact')
+        # self.creator.addpart(self.soundcontact)
+        # self.soundcounter=draw.obj_sound('mech_counter')
+        # self.creator.addpart(self.soundcontact)
+        # self.soundhit=draw.obj_sound('mech_hit')
+        # self.creator.addpart(self.soundhit)
+        # self.soundstrike=draw.obj_sound('mech_strike')
+        # self.creator.addpart(self.soundstrike)
+        self.soundwin=draw.obj_sound('mech_win')
+        self.creator.addpart(self.soundwin)
+        self.sounddie=draw.obj_sound('mech_die')
+        self.creator.addpart(self.sounddie)
+        #
+        if not self.dotutorial:
+            self.soundstart=draw.obj_sound('mech_start')
+            self.soundstart.play()# at start
+        #
     def update(self,controls):
         super().update(controls)
         if not self.goal:
             # goal unreached state
+            # fight message at beginning
+            if self.timerfightmessage.on:
+                self.timerfightmessage.update()
+                if self.timerfightmessage.ring:
+                    self.text_start.show=False
+            #
             if self.promptphase:
                 self.prompttimer.update()
                 # Reflex : match correct input here
@@ -4664,8 +4784,10 @@ class obj_world_mechfight(obj_world):
                     # Action as result of prompt
                     if self.promptmatch:# won
                         self.actionstate=tool.randchoice([0,2])# hero punches villain, or hero blocks villain
+                        self.soundcorrect.play()
                     else:# lost
                         self.actionstate=tool.randchoice([1,3])# villain punches hero, or villain blocks hero
+                        self.soundwrong.play()
                     # switch to action phase
                     self.promptphase=False
                     self.actiontimer.start()
@@ -4722,8 +4844,7 @@ class obj_world_mechfight(obj_world):
                             self.herohealth -= 1
                         if self.herohealth>=0 and self.herohealth<self.maxherohealth:
                             self.herohealthbar.dict['heartcross_'+str(self.herohealth)].show=True
-
-
+            #
             else:# action phase
                 self.actiontimer.update()
                 if self.actiontimer.ring:# flip to countdown
@@ -4778,6 +4899,7 @@ class obj_world_mechfight(obj_world):
                         self.goal=True
                         self.win=False
                         self.timerendloose.start()
+                        self.sounddie.play()
                         self.text_undone.show=False
                         self.text_donelost.show=True
                         self.promptactor.dict['hero'].show=False
@@ -4793,18 +4915,17 @@ class obj_world_mechfight(obj_world):
                             self.herohealthbar.dict['heartcross_'+str(i)].show=False
                         for i in range(self.maxvillainhealth):
                             self.villainhealthbar.dict['heart_'+str(i)].show=False
-                            self.villainhealthbar.dict['heartscar_'+str(i)].show=False
                             self.villainhealthbar.dict['heartcross_'+str(i)].show=False
 
                     # villain check health
                     if self.villainhealth>0:
                         if self.villainhealth<self.maxvillainhealth:
                             self.villainhealthbar.dict['heart_'+str(self.villainhealth)].show=False
-                            self.villainhealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
                     else:# dead=hero won
                         self.goal=True
                         self.win=True
                         self.timerendwin.start()
+                        self.soundwin.play()
                         self.text_undone.show=False
                         self.text_donewin.show=True
                         self.promptactor.dict['hero'].show=False
@@ -4820,7 +4941,6 @@ class obj_world_mechfight(obj_world):
                             self.herohealthbar.dict['heartcross_'+str(i)].show=False
                         for i in range(self.maxvillainhealth):
                             self.villainhealthbar.dict['heart_'+str(i)].show=False
-                            self.villainhealthbar.dict['heartscar_'+str(i)].show=False
                             self.villainhealthbar.dict['heartcross_'+str(i)].show=False
 
         else:
@@ -4934,13 +5054,19 @@ class obj_world_serenade(obj_world):
         self.timerend=tool.obj_timer(130)
         #
         self.soundnoted=draw.obj_sound('noted')
+        self.creator.addpart(self.soundnoted)
         self.soundnotel=draw.obj_sound('notel')
+        self.creator.addpart(self.soundnotel)
         self.soundnoter=draw.obj_sound('noter')
+        self.creator.addpart(self.soundnoter)
         self.soundnoteu=draw.obj_sound('noteu')
+        self.creator.addpart(self.soundnoteu)
         if self.heroangry:
             self.soundcheer=draw.obj_sound('serenade_cheeralone')
+            self.creator.addpart(self.soundcheer)
         else:
             self.soundcheer=draw.obj_sound('serenade_cheer')
+            self.creator.addpart(self.soundcheer)
         #
         # ambience sounds (add to page!)
         self.soundambience=draw.obj_sound('serenade_ambience')
@@ -5047,8 +5173,11 @@ class obj_world_kiss(obj_world):
         self.timer.start()# reset ungoing timer
         #
         self.soundstart=draw.obj_sound('kiss_start')
+        self.creator.addpart(self.soundstart)
         self.soundend=draw.obj_sound('kiss_cheer')
+        self.creator.addpart(self.soundend)
         self.soundend2=draw.obj_sound('kiss_cheer2')
+        self.creator.addpart(self.soundend2)
 
     def triggerungoing(self,controls):
         return (controls.gl and controls.gr) and (controls.glc or controls.grc)
@@ -5166,7 +5295,9 @@ class obj_world_sunset(obj_world):
         self.timer.start()# reset ungoing timer
         #
         self.soundstart=draw.obj_sound('sunset_start')
+        self.creator.addpart(self.soundstart)
         self.soundend=draw.obj_sound('sunset_end')
+        self.creator.addpart(self.soundend)
         #
     def triggerungoing(self,controls):
         return controls.gd and controls.gdc
@@ -5289,7 +5420,9 @@ class obj_world_gotobed(obj_world):
         self.timer.start()# reset ungoing timer
         # audio
         self.soundstart=draw.obj_sound('gotobed_start')
+        self.creator.addpart(self.soundstart)
         self.sounddone=draw.obj_sound('gotobed_end')
+        self.creator.addpart(self.sounddone)
         #
     def triggerungoing(self,controls):
         return controls.gl and controls.glc

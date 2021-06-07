@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        # if True :
-        if False :
+        if True :
+        # if False :
             # regular scenes
             #
             # quickscene=ch1.obj_scene_ch1play1()
@@ -50,7 +50,7 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p2()
             # quickscene=ch6.obj_scene_ch6p47()
-            quickscene=ch7.obj_scene_ch7p41()
+            quickscene=ch7.obj_scene_ch7p48()
             # quickscene=ch8.obj_scene_ch8roam()
             #
             #
@@ -58,7 +58,8 @@ class obj_quickscene():
         else:
             # test scenes (must initstart because are inventoried)
             # quickscene=tests.obj_scene_testdevnotes()
-            quickscene=tests.obj_scene_testdevnotesfiles()
+            # quickscene=tests.obj_scene_testdevnotesfiles()
+            quickscene=tests.obj_scene_testdrafting()
             #
             #
             share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)

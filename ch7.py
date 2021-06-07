@@ -1375,9 +1375,10 @@ class obj_scene_ch7p40(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
-        animation1.addsound( "villain1", [36] )
+        animation1.addsound( "revealscary", [1] )
+        animation1.addsound( "villain2", [140],skip=2 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch7p41(page.obj_chapterpage):
@@ -1417,8 +1418,8 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_transform1','mech_transform2') )
         animation8.addsound( "villain1", [2] )
         animation8.addsound( "mech_transform1", [70] )
-        animation8.addsound( "mech_transform2", [170] )
-        animation8.addsound( "villain2", [270],skip=1 )
+        animation8.addsound( "mech_transform2", [170],skip=1 )
+        # animation8.addsound( "villain2", [270],skip=1 )
         #
         self.addpart( draw.obj_music('fight3') )
 
@@ -1448,6 +1449,11 @@ class obj_scene_ch7p42(page.obj_chapterpage):
         animation3=draw.obj_animation('ch7_villainmech_grow3','moon',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
         #
+        # animation1.addsound( "villain1", [2] )
+        animation1.addsound( "mech_transform1", [1] )
+        animation1.addsound( "mech_transform2", [101] )
+        animation1.addsound( "villain4", [201],skip=1 )
+        #
         self.addpart( draw.obj_music('fight3') )
 
 
@@ -1469,6 +1475,11 @@ class obj_scene_ch7p43(page.obj_chapterpage):
         # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','cloud','moon') )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_stomp') )
+        animation1.addsound( "villain1", [40] )
+        animation1.addsound( "villain2", [150] )
+        animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
         self.addpart( draw.obj_music('fight3') )
 
@@ -1504,6 +1515,14 @@ class obj_scene_ch7p44(page.obj_chapterpage):
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
+        #
+        animation1.addsound( "bunny4", [60] )
+        animation1.addsound( "elder4", [100] )
+        animation1.addsound( "sailor5", [171],skip=1 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('fight3') )
 
@@ -1542,6 +1561,12 @@ class obj_scene_ch7p45(page.obj_chapterpage):
         animation8.addimage('empty',path='premade')
         self.addpart( animation8 )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_transform1','mech_transform2') )
+        animation8.addsound( "hero2", [2] )
+        animation8.addsound( "mech_transform1", [70] )
+        animation8.addsound( "mech_transform2", [170],skip=1 )
+        # animation8.addsound( "villain2", [270],skip=1 )
+        #
         self.addpart( draw.obj_music('fight3') )
 
 
@@ -1561,6 +1586,11 @@ class obj_scene_ch7p46(page.obj_chapterpage):
         # self.addpart( draw.obj_image('heromechbase',(303,412),scale=0.81,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_heromech_expand','heromechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        # animation1.addsound( "villain1", [2] )
+        animation1.addsound( "mech_transform1", [1] )
+        animation1.addsound( "mech_transform2", [101] )
+        animation1.addsound( "hero5", [201],skip=1 )
         #
         self.addpart( draw.obj_music('fight3') )
 
@@ -1583,6 +1613,11 @@ class obj_scene_ch7p47(page.obj_chapterpage):
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_stomp') )
+        animation1.addsound( "villain1", [40] )
+        animation1.addsound( "villain2", [150] )
+        animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
+        #
         self.addpart( draw.obj_music('fight3') )
 
 
@@ -1593,14 +1628,14 @@ class obj_scene_ch7p48(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p49())
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=['Here is how this fight works, said the book of things. ',\
+        self.text=[\
                     'Enter the correct command when prompted. ',\
-                    ('Press '+tempo+' when you are ready to begin.',share.colors.instructions),\
+                    ('Press '+tempo+' to start.',share.colors.instructions),\
                    ]
         self.world=world.obj_world_mechfight(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('fight4') )
 
 
 
@@ -1619,7 +1654,7 @@ class obj_scene_ch7p49(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('fight4') )
 
 
 class obj_scene_ch7p49death(page.obj_chapterpage):
@@ -1635,7 +1670,7 @@ class obj_scene_ch7p49death(page.obj_chapterpage):
                 'Now go back and try to act more "heroic". ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        self.addpart(draw.obj_textbox('you are dead',(640,360),fontsize='large') )
         #
         self.addpart( draw.obj_music('tension') )
 

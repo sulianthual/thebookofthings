@@ -6,20 +6,18 @@
 # ideas.txt: random note and ideas
 #           this file not loaded
 #
-##########################################################
 ###########################################################
-
-Ideas for game:
-
-
-###################
+###########################################################
 * Main Guidelines:
+
+
+* Mottos:
 Keep it simple or will never finish this game !!!:
 No more advanced physics! Only simple goofy minigames
 No more advanced drawings! Only simple and goofy.
 No more advanced modular story! Only one linear story.
 
-###
+
 * Game Progression:
 - Chapter I, II: set hero, partner, home (story setting)
 - Chapter III: villain captures partner (disruption)
@@ -28,7 +26,7 @@ No more advanced modular story! Only one linear story.
                     retrieve 3 parts of password in 3 locations (north,west,south)
 - Chapter VII: final fight against villain, rescue the princess
 
-###
+
 * General Story Arc:
 Each day/chapter of the story follows somewhat an arc (even if varying in content):
 arc:     wake up -> morning game -> travel1 -> midday quest -> travel -> afternoon fight (game) -> travel2 -> aftermath -> ending
@@ -42,11 +40,13 @@ travel1: home to evil lair, or other (pirate island, iceberg?? space station??,t
 travel2: X go back home, or to some location for an ending
 *** Add a quest (between morning game and afternoon fight)
 
-###
+
 * Drawings:
 DO NOT propose shadows for drawings, it makes people lazy and skip drawing (defeating the purpose)
+KEEP the premade stickmans (do NOT make player draw them):
+     because the stickmans drawings need to be precise and have many variations (crouch, dodge, zapped, mechs...)
 
-###
+
 * Minigames:
 DO NOT add complex minigames that require a physics engine (e.g. platformer, brawler...)
 It is NOT worth it to do with pygame (too painful to build from ground up)
@@ -54,75 +54,68 @@ It should be done in NEXT games with other softwares that do this more easily (g
 
 
 
-##################
-* Final changes to make:
+###########################################################
+###########################################################
+* Final changes that should probably be made:
+
+
 
 - customize locations: give them names
 
 - Add better character customization (influences text only):
   name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
 
-- Add sound and music
-
-- chapter 1: draw the stickman entirely
-             remove most additional drawings
+- tff file: cannot do text for interrogation marks. correct the file ?
 
 - compile with pyinstaller: linux, windows, mac
 
-- game spinoffs:
- kind of doom
- kind of zelda
- kind of mario
- (draw/record game assets then play dumbed down/funny version)
+- next games to make:
+ cheap spinoffs of famous games, where
+ we draw all game assets then play a dumbed down/funny version.
+ we can even do the same for the game audio with a mic.
+E.g: kind of doom, kind of zelda, kind of mario
+BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
 
-##################
+
+###########################################################
+###########################################################
+
 * Other Ideas (maybe later or never):
 
-- fps game: with simple shooting + arrows to move
+- storytelling:
+  some events are repetitive (like going to bed etc)
+  in some place, could rewrite the story slightly with twists:
+    1) point of view changes (shortly tell story from villain, partner, bug point of view)
+       have other characters make some minigames, e.g. the villain wakes up and hero is at this door, etc...
+    2) cut the chronology (like Pulp fiction type), justified by the book jumping between pages
+
+
+- Somewhere...: fps game with simple shooting + arrows to move
             should be fairly simple to code, just enemies/items with small animations
             and that are always facing the player (only scale and fliph them)
 
 
-- tff file: cannot do text for interrogation marks. correct the file ?
 
-- Chapter 1: draw the stickman (only give the shape of the head). Do positions:
-    Standing (legs straigth, facing right)
-    Walking (legs open)
-    Crouching
-    Jumping
-    => Then have all movements needed with WASD.
-    => use the stickman base for all drawings
-- Motivate it with platform minigame
 
-- Chapter 1: Add a TV and antenna (draw)
-   Add minigame of jumping: first over bushes, then over house to fix the antenna
-   put TV animation where something plays inside.
-   Hero has basic life: sleeping, fishing, eating, and watching TV.
-   => but this requires moving the house (and maybe pond+bush) to the first chapter.
 
 - Chapter 2: add a minigame to pickup flowers for the partner
              add a tennis game to play against the partner
-             make the garden the spot where could replay all minigames
-
-- Chapter 2: The music key should not be drawn, except by player.
-
-- Chapter 3: misses at least one drawing (?)
-             could ask to draw the lightning bolt here maybe
-             castle entrance would be spot to replay all minigames
 
 - Chapter 4: add the stomping minigame with the bunny (just adapt it)
-              the bunny jumps over the hero
-              start with one bunny, then up to 3 (the bunny multiplies)
+             could add doom-like scary game in the forest
+             could add stomping minigame with bunny (bunny demultiplies, jumps on hero, hero jumps on all bunnies)
+             could add stomping minigame combined with lying minigame: fight/avoid while using correct True/Wrong (e.g. go to either area).
 
 
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
-             or freezing temperatures (draw a snowman!)
-
-- Chapter 5: make climbing into 3 minigames (childs)
+             could add stomping minigame combined with rockpaperscissors minigame: fight/avoid obstacles while using correct prompts
+            could make climbing minigame longer
+            should reuse the rps minigame later on (easy to adapt)
 
 - Chapter 6: should cannon and parachute hero into island (from the boat)
              make minigame where has to aim the cannon (A,D), shoot (W)
             then open parachute at the right time (S). Should fall vertically to correct area (the island)
+            should reuse the sneaking minigame later on (easy to adapt, e.g. in the villain's quarters)
 
 - Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
 
@@ -135,7 +128,7 @@ It should be done in NEXT games with other softwares that do this more easily (g
 
 -Somewhere: recycle the breakfast drinking minigame
             (change the animations)
-            use it to cut a rope, or else stealthily
+            e.g. use it to cut a rope, when the hero sneaks in castle and unties partner
 
 - Credits: Make a song about "lie, cheat and steal"
           Play it with everyone dancing, with a little ball like a karaoke
@@ -154,12 +147,8 @@ It should be done in NEXT games with other softwares that do this more easily (g
 
 - World Map: path should not be drawn except by player
 
-- french/spanish translation
+- new game plus (more options in text, customize characters with hats/clothes...).
 
-- new game plus (more options in text, customize characters with hats/clothes...)
-
-##################
-* Even more ideas:
 
 - allow player to choose text font at beginning
 
@@ -193,8 +182,7 @@ It should be done in NEXT games with other softwares that do this more easily (g
             the villain and mirror can have conversations, and the mirror can be his sidekick (to be defeated)
 - allow player to place items (e.g. place 3 trees near the hero house, etc...)
 
-###################
-* Possible minigame additions:
+- Possible minigame additions:
 Hunt = Arrow Parabolic Arc [A][D] then [W]
 Flappy Bird [W]
 Play Pong [W][S] (tennis with partner)
@@ -211,6 +199,8 @@ helicopters for hero/villain with flappy bird and shooting
 writing game: type quickly text or answer to it. What is your favorite color? ...etc...
 skiing game like classic game
 Atari games: https://games.aarp.org/category/atari-games
+
+
 
 ####################################################################################################################
 ###################################################################################################################

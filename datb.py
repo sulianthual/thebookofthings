@@ -70,7 +70,8 @@ class obj_musics:
         self.dict['ch7']=( 'ch7/POL-galactic-trek-short.ogg' , 0.2 )
         self.dict['fight2']=( 'ch7/POL-power-battle-short.ogg' , 0.2 )# stomp
         self.dict['win']=( 'ch7/POL-gold-gryphons-short.ogg' , 0.2 )
-        self.dict['fight3']=( 'ch7/POL-underground-army-short.ogg' , 0.2 )# mech
+        self.dict['fight3']=( 'ch7/POL-underground-army-short.ogg' , 0.2 )# mech start
+        self.dict['fight4']=( 'ch7/POL-time-attack-short.ogg' , 0.2 )# mech fight
         # ch8
 
 
@@ -200,7 +201,7 @@ class obj_sounds:
         self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
         # fishing
         self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
-        self.dict['fishing_catch']=( 'world/fish/1up 3 - Sound effects Pack 2.ogg' , 1 )
+        self.dict['fishing_catch']=( 'world/fish/1up3.ogg' , 1 )
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
         self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
@@ -224,7 +225,7 @@ class obj_sounds:
         self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.ogg' , 1 )
         self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.ogg' , 1 )
         self.dict['travel_choplast']=( 'world/travel/Cure.ogg' , 1 )
-        self.dict['travel_enter']=( 'world/travel/1up 3 - Sound effects Pack 2.ogg' , 1 )
+        self.dict['travel_enter']=( 'world/travel/1up3.ogg' , 1 )
         # dodgebullets
         self.dict['dodgebullets_start']=( 'world/dodgebullets/fight_lowreverb.wav' , 1 )
         self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.ogg' , 0.5 )
@@ -241,7 +242,7 @@ class obj_sounds:
         self.dict['rps_start']=( 'world/rps/fight_lowreverb.wav' , 1 )
         self.dict['rps_count']=( 'world/rps/FX01.ogg' , 1 )
         self.dict['rps_hit']=( 'world/rps/die_02.ogg' , 1 )
-        self.dict['rps_strike']=( 'world/rps/1up 3 - Sound effects Pack 2.ogg' , 1 )
+        self.dict['rps_strike']=( 'world/rps/1up3.ogg' , 1 )
         self.dict['rps_tie']=( 'world/rps/alert.ogg' , 1 )
         self.dict['rps_die']=( 'world/rps/die_04.ogg' , 1 )
         self.dict['rps_win']=( 'world/rps/cheer1.ogg' , 0.2 )
@@ -273,6 +274,19 @@ class obj_sounds:
         # mech
         self.dict['mech_transform1']=( 'world/mech/transformers-sound.ogg', 1 )
         self.dict['mech_transform2']=( 'world/mech/transformers-sound_pitch2.ogg', 1 )
+        self.dict['mech_stomp']=( 'world/mech/stomp_mixedlow.ogg', 1 )
+        self.dict['mech_start']=( 'world/mech/fight_lowreverb.wav' , 1 )
+        self.dict['mech_hit']=( 'world/mech/die_02.ogg' , 1 )
+        self.dict['mech_strike']=( 'world/mech/Death1.ogg', 1 )
+        self.dict['mech_die']=( 'world/mech/die_04.ogg' , 1 )
+        self.dict['mech_win']=( 'world/mech/cheer1.ogg' , 0.5 )
+        self.dict['mech_contact']=( 'world/mech/Punch4.ogg', 1 )
+        # self.dict['mech_contact']=( 'world/mech/enemy_explosion.ogg', 1 )
+
+        self.dict['mech_counter']=( 'world/mech/Whip.ogg', 1 )
+        self.dict['mech_correct']=( 'world/mech/confirmation_002.ogg', 1 )
+        self.dict['mech_wrong']=( 'world/mech/fail.wav', 1 )
+
 
 
 
