@@ -23,24 +23,15 @@ import world
 # *CHAPTER VIII
 
 
-class obj_scene_chapter8(page.obj_chapterpage):
+class obj_scene_chapter8(page.obj_chapterpage):# just go to next page directly
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam())
+    def triggernextpage(self,controls):
+        return True
+    def soundnextpage(self):
+        pass# no sound
     def setup(self):
-        self.text=['-----   Epilogue   -----   ',\
-                   '\n Welcome back, said the book of things. Here you can roam the world freely and replay all the games. Have fun!  ',\
-                   ]
-        animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
-        animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)
-        animation3=draw.obj_animation('ch1_eraser1','eraser',(900,480),record=False,sync=animation1,scale=0.5)
-        self.addpart(animation1)
-        self.addpart(animation2)
-        self.addpart(animation3)
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','pen','eraser') )
-        animation1.addsound( "book1", [120] )
-        animation1.addsound( "pen", [199] )
-        animation1.addsound( "eraser", [185],skip=1 )
+        self.text=[]
         #
         self.addpart( draw.obj_music('piano') )
 
@@ -85,8 +76,10 @@ class obj_scene_ch8roam(page.obj_chapterpage):
         else:
             self.start="home"
         self.text=[]
-        self.world=world.obj_world_travel(self,start=self.start,goal='everywhere',chapter=8,boat=True)
+        self.world=world.obj_world_travel(self,start=self.start,goal='everywhere',chapter=8,boat=True,noending=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 ###########

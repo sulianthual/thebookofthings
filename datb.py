@@ -180,6 +180,7 @@ class obj_sounds:
         # ch7
         self.dict['hero_what']=( 'hero/what__confused-what_male.ogg' , 1 )
         self.dict['villain_bangdoor']=( 'villain/wood_hit_09.ogg' , 1 )
+        self.dict['cheer']=( 'general/cheer1.ogg' , 0.3 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise

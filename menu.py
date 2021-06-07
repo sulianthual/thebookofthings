@@ -50,7 +50,8 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p2()
             # quickscene=ch6.obj_scene_ch6p47()
-            quickscene=ch7.obj_scene_ch7p48()
+            # quickscene=ch7.obj_scene_ch7p52()
+            quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8roam()
             #
             #

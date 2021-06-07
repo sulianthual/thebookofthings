@@ -1759,6 +1759,14 @@ class obj_scene_ch7p50(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(980,222),record=False,sync=animation1) )
         self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(1202,320),record=False,sync=animation1) )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_stomp') )
+        animation1.addsound( "villain1", [115] )
+        animation1.addsound( "villain4", [181],skip=1 )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('tension') )
 
 
@@ -1787,6 +1795,10 @@ class obj_scene_ch7p51(page.obj_chapterpage):
         animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
         #
+        animation1.addsound( "bunny4", [60] )
+        animation1.addsound( "elder4", [100] )
+        animation1.addsound( "sailor5", [171],skip=1 )
+        #
         self.addpart( draw.obj_music('piano') )
 
 
@@ -1814,6 +1826,17 @@ class obj_scene_ch7p52(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'cheer') )
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        # self.addpart( draw.obj_soundplacer(animation1,'partner1','partner2','partner3') )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
+        # self.addpart( draw.obj_soundplacer(animation1,'castle1','castle2','castle3','castle4','castle5','castle6') )
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5','bunny6') )
+        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4','elder5','elder6') )
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5','sailor6') )
+        # self.addpart( draw.obj_soundplacer(animation1,'cow') )
+        #
         self.addpart( draw.obj_music('piano') )
 
 
@@ -1821,32 +1844,75 @@ class obj_scene_ch7p53(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p52())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p54())
+        share.scenemanager.switchscene(obj_scene_ch7ending())
     def setup(self):
         self.text=[\
             'Draw a ',('cake',share.colors.item),', said the book things. It is time to celebrate! ',\
                 ]
         self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200)) )
         #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch7p54(page.obj_chapterpage):
+class obj_scene_ch7ending(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p53())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p55())
+        share.scenemanager.switchscene(obj_scene_ch7ending2())
+    def gameendingtext(self):
+        self.addpart( draw.obj_textbox('A game by Sulian thual',(640,100),fontsize='large') )
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('A game by Sulian thual',(640,100),fontsize='large') )
-        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
+        #
+        # background
+        # self.addpart( draw.obj_image('mountain',(80,190),scale=0.29,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('castle',(220,200),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('flower',(532,297),scale=0.18,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('flower',(562,268),scale=0.15,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(50,235),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('castle',(142,259),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(215,255),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(309,278),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('house',(449,289),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(523,308),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(380,260),scale=0.2,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(248,309),scale=0.15,rotate=0,fliph=True,flipv=False) )
+ #
+        self.addpart( draw.obj_image('moon',(104,90),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(279,161),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1135,145),scale=0.2,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.2,rotate=0,fliph=False,flipv=False) )
+ #
+
+
+        y1=60
+        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.2,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.2,rotate=0,fliph=True,flipv=False) )
+        #
+        # foreground
+        self.addpart( draw.obj_image('fish',(1177,642),scale=0.3,rotate=15,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640,360+50),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640+100,360+50),sync=animation1,record=False) )
+        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640+20,360+20),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
@@ -1854,131 +1920,35 @@ class obj_scene_ch7p54(page.obj_chapterpage):
         self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
         # self.addpart(draw.obj_imageplacer(self,'house','flower','bush','pond','castle','tree','mountain','cave','tree','palmtree','sailboat','wave','skeletonhead','moon','cloud'))
         #
-        self.addpart( draw.obj_image('mountain',(79,110),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(186,119),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(245,205),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(198,198),scale=0.15,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('bush',(531,299),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
-        y1=60
-        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.16,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        # text
+        self.gameendingtext()
         #
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch7p55(page.obj_chapterpage):
+class obj_scene_ch7ending2(obj_scene_ch7ending):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p54())
+        share.scenemanager.switchscene(obj_scene_ch7ending())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p56())
-    def setup(self):
-        self.text=[]
-        self.addpart ( draw.obj_textbox('Thank you so much for playing...',(640,100),fontsize='large') )
-        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
-        self.addpart( animation1 )
-        self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
-        #
-        self.addpart( draw.obj_image('mountain',(79,110),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(186,119),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(245,205),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(198,198),scale=0.15,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('bush',(531,299),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
-        y1=60
-        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.16,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
-        #
-        self.addpart( draw.obj_music('piano') )
+        share.scenemanager.switchscene(obj_scene_ch7ending3())
+    def gameendingtext(self):
+        self.addpart( draw.obj_textbox('Thank you so much for playing...',(640,100),fontsize='large') )
 
 
-class obj_scene_ch7p56(page.obj_chapterpage):
+
+class obj_scene_ch7ending3(obj_scene_ch7ending):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p55())
+        share.scenemanager.switchscene(obj_scene_ch7ending2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7end())
-    def setup(self):
-        self.text=[]
-        self.addpart ( draw.obj_textbox('The End',(640,100),fontsize='huge') )
-        self.addpart( draw.obj_image('fish',(1177,642),scale=0.28,rotate=15,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch7_endwobble1','elderbase',(640,360),record=False)
-        self.addpart( animation1 )
-        self.addpart( draw.obj_animation('ch7_endwobble2','sailorbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble','bunnybase',(640-160,360+80),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble3','skeletonbase_sailorhat',(640+100,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble4','cow',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble6','partnerbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
-        self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
-        #
-        self.addpart( draw.obj_image('mountain',(79,110),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(186,119),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(245,205),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(198,198),scale=0.15,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('bush',(531,299),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
-        y1=60
-        self.addpart( draw.obj_image('cave',(856,228+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(762,245+y1),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(701,210+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(941,235+y1),scale=0.2,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(902,175+y1),scale=0.16,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('sailboat',(1209,163+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('wave',(1168,223+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('wave',(1257,210+y1),scale=0.17,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(1108,185+y1),scale=0.15,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(1045,213+y1),scale=0.19,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
-        #
-        self.addpart( draw.obj_music('piano') )
+    def gameendingtext(self):
+        self.addpart( draw.obj_textbox('The End',(640,100),fontsize='huge') )
+
 
 
 class obj_scene_ch7end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p56())
+        share.scenemanager.switchscene(obj_scene_ch7ending3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7endend())
     def setup(self):
@@ -1998,6 +1968,7 @@ class obj_scene_ch7end(page.obj_chapterpage):
         self.sound.play()
         #
         self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch7endend(page.obj_chapterpage):
     def prevpage(self):
