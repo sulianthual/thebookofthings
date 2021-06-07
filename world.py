@@ -1660,7 +1660,6 @@ class obj_world_travel(obj_world):
         if self.minigame=='logs':
             self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textlogs', self.logmessage  )
-            self.text_undone.dict['text1'].replacetext('['+share.datamanager.controlname('arrows')+': move] ['+share.datamanager.controlname('action')+': chop]')
             # self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D]')
             for i in self.panels:# remove tree from panels and make them into individual grandactors
                 panellogkeys=[]# list of tree keys in this panel
@@ -1848,10 +1847,9 @@ class obj_world_travel(obj_world):
                     tokill=[]
                     for i in self.logactors:
                         if tool.checkrectcollide(self.hero,i):
-                            if controls.ga and controls.gac:
-                                self.logcount += 1
-                                self.logmessage.replacetext('You have collected '+str(self.logcount)+'/'+str(self.logneed)+' logs')
-                                tokill.append(i)
+                            self.logcount += 1
+                            self.logmessage.replacetext('You have collected '+str(self.logcount)+'/'+str(self.logneed)+' logs')
+                            tokill.append(i)
                     for i in tokill:
                         self.logactors.remove(i)
                         i.clearparts()
