@@ -2203,6 +2203,8 @@ class obj_world_stompfight(obj_world):
         self.text_undone.show=True
         self.text_donewin.show=False
         self.text_donelost.show=False
+        self.text_start=obj_grandactor(self,(640,360))# text message at start
+        self.text_start.show=True
         # static
         self.staticactor.addpart( 'floor', draw.obj_image('floor2',(640,self.yground+90),path='premade') )
         # self.staticactor.addpart( 'sun', draw.obj_image('sun',(640,280),scale=0.4) )
@@ -2269,14 +2271,14 @@ class obj_world_stompfight(obj_world):
         self.villain.dict['hurttext'].show=False
         self.villainhurt=False# hurt or not
         self.villainstate='rest'# stand, kick, rest (when no hurt)
-        self.villaintimerstand=tool.obj_timer(60)# right before kicking
-        self.villaintimerkick=tool.obj_timer(200)# 40
-        self.villaintimerrest=tool.obj_timer(100)#
-        self.villaintimerhurt=tool.obj_timer(120)
+        self.villaintimerstand=tool.obj_timer(50)#60 right before kicking
+        self.villaintimerkick=tool.obj_timer(50)#100 kick time
+        self.villaintimerrest=tool.obj_timer(50)#100 rest time (when vulnerable)
+        self.villaintimerhurt=tool.obj_timer(50)#50
         # self.villaintimerstand.start()
         self.villaintimerrest.start()
         self.villainfaceright=False# direction facing (changes)
-        self.villainmx=9#12#12# move rate horizontally
+        self.villainmx=20#9# move rate horizontally
         self.villainxmin=200# area where will face to right
         self.villainxmax=1280-200# area where will face to left
         # villlain hitboxes
@@ -2298,25 +2300,25 @@ class obj_world_stompfight(obj_world):
             self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         else:
             self.healthbar.addpart('face', draw.obj_image('angryhead',(50,self.ybar),scale=0.2) )
-
         for i in range(self.maxherohealth):
             self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
         # health bar villain
-        self.maxvillainhealth=5# starting villain health
+        self.maxvillainhealth=9# starting villain health
         self.villainhealth=self.maxvillainhealth# updated one
         self.vealthbar=obj_grandactor(self,(640,360))
-
-        if self.partnerisenemy:
-            self.vealthbar.addpart('partnerface', draw.obj_image('partnerheadangry',(1280-50,self.ybar+100),scale=0.4,fliph=True) )
         self.vealthbar.addpart('face', draw.obj_image('villainhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.maxvillainhealth):
-            self.vealthbar.addpart('heart_'+str(i), draw.obj_image('love',(1280-150-i*75,self.ybar),scale=0.125) )
-            self.vealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-150-i*75,self.ybar),scale=0.125) )
+            self.vealthbar.addpart('heart_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
         # text
         self.text_undone.addpart( 'text1', \
-        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move/jump]',(640,self.ybar),color=share.colors.instructions) )
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move/jump]',(25,self.ybar+75),xleft=True,color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
+        # fight message at beginning
+        self.timerfightmessage=tool.obj_timer(80)
+        if not self.dotutorial:
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.timerfightmessage.start()
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(120)# goal to done
@@ -2333,12 +2335,20 @@ class obj_world_stompfight(obj_world):
         self.creator.addpart(self.sounddie)
         self.soundvillainkick=draw.obj_sound('stomp_villainkick')
         self.creator.addpart(self.soundvillainkick)
+        #
+        if not self.dotutorial:
+            self.soundstart=draw.obj_sound('stomp_start')
+            self.soundstart.play()# at start
 
     def update(self,controls):
         super().update(controls)
         if not self.goal:
             # goal unreached state
-            #
+            # fight message at beginning
+            if self.timerfightmessage.on:
+                self.timerfightmessage.update()
+                if self.timerfightmessage.ring:
+                    self.text_start.show=False
             if not self.herodown:
                 # hero dynamics y
                 if self.heromayjump and (controls.gu and controls.guc):# start jump (click button)
@@ -2527,7 +2537,7 @@ class obj_world_stompfight(obj_world):
             #
             #
             # Hero and Villain hit each other
-            if not self.herohurt and not self.villainhurt:
+            if not self.dotutorial and not self.herohurt and not self.villainhurt:
             #
                 # villain hits hero (state kick and stand)
                 if self.villainstate in ['stand','kick']:
@@ -2574,7 +2584,6 @@ class obj_world_stompfight(obj_world):
                         if self.villainhealth>0:
                             if self.villainhealth<self.maxvillainhealth:
                                 self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
-                                self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
                             self.villainhurt=True
                             self.villainstate='stand'
                             self.villaintimerhurt.start()
@@ -2592,7 +2601,6 @@ class obj_world_stompfight(obj_world):
                                 self.villain.dict['partnerhurt'].show=True
                         else:# dead villain
                             self.vealthbar.dict['heart_'+str(self.villainhealth)].show=False
-                            self.vealthbar.dict['heartscar_'+str(self.villainhealth)].show=False
                             self.goal=True
                             self.win=True
                             self.timerendwin.start()

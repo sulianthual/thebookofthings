@@ -838,10 +838,10 @@ class obj_scene_ch7p24(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p25())
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=['Here is how this works, said the book of things. ',\
+        self.text=[\
                     'Stomp on ',('{villainname}',share.colors.villain),\
                     ' when ',('{villain_he}',share.colors.villain2),' is not kicking. ',\
-                    ('Press '+tempo+' when you are ready to begin.',share.colors.instructions),\
+                    ('Press '+tempo+' to start.',share.colors.instructions),\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
