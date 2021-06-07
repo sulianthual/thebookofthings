@@ -264,7 +264,8 @@ class obj_sounds:
         self.dict['stomp_die']=( 'world/stomp/die_04.ogg', 1 )
         self.dict['stomp_strike']=( 'world/stomp/Death1.ogg', 1 )
         self.dict['stomp_win']=( 'world/stomp/cheer1.ogg', 0.5 )
-        self.dict['stomp_villainkick']=( 'world/stomp/swish-9.wav', 1 )
+        self.dict['stomp_kick']=( 'world/stomp/swish-9.wav', 1 )
+        self.dict['stomp_contact']=( 'world/stomp/Punch4.ogg', 1 )
         self.dict['stomp_start']=( 'world/stomp/fight_lowreverb.wav' , 1 )
 
 

@@ -826,8 +826,6 @@ class obj_scene_ch7p23(page.obj_chapterpage):
         self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
         animation1.addsound( "villain1", [172],skip=1 )
         #
-
-        #
         self.addpart( draw.obj_music(None) )
 
 
