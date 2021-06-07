@@ -76,17 +76,13 @@ class obj_scene_ch6p1(page.obj_chapterpage):
         self.addpart( animation2 )
         # self.addpart( draw.obj_imageplacer(self,'castle','mountain') )
         #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
         animation1.addsound( "villain1", [20] )
         animation1.addsound( "villain2", [300] )
         animation1.addsound( "villain3", [155] )
         animation1.addsound( "partner_scared", [228] )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch6p2(page.obj_chapterpage):
@@ -103,8 +99,6 @@ class obj_scene_ch6p2(page.obj_chapterpage):
                    ' and ',('"perservere"',share.colors.password),'. ',\
                    'Only one ',('grandmaster',share.colors.grandmaster),' remains".',\
                    ]
-
-
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade')
@@ -112,7 +106,15 @@ class obj_scene_ch6p2(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346),imgscale=0.25,sync=animation1) )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark2','bunnyhead',(640,360),sync=animation1) )
         #
-        self.addpart( draw.obj_music('tension') )
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4') )
+        animation1.addsound( "bunny2", [40] )
+        animation1.addsound( "elder1", [80],skip=1 )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch6p3(page.obj_chapterpage):
@@ -1291,6 +1293,10 @@ class obj_scene_ch6p45(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116],skip=1 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('sailor') )
 

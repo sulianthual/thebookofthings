@@ -1152,7 +1152,8 @@ class obj_world_travel(obj_world):
         self.addbeachquestionmark=False# add a question mark on the beach
         self.addbeachmark=False# add a cross mark on the beach
         self.addsailorwait=False# add the sailor (waiting on the beach)
-        self.noending=True# skip the completion part of minigame
+        self.noending=False# skip the completion part of minigame
+
         # scene tuning
         if kwargs is not None:
             if 'chapter' in kwargs: self.chapter=kwargs["chapter"]
@@ -1608,9 +1609,10 @@ class obj_world_travel(obj_world):
         self.text_undoneenter.show=False
         self.text_done.show=False
         # timer
-        self.timerend=tool.obj_timer(50)# goal to done
-        #
-        #
+        self.timerend=tool.obj_timer(60)# goal to done
+        # audio
+        self.soundenter=draw.obj_sound('travel_enter')
+        self.creator.addpart(self.soundenter)
         # ambience sounds (add to page!)
         if self.doambience:
             self.soundambience=draw.obj_sound('travel_ambience')
@@ -1693,6 +1695,7 @@ class obj_world_travel(obj_world):
                         self.text_undone.show=False
                         self.text_undoneenter.show=False
                         self.text_done.show=True
+                        self.soundenter.play()
             else:
                 self.text_undone.show=True
                 self.text_undoneenter.show=False
@@ -1715,6 +1718,7 @@ class obj_world_travel(obj_world):
                             self.text_undone.show=False
                             self.text_undoneenter.show=False
                             self.text_done.show=True
+                            self.soundenter.play()
 
     ####
     def update(self,controls):
@@ -1992,11 +1996,17 @@ class obj_world_dodgegunshots(obj_world):
         self.timerendloose=tool.obj_timer(190)# goal to done
         #
         self.soundshoot=draw.obj_sound('dodgebullets_shoot')
+        self.creator.addpart(self.soundshoot)
         self.soundhit=draw.obj_sound('dodgebullets_hit')
+        self.creator.addpart(self.soundhit)
         self.sounddie=draw.obj_sound('dodgebullets_die')
+        self.creator.addpart(self.sounddie)
         self.soundwin=draw.obj_sound('dodgebullets_win')
+        self.creator.addpart(self.soundwin)
         self.soundjump=draw.obj_sound('dodgebullets_jump')
+        self.creator.addpart(self.soundjump)
         self.soundcrouch=draw.obj_sound('dodgebullets_crouch')
+        self.creator.addpart(self.soundcrouch)
         #
         if not self.dotutorial:
             self.soundstart=draw.obj_sound('dodgebullets_start')
@@ -2087,6 +2097,8 @@ class obj_world_dodgegunshots(obj_world):
                     self.timerendwin.start()
                     self.text_undone.show=False
                     self.text_donewin.show=True
+                    self.texthurting=False
+                    self.texthurt.show=False
                     self.soundwin.play()
             #cannonballs
             if self.cannonballs:
@@ -2195,23 +2207,26 @@ class obj_world_stompfight(obj_world):
         self.staticactor.addpart( 'floor', draw.obj_image('floor2',(640,self.yground+90),path='premade') )
         # self.staticactor.addpart( 'sun', draw.obj_image('sun',(640,280),scale=0.4) )
         # hero
-        if not self.heroisangry:
-            self.hero.addpart( 'stand_right', draw.obj_image('herobase',(340,self.yground),scale=0.35) )
-            self.hero.addpart( 'stand_left', draw.obj_image('herobase',(340,self.yground),scale=0.35,fliph=True) )
-            self.hero.addpart( 'hurt', draw.obj_image('herobase',(340,self.yground+70),scale=0.35,rotate=90) )
-        else:
-            self.hero.addpart( 'stand_right', draw.obj_image('herobaseangry',(340,self.yground),scale=0.35) )
-            self.hero.addpart( 'stand_left', draw.obj_image('herobaseangry',(340,self.yground),scale=0.35,fliph=True) )
-            self.hero.addpart( 'hurt', draw.obj_image('herobaseangry',(340,self.yground+70),scale=0.35,rotate=90) )
+        self.hero.addpart( 'stand_right', draw.obj_image('herobase',(340,self.yground),scale=0.35) )
+        self.hero.addpart( 'stand_left', draw.obj_image('herobase',(340,self.yground),scale=0.35,fliph=True) )
+        self.hero.addpart( 'hurt', draw.obj_image('herobase',(340,self.yground+70),scale=0.35,rotate=90) )
+        self.hero.addpart( 'jump_right', draw.obj_image('herokick',(340,self.yground),scale=0.35) )
+        self.hero.addpart( 'jump_left', draw.obj_image('herokick',(340,self.yground),scale=0.35,fliph=True) )
         self.hero.addpart( 'hurttext', draw.obj_textbox('ouch!',(340,self.yground-120),scale=1) )
         self.hero.dict['stand_right'].show=True
         self.hero.dict['stand_left'].show=False
+        self.hero.dict['jump_right'].show=False
+        self.hero.dict['jump_left'].show=False
         self.hero.dict['hurt'].show=False
         self.hero.dict['hurttext'].show=False
         self.heromayjump=True# hero can jump (not if in the air)
         self.heromayholdjump=False# hero can hold to jump higher
+        self.herojumping=False# hero is jumping or not
         self.herohurt=False# hurting state or not
-        self.herohurttimer=tool.obj_timer(40)# how long hero is hurting. Make it just >kicking time,<rest+stand time
+        self.herohurttimer=tool.obj_timer(150)# how long hero is hurting (make it longer then hero down)
+        self.herodown=False# hero is down
+        self.herodowntimer=tool.obj_timer(40)# how long hero is down
+        # self.heroinvultimer=tool.obj_timer(40)# how long
         self.herov=0#total velocity
         self.herovj=0# added velocity from jump (changes during jump)
         self.heroivj=4# initial velocity from jump (when starting jump)
@@ -2272,7 +2287,10 @@ class obj_world_stompfight(obj_world):
         self.villainhitbox2.rx=50
         self.villainhitbox2.ry=70
         # health bar hero
-        self.ybar=200# for health bars and text
+        if self.dotutorial:
+            self.ybar=200# for health bars and text
+        else:
+            self.ybar=50
         self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360))
@@ -2284,7 +2302,7 @@ class obj_world_stompfight(obj_world):
         for i in range(self.maxherohealth):
             self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
         # health bar villain
-        self.maxvillainhealth=3# starting villain health
+        self.maxvillainhealth=5# starting villain health
         self.villainhealth=self.maxvillainhealth# updated one
         self.vealthbar=obj_grandactor(self,(640,360))
 
@@ -2296,20 +2314,36 @@ class obj_world_stompfight(obj_world):
             self.vealthbar.addpart('heartscar_'+str(i), draw.obj_image('scar',(1280-150-i*75,self.ybar),scale=0.125) )
         # text
         self.text_undone.addpart( 'text1', \
-        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move and jump]',(640,self.ybar),color=share.colors.instructions) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,self.ybar)) )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),scale=1.5) )
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move/jump]',(640,self.ybar),color=share.colors.instructions) )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,360),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('You are Dead',(640,360),fontsize='huge') )
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
         self.timerendloose=tool.obj_timer(120)# goal to done
+        # audio
+        self.soundjump=draw.obj_sound('stomp_jump')
+        self.creator.addpart(self.soundjump)
+        self.soundhit=draw.obj_sound('stomp_hit')
+        self.creator.addpart(self.soundhit)
+        self.soundstrike=draw.obj_sound('stomp_strike')
+        self.creator.addpart(self.soundstrike)
+        self.soundwin=draw.obj_sound('stomp_win')
+        self.creator.addpart(self.soundwin)
+        self.sounddie=draw.obj_sound('stomp_die')
+        self.creator.addpart(self.sounddie)
+        self.soundvillainkick=draw.obj_sound('stomp_villainkick')
+        self.creator.addpart(self.soundvillainkick)
+
     def update(self,controls):
         super().update(controls)
         if not self.goal:
             # goal unreached state
             #
-            if not self.herohurt:
+            if not self.herodown:
                 # hero dynamics y
                 if self.heromayjump and (controls.gu and controls.guc):# start jump (click button)
+                    self.herojumping=True
+                    self.soundjump.play()
                     self.herov=0# reset velocity
                     self.herovj=self.heroivj# reset jump velocity
                     self.heromayjump=False# cant jump again
@@ -2321,7 +2355,6 @@ class obj_world_stompfight(obj_world):
                     self.heroholdjumptimer.update()
                     if self.heroholdjumptimer.ring:
                         self.heromayholdjump=False
-
                 # hero dynamics x
                 if controls.gl:#
                     self.hero.movex(-self.heromx)
@@ -2338,18 +2371,24 @@ class obj_world_stompfight(obj_world):
                         self.hero.dict['hurt'].show=False
                         self.hero.dict['hurttext'].show=False
             else:
-                self.herohurttimer.update()
-                if self.herohurttimer.ring:
-                    self.herohurt=False
+                # hero is down
+                self.herodowntimer.update()
+                if self.herodowntimer.ring:
+                    self.herodown=False
                     self.hero.dict['stand_right'].show=True
                     self.hero.dict['stand_left'].show=False
                     self.hero.dict['hurt'].show=False
                     self.hero.dict['hurttext'].show=False
+            if self.herohurt:# hero is hurt (and invincible temporarily)
+                self.herohurttimer.update()
+                if self.herohurttimer.ring:
+                    self.herohurt=False
 
             # fall (even if hurt)
             self.herov += self.herovg# gravity
             self.hero.movey(self.herov)# dty=v (dt=1)
             if self.hero.y>self.yground:# hero is on ground
+                self.herojumping=False
                 self.hero.movetoy(self.yground)
                 self.herov = 0# just stall
                 self.heromayjump=True# may jump from ground again
@@ -2497,9 +2536,11 @@ class obj_world_stompfight(obj_world):
                         if not self.dotutorial:# cant loose health on tutorial
                             self.herohealth -= 1
                         if self.herohealth>0:
+                            self.soundhit.play()
                             if self.herohealth<self.maxherohealth:
                                 self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                             self.herohurt=True
+                            self.herodown=True
                             self.hero.movetoy(self.yground)# put hero to ground
                             self.herov = 0# just stall
                             self.heromayjump=True# may jump from ground again
@@ -2508,7 +2549,10 @@ class obj_world_stompfight(obj_world):
                             self.hero.dict['hurt'].show=True
                             self.hero.dict['hurttext'].show=True
                             self.herohurttimer.start()
+                            self.herodowntimer.start()
+                            self.herojumping=False
                         else:# dead hero
+                            self.sounddie.play()
                             self.healthbar.dict['heart_'+str(self.herohealth)].show=False
                             self.goal=True
                             self.win=False
@@ -2519,10 +2563,12 @@ class obj_world_stompfight(obj_world):
                             self.hero.dict['stand_left'].show=False
                             self.hero.dict['hurt'].show=True
                             self.hero.dict['hurttext'].show=False
+                            self.herojumping=False
                 #
                 # hero hits the villain (only state rest)
                 else:
                     if tool.checkrectcollide(self.villainhitbox1,self.herohitbox2):# hero hits villain
+                        self.soundstrike.play()
                         if not self.dotutorial:# cant loose health on tutorial
                             self.villainhealth -= 1
                         if self.villainhealth>0:
@@ -2550,6 +2596,7 @@ class obj_world_stompfight(obj_world):
                             self.goal=True
                             self.win=True
                             self.timerendwin.start()
+                            self.soundwin.play()
                             self.text_undone.show=False
                             self.text_donewin.show=True
                             self.villain.dict['stand_right'].show=False
@@ -2564,6 +2611,7 @@ class obj_world_stompfight(obj_world):
                                 self.villain.dict['partnerkick_right'].show=False
                                 self.villain.dict['partnerkick_left'].show=False
                                 self.villain.dict['partnerhurt'].show=True
+                            self.herojumping=False
         #
         else:
             # goal reached state
@@ -2575,7 +2623,13 @@ class obj_world_stompfight(obj_world):
                 self.timerendloose.update()
                 if self.timerendloose.ring:
                     self.done=True# end of minigame
-
+            #
+            # hero fall (even if already dead/won)
+            self.herov += self.herovg# gravity
+            self.hero.movey(self.herov)# dty=v (dt=1)
+            if self.hero.y>self.yground:# hero is on ground
+                self.hero.movetoy(self.yground)
+                self.herov = 0# just stall
 
 ####################################################################################################################
 

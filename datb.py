@@ -50,6 +50,7 @@ class obj_musics:
         self.dict['ch2']=( 'ch2/POL-pet-park-short.ogg' , 0.2 )
         # ch3
         self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )
+        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )# replace with villain
         self.dict['fight1']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )# dodge bullets
         self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.ogg' , 0.2 )
         self.dict['bug']=( 'ch3/POL-bomb-carrier-short.ogg' , 0.2 )
@@ -61,17 +62,17 @@ class obj_musics:
         self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.ogg' , 0.2 )# rps game
         self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )
         # ch6
-        # self.dict['ch6']=( 'ch6/POL-treasure-match-short.ogg' , 0.2 )# second choice
         self.dict['ch6']=( 'ch6/POL-jazzy-duck-short.ogg' , 0.2 )# could use for ch7 instead
         self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
-        #
         self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game
         self.dict['race1']=( 'ch6/POL-tlalok-temple-short.ogg' , 0.2 )# ride cow game
-        # self.dict['ch6play']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
+        # ch7
+        self.dict['ch7']=( 'ch7/POL-galactic-trek-short.ogg' , 0.2 )
+        self.dict['fight2']=( 'ch7/POL-power-battle-short.ogg' , 0.2 )# stomp
+        self.dict['win']=( 'ch7/POL-gold-gryphons-short.ogg' , 0.2 )
 
-        # others
-        #
-        # general
+        # ch8
+
 
 
 # sounds database
@@ -94,12 +95,12 @@ class obj_sounds:
         #
         # draw functions (draw, enter text, etc)
         self.dict['drawstart']=( 'draw/pen1.ogg' , 0.2 )# when draws (looped)
-        self.dict['drawerase']=( 'draw/bookFlip2.ogg' , 1 )# erase
+        self.dict['drawerase']=( 'draw/bookFlip2a.ogg' , 1 )# erase
         self.dict['pen']=( 'draw/pen2.ogg' , 1 )# pen character
-        self.dict['eraser']=( 'draw/bookFlip2.ogg' , 1 )# eraser character
-        self.dict['textchoicego']=( 'draw/bookFlip3.ogg' , 0.5 )# change a textchoice
+        self.dict['eraser']=( 'draw/bookFlip2a.ogg' , 1 )# eraser character
+        self.dict['textchoicego']=( 'draw/bookFlip3a.ogg' , 0.5 )# change a textchoice
         self.dict['textinputkeyboard']=( 'draw/click_002.ogg' , 1 )# keyboard sound when entering text
-        self.dict['textinputedit']=( 'draw/bookFlip3.ogg' , 1 )# when entering edit mode
+        self.dict['textinputedit']=( 'draw/bookFlip3a.ogg' , 1 )# when entering edit mode
         self.dict['textinputdone']=( 'draw/maximize_006.ogg' , 0.5 )# when exiting edit mode
         #
         ### SPECIFIC TO CHAPTERS/CHARACTERS
@@ -220,13 +221,14 @@ class obj_sounds:
         self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.ogg' , 1 )
         self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.ogg' , 1 )
         self.dict['travel_choplast']=( 'world/travel/Cure.ogg' , 1 )
+        self.dict['travel_enter']=( 'world/travel/1up 3 - Sound effects Pack 2.ogg' , 1 )
         # dodgebullets
         self.dict['dodgebullets_start']=( 'world/dodgebullets/fight_lowreverb.wav' , 1 )
         self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.ogg' , 0.5 )
         self.dict['dodgebullets_hit']=( 'world/dodgebullets/die_02.ogg' , 1 )
         self.dict['dodgebullets_die']=( 'world/dodgebullets/die_04.ogg' , 1 )
         self.dict['dodgebullets_win']=( 'world/dodgebullets/cheer1.ogg' , 0.5 )
-        self.dict['dodgebullets_jump']=( 'world/dodgebullets/sfx_movement_jump13.wav' , 0.5 )
+        self.dict['dodgebullets_jump']=( 'world/dodgebullets/sfx_movement_jump13.wav' , 0.3 )
         self.dict['dodgebullets_crouch']=( 'world/dodgebullets/swish-9.wav' , 0.5 )
         # climb
         self.dict['climb_jump']=( 'world/climb/sfx_movement_jump13.wav' , 0.3 )
@@ -256,6 +258,13 @@ class obj_sounds:
         self.dict['ridecow_die']=( 'world/ridecow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
         self.dict['ridecow_win']=( 'world/ridecow/cheer1.ogg' , 0.5 )
         self.dict['ridecow_start']=( 'world/ridecow/fight_lowreverb.wav' , 1 )
+        # stomp
+        self.dict['stomp_jump']=( 'world/stomp/sfx_movement_jump13.wav' , 0.3 )
+        self.dict['stomp_hit']=( 'world/stomp/die_02.ogg', 1 )
+        self.dict['stomp_die']=( 'world/stomp/die_04.ogg', 1 )
+        self.dict['stomp_strike']=( 'world/stomp/Death1.ogg', 1 )
+        self.dict['stomp_win']=( 'world/stomp/cheer1.ogg', 0.5 )
+        self.dict['stomp_villainkick']=( 'world/stomp/swish-9.wav', 1 )
 
 
 

@@ -71,11 +71,14 @@ class obj_scene_ch5p1(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark2','bunnyhead',(640,360),record=False,sync=animation1) )
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4') )
+        animation1.addsound( "bunny2", [40],skip=1 )
+        #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch5p2(page.obj_chapterpage):
     def prevpage(self):
@@ -100,7 +103,7 @@ class obj_scene_ch5p2(page.obj_chapterpage):
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116],skip=1 )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 
@@ -1231,10 +1234,6 @@ class obj_scene_ch5p37(page.obj_chapterpage):
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
-        animation1.addsound( "elder2", [200], skip=1 )
-        animation1.addsound( "elder3", [36] )
         #
         self.addpart( draw.obj_music('winds') )
 

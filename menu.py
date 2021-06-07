@@ -39,11 +39,14 @@ class obj_quickscene():
         #
         # quickscene=ch1.obj_scene_ch1play1()
         # quickscene=ch2.obj_scene_ch2p1()
-        # quickscene=ch3.obj_scene_ch3p1()
-        # quickscene=ch4.obj_scene_ch4p1()
+        # quickscene=ch3.obj_scene_ch3p22()
+        # quickscene=ch3.obj_scene_ch3p22easteregg()
+        # quickscene=ch4.obj_scene_ch4p21()
         # quickscene=ch5.obj_scene_ch5p1()
-        quickscene=ch6.obj_scene_ch6p43()
-        # quickscene=ch7.obj_scene_ch7p1()
+        # quickscene=ch5.obj_scene_ch5p39()
+        # quickscene=ch6.obj_scene_ch6p2()
+        # quickscene=ch6.obj_scene_ch6p47()
+        quickscene=ch7.obj_scene_ch7p24()
         # quickscene=ch8.obj_scene_ch8roam()
         #
         share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)

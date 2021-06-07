@@ -81,11 +81,7 @@ class obj_scene_ch4p1(page.obj_chapterpage):
         animation1.addsound( "villain3", [155] )
         animation1.addsound( "partner_scared", [228] )
         #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch4p2(page.obj_chapterpage):
     def prevpage(self):
@@ -109,7 +105,7 @@ class obj_scene_ch4p2(page.obj_chapterpage):
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116],skip=1 )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch4p2a(page.obj_chapterpage):
@@ -130,7 +126,7 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
         self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
         self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
         #
-        self.addpart( draw.obj_music('ch4') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch4p3(page.obj_chapterpage):
@@ -324,10 +320,8 @@ class obj_scene_ch4p11(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"Arrived at the ',('magical cave',share.colors.location2),', ',\
-                ('{heroname}',share.colors.hero),' met a curious character. ',\
-                'It was an extremely cute ',('bunny',share.colors.bunny),'". ',\
-                'Well, there has never absolutely ever been anything wrong with bunnies in caves, ',\
-                'said the book of things. ',\
+                ('{heroname}',share.colors.hero),\
+                ' met an extremely cute ',('bunny',share.colors.bunny),'". ',\
                 'Go on, draw the ',('bunny',share.colors.bunny),'\'s head. ',\
                    ]
         self.textkeys={'pos':(50,200),'xmax':720}
