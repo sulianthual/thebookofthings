@@ -67,10 +67,9 @@ class obj_scene_testmenu(page.obj_page):
 
     def loadtests(self):# load all tests
         # developper
-        self.list.append(obj_scene_alldrawings())
-        # developper
         self.list.append(obj_scene_testmessage())
         self.list.append(obj_scene_testdevnotes())
+        self.list.append(obj_scene_testdevnotesfiles())
         self.list.append(obj_scene_testdevmodeinfo())
         # page
         self.list.append(obj_scene_testpagefunctions())
@@ -102,8 +101,9 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testmusic())
         self.list.append(obj_scene_testsounds())
         self.list.append(obj_scene_testsoundplacer())
-        # draft
-        self.list.append(obj_scene_testothers())
+        # drafts
+        self.list.append(obj_scene_alldrawings())
+        self.list.append(obj_scene_testdrafting())
         #
         self.listlen=len(self.list)
 
@@ -136,38 +136,7 @@ class obj_testpage(page.obj_chapterpage):
 #########################################################################
 # All Tests Here
 
-class obj_scene_alldrawings(obj_testpage):
-    def pagename(self):
-        return 'All Drawings'
-    def setup(self):
-        y1=50
-        dy1=100
-        x1=50
-        dx1=100
-        ss=0.2
-        for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        y1+=dy1
-        for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','pond','bush','flower']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        y1+=dy1
-        for c,value in enumerate(['villainhead','gun','bullet','castle','mountain','bug']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        y1+=dy1
-        for c,value in enumerate(['bunnyhead','nightstand','alarmclock8am','cave','tree']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        y1+=dy1
-        for c,value in enumerate(['elderhead','cloud','lightningbolt','rock','paper','scissors']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        y1+=dy1
-        for c,value in enumerate(['sailorhead','skeletonhead','cow','sailboat','palmtree','wave']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        y1+=dy1
-        for c,value in enumerate(['cake']):
-            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
-        # y1+=dy1
-        # for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
-        #     self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+
 
 
 class obj_scene_testmessage(obj_testpage):
@@ -184,25 +153,66 @@ class obj_scene_testmessage(obj_testpage):
 
 class obj_scene_testdevnotes(obj_testpage):
     def pagename(self):
-        return 'Developper Notes'
+        return 'Code Architecture'
     def setup(self):
-        self.text=['Developper Notes: ',\
-                   ('\n\nFile Structure: ',share.colors.red),\
-                    'main=execute program. ',\
-                    'share=store global variables. ',\
-                    'core=game engine (all pygame elements there)',\
-                    'tool=basic functions (link external libraries there like math,os...). ',\
-                    'page=elements that build a page in the book. ',\
-                    'draw=draws that can be displayed on a page. ',\
-                    '(drawing, textinput, textchoice, textbox, image, animation, dispgroup). ',\
-                    'world=worlds that can be displayed on a page (and their rules). ',\
-                    'actor=actors that can be added to worlds. ',\
-                    'menu=main menus pages. ',\
-                    'ch0,ch1,ch2...=book chapters pages. ',\
-                    'tests=developper tests menu and pages. ',\
+        self.text=['Code Architecture: ',\
+                    ('()=files imported by this file. ',share.colors.darkgreen),\
+                    ('**=share, page, draw, world, tool. ',share.colors.darkgreen),\
+                    #
+                    '\n\n ',('Top: ',share.colors.red),\
+                    ('main.py',share.colors.blue),(' (share)',share.colors.darkgreen),\
+                    '=runs main loop. ',\
+                    ('share.py',share.colors.blue),(' (core, datb, menu)',share.colors.darkgreen),\
+                    '=defines and stores shared content',\
+                    ' (global variables, instances of main game objects). ',\
+                    #
+                    '\n\n ',('Modules: ',share.colors.red),\
+                    ' these only hold classes/functions. ',\
+                    ('page.py',share.colors.blue),(' (share, draw, tool)',share.colors.darkgreen),\
+                    '=base structure for any page (or scene) in the game. ',\
+                    ('draw.py',share.colors.blue),(' (share, core, tool)',share.colors.darkgreen),\
+                    '=elements that can be added to a page',\
+                    ' (text, image, animations, music, sounds...). ',\
+                    ('core.py',share.colors.blue),(' (share, tool, pygame)',share.colors.darkgreen),\
+                    '=game engine (manages display, audio, controls, sprites and switches scenes). ',\
+                    'edit pygame handling here (e.g., dirtysprites, etc). ',\
+                    ('tool.py',share.colors.blue),(' (external only)',share.colors.darkgreen),\
+                    '=all external modules (math,os...) linked here. ',\
+                    #
+                    '\n\n ',('Content: ',share.colors.red),\
+                    ' these only hold classes/functions. ',\
+                    ('menu.py',share.colors.blue),(' (**,ch0,ch1..., test)',share.colors.darkgreen),\
+                    '=main menu, settings pages. ',\
+                    ('ch0.py,ch1...',share.colors.blue),(' (**)',share.colors.darkgreen),\
+                    '=book chapters pages. ',\
+                    ('tests.py',share.colors.blue),(' (**)',share.colors.darkgreen),\
+                    '=developper tests pages. ',\
+                    ('world.py',share.colors.blue),(' (share, draw, core, tool)',share.colors.darkgreen),\
+                    '=worlds that can be displayed on a page (e.g. minigames). ',\
+                    ('datb.py',share.colors.blue),(' (draw, core, tool)',share.colors.darkgreen),\
+                    '=handles data. ',\
                    ]
 
+class obj_scene_testdevnotesfiles(obj_testpage):
+    def pagename(self):
+        return 'File Architecture'
+    def setup(self):
+        self.text=['File Architecture: ',\
+                    '\n ',\
+                    '\n ',('./',share.colors.blue),' = all code (.py), LICENSE, README.md (with screenshot.png),   ',\
+                    '\n ',('animations/',share.colors.blue),' = all game animations (text files).  ',\
+                    '\n ',('book/',share.colors.blue),' = all player saved data (drawings .png, settings.txt, progress.txt, words.txt ). ',\
+                    'can be shared (by replacing same folder on other computer). ',\
+                    'erases when book is deleted. ',\
+                    '\n ',('data/',share.colors.blue),' = some game data (fonts .ttf, .png for window icon, brushes, error image, also stores .xcf).  ',\
+                    '\n ',('musics/',share.colors.blue),' = all game musics (prefer .ogg, maybe .wav, but .mp3 wont work with pygame 2.0).  ',\
+                    '\n ',('premade/',share.colors.blue),' = all premade drawings (.png).  ',\
+                    '\n ',('shadows/',share.colors.blue),' = premade shadows used for drawings (.png, also stores .xcf).  ',\
+                    'these are image layers (e.g. gray or white surfaces) that are added to some drawings. ',\
+                    '\n ',('sounds/',share.colors.blue),' = all game sounds (prefer .ogg, maybe .wav, but .mp3 wont work with pygame 2.0).  ',\
+                    '\n ',('.git, .gitignore',share.colors.blue),' = dont remove, used for version control with git.  ',\
 
+                   ]
 
 class obj_scene_testdevmodeinfo(obj_testpage):
     def pagename(self):
@@ -835,7 +845,41 @@ class obj_scene_testsoundplacer(obj_testpage):
         # animation.addsound( "test3c", [101] )
 
 
-class obj_scene_testothers(obj_testpage):
+class obj_scene_alldrawings(obj_testpage):
+    def pagename(self):
+        return 'All Drawings'
+    def setup(self):
+        y1=50
+        dy1=100
+        x1=50
+        dx1=100
+        ss=0.2
+        for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','pond','bush','flower']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['villainhead','gun','bullet','castle','mountain','bug']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['bunnyhead','nightstand','alarmclock8am','cave','tree']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['elderhead','cloud','lightningbolt','rock','paper','scissors']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['sailorhead','skeletonhead','cow','sailboat','palmtree','wave']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        y1+=dy1
+        for c,value in enumerate(['cake']):
+            self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+        # y1+=dy1
+        # for c,value in enumerate(['partyhat','drink','coffeecup','flowervase','flame']):
+        #     self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
+
+
+class obj_scene_testdrafting(obj_testpage):
     def pagename(self):
         return 'Drafting Board'
     def setup(self):

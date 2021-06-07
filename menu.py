@@ -13,10 +13,10 @@
 
 #
 import share
-import tool
-import draw
 import page
+import draw
 import world
+import tool
 #
 import tests
 import ch0
@@ -37,20 +37,31 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        # quickscene=ch1.obj_scene_ch1play1()
-        # quickscene=ch2.obj_scene_ch2p1()
-        # quickscene=ch3.obj_scene_ch3p20()
-        # quickscene=ch3.obj_scene_ch3p22easteregg()
-        # quickscene=ch4.obj_scene_ch4p21()
-        # quickscene=ch5.obj_scene_ch5p1()
-        # quickscene=ch5.obj_scene_ch5p39()
-        # quickscene=ch6.obj_scene_ch6p2()
-        # quickscene=ch6.obj_scene_ch6p47()
-        quickscene=ch7.obj_scene_ch7p41()
-        # quickscene=ch8.obj_scene_ch8roam()
-        #
-        share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)
-        # share.scenemanager.switchscene(quickscene,initstart=True)# must initstart if a testpage
+        # if True :
+        if False :
+            # regular scenes
+            #
+            # quickscene=ch1.obj_scene_ch1play1()
+            # quickscene=ch2.obj_scene_ch2p1()
+            # quickscene=ch3.obj_scene_ch3p20()
+            # quickscene=ch3.obj_scene_ch3p22easteregg()
+            # quickscene=ch4.obj_scene_ch4p21()
+            # quickscene=ch5.obj_scene_ch5p1()
+            # quickscene=ch5.obj_scene_ch5p39()
+            # quickscene=ch6.obj_scene_ch6p2()
+            # quickscene=ch6.obj_scene_ch6p47()
+            quickscene=ch7.obj_scene_ch7p41()
+            # quickscene=ch8.obj_scene_ch8roam()
+            #
+            #
+            share.scenemanager.switchscene(quickscene)# (must not initstart if has looped sounds)
+        else:
+            # test scenes (must initstart because are inventoried)
+            # quickscene=tests.obj_scene_testdevnotes()
+            quickscene=tests.obj_scene_testdevnotesfiles()
+            #
+            #
+            share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)
 
 
 
