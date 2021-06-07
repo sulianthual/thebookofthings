@@ -878,7 +878,6 @@ class obj_scene_ch8east(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch4play') )
 
 
-
 class obj_scene_ch8eastreplay(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
@@ -1104,9 +1103,16 @@ class obj_scene_ch8south(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailboat',(163,415),scale=0.53,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(77,580),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(282,567),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640+50,360+100),record=False)
         self.addpart(animation1)
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5') )
+        animation1.addsound( "sailor2", [169] )
+        animation1.addsound( "sailor4", [110] )
+        animation1.addsound( "sailor5", [32],skip=1 )
+        #
+        self.addpart( draw.obj_music('sailor') )
 
 
 class obj_scene_ch8southride(page.obj_chapterpage):
@@ -1117,11 +1123,12 @@ class obj_scene_ch8southride(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
-        self.text=[\
-                '"Make it to the boat".',\
-                   ]
+        self.text=[]
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('race1') )
+
 
 class obj_scene_ch8southreplay(page.obj_chapterpage):
     def prevpage(self):
@@ -1145,9 +1152,18 @@ class obj_scene_ch8southreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailboat',(163,415),scale=0.53,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(77,580),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(282,567),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640+50,360+100),record=False)
         self.addpart(animation1)
+        animation2=draw.obj_animation('ch6sailortalks3love','cow',(640,360),record=False,sync=animation1)
+        self.addpart(animation2)
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5','cow') )
+        animation1.addsound( "sailor4", [40] )
+        animation1.addsound( "cow", [110],skip=1 )
+        #
+        self.addpart( draw.obj_music('sailor') )
+
 
 class obj_scene_ch8southbye(page.obj_chapterpage):
     def prevpage(self):
@@ -1164,9 +1180,16 @@ class obj_scene_ch8southbye(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailboat',(163,415),scale=0.53,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(77,580),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('wave',(282,567),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cow',(1073,624),scale=0.46,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch6sailortalks3','sailorbase',(640+50,360+100),record=False)
         self.addpart(animation1)
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5') )
+        animation1.addsound( "sailor2", [41, 153] )
+        animation1.addsound( "sailor4", [261] )
+        #
+        self.addpart( draw.obj_music('sailor') )
+
 
 ###########
 # skull island
@@ -1177,7 +1200,7 @@ class obj_scene_ch8island(page.obj_chapterpage):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
         else:
-            share.scenemanager.switchscene(obj_scene_ch8roam(start='island'))
+            share.scenemanager.switchscene(obj_scene_ch8islandbye())
     def setup(self):
         self.text=[\
                 '"',\
@@ -1202,6 +1225,13 @@ class obj_scene_ch8island(page.obj_chapterpage):
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch6_skullobserve3','moon',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero1", [15] )
+        animation1.addsound( "hero3", [50],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch8islandsneak(page.obj_chapterpage):
     def prevpage(self):
@@ -1217,6 +1247,8 @@ class obj_scene_ch8islandsneak(page.obj_chapterpage):
        self.text=['Start Sneaking']
        self.world=world.obj_world_bushstealth0(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch8islandsneak1(page.obj_chapterpage):
@@ -1233,6 +1265,9 @@ class obj_scene_ch8islandsneak1(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch8islandsneak2(page.obj_chapterpage):
     def prevpage(self):
@@ -1248,6 +1283,9 @@ class obj_scene_ch8islandsneak2(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth2(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch8islandsneak3(page.obj_chapterpage):
     def prevpage(self):
@@ -1263,6 +1301,9 @@ class obj_scene_ch8islandsneak3(page.obj_chapterpage):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth3(self)
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
+
 
 class obj_scene_ch8islandsneak4(page.obj_chapterpage):
     def prevpage(self):
@@ -1276,8 +1317,10 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
-       self.world=world.obj_world_bushstealth4(self)
+       self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')
        self.addpart(self.world)
+       #
+       self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch8islandreplay(page.obj_chapterpage):
@@ -1287,10 +1330,10 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
         else:
-            share.scenemanager.switchscene(obj_scene_ch8roam(start='island'))
+            share.scenemanager.switchscene(obj_scene_ch8islandbye())
     def setup(self):
         self.text=[\
-                '"That was nice. Do you want to play again".',\
+                '"That was fun. Do you want to play again".',\
                    ]
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
@@ -1311,7 +1354,48 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch6_skullobserve3','moon',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero3", [15] )
+        animation1.addsound( "hero5", [80],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
+
+class obj_scene_ch8islandbye(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='beach'))
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='island'))
+    def setup(self):
+        self.text=[\
+                '"Alright, bye".',\
+                   ]
+        y1=200
+        textchoice=draw.obj_textchoice('yesno',default='no')
+        textchoice.addchoice('1. Yes','yes',(450,y1))
+        textchoice.addchoice('2. No','no',(660,y1))
+        self.addpart( textchoice )
+        #
+        self.addpart( draw.obj_image('mountain',(1169,276),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(940,566),scale=0.6,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(707,467),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(1203,556),scale=0.41,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('herobase',(384,703),scale=1.02,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(130,549),scale=0.67,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(348,320),scale=0.46,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch6_skullobserve1','skeletonbase_sailorhat',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch6_skullobserve2','skeletonbase',(640,360),record=False,sync=animation1)
+        self.addpart( animation2 )
+        animation3=draw.obj_animation('ch6_skullobserve3','moon',(640,360),record=False,sync=animation1)
+        self.addpart( animation3 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero1", [30] )
+        animation1.addsound( "hero2", [100],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 #################################################################
 #################################################################
