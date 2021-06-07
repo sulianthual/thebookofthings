@@ -1305,6 +1305,10 @@ class obj_scene_ch7p38(page.obj_chapterpage):
         animation2=draw.obj_animation('ch7_knockondoor','interrogationmark',(840,360),record=False,sync=animation1,path='premade')
         self.addpart(animation2)
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero_what','wakeup_wake1','villain_bangdoor') )
+        animation1.addsound( "hero_what", [321] )
+        animation1.addsound( "villain_bangdoor", [43, 61, 81, 203, 221, 241],skip=1 )
+        #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
@@ -1332,6 +1336,11 @@ class obj_scene_ch7p39(page.obj_chapterpage):
         animation2=draw.obj_animation('ch7_knockondoor2aa','interrogationmark',(840,360),record=False,sync=animation1,path='premade')
         animation2.addimage('empty',path='premade')
         self.addpart(animation2)
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero_what','wakeup_wake1','villain_bangdoor') )
+        animation1.addsound( "wakeup_wake1", [27] )
+        animation1.addsound( "hero_what", [159] )
+        animation1.addsound( "villain_bangdoor", [43, 61, 81],skip=1 )
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -1365,7 +1374,10 @@ class obj_scene_ch7p40(page.obj_chapterpage):
         animation1=draw.obj_animation('ch7_villainsays1','villainbase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        self.addpart( draw.obj_music('villain') )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
+        animation1.addsound( "villain1", [36] )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p41(page.obj_chapterpage):
@@ -1379,6 +1391,7 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         animation1=draw.obj_animation('ch7_villainmech_assemble1','villainbase',(640,360),record=False)
         animation1.addimage('villainmecharmature')
         self.addpart( animation1 )
+
         animation2=draw.obj_animation('ch7_villainmech_assemble_larm','gun',(640,360),record=False)
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
@@ -1401,7 +1414,13 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         animation8.addimage('empty',path='premade')
         self.addpart( animation8 )
         #
-        self.addpart( draw.obj_music('villain') )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_transform1','mech_transform2') )
+        animation8.addsound( "villain1", [2] )
+        animation8.addsound( "mech_transform1", [70] )
+        animation8.addsound( "mech_transform2", [170] )
+        animation8.addsound( "villain2", [270],skip=1 )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p42(page.obj_chapterpage):
@@ -1429,7 +1448,7 @@ class obj_scene_ch7p42(page.obj_chapterpage):
         animation3=draw.obj_animation('ch7_villainmech_grow3','moon',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
         #
-        self.addpart( draw.obj_music('villain') )
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p43(page.obj_chapterpage):
@@ -1451,7 +1470,7 @@ class obj_scene_ch7p43(page.obj_chapterpage):
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        self.addpart( draw.obj_music('villain') )
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p44(page.obj_chapterpage):
@@ -1485,6 +1504,8 @@ class obj_scene_ch7p44(page.obj_chapterpage):
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p45(page.obj_chapterpage):
@@ -1520,6 +1541,8 @@ class obj_scene_ch7p45(page.obj_chapterpage):
         animation8=draw.obj_animation('ch7_villainmech_assemble_tpp','house',(640,360),record=False)
         animation8.addimage('empty',path='premade')
         self.addpart( animation8 )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p46(page.obj_chapterpage):
@@ -1538,6 +1561,8 @@ class obj_scene_ch7p46(page.obj_chapterpage):
         # self.addpart( draw.obj_image('heromechbase',(303,412),scale=0.81,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_heromech_expand','heromechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p47(page.obj_chapterpage):
@@ -1557,6 +1582,8 @@ class obj_scene_ch7p47(page.obj_chapterpage):
         # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','cloud','moon') )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p48(page.obj_chapterpage):
@@ -1572,11 +1599,10 @@ class obj_scene_ch7p48(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_mechfight(self,tutorial=True)
         self.addpart(self.world)
-        if False:
-            self.addpart( draw.obj_image('mechfightcircle',(640,360),scale=0.75,path='premade') )
-            animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360),record=False,path='premade')
-            animation1.addimage('empty',path='premade')
-            self.addpart( animation1 )
+        #
+        self.addpart( draw.obj_music('fight3') )
+
+
 
 class obj_scene_ch7p49(page.obj_chapterpage):
     def prevpage(self):
@@ -1592,6 +1618,8 @@ class obj_scene_ch7p49(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch7p49death(page.obj_chapterpage):
@@ -1608,6 +1636,8 @@ class obj_scene_ch7p49death(page.obj_chapterpage):
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 
@@ -1639,6 +1669,8 @@ class obj_scene_ch7p50(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(820,300),record=False,sync=animation1) )
         self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(980,222),record=False,sync=animation1) )
         self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(1202,320),record=False,sync=animation1) )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch7p51(page.obj_chapterpage):
@@ -1665,6 +1697,8 @@ class obj_scene_ch7p51(page.obj_chapterpage):
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch7p52(page.obj_chapterpage):
@@ -1690,6 +1724,9 @@ class obj_scene_ch7p52(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7_endwobble5','herobase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch7p53(page.obj_chapterpage):
     def prevpage(self):
@@ -1701,6 +1738,8 @@ class obj_scene_ch7p53(page.obj_chapterpage):
             'Draw a ',('cake',share.colors.item),', said the book things. It is time to celebrate! ',\
                 ]
         self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200)) )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch7p54(page.obj_chapterpage):
@@ -1748,6 +1787,9 @@ class obj_scene_ch7p54(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch7p55(page.obj_chapterpage):
     def prevpage(self):
@@ -1793,6 +1835,8 @@ class obj_scene_ch7p55(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch7p56(page.obj_chapterpage):
@@ -1839,6 +1883,8 @@ class obj_scene_ch7p56(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(1107,59),scale=0.29,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1195,75),scale=0.16,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1015,178),scale=0.16,rotate=0,fliph=True,flipv=False) )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch7end(page.obj_chapterpage):

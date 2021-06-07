@@ -136,13 +136,13 @@ class obj_scene_ch3p3a(page.obj_chapterpage):
                    'Pretty scary! ',\
                    'Lets move on to the next step. ',\
                    ]
-        animation=draw.obj_animation('ch1_hero1','villainbase',(360,360),record=False)
-        self.addpart(animation)
+        animation1=draw.obj_animation('ch1_hero1','villainbase',(360,360),record=False)
+        self.addpart(animation1)
         #
-        # self.addpart( draw.obj_soundplacer(animation,'villain1','villain2','villain3','villain4') )
-        animation.addsound( "villain1", [5] )
-        animation.addsound( "villain2", [135] )
-        animation.addsound( "villain3", [85] )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
+        animation1.addsound( "villain1", [5] )
+        animation1.addsound( "villain2", [135] )
+        animation1.addsound( "villain3", [85] )
         #
         self.addpart( draw.obj_music('ch3') )
 

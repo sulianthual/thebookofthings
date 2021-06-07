@@ -70,7 +70,7 @@ class obj_musics:
         self.dict['ch7']=( 'ch7/POL-galactic-trek-short.ogg' , 0.2 )
         self.dict['fight2']=( 'ch7/POL-power-battle-short.ogg' , 0.2 )# stomp
         self.dict['win']=( 'ch7/POL-gold-gryphons-short.ogg' , 0.2 )
-
+        self.dict['fight3']=( 'ch7/POL-underground-army-short.ogg' , 0.2 )# mech
         # ch8
 
 
@@ -176,6 +176,9 @@ class obj_sounds:
         self.dict['skeleton4']=( 'skeleton/ghostshort1.wav' , 0.4 )
         self.dict['skeleton5']=( 'skeleton/ghost_scream1.wav' , 1 )
         self.dict['cow']=( 'cow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
+        # ch7
+        self.dict['hero_what']=( 'hero/what__confused-what_male.ogg' , 1 )
+        self.dict['villain_bangdoor']=( 'villain/wood_hit_09.ogg' , 1 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -267,6 +270,9 @@ class obj_sounds:
         self.dict['stomp_kick']=( 'world/stomp/swish-9.wav', 1 )
         self.dict['stomp_contact']=( 'world/stomp/Punch4.ogg', 1 )
         self.dict['stomp_start']=( 'world/stomp/fight_lowreverb.wav' , 1 )
+        # mech
+        self.dict['mech_transform1']=( 'world/mech/transformers-sound.ogg', 1 )
+        self.dict['mech_transform2']=( 'world/mech/transformers-sound_pitch2.ogg', 1 )
 
 
 

@@ -46,7 +46,7 @@ class obj_quickscene():
         # quickscene=ch5.obj_scene_ch5p39()
         # quickscene=ch6.obj_scene_ch6p2()
         # quickscene=ch6.obj_scene_ch6p47()
-        quickscene=ch7.obj_scene_ch7p33()
+        quickscene=ch7.obj_scene_ch7p41()
         # quickscene=ch8.obj_scene_ch8roam()
         #
         share.scenemanager.switchscene(quickscene)# must not inistart if not testpage (for looped sounds)
