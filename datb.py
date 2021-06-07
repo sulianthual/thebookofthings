@@ -497,9 +497,9 @@ class obj_datamanager:
         else:
             # default settings
             self.doazerty=False# qwerty keyboard
-            self.donative=True# 1280x720(native) or adapted resolution
-            self.domusic=False# music on/off
-            self.dosound=False# sound on/off
+            self.donative=True# 1280x720(native windowed) or adapted (fullscreen) resolution
+            self.domusic=True# music on/off
+            self.dosound=True# sound on/off
             self.devaccess=False# User has no dev access by default
             # write down default settings
             self.savesettings()
