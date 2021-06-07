@@ -1731,7 +1731,52 @@ class obj_world_travel(obj_world):
         if not self.goal:
             # goal unreached state
             # Hero motion
-            # Motion=sailing or not, walking or standing
+            if controls.gl:
+                if self.xhw>self.xhwmin:# boundary
+                    self.xhw -= self.heromx
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movex(self.heromx)
+                    for k in self.hitboxes:
+                        k.movex(self.heromx)
+                if controls.glc:
+                    self.herofaceright=False
+            if controls.gr:
+                if self.xhw<self.xhwmax:
+                    self.xhw += self.heromx
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movex(-self.heromx)
+                    for k in self.hitboxes:
+                        k.movex(-self.heromx)
+                    if controls.grc:
+                        self.herofaceright=True
+            if controls.gu:
+                if self.yhw>self.yhwmin:
+                    self.yhw -= self.heromy
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movey(self.heromy)
+                    for k in self.hitboxes:
+                        k.movey(self.heromy)
+            if controls.gd:
+                if self.yhw<self.yhwmax:
+                    self.yhw += self.heromy
+                    for j in self.panels:
+                        for i in j.dict.values():
+                            i.movey(-self.heromy)
+                    for k in self.hitboxes:
+                        k.movey(-self.heromy)
+            # tune the walking speed if diagonal:
+            if (controls.gu or controls.gd) and (controls.gl or controls.gr):
+                self.heromx=self.herospeed/tool.sqrt(2)
+                self.heromy=self.herospeed/tool.sqrt(2)
+            else:
+                self.heromx=self.herospeed# moving rate
+                self.heromy=self.herospeed# moving rate
+
+
+            # Images from state= sailing, walking or standing
             self.herosailing=self.yhw>1080+self.ybm+10 and not (self.xhw>680 and self.yhw>1910)# separation land and sea (beach + skull island)
             if self.herosailing:
                 self.herowalking=False
@@ -1772,58 +1817,14 @@ class obj_world_travel(obj_world):
                     self.hero.dict['walk_right'].show=False
                     self.hero.dict['walk_left'].show=False
                     self.herowalktimer.start()# reset timer for next walking
-
-            # partner visuals
+            # partner when walking
             if self.addpartner or self.addsailor:
                 self.hero.dict['pface_right'].show=self.hero.dict['face_right'].show
                 self.hero.dict['pface_left'].show=self.hero.dict['face_left'].show
                 self.hero.dict['pwalk_right'].show=self.hero.dict['walk_right'].show
                 self.hero.dict['pwalk_left'].show=self.hero.dict['walk_left'].show
-            # tune the walking speed if diagonal:
-            if (controls.gu or controls.gd) and (controls.gl or controls.gr):
-                self.heromx=self.herospeed/tool.sqrt(2)
-                self.heromy=self.herospeed/tool.sqrt(2)
-            else:
-                self.heromx=self.herospeed# moving rate
-                self.heromy=self.herospeed# moving rate
-
-            # move the world (not the hero!)
-            if controls.gl:
-                if self.xhw>self.xhwmin:# boundary
-                    self.xhw -= self.heromx
-                    for j in self.panels:
-                        for i in j.dict.values():
-                            i.movex(self.heromx)
-                    for k in self.hitboxes:
-                        k.movex(self.heromx)
-                if controls.glc:
-                    self.herofaceright=False
-            if controls.gr:
-                if self.xhw<self.xhwmax:
-                    self.xhw += self.heromx
-                    for j in self.panels:
-                        for i in j.dict.values():
-                            i.movex(-self.heromx)
-                    for k in self.hitboxes:
-                        k.movex(-self.heromx)
-                    if controls.grc:
-                        self.herofaceright=True
-            if controls.gu:
-                if self.yhw>self.yhwmin:
-                    self.yhw -= self.heromy
-                    for j in self.panels:
-                        for i in j.dict.values():
-                            i.movey(self.heromy)
-                    for k in self.hitboxes:
-                        k.movey(self.heromy)
-            if controls.gd:
-                if self.yhw<self.yhwmax:
-                    self.yhw += self.heromy
-                    for j in self.panels:
-                        for i in j.dict.values():
-                            i.movey(-self.heromy)
-                    for k in self.hitboxes:
-                        k.movey(-self.heromy)
+            #
+            ######################
             # goals
             if not self.minigame:# no minigame, just reach a point on map
                 self.reachgoal(controls)

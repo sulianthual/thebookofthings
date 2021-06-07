@@ -964,6 +964,10 @@ class obj_scene_testdrafting(obj_testpage):
         # animation1.addsound( "mech_stomp", [10] )
         # animation1.addsound( "mech_counter", [40] )# anomalies in mechfight_villaincountered.txt
         # animation1.addsound( "mech_strike", [40] )
+        #
+        # self.addpart(draw.obj_image('sailboat',(640,360),scale=0.25) )
+        # animation2=draw.obj_animation('travel_sails','sailboat',(640,360),record=True)
+        # self.addpart(animation2)
 
 
 

@@ -52,8 +52,8 @@ class obj_quickscene():
             # quickscene=ch6.obj_scene_ch6p47()
             # quickscene=ch7.obj_scene_ch7p52()
             # quickscene=ch7.obj_scene_ch7ending()
-            # quickscene=ch8.obj_scene_ch8roam()
-            quickscene=ch8.obj_scene_ch8island()
+            quickscene=ch8.obj_scene_ch8roam()
+            # quickscene=ch8.obj_scene_ch8island()
 
             #
             #
