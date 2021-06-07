@@ -107,7 +107,14 @@ class obj_scene_ch8home(page.obj_chapterpage):
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
         self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
         self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
-        self.addpart( draw.obj_animation('ch1_awaken','bug',(640+100,360),scale=0.7,imgscale=0.5) )
+        animation1=draw.obj_animation('ch1_awaken','bug',(640+100,360),scale=0.7,imgscale=0.5)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        animation1.addsound( "bug1", [47, 67],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8homesleep(page.obj_chapterpage):
     def prevpage(self):
@@ -120,6 +127,10 @@ class obj_scene_ch8homesleep(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
 
 class obj_scene_ch8homesleep2(page.obj_chapterpage):
     def prevpage(self):
@@ -130,8 +141,11 @@ class obj_scene_ch8homesleep2(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[]
-        self.world=world.obj_world_gotobed(self,bug=True,partner=True,alarmclock=True)
+        self.world=world.obj_world_gotobed(self,bug=True,alarmclock=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8homesleep3(page.obj_chapterpage):
     def prevpage(self):
@@ -144,6 +158,9 @@ class obj_scene_ch8homesleep3(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8homesleep4(page.obj_chapterpage):
     def prevpage(self):
@@ -154,8 +171,11 @@ class obj_scene_ch8homesleep4(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[]
-        self.world=world.obj_world_wakeup(self,bug=True,partner=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8homebye(page.obj_chapterpage):
     def triggerprevpage(self,controls):# (prefer over an empty prevpage)
@@ -170,7 +190,15 @@ class obj_scene_ch8homebye(page.obj_chapterpage):
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
         self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
         self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
-        self.addpart( draw.obj_animation('ch1_awaken','bug',(640+100,360),scale=0.7,imgscale=0.5) )
+        animation1=draw.obj_animation('ch1_awaken','bug',(640+100,360),scale=0.7,imgscale=0.5)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        animation1.addsound( "bug1", [47, 67, 120] )
+        animation1.addsound( "bug2", [125],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 ###########
 # cake (credits)
@@ -187,7 +215,12 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_eatfish(self,cake=True)
         self.addpart(self.world)
-        # self.addpart( draw.obj_image('cake',(640,450)) )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 ###########
@@ -220,7 +253,14 @@ class obj_scene_ch8atpartner(page.obj_chapterpage):
         self.addpart( draw.obj_image('flower',(438,636),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('flower',(1186,633),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('flower',(1008,560),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7) )
+        animation1=draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'partner1','partner2','partner3') )
+        animation1.addsound( "partner1", [54],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
     def prevpage(self):
@@ -233,6 +273,9 @@ class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):
     def prevpage(self):
@@ -248,6 +291,9 @@ class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_kiss(self,noending=False)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
     def prevpage(self):
@@ -274,7 +320,15 @@ class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('flower',(438,636),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('flower',(1186,633),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('flower',(1008,560),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7) )
+        animation1=draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'partner1','partner2','partner3') )
+        animation1.addsound( "partner1", [50] )
+        animation1.addsound( "partner2", [110],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8atpartnerbye(page.obj_chapterpage):
     def prevpage(self):
@@ -292,7 +346,13 @@ class obj_scene_ch8atpartnerbye(page.obj_chapterpage):
         self.addpart( draw.obj_image('flower',(438,636),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('flower',(1186,633),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('flower',(1008,560),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7) )
+        animation1=draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'partner1','partner2','partner3') )
+        animation1.addsound( "partner3", [51],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 ###########
@@ -321,7 +381,15 @@ class obj_scene_ch8pond(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch1_awaken','herobase',(640+100,360),scale=0.7) )
+        animation1=draw.obj_animation('ch1_awaken','herobase',(640+100,360),scale=0.7)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero1", [15] )
+        animation1.addsound( "hero2", [140] )
+        animation1.addsound( "hero3", [50],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch8pondfish(page.obj_chapterpage):
@@ -335,6 +403,8 @@ class obj_scene_ch8pondfish(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch8pondeat(page.obj_chapterpage):
@@ -348,6 +418,9 @@ class obj_scene_ch8pondeat(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8pondreplay(page.obj_chapterpage):
     def prevpage(self):
@@ -372,7 +445,14 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch1_awaken','herobase',(640+100,360),scale=0.7) )
+        animation1=draw.obj_animation('ch1_awaken','herobase',(640+100,360),scale=0.7)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero1", [101],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 class obj_scene_ch8pondbye(page.obj_chapterpage):
     def prevpage(self):
@@ -386,7 +466,15 @@ class obj_scene_ch8pondbye(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_animation('ch1_awaken','herobase',(640+100,360),scale=0.7) )
+        animation1=draw.obj_animation('ch1_awaken','herobase',(640+100,360),scale=0.7)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero3", [35] )
+        animation1.addsound( "hero5", [105],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
 
 ###########
 # mech
@@ -422,6 +510,14 @@ class obj_scene_ch8mech(page.obj_chapterpage):
         animation8=draw.obj_animation('ch7_villainmech_assemble_tpp','house',(640,360),record=False)
         animation8.addimage('empty',path='premade')
         self.addpart( animation8 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_transform1','mech_transform2') )
+        animation8.addsound( "hero2", [2] )
+        animation8.addsound( "mech_transform1", [70] )
+        animation8.addsound( "mech_transform2", [170],skip=1 )
+        # animation8.addsound( "villain2", [270],skip=1 )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 class obj_scene_ch8mech2(page.obj_chapterpage):
     def prevpage(self):
@@ -437,6 +533,14 @@ class obj_scene_ch8mech2(page.obj_chapterpage):
         self.addpart( draw.obj_image('villainmechbase',(960,414),scale=0.81,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_heromech_expand','heromechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        # animation1.addsound( "villain1", [2] )
+        animation1.addsound( "mech_transform1", [1] )
+        animation1.addsound( "mech_transform2", [101] )
+        animation1.addsound( "hero5", [201],skip=1 )
+        #
+        self.addpart( draw.obj_music('fight3') )
+
 
 class obj_scene_ch8mech3(page.obj_chapterpage):
     def prevpage(self):
@@ -460,6 +564,14 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_stomp') )
+        animation1.addsound( "villain1", [40] )
+        animation1.addsound( "villain2", [150] )
+        animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
+        #
+        self.addpart( draw.obj_music('fight3') )
+
 
 class obj_scene_ch8mechfight(page.obj_chapterpage):
     def prevpage(self):
@@ -472,6 +584,9 @@ class obj_scene_ch8mechfight(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('fight3') )
+
 
 class obj_scene_ch8mechreplay(page.obj_chapterpage):
     def prevpage(self):
@@ -494,6 +609,13 @@ class obj_scene_ch8mechreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_stomp') )
+        animation1.addsound( "villain1", [40] )
+        animation1.addsound( "villain2", [150] )
+        animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 class obj_scene_ch8mechbye(page.obj_chapterpage):
@@ -509,6 +631,13 @@ class obj_scene_ch8mechbye(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_stomp') )
+        animation1.addsound( "villain1", [40] )
+        animation1.addsound( "villain4", [150] )
+        animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
+        #
+        self.addpart( draw.obj_music('fight3') )
 
 
 ###########
@@ -530,13 +659,20 @@ class obj_scene_ch8west(page.obj_chapterpage):
                   'Please enter the ',('password',share.colors.password),
                 '". ',\
                    ]
-        self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('castlepassword',30,(380,260), legend='Castle Password',default=' ')
+        self.textinput=draw.obj_textinput('castlepassword',30,(380,260), legend='Castle Password',default='lie cheat steal')
         self.addpart( self.textinput )
-
+        #
+        animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation1.addsound( "castle1", [16, 79] )
+        animation1.addsound( "castle2", [91] )
+        animation1.addsound( "castle4", [99] )
+        #
+        self.addpart( draw.obj_music('castle') )
 
 class obj_scene_ch8westwrongpassword(page.obj_chapterpage):
     def prevpage(self):
@@ -557,6 +693,16 @@ class obj_scene_ch8westwrongpassword(page.obj_chapterpage):
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
+        #
+        self.sound=draw.obj_sound('castle5')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'castle_elec','castle_hurt') )
+        animation1.addsound( "castle_elec", [1, 115,261] )
+        animation1.addsound( "castle_hurt", [0,115,261],skip=1 )
+        #
+        self.addpart( draw.obj_music('castle') )
 
 class obj_scene_ch8westcorrectpassword(page.obj_chapterpage):
     def prevpage(self):
@@ -565,14 +711,25 @@ class obj_scene_ch8westcorrectpassword(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8westinside())
     def setup(self):
         self.text=[\
-                  '"You may enter, blasted the castle\'s ',\
-                  'A.S.S.". ',\
+                  '"Password is correct. You may enter, said the castle\'s A.S.S."',\
                    ]
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_heroenterscastle','herobase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        animation1.addsound( "castle1", [48] )
+        animation1.addsound( "castle2", [30,93] )
+        animation1.addsound( "castle4", [42,] )
+        animation1.addsound( "castle3", [108] )
+        animation1.addsound( "castle6", [110],skip=1 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('castle') )
 
 
 class obj_scene_ch8westinside(page.obj_chapterpage):
@@ -601,6 +758,8 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
         animation2=draw.obj_animation('ch3_villainconfront2','villainbase',(640,360),record=False,sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
+        #
+        self.addpart( draw.obj_music('villain') )
 
 
 class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
@@ -614,6 +773,8 @@ class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('fight1') )
 
 
 class obj_scene_ch8weststomp(page.obj_chapterpage):
@@ -627,6 +788,9 @@ class obj_scene_ch8weststomp(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('fight2') )
+
 
 class obj_scene_ch8westreplay(page.obj_chapterpage):
     def prevpage(self):
@@ -654,6 +818,9 @@ class obj_scene_ch8westreplay(page.obj_chapterpage):
         animation2=draw.obj_animation('ch3_villainconfront2','villainbase',(640,360),record=False,sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
+        #
+        self.addpart( draw.obj_music('villain') )
+
 
 class obj_scene_ch8westbye(page.obj_chapterpage):
     def prevpage(self):
@@ -669,6 +836,9 @@ class obj_scene_ch8westbye(page.obj_chapterpage):
         animation2=draw.obj_animation('ch3_villainconfront2','villainbase',(640,360),record=False,sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation2 )
+        #
+        self.addpart( draw.obj_music('villain') )
+
 
 ###########
 # east forest
@@ -677,7 +847,7 @@ class obj_scene_ch8east(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_lyingpart1())
+            share.scenemanager.switchscene(obj_scene_lyingstart())
         else:
             share.scenemanager.switchscene(obj_scene_ch8eastbye())
     def setup(self):
@@ -698,8 +868,14 @@ class obj_scene_ch8east(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation2 )
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny2", [128] )
+        animation1.addsound( "bunny4", [43],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 
@@ -708,7 +884,7 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_lyingpart1())
+            share.scenemanager.switchscene(obj_scene_lyingstart())
         else:
             share.scenemanager.switchscene(obj_scene_ch8eastbye())
     def setup(self):
@@ -727,8 +903,14 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation2 )
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny5", [128] )
+        animation1.addsound( "bunny4", [43] )
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_ch8eastbye(page.obj_chapterpage):
@@ -749,8 +931,14 @@ class obj_scene_ch8eastbye(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation2 )
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny2", [128] )
+        animation1.addsound( "bunny3", [43],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 ###########
 # north peak
@@ -765,6 +953,12 @@ class obj_scene_ch8north(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_climbpeak(self)
         self.addpart(self.world)
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('winds') )
 
 class obj_scene_ch8northtop(page.obj_chapterpage):
     def prevpage(self):
@@ -798,6 +992,12 @@ class obj_scene_ch8northtop(page.obj_chapterpage):
         animation1=draw.obj_animation('ch5_meetelder','herobase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch5_meetelder2','sun',(640,360),record=False,sync=animation1) )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+        animation1.addsound( "elder1", [111],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch5play') )
+
 
 class obj_scene_ch8north_rps(page.obj_chapterpage):
     def prevpage(self):
@@ -807,9 +1007,12 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-        self.text=['"Alright lets play, said ',('{eldername}',share.colors.elder),'". ']
+        self.text=[]
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch5play') )
+
 
 class obj_scene_ch8northreplay(page.obj_chapterpage):
     def prevpage(self):
@@ -829,7 +1032,6 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
         textchoice.addchoice('1. Yes','yes',(450,y1))
         textchoice.addchoice('2. No','no',(660,y1))
         self.addpart( textchoice )
-        self.addpart( draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False) )
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
@@ -838,7 +1040,14 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
-
+        animation1=draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+        animation1.addsound( "elder5", [36] )
+        animation1.addsound( "elder4", [200], skip=1 )
+        #
+        self.addpart( draw.obj_music('ch5play') )
 
 
 class obj_scene_ch8northbye(page.obj_chapterpage):
@@ -851,7 +1060,6 @@ class obj_scene_ch8northbye(page.obj_chapterpage):
                 '"Bye then, said ',\
                 ('{eldername}',share.colors.elder),'." ',\
                    ]
-        self.addpart( draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False) )
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
@@ -860,6 +1068,15 @@ class obj_scene_ch8northbye(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+        animation1.addsound( "elder2", [200], skip=1 )
+        animation1.addsound( "elder3", [36] )
+        #
+        self.addpart( draw.obj_music('ch5play') )
+
 
 ###########
 # south beach
@@ -1098,13 +1315,102 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
 
 #################################################################
 #################################################################
-# the entire lying game put back here
+# the entire lying game put back here (just copy paste from ch4 down below)
+# Entry and exit points of ch4 (DONT MODIFY)
 
-
-##########################
-class obj_scene_lyingpart1(page.obj_chapterpage):
+# entry point
+class obj_scene_lyingstart(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8eastreplay())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_lyingpart1())
+    def setup(self):
+        self.text=[\
+                '"Alright, said ',\
+                ('{bunnyname}',share.colors.bunny),'. ',\
+                'here is how the ',('lying game',share.colors.grandmaster2),\
+                ' works. It is all about having a good memory and mastering the art of lying." ',\
+                   ]
+        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
+        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny2", [128] )
+        animation1.addsound( "bunny3", [43],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch4play') )
+
+# exit point
+class obj_scene_lyingend(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_lyingpart3())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8eastreplay())
+    def setup(self):
+        self.text=[\
+                    'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
+                    'you won my ',('lying game',share.colors.grandmaster2),'! ',\
+                    ' You are truly a ',\
+                    ('great deceiver',share.colors.grandmaster2),' that can ',\
+                    ('lie',share.colors.grandmaster),' like no equal. ',\
+                   ]
+        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
+        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
+        animation3.addimage('empty',path='premade')
+        self.addpart( animation3 )
+        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation1)
+        animation4.addimage('empty',path='premade')
+        self.addpart( animation4 )
+        animation5=draw.obj_animation('ch4_herowalkbunny2love3','love',(640,360),record=False,sync=animation1)
+        animation5.addimage('empty',path='premade')
+        self.addpart( animation5 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.sound=draw.obj_sound('serenade_cheer')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny5", [128] )
+        animation1.addsound( "bunny4", [43] )
+        #
+        self.addpart( draw.obj_music('ch4play') )
+
+
+
+#################################################################
+#################################################################
+# COPY PAST FROM CH4 HERE: obj_scene_lyingpart1
+
+#################################################################
+#################################################################
+
+
+
+
+class obj_scene_lyingpart1(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_lyingstart())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp1q1(world=self.world))
     def setup(self,**kwargs):
@@ -1131,6 +1437,12 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
             drawing.clear()# erase drawing
         self.addpart( drawing )
         self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        #
+        self.sound=draw.obj_sound('bunny2')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_lyingp1q1(page.obj_chapterpage):
@@ -1170,6 +1482,12 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         animation1=draw.obj_animation('ch3_bunnheadwobble','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bunnheadwobble2','herohead',(640,360),record=False, sync=animation1) )
+        #
+        self.sound=draw.obj_sound('bunny3')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_lyingp1q2(obj_scene_lyingp1q1):# child of lying 1
@@ -1178,12 +1496,16 @@ class obj_scene_lyingp1q2(obj_scene_lyingp1q1):# child of lying 1
     def text_lyinggame(self):
         return ['Now tell me if this is true or false (2/3):']
 
+
 class obj_scene_lyingp1q3(obj_scene_lyingp1q1):# child of lying 1
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1win())# forget lying game database
     def text_lyinggame(self):
         return ['Now tell me if this is true or false (3/3):']
-
+    def firstsound(self):
+        self.sound=draw.obj_sound('bunny2')
+        self.addpart(self.sound)
+        self.sound.play()
 
 class obj_scene_lyingfailpart1(page.obj_chapterpage):
     def prevpage(self):
@@ -1204,6 +1526,12 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        self.sound=draw.obj_sound('bunny5')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_lyingpart1win(page.obj_chapterpage):
@@ -1224,11 +1552,21 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation2 )
-        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation2)
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
         animation3.addimage('empty',path='premade')
         self.addpart( animation3 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny4", [128] )
+        animation1.addsound( "bunny3", [43] )
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 ##########################
@@ -1261,6 +1599,12 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
             drawing.clear()# erase drawing
         self.addpart(drawing)
         self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        #
+        self.sound=draw.obj_sound('bunny2')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_lyingp2q1(obj_scene_lyingp1q1):# child of lying 1
@@ -1272,7 +1616,6 @@ class obj_scene_lyingp2q1(obj_scene_lyingp1q1):# child of lying 1
         share.scenemanager.switchscene(obj_scene_lyingfailpart2(world=self.world))
     def text_lyinggame(self):
         return ['Now tell me if this is true or false (1/3):']
-
 
 class obj_scene_lyingp2q2(obj_scene_lyingp2q1):# child of lying 2
     def nextpage_lyinggame(self):
@@ -1308,6 +1651,12 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        self.sound=draw.obj_sound('bunny5')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_lyingpart2win(page.obj_chapterpage):
@@ -1329,14 +1678,24 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation2 )
-        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation2)
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
         animation3.addimage('empty',path='premade')
         self.addpart( animation3 )
-        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation2)
+        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation1)
         animation4.addimage('empty',path='premade')
         self.addpart( animation4 )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny4", [43,128] )
+        # animation1.addsound( "bunny3", [43],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 ##########################
@@ -1370,6 +1729,12 @@ class obj_scene_lyingpart3(page.obj_chapterpage):
             drawing.clear()# erase drawing
         self.addpart(drawing)
         self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        #
+        self.sound=draw.obj_sound('bunny2')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
@@ -1432,41 +1797,24 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
-
-
-class obj_scene_lyingend(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart3())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8eastreplay())
-    def setup(self):
-        self.text=[\
-                    'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
-                    'you won my ',('lying game',share.colors.grandmaster2),'! ',\
-                    '".',\
-                   ]
-        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
-        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation2=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation2 )
-        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation2)
-        animation3.addimage('empty',path='premade')
-        self.addpart( animation3 )
-        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation2)
-        animation4.addimage('empty',path='premade')
-        self.addpart( animation4 )
-        animation5=draw.obj_animation('ch4_herowalkbunny2love3','love',(640,360),record=False,sync=animation2)
-        animation5.addimage('empty',path='premade')
-        self.addpart( animation5 )
-
-
-
+        #
+        self.sound=draw.obj_sound('bunny5')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch4play') )
 
 #################################################################
 #################################################################
+# STOP COPY PASTE FROM CH4 BEFORE: obj_scene_lyingend
+
+#################################################################
+#################################################################
+
+
+
+
+
+
+
+#

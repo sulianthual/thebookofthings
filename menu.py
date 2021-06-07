@@ -46,13 +46,15 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p20()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p21()
-            # quickscene=ch5.obj_scene_ch5p1()
+            # quickscene=ch5.obj_scene_ch5p36()
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p2()
             # quickscene=ch6.obj_scene_ch6p47()
             # quickscene=ch7.obj_scene_ch7p52()
-            quickscene=ch7.obj_scene_ch7ending()
+            # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8roam()
+            quickscene=ch8.obj_scene_ch8north_rps()
+
             #
             #
             share.scenemanager.switchscene(quickscene)# (must not initstart if has looped sounds)

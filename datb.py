@@ -180,7 +180,6 @@ class obj_sounds:
         # ch7
         self.dict['hero_what']=( 'hero/what__confused-what_male.ogg' , 1 )
         self.dict['villain_bangdoor']=( 'villain/wood_hit_09.ogg' , 1 )
-        self.dict['cheer']=( 'general/cheer1.ogg' , 0.3 )
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -282,8 +281,6 @@ class obj_sounds:
         self.dict['mech_die']=( 'world/mech/die_04.ogg' , 1 )
         self.dict['mech_win']=( 'world/mech/cheer1.ogg' , 0.5 )
         self.dict['mech_contact']=( 'world/mech/Punch4.ogg', 1 )
-        # self.dict['mech_contact']=( 'world/mech/enemy_explosion.ogg', 1 )
-
         self.dict['mech_counter']=( 'world/mech/Whip.ogg', 1 )
         self.dict['mech_correct']=( 'world/mech/confirmation_002.ogg', 1 )
         self.dict['mech_wrong']=( 'world/mech/fail.wav', 1 )

@@ -972,7 +972,6 @@ class obj_scene_lyingend(page.obj_chapterpage):
                     ' You are truly a ',\
                     ('great deceiver',share.colors.grandmaster2),' that can ',\
                     ('lie',share.colors.grandmaster),' like no equal. ',\
-                    'Now ask me anything".',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )

@@ -3042,8 +3042,8 @@ class obj_world_rockpaperscissors(obj_world):
         self.elderalwaysloose=False# elder always looses (chooses bad counter at last moment)
         self.elderthinks=True# can see what the elder is thinking
         self.elderpeaks=False# elder peaks on last countdown to counter
-        self.herohealth=3# health bar
-        self.elderhealth=3#
+        self.herohealthmax=3# health bar
+        self.elderhealthmax=7#3#
         self.dotutorial=False# do tutorial
         self.dotutorialnothinks=False# remove what hero/elder is thinking (for extended tutorial)
         # scene tuning
@@ -3052,11 +3052,12 @@ class obj_world_rockpaperscissors(obj_world):
             if 'elderlooses' in kwargs: self.elderalwaysloose=kwargs["elderlooses"]
             if 'elderthinks' in kwargs: self.elderthinks=kwargs["elderthinks"]
             if 'elderpeaks' in kwargs: self.elderpeaks=kwargs["elderpeaks"]
-            if 'herohealth' in kwargs: self.herohealth=kwargs["herohealth"]
-            if 'elderhealth' in kwargs: self.elderhealth=kwargs["elderhealth"]
+            if 'herohealth' in kwargs: self.herohealthmax=kwargs["herohealth"]
+            if 'elderhealth' in kwargs: self.elderhealthmax=kwargs["elderhealth"]
             if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
             if 'nothinks' in kwargs: self.dotutorialnothinks=kwargs["nothinks"]
-        #
+        self.herohealth=self.herohealthmax
+        self.elderhealth=self.elderhealthmax
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
         self.win=True# game is won
@@ -3097,12 +3098,13 @@ class obj_world_rockpaperscissors(obj_world):
         # self.staticactor.addpart( 'img5a', draw.obj_image('mountain',(198,621),scale=0.22,rotate=0,fliph=False,flipv=False) )
         # self.staticactor.addpart( 'img6a', draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
         # instructions
-        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,530),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,530+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,350),color=share.colors.instructions) )
-        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,350),color=share.colors.instructions) )
-        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,350),color=share.colors.instructions) )
+        yrpsinfo=300
+        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,yrpsinfo),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,yrpsinfo),color=share.colors.instructions) )
+        self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,yrpsinfo),color=share.colors.instructions) )
+        self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,yrpsinfo),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
         self.instructions.dict['textw'].show=True
         self.instructions.dict['textd'].show=True
@@ -3179,10 +3181,10 @@ class obj_world_rockpaperscissors(obj_world):
         # self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,350),fontsize='big',scale=0.9)  )
         # self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,350),fontsize='big',scale=0.9)  )
         # self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,350),fontsize='big')  )
-        self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,80),fontsize='huge',scale=0.9)  )
-        self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,80),fontsize='huge',scale=0.9)  )
-        self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,80),fontsize='huge',scale=0.9)  )
-        self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,80),fontsize='huge')  )
+        self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,150),fontsize='huge',scale=0.9)  )
+        self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,150),fontsize='huge',scale=0.9)  )
+        self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,150),fontsize='huge',scale=0.9)  )
+        self.result.addpart( 'tie', draw.obj_textbox('Its a tie',(640,150),fontsize='huge')  )
         self.result.dict['win'].show=False
         self.result.dict['loose'].show=False
         self.result.dict['tie'].show=False
@@ -3190,9 +3192,9 @@ class obj_world_rockpaperscissors(obj_world):
         self.result.dict['rockscissors'].show=False
         self.result.dict['scissorspaper'].show=False
         # countdown
-        self.countdown.addpart( '3', draw.obj_textbox('3...',(640,350),fontsize='huge',color=share.colors.drawing)  )
-        self.countdown.addpart( '2', draw.obj_textbox('2...',(640,350),fontsize='huge',color=share.colors.drawing)  )
-        self.countdown.addpart( '1', draw.obj_textbox('1...',(640,350),fontsize='huge',color=share.colors.drawing)  )
+        self.countdown.addpart( '3', draw.obj_textbox('3...',(640,150),fontsize='huge',color=share.colors.drawing)  )
+        self.countdown.addpart( '2', draw.obj_textbox('2...',(640,150),fontsize='huge',color=share.colors.drawing)  )
+        self.countdown.addpart( '1', draw.obj_textbox('1...',(640,150),fontsize='huge',color=share.colors.drawing)  )
         self.countdown.dict['3'].show=False
         self.countdown.dict['2'].show=False
         self.countdown.dict['1'].show=False
@@ -3205,17 +3207,24 @@ class obj_world_rockpaperscissors(obj_world):
             self.countdowntimelast=self.countdowntime
         self.countdowntimer=tool.obj_timer(self.countdowntime)# timer
         # healthbars
-        for i in range(self.herohealth):
-            self.healthbar.addpart('hero_'+str(i), draw.obj_image('love',(640-300+i*75,240),scale=0.125) )
-            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('smallcrossred',(640-300+i*75,240),scale=0.5,path='premade') )
+        # health bar hero
+        if self.dotutorial:
+            self.ybar=150# for health bars and text
+        else:
+            self.ybar=50
+        self.healthbar.addpart('face1', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
+        for i in range(self.herohealthmax):
+            self.healthbar.addpart('hero_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
+            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('smallcrossred',(150+i*75,self.ybar),scale=0.5,path='premade') )
             self.healthbar.dict['herocross_'+str(i)].show=False
-        for i in range(self.elderhealth):
-            self.healthbar.addpart('elder_'+str(i), draw.obj_image('love',(640+300-i*75,240),scale=0.125) )
-            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('smallcrossred',(640+300-i*75,240),scale=0.5,path='premade') )
+        self.healthbar.addpart('face2', draw.obj_image('elderhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
+        for i in range(self.elderhealthmax):
+            self.healthbar.addpart('elder_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
+            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.5,path='premade') )
             self.healthbar.dict['eldercross_'+str(i)].show=False
         # text
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('Victory!',(640,360),fontsize='huge') )
-        self.text_donelost.addpart( 'text1', draw.obj_textbox('Defeat!',(640,360),fontsize='huge') )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('victory!',(640,150),fontsize='huge') )
+        self.text_donelost.addpart( 'text1', draw.obj_textbox('defeat!',(640,150),fontsize='huge') )
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
         if not self.dotutorial:
@@ -3475,6 +3484,11 @@ class obj_world_rockpaperscissors(obj_world):
                         self.checking=False
                         self.countdowning=False
                         self.computedresults=False
+                        # clean healthbars
+                        for i in range(self.herohealthmax):
+                            self.healthbar.dict['herocross_'+str(i)].show=False
+                        for i in range(self.elderhealthmax):
+                            self.healthbar.dict['eldercross_'+str(i)].show=False
                     # images shown
                     if self.goal:
                         self.hero.dict['rock'].show=False

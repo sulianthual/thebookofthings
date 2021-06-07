@@ -556,12 +556,9 @@ class obj_scene_ch5p22(page.obj_chapterpage):
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
-               '"Alright, said ',('{eldername}',share.colors.elder),', this is how it works. ',\
-               'The ',('bubble',share.colors.instructions),\
-               ' above your head shows what you are thinking about. ',\
-               'Change it with the '+tempo+'". ',\
+               'This is you selection, change it with the '+tempo+'. ',\
                   ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,elderhealth=1,tutorial=True)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
         self.addpart( draw.obj_image('show3',(418,300),path='premade') )
         #
@@ -580,13 +577,12 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p23a())
     def setup(self):
         self.text=[\
-               '"This is your health and mine. If you loose a round, you loose a heart. ',\
-               'The first one that runs out of hearts looses the game". ',\
+               '"These are the healthbars, totally fair. If you loose a round, you loose a health. ',\
                   ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,elderhealth=1,tutorial=True)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
-        self.addpart( draw.obj_image('show1',(510,348),scale=0.65,fliph=False,flipv=True,path='premade') )
-        self.addpart( draw.obj_image('show1',(744,347),scale=0.65,fliph=True,flipv=True,path='premade') )
+        self.addpart( draw.obj_image('show3',(280,150),scale=0.65,fliph=False,flipv=True,path='premade') )
+        self.addpart( draw.obj_image('show3',(620,150),scale=0.65,fliph=True,flipv=True,path='premade') )
         #
         self.sound=draw.obj_sound('elder3')
         self.addpart(self.sound)
@@ -607,7 +603,7 @@ class obj_scene_ch5p23a(page.obj_chapterpage):
                   ' This is it. ',\
                   ('Press '+tempo+' when you are ready.',share.colors.instructions),\
                    ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,elderhealth=1,tutorial=True)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
         #
         self.sound=draw.obj_sound('elder2')
@@ -627,7 +623,7 @@ class obj_scene_ch5p24(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1,elderhealth=1)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch5play') )
@@ -713,7 +709,7 @@ class obj_scene_ch5p26(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2,elderhealth=1)
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch5play') )
@@ -1070,13 +1066,11 @@ class obj_scene_ch5p33(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p34())
     def setup(self):
         self.text=[\
-                ('Cheat',share.colors.grandmaster),' by ',\
-               ('peeking at other\'s bubble',share.colors.instructions),\
-               ' to know what they are thinking. ',\
-              'You can then ',('counter their hand at the last moment',share.colors.instructions),\
-              ', but you gotta be quick. ',\
+                   'Peek at others\'s selection and ',\
+                  ('counter them at the last moment',share.colors.instructions),'. ',\
+                 'That is how you ',('cheat',share.colors.grandmaster),'. ',\
                   ]
-        self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True)
+        self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True,herohealth=2)
         self.addpart(self.world)
         animation1=draw.obj_animation('ch5_eldershufflerps','rock',(640,360),record=False)
         animation1.addimage('paper')
@@ -1096,7 +1090,7 @@ class obj_scene_ch5p34(page.obj_chapterpage):
         self.text=[\
                '"Well, that is the reason you havent won a single time, ',\
                'said ',('{eldername}',share.colors.elder),'. ',\
-                'I was peeking at your bubble the whole time, hi hi hi ".',\
+                'I was peeking at your selection the whole time, hi hi hi ".',\
                   ]
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -1177,8 +1171,8 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
         self.text=[\
                'OWWWW you really dont listen, said ',('{eldername}',share.colors.elder),'. ',\
                'You need to ',\
-               ('peek',share.colors.instructions),' at what I am thinking and ',\
-               ('counter my hand at the last moment',share.colors.instructions),'. ',\
+               ('peek',share.colors.instructions),' at my selection and ',\
+               ('counter me at the last moment',share.colors.instructions),'. ',\
                'Now lets play again before I loose my patience. ',\
                   ]
         animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)
@@ -1196,7 +1190,6 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
         animation1.addsound( "elder5", [115] )
         animation1.addsound( "elder6", [9] )
         #
-
         self.addpart( draw.obj_music('ch5play') )
 
 
@@ -1234,6 +1227,10 @@ class obj_scene_ch5p37(page.obj_chapterpage):
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+        animation1.addsound( "elder2", [200], skip=1 )
+        animation1.addsound( "elder3", [36] )
         #
         self.addpart( draw.obj_music('winds') )
 
