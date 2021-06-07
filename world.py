@@ -1877,8 +1877,8 @@ class obj_world_dodgegunshots(obj_world):
         self.dotutorial=False# do the tutorial
         # scene tuning
         if kwargs is not None:
-            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]
-            if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]
+            if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# OBSOLETE
+            if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]# OBSOLETE
             if 'incastle' in kwargs: self.incastle=kwargs["incastle"]
             if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
         #
@@ -1904,12 +1904,8 @@ class obj_world_dodgegunshots(obj_world):
             self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
             self.staticactor.addpart( 'sun', draw.obj_image('sun',(800,250),scale=0.4) )
         # hero
-        if not self.heroisangry:
-            self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
-            self.hero.addpart( 'crouch', draw.obj_image('herocrouch',(200,500+50+self.yoff),scale=0.5) )
-        else:
-            self.hero.addpart( 'stand', draw.obj_image('herobaseangry',(200,500+self.yoff),scale=0.5) )
-            self.hero.addpart( 'crouch', draw.obj_image('herocrouchangry',(200,500+50+self.yoff),scale=0.5) )
+        self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
+        self.hero.addpart( 'crouch', draw.obj_image('herocrouch',(200,500+50+self.yoff),scale=0.5) )
         self.hero.dict['stand'].show=True
         self.hero.dict['crouch'].show=False
         self.herocrouch=False# crouching or not
@@ -1934,10 +1930,7 @@ class obj_world_dodgegunshots(obj_world):
         self.herohitbox2.rx=130
         self.herohitbox2.ry=70
         # hero dies
-        if not self.heroisangry:
-            self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobase',(640,360)))
-        else:
-            self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobaseangry',(640,360)))
+        self.herodead.addpart('anim',draw.obj_animation('ch3_herodies','herobase',(640,360)))
         self.herodead.show=False
         # boundaries
         self.ymax=self.hero.y
@@ -1982,8 +1975,7 @@ class obj_world_dodgegunshots(obj_world):
                 self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-i*50-10,720-25-50-5),scale=0.125) )
         # text
         self.text_undone.addpart( 'text1', \
-        draw.obj_textbox('['+share.datamanager.controlname('up')+\
-        ': jump] ['+share.datamanager.controlname('down')+': crouch]',(640,660),color=share.colors.instructions) )
+        draw.obj_textbox('['+share.datamanager.controlname('up')+': jump] ['+share.datamanager.controlname('down')+': crouch]',(640,660),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('he is the one!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('you are dead',(640,360),fontsize='huge') )
         # fight message at beginning
@@ -2246,10 +2238,10 @@ class obj_world_stompfight(obj_world):
         self.herohitbox1=obj_grandactor(self,(340,self.yground+self.herohitbox1yoff))# for being hit (head)
         self.herohitbox1.rx=45
         self.herohitbox1.ry=60
-        self.herohitbox2yoff=50
+        self.herohitbox2yoff=30
         self.herohitbox2=obj_grandactor(self,(340,self.yground+self.herohitbox2yoff))# for hitting (feets)
         self.herohitbox2.rx=50
-        self.herohitbox2.ry=50
+        self.herohitbox2.ry=25
 
         # villain
         self.villain.addpart( 'stand_right', draw.obj_image('villainbase',(940,self.yground-12),scale=0.35) )
@@ -2289,13 +2281,13 @@ class obj_world_stompfight(obj_world):
         self.villainhitbox1=obj_grandactor(self,(940,self.yground-12+self.villainhitbox1yoff))# for being hit (head)
         self.villainhitbox1.rx=45
         self.villainhitbox1.ry=50
-        self.villainhitbox2yoff=50
+        self.villainhitbox2yoff=40
         self.villainhitbox2=obj_grandactor(self,(940+50,self.yground-12+self.villainhitbox2yoff))# for hitting (villain kick)
         self.villainhitbox2.rx=50
         self.villainhitbox2.ry=50
         # health bar hero
         if self.dotutorial:
-            self.ybar=200# for health bars and text
+            self.ybar=150# for health bars and text
         else:
             self.ybar=50
         self.maxherohealth=5# starting hero health
@@ -2312,9 +2304,14 @@ class obj_world_stompfight(obj_world):
         for i in range(self.maxvillainhealth):
             self.vealthbar.addpart('heart_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
         # text
-        self.text_undone.addpart( 'text1', \
-        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move/jump/kick]',\
-        (25,self.ybar+75),xleft=True,color=share.colors.instructions) )
+        # tempo='['+share.datamanager.controlname('arrows')+': move/jump/kick]'
+        tempo='['+share.datamanager.controlname('left')
+        tempo +='/'+share.datamanager.controlname('right')+': move] '
+        tempo +='['+share.datamanager.controlname('up')+': jump] '
+        tempo +='['+share.datamanager.controlname('down')+': kick] '
+
+        # self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(25,self.ybar+75),xleft=True,color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(640,self.ybar+75),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('fatality!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('you are dead',(640,360),fontsize='huge') )
         # fight message at beginning
@@ -2391,10 +2388,9 @@ class obj_world_stompfight(obj_world):
                             self.hero.dict['stand_left'].show=False
                             self.hero.dict['hurt'].show=False
                             self.hero.dict['hurttext'].show=False
-                    if not self.herojumping and controls.gd and controls.gdc:
+                    if controls.gd and controls.gdc:
                         self.soundkick.play()
                         self.herokicking=True
-                        self.herojumping=False
                         self.hero.dict['kick_right'].show=self.herofaceright
                         self.hero.dict['kick_left'].show=not self.herofaceright
                         self.hero.dict['stand_right'].show=False

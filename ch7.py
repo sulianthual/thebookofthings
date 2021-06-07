@@ -335,6 +335,11 @@ class obj_scene_ch7p11(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -403,6 +408,12 @@ class obj_scene_ch7p12fail(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
@@ -435,6 +446,11 @@ class obj_scene_ch7p13(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
         #
         animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
@@ -469,6 +485,12 @@ class obj_scene_ch7p14(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
@@ -652,6 +674,12 @@ class obj_scene_ch7p18fail(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
@@ -681,6 +709,11 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
         self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
         #
         animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
@@ -715,6 +748,12 @@ class obj_scene_ch7p20(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(576,242),scale=0.38,rotate=4,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch7_heroenterscastle','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -729,9 +768,9 @@ class obj_scene_ch7p21(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',\
-                    'Oh, you are here. ',\
-                  'Just in time, said ',('{villainname}',share.colors.villain),', ',\
-                  'I was just wanting to rip someone apart". ',\
+                    'Oh, you have figured out my password, ',\
+                  'said ',('{villainname}',share.colors.villain),'. ',\
+                  'Fool, you have just earned yourself a beating". ',\
                    ]
         self.addpart( draw.obj_image('partnerbase',(1100,530), scale=0.4,rotate=90) )
         # self.addpart( draw.obj_imageplacer(self,'mountain') )
@@ -823,7 +862,7 @@ class obj_scene_ch7p23(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
         animation1.addsound( "villain1", [172],skip=1 )
         #
         self.addpart( draw.obj_music(None) )
@@ -833,13 +872,51 @@ class obj_scene_ch7p24(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p23())
     def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p24a())
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[\
+                    'Move with ','['+share.datamanager.controlname('left')+'/',\
+                    share.datamanager.controlname('right')+']',', ',\
+                    ' jump with ','['+share.datamanager.controlname('up')+']',\
+                    ' and kick with ','['+share.datamanager.controlname('down')+']','. ',\
+                   ]
+        self.world=world.obj_world_stompfight(self,tutorial=True)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('fight2') )
+
+
+class obj_scene_ch7p24a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p24())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p24b())
+    def setup(self):
+        self.text=[\
+                  'Kick ',\
+                  ('{villainname}',share.colors.villain),' to bring ',\
+                  ('{villain_his}',share.colors.villain2),' health down ',\
+                  '(when the fight starts). ',\
+                   ]
+        self.world=world.obj_world_stompfight(self,tutorial=True)
+        self.addpart(self.world)
+        #
+        self.addpart(draw.obj_image('show1',(1130,360),path='premade',flipv=True))
+        #
+        self.addpart( draw.obj_music('fight2') )
+
+
+class obj_scene_ch7p24b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p24a())
+    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p25())
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
-                    'Stomp on ',('{villainname}',share.colors.villain),\
-                    ' when ',('{villain_he}',share.colors.villain2),' is not kicking. ',\
-                    ('Press '+tempo+' to start.',share.colors.instructions),\
+                  ' This is it. ',\
+                  ('Press '+tempo+' when you are ready.',share.colors.instructions),\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
@@ -849,7 +926,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
 
 class obj_scene_ch7p25(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p24())
+        share.scenemanager.switchscene(obj_scene_ch7p24b())
     def nextpage(self):
         if self.world.win:
             share.scenemanager.switchscene(obj_scene_ch7p26())
@@ -893,13 +970,17 @@ class obj_scene_ch7p26(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',\
+                  ('{heroname}',share.colors.hero),' was victorious. ', \
                   ('{villainname}',share.colors.villain),' said: I will have my revenge! ', \
                   'and disappeared into the mountains." ', \
-                  ' Congratulations, said the book of things, you made it! ',\
                    ]
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
         self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
         self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_image('cloud',(1189,210),scale=0.33,rotate=2,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(360,245),scale=0.32,rotate=2,fliph=True,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_herowins','herobase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_herowins3','villainbase',(640,360),record=False,sync=animation1) )
@@ -910,19 +991,22 @@ class obj_scene_ch7p27(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p26())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p28())
+        share.scenemanager.switchscene(obj_scene_ch7p27a())
     def setup(self):
         self.text=[\
                   '"',\
                   ('{heroname}',share.colors.hero),' reunited with ',\
                   ('{partnername}',share.colors.partner),'. ',\
-                  ' and they were so excited. ',\
-                  ('{partnername}',share.colors.partner),' said: ',\
-                  'lets go home! ". ',\
+                  ' and they were so excited." ',\
                    ]
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
         self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
         self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_image('cloud',(1189,210),scale=0.33,rotate=2,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(360,245),scale=0.32,rotate=2,fliph=True,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
+        # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
+        #
         animation1=draw.obj_animation('ch3_herowins','herobase',(640,360),record=False)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_herowins2','partnerbase',(640,360),record=False,sync=animation1) )
@@ -933,19 +1017,75 @@ class obj_scene_ch7p27(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('win') )
 
-class obj_scene_ch7p28(page.obj_chapterpage):
+
+class obj_scene_ch7p27a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p27())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p29())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        share.scenemanager.switchscene(obj_scene_ch7p28())
     def setup(self):
         self.text=[\
-                'go back home ',\
+                  '"The ',('{bug}',share.colors.bug),\
+                  ' crawled out of ',('{heroname}',share.colors.hero),\
+                  '\'s pocket and said: ',\
+                  'it looks like my job is done, but i really like it here. ',\
+                   'Could I stay and live with you." ',\
                    ]
-        self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=7,boat=True,partner=True)
-        self.addpart(self.world)
+        self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
+        self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
+        self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_image('cloud',(1189,210),scale=0.33,rotate=2,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
+        #
+        self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch7_bugtalks','bug',(840,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        animation1.addsound( "bug1", [15, 100] )
+        animation1.addsound( "bug2", [116])
+        #
+        self.addpart( draw.obj_music('win') )
+
+
+class obj_scene_ch7p28(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p27a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p29())
+    def setup(self):
+        self.text=[\
+                  '"',\
+                  ('{partnername}',share.colors.partner),' said: ',\
+                  'what is that funny little thing, it is ',\
+                  ('soooo cuuuute',share.colors.partner),'! ',\
+                  'Of course you can stay with us, you can be our house pet". ',\
+                   ]
+        # self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
+        self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
+        self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_image('cloud',(1189,210),scale=0.33,rotate=2,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
+        self.addpart( draw.obj_image('partnerbase',(382,612+20),scale=1.2,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('herobase',(140,646+20),scale=1.2,rotate=0,fliph=False,flipv=False) )
+        #
+        animation1=draw.obj_animation('ch7_bugtalks','bug',(840,360),record=False)
+        self.addpart( animation1 )
+        #
+        animation2=draw.obj_animation('ch7_bugtalkslove','love',(840,360),record=False,sync=animation1)
+        animation2.addimage('empty',path='premade')
+        self.addpart(animation2)
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2','partner1','partner2') )
+        animation1.addsound( "bug1", [15, 100] )
+        animation1.addsound( "bug2", [116])
+        animation1.addsound( "partner1", [154] )
+        animation1.addsound( "partner2", [252] )
+        #
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('win') )
 
@@ -957,16 +1097,26 @@ class obj_scene_ch7p29(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p30())
     def setup(self):
         self.text=[\
-                  '"Arrived at home, the ',('{bug}',share.colors.bug),\
-                  ' crawled out of ',('{heroname}',share.colors.hero),\
-                  '\'s pocket and said: ',\
-                  'congratulations, I am very happy for you! ',\
-                   'Well, it looks like my job is done. ',\
-                   'I have a request to make, could I stay and live with you. ',\
-                   'I kind of like it here". ',\
+                    'Well, it looks everything is working out, said the book of things. ',
+                   'You made it, congratulations! ',\
                    ]
-        self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
+        self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
+        self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
+        self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_image('cloud',(1189,210),scale=0.33,rotate=2,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(360,245),scale=0.32,rotate=2,fliph=True,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
+        #
+        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='premade',sync=animation1)
+        animation2.addimage('empty',path='premade')
+        self.addpart( animation2 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book1", [13] )
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book3", [155],skip=1 )
         #
         self.addpart( draw.obj_music('win') )
 
@@ -976,25 +1126,20 @@ class obj_scene_ch7p30(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p29())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p31())
+    def triggernextpage(self,controls):
+        return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                  '"',\
-                  ('{partnername}',share.colors.partner),' said: ',\
-                  'what is that funny little thing. My god, it is ',\
-                  ('so cuuuute',share.colors.partner),'! ',\
-                  'Of course you can stay with us, you can be our house pet". ',\
+                'go back home ',\
                    ]
-        # self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('partnerbase',(382,612+40),scale=1.45,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('herobase',(140,646+40),scale=1.45,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
-        self.addpart(animation1)
-        # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase') )
-        animation2=draw.obj_animation('ch7_bugtalks1love','love',(840,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
-        self.addpart(animation2)
+        self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=7,boat=True,partner=True)
+        self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('win') )
+        self.sound=draw.obj_sound('unlock')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music(None) )
 
 
 class obj_scene_ch7p31(page.obj_chapterpage):

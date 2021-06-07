@@ -665,6 +665,8 @@ class obj_scene_ch3p20(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
         self.addpart( draw.obj_image('castle',(1143,318),scale=0.67) )
         # self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
+        self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_herowins','herobase',(640,360),record=False)
         self.addpart( animation1 )
         # self.addpart( draw.obj_animation('ch3_herowins2','partnerbase',(640,360),record=False,sync=animation1) )
@@ -705,6 +707,7 @@ class obj_scene_ch3p21(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_drawing('towersparks',(1000,310),shadow=(280,200)) )
         self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
         #
         animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
@@ -772,6 +775,7 @@ class obj_scene_ch3p22easteregg(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
         #
         animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
@@ -944,6 +948,8 @@ class obj_scene_ch3p25(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        #
         animation1=draw.obj_animation('ch3_heroabandons','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
