@@ -4454,9 +4454,13 @@ class obj_world_mechfight(obj_world):
         ##########################
         # default options
         self.dotutorial=False# do the tutorial
+        self.doprompt=True# do prompt (if none, random outcome, for tutorial)
+        self.dohealth=True# show healthbar (can be hidden for tutorial)
         # scene tuning
         if kwargs is not None:
             if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
+            if 'prompt' in kwargs: self.doprompt=kwargs["prompt"]
+            if 'healthbar' in kwargs: self.dohealth=kwargs["healthbar"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -4495,23 +4499,23 @@ class obj_world_mechfight(obj_world):
         # self.promptactor.addpart( 'prompt_s', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
         # self.promptactor.addpart( 'prompt_a', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.black) )
         # self.promptactor.addpart( 'prompt_d', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrow',(640,y2),path='premade',scale=1) )
-        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrow',(640,y2),path='premade',scale=1,flipv=True) )
-        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrow',(640,y2),path='premade',scale=1,rotate=90) )
-        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrow',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
+        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1) )
+        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1,flipv=True) )
+        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1,rotate=90) )
+        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
         animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade')
         self.promptactor.addpart( 'shrink', animation1 )
         # self.promptactor.addpart( 'prompt', draw.obj_textbox('Prompt',(640,200),fontsize='huge',color=share.colors.red) )
         self.promptactor.dict['hero'].show=True
         self.promptactor.dict['villain'].show=True
-        self.promptactor.dict['prompt'].show=True
-        self.promptactor.dict['shrink'].show=True
+        self.promptactor.dict['prompt'].show=self.doprompt
+        self.promptactor.dict['shrink'].show=self.doprompt
         self.promptactor.dict['shrink'].rewind()
         self.whichprompt=tool.randint(0,3)
-        self.promptactor.dict['prompt_w'].show=self.whichprompt==0
-        self.promptactor.dict['prompt_s'].show=self.whichprompt==1
-        self.promptactor.dict['prompt_a'].show=self.whichprompt==2
-        self.promptactor.dict['prompt_d'].show=self.whichprompt==3
+        self.promptactor.dict['prompt_w'].show=self.whichprompt==0 and self.doprompt
+        self.promptactor.dict['prompt_s'].show=self.whichprompt==1 and self.doprompt
+        self.promptactor.dict['prompt_a'].show=self.whichprompt==2 and self.doprompt
+        self.promptactor.dict['prompt_d'].show=self.whichprompt==3 and self.doprompt
         self.promptinput=False# an input has been entered for prompt
         self.promptmatch=False# the current prompt was matched
         self.promptphase=True# are we in countdown or action phase
@@ -4535,33 +4539,37 @@ class obj_world_mechfight(obj_world):
         self.actionactor.addpart('villainblock',animation1)
         #
         animation1=draw.obj_animation('mechfight_villainpunches2','heromechbase',(640,360))
-        animation1.addimage('heromechhit')
-        animation1.addsound( "mech_stomp", [10,105] )
-        animation1.addsound( "mech_contact", [55] )
-        animation1.addsound( "mech_hit", [55] )
+        if not self.dotutorial:
+            animation1.addimage('heromechhit')
+            animation1.addsound( "mech_stomp", [10,105] )
+            animation1.addsound( "mech_contact", [55] )
+            animation1.addsound( "mech_hit", [55] )
         self.actionactor.addpart('herohit',animation1)
         #
         animation1=draw.obj_animation('mechfight_heropunches2','villainmechbase',(640,360))
-        animation1.addimage('villainmechhit')
-        animation1.addsound( "mech_stomp", [10,108] )
-        animation1.addsound( "mech_contact", [58] )
-        animation1.addsound( "mech_strike", [58] )
+        if not self.dotutorial:
+            animation1.addimage('villainmechhit')
+            animation1.addsound( "mech_stomp", [10,108] )
+            animation1.addsound( "mech_contact", [58] )
+            animation1.addsound( "mech_strike", [58] )
         self.actionactor.addpart('villainhit',animation1)
         #
         animation1=draw.obj_animation('mechfight_herocountered','heromechbase',(640,360))
-        animation1.addimage('heromechpunch')
-        animation1.addimage('heromechhit')
-        animation1.addsound( "mech_stomp", [10,88] )
-        animation1.addsound( "mech_counter", [38] )
-        animation1.addsound( "mech_hit", [38] )
+        if not self.dotutorial:
+            animation1.addimage('heromechpunch')
+            animation1.addimage('heromechhit')
+            animation1.addsound( "mech_stomp", [10,88] )
+            animation1.addsound( "mech_counter", [38] )
+            animation1.addsound( "mech_hit", [38] )
         self.actionactor.addpart('herocountered',animation1)
         #
         animation1=draw.obj_animation('mechfight_villaincountered','villainmechbase',(640,360))
-        animation1.addimage('villainmechpunch')
-        animation1.addimage('villainmechhit')
-        animation1.addsound( "mech_stomp", [10,90] )
-        animation1.addsound( "mech_counter", [40] )
-        animation1.addsound( "mech_strike", [40] )
+        if not self.dotutorial:
+            animation1.addimage('villainmechpunch')
+            animation1.addimage('villainmechhit')
+            animation1.addsound( "mech_stomp", [10,90] )
+            animation1.addsound( "mech_counter", [40] )
+            animation1.addsound( "mech_strike", [40] )
         self.actionactor.addpart('villaincountered',animation1)
         #
         if not self.dotutorial:
@@ -4618,9 +4626,9 @@ class obj_world_mechfight(obj_world):
         self.actiontimer.start()
         #
         # healthbar hero
-        self.maxherohealth=1#5# starting hero health
+        self.maxherohealth=5# starting hero health
         self.herohealth=self.maxherohealth# updated one
-        self.maxvillainhealth=1#9# starting hero health
+        self.maxvillainhealth=9# starting hero health
         self.villainhealth=self.maxvillainhealth# updated one
 
         # health bar hero
@@ -4638,6 +4646,8 @@ class obj_world_mechfight(obj_world):
             self.villainhealthbar.addpart('heart_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
             self.villainhealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.75,path='premade') )
             self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+        self.herohealthbar.show=self.dohealth
+        self.villainhealthbar.show=self.dohealth
         # text for winning
         # self.text_undone.addpart( 'text1', draw.obj_textbox('Match the prompts',(640,680),color=share.colors.instructions) )
         self.text_donewin.addpart( 'text1', draw.obj_textbox('super-mech-villain destroyed',(640,y4),fontsize='huge',color=share.colors.darkgreen) )
@@ -4696,98 +4706,111 @@ class obj_world_mechfight(obj_world):
             #
             if self.promptphase:
                 self.prompttimer.update()
-                # Reflex : match correct input here
-                if self.whichprompt==0:# press w
-                    if not self.promptinput:
-                        if controls.gu and controls.guc:
-                            self.promptmatch=True# won
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_wwin'].show=True
-                            self.promptactor.dict['prompt_w'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                        elif (controls.gd and controls.gdc) or (controls.gl and controls.glc) or (controls.gr and controls.grc):
-                            self.promptmatch=False# lost
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_wfail'].show=True
-                            self.actionactor.dict['cross'].show=True
-                            self.promptactor.dict['prompt_w'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                elif self.whichprompt==1:# press s
-                    if not self.promptinput:
-                        if controls.gd and controls.gdc:
-                            self.promptmatch=True# won
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_swin'].show=True
-                            self.promptactor.dict['prompt_s'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                        elif (controls.gu and controls.guc) or (controls.gl and controls.glc) or (controls.gr and controls.grc):
-                            self.promptmatch=False# lost
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_sfail'].show=True
-                            self.actionactor.dict['cross'].show=True
-                            self.promptactor.dict['prompt_s'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                elif self.whichprompt==2:# press a
-                    if not self.promptinput:
-                        if controls.gl and controls.glc:
-                            self.promptmatch=True# won
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_awin'].show=True
-                            self.promptactor.dict['prompt_a'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                        elif (controls.gu and controls.guc) or (controls.gd and controls.gdc) or (controls.gr and controls.grc):
-                            self.promptmatch=False# lost
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_afail'].show=True
-                            self.actionactor.dict['cross'].show=True
-                            self.promptactor.dict['prompt_a'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                elif self.whichprompt==3:# press d
-                    if not self.promptinput:
-                        if controls.gr and controls.grc:
-                            self.promptmatch=True# won
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_dwin'].show=True
-                            self.promptactor.dict['prompt_d'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
-                        elif (controls.gu and controls.guc) or (controls.gd and controls.gdc) or (controls.gl and controls.glc):
-                            self.promptmatch=False# lost
-                            self.promptinput=True
-                            self.actionactor.dict['prompt_dfail'].show=True
-                            self.actionactor.dict['cross'].show=True
-                            self.promptactor.dict['prompt_d'].show=False
-                            self.prompttimer.forcering()
-                            self.promptactor.dict['shrink'].pause()
+                #
+                if self.doprompt:# only if prompt on
+                    # Reflex : match correct input here
+                    if self.whichprompt==0:# press w
+                        if not self.promptinput:
+                            if controls.gu and controls.guc:
+                                self.promptmatch=True# won
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_wwin'].show=True
+                                self.promptactor.dict['prompt_w'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                            elif (controls.gd and controls.gdc) or (controls.gl and controls.glc) or (controls.gr and controls.grc):
+                                self.promptmatch=False# lost
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_wfail'].show=True
+                                self.actionactor.dict['cross'].show=True
+                                self.promptactor.dict['prompt_w'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                    elif self.whichprompt==1:# press s
+                        if not self.promptinput:
+                            if controls.gd and controls.gdc:
+                                self.promptmatch=True# won
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_swin'].show=True
+                                self.promptactor.dict['prompt_s'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                            elif (controls.gu and controls.guc) or (controls.gl and controls.glc) or (controls.gr and controls.grc):
+                                self.promptmatch=False# lost
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_sfail'].show=True
+                                self.actionactor.dict['cross'].show=True
+                                self.promptactor.dict['prompt_s'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                    elif self.whichprompt==2:# press a
+                        if not self.promptinput:
+                            if controls.gl and controls.glc:
+                                self.promptmatch=True# won
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_awin'].show=True
+                                self.promptactor.dict['prompt_a'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                            elif (controls.gu and controls.guc) or (controls.gd and controls.gdc) or (controls.gr and controls.grc):
+                                self.promptmatch=False# lost
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_afail'].show=True
+                                self.actionactor.dict['cross'].show=True
+                                self.promptactor.dict['prompt_a'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                    elif self.whichprompt==3:# press d
+                        if not self.promptinput:
+                            if controls.gr and controls.grc:
+                                self.promptmatch=True# won
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_dwin'].show=True
+                                self.promptactor.dict['prompt_d'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
+                            elif (controls.gu and controls.guc) or (controls.gd and controls.gdc) or (controls.gl and controls.glc):
+                                self.promptmatch=False# lost
+                                self.promptinput=True
+                                self.actionactor.dict['prompt_dfail'].show=True
+                                self.actionactor.dict['cross'].show=True
+                                self.promptactor.dict['prompt_d'].show=False
+                                self.prompttimer.forcering()
+                                self.promptactor.dict['shrink'].pause()
                 #
                 # end of countdown
                 if self.prompttimer.ring:# flip to action
-                    # check if prompt was matched
-                    if not self.promptinput: # no input was given=fail
-                        self.promptmatch=False
-                        self.actionactor.dict['cross'].show=True
-                        self.promptactor.dict['shrink'].pause()
-                        if self.whichprompt==0:# press w
-                            self.actionactor.dict['prompt_wfail'].show=True
-                        elif self.whichprompt==1:# press s
-                            self.actionactor.dict['prompt_sfail'].show=True
-                        elif self.whichprompt==2:# press a
-                            self.actionactor.dict['prompt_afail'].show=True
-                        elif self.whichprompt==3:# press d
-                            self.actionactor.dict['prompt_dfail'].show=True
+                    if not self.doprompt:# no prompt, random outcome
+                        self.promptmatch=tool.randbool()
+                    else:
+                        # check if prompt was matched
+                        if not self.promptinput: # no input was given=fail
+                            self.promptmatch=False
+                            self.actionactor.dict['cross'].show=self.doprompt
+                            self.promptactor.dict['shrink'].pause()
+                            if self.whichprompt==0:# press w
+                                self.actionactor.dict['prompt_wfail'].show=self.doprompt
+                            elif self.whichprompt==1:# press s
+                                self.actionactor.dict['prompt_sfail'].show=self.doprompt
+                            elif self.whichprompt==2:# press a
+                                self.actionactor.dict['prompt_afail'].show=self.doprompt
+                            elif self.whichprompt==3:# press d
+                                self.actionactor.dict['prompt_dfail'].show=self.doprompt
                     # Action as result of prompt
                     if self.promptmatch:# won
-                        self.actionstate=tool.randchoice([0,2])# hero punches villain, or hero blocks villain
-                        self.soundcorrect.play()
+                        if self.dotutorial:
+                            self.actionstate=0# tutorial: hero always punch
+                        else:
+                            self.actionstate=tool.randchoice([0,2])# hero punches villain, or hero blocks villain
+                        if self.doprompt:
+                            self.soundcorrect.play()
                     else:# lost
-                        self.actionstate=tool.randchoice([1,3])# villain punches hero, or villain blocks hero
-                        self.soundwrong.play()
+                        if self.dotutorial:
+                            self.actionstate=1# tutorial: hero gets hit (doesnt matter tho)
+                        else:
+                            self.actionstate=tool.randchoice([1,3])# villain punches hero, or villain blocks hero
+                        if self.doprompt:
+                            self.soundwrong.play()
                     # switch to action phase
                     self.promptphase=False
                     self.actiontimer.start()
@@ -4852,16 +4875,16 @@ class obj_world_mechfight(obj_world):
                     self.prompttimer.start()
                     self.promptactor.dict['hero'].show=True
                     self.promptactor.dict['villain'].show=True
-                    self.promptactor.dict['prompt'].show=True
+                    self.promptactor.dict['prompt'].show=self.doprompt
                     self.promptactor.dict['shrink'].unpause()# unpause
-                    self.promptactor.dict['shrink'].show=True
+                    self.promptactor.dict['shrink'].show=self.doprompt
                     self.promptactor.dict['shrink'].rewind()
                     # random prompt
                     self.whichprompt=tool.randint(0,3)
-                    self.promptactor.dict['prompt_w'].show=self.whichprompt==0
-                    self.promptactor.dict['prompt_s'].show=self.whichprompt==1
-                    self.promptactor.dict['prompt_a'].show=self.whichprompt==2
-                    self.promptactor.dict['prompt_d'].show=self.whichprompt==3
+                    self.promptactor.dict['prompt_w'].show=self.whichprompt==0 and self.doprompt
+                    self.promptactor.dict['prompt_s'].show=self.whichprompt==1 and self.doprompt
+                    self.promptactor.dict['prompt_a'].show=self.whichprompt==2 and self.doprompt
+                    self.promptactor.dict['prompt_d'].show=self.whichprompt==3 and self.doprompt
                     self.promptmatch=False
                     self.promptinput=False
                     #

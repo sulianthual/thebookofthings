@@ -1625,23 +1625,77 @@ class obj_scene_ch7p48(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p47())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p49())
+        share.scenemanager.switchscene(obj_scene_ch7p48a())
     def setup(self):
-        tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
-                    'Enter the correct command when prompted. ',\
-                    ('Press '+tempo+' to start.',share.colors.instructions),\
+                    'Oh boy, that is one epic super-mech fight, said the book of things. ',\
+                    'Lets get started. ',\
                    ]
-        self.world=world.obj_world_mechfight(self,tutorial=True)
+        self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('fight4') )
 
 
+class obj_scene_ch7p48a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p48())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p48b())
+    def setup(self):
+        tempo='['+share.datamanager.controlname('arrows')+']'
+        self.text=[\
+                    'Using the '+tempo+', ',\
+                    'enter the correct command when prompted. ',\
+                   ]
+        self.world=world.obj_world_mechfight(self,tutorial=True)
+        self.addpart(self.world)
+        #
+        self.addpart(draw.obj_image('show3',(850,270),scale=1,path='premade'))
+        #
+        self.addpart( draw.obj_music('fight4') )
+
+
+class obj_scene_ch7p48b(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p48a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p48c())
+    def setup(self):
+        self.text=[\
+                  'Hit ',\
+                  ('{villainname}',share.colors.villain),' to bring ',\
+                  ('{villain_his}',share.colors.villain2),' health down ',\
+                  '(when the fight starts). ',\
+                   ]
+        self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
+        self.addpart(self.world)
+        #
+        self.addpart(draw.obj_image('show1',(640,300),scale=1,fliph=True,flipv=True,path='premade'))
+        #
+        self.addpart( draw.obj_music('fight4') )
+
+
+class obj_scene_ch7p48c(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p48b())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p49())
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[\
+                    'This is it. ',\
+                    ('Press '+tempo+' to start.',share.colors.instructions),\
+                   ]
+        self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('fight4') )
+
 
 class obj_scene_ch7p49(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p48())
+        share.scenemanager.switchscene(obj_scene_ch7p48c())
     def nextpage(self):
         if self.world.win or share.devmode:
             share.scenemanager.switchscene(obj_scene_ch7p50())
