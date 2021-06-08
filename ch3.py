@@ -510,7 +510,6 @@ class obj_scene_ch3p15a(page.obj_chapterpage):
                   ('{villainname}',share.colors.villain),'".',\
                    ]
         self.addpart( draw.obj_image('floor1',(640,500),path='premade') )
-        self.addpart( draw.obj_image('sun',(800,250),scale=0.4) )
         self.addpart( draw.obj_image('herobase',(200,500-50),scale=0.5) )
         self.addpart( draw.obj_image('villainbase',(1280-150,450-50),scale=0.5,fliph=True) )
         self.addpart( draw.obj_image('gun',(1280-150-175,445-50),scale=0.25,fliph=True) )
@@ -531,12 +530,11 @@ class obj_scene_ch3p16(page.obj_chapterpage):
     def setup(self):
         tempou='['+share.datamanager.controlname('up')+']'
         tempod='['+share.datamanager.controlname('down')+']'
-        self.text=[\
-                  'This is how the gunfight works, said the book of things. Make ',\
-                  ('{heroname}',share.colors.hero),' jump with '+tempou+' and crouch with '+tempod+'.',\
-                   ]
+        self.text=['This is how it works: jump with '+tempou+' and crouch with '+tempod+'.']
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
+        #
+        self.addpart(draw.obj_image('show1',(560,540),path='premade',fliph=True))
         #
         self.addpart( draw.obj_music('fight1') )
 
@@ -550,16 +548,14 @@ class obj_scene_ch3p17(page.obj_chapterpage):
         return controls.ga and controls.gac
     def setup(self):
         self.text=[\
-                  'The hearts in the lower left show how much life ',\
-                  ('{heroname}',share.colors.hero),' has. ',\
-                  'If ',('{hero_he}',share.colors.hero2),' gets hit, ',\
-                  ('{hero_he}',share.colors.hero2),' will loose life and eventually die, ',\
-                  'so dont let that happen. '
+                  'This is ',\
+                  ('{heroname}',share.colors.hero),'\'s health. ',\
+                  'Dont get hit or ',('{hero_he}',share.colors.hero2),' will die. ',\
                    ]
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show1',(480,530),path='premade'))
+        self.addpart(draw.obj_image('show1',(390,290),path='premade',flipv=True))
         #
         self.addpart( draw.obj_music('fight1') )
 
@@ -573,15 +569,12 @@ class obj_scene_ch3p18(page.obj_chapterpage):
         return controls.ga and controls.gac
     def setup(self):
         self.text=[\
-                  'This is how much bullets ',\
-                  ('{villainname}',share.colors.villain),' has left. ',\
-                  ' Survive the fight until ',('{villain_he}',share.colors.villain2),\
-                  ' is out. '
+                  'This is how much bullets are left. ',\
                    ]
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show2',(880,530),path='premade'))
+        self.addpart(draw.obj_image('show1',(740,290),path='premade',fliph=True,flipv=True))
         #
         self.addpart( draw.obj_music('fight1') )
 
@@ -618,9 +611,7 @@ class obj_scene_ch3p19(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
-        self.text=[\
-                  'Survive the gun fight. ',\
-                   ]
+        self.text=[]
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)
         #

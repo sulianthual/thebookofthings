@@ -1904,9 +1904,10 @@ class obj_world_dodgegunshots(obj_world):
         self.text_start=obj_grandactor(self,(640,360))# text message at start
         self.text_start.show=True
         # static
-        if not self.incastle:
-            self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
-            self.staticactor.addpart( 'sun', draw.obj_image('sun',(800,250),scale=0.4) )
+        self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
+        # if not self.incastle:
+            # self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
+            # self.staticactor.addpart( 'sun', draw.obj_image('sun',(470,190),scale=0.4) )
         # hero
         self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
         self.hero.addpart( 'crouch', draw.obj_image('herocrouch',(200,500+50+self.yoff),scale=0.5) )
@@ -1963,20 +1964,26 @@ class obj_world_dodgegunshots(obj_world):
         # cannonballs
         self.cannonballs=[]# empty list
         # health bar
-        self.maxherohealth=5# starting hero health
+        self.maxherohealth=3# starting hero health (reference=always 3)
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360))
+        if self.dotutorial:
+            self.ybar=150# for health bars and text
+        else:
+            self.ybar=50
+        self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         for i in range(self.maxherohealth):
-            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,650),scale=0.125) )
+            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
         # bullet count
         self.maxvillainshots=12
         self.villainshots=self.maxvillainshots
         self.bulletbar=obj_grandactor(self,(640,360))
+        self.bulletbar.addpart('face', draw.obj_image('villainhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.maxvillainshots):
             if i>int(self.maxvillainshots/2)-1:
-                self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-(i-int(self.maxvillainshots/2))*50-10,720-25-5),scale=0.125) )
+                self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-130-(i-int(self.maxvillainshots/2))*50-10,self.ybar-25),scale=0.125) )
             else:
-                self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-25-i*50-10,720-25-50-5),scale=0.125) )
+                self.bulletbar.addpart('bullet_'+str(i), draw.obj_image('bullet',(1280-130-i*50-10,self.ybar+25),scale=0.125) )
         # text
         self.text_undone.addpart( 'text1', \
         draw.obj_textbox('['+share.datamanager.controlname('up')+': jump] ['+share.datamanager.controlname('down')+': crouch]',(640,660),color=share.colors.instructions) )
@@ -2294,7 +2301,7 @@ class obj_world_stompfight(obj_world):
             self.ybar=150# for health bars and text
         else:
             self.ybar=50
-        self.maxherohealth=5# starting hero health
+        self.maxherohealth=3# starting hero health (reference=always 3)
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360))
         self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
@@ -4024,18 +4031,19 @@ class obj_world_ridecow(obj_world):
         self.text_start.show=True
 
         # static actor
-        self.staticactor.addpart( 'anim1', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360)) )
-        self.staticactor.addpart( 'anim2', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+100)) )
-        self.staticactor.addpart( 'anim3', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-100)) )
+        if not self.dotutorial:
+            self.staticactor.addpart( 'anim1', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
+        self.staticactor.addpart( 'anim2', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-100)) )
+        self.staticactor.addpart( 'anim3', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360)) )
         #
         # self.staticactor.addpart( 'anim4', draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+200)) )
-        animation1=draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+200))
+        animation1=draw.obj_animation('ch6_skeletonrun','skeletonbase_sailorhat',(640,360+100))
         animation1.addsound( "skeleton4", [1])
         animation1.addsound( "skeleton2", [64],skip=3)# breathing (turned off if wins)
         self.staticactor.addpart( 'anim4', animation1 )
         #
         # self.staticactor.addpart( 'anim5', draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200)) )
-        animation2=draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360-200))
+        animation2=draw.obj_animation('ch6_skeletonrun','skeletonbase',(640,360+200))
         # animation2.addsound( "skeleton1", [1])
         # animation2.addsound( "skeleton3", [31])
         self.staticactor.addpart( 'anim5', animation2 )
@@ -4080,14 +4088,25 @@ class obj_world_ridecow(obj_world):
         else:
             self.shotprobas=[0,0,100]
         # health bar
-        self.maxherohealth=5# starting hero health
+        self.maxherohealth=3# starting hero health (reference=always 3)
         self.herohealth=self.maxherohealth# updated one
         self.healthbar=obj_grandactor(self,(640,360),foreground=False)
+        if self.dotutorial:
+            self.ybar=150# for health bars and text
+        else:
+            self.ybar=50
+        self.healthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         for i in range(self.maxherohealth):
-            if self.dotutorial:
-                self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75+130,150),scale=0.125) )
-            else:
-                self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,50),scale=0.125) )
+            self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
+
+
+        # for i in range(self.maxherohealth):
+        #     if self.dotutorial:
+        #         self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75+130,150),scale=0.125) )
+        #     else:
+        #         self.healthbar.addpart('heart_'+str(i), draw.obj_image('love',(50+i*75,50),scale=0.125) )
+
+
         # timer for done part
         self.timerendwin=tool.obj_timer(180)# goal to done
         self.timerendloose=tool.obj_timer(180)# goal to done
@@ -4639,9 +4658,9 @@ class obj_world_mechfight(obj_world):
         self.actiontimer.start()
         #
         # healthbar hero
-        self.maxherohealth=5# starting hero health
+        self.maxherohealth=3# starting hero health (reference=always 3)
         self.herohealth=self.maxherohealth# updated one
-        self.maxvillainhealth=9# starting hero health
+        self.maxvillainhealth=9# starting villain health
         self.villainhealth=self.maxvillainhealth# updated one
 
         # health bar hero
@@ -4946,12 +4965,8 @@ class obj_world_mechfight(obj_world):
                         self.promptactor.dict['prompt_s'].show=False
                         self.promptactor.dict['prompt_a'].show=False
                         self.promptactor.dict['prompt_d'].show=False
-                        for i in range(self.maxherohealth):
-                            self.herohealthbar.dict['heart_'+str(i)].show=False
-                            self.herohealthbar.dict['heartcross_'+str(i)].show=False
-                        for i in range(self.maxvillainhealth):
-                            self.villainhealthbar.dict['heart_'+str(i)].show=False
-                            self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+                        if self.herohealth<self.maxherohealth:
+                            self.herohealthbar.dict['heart_'+str(self.herohealth)].show=False
 
                     # villain check health
                     if self.villainhealth>0:
@@ -4972,12 +4987,8 @@ class obj_world_mechfight(obj_world):
                         self.promptactor.dict['prompt_s'].show=False
                         self.promptactor.dict['prompt_a'].show=False
                         self.promptactor.dict['prompt_d'].show=False
-                        for i in range(self.maxherohealth):
-                            self.herohealthbar.dict['heart_'+str(i)].show=False
-                            self.herohealthbar.dict['heartcross_'+str(i)].show=False
-                        for i in range(self.maxvillainhealth):
-                            self.villainhealthbar.dict['heart_'+str(i)].show=False
-                            self.villainhealthbar.dict['heartcross_'+str(i)].show=False
+                        if self.villainhealth<self.maxvillainhealth:
+                            self.villainhealthbar.dict['heart_'+str(self.villainhealth)].show=False
 
         else:
             # goal reached state

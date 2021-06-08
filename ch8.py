@@ -1127,6 +1127,10 @@ class obj_scene_ch8southride(page.obj_chapterpage):
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
         #
+        self.sound=draw.obj_sound('cow')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('race1') )
 
 

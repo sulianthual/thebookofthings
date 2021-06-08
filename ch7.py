@@ -785,6 +785,7 @@ class obj_scene_ch7p21(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('ch7') )
 
+
 class obj_scene_ch7p21a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p21())
@@ -795,6 +796,7 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
                   '"I will not let you win this time, said ',\
                   ('{villainname}',share.colors.villain),'".',\
                    ]
+        self.addpart( draw.obj_image('floor1',(640,500),path='premade') )
         self.addpart( draw.obj_image('herobase',(200,500-50),scale=0.5) )
         self.addpart( draw.obj_image('villainbase',(1280-150,450-50),scale=0.5,fliph=True) )
         self.addpart( draw.obj_image('gun',(1280-150-175,445-50),scale=0.25,fliph=True) )

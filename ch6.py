@@ -1012,8 +1012,9 @@ class obj_scene_ch6p38(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
     def setup(self):
+        tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Way to go, said the book of things. ',\
-                    'Move ',('treasure',share.colors.cow),' around with the arrows. ',\
+                    'Move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
                    ]
         self.textkeys={'pos':(100,50),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
@@ -1022,6 +1023,8 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         self.sound=draw.obj_sound('skeleton2')
         self.addpart(self.sound)
         self.sound.play()
+        #
+        self.addpart( draw.obj_image('show1',(760,540),fliph=False,flipv=False,path='premade') )
         #
         self.addpart( draw.obj_music('race1') )
 
@@ -1033,18 +1036,15 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
     def setup(self):
         self.text=[\
-                    # 'Avoid the palm trees and the rocks, until you make it to the ship. ',\
-                    'Make sure ',('{heroname}',share.colors.hero),\
-                    ' doesnt get hit by trees or rocks, ',\
-                    'or ',('{hero_he}',share.colors.hero),\
-                    ' will loose life. ',\
+                    'Avoid trees and rocks or ',\
+                    ('{heroname}',share.colors.hero),\
+                    ' will get hurt. ',\
                    ]
         self.textkeys={'pos':(100,50),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
-        # self.addpart( draw.obj_image('show3',(418,300),path='premade') )
-        self.addpart( draw.obj_image('show1',(570,260),scale=0.65,fliph=False,flipv=True,path='premade') )
+        self.addpart( draw.obj_image('show3',(460,160),scale=1,fliph=False,flipv=True,path='premade') )
         #
         self.addpart( draw.obj_music('race1') )
 
@@ -1063,7 +1063,7 @@ class obj_scene_ch6p38b(page.obj_chapterpage):
         self.addpart(self.world)
         #
         # self.addpart( draw.obj_image('show3',(418,300),path='premade') )
-        self.addpart( draw.obj_image('show1',(990,550),scale=0.65,fliph=True,flipv=False,path='premade') )
+        self.addpart( draw.obj_image('show1',(970,520),fliph=True,flipv=False,path='premade') )
         #
         self.addpart( draw.obj_music('race1') )
 
@@ -1100,6 +1100,10 @@ class obj_scene_ch6p39(page.obj_chapterpage):
         self.text=[]
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
+        #
+        self.sound=draw.obj_sound('cow')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('race1') )
 

@@ -43,17 +43,31 @@ class obj_quickscene():
             #
             # quickscene=ch1.obj_scene_ch1play1()
             # quickscene=ch2.obj_scene_ch2p1()
-            # quickscene=ch3.obj_scene_ch3p20()
+            # quickscene=ch3.obj_scene_ch3p16()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p21()
             # quickscene=ch5.obj_scene_ch5p36()
             # quickscene=ch5.obj_scene_ch5p39()
-            quickscene=ch6.obj_scene_ch6p21()
+            # quickscene=ch6.obj_scene_ch6p21()
             # quickscene=ch6.obj_scene_ch6p47()
             # quickscene=ch7.obj_scene_ch7p52()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8roam()
             # quickscene=ch8.obj_scene_ch8island()
+            #
+            # minigames
+            # quickscene=ch2.obj_scene_ch2p8()# ch2 serenade
+            # quickscene=ch3.obj_scene_ch3p19()# ch3 dodge
+            # quickscene=ch4.obj_scene_lyingstart()# ch4 lying
+            # quickscene=ch5.obj_scene_ch5p36()# ch5 rps
+            # quickscene=ch6.obj_scene_ch6p21()# ch6 travel (get logs)
+            # quickscene=ch6.obj_scene_ch6p30()# ch6 sneak
+            quickscene=ch6.obj_scene_ch6p38a()# ch6 ride cow
+            # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
+            # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
+            # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
+            # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
+
 
             #
             #

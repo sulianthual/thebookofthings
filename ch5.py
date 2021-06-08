@@ -1114,7 +1114,7 @@ class obj_scene_ch5p35(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p34())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p36())
+        share.scenemanager.switchscene(obj_scene_ch5p35a())
     def setup(self):
         self.text=[\
                '"Tell you what, lets play one last game of ',\
@@ -1144,9 +1144,27 @@ class obj_scene_ch5p35(page.obj_chapterpage):
         self.addpart( draw.obj_music('winds') )
 
 
-class obj_scene_ch5p36(page.obj_chapterpage):
+class obj_scene_ch5p35a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p35())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p36())
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[\
+                  ' Alrighty. ',\
+                  ('Press '+tempo+' when you are ready.',share.colors.instructions),\
+                   ]
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,tutorial=True)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('winds') )
+
+
+
+class obj_scene_ch5p36(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p35a())
     def nextpage(self):
         if self.world.win:
             share.scenemanager.switchscene(obj_scene_ch5p37())
@@ -1224,15 +1242,11 @@ class obj_scene_ch5p37(page.obj_chapterpage):
         animation1=draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
         animation1.addsound( "elder2", [200], skip=1 )
         animation1.addsound( "elder3", [36] )
         #
-        self.addpart( draw.obj_music('winds') )
+        self.addpart( draw.obj_music('ch5play') )
 
 
 class obj_scene_ch5p38(page.obj_chapterpage):
