@@ -242,7 +242,7 @@ class obj_scene_ch0p10(page.obj_chapterpage):
 
         yref=560
         self.addpart( draw.obj_textbox('current mood: ',(180,yref)) )
-        textchoice=draw.obj_textchoice('playermood',default='okay')
+        textchoice=draw.obj_textchoice('playermood')
         textchoice.addchoice('1. whatever','whatever',(440,yref))
         textchoice.addchoice('2. okay','okay',(640,yref))
         textchoice.addchoice('3. amazing','amazing',(840,yref))
