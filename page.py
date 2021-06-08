@@ -36,7 +36,7 @@ class obj_page:
         self.postsetup()
     def presetup(self):# background
         self.addpart(draw.obj_pagebackground())
-        share.soundplayer.stop()# stop all sounds for safety (omitted for soundnextpage,etc)
+        # share.soundplayer.stop()# stop all sounds for safety (omitted for soundnextpage,etc)
     def setup(self,**kwargs):# custom elements
         pass
     def postsetup(self):# foreground

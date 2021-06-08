@@ -30,7 +30,7 @@ class obj_scene_chapter6(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
                    '\n It was the next day when the book of things said to the pen and the eraser: ',\
-                  'lets see how our story is going so far. ',\
+                  'lets continue our story where we left. ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)

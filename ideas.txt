@@ -58,6 +58,14 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ###########################################################
 * Final changes that should probably be made:
 
+
+-sounds during page transitions:
+ page may initiate with share.soundplayer.stop() to kill all sounds (potential looped sounds)
+ but then sounds when exiting page are muted
+
+- change pages with the mouse? Like by clicking a "Next Page"?
+  could make it appear/load on a timer...
+
 - draws objects fonctionality (for textbox, image,animation, or dispgroup):
   launches a timer that makes draw  draw.show=False after timer ends (timer is automatic from updates)
   1) use option vanish=amount (starts timer) at creation to start timer

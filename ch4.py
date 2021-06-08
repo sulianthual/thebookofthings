@@ -434,14 +434,8 @@ class obj_scene_ch4p14(page.obj_chapterpage):
         self.addpart( animation5 )
         #
         self.sound=draw.obj_sound('revealscary')
-        # self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
-        #
-        # self.sound=draw.obj_sound('revealscary')
-        # self.sound2=draw.obj_sound('bookscene')
-        # self.addpart(self.sound2)
-        # self.sound2.play()
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5','bunny_scream') )
         animation1.addsound( "bunny2", [0] )
@@ -476,36 +470,6 @@ class obj_scene_ch4p15(page.obj_chapterpage):
         animation1.addsound( "bunny5", [103],skip=1)
         #
         self.addpart( draw.obj_music('ch4play') )
-
-
-# class obj_scene_ch4p16(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch4p15())
-#     def nextpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch4p17())
-#     def setup(self):
-#         self.text=[\
-#                 '"So you want to know my part of the  ',\
-#                 ('castle\'s password',share.colors.password),'. ',\
-#                 'Tell you what, I will give it to you if you win my ',('lying game',share.colors.grandmaster2),\
-#                 '." ',\
-#                    ]
-#         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
-#         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
-#         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
-#         self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
-#         self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
-#         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
-#         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-#         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-#         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-#         self.addpart( animation1 )
-#         #
-#         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-#         animation1.addsound( "bunny2", [128] )
-#         animation1.addsound( "bunny3", [43],skip=1 )
-#         #
-#         self.addpart( draw.obj_music('ch4play') )
 
 
 class obj_scene_ch4p17(page.obj_chapterpage):
@@ -1022,7 +986,7 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         self.text=[\
                     '"The first part of the castle\'s password is: ',\
                     ('"fight"',share.colors.password),'. ',\
-                    'That\'s my motto, "fight in any situation", which I taught to ',\
+                    'That\'s my motto: "fight in any situation", which I taught to ',\
                     ('{villainname}',share.colors.villain),' when ',\
                     ('{villain_he}',share.colors.villain2),' was my student." ',\
                    ]
