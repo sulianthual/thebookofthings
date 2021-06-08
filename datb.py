@@ -326,7 +326,7 @@ class obj_colors:
         self.maroon=(128,0,0)
         self.darkerpurple=(138,0,138)
         self.pink=(231,84,128)
-        self.darkorange=(255,140,0)
+        self.darkorange=(240,94,35)
         # Colors devmode
         self.devtextbox=(233,222,100)# yellow
         self.devimage=(250,150,0)# orange
@@ -676,15 +676,16 @@ class obj_snapshotmanager:
         if name =='bunnyface':
             # save bunny head
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360+150),scale=1.5,path='premade'))
+            # dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360+150),scale=1.5,path='premade'))
+            dispgroup1.addpart('part1',draw.obj_image('bunnystickhead',(640,360+150),scale=0.75,path='premade'))
             dispgroup1.addpart('part2',draw.obj_image('bunnyface',(640,360)))
-            dispgroup1.snapshot((640,360,200,300),'bunnyhead')
+            dispgroup1.snapshot((640,360,400,300),'bunnyhead')
         if name in ['bunnyface','bunnybody']:
             # save angry head
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',draw.obj_image('bunnybody',(640,360+65)))
             dispgroup1.addpart('part2',draw.obj_image('bunnyhead',(640,360-150),scale=0.5))
-            dispgroup1.snapshot((640,295,200,235),'bunnybase')
+            dispgroup1.snapshot((640,295,200,235+50),'bunnybase')
         if name =='elderhead':
             # # save elder full body (slight offset made)
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup

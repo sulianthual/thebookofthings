@@ -56,11 +56,9 @@ class obj_scene_ch4p1(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',
-                   ('{partnername}',share.colors.partner),' has been captured by the ',\
-                    ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),', and ',\
-                     ('{partner_he}',share.colors.partner2),' is being held in ',\
-                     ('{villain_his}',share.colors.villain2),' ',\
-                     ('evil castle',share.colors.location2),'. ',\
+                   ('{partnername}',share.colors.partner),' is being held captive in ',\
+                    ('{villainname}',share.colors.villain),'\'s ',\
+                     ('evil castle',share.colors.location2),', and ',\
                      ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
                      ('password',share.colors.password2),'. ',\
                    ]
@@ -90,12 +88,11 @@ class obj_scene_ch4p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p2a())
     def setup(self):
         self.text=[\
-                  '"Luckily, ',('{heroname}',share.colors.hero),\
+                  '"',('{heroname}',share.colors.hero),\
                    ' has befriended a terrifying ',('{bug}',share.colors.bug),\
-                    ' who may know how to crack the castle\'s ',('password',share.colors.password2),'. ',\
-                    'Today, they are on their way to meet a ',\
+                    ', and they need to visit three ',\
                     ('grandmaster of deceit',share.colors.grandmaster),\
-                    ' that lives in the east."',\
+                    ' that know parts of the castle\'s password."',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
@@ -115,11 +112,10 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p3())
     def setup(self):
         self.text=[\
-                   'First, lets make sure ',('{heroname}',share.colors.hero),' wakes up on time for ', \
-                   ('{hero_his}',share.colors.hero2),' adventure, said the book of things. ',\
+                   'First, lets make sure ',('{heroname}',share.colors.hero),\
+                   ' wakes up today, said the book of things. ',\
                    'Draw a ',('night stand',share.colors.item),\
-                   ' and an ',('alarm clock',share.colors.item),\
-                   ' to wake ',('{hero_him}',share.colors.hero2),' up. ',\
+                   ' and an ',('alarm clock',share.colors.item),'. ',\
                    ]
         self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='Night Stand',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock (draw the exterior)',shadow=(200,200)) )
@@ -140,8 +136,8 @@ class obj_scene_ch4p3(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-               'Alright lets go, said the book of things: ',\
-                '"once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+               'Lets do this, said the book of things: ',\
+                '"once upon a time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' that lived in a house. ',\
                 'It was morning and the sun was rising." ',\
                    ]
@@ -259,13 +255,9 @@ class obj_scene_ch4p8(page.obj_chapterpage):
         self.text=[\
                   '"The ',('{bug}',share.colors.bug),\
                   ' crawled out of ',('{heroname}',share.colors.hero),\
-                  '\'s pocket and said: ',\
-                   ' Alright, today we need to head east and meet the first ',\
-                   ('grandmaster of deceit',share.colors.grandmaster),'. ',\
-                    'From what I heard in ',('{villainname}',share.colors.villain),\
-                    '\'s sleep, this grandmaster ',\
-                    'holds the first clue to the evil castle\'s ',\
-                    ('password',share.colors.password2),'". ',\
+                  '\'s pocket and said: the first ',\
+                   ('grandmaster of deceit',share.colors.grandmaster),\
+                    ' lives in the east not far from here. Lets get going." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
@@ -284,7 +276,9 @@ class obj_scene_ch4p9(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p10())
     def setup(self):
-        self.text=['This grandmaster lives in a magical cave in a dark forest,',\
+        self.text=['The ',\
+                    ('grandmaster',share.colors.grandmaster),\
+                    '\'s home is a magical cave in a dark forest,',\
                     ' said the book of things. ',\
                     'Draw a ',('cave',share.colors.item),\
                     ' and a ',('tree',share.colors.item),' and we will be on our way. ',\
@@ -321,51 +315,63 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         self.text=[\
                 '"Arrived at the ',('magical cave',share.colors.location2),', ',\
                 ('{heroname}',share.colors.hero),\
-                ' met an extremely cute ',('bunny',share.colors.bunny),'". ',\
-                'Go on, draw the ',('bunny',share.colors.bunny),'\'s head. ',\
+                ' met an extremely cute ',('bunny',share.colors.bunny),'." ',\
+                'Awww, how nice said the book of things. Choose a name for the ',('bunny',share.colors.bunny),'. ',\
                    ]
-        self.textkeys={'pos':(50,200),'xmax':720}
-        self.addpart( draw.obj_image('stickhead',(980,360+150-10),path='premade',scale=1.5) )
-        self.addpart( draw.obj_drawing('bunnyface',(980,360-10),legend='Bunny Head (facing right)',shadow=(200,300)) )
+        yref=260
+        dyref=120
+        self.addpart( draw.obj_textbox("the bunny\'s name was:",(200,yref)) )
+        self.addpart( draw.obj_textinput('bunnyname',20,(750,yref), legend='bunny name') )
         #
         self.addpart( draw.obj_music('ch4') )
+        #
 
 
 class obj_scene_ch4p12(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p11())
     def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p12a())
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_image('bunnystickhead',(640,360+150-10),scale=0.75,path='premade') )
+        self.addpart( draw.obj_drawing('bunnyface',(640,360-10),legend='draw a bunny head (facing right)',shadow=(400,300)) )
+        #
+        self.addpart( draw.obj_music('ch4') )
+
+
+class obj_scene_ch4p12a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p12())
+    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p13())
     def setup(self):
         self.text=[\
-                'Great. Now draw the ',('bunny',share.colors.bunny),'\'s body, said the book of things. ',\
+                'Now draw ',('{bunnyname}',share.colors.bunny),'\'s body. ',\
                 'Remember to make it very cute! ',\
-                'And finish by naming it. ',\
                    ]
-        self.textkeys={'pos':(50,100),'xmax':720}
-        self.addpart( draw.obj_drawing('bunnybody',(980,360+65),legend='Bunny body (facing right)',shadow=(200,105),brush=share.brushes.pen6) )
-        self.addpart( draw.obj_image('bunnyhead',(980,360-150),scale=0.5) )
-        self.addpart( draw.obj_textinput('bunnyname',20,(380,360), legend='Bunny Name') )
+        yref=400
+        self.addpart( draw.obj_drawing('bunnybody',(640,yref+65),legend='bunny body (facing right)',shadow=(200,105+50),brush=share.brushes.pen6) )
+        self.addpart( draw.obj_image('bunnyhead',(640,yref-150),scale=0.5) )
         #
         self.addpart( draw.obj_music('ch4') )
 
 
 class obj_scene_ch4p13(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p12())
+        share.scenemanager.switchscene(obj_scene_ch4p12a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p14())
     def soundnextpage(self):
         pass# no sound
     def setup(self):
         self.text=[\
-                'Lets move on, said the book of things. ',\
+                'Moving on, said the book of things: ',\
                 '"',('{heroname}',share.colors.hero),\
                 ' met a ',('bunny',share.colors.bunny),' called ',\
-                ('{bunnyname}',share.colors.bunny),\
-                ' at the ',('magical cave',share.colors.location2),'. ',\
-                ('{heroname}',share.colors.hero),' said: ',\
-                ' wow, you are so cute, can I pet you". ',\
+                ('{bunnyname}',share.colors.bunny),'. ',\
+                ('{hero_he}',share.colors.hero),' said: ',\
+                ' wow, you are so cute, can I pet you." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         # self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -395,10 +401,9 @@ class obj_scene_ch4p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p15())
     def setup(self):
         self.text=[\
-                '"Ha! You think I am cute!, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                'Well, look carefully at all these trees. Poof, they are all gone. ',\
-                'I just chopped them with my LITTLE PAW! ',\
-                'Do you still want to pet me now". ',\
+                '"Ha! You think I am cute, said ',('{bunnyname}',share.colors.bunny),'. ',\
+                'Look at these trees, poof, I chopped them all ',\
+                'with my ',('LITTLE PAWS',share.colors.bunny),'!" ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -452,7 +457,7 @@ class obj_scene_ch4p15(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p14())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16())
+        share.scenemanager.switchscene(obj_scene_ch4p17())
     def setup(self):
         self.text=[\
                 '"Hahaha, said the ',('bunny',share.colors.bunny),'. ',\
@@ -460,7 +465,7 @@ class obj_scene_ch4p15(page.obj_chapterpage):
                 'I am ',('{bunnyname}',share.colors.bunny),\
                 ', the ',('grandmaster of deceit',share.colors.grandmaster),\
                 ' from the east! ',\
-                'Tremble before me". ',\
+                'Tremble before me." ',\
                    ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
@@ -473,17 +478,47 @@ class obj_scene_ch4p15(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch4play') )
 
 
-class obj_scene_ch4p16(page.obj_chapterpage):
+# class obj_scene_ch4p16(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p15())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p17())
+#     def setup(self):
+#         self.text=[\
+#                 '"So you want to know my part of the  ',\
+#                 ('castle\'s password',share.colors.password),'. ',\
+#                 'Tell you what, I will give it to you if you win my ',('lying game',share.colors.grandmaster2),\
+#                 '." ',\
+#                    ]
+#         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
+#         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+#         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+#         self.addpart( animation1 )
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+#         animation1.addsound( "bunny2", [128] )
+#         animation1.addsound( "bunny3", [43],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('ch4play') )
+
+
+class obj_scene_ch4p17(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p15())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p17())
+        share.scenemanager.switchscene(obj_scene_lyingstart())
     def setup(self):
         self.text=[\
-                '"Well, I also teach some great evil ways, said ',\
-                ('{bunnyname}',share.colors.bunny),'. ',\
-                'Tell you what, if you manage to win my ',('lying game',share.colors.grandmaster2),\
-                ' you can ask me anything". ',\
+                '"So you want to know ',\
+                ('my part of the castle\'s password',share.colors.password),'. ',\
+                'Tell you what, I will give it to you if you win my ',('lying game',share.colors.grandmaster2),\
+                '." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -503,31 +538,6 @@ class obj_scene_ch4p16(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch4play') )
 
 
-class obj_scene_ch4p17(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingstart())
-    def setup(self):
-        self.text=[\
-                '"The ',('{bug}',share.colors.bug),\
-                ' crawled out of ',('{heroname}',share.colors.hero),\
-                '\'s pocket and whispered: ',\
-                'I think we are onto something, lets win this ',\
-                ('lying game',share.colors.grandmaster2),' then ask for the evil lair\'s ',\
-                ('password',share.colors.password2),'". ',\
-                   ]
-        self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
-        self.addpart( animation1 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [15, 100] )
-        animation1.addsound( "bug2", [116],skip=1 )
-        #
-        self.addpart( draw.obj_music('ch4play') )
-
-
 #################################################################
 # Lying game
 # *LYING
@@ -539,10 +549,9 @@ class obj_scene_lyingstart(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_lyingpart1())
     def setup(self):
         self.text=[\
-                '"Alright, said ',\
-                ('{bunnyname}',share.colors.bunny),'. ',\
-                'here is how the ',('lying game',share.colors.grandmaster2),\
-                ' works. It is all about having a good memory and mastering the art of lying." ',\
+                '"The lying game is all about having a good memory and mastering the art of deception, said ',\
+                ('{bunnyname}',share.colors.bunny),'. Now lets get started."',\
+
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -579,7 +588,7 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
                     'This game plays in three rounds. For the first round, ',\
                     'here are three ',\
                     ('true statements',share.colors.darkgreen),' you need to remember. ',\
-                    'You can even take some notes at the bottom of the screen to help your memory. '
+                    'You can even take some notes at the bottom of the screen. '
                    ]
         self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0),(400,220),xleft=True,color=share.colors.darkgreen  ) )
         self.addpart( draw.obj_textbox( '2. '+self.world.getstatement(1),(400,290),xleft=True,color=share.colors.darkgreen  ) )
@@ -673,10 +682,8 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
             self.world=kwargs["world"]# inherit lying database
         else:
             self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    ' You gave me the wrong answer. ',\
-                    'If your memory is that bad you can always ',\
-                    ('take some notes',share.colors.instructions),' at the bottom of the screen. ',\
+        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),', ',\
+                    'you gave me the wrong answer. ',\
                     'Now go back and win this first round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -740,7 +747,6 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         self.text=['For the second round, ',('I will now be lying',share.colors.red),'. ',\
                     'Let me tell you three statements. They are ',\
                     ('all false ',share.colors.red),' because I am lying. ',\
-                    'Once again, you can take some notes to help your memory. '
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
         self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0,lying=True),(400,220),xleft=True,color=share.colors.red) )
@@ -800,9 +806,7 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
                     ' You gave me the wrong answer. ',\
                     'For this second round, remember that ',\
                     ('all my statements are false',share.colors.red),'. ',\
-                    'And I may suggest that you take some notes ',\
-                    'at the bottom of the screen. ',\
-                    'Now go back and win this second round, I know you can do it! ',\
+                    'Now go back and win this second round. ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
@@ -942,13 +946,13 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
             self.world=kwargs["world"]# inherit lying database
         else:
             self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    'Well, you actually gave me the correct answer, but that isnt what I wanted. ',\
+        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),', ',\
+                    'you actually gave me the correct answer. ',\
                     'For this third round, remember that ',\
-                    ('all my statements are false',share.colors.red),' (I am lying), ',\
-                    'and that you must ',\
-                    ('always give me the wrong answer',share.colors.red),' (you are lying too). ',\
-                    'Now go back and win this third round, I know you can do it! ',\
+                    ('all my statements are false',share.colors.red),\
+                    ', and that you must ',\
+                    ('always give me the wrong answer',share.colors.red),'. ',\
+                    'Now go back and win this third round. ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
@@ -967,11 +971,9 @@ class obj_scene_lyingend(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p18())
     def setup(self):
         self.text=[\
-                    'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
+                    '"Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won my ',('lying game',share.colors.grandmaster2),'! ',\
-                    ' You are truly a ',\
-                    ('great deceiver',share.colors.grandmaster2),' that can ',\
-                    ('lie',share.colors.grandmaster),' like no equal. ',\
+                    ' You are truly a great deceiver!"',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -1018,45 +1020,11 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p19())
     def setup(self):
         self.text=[\
-                    '"Oh, you want to know the  ',('password',share.colors.password2),\
-                    ' that opens ',('{villainname}',share.colors.villain),'\'s ',\
-                    ('castle',share.colors.location2),'. ',\
-                    'Well sorry, I cant tell for sure. You see, ',\
-                    ('{villainname}',share.colors.villain),' was a former student of mine, ',\
-                    'and he was quite dedicated". ',\
-                   ]
-        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
-        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation1 )
-        animation3=draw.obj_animation('ch4_herowalkbunny3inter','interrogationmark',(640,360),record=False,sync=animation1,path='premade')
-        animation3.addimage('empty',path='premade')
-        self.addpart( animation3 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [128] )
-        animation1.addsound( "bunny3", [43],skip=1 )
-        #
-        self.addpart( draw.obj_music('ch4play') )
-
-
-class obj_scene_ch4p19(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p18())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p19a())
-    def setup(self):
-        self.text=[\
-                    '"One thing is fore sure, ',('{villainname}',share.colors.villain),
-                    ' certainly remembers my motto which is "fight in any situation". ',\
-                    'Yes, that\'s it. I am pretty sure the first part of the password is ',\
-                    ('"fight"',share.colors.password),'. ',' Well, goodbye now". ',\
+                    '"The first part of the castle\'s password is: ',\
+                    ('"fight"',share.colors.password),'. ',\
+                    'That\'s my motto, "fight in any situation", which I taught to ',\
+                    ('{villainname}',share.colors.villain),' when ',\
+                    ('{villain_he}',share.colors.villain2),' was my student." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -1079,21 +1047,18 @@ class obj_scene_ch4p19(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch4play') )
 
 
-class obj_scene_ch4p19a(page.obj_chapterpage):
+class obj_scene_ch4p19(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p19())
+        share.scenemanager.switchscene(obj_scene_ch4p18())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p20())
-
     def setup(self):
         self.text=[\
                 '"The ',('{bug}',share.colors.bug),\
                 ' crawled out of ',('{heroname}',share.colors.hero),\
                 '\'s pocket and whispered: ',\
-                'Well done! Now we know that ',\
-                'the first part of the password is ',('"fight"',share.colors.password),'. ',\
-                'Lets go home, then tomorrow we will visit the second ',\
-                ('grandmaster',share.colors.grandmaster),'". ',\
+                'Well done, soon we will be able to figure out the entire password! ',\
+                'Now lets scram." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
@@ -1106,9 +1071,11 @@ class obj_scene_ch4p19a(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch4play') )
 
 
+
+
 class obj_scene_ch4p20(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p19a())
+        share.scenemanager.switchscene(obj_scene_ch4p19())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p21())
     def triggernextpage(self,controls):
@@ -1134,8 +1101,7 @@ class obj_scene_ch4p21(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Back at home, ',\
-                   ('{heroname}',share.colors.hero),' was sad again. ',\
-                   ('{hero_he}',share.colors.hero2), ' though about how ',\
+                   ('{heroname}',share.colors.hero), ' remembered how ',\
                    ('{hero_he}',share.colors.hero2),' used to charm ',\
                    ('{partnername}',share.colors.partner),' with a serenade. ',\
                    ]
@@ -1154,12 +1120,12 @@ class obj_scene_ch4p22(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                   '"Then, ',\
-                   ('{heroname}',share.colors.hero),' remembered how ',\
-                   ('{hero_he}',share.colors.hero2),' and ',\
-                   ('{partnername}',share.colors.partner),' used to kiss". ',\
+                   '"This made ',('{hero_him}',share.colors.hero2),\
+                   ' so sad that ',\
+                   ('{hero_he}',share.colors.hero),\
+                   ' went straight to bed." ',\
                    ]
-        self.world=world.obj_world_kiss(self,noending=True)
+        self.world=world.obj_world_gotobed(self,bug=True,addmoon=False,addsun=True)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
@@ -1169,62 +1135,12 @@ class obj_scene_ch4p23(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p22())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p24())
-    def setup(self):
-        self.text=[\
-                   '"But ',\
-                   ('{partnername}',share.colors.partner),' wasnt there, and ',\
-                   ('{heroname}',share.colors.hero),' was only kissing the ',\
-                   ('{bug}',share.colors.bug),' that had crawled out of ',\
-                   ('{hero_his}',share.colors.hero2),' pocket". ',\
-                   ]
-
-        # self.addpart( draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
-        # self.addpart( draw.obj_image('fish',(785,467),scale=0.84,rotate=-68,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bug',(730,440),scale=0.5,rotate=30,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('herobaseangry',(580,400),scale=0.7,rotate=-15) )
-        # self.addpart( draw.obj_imageplacer(self,'fish','bug'))
-        self.addpart( draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
-        self.addpart( draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
-        #
-        self.sound=draw.obj_sound('partner_scared')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-class obj_scene_ch4p24(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p23())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p25())
+        share.scenemanager.switchscene(obj_scene_ch4end())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                    '"In the evening, ',\
-                    ('{heroname}',share.colors.hero),\
-                    ' ate the ',\
-                    ('fish',share.colors.item2),' that ',\
-                    ('{hero_he}',share.colors.hero2),' had caught in the pond".',\
-                   ]
-        self.world=world.obj_world_eatfish(self,heroangry=True)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-class obj_scene_ch4p25(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p24())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p26())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
-    def setup(self):
-        self.text=[\
-                '"It was already night".',\
+                '"The night fell, but tomorrow would be another day."',\
                    ]
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
@@ -1232,52 +1148,10 @@ class obj_scene_ch4p25(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch4p26(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p25())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p27())
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
-    def setup(self):
-        self.text=[\
-                   '"',\
-                   ('{heroname}',share.colors.hero),\
-                   ' went back to bed". ',\
-                   ]
-        self.world=world.obj_world_gotobed(self,heroangry=True,bug=True)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-class obj_scene_ch4p27(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p26())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4end())
-    def setup(self):
-        self.text=[\
-                   '"Then, right before falling asleep, ',\
-                   ('{heroname}',share.colors.hero),' smiled slightly thinking about how ',\
-                   ('{hero_he}',share.colors.hero2),' might rescue ',\
-                   ('{partnername}',share.colors.partner),' the next day".',\
-                   ]
-        self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
-        self.addpart( draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
-        animation1=draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5)
-        self.addpart( animation1 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3') )
-        animation1.addsound( "hero1", [52] )
-        animation1.addsound( "hero3", [84] )
-        #
-        self.addpart( draw.obj_music('piano') )
-
 
 class obj_scene_ch4end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p27())
+        share.scenemanager.switchscene(obj_scene_ch4p23())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4unlocknext())
     def setup(self):

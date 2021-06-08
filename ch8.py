@@ -1512,7 +1512,7 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
                     'This game plays in three rounds. For the first round, ',\
                     'here are three ',\
                     ('true statements',share.colors.darkgreen),' you need to remember. ',\
-                    'You can even take some notes at the bottom of the screen to help your memory. '
+                    'You can even take some notes at the bottom of the screen. '
                    ]
         self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0),(400,220),xleft=True,color=share.colors.darkgreen  ) )
         self.addpart( draw.obj_textbox( '2. '+self.world.getstatement(1),(400,290),xleft=True,color=share.colors.darkgreen  ) )
@@ -1606,10 +1606,8 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
             self.world=kwargs["world"]# inherit lying database
         else:
             self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    ' You gave me the wrong answer. ',\
-                    'If your memory is that bad you can always ',\
-                    ('take some notes',share.colors.instructions),' at the bottom of the screen. ',\
+        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),', ',\
+                    'you gave me the wrong answer. ',\
                     'Now go back and win this first round, I know you can do it! ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
@@ -1673,7 +1671,6 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         self.text=['For the second round, ',('I will now be lying',share.colors.red),'. ',\
                     'Let me tell you three statements. They are ',\
                     ('all false ',share.colors.red),' because I am lying. ',\
-                    'Once again, you can take some notes to help your memory. '
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
         self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0,lying=True),(400,220),xleft=True,color=share.colors.red) )
@@ -1733,9 +1730,7 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
                     ' You gave me the wrong answer. ',\
                     'For this second round, remember that ',\
                     ('all my statements are false',share.colors.red),'. ',\
-                    'And I may suggest that you take some notes ',\
-                    'at the bottom of the screen. ',\
-                    'Now go back and win this second round, I know you can do it! ',\
+                    'Now go back and win this second round. ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
@@ -1875,13 +1870,13 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
             self.world=kwargs["world"]# inherit lying database
         else:
             self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    'Well, you actually gave me the correct answer, but that isnt what I wanted. ',\
+        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),', ',\
+                    'you actually gave me the correct answer. ',\
                     'For this third round, remember that ',\
-                    ('all my statements are false',share.colors.red),' (I am lying), ',\
-                    'and that you must ',\
-                    ('always give me the wrong answer',share.colors.red),' (you are lying too). ',\
-                    'Now go back and win this third round, I know you can do it! ',\
+                    ('all my statements are false',share.colors.red),\
+                    ', and that you must ',\
+                    ('always give me the wrong answer',share.colors.red),'. ',\
+                    'Now go back and win this third round. ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )

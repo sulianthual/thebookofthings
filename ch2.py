@@ -30,7 +30,7 @@ class obj_scene_chapter2(page.obj_chapterpage):
     def setup(self):
         self.text=['-----   Chapter II: Home Sweet Home   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
-                  'The book of things said: "Lets see how our story is going so far". ',\
+                  'The book of things said: lets see how our story is going so far. ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)

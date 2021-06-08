@@ -5390,12 +5390,13 @@ class obj_world_sunset(obj_world):
 ####################################################################################################################
 
 # Mini Game: go to bed
-# *GOTO BED *BED *SLEEP
+# *GOTOBED *BED *SLEEP
 class obj_world_gotobed(obj_world):
     def setup(self,**kwargs):
         # default options
         self.addpartner=False
         self.addmoon=True# add the moon (must have been drawn)
+        self.addsun=False# add the sun (must have been drawn)
         self.addalarmclock=False# add the alarm clock and night stand
         self.heroisangry=False# angry face on hero
         self.addbug=False# add bug alongside hero
@@ -5403,7 +5404,8 @@ class obj_world_gotobed(obj_world):
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
             if 'bug' in kwargs: self.addbug=kwargs["bug"]# partner options
-            if 'addmoon' in kwargs: self.addmoon=kwargs["addmoon"]# partner options
+            if 'addmoon' in kwargs: self.addmoon=kwargs["addmoon"]#
+            if 'addsun' in kwargs: self.addsun=kwargs["addsun"]#
             if 'alarmclock' in kwargs: self.addalarmclock=kwargs["alarmclock"]# partner options
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# partner options
         #
@@ -5427,6 +5429,8 @@ class obj_world_gotobed(obj_world):
         self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75)  )
         if self.addmoon:
             self.staticactor.addpart( 'annim',draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
+        if self.addsun:
+            self.staticactor.addpart( 'annim',draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5) )
         if self.addalarmclock:
             self.staticactor.addpart( 'img3',draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
             self.staticactor.addpart( 'img2',draw.obj_image('nightstand',(100,530),scale=0.5) )
