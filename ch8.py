@@ -585,7 +585,7 @@ class obj_scene_ch8mechfight(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('fight4') )
 
 
 class obj_scene_ch8mechreplay(page.obj_chapterpage):

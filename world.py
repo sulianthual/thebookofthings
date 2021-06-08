@@ -1011,7 +1011,7 @@ class obj_world_eatfish(obj_world):
         # hero eating or not eating
         self.herostand=obj_grandactor(self,(640,360))
         if self.addpartner:# add partner
-            self.herostand.addpart( 'imgadd1', draw.obj_image('partnerbase',(340-100,400-50), scale=0.7) )
+            self.herostand.addpart( 'imgadd1', draw.obj_image('partnerbase',(340-100,400-10), scale=0.7) )
         if self.eldereats:
             self.herostand.addpart( 'img_stand',draw.obj_image('elderbase',(340,400), scale=0.7) )
         else:
@@ -1021,7 +1021,7 @@ class obj_world_eatfish(obj_world):
                 self.herostand.addpart( 'img_stand',draw.obj_image('herobase',(340,400), scale=0.7) )
         self.heroeat=obj_grandactor(self,(640,360))
         if self.addpartner:# add partner in love
-            self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-50),imgscale=0.7) )
+            self.heroeat.addpart( 'imgadd1', draw.obj_animation('ch1_heroeats1','partnerbase',(640-100,360-10),imgscale=0.7) )
         if self.eldereats:
             self.animation1=draw.obj_animation('ch1_heroeats1','elderbase',(640,360),imgscale=0.7)
         else:
@@ -4517,6 +4517,11 @@ class obj_world_mechfight(obj_world):
         # self.staticactor.addpart( "img3", draw.obj_image('cloud',(1199,234),scale=0.35,rotate=0,fliph=True,flipv=False) )
         # self.staticactor.addpart( "img4", draw.obj_image('cloud',(1209,647),scale=0.29,rotate=0,fliph=False,flipv=False) )
         #
+        # tune difficult
+        prompt_time=80# time to react to prompt (reference=80 but kinda easy)
+        promptcircle_scale=1# scaling factor for the vanishing circle: if shorter prompt time, make it smaller
+        promptarrows_scale=1# or make the arrows larger too if prompt time shorter
+
         y1=140#80# for text
         y1font='huge'# large
         dx1=0# text horizontal spacing
@@ -4531,11 +4536,11 @@ class obj_world_mechfight(obj_world):
         # self.promptactor.addpart( 'prompt_s', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
         # self.promptactor.addpart( 'prompt_a', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.black) )
         # self.promptactor.addpart( 'prompt_d', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1) )
-        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1,flipv=True) )
-        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1,rotate=90) )
-        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
-        animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade')
+        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale) )
+        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale,flipv=True) )
+        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale,rotate=90) )
+        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale,rotate=90,fliph=True) )
+        animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade',imgscale=promptcircle_scale)
         self.promptactor.addpart( 'shrink', animation1 )
         # self.promptactor.addpart( 'prompt', draw.obj_textbox('Prompt',(640,200),fontsize='huge',color=share.colors.red) )
         self.promptactor.dict['hero'].show=True
@@ -4551,8 +4556,7 @@ class obj_world_mechfight(obj_world):
         self.promptinput=False# an input has been entered for prompt
         self.promptmatch=False# the current prompt was matched
         self.promptphase=True# are we in countdown or action phase
-        self.prompttimer=tool.obj_timer(80)# countdown time
-        # self.prompttimer=tool.obj_timer(50)# countdown time
+        self.prompttimer=tool.obj_timer(prompt_time)# countdown time
         self.prompttimer.start()
         #
         #################
@@ -4622,15 +4626,15 @@ class obj_world_mechfight(obj_world):
         # self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
         # self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
         # self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_wfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1) )
-        self.actionactor.addpart( 'prompt_sfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1,flipv=True) )
-        self.actionactor.addpart( 'prompt_afail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1,rotate=90) )
-        self.actionactor.addpart( 'prompt_dfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
-        self.actionactor.addpart( 'prompt_wwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1) )
-        self.actionactor.addpart( 'prompt_swin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1,flipv=True) )
-        self.actionactor.addpart( 'prompt_awin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1,rotate=90) )
-        self.actionactor.addpart( 'prompt_dwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=1,rotate=90,fliph=True) )
-        self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='premade',scale=0.5) )
+        self.actionactor.addpart( 'prompt_wfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale) )
+        self.actionactor.addpart( 'prompt_sfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale,flipv=True) )
+        self.actionactor.addpart( 'prompt_afail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale,rotate=90) )
+        self.actionactor.addpart( 'prompt_dfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale,rotate=90,fliph=True) )
+        self.actionactor.addpart( 'prompt_wwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale) )
+        self.actionactor.addpart( 'prompt_swin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale,flipv=True) )
+        self.actionactor.addpart( 'prompt_awin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale,rotate=90) )
+        self.actionactor.addpart( 'prompt_dwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale,rotate=90,fliph=True) )
+        self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='premade',scale=0.5*promptarrows_scale) )
         #
         self.actionactor.dict['heropunch'].show=False
         self.actionactor.dict['villainpunch'].show=False

@@ -190,7 +190,6 @@ class obj_sounds:
         self.dict['sunrise_end']=( 'world/sunrise/rooster2.wav' , 0.5 )
         # sunset
         self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
-        # self.dict['sunset_end']=( 'world/sunset/wall (2).wav' , 0.5 )
         self.dict['sunset_end']=( 'world/sunset/howling_shorter.wav' , 1 )
         # wakeup
         self.dict['wakeup_snore1']=( 'world/wakeup/snore.ogg' , 1 )

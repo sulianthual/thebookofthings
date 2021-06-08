@@ -53,7 +53,7 @@ class obj_page:
               'world']
         if element.type in term:
             self.to_update.append(element)
-        if element.type in ['drawing','textinput','textchoice','imageplacer','sound']:
+        if element.type in ['drawing','textinput','textchoice','imageplacer','sound','animation']:
             self.to_finish.append(element)
         if element.type=='music':# override page music (unique element)
             self.pagemusic=element

@@ -58,6 +58,7 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ###########################################################
 * Final changes that should probably be made:
 
+-mech fight: bit too easy, allow for shorter prompt time
 
 -sounds during page transitions:
  page may initiate with share.soundplayer.stop() to kill all sounds (potential looped sounds)
