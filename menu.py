@@ -41,6 +41,7 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
+            quickscene=ch0.obj_scene_ch0tutorial()
             # quickscene=ch1.obj_scene_ch1play1()
             # quickscene=ch2.obj_scene_ch2p1()
             # quickscene=ch3.obj_scene_ch3p16()
@@ -49,11 +50,11 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p36()
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p21()
-            # quickscene=ch6.obj_scene_ch6p47()
+            # quickscene=ch6.obj_scene_ch6p27()
             # quickscene=ch7.obj_scene_ch7p52()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8roam()
-            # quickscene=ch8.obj_scene_ch8island()
+            # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             # minigames
             # quickscene=ch2.obj_scene_ch2p8()# ch2 serenade
@@ -62,13 +63,12 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p36()# ch5 rps
             # quickscene=ch6.obj_scene_ch6p21()# ch6 travel (get logs)
             # quickscene=ch6.obj_scene_ch6p30()# ch6 sneak
-            quickscene=ch6.obj_scene_ch6p38a()# ch6 ride cow
+            # quickscene=ch6.obj_scene_ch6p38a()# ch6 ride cow
             # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
             # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
-
-
+            # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
             share.scenemanager.switchscene(quickscene)# (must not initstart if has looped sounds)
@@ -264,44 +264,58 @@ class obj_scene_settings(page.obj_page):
         tempo+= '['+share.datamanager.controlname('action')+': change] '
         self.addpart( draw.obj_textbox(tempo,(640,350),fontsize='smaller') )
         #
-        self.maxjpos=5# max pointer position
+        self.maxjpos=6# max pointer position
         self.jpos=0# pointer position
         if self.tosoundon:# turning back sound
             self.jpos=3
         self.sprite_pointer=draw.obj_textbox('---',(400,380+self.jpos*30),fontsize='smaller')
         self.addpart(self.sprite_pointer)
         #
-        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(640,380),fontsize='smaller')
-        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(640,380),fontsize='smaller')
+        ycount0=380
+        dycount=30
+        ycount=ycount0
+        #
+        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(640,ycount),fontsize='smaller')
+        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(640,ycount),fontsize='smaller')
         self.addpart( self.keyboardqwerty )
         self.addpart( self.keyboardazerty )
         self.keyboardqwerty.show=not share.datamanager.doazerty
         self.keyboardazerty.show=share.datamanager.doazerty
         #
-        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,410),fontsize='smaller')
-        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,410),fontsize='smaller')
+        ycount += dycount
+        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,ycount),fontsize='smaller')
+        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,ycount),fontsize='smaller')
         self.addpart( self.screennative )
         self.addpart( self.screenadapted )
         self.screennative.show=share.datamanager.donative
         self.screenadapted.show=not share.datamanager.donative
         #
-        self.musicoff=draw.obj_textbox('Music: Off',(640,440),fontsize='smaller')
-        self.musicon=draw.obj_textbox('Music: On',(640,440),fontsize='smaller')
+        ycount += dycount
+        self.musicoff=draw.obj_textbox('Music: Off',(640,ycount),fontsize='smaller')
+        self.musicon=draw.obj_textbox('Music: On',(640,ycount),fontsize='smaller')
         self.addpart( self.musicoff )
         self.addpart( self.musicon )
         self.musicoff.show=not share.datamanager.domusic
         self.musicon.show=share.datamanager.domusic
         #
-        self.soundoff=draw.obj_textbox('Sound: Off',(640,470),fontsize='smaller')
-        self.soundon=draw.obj_textbox('Sound: On',(640,470),fontsize='smaller')
+        ycount += dycount
+        self.soundoff=draw.obj_textbox('Sound: Off',(640,ycount),fontsize='smaller')
+        self.soundon=draw.obj_textbox('Sound: On',(640,ycount),fontsize='smaller')
         self.addpart( self.soundoff )
         self.addpart( self.soundon )
         self.soundoff.show=not share.datamanager.dosound
         self.soundon.show=share.datamanager.dosound
         #
-        self.addpart( draw.obj_textbox('Erase Book',(640,500),fontsize='smaller') )
-        self.addpart( draw.obj_textbox('Credits',(640,530),fontsize='smaller') )
-
+        ycount += dycount
+        self.addpart( draw.obj_textbox('Controls',(640,ycount),fontsize='smaller') )
+        #
+        ycount += dycount
+        self.addpart( draw.obj_textbox('Credits',(640,ycount),fontsize='smaller') )
+        #
+        ycount += dycount
+        self.addpart( draw.obj_textbox('Erase Book',(640,ycount),fontsize='smaller') )
+        #
+        # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
         self.addpart( self.sound_menugo )
         self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
@@ -324,7 +338,8 @@ class obj_scene_settings(page.obj_page):
             self.jpos -=1
             if self.jpos<0: self.jpos=self.maxjpos
             self.sprite_pointer.movetoy(380+self.jpos*30)
-        # change difficulty
+        #
+        # change keyboard type
         if self.jpos==0 and (controls.ga and controls.gac):
             self.sound_menuback.play()
             share.datamanager.doazerty=not share.datamanager.doazerty
@@ -333,7 +348,7 @@ class obj_scene_settings(page.obj_page):
             self.keyboardazerty.show=share.datamanager.doazerty
             share.datamanager.savesettings()# save settings
         # change display
-        if self.jpos==1 and (controls.ga and controls.gac):
+        elif self.jpos==1 and (controls.ga and controls.gac):
             self.sound_menuback.play()
             share.datamanager.donative= not share.datamanager.donative
             self.screennative.show=share.datamanager.donative
@@ -344,7 +359,7 @@ class obj_scene_settings(page.obj_page):
                 share.display.reset(native=False)
             share.datamanager.savesettings()# save settings
         # toggle music
-        if self.jpos==2 and (controls.ga and controls.gac):
+        elif self.jpos==2 and (controls.ga and controls.gac):
             share.datamanager.domusic=not share.datamanager.domusic
             if share.datamanager.domusic:
                 share.musicplayer.setmastervolume(1)
@@ -354,7 +369,7 @@ class obj_scene_settings(page.obj_page):
             self.musicon.show=share.datamanager.domusic
             share.datamanager.savesettings()# save settings
         # toggle sound
-        if self.jpos==3 and (controls.ga and controls.gac):
+        elif self.jpos==3 and (controls.ga and controls.gac):
             share.datamanager.dosound=not share.datamanager.dosound
             if share.datamanager.dosound:
                 share.soundplayer.setmastervolume(1)
@@ -364,19 +379,40 @@ class obj_scene_settings(page.obj_page):
             self.soundon.show=share.datamanager.dosound
             share.datamanager.savesettings()# save settings
             share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))# reload scene
-        # erase book
-        if self.jpos==4 and (controls.ga and controls.gac):
+        # instructions for controls
+        elif self.jpos==4 and (controls.ga and controls.gac):
             self.sound_menugo.play()
-            share.scenemanager.switchscene(obj_scene_erasebook())
+            share.scenemanager.switchscene(obj_scene_instructions_controls_screen())
         # read game credits
-        if self.jpos==5 and (controls.ga and controls.gac):
+        elif self.jpos==5 and (controls.ga and controls.gac):
             self.sound_menugo.play()
             share.scenemanager.switchscene(obj_scene_creditscreen())
+        # erase book
+        elif self.jpos==6 and (controls.ga and controls.gac):
+            self.sound_menugo.play()
+            share.scenemanager.switchscene(obj_scene_erasebook())
+        #
         # back to titlescreen
         if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)
 
+####################################################################################################################
+####################################################################################################################
+# Instructions for the Controls
+# *CONTROLS
+
+class obj_scene_instructions_controls_screen(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
+    def triggernextpage(self,controls):
+        return False
+    def setup(self):
+        self.text=['Controls: ([wasd] can be replaced by [zqsd] in azerty mode). ']
+        #
+        self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
+        #
+        self.addpart( draw.obj_music('tension') )
 
 ####################################################################################################################
 ####################################################################################################################
@@ -390,7 +426,7 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         return False
     def setup(self):
         self.text=['Credits: ',\
-                    '\n\nThe book of things: a game by Sulian Thual (circa 2020-2021). ',\
+                    '\n\nThe book of things: a game by Sulian Thual (2021). ',\
                     'Made with Pygame. ',\
                     'All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). ',\
                     'Sounds from opengameart.com and freesound.com (License CC0). ',\

@@ -201,7 +201,7 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
         animation1.addsound( "book3", [107] )
         animation1.addsound( "book2", [270] )
-        animation1.addsound( "book1", [249],skip=1 )
+        animation1.addsound( "book1", [200],skip=1 )
         #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
@@ -214,19 +214,63 @@ class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0unlocknext())
+        share.scenemanager.switchscene(obj_scene_ch0tutorial())
     def soundnextpage(self):
         pass# no sound
     def setup(self):
-        self.text=['And so the book began...',\
-                   ]
+        self.text=['And so the book began...']
         #
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0unlocknext(page.obj_chapterpage):
+class obj_scene_ch0tutorial(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0end())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0tutorialend())
+    def setup(self):
+        self.text=['First things first, said the book of things, ',\
+                'lets make sure you have everything you need. ',\
+                    'These are the game controls (you can also see them in the settings). ',\
+                   ]
+        #
+        self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
+        #
+        animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360),record=True,sync=animation1,path='premade')
+        animation2.addimage('empty',path='premade')
+        self.addpart( animation2 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book1", [28] )
+        animation1.addsound( "book2", [170],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
+class obj_scene_ch0tutorialend(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0tutorial())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0unlocknext())
+    def setup(self):
+        self.text=['That is all for now, lets get started! ',
+                   ]
+        animation1=draw.obj_animation('bookmove','book',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "bookscene", [1] )
+        animation1.addsound( "book3", [107] )
+        animation1.addsound( "book2", [270] )
+        animation1.addsound( "book1", [249],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
+class obj_scene_ch0unlocknext(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0tutorialend())
     def setup(self):
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter I',share.colors.instructions),'! Access it from the menu. ',\
@@ -238,6 +282,8 @@ class obj_scene_ch0unlocknext(page.obj_chapterpage):
         sound1.play()
         #
         self.addpart( draw.obj_music('piano') )
+
+
 
 
 

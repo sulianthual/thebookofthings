@@ -883,8 +883,21 @@ class obj_scene_testdrafting(obj_testpage):
     def pagename(self):
         return 'Drafting Board'
     def setup(self):
-        self.text=['Drafting Board: ',\
-                   ]
+        self.text=['Drafting Board: ']
+        #
+        # Controls instructions (redraft)
+        if True:
+            drawing=draw.obj_drawing('instructions_controls',(640,360+100),legend='controls',shadow=(600,200))
+            self.addpart(drawing)
+            #
+            text='or [esc] [tab] [space] [enter] w a s d [w a s d] [arrows] [mouse] [right mouse] [left mouse] [backspace]'
+            text='draw erase next exit back play minigames'
+            # self.textbox=draw.obj_textbox(text,(640,200),fontsize='huge')
+            # self.textbox=draw.obj_textbox(text,(640,200),fontsize='huge',color=share.colors.instructions)
+            # self.textbox=draw.obj_textbox(text,(640,200))
+            self.textbox=draw.obj_textbox(text,(640,200),fontsize='larger',color=share.colors.instructions)
+            self.textbox.snapshot('instructions_snap')
+            self.addpart( self.textbox)
         #
         # Image from textbox
         # self.textbox=draw.obj_textbox('start!',(640,360),fontsize='huge')
@@ -894,81 +907,6 @@ class obj_scene_testdrafting(obj_testpage):
         # drawing=draw.obj_drawing('mechsparks',(640,360),legend='sparks',shadow=(50,50))
         # self.addpart(drawing)
         #
-
-        #
-        # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
-        # dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        # dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        # dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
-        # dispgroup1.addpart( 'part5', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
-        # dispgroup1.addpart( 'part6', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        # dispgroup1.addpart( 'part7', draw.obj_image('mechhit',(640,360-100),path='premade') )
-        # dispgroup1.addpart( 'part8', draw.obj_image('fish',(467,104),scale=0.3,rotate=90,fliph=True,flipv=True) )
-        # dispgroup1.addpart( 'part9', draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
-        # dispgroup1.addpart( 'part10', draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
-        # dispgroup1.addpart( 'part11', draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
-        # dispgroup1.addpart( 'part12', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='premade') )
-        # dispgroup1.addpart( 'part13', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='premade') )
-        # dispgroup1.snapshot((640,360,300,350),'heromechhit')
-        # self.addpart(dispgroup1)
-
-        # animation1=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360))
-        # animation1.addimage('heromechpunch')
-        # self.addpart(animation1)
-        #
-        # animation2=draw.obj_animation('mechfight_heropunches2','villainmechbase',(640,360))
-        # animation2.addimage('villainmechhit')
-        # self.addpart(animation2)
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'mech_hit','mech_stomp','mech_strike','mech_contact') )
-        # animation1.addsound( "mech_stomp", [10] )
-        # animation1.addsound( "mech_contact", [58] )
-        # animation1.addsound( "mech_strike", [58] )
-        #
-        # animation1=draw.obj_animation('mechfight_villainpunches1','villainmechbase',(640,360))
-        # animation1.addimage('villainmechpunch')
-        # self.addpart(animation1)
-        #
-        # animation2=draw.obj_animation('mechfight_villainpunches2','heromechbase',(640,360))
-        # animation2.addimage('heromechhit')
-        # self.addpart(animation2)
-        #
-        # animation1.addsound( "mech_stomp", [10] )
-        # animation1.addsound( "mech_contact", [55] )
-        # animation1.addsound( "mech_hit", [55] )
-
-        # animation1=draw.obj_animation('mechfight_herocountered','heromechbase',(640,360))
-        # animation1.addimage('heromechpunch')
-        # animation1.addimage('heromechhit')
-        # self.addpart(animation1)
-        #
-        # animation2=draw.obj_animation('mechfight_villainblocks','villainmechbase',(640,360))
-        # animation2.addimage('villainmechblock')
-        # self.addpart(animation2)
-        #
-        # animation1.addsound( "mech_stomp", [10] )
-        # animation1.addsound( "mech_counter", [38] )
-        # animation1.addsound( "mech_hit", [38] )
-
-
-        # animation1=draw.obj_animation('mechfight_villaincountered','villainmechbase',(640,360))
-        # animation1.addimage('villainmechpunch')
-        # animation1.addimage('villainmechhit')
-        # self.addpart(animation1)
-        #
-        # animation2=draw.obj_animation('mechfight_heroblocks','heromechbase',(640,360))
-        # animation2.addimage('heromechblock')
-        # self.addpart(animation2)
-        #
-        # animation1.addsound( "mech_stomp", [10] )
-        # animation1.addsound( "mech_counter", [40] )# anomalies in mechfight_villaincountered.txt
-        # animation1.addsound( "mech_strike", [40] )
-        #
-        # self.addpart(draw.obj_image('sailboat',(640,360),scale=0.25) )
-        # animation2=draw.obj_animation('travel_sails','sailboat',(640,360),record=True)
-        # self.addpart(animation2)
-
 
 
 ####################################################################################################################

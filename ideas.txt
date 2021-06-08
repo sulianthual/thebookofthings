@@ -58,7 +58,14 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ###########################################################
 * Final changes that should probably be made:
 
-
+- draws objects fonctionality (for textbox, image,animation, or dispgroup):
+  launches a timer that makes draw  draw.show=False after timer ends (timer is automatic from updates)
+  1) use option vanish=amount (starts timer) at creation to start timer
+  2) or invoke draw.vanish(amount) to (re)start timer
+  3) can easily be reversed using draw.show=False
+useful for:
+* healthbars: when hit add a cross that disappears fast.
+* to make some cool effects , like dust or else in minigames/story
 
 - customize locations: give them names
 

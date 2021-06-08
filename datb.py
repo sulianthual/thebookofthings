@@ -312,6 +312,7 @@ class obj_colors:
     def __init__(self):
         # NB: colorkey is defined in share (as global variable)
         # base colors
+        self.purple=(128,0,128)# THIS IS THE TRANSPARENCEY COLOR (colorkey in share.py), DONT USE IT
         self.white=(255,255,255)
         self.black=(0,0,0)
         self.red=(220,0,0)# bit darker
@@ -323,7 +324,7 @@ class obj_colors:
         self.darkgray=(100,100,100)
         self.brown=(165,42,42)
         self.maroon=(128,0,0)
-        self.purple=(128,0,128)
+        self.darkerpurple=(138,0,138)
         self.pink=(231,84,128)
         self.darkorange=(255,140,0)
         # Colors devmode
@@ -335,7 +336,7 @@ class obj_colors:
         # Colors game elements
         self.background=self.white# game background
         self.text=self.black# regular text
-        self.instructions=self.purple# any instruction text/element
+        self.instructions=self.darkerpurple# any instruction text/element
         self.drawing=(220,0,0)# drawing
         self.input=self.red# text input (in text)
         self.textinput=(200,0,0)# text input (box and highlight)
@@ -382,6 +383,7 @@ class obj_fonts:
          self.font40=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 40)# small indicators,textbox
          self.font50=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 50)# medium (for story text)
          self.font60=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 60)# large
+         self.font80=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 80)# larger
          self.font100=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 100)# big (for titlescreen)
          self.font120=core.obj_sprite_font('data/AmaticSC-Bold.ttf', 120)# huge
     def font(self,fontname):# call by key(string)
@@ -395,6 +397,8 @@ class obj_fonts:
              return self.font50
          elif fontname=='large' or fontname==60:
              return self.font60
+         elif fontname=='larger' or fontname==80:
+             return self.font80
          elif fontname=='big' or fontname==100:
              return self.font100
          elif fontname=='huge' or fontname==120:
