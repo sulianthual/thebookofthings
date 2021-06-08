@@ -58,11 +58,16 @@ It should be done in NEXT games with other softwares that do this more easily (g
 ###########################################################
 * Final changes that should probably be made:
 
--mech fight: bit too easy, allow for shorter prompt time
 
--sounds during page transitions:
- page may initiate with share.soundplayer.stop() to kill all sounds (potential looped sounds)
- but then sounds when exiting page are muted
+- sound and music: volume bar (in settings). Just add volume multiplicators
+
+- do comprehensive cleanup of music and sounds.
+   - Avoid file duplicates
+   - look (briefly) at volume levels
+   - during page transitions: sometimes nosound, sometimes there is (with soundnextpage), clean it up
+   - animations properly finish(). they shut down all sounds. Do same for dispgroup that hold animations:
+     call finish() for dispgroup that calls finish for animations (that calls finish() for sounds)
+
 
 - change pages with the mouse? Like by clicking a "Next Page"?
   could make it appear/load on a timer...

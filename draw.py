@@ -1123,7 +1123,7 @@ class obj_animation:
         self.play(controls)
     def finish(self):# upon page exit
         for i in self.sounddict.keys():
-            self.sounddict[i].stop()# stop all sounds associated to animation
+            self.sounddict[i].finish()# stop all sounds associated to animation
 
 # Animation sequence (vector of time-transformations)
 # *SEQUENCE
@@ -1450,6 +1450,11 @@ class obj_dispgroup:
         if share.devmode: self.devtools()
     def update(self,controls):
         self.play(controls)
+    def finish(self):# upon page exit
+        for i in self.dict.keys():
+            if self.dict[i].type=='animation':
+                self.dict[i].finish()# stop all animations
+
 
 
 ####################################################################################################################
