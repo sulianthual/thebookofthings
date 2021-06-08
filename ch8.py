@@ -64,7 +64,6 @@ class obj_scene_ch8roam(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8island())
         else:
             share.scenemanager.switchscene(obj_scene_ch8roam())# reload same scene
-
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
@@ -655,7 +654,7 @@ class obj_scene_ch8west(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8westwrongpassword())
     def setup(self):
         self.text=[\
-                  '"Welcome back, blasted the castle\'s A.S.S. (automated security system). ',\
+                  '"Welcome back, blasted the castle\'s a.s.s. (automated security system). ',\
                   'Please enter the ',('password',share.colors.password),
                 '". ',\
                    ]
@@ -682,7 +681,7 @@ class obj_scene_ch8westwrongpassword(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Wrong, blasted the castle\'s ',\
-                  'A.S.S., zapping engaged! In case you already forgot, the password is ',\
+                  'a.s.s., zapping engaged! In case you already forgot, the password is ',\
                 ('"lie cheat steal"',share.colors.password),\
                 '. Now try again". ',\
                    ]
@@ -711,7 +710,7 @@ class obj_scene_ch8westcorrectpassword(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8westinside())
     def setup(self):
         self.text=[\
-                  '"Password is correct. You may enter, said the castle\'s A.S.S."',\
+                  '"Password is correct. You may enter, said the castle\'s a.s.s."',\
                    ]
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
@@ -746,7 +745,7 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
         self.text=[\
                 '"Welcome back, said ',\
                 ('{villainname}',share.colors.villain),'. ',\
-                'How do you want to fight." ',\
+                'Do you want to fight again." ',\
                    ]
         y1=200
         textchoice=draw.obj_textchoice('numchoice',default='1')
@@ -1004,7 +1003,7 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8northreplay())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return (share.devmode and controls.ga and controls.gac) or self.world.done# CANT SKIP THIS ONE
     def setup(self):
         self.text=[]
         self.world=world.obj_world_rockpaperscissors(self)
@@ -1246,7 +1245,7 @@ class obj_scene_ch8islandsneak(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
        self.text=['Start Sneaking']
        self.world=world.obj_world_bushstealth0(self)
@@ -1264,7 +1263,7 @@ class obj_scene_ch8islandsneak1(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak1())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth(self)
@@ -1282,7 +1281,7 @@ class obj_scene_ch8islandsneak2(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak2())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth2(self)
@@ -1300,7 +1299,7 @@ class obj_scene_ch8islandsneak3(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak3())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth3(self)
@@ -1318,7 +1317,7 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return (controls.ga and controls.gac) or self.world.done
     def setup(self):
        self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
        self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')

@@ -4518,9 +4518,11 @@ class obj_world_mechfight(obj_world):
         # self.staticactor.addpart( "img4", draw.obj_image('cloud',(1209,647),scale=0.29,rotate=0,fliph=False,flipv=False) )
         #
         # tune difficult
-        prompt_time=80# time to react to prompt (reference=80 but kinda easy)
-        promptcircle_scale=1# scaling factor for the vanishing circle: if shorter prompt time, make it smaller
-        promptarrows_scale=1# or make the arrows larger too if prompt time shorter
+        prompt_dt=50# between 0 and 79, increment from base difficulty# !!!!!
+        prompt_time=80-prompt_dt# time to react to prompt (reference=80 but kinda easy)
+        self.prompt_frame=prompt_dt#None# rewind prompt circle animation to given frame <84(higher frame for faster prompt time)
+        promptcircle_scale=1# scaling factor for the vanishing circle: if shorter prompt time, make it smaller (keep ref=1)
+        promptarrows_scale=1# or make the arrows larger too if prompt time shorter (keep ref=1)
 
         y1=140#80# for text
         y1font='huge'# large
@@ -4547,7 +4549,7 @@ class obj_world_mechfight(obj_world):
         self.promptactor.dict['villain'].show=True
         self.promptactor.dict['prompt'].show=self.doprompt
         self.promptactor.dict['shrink'].show=self.doprompt
-        self.promptactor.dict['shrink'].rewind()
+        self.promptactor.dict['shrink'].rewind(self.prompt_frame)
         self.whichprompt=tool.randint(0,3)
         self.promptactor.dict['prompt_w'].show=self.whichprompt==0 and self.doprompt
         self.promptactor.dict['prompt_s'].show=self.whichprompt==1 and self.doprompt
@@ -4914,7 +4916,7 @@ class obj_world_mechfight(obj_world):
                     self.promptactor.dict['prompt'].show=self.doprompt
                     self.promptactor.dict['shrink'].unpause()# unpause
                     self.promptactor.dict['shrink'].show=self.doprompt
-                    self.promptactor.dict['shrink'].rewind()
+                    self.promptactor.dict['shrink'].rewind(self.prompt_frame)
                     # random prompt
                     self.whichprompt=tool.randint(0,3)
                     self.promptactor.dict['prompt_w'].show=self.whichprompt==0 and self.doprompt
