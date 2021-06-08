@@ -928,10 +928,10 @@ class obj_world_fishing(obj_world):
         self.timerend=tool.obj_timer(90)# 50
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
-        self.text1.addpart( 'textbox1',\
-        draw.obj_textbox('Hold ['+share.datamanager.controlname('down')+'] to lower Hook',(1100,480),color=share.colors.instructions) )
+        tempo='['+share.datamanager.controlname('down')+': lower hook]'
+        self.text1.addpart( 'textbox1',draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(840,500))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,480)) )
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,460)) )
         self.text1.show=True
         self.text2.show=False
         #
@@ -1034,9 +1034,9 @@ class obj_world_eatfish(obj_world):
         self.heroeat.show=False
         # text
         self.text1=obj_grandactor(self,(640,360))
-        self.text1.addpart( 'textbox1',\
-        draw.obj_textbox('Alternate ['+share.datamanager.controlname('left')+\
-        '] and ['+share.datamanager.controlname('right')+'] to Eat',(640,660),color=share.colors.instructions) )
+        tempo='alternate ['+share.datamanager.controlname('left')
+        tempo +='] and ['+share.datamanager.controlname('right')+'] to eat'
+        self.text1.addpart( 'textbox1',draw.obj_textbox(tempo,(480,660),color=share.colors.instructions) )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390),fontsize='large') )
         self.text1.show=True

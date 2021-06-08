@@ -63,7 +63,7 @@ class obj_scene_ch7p1(page.obj_chapterpage):
                    ]
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castlesparks',(754,418-60),scale=0.8,path='premade') )
+        # self.addpart( draw.obj_image('castlesparks',(754,418-60),scale=0.8,path='premade') )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','sailorhead',(137,564),imgscale=0.25)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346),imgscale=0.25,sync=animation1) )
@@ -91,7 +91,7 @@ class obj_scene_ch7p2(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                'Better be ready for this! "It was the next day and the sun was rising".',\
+                'Better be ready for this! "It was the next day and the sun was rising."',\
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
@@ -128,7 +128,7 @@ class obj_scene_ch7p4(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish".',
                    ]
         self.world=world.obj_world_fishing(self)
@@ -407,7 +407,7 @@ class obj_scene_ch7p12fail(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
         #
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
         self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
@@ -484,7 +484,7 @@ class obj_scene_ch7p14(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
         #
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
         self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
@@ -673,7 +673,7 @@ class obj_scene_ch7p18fail(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
         #
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
         self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
@@ -706,7 +706,7 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
         # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         #
@@ -832,12 +832,10 @@ class obj_scene_ch7p22death(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p22())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p22())
-
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                  '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
                 'Now go back and try to act more "heroic". ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
@@ -949,12 +947,10 @@ class obj_scene_ch7p25death(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p25())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p25())
-
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                  '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
                 'Now go back and try to act more "heroic". ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
@@ -1720,13 +1716,12 @@ class obj_scene_ch7p49death(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p49())
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                  '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
                 'Now go back and try to act more "heroic". ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('you are dead',(640,360),fontsize='large') )
+        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
         #
         self.addpart( draw.obj_music('tension') )
 

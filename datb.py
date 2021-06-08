@@ -342,6 +342,7 @@ class obj_colors:
         self.textinput=(200,0,0)# text input (box and highlight)
         self.textchoice=(180,0,0)# text input box
         # Colors for story
+        self.player=self.red# player text color
         self.hero=self.red# hero text color
         self.hero2=self.text# hero in secondary context (he/him..)
         self.partner=self.pink

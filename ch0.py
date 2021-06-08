@@ -127,7 +127,7 @@ class obj_scene_ch0p5(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p4())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p6())
+        share.scenemanager.switchscene(obj_scene_ch0p7())
     def setup(self):
         self.text=['The pen and eraser looked like this, and they were very happy.',\
                    'They danced together all day.',\
@@ -143,31 +143,30 @@ class obj_scene_ch0p5(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0p6(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p5())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p7())
-    def setup(self):
-        self.text=['Because in the beginning, there was nothing, It was unclear how the pen had been drawn.',\
-                   'And when there would be nothing again, it was unclear how the eraser would be erased.',\
-                   ' But it didnt matter much right now because there were many more things to draw and erase.',\
-                   ]
-        animation=draw.obj_animation('penmove2a','pen',(640,360))
-        animation2=draw.obj_animation('erasermovea','eraser',(640,360),sync=animation)
-        self.addpart( animation )
-        self.addpart( animation2 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation,'pen','eraser') )
-        animation.addsound( "pen", [26, 99] )
-        animation.addsound( "eraser", [236, 311],skip=1 )
-        #
-        self.addpart( draw.obj_music('piano') )
+# class obj_scene_ch0p6(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch0p5())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch0p7())
+#     def setup(self):
+#         self.text=['Because in the beginning, there was nothing, It was unclear how the pen had been drawn.',\
+#                    'And when there would be nothing again, it was unclear how the eraser would be erased.',\
+#                    ' But it didnt matter much right now because there were many more things to draw and erase.',\
+#                    ]
+#         animation=draw.obj_animation('penmove2a','pen',(640,360))
+#         animation2=draw.obj_animation('erasermovea','eraser',(640,360),sync=animation)
+#         self.addpart( animation )
+#         self.addpart( animation2 )
+#         #
+#         animation.addsound( "pen", [26, 99] )
+#         animation.addsound( "eraser", [236, 311],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch0p7(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p6())
+        share.scenemanager.switchscene(obj_scene_ch0p5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def endpage(self):
@@ -190,7 +189,7 @@ class obj_scene_ch0p8(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p7())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0end())
+        share.scenemanager.switchscene(obj_scene_ch0p9())
     def setup(self):
         self.text=['It was the book of things. The book of all things were all things would be.',
                    'With the help of the pen and eraser, there would be many things to write in the book.',\
@@ -210,31 +209,120 @@ class obj_scene_ch0p8(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0end(page.obj_chapterpage):
+class obj_scene_ch0p9(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0tutorial())
-    def soundnextpage(self):
-        pass# no sound
+        share.scenemanager.switchscene(obj_scene_ch0p10())
     def setup(self):
         self.text=['And so the book began...']
         #
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0tutorial(page.obj_chapterpage):
+class obj_scene_ch0p10(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0end())
+        share.scenemanager.switchscene(obj_scene_ch0p9())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0tutorialend())
+        share.scenemanager.switchscene(obj_scene_ch0p11())
     def setup(self):
-        self.text=['First things first, said the book of things, ',\
-                'lets make sure you have everything you need. ',\
-                    'These are the game controls (you can also see them in the settings). ',\
+        tempo1='['+share.datamanager.controlname('mouse1')+']'
+        tempom='['+share.datamanager.controlname('mouse')+']'
+        tempok='['+share.datamanager.controlname('keyboard')+']'
+        self.text=['Well hello, said the book of things, ',\
+                'who do I have the honor of speaking with. ',\
+                    'Please write a profile name on my first page and your current mood. ',\
+                    '\n\n ',\
+                  ('select the box with '+tempo1+' and type a name with the '+tempok+'. ',share.colors.instructions),\
+                  '\n\n\n\n ',\
+                 ('select an option with '+tempo1+'. ',share.colors.instructions),\
+                 ]
+        self.addpart( draw.obj_textinput('playername',20,(640,330), legend='profile name') )
+        #
+
+        yref=560
+        self.addpart( draw.obj_textbox('current mood: ',(180,yref)) )
+        textchoice=draw.obj_textchoice('playermood',default='okay')
+        textchoice.addchoice('1. whatever','whatever',(440,yref))
+        textchoice.addchoice('2. okay','okay',(640,yref))
+        textchoice.addchoice('3. amazing','amazing',(840,yref))
+        textchoice.addchoice('4. delirious','delirious',(1040,yref))
+        self.addpart( textchoice )
+        #
+        animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360-300),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360-300),record=True,sync=animation1,path='premade')
+        animation2.addimage('empty',path='premade')
+        self.addpart( animation2 )
+        #
+        # self.addpart(draw.obj_animation('ch1_pen2','pen',(1180,400),record=False,scale=0.5))
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book1", [28] )
+        animation1.addsound( "book2", [170],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
+class obj_scene_ch0p11(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p10())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p12())
+    def setup(self):
+        self.text=[\
+                    'Very nice to meet you ',\
+                    ('{playername}',share.colors.player), \
+                    ', said the book of things, ',\
+                    'I am also feeling very super-duper-',\
+                    ('{playermood}',share.colors.player),'! ',\
+                    ]
+        animation1=draw.obj_animation('bookmove','book',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book3", [107] )
+        animation1.addsound( "book2", [270] )
+        animation1.addsound( "book1", [200],skip=1 )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
+
+class obj_scene_ch0p12(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p11())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
+    def setup(self):
+        self.text=[\
+                    'Lets make sure you have everything you need. ',\
+                    'Here are the game controls (you can also see them in the settings). ',\
                    ]
         #
+        # Game controls instructions
         self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
+        self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+        self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
+        #
+        self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('previous',(216,544),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)
         self.addpart( animation1 )
@@ -249,9 +337,9 @@ class obj_scene_ch0tutorial(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0tutorialend(page.obj_chapterpage):
+class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0tutorial())
+        share.scenemanager.switchscene(obj_scene_ch0p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):
@@ -270,7 +358,7 @@ class obj_scene_ch0tutorialend(page.obj_chapterpage):
 
 class obj_scene_ch0unlocknext(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0tutorialend())
+        share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter I',share.colors.instructions),'! Access it from the menu. ',\

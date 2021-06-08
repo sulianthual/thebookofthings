@@ -143,7 +143,7 @@ class obj_scene_ch4p3(page.obj_chapterpage):
                'Alright lets go, said the book of things: ',\
                 '"once upon a Time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' that lived in a house. ',\
-                'It was morning and the sun was rising". ',\
+                'It was morning and the sun was rising." ',\
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
@@ -179,7 +179,7 @@ class obj_scene_ch4p5(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish."',\
                    ]
         self.world=world.obj_world_fishing(self)
@@ -345,7 +345,7 @@ class obj_scene_ch4p12(page.obj_chapterpage):
         self.textkeys={'pos':(50,100),'xmax':720}
         self.addpart( draw.obj_drawing('bunnybody',(980,360+65),legend='Bunny body (facing right)',shadow=(200,105),brush=share.brushes.pen6) )
         self.addpart( draw.obj_image('bunnyhead',(980,360-150),scale=0.5) )
-        self.addpart( draw.obj_textinput('bunnyname',25,(380,360), legend='Bunny Name') )
+        self.addpart( draw.obj_textinput('bunnyname',20,(380,360), legend='Bunny Name') )
         #
         self.addpart( draw.obj_music('ch4') )
 

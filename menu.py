@@ -41,10 +41,14 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
-            quickscene=ch0.obj_scene_ch0tutorial()
-            # quickscene=ch1.obj_scene_ch1play1()
-            # quickscene=ch2.obj_scene_ch2p1()
-            # quickscene=ch3.obj_scene_ch3p16()
+            # quickscene=ch0.obj_scene_prologue()
+            # quickscene=ch0.obj_scene_ch0p10()
+            # quickscene=ch1.obj_scene_ch1p14()
+            # quickscene=ch1.obj_scene_ch1play3()
+            # quickscene=ch2.obj_scene_ch2p4()
+            # quickscene=ch2.obj_scene_ch2play4()
+            # quickscene=ch3.obj_scene_ch3p12()
+            quickscene=ch3.obj_scene_ch3p39a()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p21()
             # quickscene=ch5.obj_scene_ch5p36()
@@ -408,9 +412,27 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return False
     def setup(self):
-        self.text=['Controls: ([wasd] can be replaced by [zqsd] in azerty mode). ']
+        self.text=['Controls: ']
         #
+        # Game controls instructions
         self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
+        self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+        self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
+        #
+        self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('previous',(216,544),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
         #
         self.addpart( draw.obj_music('tension') )
 

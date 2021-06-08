@@ -128,7 +128,7 @@ class obj_scene_ch6p3(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-                'Lets get started: "It was the next day and the sun was rising".',\
+                'Lets get started: "It was the next day and the sun was rising."',\
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
@@ -165,7 +165,7 @@ class obj_scene_ch6p5(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish".',
                    ]
         self.world=world.obj_world_fishing(self)
@@ -379,7 +379,7 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         textchoice.addkey('sailor_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the sailor\'s name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('sailorname',25,(750,y2), legend='Sailor Name') )
+        self.addpart( draw.obj_textinput('sailorname',20,(750,y2), legend='Sailor Name') )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -1113,19 +1113,16 @@ class obj_scene_ch6p39death(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p39())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p39())
-
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died."',\
+                  '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-              'Dont do that all the time it gets annoying you know. ',\
                 'Now go back and try to act more "heroic". ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
         #
         self.addpart( draw.obj_music('tension') )
-
 
 
 class obj_scene_ch6p40(page.obj_chapterpage):

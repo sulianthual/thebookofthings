@@ -55,28 +55,25 @@ class obj_scene_ch1p1(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
-        tempo1='['+share.datamanager.controlname('mouse1')+']'
-        tempom='['+share.datamanager.controlname('mouse')+']'
-        tempok='['+share.datamanager.controlname('keyboard')+']'
         self.text=[\
-                   'Lets write this, said the book of things: "Once upon a time, there was a ',('hero',share.colors.hero),'". ',\
+                   'Lets write this, said the book of things: ',\
+                   '"Once upon a time, there was a ',('hero',share.colors.hero),'". ',\
                    'Simple and to the point. ',\
                    'Well, lets give this ',('hero',share.colors.hero2),' a proper name and gender.',\
-                  '\n\n ',\
-                  ('select the hero name with '+tempo1+' and type with the '+tempok+'. ',share.colors.instructions),\
-                 ('then, choose a gender with '+tempo1+'. ',share.colors.instructions),\
                    ]
-        self.addpart( draw.obj_textbox("The Hero\'s Name was:",(200,460)) )
-        self.addpart( draw.obj_textinput('heroname',25,(750,460), legend='Hero Name') )
-        self.addpart( draw.obj_textbox('and the hero was:',(180,580)) )
+        yref=260
+        dyref=120
+        self.addpart( draw.obj_textbox("the hero\'s name was:",(200,yref)) )
+        self.addpart( draw.obj_textinput('heroname',20,(750,yref), legend='hero name') )
+        #
+        self.addpart( draw.obj_textbox('and the hero was:',(180,yref+dyref)) )
         textchoice=draw.obj_textchoice('hero_he')
-        textchoice.addchoice('1. A guy','he',(440,580))
-        textchoice.addchoice('2. A girl','she',(740,580))
-        textchoice.addchoice('3. A thing','it',(1040,580))
+        textchoice.addchoice('1. A guy','he',(440,yref+dyref))
+        textchoice.addchoice('2. A girl','she',(740,yref+dyref))
+        textchoice.addchoice('3. A thing','it',(1040,yref+dyref))
         textchoice.addkey('hero_his',{'he':'his','she':'her','it':'its'})
         textchoice.addkey('hero_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
-        self.addpart(draw.obj_animation('ch1_pen2','pen',(1180,400),record=False,scale=0.5))
         #
         self.addpart( draw.obj_music('ch1') )
 
@@ -118,7 +115,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
                    ('Draw with '+tempo1+' and erase with '+tempo2+'',share.colors.instructions),', but you should know this by now.',\
                    ]
         self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
-        drawing=draw.obj_drawing('happyface',(640,450),legend='Draw a Happy Face',shadow=(200,200))
+        drawing=draw.obj_drawing('happyface',(640,450),legend='draw a happy face',shadow=(200,200))
         self.addpart( drawing )
         #
         self.addpart( draw.obj_music('ch1') )
@@ -129,7 +126,8 @@ class obj_scene_ch1p4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p5())
     def setup(self):
-        self.text=['So this is what ',('{heroname}',share.colors.hero),' looks like. ',\
+        self.text=[\
+                    'This is what ',('{heroname}',share.colors.hero),' looks like. ',\
                     'Not bad, said the book of things. ',\
                    'Indeed, ',('{hero_he}',share.colors.hero2),' looks very cool. ',\
                    'Lets move on to the next step. ',\
@@ -152,12 +150,12 @@ class obj_scene_ch1p5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p6())
     def setup(self):
-        self.text=['So far, our story goes as "Once upon a Time, There was a ',('hero',share.colors.hero),'". ',\
+        self.text=['So far, our story goes as "Once upon a time, there was a ',('hero',share.colors.hero),'". ',\
                   'It aint much but its a start, said the book of things. ',\
                 'Now, lets draw a ',('bed',share.colors.item),' ',\
                 'such that our ',('hero',share.colors.hero2),' can wake up.',\
                    ]
-        drawing=draw.obj_drawing('bed',(640,450),legend='Draw a Bed',shadow=(400,200))
+        drawing=draw.obj_drawing('bed',(640,450),legend='draw a bed',shadow=(400,200))
         self.addpart( drawing )
         #
         self.addpart( draw.obj_music('ch1') )
@@ -205,13 +203,11 @@ class obj_scene_ch1p7(page.obj_chapterpage):
     def setup(self):
         tempor='['+share.datamanager.controlname('right')+']'
         self.text=[\
-                  '... Huh...well, you actually need to hold '+tempor+' to wake ',\
-                  ('{heroname}',share.colors.hero),\
-                  ' from ',('bed',share.colors.item2),', said the book of things. ',\
+                  '... Huh...well, you actually need to hold '+tempor+' to wake up ',\
+                  ('{heroname}',share.colors.hero),', said the book of things. ',\
                   ('{hero_he}',share.colors.hero2),' is quite lazy you know. ',\
                   ' And dont release '+tempor+' too soon or ',('{hero_he}',share.colors.hero2),\
                   ' will go straight back to sleep. ',\
-                  ' When ',('{heroname}',share.colors.hero),' is fully awake, we will move on. ',\
                    ]
         self.world=world.obj_world_wakeup(self,sun=False)
         self.addpart(self.world)
@@ -248,14 +244,14 @@ class obj_scene_ch1p9(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p10())
     def setup(self):
-        self.text=['Since it is the first day, today we will have ',('{heroname}',share.colors.hero), \
+        self.text=['Today we will have ',('{heroname}',share.colors.hero), \
                   ' take it easy, said the book of things. Lets just go  fishing. ',\
-                'All you need is to draw a ',('fish',share.colors.item),\
-                ' and a ',('hook',share.colors.item),', ',\
-                ' and we will be on our way. ',\
+                'Draw a ',('fish',share.colors.item),' and a ',\
+                ('hook',share.colors.item),' and we will be on our way. ',\
+
                    ]
-        self.addpart(draw.obj_drawing('hook',(240,450),legend='Draw a Hook',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('fish',(940,450),legend='Draw a Fish (Facing Left)',shadow=(300,200)))
+        self.addpart(draw.obj_drawing('hook',(240,450),legend='draw a hook',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('fish',(940,450),legend='draw a fish (facing left)',shadow=(300,200)))
         #
         self.addpart( draw.obj_music('ch1') )
 
@@ -270,17 +266,12 @@ class obj_scene_ch1p10(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
-        tempo='['+share.datamanager.controlname('down')+']'
-        self.text=[\
-                    ' Lower the hook with '+tempo+' and catch a fish. ',\
-                   ]
+        tempo='['+share.datamanager.controlname('down')+']. '
+        self.text=['Lower the hook with '+tempo]
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch1') )
-
-
-
 
 class obj_scene_ch1p11(page.obj_chapterpage):
     def prevpage(self):
@@ -289,10 +280,10 @@ class obj_scene_ch1p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p12())
     def setup(self):
         self.text=[\
-                    'Nice Catch, said the book of thing. This ',\
+                    'Nice catch, said the book of thing, this ',\
                     ('{heroname}',share.colors.hero),' is going places. ',\
-                    ' Lets write down in our story: "',\
-                    ('{heroname}',share.colors.hero),' the ',('hero',share.colors.hero2),\
+                    'Lets write down in our story: "',\
+                    'the ',('hero',share.colors.hero),\
                     ' went fishing and caught a ',('fish',share.colors.item2),'". ',\
                    ]
         animation=draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=False)
@@ -342,8 +333,8 @@ class obj_scene_ch1p13(page.obj_chapterpage):
     def setup(self):
         tempol='['+share.datamanager.controlname('left')+']'
         self.text=[\
-                    'Nicely done, said the book of things. ',\
-                    'That wraps it up for our first day. Now, lets put our ',\
+                    'That wraps it up for our first day, said the book of things. ',\
+                    'Now, lets put our ',\
                     ('hero',share.colors.hero),' back to sleep. ',\
                     ' Hold '+tempol+', and dont release',\
                     ' or this procrastinator will stay awake all night. ',\
@@ -364,14 +355,13 @@ class obj_scene_ch1p14(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'And we finish with: "At night, the ',('hero',share.colors.hero),' went to back to bed". ',\
-                   'That wraps it nicely, says the book of things. ',\
-                   'One last thing, lets draw the ',('sun',share.colors.item),\
+                   'One last thing, draw the ',('sun',share.colors.item),\
                    ' and the ',('moon',share.colors.item),\
-                   ' so we know when it is day and night. ',\
+                   ' so we know when it is day or night. ',\
                    ]
         # self.addpart(draw.obj_drawing('sun',(340,450),legend='Sun',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('sun',(300+50,450),legend='Sun',shadow=(300,200)))
-        self.addpart(draw.obj_drawing('moon',(1280-200-50,450),legend='Moon',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('sun',(300+50,450),legend='sun',shadow=(300,200)))
+        self.addpart(draw.obj_drawing('moon',(1280-200-50,450),legend='moon',shadow=(200,200)))
         #
         self.addpart( draw.obj_music('ch1') )
 
@@ -388,7 +378,8 @@ class obj_scene_ch1play(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1play1())
     def setup(self):
         self.text=[\
-                   'Now, lets read again our story to summarize, said the book of things. ',\
+                    'That wraps it nicely, says the book of things. ',\
+                   'Now, lets read our story one more time. ',\
                    ]
         animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
@@ -421,7 +412,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+                '"Once upon a time, there was a ',('hero',share.colors.hero),' ',\
                 'named  ',('{heroname}',share.colors.hero),'. ',\
                 'It was morning when ',('{hero_he}',share.colors.hero2),' ',\
                 'woke up from ',('bed',share.colors.item2),'." ',\
@@ -450,7 +441,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero),\
                      ' went fishing and caught a ',\
                      ('fish',share.colors.item2),'."',\
                    ]
@@ -492,7 +483,7 @@ class obj_scene_ch1play4(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"And at night, ',('{heroname}',share.colors.hero),' went back to ',\
-                   ('bed',share.colors.item2),'". ',\
+                   ('bed',share.colors.item2),'." ',\
                    ]
         self.world=world.obj_world_gotobed(self)
         self.addpart(self.world)

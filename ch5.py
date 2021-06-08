@@ -118,7 +118,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-                'Ok here we go, lets write: "It was the next day and the sun was rising".',\
+                'Ok here we go, lets write: "It was the next day and the sun was rising."',\
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
@@ -155,7 +155,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                    '"',('{heroname}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish".',
                    ]
         self.world=world.obj_world_fishing(self)
@@ -365,7 +365,7 @@ class obj_scene_ch5p14(page.obj_chapterpage):
         textchoice.addkey('elder_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         self.addpart( draw.obj_textbox("and the elder\'s name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('eldername',25,(750,y2), legend='Elder Name') )
+        self.addpart( draw.obj_textinput('eldername',20,(750,y2), legend='Elder Name') )
         #
         self.addpart( draw.obj_music('winds') )
 
