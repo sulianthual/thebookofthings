@@ -171,6 +171,8 @@ class obj_sounds:
         self.dict['sailor3']=( 'sailor/humanYell4.wav' , 1 )
         self.dict['sailor4']=( 'sailor/drunk-hic.ogg' , 1 )
         self.dict['sailor5']=( 'sailor/pirate_arrshort2.wav' , 0.5 )
+        self.dict['sailor_radio']=( 'sailor/radiocut2.ogg' ,1 )
+
         self.dict['skeleton1']=( 'skeleton/wood_squeak_01.ogg' , 0.5 )
         self.dict['skeleton3']=( 'skeleton/wood_squeak_02.ogg' , 0.5 )
         self.dict['skeleton2']=( 'skeleton/ghost_SpiritShout.wav' , 0.4 )

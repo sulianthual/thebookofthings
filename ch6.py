@@ -56,11 +56,9 @@ class obj_scene_ch6p1(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',
-                   ('{partnername}',share.colors.partner),' has been captured by the ',\
-                    ('villain',share.colors.villain),' called ',('{villainname}',share.colors.villain),', and ',\
-                     ('{partner_he}',share.colors.partner2),' is being held in  ',\
-                     ('{villain_his}',share.colors.villain2),' ',\
-                     ('evil castle',share.colors.location2),'. ',\
+                   ('{partnername}',share.colors.partner),' is being held captive in ',\
+                    ('{villainname}',share.colors.villain),'\'s ',\
+                     ('evil castle',share.colors.location2),', and ',\
                      ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
                      ('password',share.colors.password2),'. ',\
                    ]
@@ -92,13 +90,16 @@ class obj_scene_ch6p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p3())
     def setup(self):
         self.text=[\
-                   '"Three ',('grandmasters of deceit',share.colors.grandmaster),' hold the clues to the password, ',\
-                   'and so far ',('{heroname}',share.colors.hero),\
-                   ' has visited two of them. ',\
-                   'Their password parts are ',('"fight"',share.colors.password),\
-                   ' and ',('"perservere"',share.colors.password),'. ',\
-                   'Only one ',('grandmaster',share.colors.grandmaster),' remains".',\
+                  '"',\
+                'So far, the castle\'s password is ',('"fight persevere"',share.colors.password),'. ',\
+                     ('{heroname}',share.colors.hero),' must visit one last ',\
+                     ('grandmaster of deceit',share.colors.grandmaster),\
+                     ' to figure out the last part." ',\
                    ]
+        # self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade')
@@ -250,10 +251,10 @@ class obj_scene_ch6p8(page.obj_chapterpage):
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
-                    '\nIts me, your favorite ',('villain',share.colors.villain),'. ',\
-                    'Still waiting for you. ',\
-                    'I heard you already met two of my former grandmasters. ',\
-                    'Are you up to something. ',\
+                    '\nIts me, your favorite ',('villain',share.colors.villain),', ',\
+                    'I am still waiting for you you know. ',\
+                    'I heard you already met two of my former grandmasters, ',\
+                    'are you up to something. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
@@ -280,7 +281,7 @@ class obj_scene_ch6p9(page.obj_chapterpage):
                   '"',\
                     ('{heroname}',share.colors.hero),' checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox again.',\
-                    ' There was a scrambled piece of paper. ',\
+                    'There was also a scrambled piece of paper. ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -302,16 +303,22 @@ class obj_scene_ch6p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p11())
     def setup(self):
-        self.addpart( draw.obj_textbox('"The piece of paper said:"',(50,83),xleft=True) )
-        xmargin=300+200
-        ymargin=230
-        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
         self.text=[\
-                    'Dear ',('{heroname}',share.colors.hero),\
-                    '\n\n Meet me on the beach. ',\
-                    '\n\nsigned: unknown. ',\
+                  '"',\
+                    'The piece of paper said: ',\
+                    'dear ',('{heroname}',share.colors.hero),\
+                    ', meet me on the beach. ',\
+                    'signed: unknown. "',\
                    ]
-        self.addpart( draw.obj_image('paperframe',(440+200,400),path='premade') )
+        self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('paper',(333,442),scale=0.33,rotate=6,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch2_mail2','sun',(640,360))
+        animation1.addimage('empty',path='premade')
+        self.addpart(animation1)
+        #
+        self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
+        animation1.addsound( "hero1", [70,180],skip=1 )
         #
         self.sound=draw.obj_sound('mailopen')
         self.addpart(self.sound)
@@ -326,13 +333,13 @@ class obj_scene_ch6p11(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p12())
     def setup(self):
-        self.text=['Who could that be, said the book of things. ',\
-                    ' Well, the beach is just south from here. ',\
+        self.text=['Who could that possibly be, said the book of things. ',\
+                    'Well, the beach is just south from here. ',\
                     'Draw a ',('palm tree',share.colors.item),\
                     ' and a ',('wave',share.colors.item),' and we will be on our way. ',\
                     ]
-        self.addpart( draw.obj_drawing('palmtree',(340,450),legend='Palm Tree',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('wave',(940,450),legend='Wave',shadow=(200,100)) )
+        self.addpart( draw.obj_drawing('palmtree',(340,450),legend='palm tree',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('wave',(940,450),legend='wave',shadow=(200,100)) )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -362,24 +369,25 @@ class obj_scene_ch6p13(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"On the beach, ',('{heroname}',share.colors.hero),\
-                ' met a mysterious character. It was a ',\
+                ' met a mysterious ',\
                 ('sailor',share.colors.sailor),'". ',\
                'Interesting, said the book of things. ',\
                 'Choose a name and gender for this ',\
                 ('sailor',share.colors.sailor),'. ',\
                    ]
-        y1=360+90-100
-        y2=520+100-100
-        self.addpart( draw.obj_textbox('The sailor was:',(180,y1)) )
+        yref=260
+        dyref=120
+        self.addpart( draw.obj_textbox("the sailor\'s name was:",(200,yref)) )
+        self.addpart( draw.obj_textinput('sailorname',20,(750,yref), legend='sailor name') )
+        #
+        self.addpart( draw.obj_textbox('and the sailor was:',(180,yref+dyref)) )
         textchoice=draw.obj_textchoice('sailor_he')
-        textchoice.addchoice('1. A guy','he',(440,y1))
-        textchoice.addchoice('2. A girl','she',(740,y1))
-        textchoice.addchoice('3. A thing','it',(1040,y1))
+        textchoice.addchoice('1. A guy','he',(440,yref+dyref))
+        textchoice.addchoice('2. A girl','she',(740,yref+dyref))
+        textchoice.addchoice('3. A thing','it',(1040,yref+dyref))
         textchoice.addkey('sailor_his',{'he':'his','she':'her','it':'its'})
         textchoice.addkey('sailor_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
-        self.addpart( draw.obj_textbox("and the sailor\'s name was:",(200,y2)) )
-        self.addpart( draw.obj_textinput('sailorname',20,(750,y2), legend='Sailor Name') )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -393,11 +401,10 @@ class obj_scene_ch6p14(page.obj_chapterpage):
         self.text=[\
                'Now draw the ',\
                ('sailor',share.colors.sailor),'\'s face, and make it look slightly to the right. ',\
-                'I suggest you draw a happy face and add an eyelid, ',\
-                'but that is entirely up to you. ',\
                    ]
-        self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
-        self.addpart( draw.obj_drawing('sailorface',(640,450),legend='Draw the sailor (facing right)',shadow=(200,200)) )
+        yref=460
+        self.addpart( draw.obj_image('stickhead',(640,yref),path='premade',scale=2)  )
+        self.addpart( draw.obj_drawing('sailorface',(640,yref),legend='Draw the sailor (facing right)',shadow=(200,200)) )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -409,15 +416,18 @@ class obj_scene_ch6p15(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p16())
     def setup(self):
         self.text=[\
-                   'Almost done, said the book of things. ',\
+                   'Almost done. ',\
                   'We cant have a ',('sailor',share.colors.sailor),\
-                  ' without a proper ',('sailor hat',share.colors.item),'. ',\
-                  'Go on and draw that too. ',\
+                  ' without a proper ',('sailor hat',share.colors.item),', ',\
+                  'so draw that too. ',\
                    ]
-        self.textkeys={'pos':(50,200),'xmax':640}
-        self.addpart( draw.obj_image('sailorbaldhead',(640+300,450)) )
-        self.addpart( draw.obj_drawing('sailorhat',(640+300,450-200),shadow=(250,150)) )
-        self.addpart( draw.obj_textbox('Add a sailor hat',(640+300,680),color=share.colors.instructions) )
+        # self.textkeys={'pos':(50,200),'xmax':640}
+        # self.textkeys={'xmax':740}
+        yref=460
+        self.addpart( draw.obj_image('sailorbaldhead',(640,yref)) )
+        # self.addpart( draw.obj_drawing('sailorhat',(640,yref-200),shadow=(250,150)) )
+        self.addpart( draw.obj_drawing('sailorhat',(640,yref-200),shadow=(400,150)) )# WIDER
+        self.addpart( draw.obj_textbox('Add a sailor hat',(640,yref+230),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -433,7 +443,7 @@ class obj_scene_ch6p16(page.obj_chapterpage):
                '"On the ',('beach',share.colors.location2),', ',\
                ('{heroname}',share.colors.hero),' met the ',\
                ('sailor',share.colors.sailor),' called ',\
-               ('{sailorname}',share.colors.sailor),'". ',\
+               ('{sailorname}',share.colors.sailor),'." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
         self.addpart( draw.obj_image('sailorbase',(1280-500,475),scale=0.5,rotate=0,fliph=True,flipv=False) )
@@ -464,7 +474,7 @@ class obj_scene_ch6p17(page.obj_chapterpage):
                '"The ',('sailor',share.colors.sailor),' said: so you have received my note. ',\
                'My name is ',('{sailorname}',share.colors.sailor),', I am the ',\
                ('grandmaster of deceit',share.colors.grandmaster),' of the south! ',\
-               'Aye Aye, I can teach you all sorts of evil ways". ',\
+               'Aye Aye, I can teach you all sorts of evil ways." ',\
                   ]
         animation1=draw.obj_animation('ch6sailortalks1','sailorbase',(640,360),record=False)
         self.addpart( animation1 )
@@ -481,15 +491,13 @@ class obj_scene_ch6p18(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p17())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p19())
+        share.scenemanager.switchscene(obj_scene_ch6p20())
     def setup(self):
         self.text=[\
-                    '"The other ',('grandmasters',share.colors.grandmaster),\
-                    ' have told me about your feats. How impressive! ',\
-                    'Well, I happen to be looking for a skilled crewmate, ',\
+                    '"I happen to be looking for a skilled crewmate, ',\
                     'this is your lucky day squid. ',\
-                    'In return, I might be able to help with that ',\
-                    ('password',share.colors.password),' thing of yours". '
+                    'Tell you what, If you do well I will even tell you the ',\
+                    ('last part of the castle\'s password',share.colors.password),'." '
                   ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
@@ -504,45 +512,16 @@ class obj_scene_ch6p18(page.obj_chapterpage):
         self.addpart( draw.obj_music('sailor') )
 
 
-class obj_scene_ch6p19(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p18())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p20())
-    def setup(self):
-        self.text=[\
-                  '"The ',('{bug}',share.colors.bug),\
-                  ' crawled out of ',('{heroname}',share.colors.hero),\
-                  '\'s pocket and said: ',\
-                   'It sounds like we have no choice, lets join this ',\
-                   ('grandmaster',share.colors.grandmaster),'\'s crew. ',\
-                    'Soon enough, ',('{sailor_he}',share.colors.grandmaster2),\
-                    ' should tell us the last part of the castle\'s ',\
-                    ('password',share.colors.password2),'". ',\
-                   ]
-        self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
-        self.addpart( animation1 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [15, 100] )
-        animation1.addsound( "bug2", [116],skip=1 )
-        #
-        self.addpart( draw.obj_music('sailor') )
-
-
 class obj_scene_ch6p20(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p19())
+        share.scenemanager.switchscene(obj_scene_ch6p18())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p21())
     def setup(self):
         self.text=[\
-                    '"So you\'re in. Aye aye, welcome to my crew squid, said ',\
-                    ('{sailorname}',share.colors.sailor),'. ',\
-                    'First thing first, we need to work on building a ship. ',\
-                    'The last one sank due to, errr, stuff. ',\
-                    'Go get me some wood then come back to see me. I need ',\
+                    '"First thing first, we need to work on building a ship. ',\
+                    'The last one sank due to, arrr, reasons. ',\
+                    'Go get some wood then come back to see me, I need ',\
                     ('10 logs',share.colors.instructions),'". '
                   ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
@@ -569,7 +548,7 @@ class obj_scene_ch6p21(page.obj_chapterpage):
         self.text=[\
                    'Get 10 wood logs for the sailor.',\
                    ]
-        self.world=world.obj_world_travel(self,start=(-1280+100,1080-120),goal='beach',chapter=6,minigame='logs',sailorwait=True)
+        self.world=world.obj_world_travel(self,start=(-1280+100,1080-120),goal='beach',chapter=6,minigame='logs',sailorwait=True,noending='True')
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('sailor') )
@@ -635,9 +614,8 @@ class obj_scene_ch6p24(page.obj_chapterpage):
                    '"Oh, it wont be easy said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
                    'See, I lost my ',('treasure',share.colors.cow),\
-                   ' in a very spooky place called ',\
-                   ('skull island',share.colors.skeleton),'". ',\
-                   'Draw a ',('skull',share.colors.skeleton),', said the book of things. ',\
+                   ' in a place called skull island". ',\
+                   'Draw a ',('skull',share.colors.item),', said the book of things. ',\
                    ]
         self.addpart( draw.obj_drawing('skeletonhead',(640,450),legend='Skull (Facing Right)',shadow=(200,200)) )
         #
@@ -651,14 +629,12 @@ class obj_scene_ch6p25(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p26())
     def setup(self):
-        self.text=['"The, err, slight problem with ',\
+        self.text=['"The, arrr, slight problem with ',\
                     ('skull island',share.colors.location2),\
                     ' is that it is inhabited by ',\
-                    ('spooky skeletons',share.colors.skeleton),', said ',\
-                    ('{sailorname}',share.colors.sailor),'. ',\
-                    'These guys stole my ',\
-                    ('treasure',share.colors.cow),' and I really need it back. ',\
-                    'Now lets get going squid". ',\
+                    ('spooky skeletons',share.colors.skeleton),'. ',\
+                    'Now lets get moving squid, ',\
+                    'said ',('{sailorname}',share.colors.sailor),'." ',\
                    ]
         animation1=draw.obj_animation('ch1_hero1','skeletonbase',(360,360))
         self.addpart(animation1)
@@ -689,7 +665,7 @@ class obj_scene_ch6p26(page.obj_chapterpage):
         self.world=world.obj_world_travel(self,start='beach',goal='island',boat=True,chapter=6,sailor=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('sailor') )
+        self.addpart( draw.obj_music(None) )
 
 
 class obj_scene_ch6p27(page.obj_chapterpage):
@@ -702,7 +678,7 @@ class obj_scene_ch6p27(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Alright, said ',('{sailorname}',share.colors.sailor),'. ',\
-                   'First, we shall wait until night to infiltrate the island". ',\
+                   'First, we shall wait until night to infiltrate the island." ',\
                    ]
         self.world=world.obj_world_sunset(self,type='island')
         self.addpart(self.world)
@@ -724,10 +700,10 @@ class obj_scene_ch6p28(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p29())
     def setup(self):
         self.text=[\
-                   '"Now squid, said ',('{sailorname}',share.colors.sailor),', ',\
+                   '"Now listen squid, ',\
                    'your mission is to sneak past these enemies and reach the island main quarters, ',\
                    'where my ',('treasure',share.colors.cow),' is. ',\
-                   'Grab my treasure and make it back here". ',\
+                   'Grab my treasure then make it back to the ship." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','skeletonbase','palmtree','wave','cloud','sailboat','mountain','bush') )
         self.addpart( draw.obj_image('mountain',(1169,276),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -763,7 +739,8 @@ class obj_scene_ch6p29(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p30())
     def setup(self):
         self.text=[\
-                   '"Good luck squid! I will be on the radio if you need any help. ',\
+                   '"Good luck squid! said ',('{sailorname}',share.colors.sailor),'. ',\
+                   'I will be on the radio if you need any help. ',\
                    'Now get in that bush and start sneaking. ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','saislorbase','bush','palmtree','moon') )
@@ -804,9 +781,16 @@ class obj_scene_ch6p30(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Start Sneaking']
+       self.text=['"You are doing great, said ',\
+                   ('{sailorname}',share.colors.sailor),' on the radio. ',\
+                   'Keep moving right." ',\
+                   ]
        self.world=world.obj_world_bushstealth0(self)
        self.addpart(self.world)
+       #
+       self.sound=draw.obj_sound('sailor_radio')
+       self.addpart(self.sound)
+       self.sound.play()
        #
        self.addpart( draw.obj_music('ch6play') )
 
@@ -822,9 +806,15 @@ class obj_scene_ch6p30a(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=['"Uh oh, we have company! You are on your own now, good luck squid."',\
+                   ]
+
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
+       #
+       self.sound=draw.obj_sound('sailor_radio')
+       self.addpart(self.sound)
+       self.sound.play()
        #
        self.addpart( draw.obj_music('ch6play') )
 
@@ -841,7 +831,7 @@ class obj_scene_ch6p31(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth2(self)
        self.addpart(self.world)
        #
@@ -859,7 +849,7 @@ class obj_scene_ch6p32(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth3(self)
        self.addpart(self.world)
        #
@@ -877,7 +867,7 @@ class obj_scene_ch6p33(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')# modified win sound
        self.addpart(self.world)
        #
@@ -892,11 +882,17 @@ class obj_scene_ch6p34(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Great job, said ',('{sailorname}',share.colors.sailor),' on the radio, ',\
-                   'my treasure should be right ahead". ',\
+                   'my ',('treasure',share.colors.cow),' should be right ahead". ',\
                    'Its weird, said the book of things, there is nothing here except a ',\
-                   ('cow',share.colors.cow),'. ',\
+                   ('cow',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('cow',(640,450),legend='Draw a Cow (Facing Right)',shadow=(300,200),brush=share.brushes.pen6) )
+        self.addpart( draw.obj_drawing('cow',(640,450),legend='draw a cow (facing right)',shadow=(300,200),brush=share.brushes.pen6) )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5','sailor_radio') )
+        #
+        self.sound=draw.obj_sound('sailor_radio')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('ch6play') )
         #
@@ -911,10 +907,9 @@ class obj_scene_ch6p35(page.obj_chapterpage):
         self.text=[\
                    '"The cow is my treasure, said ',\
                    ('{sailorname}',share.colors.sailor),' on the radio. ',\
-                   'Well, she is my pet cow called ',('treasure',share.colors.cow),'. ',\
-                   'The skeletons stole her because her milk makes bones stronger. ',\
-                   'I hope you werent expecting real money! Now bring ',\
-                   ('treasure',share.colors.cow),' back to the ship". ',\
+                   'Well, my pet cow called ',('treasure',share.colors.cow),'. ',\
+                   # 'The skeletons stole her because her milk makes bones stronger. ',\
+                   'I hope you werent expecting real money! Now bring her back to the ship." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cow','bush','palmtree','moon') )
         # self.addpart( draw.obj_image('cow',(533,498),scale=0.68,rotate=0,fliph=False,flipv=False) )
@@ -946,7 +941,7 @@ class obj_scene_ch6p36(page.obj_chapterpage):
                    '"Suddenly, one of the ',('skeletons',share.colors.skeleton),' sounded the alarm: ',\
                    ('Alert',share.colors.skeleton),', someone has breached the perimeter! ',\
                  'I see the intruder, ',\
-                 ('{hero_he}',share.colors.hero2),' is trying to steal our cow!".',\
+                 ('{hero_he}',share.colors.hero2),' is trying to steal our cow!"',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','skeletonbase','cow','bush','palmtree','moon') )
         self.addpart( draw.obj_image('cow',(174,364),scale=0.48,rotate=0,fliph=False,flipv=False) )
@@ -1132,9 +1127,9 @@ class obj_scene_ch6p40(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p41())
     def setup(self):
         self.text=[\
-                   '"You made it squid!, I am so relieved, said ',\
+                   '"You made it squid! I am so relieved, said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
-                   'Now quick, board the ship and lets get out of here". ',\
+                   'Quick, board the ship and lets get out of here." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'heroridecow','sailorbase','bush','palmtree','moon','sailboat','wave') )
         self.addpart( draw.obj_image('sailboat',(1034,416),scale=0.81,rotate=0,fliph=False,flipv=False) )
@@ -1185,11 +1180,9 @@ class obj_scene_ch6p42(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p43())
     def setup(self):
         self.text=[\
-                   '"Well squid, I guess this is were we part ways said ',\
+                   '"Squid, I guess this is were we part ways said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
-                    'One thing is for sure, you are truly a ',\
-                    ('great deceiver',share.colors.grandmaster2),' that can ',\
-                    ('steal',share.colors.grandmaster),' like no equal!". ',\
+                    'One thing is for sure, you are truly a great deceiver!"',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'cow','sailorbase','palmtree','wave','cloud','sun','sailboat') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
@@ -1216,9 +1209,9 @@ class obj_scene_ch6p43(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p44())
     def setup(self):
         self.text=[\
-                   '"I cannot thank you enough for saving my cow ',\
-                   ('treasure',share.colors.cow),', she is what I love most in the world ',\
-                   '(and it gets lonely at sea you know). To thank you, I want you to keep the ship, you earned it". ',\
+                   '"I cannot thank you enough for saving ',\
+                   ('treasure',share.colors.cow),', she is what I love most in the world. ',\
+                   'To thank you, I want you to keep the ship, you earned it". ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'cow','sailorbase','palmtree','wave','cloud','sun','sailboat') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
@@ -1249,10 +1242,11 @@ class obj_scene_ch6p44(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p45())
     def setup(self):
         self.text=[\
-                   '"One last thing, I think the last part of the  castle\'s ',\
-                   ('password',share.colors.password2),' is ',\
-                   ('"overcome"',share.colors.password),'. That is my motto: "overcome everything". ',\
-                   'well, till next time squid".',\
+                   '"One last thing, the last part of the  castle\'s password is: ',\
+                   ('"overcome"',share.colors.password),'. ',\
+                    'That\'s my motto: overcome everything. ',\
+                    'Till next time squid".',\
+
                    ]
         # self.addpart( draw.obj_imageplacer(self,'cow','sailorbase','palmtree','wave','cloud','sun','sailboat') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
@@ -1280,10 +1274,10 @@ class obj_scene_ch6p45(page.obj_chapterpage):
         self.text=[\
                   '"The ',('{bug}',share.colors.bug),\
                   ' crawled out of ',('{heroname}',share.colors.hero),\
-                  '\'s pocket and said: ',\
+                  '\'s pocket and whispered: ',\
                    'this is it, we have completed the castle\'s ',\
                    ('password',share.colors.password2),'. It reads: ',\
-                    ('fight persevere overcome',share.colors.password),\
+                    ('"fight persevere overcome"',share.colors.password),\
                     '. Lets get a good night sleep and tomorrow we will finally rescue ',\
                     ('{partnername}',share.colors.partner),'!". ',\
                    ]
@@ -1330,7 +1324,7 @@ class obj_scene_ch6p47(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' was all excited ',\
                    'thinking about how ',\
                    ('{hero_he}',share.colors.hero2),' would soon charm ',\
-                   ('{partnername}',share.colors.partner),' with a serenade. ',\
+                   ('{partnername}',share.colors.partner),' with a serenade." ',\
                    ]
         self.world=world.obj_world_serenade(self,partner=False)
         self.addpart(self.world)
@@ -1348,8 +1342,8 @@ class obj_scene_ch6p48(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
         self.text=[\
-                   '"Then, ',\
-                   ('{heroname}',share.colors.hero),' though about how ',\
+                   '"',\
+                   ('{hero_he}',share.colors.hero),' though about how ',\
                    ('{hero_him}',share.colors.hero2),' and ',\
                    ('{partnername}',share.colors.partner),' would soon be kissing". ',\
                    ]

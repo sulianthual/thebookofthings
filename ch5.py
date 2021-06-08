@@ -821,7 +821,7 @@ class obj_scene_ch5p28a(page.obj_chapterpage):
         self.text=[\
                 '"I am so impressed that I will tell you the second part of the password. It is:',\
                 ('"persevere"',share.colors.password),'. ',\
-                'That\'s my motto: "always perservere!", which I taught to ',\
+                'That\'s my motto: always perservere!, that I taught to ',\
                 ('{villainname}',share.colors.villain),'." ',\
                   ]
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
@@ -1363,28 +1363,6 @@ class obj_scene_ch5p42(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p41())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p43())
-    def setup(self):
-        self.text=[\
-                   '"Then, right before falling asleep, ',\
-                   ('{hero_he}',share.colors.hero),' smiled slightly hoping that ',\
-                   ('{hero_he}',share.colors.hero2),' would soon rescue ',\
-                   ('{partnername}',share.colors.partner),'".',\
-                   ]
-        self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
-        self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
-        self.addpart( draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
-        self.addpart( draw.obj_animation('ch1_sun','sun',(640,360),scale=0.5) )
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-
-class obj_scene_ch5p43(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p42())
-    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5end())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
@@ -1400,7 +1378,7 @@ class obj_scene_ch5p43(page.obj_chapterpage):
 
 class obj_scene_ch5end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p43())
+        share.scenemanager.switchscene(obj_scene_ch5p42())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5unlocknext())
     def setup(self):

@@ -986,7 +986,7 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         self.text=[\
                     '"The first part of the castle\'s password is: ',\
                     ('"fight"',share.colors.password),'. ',\
-                    'That\'s my motto: "fight in any situation", which I taught to ',\
+                    'That\'s my motto: fight in any situation, that I taught to ',\
                     ('{villainname}',share.colors.villain),' when ',\
                     ('{villain_he}',share.colors.villain2),' was my student." ',\
                    ]
