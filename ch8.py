@@ -39,8 +39,6 @@ class obj_scene_chapter8(page.obj_chapterpage):# just go to next page directly
 ###########
 # roam to different locations
 class obj_scene_ch8roam(page.obj_chapterpage):
-    def triggerprevpage(self,controls):# (prefer over an empty prevpage)
-        return False
     def nextpage(self):
         if self.world.goalname=='home':
             share.scenemanager.switchscene(obj_scene_ch8home())
@@ -208,10 +206,12 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
+    def presetup(self):
+        super().presetup()
+        self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def setup(self):
-        self.text=[\
-                'Thank you for playing the book of things. See full list of credits in the settings menu. ',\
-                   ]
+        credits=share.gamecredits.gettext()
+        self.text=[credits]
         self.world=world.obj_world_eatfish(self,cake=True)
         self.addpart(self.world)
         #

@@ -61,6 +61,7 @@ colors=datb.obj_colors()# dictionary of colors
 brushes=datb.obj_brushes()# brushes used for drawing
 musics=datb.obj_musics()# music names
 sounds=datb.obj_sounds()# sound names
+gamecredits=datb.obj_gamecredits()# game credits text
 #
 # Devtools
 devaccess=datamanager.getdevaccess()# ask datamanager if user has dev access (edit file settings.txt to allow)

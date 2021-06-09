@@ -446,13 +446,13 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_settings())
     def triggernextpage(self,controls):
         return False
+    def presetup(self):
+        super().presetup()
+        self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def setup(self):
-        self.text=['Credits: ',\
-                    '\n\nThe book of things: a game by Sulian Thual (2021). ',\
-                    'Made with Pygame. ',\
-                    'All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). ',\
-                    'Sounds from opengameart.com and freesound.com (License CC0). ',\
-                   '[',share.datamanager.controlname('back'),': back]']
+        credits=share.gamecredits.gettext()
+        self.text=[credits,\
+                   '['+share.datamanager.controlname('back')+': back]']
         #
         self.addpart( draw.obj_music('tension') )
 

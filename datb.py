@@ -285,13 +285,6 @@ class obj_sounds:
         self.dict['mech_counter']=( 'world/mech/Whip.ogg', 1 )
         self.dict['mech_correct']=( 'world/mech/confirmation_002.ogg', 1 )
         self.dict['mech_wrong']=( 'world/mech/fail.wav', 1 )
-
-
-
-
-
-
-
         #
     def getsoundfilename(self,name):
         if name in self.dict.keys():
@@ -305,6 +298,23 @@ class obj_sounds:
           return self.dict['error'][1]
 
 
+####################################################################################################################
+# Credits (text that appears in settings and end-game)
+
+class obj_gamecredits:
+    def __init__(self):
+        self.setup()
+    def setup(self):
+        credits ='"The book of things", a video game by Sulian Thual (2021). '
+        credits+='Made with Python and Pygame. '
+        credits+='All musics from PlayOnLoop.com (Licensed under Creative Commons by Attribution 4.0). '
+        credits+='Sounds from opengameart.com and freesound.com (License CC0). '
+        credits+='Thank you for playing. '
+        self.text=credits
+    def gettext(self):
+        return self.text
+
+        
 ####################################################################################################################
 # Databases
 
