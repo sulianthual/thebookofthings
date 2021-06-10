@@ -210,7 +210,7 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def setup(self):
-        credits=share.gamecredits.gettext()
+        credits=share.gamecredits.gettext()# game credits from database
         self.text=[credits]
         self.world=world.obj_world_eatfish(self,cake=True)
         self.addpart(self.world)
@@ -763,7 +763,7 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
 
 class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8westbye())
+        share.scenemanager.switchscene(obj_scene_ch8westreplay())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8westreplay())
     def triggernextpage(self,controls):
@@ -778,7 +778,7 @@ class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
 
 class obj_scene_ch8weststomp(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8westbye())
+        share.scenemanager.switchscene(obj_scene_ch8westreplay())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8westreplay())
     def triggernextpage(self,controls):
@@ -1247,7 +1247,7 @@ class obj_scene_ch8islandsneak(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Start Sneaking']
+       self.text=[]
        self.world=world.obj_world_bushstealth0(self)
        self.addpart(self.world)
        #
@@ -1265,7 +1265,7 @@ class obj_scene_ch8islandsneak1(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
        #
@@ -1283,7 +1283,7 @@ class obj_scene_ch8islandsneak2(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth2(self)
        self.addpart(self.world)
        #
@@ -1301,7 +1301,7 @@ class obj_scene_ch8islandsneak3(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth3(self)
        self.addpart(self.world)
        #
@@ -1319,7 +1319,7 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['Sneak past the ',('skeletons',share.colors.skeleton2)]
+       self.text=[]
        self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')
        self.addpart(self.world)
        #

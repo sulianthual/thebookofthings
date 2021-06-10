@@ -314,7 +314,7 @@ class obj_gamecredits:
     def gettext(self):
         return self.text
 
-        
+
 ####################################################################################################################
 # Databases
 
@@ -742,9 +742,10 @@ class obj_snapshotmanager:
             # skeleton with hair
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-            dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-            dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
+            dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
+            dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+            # dispgroup1.addpart('part3',draw.obj_image('stickhead',(640,200),path='premade') )
+            dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
         if name in ['skeletonhead','sailorhat']:
             # skeleton with sailor hat

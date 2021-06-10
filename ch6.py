@@ -491,11 +491,12 @@ class obj_scene_ch6p18(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p17())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p20())
+        share.scenemanager.switchscene(obj_scene_ch6p19())
     def setup(self):
         self.text=[\
-                    '"I happen to be looking for a skilled crewmate, ',\
-                    'this is your lucky day squid. ',\
+                    '"',\
+                    'This is your lucky day squid, ',\
+                    'I happen to be looking for a skilled crewmate. ',\
                     'Tell you what, If you do well I will even tell you the ',\
                     ('last part of the castle\'s password',share.colors.password),'." '
                   ]
@@ -512,14 +513,40 @@ class obj_scene_ch6p18(page.obj_chapterpage):
         self.addpart( draw.obj_music('sailor') )
 
 
-class obj_scene_ch6p20(page.obj_chapterpage):
+class obj_scene_ch6p19(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p18())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p20())
+    def setup(self):
+        self.text=[\
+                  '"The ',('{bug}',share.colors.bug),\
+                  ' crawled out of ',('{heroname}',share.colors.hero),\
+                  '\'s pocket and whispered: ',\
+                   'It sounds like we have no choice, lets join the ',\
+                   ('grandmaster',share.colors.grandmaster),'\'s crew and hope for the best." ',\
+                   ]
+        self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        animation1.addsound( "bug1", [15, 100] )
+        animation1.addsound( "bug2", [116],skip=1 )
+        #
+        self.addpart( draw.obj_music('sailor') )
+
+
+class obj_scene_ch6p20(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch6p19())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p21())
     def setup(self):
         self.text=[\
-                    '"First thing first, we need to work on building a ship. ',\
+                    '"So you\'re in. Aye aye, welcome to my crew squid, said ',\
+                    ('{sailorname}',share.colors.sailor),'. ',\
+                    'First thing first, we need to work on building a ship. ',\
                     'The last one sank due to, arrr, reasons. ',\
                     'Go get some wood then come back to see me, I need ',\
                     ('10 logs',share.colors.instructions),'". '
@@ -614,8 +641,8 @@ class obj_scene_ch6p24(page.obj_chapterpage):
                    '"Oh, it wont be easy said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
                    'See, I lost my ',('treasure',share.colors.cow),\
-                   ' in a place called skull island". ',\
-                   'Draw a ',('skull',share.colors.item),', said the book of things. ',\
+                   ' in a very scary place called skull island". ',\
+                   'Well, lets draw a ',('skull',share.colors.item),' said the book of things. ',\
                    ]
         self.addpart( draw.obj_drawing('skeletonhead',(640,450),legend='Skull (Facing Right)',shadow=(200,200)) )
         #
@@ -629,10 +656,12 @@ class obj_scene_ch6p25(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p26())
     def setup(self):
-        self.text=['"The, arrr, slight problem with ',\
-                    ('skull island',share.colors.location2),\
-                    ' is that it is inhabited by ',\
-                    ('spooky skeletons',share.colors.skeleton),'. ',\
+        self.text=['"The, arrr, slight problem is that ',\
+                    ('spooky skeletons',share.colors.skeleton),' guard the place. ',\
+                    # ('skull island',share.colors.location2),\
+                    # ' is that it is inhabited by ',\
+                    # ('spooky skeletons',share.colors.skeleton),'. ',\
+                    'These rotten mussels stole my ',('treasure',share.colors.cow),'. ',\
                     'Now lets get moving squid, ',\
                     'said ',('{sailorname}',share.colors.sailor),'." ',\
                    ]
@@ -1030,10 +1059,17 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
     def setup(self):
+        # self.text=[\
+        #             'Avoid trees and rocks or ',\
+        #             ('{heroname}',share.colors.hero),\
+        #             ' will get hurt. ',\
+        #            ]
         self.text=[\
-                    'Avoid trees and rocks or ',\
+                    'Trees and rocks will hurt ',\
                     ('{heroname}',share.colors.hero),\
-                    ' will get hurt. ',\
+                    ' (but not ',\
+                    ('treasure',share.colors.cow),\
+                    '). '
                    ]
         self.textkeys={'pos':(100,50),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
@@ -1180,7 +1216,7 @@ class obj_scene_ch6p42(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p43())
     def setup(self):
         self.text=[\
-                   '"Squid, I guess this is were we part ways said ',\
+                   '"Squid, I guess this is where we part ways said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
                     'One thing is for sure, you are truly a great deceiver!"',\
                    ]

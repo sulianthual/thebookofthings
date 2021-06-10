@@ -559,7 +559,7 @@ class obj_scene_ch3p16(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p17())
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
-        self.text=['Blockbuster action scene, said the book of things!',\
+        self.text=['Blockbuster action scene!',\
         ' Jump and crouch with the '+tempo+'. ',\
                     ]
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
@@ -958,9 +958,9 @@ class obj_scene_ch3p25(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p25a())
     def setup(self):
         self.text=[\
-                '"Having failed to unlock the  ',('castle',share.colors.location2),', ',\
-                ('{heroname}',share.colors.hero),' decided to travel back ',
-                ('home',share.colors.location2),'". ',\
+                '"',\
+                ('{heroname}',share.colors.hero),' gave up. ',\
+                'Till next time looser, blasted the castle\'s a.s.s." ',\
                    ]
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
@@ -1114,7 +1114,7 @@ class obj_scene_ch3p31(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [51, 148, 170, 201] )
+        animation1.addsound( "bug1", [51, 148, 170, 201],skip=1 )
 
         #
         self.addpart( draw.obj_music('tension') )
@@ -1138,7 +1138,7 @@ class obj_scene_ch3p32(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [26, 37, 208] )
+        animation1.addsound( "bug1", [26, 37, 208],skip=1 )
         #
         self.addpart( draw.obj_textinput('bug',20,(640,260), legend='Most Terrifying Bug') )
         #
@@ -1161,7 +1161,7 @@ class obj_scene_ch3p33(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [24, 49, 166] )
+        animation1.addsound( "bug1", [24, 49, 166],skip=1 )
         #
         bugword=share.datamanager.getword('bug')
         self.addpart( draw.obj_drawing('bug',(640,450),legend='Draw a '+bugword+' ',shadow=(200,200)) )
@@ -1233,7 +1233,7 @@ class obj_scene_ch3p36(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         #
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(340,360))
@@ -1293,7 +1293,7 @@ class obj_scene_ch3p38(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         #
         self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )

@@ -396,8 +396,7 @@ class obj_scene_ch5p16(page.obj_chapterpage):
         self.text=[\
                'Lets continue, say the book of things: ',\
                '"At the top of the ',('highest peak',share.colors.location2),', above the clouds, ',\
-               ('{heroname}',share.colors.hero),' met the ',('elder',share.colors.elder),' called ',\
-               ('{eldername}',share.colors.elder),'." ',\
+               ('{heroname}',share.colors.hero),' met a mysterious ',('elder',share.colors.elder),'." ',\
                    ]
         self.addpart( draw.obj_image('elderbase',(964,325),scale=0.48,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('mountain',(72,655),scale=0.34,rotate=0,fliph=False,flipv=False) )

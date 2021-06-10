@@ -48,17 +48,18 @@ class obj_quickscene():
             # quickscene=ch2.obj_scene_ch2p4()
             # quickscene=ch2.obj_scene_ch2play4()
             # quickscene=ch3.obj_scene_ch3p12()
-            # quickscene=ch3.obj_scene_ch3p39a()
+            # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p21()
-            # quickscene=ch5.obj_scene_ch5p40()
+            # quickscene=ch5.obj_scene_ch5p16()
             # quickscene=ch5.obj_scene_ch5p39()
-            # quickscene=ch6.obj_scene_ch6p47()
+            # quickscene=ch6.obj_scene_ch6p42()
             # quickscene=ch6.obj_scene_ch6p27()
+            # quickscene=ch7.obj_scene_ch7p19()
             # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
-            # quickscene=ch8.obj_scene_ch8roam(start='island')
+            quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             # minigames
             # quickscene=ch2.obj_scene_ch2p8()# ch2 serenade
@@ -72,7 +73,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
             # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
-            quickscene=ch8.obj_scene_ch8roam(start='island')
+            # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
             share.scenemanager.switchscene(quickscene)# (must not initstart if has looped sounds)
@@ -450,7 +451,7 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         super().presetup()
         self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def setup(self):
-        credits=share.gamecredits.gettext()
+        credits=share.gamecredits.gettext()# game credits from database
         self.text=[credits,\
                    '['+share.datamanager.controlname('back')+': back]']
         #

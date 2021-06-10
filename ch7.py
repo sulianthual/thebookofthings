@@ -731,7 +731,7 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch7') )
+        self.addpart( draw.obj_music('tension') )
 
 
 

@@ -113,7 +113,7 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'First, lets make sure ',('{heroname}',share.colors.hero),\
-                   ' wakes up today, said the book of things. ',\
+                   ' wakes up on time today, said the book of things. ',\
                    'Draw a ',('night stand',share.colors.item),\
                    ' and an ',('alarm clock',share.colors.item),'. ',\
                    ]
