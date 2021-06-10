@@ -126,6 +126,8 @@ class obj_scene_ch6p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p4())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def soundnextpage(self):
         pass# no sound
     def setup(self):
@@ -146,6 +148,8 @@ class obj_scene_ch6p4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p5())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
@@ -166,6 +170,8 @@ class obj_scene_ch6p5(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p6())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
@@ -213,6 +219,9 @@ class obj_scene_ch6p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p8())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,85)
+        self.textboxnextpage_xy=(1230,85)
     def setup(self):
         self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
         xmargin=100
@@ -247,6 +256,9 @@ class obj_scene_ch6p8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p7())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p9())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,85)
+        self.textboxnextpage_xy=(1230,85)
     def setup(self):
         self.addpart( draw.obj_textbox('"The second letter said:"',(50,83),xleft=True) )
         xmargin=100
@@ -355,6 +367,8 @@ class obj_scene_ch6p12(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p13())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    'Investigate the beach',\
@@ -370,6 +384,9 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p14())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,660)
+        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch6_writesailor')
         self.text=[\
@@ -577,6 +594,8 @@ class obj_scene_ch6p21(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p22())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    'Get 10 wood logs for the sailor.',\
@@ -695,6 +714,8 @@ class obj_scene_ch6p26(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p27())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    'Sail to ',('skull island',share.colors.skeleton2),\
@@ -712,6 +733,8 @@ class obj_scene_ch6p27(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p28())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_startskullisland')
         self.text=[\
@@ -819,6 +842,8 @@ class obj_scene_ch6p30(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch6p30())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
        self.text=['"You are doing great, said ',\
                    ('{sailorname}',share.colors.sailor),' on the radio. ',\
@@ -844,6 +869,8 @@ class obj_scene_ch6p30a(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch6p30a())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak1')
         self.text=['"Uh oh, we have company! You are on your own now, good luck squid."',\
@@ -870,6 +897,8 @@ class obj_scene_ch6p31(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch6p31())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak2')
         self.text=[]
@@ -892,6 +921,8 @@ class obj_scene_ch6p32(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch6p32())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak3')
         self.text=[]
@@ -911,6 +942,8 @@ class obj_scene_ch6p33(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch6p33())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak4')
         self.text=[]
@@ -997,7 +1030,7 @@ class obj_scene_ch6p36(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(149,563),scale=0.53,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(624,383),scale=0.35,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(1188,292),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('moon',(86,235),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(480,235),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('exclamationmark',(948,260),scale=1,path='premade') )
         animation1=draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(933,485),imgfliph=True)
         self.addpart(animation1)
@@ -1053,6 +1086,9 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p37())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,520)
+        self.textboxnextpage_xy=(1230,520)
     def setup(self):
         share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('arrows')+']'
@@ -1077,6 +1113,9 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,520)
+        self.textboxnextpage_xy=(1230,520)
     def setup(self):
         self.text=[\
                     'Trees and rocks will hurt ',\
@@ -1099,6 +1138,9 @@ class obj_scene_ch6p38b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38c())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,520)
+        self.textboxnextpage_xy=(1230,520)
     def setup(self):
         self.text=[\
                     'Ride until you make it to the ship. ',\
@@ -1118,6 +1160,9 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p39())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,520)
+        self.textboxnextpage_xy=(1230,520)
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
@@ -1141,8 +1186,13 @@ class obj_scene_ch6p39(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch6p39death())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,520)
+        self.textboxnextpage_xy=(1230,520)
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
         #
@@ -1212,6 +1262,8 @@ class obj_scene_ch6p41(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p42())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    'Go back to the beach',\
@@ -1354,6 +1406,8 @@ class obj_scene_ch6p46(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p47())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_gohome')
         self.text=['go back home']
@@ -1370,6 +1424,8 @@ class obj_scene_ch6p47(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p48())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"Back at home, ',\
@@ -1392,6 +1448,8 @@ class obj_scene_ch6p48(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p49())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"',\
@@ -1412,6 +1470,8 @@ class obj_scene_ch6p49(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p50())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                 '"It was already night".',\
@@ -1429,6 +1489,8 @@ class obj_scene_ch6p50(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6end())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"',\
@@ -1472,7 +1534,7 @@ class obj_scene_ch6unlocknext(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch6_endunlock')
         self.text=['You have unlocked a new chapter, ',\
-                    ('Chapter VII',share.colors.instructions),'! Access it from the menu. ',\
+                    ('Chapter VII',share.colors.instructions),'! ',\
                    ]
         share.datamanager.updateprogress(chapter=7)# chapter 7 becomes available
         sound1=draw.obj_sound('unlock')

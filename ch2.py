@@ -132,6 +132,9 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p4())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,660)
+        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch2_writepartner')
         self.text=[\
@@ -237,10 +240,13 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p6b())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(50,85)
+        self.textboxnextpage_xy=(230,85)
     def setup(self):
         share.datamanager.setbookmark('ch2_drawmail')
         self.text=[\
-                   'Alright, so first our lovebirds want to send each other some passionate letters. ',\
+                   'Alright, so first our lovers want to send each other some passionate letters. ',\
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
                    ]
         self.textkeys={'pos':(500,50),'xmin':500}# same as ={}
@@ -285,6 +291,9 @@ class obj_scene_ch2p6c(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p6b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p7())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,85)
+        self.textboxnextpage_xy=(1230,85)
     def setup(self):
         self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
         xmargin=150
@@ -341,6 +350,8 @@ class obj_scene_ch2p8(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
@@ -388,6 +399,8 @@ class obj_scene_ch2p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p11())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done# quick skip
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         tempol='['+share.datamanager.controlname('left')+']'
         tempor='['+share.datamanager.controlname('right')+']'
@@ -510,6 +523,8 @@ class obj_scene_ch2play1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play1a())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                 '"Once upon a time, there was a ',('hero',share.colors.hero),' ',\
@@ -530,6 +545,8 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play2())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
@@ -554,6 +571,8 @@ class obj_scene_ch2play2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play3())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
@@ -616,6 +635,8 @@ class obj_scene_ch2play3b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play4())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                     '"In the evening, ',\
@@ -636,6 +657,8 @@ class obj_scene_ch2play4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play5())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' charmed ',\
@@ -655,6 +678,8 @@ class obj_scene_ch2play5(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play5a())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"...and then they kissed."   ',\
@@ -672,6 +697,8 @@ class obj_scene_ch2play5a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play6())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                 '"It was already night."',\
@@ -689,6 +716,8 @@ class obj_scene_ch2play6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"',\
@@ -732,7 +761,7 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch2_endunlock')
         self.text=['You have unlocked a new chapter, ',\
-                    ('Chapter III',share.colors.instructions),'! Access it from the menu. ',\
+                    ('Chapter III',share.colors.instructions),'! ',\
                    ]
         share.datamanager.updateprogress(chapter=3)# chapter 3 becomes available
         sound1=draw.obj_sound('unlock')

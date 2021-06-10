@@ -65,6 +65,7 @@ class obj_pagedisplay_text:
     def __init__(self):
         self.type='pagetext'
         self.words_prerender=[]# list of words (sprites and positions)
+        self.ipos=(0,0)
     def make(self,textmatrix,pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
         self.words_prerender=[]
         formattextkwargs=share.datamanager.getwords()
@@ -100,6 +101,8 @@ class obj_pagedisplay_text:
             # last item of line, replace space with no-separation
             x = x - space_width + space_widthnone
         return x,y# return position for next call
+    def getposition(self):# return last known text position
+        return self.ipos
     def display(self):
         for i in self.words_prerender:
             word_surface, xy=i
@@ -286,6 +289,9 @@ class obj_drawing:
         self.sprite.save('book/'+self.name+'.png')
         # call the snapshot manager to redraw any related image
         share.snapshotmanager.remake(self.name)
+        #
+        self.sounddrawstart.finish()
+        self.sounddrawerase.finish()
     def mousedraw(self,controls):
         if controls.gm1 and tool.isinrect(controls.gmx,controls.gmy,self.rect):
 

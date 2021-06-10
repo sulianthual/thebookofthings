@@ -55,6 +55,9 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p2())
     def soundnextpage(self):
         pass# no sound
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,660)
+        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch1_writehero')
         self.text=[\
@@ -204,6 +207,8 @@ class obj_scene_ch1p7(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         tempor='['+share.datamanager.controlname('right')+']'
         self.text=[\
@@ -270,6 +275,8 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         tempo='['+share.datamanager.controlname('down')+']. '
         self.text=['Lower the hook with '+tempo]
@@ -310,6 +317,8 @@ class obj_scene_ch1p12(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p13())
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def soundnextpage(self):
         pass# no sound
     def setup(self):
@@ -336,6 +345,8 @@ class obj_scene_ch1p13(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         tempol='['+share.datamanager.controlname('left')+']'
         self.text=[\
@@ -418,6 +429,8 @@ class obj_scene_ch1play1(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                 '"Once upon a time, there was a ',('hero',share.colors.hero),' ',\
@@ -447,6 +460,8 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
@@ -467,6 +482,8 @@ class obj_scene_ch1play3(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                     '"',\
@@ -488,6 +505,8 @@ class obj_scene_ch1play4(page.obj_chapterpage):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def soundnextpage(self):
         pass# no sound
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         self.text=[\
                    '"And at night, ',('{heroname}',share.colors.hero),' went back to ',\
@@ -536,7 +555,7 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch1_endunlock')
         self.text=['You have unlocked a new chapter, ',\
-                    ('Chapter II',share.colors.instructions),'! Access it from the menu. ',\
+                    ('Chapter II',share.colors.instructions),'! ',\
                    ]
         share.datamanager.updateprogress(chapter=2)# chapter 2 becomes available
         #

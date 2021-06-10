@@ -99,22 +99,64 @@ class obj_chapterpage(obj_page):
         self.addpart( self.sound_menugo )
         self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
         self.addpart( self.sound_menuback )
+        #
     def postsetup(self):
         super().postsetup()
-        term=draw.obj_pagedisplay_text()
-        term.make(self.text,**self.textkeys)# rebuild main text
-        self.addpart(term)
+        self.pagetext=draw.obj_pagedisplay_text()
+        self.pagetext.make(self.text,**self.textkeys)# rebuild main text
+        self.addpart(self.pagetext)
+        #
+        self.textboxplace()# place textboxes
+        self.dotextboxprevpage=False
+        self.textboxprevpage()
+        self.dotextboxnextpage=False
+        self.textboxnextpage()
+    def textboxplace(self):
+        pagetext_x,pagetext_y=self.pagetext.getposition()
+        self.textboxprevpage_xy=( 50,pagetext_y+90 )
+        self.textboxnextpage_xy=( 230,pagetext_y+90 )
+    #
+    #############################
+    #
+    # Option 1: browse pages with Space/Enter
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return (controls.gb and controls.gbc)
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac)
+    #
+    # Option 2: browse pages with Mouse
+    # def textboxprevpage(self):
+    #     self.dotextboxprevpage=True
+    #     self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(110,0,110),fontsize='medium',xleft=True)
+    #     self.addpart(self.textbox_prev)
+    # def textboxnextpage(self):
+    #     self.dotextboxnextpage=True
+    #     self.textbox_next=draw.obj_textbox('[next]',self.textboxnextpage_xy,color=(138,0,138),hover=True,hovercolor=(110,0,110),fontsize='medium',xright=True)
+    #     self.addpart(self.textbox_next)
+    # def triggerprevpage(self,controls):
+    #     return self.textbox_prev.isclicked(controls) or (share.devmode and controls.gb and controls.gbc)
+    # def triggernextpage(self,controls):
+    #     return self.textbox_next.isclicked(controls) or (share.devmode and controls.ga and controls.gac)
+    #
+    #############################
+    #
+
+
     def prepage(self,controls):# background
         super().prepage(controls)
         self.callprevpage(controls)
         self.callnextpage(controls)
         self.callexitpage(controls)
-    def triggerprevpage(self,controls):
-        return controls.gb and controls.gbc
+
+
     def triggerexitpage(self,controls):
         return controls.gq and controls.gqc
-    def triggernextpage(self,controls):
-        return controls.ga and controls.gac
+
+
     def soundprevpage(self):
         self.sound_menuback.play()
     def soundexitpage(self):

@@ -228,7 +228,11 @@ class obj_scene_ch0p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p9())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,660)
+        self.textboxnextpage_xy=(1230,660)
     def setup(self):
+
         share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempom='['+share.datamanager.controlname('mouse')+']'
@@ -305,7 +309,7 @@ class obj_scene_ch0p12(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'Lets make sure you have everything you need. ',\
-                    'Here are the game controls (you can also see them in the settings). ',\
+                    'These are the game controls. ',\
                    ]
         #
         # Game controls instructions
@@ -366,7 +370,7 @@ class obj_scene_ch0unlocknext(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch0_endunlock')
         self.text=['You have unlocked a new chapter, ',\
-                    ('Chapter I',share.colors.instructions),'! Access it from the menu. ',\
+                    ('Chapter I',share.colors.instructions),'! ',\
                    ]
         share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
         #
