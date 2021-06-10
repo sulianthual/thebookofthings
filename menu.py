@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        if True :
-        # if False :
+        # if True :
+        if False :
             # regular scenes
             #
             quickscene=obj_scene_settings()
@@ -375,7 +375,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.sprite_settings=draw.obj_textbox('settings',(540,410),fontsize='smaller',xleft=True)
             self.sprite_exit=draw.obj_textbox('exit',(540,440),fontsize='smaller',xleft=True)
         else:
-            self.sprite_continue=draw.obj_textbox('continue book',(540,380),fontsize='smaller',xleft=True)
+            self.sprite_continue=draw.obj_textbox('continue book',(540,380),fontsize='smaller',xleft=True,hover=True)
             self.sprite_chapters=draw.obj_textbox('chapters',(540,410),fontsize='smaller',xleft=True)
             self.sprite_settings=draw.obj_textbox('settings',(540,440),fontsize='smaller',xleft=True)
             self.sprite_exit=draw.obj_textbox('exit',(540,470),fontsize='smaller',xleft=True)
@@ -469,11 +469,11 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
             if controls.gl and controls.glc:
                 self.gotoquickscene()
-            # if controls.gm1 and controls.gm1c:
-            #     self.gotobookmarkscene()
-            if controls.gm1 and controls.gm1c:
-                share.scenemanager.switchscene(obj_scene_chaptersscreen())
         #############################################3
+        #
+        # Hovering
+        if self.sprite_continue.isclicked(controls):
+            print('continue')
 
 
 ####################################################################################################################
@@ -644,39 +644,39 @@ class obj_scene_settings(page.obj_page):
         ycount0=380
         dycount=30
         ycount=ycount0
-        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(640,ycount),fontsize='smaller')
-        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(640,ycount),fontsize='smaller')
+        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(540,ycount),fontsize='smaller',xleft=True)
+        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(540,ycount),fontsize='smaller',xleft=True)
         self.addpart( self.keyboardqwerty )
         self.addpart( self.keyboardazerty )
         self.keyboardqwerty.show=not share.datamanager.doazerty
         self.keyboardazerty.show=share.datamanager.doazerty
         ycount += dycount
-        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(640,ycount),fontsize='smaller')
-        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(640,ycount),fontsize='smaller')
+        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(540,ycount),fontsize='smaller',xleft=True)
+        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(540,ycount),fontsize='smaller',xleft=True)
         self.addpart( self.screennative )
         self.addpart( self.screenadapted )
         self.screennative.show=share.datamanager.donative
         self.screenadapted.show=not share.datamanager.donative
         ycount += dycount
-        self.musicoff=draw.obj_textbox('Music: Off',(640,ycount),fontsize='smaller')
-        self.musicon=draw.obj_textbox('Music: On',(640,ycount),fontsize='smaller')
+        self.musicoff=draw.obj_textbox('Music: Off',(540,ycount),fontsize='smaller',xleft=True)
+        self.musicon=draw.obj_textbox('Music: On',(540,ycount),fontsize='smaller',xleft=True)
         self.addpart( self.musicoff )
         self.addpart( self.musicon )
         self.musicoff.show=not share.datamanager.domusic
         self.musicon.show=share.datamanager.domusic
         ycount += dycount
-        self.soundoff=draw.obj_textbox('Sound: Off',(640,ycount),fontsize='smaller')
-        self.soundon=draw.obj_textbox('Sound: On',(640,ycount),fontsize='smaller')
+        self.soundoff=draw.obj_textbox('Sound: Off',(540,ycount),fontsize='smaller',xleft=True)
+        self.soundon=draw.obj_textbox('Sound: On',(540,ycount),fontsize='smaller',xleft=True)
         self.addpart( self.soundoff )
         self.addpart( self.soundon )
         self.soundoff.show=not share.datamanager.dosound
         self.soundon.show=share.datamanager.dosound
         ycount += dycount
-        self.addpart( draw.obj_textbox('Controls',(640,ycount),fontsize='smaller') )
+        self.addpart( draw.obj_textbox('Controls',(540,ycount),fontsize='smaller',xleft=True) )
         ycount += dycount
-        self.addpart( draw.obj_textbox('Credits',(640,ycount),fontsize='smaller') )
+        self.addpart( draw.obj_textbox('Credits',(540,ycount),fontsize='smaller',xleft=True) )
         ycount += dycount
-        self.addpart( draw.obj_textbox('Erase Book',(640,ycount),fontsize='smaller') )
+        self.addpart( draw.obj_textbox('Erase Book',(540,ycount),fontsize='smaller',xleft=True) )
         #
         # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played

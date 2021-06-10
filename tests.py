@@ -372,25 +372,30 @@ class obj_scene_textbox(obj_testpage):
         return 'Textbox Basics'
     def setup(self):
         self.text=[
-            'Textbox Basics: Placed anywhere, can customize font and color (including filling). ',\
+            'Textbox Basics:',\
+            '\n 1) can customize font, color (including filling), line-adjustment. ',\
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
-            'Try it: ',\
+            '\n 2) Can be transformed: ',\
             '[arrows alone]:move. ',\
             '[lmouse +arrows]:scale, rotate90. ',\
             '[rmouse +left/right]:flip. ',\
             '[rmouse +up]:rotate45 (use sparingly cf enlargens-memory issues). ',\
             '[rmouse +down]:save an image (useful to animate). ',\
             '[lmouse +rmouse]:reset. ',\
-            'use options xleft,ytop such that given position is left-top instead of center. ',\
+            '\n 3) can be hovered ',\
                    ]
-        self.addpart(draw.obj_textbox('textbox',(340,360),color=share.colors.blue))#customize font and color
-        self.addpart(draw.obj_textbox('small',(140,360),color=share.colors.blue, fontsize='tiny'))
-        self.addpart(draw.obj_textbox('xleft-ytop',(340,460),color=share.colors.blue, fontsize='big',xleft=True,ytop=True))
-        self.addpart(draw.obj_textbox('from keyword: {test1}',(340,660),color=share.colors.green))
-        self.textbox=draw.obj_textbox('textbox:move me',(840,460),color=share.colors.red,fillcolor=share.colors.blue)
+        self.addpart(draw.obj_textbox('textbox',(140,560)))# standard
+        self.addpart(draw.obj_textbox('custom',(240,460),color=share.colors.blue, fontsize='big',fillcolor=share.colors.black))#customize font and color
+        self.addpart(draw.obj_textbox('xleft-ytop',(240,560),xleft=True,ytop=True))# line adjusted
+        self.addpart(draw.obj_textbox('from keyword: {test1}',(240,660),color=share.colors.green))
+        self.textbox=draw.obj_textbox('textbox:move me',(840,560),color=share.colors.red,fillcolor=share.colors.blue)
+        self.addpart(self.textbox)
+        self.textbox2=draw.obj_textbox('hoverable (print when clicked)',(640,460),hover=True)
+        self.addpart(self.textbox2)
+        self.textbox3=draw.obj_textbox('hoverable ',(640,660),hover=True,hovercolor=share.colors.blue)
+        self.addpart(self.textbox3)# hoverable (hovercolor default is purple)
         self.dx,self.dy=5,5
     def page(self,controls):
-        self.textbox.update(controls)
         #
         if controls.gm1:
             if controls.gu and controls.guc: self.textbox.scale(2)
@@ -408,6 +413,12 @@ class obj_scene_textbox(obj_testpage):
             if controls.gd: self.textbox.movey(self.dy)
             if controls.gl: self.textbox.movex(-self.dx)
             if controls.gr: self.textbox.movex(self.dx)
+        if self.textbox2.isclicked(controls):
+            print('textbox 2 is clicked')# very useful
+        # if self.textbox3.ishovered(controls):
+        #     print('textbox 3 is hovered')
+
+
 
 
 # Scene: test draw something

@@ -532,7 +532,8 @@ class obj_textchoice:
 # *TEXTBOX
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
-    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,xleft=False,xright=False,ytop=False,fillcolor=None):
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,\
+    xleft=False,xright=False,ytop=False,fillcolor=None,hover=False,hovercolor=(138,0,138)):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
@@ -542,13 +543,18 @@ class obj_textbox:
         self.xleft=xleft# x (from xy) defines left of frame instead of center
         self.xright=xright# x (from xy) defines right of frame instead of center
         self.ytop=ytop# y (from xy) defines top of frame instead of center
-        self.fillcolor=fillcolor# color for textbox backgroun
+        self.fillcolor=fillcolor# color for textbox background
+        self.trackinghover=hover# track if hovered or not (and change color accordingly)
+        self.nohovercolor=color# color when not hovered
+        self.hovercolor=hovercolor# color when hovered (if tracked, default = dark purple)
         self.setup()
         if scale != 1: self.scale(scale)
         if rotate != 0: self.rotate(rotate)
     def setup(self):
         self.x=self.xini# position
         self.y=self.yini
+        self.xoffset=0# offset from xleft,xright
+        self.yoffset=0# offset from ytop
         self.fh=False# is flipped horizontally
         self.fv=False# is flipped vertically
         self.s=1# scaling factor
@@ -557,23 +563,31 @@ class obj_textbox:
         # sprite
         self.sprite=core.obj_sprite_text()# sprite
         self.replacetext(self.text)
+        self.rx=self.sprite.getrx()# dimensions
+        self.ry=self.sprite.getry()
+        # hover
+        self.hovered=False# is it being hovered
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
+    def makeoffsets(self):
+        if self.xleft:
+            self.xoffset=self.rx
+        elif self.xright:
+            self.xoffset=-self.rx
+        if self.ytop:
+            self.yoffset=self.ry
+
     def replacetext(self,text):
         self.text=text
         formattextkwargs=share.datamanager.getwords()
         self.text=tool.formattext(self.text,**formattextkwargs)# replace with book of things keywords
         self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color,fillcolor=self.fillcolor)
-        if self.xleft:
-            tempo=self.sprite.getrx()
-            self.movex(tempo)
-        elif self.xright:
-            tempo=self.sprite.getrx()
-            self.movex(-tempo)
-        if self.ytop:
-            tempo=self.sprite.getry()
-            self.movey(tempo)
+        self.newscaleadapt()
+    def newscaleadapt(self):# recompute anything affected by change of scale
+        self.rx=self.sprite.getrx()
+        self.ry=self.sprite.getry()
+        self.makeoffsets()
     def movetoxy(self,x,y):
         self.movetox(x)
         self.movetoy(y)
@@ -620,28 +634,53 @@ class obj_textbox:
     def scale(self,s): # scale image by given factor s (permanent)
         self.s *= s
         self.sprite.scale(s)
+        self.newscaleadapt()
     def rotate(self,r): # rotate image (permanent)
         self.r += r# (do not overdo, enlargens image with memory issues)
         self.sprite.rotate(r)
+        self.newscaleadapt()
     def rotate90(self,r):# rotate image in 90 increments nonly
         self.r += int(round(r%360/90,0)*90)# (in 0,90,180,270)
         self.sprite.rotate90(r)
+        self.newscaleadapt()
     def snapshot(self,filename,path='book'):# save image of textbox
         snap=core.obj_sprite_image()
         snap.makeempty(self.sprite.getrx(),self.sprite.getry())
         snap.blitfrom(self.sprite,0,0)
         snap.save(path+'/'+filename+'.png')
     def display(self):
-        if self.show: self.sprite.display(self.x,self.y)
+        if self.show:
+            self.sprite.display(self.x+self.xoffset,self.y+self.yoffset)
     def devtools(self):
-        self.devcross.display(share.colors.devtextbox,(self.x,self.y),10)
+        self.devcross.display(share.colors.devtextbox,(self.x+self.xoffset,self.y+self.yoffset),10)
         termx,termy=self.sprite.getrxry()
-        self.devrect.display(share.colors.devtextbox,(self.x,self.y,termx*2,termy*2))
+        self.devrect.display(share.colors.devtextbox,(self.x+self.xoffset,self.y+self.yoffset,termx*2,termy*2))
     def play(self,controls):# same as display, but renamed for consitency with play() for animations, dispgroups
         self.display()
         if share.devmode: self.devtools()# dev tools
+    def ishovered(self,controls):# check is textbox is being hovered by mouse
+        rect=(self.x+self.xoffset-self.rx, self.x+self.xoffset+self.rx, self.y+self.yoffset-self.ry, self.y+self.yoffset+self.ry)
+        return tool.isinrect(controls.gmx,controls.gmy,rect )
+    def isclicked(self,controls):# check is textbox is being clicked
+        return controls.gm1 and controls.gm1c and self.ishovered(controls)
+    def trackhover(self,controls):
+        if self.trackinghover:
+            if self.ishovered(controls):
+                if not self.hovered:# flip to hovered
+                    self.hovered=True
+                    self.color=self.hovercolor
+                    self.replacetext(self.text)
+            else:
+                if self.hovered:# flip to non hovered
+                    self.hovered=False
+                    self.color=self.nohovercolor
+                    self.replacetext(self.text)
+
+
+
     def update(self,controls):
         self.play(controls)
+        self.trackhover(controls)
 
 
 ####################################################################################################################
