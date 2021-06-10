@@ -33,7 +33,6 @@ colorkey=(128,0,128)# color used for transparency on images (purple)
 devaccess=False# user has access to developer mode (cant change here, must change MANUALLY in the settings file)
 devmode=False # developer mode toggle
 dt=1# elapsed time since last frame (updated by game clock each frame)
-ipage=1# current page within a chapter (PUT THOSE IN a datb.pointers object or something)
 itest=0# test menu index
 iidea=0# idea menu index
 

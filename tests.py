@@ -26,7 +26,6 @@ import world
 # Note: All tests are init on menu init (which is problematic, loads all assets at once)
 class obj_scene_testmenu(page.obj_page):
     def setup(self):
-        share.ipage=1# current page number in chapter
         self.nrow=17# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
