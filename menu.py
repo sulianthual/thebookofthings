@@ -102,7 +102,7 @@ class obj_bookmarkscene():
         bookmarkname=share.datamanager.getbookmark()
         #
         # ch0
-        if bookmarkname == 'ch0_start':
+        if bookmarkname == 'ch0_start':# also default in datb.py if book is empty
             bookmarkscene=ch0.obj_scene_prologue()
         elif bookmarkname == 'ch0_drawpen':
             bookmarkscene=ch0.obj_scene_ch0p2()
@@ -148,7 +148,9 @@ class obj_bookmarkscene():
             bookmarkscene=ch2.obj_scene_ch2p7()
         elif bookmarkname == 'ch2_drawhouse':
             bookmarkscene=ch2.obj_scene_ch2p11()
-        elif bookmarkname == 'ch1_startplay':
+        elif bookmarkname == 'ch2_drawbush':
+            bookmarkscene=ch2.obj_scene_ch2p13()
+        elif bookmarkname == 'ch2_startplay':
             bookmarkscene=ch2.obj_scene_ch2play()
         elif bookmarkname == 'ch2_endunlock':
             bookmarkscene=ch2.obj_scene_ch2unlocknext()
@@ -175,7 +177,7 @@ class obj_bookmarkscene():
         elif bookmarkname == 'ch3_startbug' :
             bookmarkscene=ch3.obj_scene_ch3p31()
         elif bookmarkname == 'ch3_endbug' :
-            bookmarkscene=ch3.obj_scene_ch3p40()
+            bookmarkscene=ch3.obj_scene_ch3p39a()
         elif bookmarkname == 'ch3_endunlock':
             bookmarkscene=ch3.obj_scene_ch3unlocknext()
         #
@@ -194,7 +196,11 @@ class obj_bookmarkscene():
             bookmarkscene=ch4.obj_scene_ch4p11()
         elif bookmarkname == 'ch4_startlying' :
             bookmarkscene=ch4.obj_scene_lyingstart()
-        elif bookmarkname == 'ch4_winlying' :
+        elif bookmarkname == 'ch4_winlying1' :
+            bookmarkscene=ch4.obj_scene_lyingpart1win()
+        elif bookmarkname == 'ch4_winlying2' :
+            bookmarkscene=ch4.obj_scene_lyingpart2win()
+        elif bookmarkname == 'ch4_winlying3' :
             bookmarkscene=ch4.obj_scene_lyingend()
         elif bookmarkname == 'ch4_gohome' :
             bookmarkscene=ch4.obj_scene_ch4p20()
@@ -218,9 +224,13 @@ class obj_bookmarkscene():
             bookmarkscene=ch5.obj_scene_ch5p21()
         elif bookmarkname == 'ch5_rps1' :
             bookmarkscene=ch5.obj_scene_ch5p22()
-        elif bookmarkname == 'ch5_winrps1' :
+        elif bookmarkname == 'ch5_lostrps1' :
+            bookmarkscene=ch5.obj_scene_ch5p25()
+        elif bookmarkname == 'ch5_lostrps2' :
+            bookmarkscene=ch5.obj_scene_ch5p27()
+        elif bookmarkname == 'ch5_strongwilled' :
             bookmarkscene=ch5.obj_scene_ch5p28()
-        elif bookmarkname == 'ch5_winrps2' :
+        elif bookmarkname == 'ch5_eldercheatsecret' :
             bookmarkscene=ch5.obj_scene_ch5p32()
         elif bookmarkname == 'ch5_rps3' :
             bookmarkscene=ch5.obj_scene_ch5p35a()
@@ -252,6 +262,8 @@ class obj_bookmarkscene():
             bookmarkscene=ch6.obj_scene_ch6p27()
         elif bookmarkname == 'ch6_startsneak':
             bookmarkscene=ch6.obj_scene_ch6p29()
+        elif bookmarkname == 'ch6_sneak1':
+            bookmarkscene=ch6.obj_scene_ch6p30a()
         elif bookmarkname == 'ch6_sneak2':
             bookmarkscene=ch6.obj_scene_ch6p31()
         elif bookmarkname == 'ch6_sneak3':
@@ -288,8 +300,6 @@ class obj_bookmarkscene():
             bookmarkscene=ch7.obj_scene_ch7p21a()
         elif bookmarkname == 'ch7_windodge':
             bookmarkscene=ch7.obj_scene_ch7p23()
-        elif bookmarkname == 'ch7_startstomp':
-            bookmarkscene=ch7.obj_scene_ch7p5()
         elif bookmarkname == 'ch7_winstomp':
             bookmarkscene=ch7.obj_scene_ch7p26()
         elif bookmarkname == 'ch7_gohome':
@@ -476,7 +486,7 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
             if controls.gl and controls.glc:
                 self.gotoquickscene()
-            if controls.gm2 and controls.gm2c:
+            if controls.gm1 and controls.gm1c:
                 self.gotobookmarkscene()
         #############################################3
 

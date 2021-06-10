@@ -845,17 +845,18 @@ class obj_scene_ch6p30a(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=['"Uh oh, we have company! You are on your own now, good luck squid."',\
+        share.datamanager.setbookmark('ch6_sneak1')
+        self.text=['"Uh oh, we have company! You are on your own now, good luck squid."',\
                    ]
 
-       self.world=world.obj_world_bushstealth(self)
-       self.addpart(self.world)
-       #
-       self.sound=draw.obj_sound('sailor_radio')
-       self.addpart(self.sound)
-       self.sound.play()
-       #
-       self.addpart( draw.obj_music('ch6play') )
+        self.world=world.obj_world_bushstealth(self)
+        self.addpart(self.world)
+        #
+        self.sound=draw.obj_sound('sailor_radio')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 

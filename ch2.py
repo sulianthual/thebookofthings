@@ -440,6 +440,7 @@ class obj_scene_ch2p13(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p14())
     def setup(self):
+        share.datamanager.setbookmark('ch2_drawbush')
         self.text=[\
                    'Still a bit basic. Lets add a few ',\
                    ('bushes',share.colors.item),' around the pond, and some ',\

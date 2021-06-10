@@ -1357,6 +1357,7 @@ class obj_scene_ch3p39a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p40())
     def setup(self):
+        share.datamanager.setbookmark('ch3_endbug')
         self.text=[\
                    '"See you tomorrow said the ',('{bug}',share.colors.bug),\
                    ', and it crawled back in ',('{heroname}',share.colors.hero),'\'s pocket." ',\
@@ -1381,7 +1382,6 @@ class obj_scene_ch3p40(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-        share.datamanager.setbookmark('ch3_endbug')
         self.text=[\
                    '"',\
                    ('{heroname}',share.colors.hero),\

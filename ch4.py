@@ -673,6 +673,7 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart2())
     def setup(self):
+        share.datamanager.setbookmark('ch4_winlying1')
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won the ',\
@@ -795,6 +796,7 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart3())
     def setup(self):
+        share.datamanager.setbookmark('ch4_winlying2')
         self.text=[\
                     'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won the ',\
@@ -941,7 +943,7 @@ class obj_scene_lyingend(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p18())
     def setup(self):
-        share.datamanager.setbookmark('ch4_winlying')
+        share.datamanager.setbookmark('ch4_winlying3')
         self.text=[\
                     '"Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won my ',('lying game',share.colors.grandmaster2),'! ',\

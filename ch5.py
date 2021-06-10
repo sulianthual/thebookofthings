@@ -639,6 +639,7 @@ class obj_scene_ch5p25(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch5p25fail())
     def setup(self):
+        share.datamanager.setbookmark('ch5_lostrps1')
         self.text=[\
                '"Oh, you lost, said ',('{eldername}',share.colors.elder),'. ',\
                'Better luck next time, hi hi hi. ',\
@@ -725,6 +726,7 @@ class obj_scene_ch5p27(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch5p27fail())
     def setup(self):
+        share.datamanager.setbookmark('ch5_lostrps2')
         self.text=[\
                '"Oh noooo, you lost again, said ',('{eldername}',share.colors.elder),'. ',\
                'But you are getting better, hi hi hi. ',\
@@ -792,7 +794,7 @@ class obj_scene_ch5p28(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p28a())
     def setup(self):
-        share.datamanager.setbookmark('ch5_winrps1')
+        share.datamanager.setbookmark('ch5_strongwilled')
         self.text=[\
                 '"What a strong willed character, said ',('{eldername}',share.colors.elder),'. ',\
                 'Even when you were loosing, you never gave up. You had it in you all the time!" ',\
@@ -1062,7 +1064,7 @@ class obj_scene_ch5p32(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p33())
     def setup(self):
-        share.datamanager.setbookmark('ch5_winrps2')
+        share.datamanager.setbookmark('ch5_eldercheatsecret')
         self.text=[\
                '"Owwwwww, you young punks have no respect! ',\
                'Fine, I will teach you my real secret. ',\

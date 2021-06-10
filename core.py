@@ -78,8 +78,9 @@ class obj_scenemanager:
             if share.devmode and controls.gm2 and controls.gm2c:# print coordinates
                 print( '('+str(controls.gmx)+','+str(controls.gmy)+')')
             # if controls.gq and controls.gqc:
+            if controls.gm2 and controls.gm2c:
                 # share.quitgame()# quit directly
-                # share.scenemanager.switchscene(share.titlescreen)# go back to menu
+                share.scenemanager.switchscene(share.titlescreen)# go back to menu
 
 ####################################################################################################################
 ####################################################################################################################

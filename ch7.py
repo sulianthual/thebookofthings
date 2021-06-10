@@ -883,7 +883,6 @@ class obj_scene_ch7p24(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p24a())
     def setup(self):
-        share.datamanager.setbookmark('ch7_startstomp')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                   'Boss battle final phase! ',\
