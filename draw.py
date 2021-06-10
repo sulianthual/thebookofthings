@@ -647,7 +647,7 @@ class obj_textbox:
 ####################################################################################################################
 
 # A simple image (from the book folder) to display at a given location
-# *IMAGE
+#0
 class obj_image:
     def __init__(self,name,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False,show=True,path='book'):
         self.type='image'# object type
@@ -682,8 +682,10 @@ class obj_image:
     def save(self,name):
         if not self.path:
             self.sprite.save(self.path+'/'+name+'.png')
-    def replaceimage(self,name):
+    def replaceimage(self,name,path=None):
         self.name=name
+        if path is not None:
+            self.path=path
         self.sprite.load(self.path+'/'+name+'.png')
         # reapply historial of transformations
         self.sprite.flip(self.fh,self.fv)

@@ -97,7 +97,7 @@ class obj_quickscene():
 # bookmark: go to last completed scene according to progress
 # database of bookmark names and corresponding scenes here
 
-class obj_bookmarkscene():
+class obj_gotobookmark():
      def __call__(self):
         bookmarkname=share.datamanager.getbookmark()
         #
@@ -328,6 +328,8 @@ class obj_bookmarkscene():
         if bookmarkscene:
             share.scenemanager.switchscene(bookmarkscene)
 
+##########################################################
+##########################################################
 
 
 
@@ -374,17 +376,14 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.sprite_exit=draw.obj_textbox('exit',(540,440),fontsize='smaller',xleft=True)
         else:
             self.sprite_continue=draw.obj_textbox('continue book',(540,380),fontsize='smaller',xleft=True)
-            self.sprite_drawings=draw.obj_textbox('drawings (coming soon)',(540,410),fontsize='smaller',xleft=True)
-            self.sprite_chapters=draw.obj_textbox('chapters',(540,440),fontsize='smaller',xleft=True)
-            self.sprite_settings=draw.obj_textbox('settings',(540,470),fontsize='smaller',xleft=True)
-            self.sprite_exit=draw.obj_textbox('exit',(540,500),fontsize='smaller',xleft=True)
+            self.sprite_chapters=draw.obj_textbox('chapters',(540,410),fontsize='smaller',xleft=True)
+            self.sprite_settings=draw.obj_textbox('settings',(540,440),fontsize='smaller',xleft=True)
+            self.sprite_exit=draw.obj_textbox('exit',(540,470),fontsize='smaller',xleft=True)
         self.addpart(self.sprite_continue)
-        self.addpart(self.sprite_drawings)
         self.addpart(self.sprite_chapters)
         self.addpart(self.sprite_settings)
         self.addpart(self.sprite_exit)
         self.sprite_continue.show=True
-        self.sprite_drawings.show=self.hasbook
         self.sprite_chapters.show=self.hasbook
         self.sprite_settings.show=True
         self.sprite_exit.show=True
@@ -399,7 +398,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_pointer.show=True
         self.sprite_info.show=True
         if self.hasbook:
-            self.maxrows=5# max pointer positions
+            self.maxrows=4#5# max pointer positions
         else:
             self.maxrows=3
         self.ipointer=0# pointer vertical position
@@ -425,7 +424,7 @@ class obj_scene_realtitlescreen(page.obj_page):
                 y1 += dy1
         # devtools: quick scene
         self.gotoquickscene=obj_quickscene()
-        self.gotobookmarkscene=obj_bookmarkscene()
+        self.gotobookmarkscene=obj_gotobookmark()
 
     def page(self,controls):
         if controls.gd and controls.gdc:
@@ -456,12 +455,10 @@ class obj_scene_realtitlescreen(page.obj_page):
                 if self.ipointer==0:
                     self.gotobookmarkscene()# last bookmarked scene
                 elif self.ipointer==1:
-                    pass# to drawings menu
-                elif self.ipointer==2:
                     share.scenemanager.switchscene(obj_scene_chaptersscreen())# chapters
-                elif self.ipointer==3:
+                elif self.ipointer==2:
                     share.scenemanager.switchscene(obj_scene_settings())
-                elif self.ipointer==4:
+                elif self.ipointer==3:
                     share.quitgame()
         #
         if controls.gq and controls.gqc:
@@ -594,10 +591,6 @@ class obj_scene_chaptersscreen(page.obj_page):
         if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
-
-
-
-
 
 
 ####################################################################################################################
@@ -876,14 +869,6 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
 
 ####################################################################################################################
 ####################################################################################################################
-
-
-
-class obj_scene_drawingsscreen(page.obj_chapterpage):
-
-    def setup(self):
-        self.text=['Select a drawing to edit.']
-
 
 
 ####################################################################################################################

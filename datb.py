@@ -110,10 +110,6 @@ class obj_sounds:
         self.dict['test2']=( 'tests/footstep_grass_001.ogg' , 1 )
         self.dict['test3']=( 'tests/troll_01.ogg' , 1 )
         self.dict['test4']=( 'tests/desert-ambience.ogg' , 1 )# looped
-        # self.dict['test3a']=( 'tests/female_light_1.ogg' , 1 )
-        # self.dict['test3b']=( 'tests/female_light_2.ogg' , 1 )
-        # self.dict['test3c']=( 'tests/female_light_3.ogg' , 1 )
-        # self.dict['test3d']=( 'tests/female_light_4.ogg' , 1 )
         self.dict['test3a']=( 'tests/male_standard_1.ogg' , 0.1 )
         self.dict['test3b']=( 'tests/male_standard_2.ogg' , 0.1 )
         self.dict['test3c']=( 'tests/male_standard_3.ogg' , 0.1 )
@@ -466,19 +462,32 @@ class obj_datamanager:
             f1.write(str(self.chapter)+'\n')#
             f1.write('bookmark'+'\n')# bookmark name (current page to return to)
             f1.write(str(self.bookmarkname)+'\n')#
+            f1.write('allbookmarks'+'\n')# all unlocked bookmarks
+            for i in self.allbookmarks:
+                f1.write(str(i)+'\n')#
+
     def loadprogress(self):
         if tool.ospathexists(self.fileprogress):
+            readheader=True
+            self.allbookmarks=[]
             with open(self.fileprogress,'r+') as f1:
-                line=f1.readline()# highest unlocked chapter
-                line=f1.readline()
-                self.chapter=int(line)
-                line=f1.readline()# bookmark name (current page to return to)
-                line=f1.readline()
-                self.bookmarkname=line[:-1]# omit \n
+                if readheader:
+                    line=f1.readline()# highest unlocked chapter
+                    line=f1.readline()
+                    self.chapter=int(line)
+                    line=f1.readline()# bookmark name (current page to return to)
+                    line=f1.readline()
+                    self.bookmarkname=line[:-1]# omit \n
+                    line=f1.readline()# all bookmarks text
+                    readheader=False
+                else:
+                    line=f1.readline()
+                    self.allbookmarks.append(line[:-1])
         else:
             # default progress
             self.chapter=0
             self.bookmarkname='ch0_start'
+            self.allbookmarks=['ch0_start']
             self.saveprogress()
     def updateprogress(self,chapter=None):# update highest unlocked chapter (for menu display)
         if chapter:
@@ -486,6 +495,8 @@ class obj_datamanager:
         self.saveprogress()
     def setbookmark(self,bookmarkname):# update name of bookmark (current page to return to)
         self.bookmarkname=bookmarkname
+        if bookmarkname not in self.allbookmarks:# add to list of unlocked bookmarks
+            self.allbookmarks.append(bookmarkname)
         self.saveprogress()
     def getbookmark(self):
         return self.bookmarkname
@@ -578,6 +589,11 @@ class obj_datamanager:
         self.dictcontrolnames['keyboard']='keyboard'
         #
         return self.dictcontrolnames[name]
+    #
+    # check if a drawing by has already been done by the player
+    def drawingmade(self,name):
+        return tool.ospathexists('book/'+name+'.png')
+
 
 # Temp object for datamanager: store any temporal data here
 # (under share.datamanager.temp.something=True)
