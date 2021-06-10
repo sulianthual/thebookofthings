@@ -41,6 +41,8 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
+            quickscene=obj_scene_settings()
+
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
             # quickscene=ch1.obj_scene_ch1p14()
@@ -55,11 +57,11 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p42()
             # quickscene=ch6.obj_scene_ch6p27()
-            # quickscene=ch7.obj_scene_ch7p19()
+            # quickscene=ch7.obj_scene_ch7p25()
             # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
-            quickscene=ch8.obj_scene_ch8roam(start='island')
+            # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             # minigames
             # quickscene=ch2.obj_scene_ch2p8()# ch2 serenade
@@ -81,14 +83,240 @@ class obj_quickscene():
             # test scenes (must initstart because are inventoried)
             # quickscene=tests.obj_scene_testdevnotes()
             # quickscene=tests.obj_scene_testdevnotesfiles()
-            quickscene=tests.obj_scene_testdrafting()
+            quickscene=tests.obj_scene_textbox()
+            #
+            # quickscene=tests.obj_scene_testdrafting()
             #
             #
             share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)
 
 
 
+##########################################################
+##########################################################
+# bookmark: go to last completed scene according to progress
+# database of bookmark names and corresponding scenes here
 
+class obj_bookmarkscene():
+     def __call__(self):
+        bookmarkname=share.datamanager.getbookmark()
+        #
+        # ch0
+        if bookmarkname == 'ch0_start':
+            bookmarkscene=ch0.obj_scene_prologue()
+        elif bookmarkname == 'ch0_drawpen':
+            bookmarkscene=ch0.obj_scene_ch0p2()
+        elif bookmarkname == 'ch0_draweraser':
+            bookmarkscene=ch0.obj_scene_ch0p4()
+        elif bookmarkname == 'ch0_drawbook':
+            bookmarkscene=ch0.obj_scene_ch0p7()
+        elif bookmarkname == 'ch0_meetbook':
+            bookmarkscene=ch0.obj_scene_ch0p10()
+        elif bookmarkname == 'ch0_endunlock':
+            bookmarkscene=ch0.obj_scene_ch0unlocknext()
+        #
+        # ch1
+        elif bookmarkname == 'ch1_start':
+            bookmarkscene=ch1.obj_scene_chapter1()
+        elif bookmarkname == 'ch1_writehero':
+            bookmarkscene=ch1.obj_scene_ch1p1()
+        elif bookmarkname == 'ch1_drawhero':
+            bookmarkscene=ch1.obj_scene_ch1p3()
+        elif bookmarkname == 'ch1_drawbed':
+            bookmarkscene=ch1.obj_scene_ch1p5()
+        elif bookmarkname == 'ch1_drawfish':
+            bookmarkscene=ch1.obj_scene_ch1p9()
+        elif bookmarkname == 'ch1_gotfish':
+            bookmarkscene=ch1.obj_scene_ch1p11()
+        elif bookmarkname == 'ch1_drawsun':
+            bookmarkscene=ch1.obj_scene_ch1p14()
+        elif bookmarkname == 'ch1_startplay':
+            bookmarkscene=ch1.obj_scene_ch1play()
+        elif bookmarkname == 'ch1_endunlock':
+            bookmarkscene=ch1.obj_scene_ch1unlocknext()
+        #
+        # ch2
+        elif bookmarkname == 'ch2_start':
+            bookmarkscene=ch2.obj_scene_chapter2()
+        elif bookmarkname == 'ch2_drawlove':
+            bookmarkscene=ch2.obj_scene_ch2p2()
+        elif bookmarkname == 'ch2_writepartner':
+            bookmarkscene=ch2.obj_scene_ch2p3()
+        elif bookmarkname == 'ch2_drawmail':
+            bookmarkscene=ch2.obj_scene_ch2p6a()
+        elif bookmarkname == 'ch2_drawmusic':
+            bookmarkscene=ch2.obj_scene_ch2p7()
+        elif bookmarkname == 'ch2_drawhouse':
+            bookmarkscene=ch2.obj_scene_ch2p11()
+        elif bookmarkname == 'ch1_startplay':
+            bookmarkscene=ch2.obj_scene_ch2play()
+        elif bookmarkname == 'ch2_endunlock':
+            bookmarkscene=ch2.obj_scene_ch2unlocknext()
+        #
+        # ch3
+        elif bookmarkname == 'ch3_start':
+            bookmarkscene=ch3.obj_scene_chapter3()
+        elif bookmarkname == 'ch3_writevillain':
+            bookmarkscene=ch3.obj_scene_ch3p2()
+        elif bookmarkname == 'ch3_startstory':
+            bookmarkscene=ch3.obj_scene_ch3p5()
+        elif bookmarkname == 'ch3_checkmail' :
+            bookmarkscene=ch3.obj_scene_ch3p9()
+        elif bookmarkname == 'ch3_drawmountain' :
+            bookmarkscene=ch3.obj_scene_ch3p12()
+        elif bookmarkname == 'ch3_drawgun' :
+            bookmarkscene=ch3.obj_scene_ch3p15()
+        elif bookmarkname == 'ch3_startdodge' :
+            bookmarkscene=ch3.obj_scene_ch3p16()
+        elif bookmarkname == 'ch3_windodge' :
+            bookmarkscene=ch3.obj_scene_ch3p20()
+        elif bookmarkname == 'ch3_gohome' :
+            bookmarkscene=ch3.obj_scene_ch3p25a()
+        elif bookmarkname == 'ch3_startbug' :
+            bookmarkscene=ch3.obj_scene_ch3p31()
+        elif bookmarkname == 'ch3_endbug' :
+            bookmarkscene=ch3.obj_scene_ch3p40()
+        elif bookmarkname == 'ch3_endunlock':
+            bookmarkscene=ch3.obj_scene_ch3unlocknext()
+        #
+        # ch4
+        elif bookmarkname == 'ch4_start':
+            bookmarkscene=ch4.obj_scene_chapter4()
+        elif bookmarkname == 'ch4_drawalarm' :
+            bookmarkscene=ch4.obj_scene_ch4p2a()
+        elif bookmarkname == 'ch4_startstory' :
+            bookmarkscene=ch4.obj_scene_ch4p3()
+        elif bookmarkname == 'ch4_checkmail' :
+            bookmarkscene=ch4.obj_scene_ch4p6()
+        elif bookmarkname == 'ch4_drawcave' :
+            bookmarkscene=ch4.obj_scene_ch4p9()
+        elif bookmarkname == 'ch4_writebunny' :
+            bookmarkscene=ch4.obj_scene_ch4p11()
+        elif bookmarkname == 'ch4_startlying' :
+            bookmarkscene=ch4.obj_scene_lyingstart()
+        elif bookmarkname == 'ch4_winlying' :
+            bookmarkscene=ch4.obj_scene_lyingend()
+        elif bookmarkname == 'ch4_gohome' :
+            bookmarkscene=ch4.obj_scene_ch4p20()
+        elif bookmarkname == 'ch4_endunlock':
+            bookmarkscene=ch4.obj_scene_ch4unlocknext()
+        #
+        # ch5
+        elif bookmarkname == 'ch5_start':
+            bookmarkscene=ch5.obj_scene_chapter5()
+        elif bookmarkname == 'ch5_startstory':
+            bookmarkscene=ch5.obj_scene_ch5p3()
+        elif bookmarkname == 'ch5_checkmail':
+            bookmarkscene=ch5.obj_scene_ch5p6()
+        elif bookmarkname == 'ch5_drawcloud':
+            bookmarkscene=ch5.obj_scene_ch5p9()
+        elif bookmarkname == 'ch5_climb':
+            bookmarkscene=ch5.obj_scene_ch5p11()
+        elif bookmarkname == 'ch5_writeelder' :
+            bookmarkscene=ch5.obj_scene_ch5p14()
+        elif bookmarkname == 'ch5_drawrock' :
+            bookmarkscene=ch5.obj_scene_ch5p21()
+        elif bookmarkname == 'ch5_rps1' :
+            bookmarkscene=ch5.obj_scene_ch5p22()
+        elif bookmarkname == 'ch5_winrps1' :
+            bookmarkscene=ch5.obj_scene_ch5p28()
+        elif bookmarkname == 'ch5_winrps2' :
+            bookmarkscene=ch5.obj_scene_ch5p32()
+        elif bookmarkname == 'ch5_rps3' :
+            bookmarkscene=ch5.obj_scene_ch5p35a()
+        elif bookmarkname == 'ch5_winrps3' :
+            bookmarkscene=ch5.obj_scene_ch5p37()
+        elif bookmarkname == 'ch5_gohome' :
+            bookmarkscene=ch5.obj_scene_ch5p38()
+        elif bookmarkname == 'ch5_endunlock':
+            bookmarkscene=ch5.obj_scene_ch5unlocknext()
+        #
+        # ch6
+        elif bookmarkname == 'ch6_start':
+            bookmarkscene=ch6.obj_scene_chapter6()
+        elif bookmarkname == 'ch6_startstory':
+            bookmarkscene=ch6.obj_scene_ch6p3()
+        elif bookmarkname == 'ch6_checkmail':
+            bookmarkscene=ch6.obj_scene_ch6p6()
+        elif bookmarkname == 'ch6_drawwave':
+            bookmarkscene=ch6.obj_scene_ch6p11()
+        elif bookmarkname == 'ch6_writesailor':
+            bookmarkscene=ch6.obj_scene_ch6p13()
+        elif bookmarkname == 'ch6_getlogs':
+            bookmarkscene=ch6.obj_scene_ch6p20()
+        elif bookmarkname == 'ch6_drawship':
+            bookmarkscene=ch6.obj_scene_ch6p22()
+        elif bookmarkname == 'ch6_drawskull':
+            bookmarkscene=ch6.obj_scene_ch6p24()
+        elif bookmarkname == 'ch6_startskullisland':
+            bookmarkscene=ch6.obj_scene_ch6p27()
+        elif bookmarkname == 'ch6_startsneak':
+            bookmarkscene=ch6.obj_scene_ch6p29()
+        elif bookmarkname == 'ch6_sneak2':
+            bookmarkscene=ch6.obj_scene_ch6p31()
+        elif bookmarkname == 'ch6_sneak3':
+            bookmarkscene=ch6.obj_scene_ch6p32()
+        elif bookmarkname == 'ch6_sneak4':
+            bookmarkscene=ch6.obj_scene_ch6p33()
+        elif bookmarkname == 'ch6_drawcow':
+            bookmarkscene=ch6.obj_scene_ch6p34()
+        elif bookmarkname == 'ch6_startride':
+            bookmarkscene=ch6.obj_scene_ch6p38()
+        elif bookmarkname == 'ch6_winride':
+            bookmarkscene=ch6.obj_scene_ch6p40()
+        elif bookmarkname == 'ch6_byesailor':
+            bookmarkscene=ch6.obj_scene_ch6p42()
+        elif bookmarkname == 'ch6_gohome':
+            bookmarkscene=ch6.obj_scene_ch6p46()
+        elif bookmarkname == 'ch6_endunlock':
+            bookmarkscene=ch6.obj_scene_ch6unlocknext()
+        #
+        # ch7
+        elif bookmarkname == 'ch7_start':
+            bookmarkscene=ch7.obj_scene_chapter7()
+        elif bookmarkname == 'ch7_startstory':
+            bookmarkscene=ch7.obj_scene_ch7p2()
+        elif bookmarkname == 'ch7_checkmail':
+            bookmarkscene=ch7.obj_scene_ch7p5()
+        elif bookmarkname == 'ch7_gotocastle':
+            bookmarkscene=ch7.obj_scene_ch7p10()
+        elif bookmarkname == 'ch7_putpassword1':
+            bookmarkscene=ch7.obj_scene_ch7p13()
+        elif bookmarkname == 'ch7_putpassword2':
+            bookmarkscene=ch7.obj_scene_ch7p19()
+        elif bookmarkname == 'ch7_startdodge':
+            bookmarkscene=ch7.obj_scene_ch7p21a()
+        elif bookmarkname == 'ch7_windodge':
+            bookmarkscene=ch7.obj_scene_ch7p23()
+        elif bookmarkname == 'ch7_startstomp':
+            bookmarkscene=ch7.obj_scene_ch7p5()
+        elif bookmarkname == 'ch7_winstomp':
+            bookmarkscene=ch7.obj_scene_ch7p26()
+        elif bookmarkname == 'ch7_gohome':
+            bookmarkscene=ch7.obj_scene_ch7p30()
+        elif bookmarkname == 'ch7_villainagain':
+            bookmarkscene=ch7.obj_scene_ch7p40()
+        elif bookmarkname == 'ch7_startmech':
+            bookmarkscene=ch7.obj_scene_ch7p48()
+        elif bookmarkname == 'ch7_winmech':
+            bookmarkscene=ch7.obj_scene_ch7p50()
+        elif bookmarkname == 'ch7_drawcake':
+            bookmarkscene=ch7.obj_scene_ch7p53()
+        elif bookmarkname == 'ch7_endunlock':
+            bookmarkscene=ch7.obj_scene_ch7unlocknext()
+        #
+        # ch8
+        elif bookmarkname == 'ch8_start':
+            bookmarkscene=ch8.obj_scene_chapter8()
+
+        # no bookmark found
+        else:
+            bookmarkscene=None
+
+        #
+        # go to bookmarked scene
+        if bookmarkscene:
+            share.scenemanager.switchscene(bookmarkscene)
 
 
 
@@ -160,7 +388,8 @@ class obj_scene_realtitlescreen(page.obj_page):
                 self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
                 y1 += dy1
         # devtools: quick scene
-        self.gotquickscene=obj_quickscene()
+        self.gotoquickscene=obj_quickscene()
+        self.gotobookmarkscene=obj_bookmarkscene()
 
     def setup(self):
         super().setup()
@@ -246,8 +475,9 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gr and controls.grc:
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
             if controls.gl and controls.glc:
-                self.gotquickscene()
-
+                self.gotoquickscene()
+            if controls.gm2 and controls.gm2c:
+                self.gotobookmarkscene()
         #############################################3
 
 

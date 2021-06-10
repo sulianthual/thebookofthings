@@ -31,6 +31,7 @@ class obj_scene_chapter8(page.obj_chapterpage):# just go to next page directly
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch8_start')
         self.text=[]
         #
         self.addpart( draw.obj_music('piano') )

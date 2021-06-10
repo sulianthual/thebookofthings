@@ -28,6 +28,7 @@ class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p1())
     def setup(self):
+        share.datamanager.setbookmark('ch6_start')
         self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
                    '\n It was the next day when the book of things said to the pen and the eraser: ',\
                   'lets continue our story where we left. ',\
@@ -128,6 +129,7 @@ class obj_scene_ch6p3(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch6_startstory')
         self.text=[\
                 'Lets get started: "It was the next day and the sun was rising."',\
                    ]
@@ -181,6 +183,7 @@ class obj_scene_ch6p6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p7())
     def setup(self):
+        share.datamanager.setbookmark('ch6_checkmail')
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' came back home and checked ',\
@@ -333,6 +336,7 @@ class obj_scene_ch6p11(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p12())
     def setup(self):
+        share.datamanager.setbookmark('ch6_drawwave')
         self.text=['Who could that possibly be, said the book of things. ',\
                     'Well, the beach is just south from here. ',\
                     'Draw a ',('palm tree',share.colors.item),\
@@ -367,6 +371,7 @@ class obj_scene_ch6p13(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p14())
     def setup(self):
+        share.datamanager.setbookmark('ch6_writesailor')
         self.text=[\
                 '"On the beach, ',('{heroname}',share.colors.hero),\
                 ' met a mysterious ',\
@@ -543,6 +548,7 @@ class obj_scene_ch6p20(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p21())
     def setup(self):
+        share.datamanager.setbookmark('ch6_getlogs')
         self.text=[\
                     '"So you\'re in. Aye aye, welcome to my crew squid, said ',\
                     ('{sailorname}',share.colors.sailor),'. ',\
@@ -587,6 +593,7 @@ class obj_scene_ch6p22(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p23())
     def setup(self):
+        share.datamanager.setbookmark('ch6_drawship')
         self.text=[\
                    '"Great job on getting that wood squid, said ',\
                    ('{sailorname}',share.colors.sailor),\
@@ -637,6 +644,7 @@ class obj_scene_ch6p24(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p25())
     def setup(self):
+        share.datamanager.setbookmark('ch6_drawskull')
         self.text=[\
                    '"Oh, it wont be easy said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
@@ -705,6 +713,7 @@ class obj_scene_ch6p27(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch6_startskullisland')
         self.text=[\
                    '"Alright, said ',('{sailorname}',share.colors.sailor),'. ',\
                    'First, we shall wait until night to infiltrate the island." ',\
@@ -767,6 +776,7 @@ class obj_scene_ch6p29(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p30())
     def setup(self):
+        share.datamanager.setbookmark('ch6_startsneak')
         self.text=[\
                    '"Good luck squid! said ',('{sailorname}',share.colors.sailor),'. ',\
                    'I will be on the radio if you need any help. ',\
@@ -860,11 +870,15 @@ class obj_scene_ch6p31(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=[]
-       self.world=world.obj_world_bushstealth2(self)
-       self.addpart(self.world)
-       #
-       self.addpart( draw.obj_music('ch6play') )
+        share.datamanager.setbookmark('ch6_sneak2')
+        self.text=[]
+        self.world=world.obj_world_bushstealth2(self)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6play') )
+
+
+
 
 
 class obj_scene_ch6p32(page.obj_chapterpage):
@@ -878,11 +892,12 @@ class obj_scene_ch6p32(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=[]
-       self.world=world.obj_world_bushstealth3(self)
-       self.addpart(self.world)
-       #
-       self.addpart( draw.obj_music('ch6play') )
+        share.datamanager.setbookmark('ch6_sneak3')
+        self.text=[]
+        self.world=world.obj_world_bushstealth3(self)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p33(page.obj_chapterpage):
@@ -896,11 +911,12 @@ class obj_scene_ch6p33(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
-       self.text=[]
-       self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')# modified win sound
-       self.addpart(self.world)
-       #
-       self.addpart( draw.obj_music('ch6play') )
+        share.datamanager.setbookmark('ch6_sneak4')
+        self.text=[]
+        self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')# modified win sound
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch6play') )
 
 
 class obj_scene_ch6p34(page.obj_chapterpage):
@@ -909,6 +925,7 @@ class obj_scene_ch6p34(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p35())
     def setup(self):
+        share.datamanager.setbookmark('ch6_drawcow')
         self.text=[\
                    '"Great job, said ',('{sailorname}',share.colors.sailor),' on the radio, ',\
                    'my ',('treasure',share.colors.cow),' should be right ahead". ',\
@@ -1036,6 +1053,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
     def setup(self):
+        share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Way to go, said the book of things. ',\
                     'Move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
@@ -1059,11 +1077,6 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
     def setup(self):
-        # self.text=[\
-        #             'Avoid trees and rocks or ',\
-        #             ('{heroname}',share.colors.hero),\
-        #             ' will get hurt. ',\
-        #            ]
         self.text=[\
                     'Trees and rocks will hurt ',\
                     ('{heroname}',share.colors.hero),\
@@ -1162,6 +1175,7 @@ class obj_scene_ch6p40(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p41())
     def setup(self):
+        share.datamanager.setbookmark('ch6_winride')
         self.text=[\
                    '"You made it squid! I am so relieved, said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
@@ -1186,7 +1200,6 @@ class obj_scene_ch6p40(page.obj_chapterpage):
         animation1.addsound( "sailor4", [1] )
         animation1.addsound( "cow", [40],skip=1 )
         #
-
         self.addpart( draw.obj_music('race1') )
 
 
@@ -1215,6 +1228,7 @@ class obj_scene_ch6p42(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p43())
     def setup(self):
+        share.datamanager.setbookmark('ch6_byesailor')
         self.text=[\
                    '"Squid, I guess this is where we part ways said ',\
                    ('{sailorname}',share.colors.sailor),'. ',\
@@ -1340,6 +1354,7 @@ class obj_scene_ch6p46(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch6_gohome')
         self.text=['go back home']
         self.world=world.obj_world_travel(self,start='beach',goal='home',chapter=6,boat=True)
         self.addpart(self.world)
@@ -1454,6 +1469,7 @@ class obj_scene_ch6unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6end())
     def setup(self):
+        share.datamanager.setbookmark('ch6_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter VII',share.colors.instructions),'! Access it from the menu. ',\
                    ]

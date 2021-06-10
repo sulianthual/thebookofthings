@@ -27,6 +27,7 @@ class obj_scene_chapter1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p1())
     def setup(self):
+        share.datamanager.setbookmark('ch1_start')
         self.text=['-----   Chapter I: The Hero   -----   ',\
                    '\n It was a new day for the book of things, the pen and the eraser. ',\
                   'The book of things said: today, we are going to write an amazing story. ',\
@@ -55,6 +56,7 @@ class obj_scene_ch1p1(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch1_writehero')
         self.text=[\
                    'Lets write this, said the book of things: ',\
                    '"Once upon a time, there was a ',('hero',share.colors.hero),'". ',\
@@ -108,6 +110,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p4())
     def setup(self):
+        share.datamanager.setbookmark('ch1_drawhero')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', said the book of things, ',\
@@ -150,6 +153,7 @@ class obj_scene_ch1p5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p6())
     def setup(self):
+        share.datamanager.setbookmark('ch1_drawbed')
         self.text=['So far, our story goes as "Once upon a time, there was a ',('hero',share.colors.hero),'". ',\
                   'It aint much but its a start, said the book of things. ',\
                 'Now, lets draw a ',('bed',share.colors.item),' ',\
@@ -244,6 +248,7 @@ class obj_scene_ch1p9(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p10())
     def setup(self):
+        share.datamanager.setbookmark('ch1_drawfish')
         self.text=['Today we will have ',('{heroname}',share.colors.hero), \
                   ' take it easy, said the book of things. Lets just go  fishing. ',\
                 'Draw a ',('fish',share.colors.item),' and a ',\
@@ -279,6 +284,7 @@ class obj_scene_ch1p11(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p12())
     def setup(self):
+        share.datamanager.setbookmark('ch1_gotfish')
         self.text=[\
                     'Nice catch, said the book of thing, this ',\
                     ('{heroname}',share.colors.hero),' is going places. ',\
@@ -353,6 +359,7 @@ class obj_scene_ch1p14(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch1_drawsun')
         self.text=[\
                    'And we finish with: "At night, the ',('hero',share.colors.hero),' went to back to bed". ',\
                    'One last thing, draw the ',('sun',share.colors.item),\
@@ -377,6 +384,7 @@ class obj_scene_ch1play(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play1())
     def setup(self):
+        share.datamanager.setbookmark('ch1_startplay')
         self.text=[\
                     'That wraps it nicely, says the book of things. ',\
                    'Now, lets read our story one more time. ',\
@@ -526,6 +534,7 @@ class obj_scene_ch1unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1playend())
     def setup(self):
+        share.datamanager.setbookmark('ch1_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter II',share.colors.instructions),'! Access it from the menu. ',\
                    ]

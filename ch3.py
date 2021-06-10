@@ -27,6 +27,7 @@ class obj_scene_chapter3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p1())
     def setup(self):
+        share.datamanager.setbookmark('ch3_start')
         self.text=['-----   Chapter III: Where are you   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: lets see how our story is going so far. ',\
@@ -119,6 +120,7 @@ class obj_scene_ch3p2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p3())
     def setup(self):
+        share.datamanager.setbookmark('ch3_writevillain')
         self.text=[\
                    'Let\'s add a ',\
                    ('villain',share.colors.villain), ' to our story, all evil and despicable. ',\
@@ -240,6 +242,7 @@ class obj_scene_ch3p5(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch3_startstory')
         self.text=[\
                 '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),'. ',\
@@ -297,6 +300,7 @@ class obj_scene_ch3p9(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch3_checkmail')
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' came back home but ',\
@@ -445,6 +449,7 @@ class obj_scene_ch3p12(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p13())
     def setup(self):
+        share.datamanager.setbookmark('ch3_drawmountain')
         self.text=[\
 
                  'Lets continue: "the evil lair was a castle in the mountains". '\
@@ -514,6 +519,7 @@ class obj_scene_ch3p15(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch3_drawgun')
         self.text=[\
                   'This is going to be epic, said the book of things. ',\
                  ' Draw a ',('gun',share.colors.item),' and a ',\
@@ -558,6 +564,7 @@ class obj_scene_ch3p16(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p17())
     def setup(self):
+        share.datamanager.setbookmark('ch3_startdodge')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Blockbuster action scene!',\
         ' Jump and crouch with the '+tempo+'. ',\
@@ -672,6 +679,7 @@ class obj_scene_ch3p20(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p21())
     def setup(self):
+        share.datamanager.setbookmark('ch3_windodge')
         self.text=[\
                   'Well done, said the book of things. Lets write down: ',\
                   '"',\
@@ -987,6 +995,7 @@ class obj_scene_ch3p25a(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch3_gohome')
         self.text=['go back home']
         self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=3)
         self.addpart(self.world)
@@ -1104,6 +1113,7 @@ class obj_scene_ch3p31(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p32())
     def setup(self):
+        share.datamanager.setbookmark('ch3_startbug')
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' was almost asleep, ',\
                   'when a small voice started whispering".',\
@@ -1371,6 +1381,7 @@ class obj_scene_ch3p40(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch3_endbug')
         self.text=[\
                    '"',\
                    ('{heroname}',share.colors.hero),\
@@ -1408,6 +1419,7 @@ class obj_scene_ch3unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3end())
     def setup(self):
+        share.datamanager.setbookmark('ch3_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter IV',share.colors.instructions),'! Access it from the menu. ',\
                    ]

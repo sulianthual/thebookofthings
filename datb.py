@@ -267,7 +267,7 @@ class obj_sounds:
         self.dict['stomp_jump']=( 'world/stomp/sfx_movement_jump13.wav' , 0.3 )
         self.dict['stomp_hit']=( 'world/stomp/die_02.ogg', 1 )
         self.dict['stomp_die']=( 'world/stomp/die_04.ogg', 1 )
-        self.dict['stomp_strike']=( 'world/stomp/Death1.ogg', 1 )
+        self.dict['stomp_strike']=( 'world/stomp/Death1.ogg', 0.5 )
         self.dict['stomp_win']=( 'world/stomp/cheer1.ogg', 0.5 )
         self.dict['stomp_kick']=( 'world/stomp/swish-9.wav', 1 )
         self.dict['stomp_contact']=( 'world/stomp/Punch4.ogg', 1 )
@@ -278,7 +278,7 @@ class obj_sounds:
         self.dict['mech_stomp']=( 'world/mech/stomp_mixedlow.ogg', 1 )
         self.dict['mech_start']=( 'world/mech/fight_lowreverb.wav' , 1 )
         self.dict['mech_hit']=( 'world/mech/die_02.ogg' , 1 )
-        self.dict['mech_strike']=( 'world/mech/Death1.ogg', 1 )
+        self.dict['mech_strike']=( 'world/mech/Death1.ogg', 0.5 )
         self.dict['mech_die']=( 'world/mech/die_04.ogg' , 1 )
         self.dict['mech_win']=( 'world/mech/cheer1.ogg' , 0.5 )
         self.dict['mech_contact']=( 'world/mech/Punch4.ogg', 1 )
@@ -464,21 +464,31 @@ class obj_datamanager:
         with open(self.fileprogress,'w+') as f1:
             f1.write('chapter'+'\n')# highest unlocked chapter
             f1.write(str(self.chapter)+'\n')#
+            f1.write('bookmark'+'\n')# bookmark name (current page to return to)
+            f1.write(str(self.bookmarkname)+'\n')#
     def loadprogress(self):
         if tool.ospathexists(self.fileprogress):
             with open(self.fileprogress,'r+') as f1:
                 line=f1.readline()# highest unlocked chapter
                 line=f1.readline()
                 self.chapter=int(line)
+                line=f1.readline()# bookmark name (current page to return to)
+                line=f1.readline()
+                self.bookmarkname=line[:-1]# omit \n
         else:
             # default progress
             self.chapter=0
+            self.bookmarkname='ch0_start'
             self.saveprogress()
-
-    def updateprogress(self,chapter=None):
+    def updateprogress(self,chapter=None):# update highest unlocked chapter (for menu display)
         if chapter:
             self.chapter=max(self.chapter,chapter)
         self.saveprogress()
+    def setbookmark(self,bookmarkname):# update name of bookmark (current page to return to)
+        self.bookmarkname=bookmarkname
+        self.saveprogress()
+    def getbookmark(self):
+        return self.bookmarkname
     #
     def savesettings(self):
         with open(self.filesettings,'w') as f1:

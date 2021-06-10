@@ -72,6 +72,19 @@ It should be done in NEXT games with other softwares that do this more easily (g
 - change pages with the mouse? Like by clicking a "Next Page"?
   could make it appear/load on a timer...
 
+- tff file: cannot do text for interrogation marks. correct the file ?
+
+- compile with pyinstaller: linux, windows, mac
+
+
+
+
+###########################################################
+###########################################################
+
+* Other Ideas (maybe later or never, not so important):
+
+
 - draws objects fonctionality (for textbox, image,animation, or dispgroup):
   launches a timer that makes draw  draw.show=False after timer ends (timer is automatic from updates)
   1) use option vanish=amount (starts timer) at creation to start timer
@@ -86,22 +99,21 @@ useful for:
 - Add better character customization (influences text only):
   name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
 
-- tff file: cannot do text for interrogation marks. correct the file ?
-
-- compile with pyinstaller: linux, windows, mac
-
-- next games to make:
+- make other games:
  cheap spinoffs of famous games, where
  we draw all game assets then play a dumbed down/funny version.
  we can even do the same for the game audio with a mic.
 E.g: kind of doom, kind of zelda, kind of mario
 BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
 
+- text: (main text and textbox, textinput, textchoice). Can add options:
+  fillcolor (background) (already possible for textbox)
+  bold (no real difference with current font)
+  italic
+  underline (only pygame 2.0)
+  => need to find a way to insert in self.text=['this is ', ('it',(255,255,255))]
 
-###########################################################
-###########################################################
-
-* Other Ideas (maybe later or never):
+- difficulty levels: select at profile setup, and can change in settings...(not too important)
 
 - storytelling:
   some events are repetitive (like going to bed etc)
@@ -114,10 +126,6 @@ BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
 - Somewhere...: fps game with simple shooting + arrows to move
             should be fairly simple to code, just enemies/items with small animations
             and that are always facing the player (only scale and fliph them)
-
-
-
-
 
 - Chapter 2: add a minigame to pickup flowers for the partner
              add a tennis game to play against the partner

@@ -77,8 +77,8 @@ class obj_scenemanager:
             if controls.gdev and controls.gdevc: share.devmode = not share.devmode# toggle dev mode
             if share.devmode and controls.gm2 and controls.gm2c:# print coordinates
                 print( '('+str(controls.gmx)+','+str(controls.gmy)+')')
-            if controls.gq and controls.gqc:
-                share.quitgame()# quit directly
+            # if controls.gq and controls.gqc:
+                # share.quitgame()# quit directly
                 # share.scenemanager.switchscene(share.titlescreen)# go back to menu
 
 ####################################################################################################################
@@ -402,8 +402,8 @@ class obj_sprite_text(obj_sprite_image):
     def __init__(self):
         super().__init__()
         self.spritetype='text'
-    def make(self,text,font,color,bold=True):
-        self.surf=font.render(text,bold,color)
+    def make(self,text,font,color,bold=True,fillcolor=None):
+        self.surf=font.render(text,bold,color,fillcolor=fillcolor)
         self.rx,self.ry=self.getrxry()
 
 
@@ -477,8 +477,15 @@ class obj_sprite_brush(obj_sprite_image):
 class obj_sprite_font:
     def __init__(self,name,size):
         self.font=pygame.font.Font(name,size)# pygame font
-    def render(self,text,bold,color):
-        return self.font.render(text,bold,color)
+        # self.font.set_bold(True)# Test
+        # self.font.set_italic(True)# Test
+        # self.font.set_underline(True)# Test
+    def render(self,text,bold,color,fillcolor=None):
+        if fillcolor is not None:
+            return self.font.render(text,bold,color,fillcolor)
+        else:
+            return self.font.render(text,bold,color)
+
     def size(self,text):
         return self.font.size(text)
 

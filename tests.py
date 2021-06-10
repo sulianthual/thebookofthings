@@ -73,6 +73,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testdevmodeinfo())
         # page
         self.list.append(obj_scene_testpagefunctions())
+        self.list.append(obj_scene_testpagebookmark())
         self.list.append(obj_scene_testheadermaker())
         # text
         self.list.append(obj_scene_interactivetext())
@@ -274,6 +275,19 @@ class obj_scene_testpagefunctions(obj_testpage):
     def endpage(self):
         self.drawing.finish()# non-managed elements must be finished here (textinput and drawings...)
 
+# Scene: page bookmark
+class obj_scene_testpagebookmark(obj_testpage):
+    def pagename(self):
+        return 'Page Bookmark'
+    def setup(self):
+        self.text=['Page Bookmark: from the main menu (obj_titlescreen in menu.py), on can access most recent page. ',\
+                   'Only certain pages are bookmarked. Test pages are not bookmarked (although they could be) ',\
+                  'To bookmark a page, add a setbookmark in the setup(). ',\
+                  'and add page to the listing in obj_bookmarkscene from menu.py ',\
+                   ]
+        # share.datamanager.setbookmark('ch0_drawpen')# this in a regular chapter page sets a bookmark
+
+
 
 # Scene: page basics
 class obj_scene_testheadermaker(obj_testpage):
@@ -359,22 +373,22 @@ class obj_scene_textbox(obj_testpage):
         return 'Textbox Basics'
     def setup(self):
         self.text=[
-            'Textbox Basics: Placed anywhere, can customize font and color. ',\
+            'Textbox Basics: Placed anywhere, can customize font and color (including filling). ',\
             'Accepts existing keywords like ',('{test1}',share.colors.green),'. ',\
             'Try it: ',\
             '[arrows alone]:move. ',\
-            '[lmouse+arrows]:scale, rotate90. ',\
-            '[rmouse+left/right]:flip. ',\
-            '[rmouse+up]:rotate45 (use sparingly cf enlargens-memory issues). ',\
-            '[rmouse+down]:save an image (useful to animate). ',\
-            '[lmouse+rmouse]:reset. ',\
+            '[lmouse +arrows]:scale, rotate90. ',\
+            '[rmouse +left/right]:flip. ',\
+            '[rmouse +up]:rotate45 (use sparingly cf enlargens-memory issues). ',\
+            '[rmouse +down]:save an image (useful to animate). ',\
+            '[lmouse +rmouse]:reset. ',\
             'use options xleft,ytop such that given position is left-top instead of center. ',\
                    ]
-        self.addpart(draw.obj_textbox('textbox',(340,260),color=share.colors.blue))#customize font and color
-        self.addpart(draw.obj_textbox('small',(340,360),color=share.colors.blue, fontsize='tiny'))
+        self.addpart(draw.obj_textbox('textbox',(340,360),color=share.colors.blue))#customize font and color
+        self.addpart(draw.obj_textbox('small',(140,360),color=share.colors.blue, fontsize='tiny'))
         self.addpart(draw.obj_textbox('xleft-ytop',(340,460),color=share.colors.blue, fontsize='big',xleft=True,ytop=True))
         self.addpart(draw.obj_textbox('from keyword: {test1}',(340,660),color=share.colors.green))
-        self.textbox=draw.obj_textbox('textbox:move me',(840,460),color=share.colors.red)
+        self.textbox=draw.obj_textbox('textbox:move me',(840,460),color=share.colors.red,fillcolor=share.colors.blue)
         self.dx,self.dy=5,5
     def page(self,controls):
         self.textbox.update(controls)

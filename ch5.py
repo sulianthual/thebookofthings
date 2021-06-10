@@ -28,6 +28,7 @@ class obj_scene_chapter5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p1())
     def setup(self):
+        share.datamanager.setbookmark('ch5_start')
         self.text=['-----   Chapter V: Higher and Higher  -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: lets see how our story is going so far. ',\
@@ -119,6 +120,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch5_startstory')
         self.text=[\
                 'Ok here we go, lets write: "It was the next day and the sun was rising."',\
                    ]
@@ -176,6 +178,7 @@ class obj_scene_ch5p6(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch5_checkmail')
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' came back home and checked ',\
@@ -273,6 +276,7 @@ class obj_scene_ch5p9(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p10())
     def setup(self):
+        share.datamanager.setbookmark('ch5_drawcloud')
         self.text=[\
                   'The second  ',('grandmaster',share.colors.grandmaster),\
                   ' lives in the north, on top of the ',\
@@ -312,6 +316,7 @@ class obj_scene_ch5p11(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch5_climb')
         self.text=[]
         self.world=world.obj_world_climbpeak(self)
         self.addpart(self.world)
@@ -344,6 +349,7 @@ class obj_scene_ch5p14(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p15())
     def setup(self):
+        share.datamanager.setbookmark('ch5_writeelder')
         self.text=[\
                 '"When ',('{heroname}',share.colors.hero),\
                 ' reached the top of the ',('peak',share.colors.location2),\
@@ -532,6 +538,7 @@ class obj_scene_ch5p21(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p22())
     def setup(self):
+        share.datamanager.setbookmark('ch5_drawrock')
         self.text=[\
                'That sounds rather easy, said the book of things. Draw a ',\
                ('large rock',share.colors.item),', a ',\
@@ -551,6 +558,7 @@ class obj_scene_ch5p22(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p23())
     def setup(self):
+        share.datamanager.setbookmark('ch5_rps1')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
                'Epic battle time! This is you selection, change it with the '+tempo+'. ',\
@@ -784,6 +792,7 @@ class obj_scene_ch5p28(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p28a())
     def setup(self):
+        share.datamanager.setbookmark('ch5_winrps1')
         self.text=[\
                 '"What a strong willed character, said ',('{eldername}',share.colors.elder),'. ',\
                 'Even when you were loosing, you never gave up. You had it in you all the time!" ',\
@@ -1053,6 +1062,7 @@ class obj_scene_ch5p32(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p33())
     def setup(self):
+        share.datamanager.setbookmark('ch5_winrps2')
         self.text=[\
                '"Owwwwww, you young punks have no respect! ',\
                'Fine, I will teach you my real secret. ',\
@@ -1173,6 +1183,7 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p36())
     def setup(self):
+        share.datamanager.setbookmark('ch5_rps3')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                   'Epic Battle Time! ',\
@@ -1240,6 +1251,7 @@ class obj_scene_ch5p37(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p38())
     def setup(self):
+        share.datamanager.setbookmark('ch5_winrps3')
         self.text=[\
                '"Congratulations, you really won this time said ',('{eldername}',share.colors.elder),'. ',\
                'You need to respect the elders more, you know. ',\
@@ -1277,6 +1289,7 @@ class obj_scene_ch5p38(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch5_gohome')
         self.text=['go back home']
         self.world=world.obj_world_travel(self,start='peak',goal='home',chapter=5)
         self.addpart(self.world)
@@ -1403,6 +1416,7 @@ class obj_scene_ch5unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5end())
     def setup(self):
+        share.datamanager.setbookmark('ch5_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter VI',share.colors.instructions),'! Access it from the menu. ',\
                    ]

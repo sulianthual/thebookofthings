@@ -27,6 +27,7 @@ class obj_scene_chapter7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p1())
     def setup(self):
+        share.datamanager.setbookmark('ch7_start')
         self.text=['-----   Chapter VII: Showtime   -----   ',\
                    '\n It was the next day when the book of things said to the pen and the eraser: ',\
                   'well, this is it, we are reaching the climax of our story. ',\
@@ -66,8 +67,6 @@ class obj_scene_ch7p1(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
-
-
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('castlesparks',(754,418-60),scale=0.8,path='premade') )
@@ -97,6 +96,7 @@ class obj_scene_ch7p2(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch7_startstory')
         self.text=[\
                 'Better be ready for this!: "It was the next day and the sun was rising."',\
                    ]
@@ -150,6 +150,7 @@ class obj_scene_ch7p5(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p6())
     def setup(self):
+        share.datamanager.setbookmark('ch7_checkmail')
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' came back home and checked ',\
@@ -316,6 +317,7 @@ class obj_scene_ch7p10(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch7_gotocastle')
         self.text=['go to the castle in the west']
         self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=7,boat=True)
         self.addpart(self.world)
@@ -442,6 +444,7 @@ class obj_scene_ch7p13(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p14())
     def setup(self):
+        share.datamanager.setbookmark('ch7_putpassword1')
         self.text=[\
                 '"You have entered: ',('"fight persevere overcome"',share.colors.password),' . ',\
                 'Wait a minute, said the castle\'s a.s.s. ',\
@@ -700,6 +703,7 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p20())
     def setup(self):
+        share.datamanager.setbookmark('ch7_putpassword2')
         self.text=[\
                 '"You have entered: ',('"lie cheat steal"',share.colors.password),' .',\
                 'Ugh, that is correct, said the castle\'s a.s.s., how did you figure it out. ',\
@@ -795,6 +799,7 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p22())
     def setup(self):
+        share.datamanager.setbookmark('ch7_startdodge')
         self.text=[\
                   '"I will not let you win this time, said ',\
                   ('{villainname}',share.colors.villain),'."',\
@@ -853,6 +858,7 @@ class obj_scene_ch7p23(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p24())
     def setup(self):
+        share.datamanager.setbookmark('ch7_windodge')
         self.text=[\
                   '"This isnt over yet, said ',\
                     ('{villainname}',share.colors.villain),\
@@ -877,6 +883,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p24a())
     def setup(self):
+        share.datamanager.setbookmark('ch7_startstomp')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                   'Boss battle final phase! ',\
@@ -970,6 +977,7 @@ class obj_scene_ch7p26(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p27())
     def setup(self):
+        share.datamanager.setbookmark('ch7_winstomp')
         self.text=[\
                   '"',\
                   ('{heroname}',share.colors.hero),' was victorious. ', \
@@ -1131,6 +1139,7 @@ class obj_scene_ch7p30(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch7_gohome')
         self.text=[\
                 'go back home ',\
                    ]
@@ -1353,6 +1362,7 @@ class obj_scene_ch7p40(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p41())
     def setup(self):
+        share.datamanager.setbookmark('ch7_villainagain')
         self.text=[\
                   '"',\
                     ('{villainname}',share.colors.villain),' was outside the house! ',\
@@ -1631,6 +1641,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p48a())
     def setup(self):
+        share.datamanager.setbookmark('ch7_startmech')
         self.text=[\
                     'Oh boy, that is one epic fight, said the book of things. ',\
                     'Lets get started. ',\
@@ -1739,6 +1750,7 @@ class obj_scene_ch7p50(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p51())
     def setup(self):
+        share.datamanager.setbookmark('ch7_winmech')
         self.text=[\
             '"The  ',('super-mech-villain',share.colors.villain),\
             ' fell over and started smoking.  ',\
@@ -1849,6 +1861,7 @@ class obj_scene_ch7p53(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7ending())
     def setup(self):
+        share.datamanager.setbookmark('ch7_drawcake')
         self.text=[\
             'Draw a ',('cake',share.colors.item),', said the book things. It is time to celebrate! ',\
                 ]
@@ -1988,6 +2001,7 @@ class obj_scene_ch7unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7end())
     def setup(self):
+        share.datamanager.setbookmark('ch7_endunlock')
         self.text=['You have unlocked the ',\
                     ('epilogue',share.colors.instructions),'! Access it from the menu. ',\
                    ]

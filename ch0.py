@@ -27,6 +27,7 @@ class obj_scene_prologue(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch0_start')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['-----   Prologue: The book of things   -----   ',\
                    '\nIn the beginning, there was nothing. Absolutely nothing. But one could press '+tempo+' to continue.']
@@ -40,7 +41,6 @@ class obj_scene_ch0p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_prologue())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
-
     def setup(self):
         tempo1='['+share.datamanager.controlname('action')+']'
         tempo2='['+share.datamanager.controlname('back')+']'
@@ -70,6 +70,7 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         dispgroup1.addpart('part1',draw.obj_image('pendraw',(640,360),scale=0.666))
         dispgroup1.snapshot((640,360,100,200),'pen')
     def setup(self):
+        share.datamanager.setbookmark('ch0_drawpen')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['There was going to be a pen. ',\
@@ -112,6 +113,7 @@ class obj_scene_ch0p4(page.obj_chapterpage):
         dispgroup1.addpart('part1',draw.obj_image('eraserdraw',(640,360),scale=0.666))
         dispgroup1.snapshot((640,360,135,135),'eraser')
     def setup(self):
+        share.datamanager.setbookmark('ch0_draweraser')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['Along with the pen, there was going to be an eraser.',\
@@ -176,6 +178,7 @@ class obj_scene_ch0p7(page.obj_chapterpage):
         dispgroup1.addpart('part1',draw.obj_image('bookdraw',(640,360),scale=0.666))
         dispgroup1.snapshot((640,360,210,180),'book')
     def setup(self):
+        share.datamanager.setbookmark('ch0_drawbook')
         self.text=['There was going to be a book. A very mysterious book.',\
                    ]
         self.addpart( draw.obj_drawing('bookdraw',(640,390), legend='Draw an Open Book') )
@@ -226,6 +229,7 @@ class obj_scene_ch0p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def setup(self):
+        share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempom='['+share.datamanager.controlname('mouse')+']'
         tempok='['+share.datamanager.controlname('keyboard')+']'
@@ -360,6 +364,7 @@ class obj_scene_ch0unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
+        share.datamanager.setbookmark('ch0_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter I',share.colors.instructions),'! Access it from the menu. ',\
                    ]

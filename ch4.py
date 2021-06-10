@@ -28,6 +28,7 @@ class obj_scene_chapter4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def setup(self):
+        share.datamanager.setbookmark('ch4_start')
         self.text=['-----   Chapter IV: Something East   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: well, lets continue our story where we left. ',\
@@ -111,6 +112,7 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p3())
     def setup(self):
+        share.datamanager.setbookmark('ch4_drawalarm')
         self.text=[\
                    'First, lets make sure ',('{heroname}',share.colors.hero),\
                    ' wakes up on time today, said the book of things. ',\
@@ -135,6 +137,7 @@ class obj_scene_ch4p3(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch4_startstory')
         self.text=[\
                'Lets do this, said the book of things: ',\
                 '"once upon a time, there was a ',('hero',share.colors.hero),' ',\
@@ -192,6 +195,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def setup(self):
+        share.datamanager.setbookmark('ch4_checkmail')
         self.text=[\
                   '"',\
                     ('{heroname}',share.colors.hero),' checked ',\
@@ -276,6 +280,7 @@ class obj_scene_ch4p9(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p10())
     def setup(self):
+        share.datamanager.setbookmark('ch4_drawcave')
         self.text=['The ',\
                     ('grandmaster',share.colors.grandmaster),\
                     '\'s home is a magical cave in a dark forest,',\
@@ -312,6 +317,7 @@ class obj_scene_ch4p11(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p12())
     def setup(self):
+        share.datamanager.setbookmark('ch4_writebunny')
         self.text=[\
                 '"Arrived at the ',('magical cave',share.colors.location2),', ',\
                 ('{heroname}',share.colors.hero),\
@@ -512,6 +518,7 @@ class obj_scene_lyingstart(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1())
     def setup(self):
+        share.datamanager.setbookmark('ch4_startlying')
         self.text=[\
                 '"The lying game is all about having a good memory and mastering the art of deception, said ',\
                 ('{bunnyname}',share.colors.bunny),'. Now lets get started."',\
@@ -934,6 +941,7 @@ class obj_scene_lyingend(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p18())
     def setup(self):
+        share.datamanager.setbookmark('ch4_winlying')
         self.text=[\
                     '"Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won my ',('lying game',share.colors.grandmaster2),'! ',\
@@ -1045,6 +1053,7 @@ class obj_scene_ch4p20(page.obj_chapterpage):
     def triggernextpage(self,controls):
         return (share.devmode and controls.ga and controls.gac) or self.world.done
     def setup(self):
+        share.datamanager.setbookmark('ch4_gohome')
         self.text=[\
                 'go back home',\
                    ]
@@ -1141,6 +1150,7 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4end())
     def setup(self):
+        share.datamanager.setbookmark('ch4_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter V',share.colors.instructions),'! Access it from the menu. ',\
                    ]

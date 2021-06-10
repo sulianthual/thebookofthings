@@ -28,6 +28,7 @@ class obj_scene_chapter2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p1())
     def setup(self):
+        share.datamanager.setbookmark('ch2_start')
         self.text=['-----   Chapter II: Home Sweet Home   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: lets see how our story is going so far. ',\
@@ -112,6 +113,7 @@ class obj_scene_ch2p2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p3())
     def setup(self):
+        share.datamanager.setbookmark('ch2_drawlove')
         self.text=[\
                'I want ',('{heroname}',share.colors.hero),' to have a ',\
                ('partner',share.colors.partner),\
@@ -131,6 +133,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p4())
     def setup(self):
+        share.datamanager.setbookmark('ch2_writepartner')
         self.text=[\
                  'Great, lets write: ',\
                 '"',('{heroname}',share.colors.hero),\
@@ -139,7 +142,6 @@ class obj_scene_ch2p3(page.obj_chapterpage):
                 ('love',share.colors.partner2),'". '\
                 'Choose a name and gender for this ',('partner',share.colors.partner),'. '\
                    ]
-
         yref=260
         dyref=120
         self.addpart( draw.obj_textbox("the partner\'s name was:",(200,yref)) )
@@ -236,6 +238,7 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p6b())
     def setup(self):
+        share.datamanager.setbookmark('ch2_drawmail')
         self.text=[\
                    'Alright, so first our lovebirds want to send each other some passionate letters. ',\
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
@@ -314,6 +317,7 @@ class obj_scene_ch2p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p8())
     def setup(self):
+        share.datamanager.setbookmark('ch2_drawmusic')
         self.text=[\
                     'Aww that is so sweet. ',\
                    ('{heroname}',share.colors.hero),' wants to show ',\
@@ -402,6 +406,7 @@ class obj_scene_ch2p11(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p12())
     def setup(self):
+        share.datamanager.setbookmark('ch2_drawhouse')
         self.text=[\
                    'Ewww gross, get some privacy next time. ',\
                    'Moving on, lets draw a ',\
@@ -473,6 +478,7 @@ class obj_scene_ch2play(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play1())
     def setup(self):
+        share.datamanager.setbookmark('ch2_startplay')
         self.text=[\
                     'That wraps it nicely, says the book of things. ',\
                    'Now, lets read our story one more time. ',\
@@ -723,6 +729,7 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def setup(self):
+        share.datamanager.setbookmark('ch2_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter III',share.colors.instructions),'! Access it from the menu. ',\
                    ]

@@ -407,8 +407,6 @@ class obj_textinput:
                 self.colorshow=self.color
                 if self.text=='':# like setempty
                     self.text=self.empty
-
-
     def makeframe(self):
         self.sprite.make('W',self.font,self.colorshow)# biggest character
         self.rx=self.sprite.getrx()*self.nchar# biggest text size
@@ -534,7 +532,7 @@ class obj_textchoice:
 # *TEXTBOX
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
-    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,xleft=False,xright=False,ytop=False):
+    def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,xleft=False,xright=False,ytop=False,fillcolor=None):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
@@ -544,6 +542,7 @@ class obj_textbox:
         self.xleft=xleft# x (from xy) defines left of frame instead of center
         self.xright=xright# x (from xy) defines right of frame instead of center
         self.ytop=ytop# y (from xy) defines top of frame instead of center
+        self.fillcolor=fillcolor# color for textbox backgroun
         self.setup()
         if scale != 1: self.scale(scale)
         if rotate != 0: self.rotate(rotate)
@@ -565,7 +564,7 @@ class obj_textbox:
         self.text=text
         formattextkwargs=share.datamanager.getwords()
         self.text=tool.formattext(self.text,**formattextkwargs)# replace with book of things keywords
-        self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color)
+        self.sprite.make(self.text,share.fonts.font(self.fontsize),self.color,fillcolor=self.fillcolor)
         if self.xleft:
             tempo=self.sprite.getrx()
             self.movex(tempo)
