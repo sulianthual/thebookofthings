@@ -355,9 +355,9 @@ class obj_scene_realtitlescreen(page.obj_page):
         # decorations
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('V1.0',(1210,670),fontsize='smaller')
-        self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
+        self.sprite_pen=draw.obj_image('pen',(70,620), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
-        self.sprite_eraser=draw.obj_image('eraser',(1210,620), scale=0.25)
+        self.sprite_eraser=draw.obj_image('eraser',(1280-70,620), scale=0.25)
         self.addpart(self.sprite_author)
         self.addpart(self.sprite_pen)
         self.addpart(self.sprite_book)
@@ -370,15 +370,19 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_pen.show=self.hasbook
         self.sprite_eraser.show=self.hasbook
         # menu
+        xref=640
+        yref=380
+        dyref=80
+        fontref='larger'
         if not self.hasbook:
-            self.sprite_continue=draw.obj_textbox('start new book',(540,380),fontsize='smaller',xleft=True)
-            self.sprite_settings=draw.obj_textbox('settings',(540,410),fontsize='smaller',xleft=True)
-            self.sprite_exit=draw.obj_textbox('exit',(540,440),fontsize='smaller',xleft=True)
+            self.sprite_continue=draw.obj_textbox('start new book',(xref,yref),fontsize=fontref,xleft=False,hover=True)
+            self.sprite_settings=draw.obj_textbox('settings',(xref,yref+dyref),fontsize=fontref,xleft=False,hover=True)
+            self.sprite_exit=draw.obj_textbox('exit',(xref,yref+2*dyref),fontsize=fontref,xleft=False,hover=True)
         else:
-            self.sprite_continue=draw.obj_textbox('continue book',(540,380),fontsize='smaller',xleft=True,hover=True)
-            self.sprite_chapters=draw.obj_textbox('chapters',(540,410),fontsize='smaller',xleft=True)
-            self.sprite_settings=draw.obj_textbox('settings',(540,440),fontsize='smaller',xleft=True)
-            self.sprite_exit=draw.obj_textbox('exit',(540,470),fontsize='smaller',xleft=True)
+            self.sprite_continue=draw.obj_textbox('continue book',(xref,yref),fontsize=fontref,xleft=False,hover=True)
+            self.sprite_chapters=draw.obj_textbox('chapters',(xref,yref+dyref),fontsize=fontref,xleft=False,hover=True)
+            self.sprite_settings=draw.obj_textbox('settings',(xref,yref+2*dyref),fontsize=fontref,xleft=False,hover=True)
+            self.sprite_exit=draw.obj_textbox('exit',(xref,yref+3*dyref),fontsize=fontref,xleft=False,hover=True)
         self.addpart(self.sprite_continue)
         self.addpart(self.sprite_chapters)
         self.addpart(self.sprite_settings)
@@ -387,23 +391,6 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.sprite_chapters.show=self.hasbook
         self.sprite_settings.show=True
         self.sprite_exit.show=True
-        # browsing
-        self.sprite_pointer=draw.obj_textbox('---',(500-100,410),fontsize='smaller')
-        tempo= '['+share.datamanager.controlname('quit')+': exit] '
-        tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
-        tempo+= '['+share.datamanager.controlname('action')+': choose] '
-        self.sprite_info=draw.obj_textbox(tempo,(640,350),fontsize='smaller')
-        self.addpart(self.sprite_pointer)
-        self.addpart(self.sprite_info)
-        self.sprite_pointer.show=True
-        self.sprite_info.show=True
-        if self.hasbook:
-            self.maxrows=4#5# max pointer positions
-        else:
-            self.maxrows=3
-        self.ipointer=0# pointer vertical position
-        self.sprite_pointer.movetoy(380+self.ipointer*30)
-        self.sprite_pen.movetoy(330+self.ipointer*30)
         #
         # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
@@ -418,7 +405,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             tempo2= '['+share.datamanager.controlname('right')+': appendix of tests] '
             tempo3= '['+share.datamanager.controlname('left')+': quick access scene] '
             textmat=['Developper Access is on:','(edit settings.txt to change)',tempo1,tempo2,tempo3]
-            x1,y1,dy1=30,500,30
+            x1,y1,dy1=30,300,30
             for i in textmat:
                 self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
                 y1 += dy1
@@ -427,39 +414,24 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.gotobookmarkscene=obj_gotobookmark()
 
     def page(self,controls):
-        if controls.gd and controls.gdc:
-            self.sound_menugo.play()
-            # self.ipointer=min(self.ipointer+1,self.maxchapter)
-            self.ipointer +=1
-            if self.ipointer>self.maxrows-1: self.ipointer=0
-            self.sprite_pointer.movetoy(380+self.ipointer*30)
-            self.sprite_pen.movetoy(330+self.ipointer*30)
-        if controls.gu and controls.guc:
-            self.sound_menugo.play()
-            self.ipointer -=1
-            if self.ipointer<0: self.ipointer=self.maxrows-1
-            self.sprite_pointer.movetoy(380+self.ipointer*30)
-            self.sprite_pen.movetoy(330+self.ipointer*30)
         #
-        if controls.ga  and controls.gac:
-            self.sound_menugo.play()
-
-            if not self.hasbook:# start new book
-                if self.ipointer==0:
-                    share.scenemanager.switchscene(ch0.obj_scene_prologue())
-                elif self.ipointer==1:
-                    share.scenemanager.switchscene(obj_scene_settings())
-                elif self.ipointer==2:
-                    share.quitgame()
-            else:# continue book
-                if self.ipointer==0:
-                    self.gotobookmarkscene()# last bookmarked scene
-                elif self.ipointer==1:
-                    share.scenemanager.switchscene(obj_scene_chaptersscreen())# chapters
-                elif self.ipointer==2:
-                    share.scenemanager.switchscene(obj_scene_settings())
-                elif self.ipointer==3:
-                    share.quitgame()
+        # Hovering
+        if not self.hasbook:
+            if self.sprite_continue.isclicked(controls):
+                share.scenemanager.switchscene(ch0.obj_scene_prologue())
+            elif self.sprite_settings.isclicked(controls):
+                share.scenemanager.switchscene(obj_scene_settings())
+            elif self.sprite_exit.isclicked(controls):
+                share.quitgame()
+        else:
+            if self.sprite_continue.isclicked(controls):
+                self.gotobookmarkscene()
+            elif self.sprite_chapters.isclicked(controls):
+                share.scenemanager.switchscene(obj_scene_chaptersscreen())# chapters
+            elif self.sprite_settings.isclicked(controls):
+                share.scenemanager.switchscene(obj_scene_settings())
+            elif self.sprite_exit.isclicked(controls):
+                share.quitgame()
         #
         if controls.gq and controls.gqc:
             share.quitgame()
@@ -470,10 +442,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.gl and controls.glc:
                 self.gotoquickscene()
         #############################################3
-        #
-        # Hovering
-        if self.sprite_continue.isclicked(controls):
-            print('continue')
+
 
 
 ####################################################################################################################
@@ -487,7 +456,7 @@ class obj_scene_chaptersscreen(page.obj_page):
         # decorations
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('V1.0',(1210,670),fontsize='smaller')
-        self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
+        self.sprite_pen=draw.obj_image('pen',(70,620), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
         self.sprite_eraser=draw.obj_image('eraser',(1210,620), scale=0.25)
         self.addpart(self.sprite_author)
@@ -502,46 +471,40 @@ class obj_scene_chaptersscreen(page.obj_page):
         self.sprite_pen.show=self.hasbook
         self.sprite_eraser.show=self.hasbook
         # menu
-        self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(540,380),fontsize='smaller',xleft=True)
-        self.sprite_ch1=draw.obj_textbox('Chapter I: The Hero',(540,410),fontsize='smaller',xleft=True)
-        self.sprite_ch2=draw.obj_textbox('Chapter II: Home Sweet Home',(540,440),fontsize='smaller',xleft=True)
-        self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(540,470),fontsize='smaller',xleft=True)
-        self.sprite_ch4=draw.obj_textbox('Chapter IV Something East',(540,500),fontsize='smaller',xleft=True)
-        self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(540,530),fontsize='smaller',xleft=True)
-        self.sprite_ch6=draw.obj_textbox('Chapter VI: Treasure Hunt',(540,560),fontsize='smaller',xleft=True)
-        self.sprite_ch7=draw.obj_textbox('Chapter VII: Showtime',(540,590),fontsize='smaller',xleft=True)
-        self.sprite_ch8=draw.obj_textbox('Epilogue',(540,620),fontsize='smaller',xleft=True)
+        self.sprite_back=draw.obj_textbox('back',(420,370),fontsize='larger',hover=True)
+        self.addpart(self.sprite_back)
+        xref=540
+        yref=360
+        dyref=40
+        fontref='smaller'
+        self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(xref,yref),fontsize=fontref,xleft=True, hover=True)
         self.addpart(self.sprite_prologue)
-        self.addpart(self.sprite_ch1)
-        self.addpart(self.sprite_ch2)
-        self.addpart(self.sprite_ch3)
-        self.addpart(self.sprite_ch4)
-        self.addpart(self.sprite_ch5)
-        self.addpart(self.sprite_ch6)
-        self.addpart(self.sprite_ch7)
-        self.addpart(self.sprite_ch8)
-        self.sprite_prologue.show=True
-        self.sprite_ch1.show=self.maxchapter>0
-        self.sprite_ch2.show=self.maxchapter>1
-        self.sprite_ch3.show=self.maxchapter>2
-        self.sprite_ch4.show=self.maxchapter>3
-        self.sprite_ch5.show=self.maxchapter>4
-        self.sprite_ch6.show=self.maxchapter>5
-        self.sprite_ch7.show=self.maxchapter>6
-        self.sprite_ch8.show=self.maxchapter>7
-        # pointer
-        self.sprite_pointer=draw.obj_textbox('---',(400,410),fontsize='smaller')
-        tempo= '['+share.datamanager.controlname('quit')+': exit] '
-        tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
-        tempo+= '['+share.datamanager.controlname('action')+': choose] '
-        self.sprite_info=draw.obj_textbox(tempo,(640,350),fontsize='smaller')
-        self.addpart(self.sprite_pointer)
-        self.addpart(self.sprite_info)
-        self.sprite_pointer.show=True
-        self.sprite_info.show=True
-        self.ichapter=0# pointer position
-        self.sprite_pointer.movetoy(380+self.ichapter*30)
-        self.sprite_pen.movetoy(330+self.ichapter*30)
+        if self.maxchapter>0:
+            self.sprite_ch1=draw.obj_textbox('Chapter I: The Hero',(xref,yref+dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch1)
+        if self.maxchapter>1:
+            self.sprite_ch2=draw.obj_textbox('Chapter II: Home Sweet Home',(xref,yref+2*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch2)
+        if self.maxchapter>2:
+            self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch3)
+        if self.maxchapter>3:
+            self.sprite_ch4=draw.obj_textbox('Chapter IV Something East',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch4)
+        if self.maxchapter>4:
+            self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(xref,yref+5*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch5)
+        if self.maxchapter>5:
+            self.sprite_ch6=draw.obj_textbox('Chapter VI: Treasure Hunt',(xref,yref+6*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch6)
+        if self.maxchapter>6:
+            self.sprite_ch7=draw.obj_textbox('Chapter VII: Showtime',(xref,yref+7*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch7)
+        if self.maxchapter>7:
+            self.sprite_ch8=draw.obj_textbox('Epilogue',(xref,yref+8*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.addpart(self.sprite_ch8)
+        #
+        # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
         self.addpart( self.sound_menugo )
         self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
@@ -554,43 +517,45 @@ class obj_scene_chaptersscreen(page.obj_page):
             self.addpart( draw.obj_music('tension') )
 
     def page(self,controls):
-        if controls.gd and controls.gdc:
-            self.sound_menugo.play()
-            # self.ichapter=min(self.ichapter+1,self.maxchapter)
-            self.ichapter +=1
-            if self.ichapter>self.maxchapter-1: self.ichapter=0
-            self.sprite_pointer.movetoy(380+self.ichapter*30)
-            self.sprite_pen.movetoy(330+self.ichapter*30)
-        if controls.gu and controls.guc:
-            self.sound_menugo.play()
-            # self.ichapter=max(self.ichapter-1,-1)
-            self.ichapter -=1
-            if self.ichapter<0: self.ichapter=self.maxchapter-1
-            self.sprite_pointer.movetoy(380+self.ichapter*30)
-            self.sprite_pen.movetoy(330+self.ichapter*30)
-        if controls.ga  and controls.gac:
-            self.sound_menugo.play()
-            if self.ichapter==0:
-                share.scenemanager.switchscene(ch0.obj_scene_prologue())
-            elif self.ichapter==1:
-                share.scenemanager.switchscene(ch1.obj_scene_chapter1())
-            elif self.ichapter==2:
-                share.scenemanager.switchscene(ch2.obj_scene_chapter2())
-            elif self.ichapter==3:
-                share.scenemanager.switchscene(ch3.obj_scene_chapter3())
-            elif self.ichapter==4:
-                share.scenemanager.switchscene(ch4.obj_scene_chapter4())
-            elif self.ichapter==5:
-                share.scenemanager.switchscene(ch5.obj_scene_chapter5())
-            elif self.ichapter==6:
-                share.scenemanager.switchscene(ch6.obj_scene_chapter6())
-            elif self.ichapter==7:
-                share.scenemanager.switchscene(ch7.obj_scene_chapter7())
-            elif self.ichapter==8:
-                share.scenemanager.switchscene(ch8.obj_scene_chapter8())
-        if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
+        # hovers
+        if self.sprite_back.isclicked(controls):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
+        if self.sprite_prologue.isclicked(controls):
+            self.sound_menugo.play()
+            share.scenemanager.switchscene(ch0.obj_scene_prologue())
+        if self.maxchapter>0:
+            if self.sprite_ch1.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch1.obj_scene_chapter1())
+        if self.maxchapter>1:
+            if self.sprite_ch2.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch2.obj_scene_chapter2())
+        if self.maxchapter>2:
+            if self.sprite_ch3.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch3.obj_scene_chapter3())
+        if self.maxchapter>3:
+            if self.sprite_ch4.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch4.obj_scene_chapter4())
+        if self.maxchapter>4:
+            if self.sprite_ch5.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch5.obj_scene_chapter5())
+        if self.maxchapter>5:
+            if self.sprite_ch6.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch6.obj_scene_chapter6())
+        if self.maxchapter>6:
+            if self.sprite_ch7.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch7.obj_scene_chapter7())
+        if self.maxchapter>7:
+            if self.sprite_ch8.isclicked(controls):
+                self.sound_menugo.play()
+                share.scenemanager.switchscene(ch8.obj_scene_chapter8())
 
 
 ####################################################################################################################
@@ -611,7 +576,7 @@ class obj_scene_settings(page.obj_page):
         # decorations
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
         self.sprite_author=draw.obj_textbox('V1.0',(1210,670),fontsize='smaller')
-        self.sprite_pen=draw.obj_image('pen',(460-100,360), scale=0.25)
+        self.sprite_pen=draw.obj_image('pen',(70,620), scale=0.25)
         self.sprite_book=draw.obj_image('book',(640,230), scale=0.5)
         self.sprite_eraser=draw.obj_image('eraser',(1210,620), scale=0.25)
         self.addpart(self.sprite_author)
@@ -625,58 +590,51 @@ class obj_scene_settings(page.obj_page):
         self.sprite_book.show=self.hasbook
         self.sprite_pen.show=self.hasbook
         self.sprite_eraser.show=self.hasbook
-        # browsing
-        # self.addpart( draw.obj_textbox('Settings',(640,80),fontsize='large') )
-        tempo= '['+share.datamanager.controlname('back')+'/'+share.datamanager.controlname('quit')+': back] '
-        tempo+= '['+share.datamanager.controlname('up')+'/'+share.datamanager.controlname('down')+': select] '
-        tempo+= '['+share.datamanager.controlname('action')+': change] '
-        self.addpart( draw.obj_textbox(tempo,(640,350),fontsize='smaller') )
-        self.sprite_pointer=draw.obj_textbox('---',(400,410),fontsize='smaller')
-        self.addpart(self.sprite_pointer)
-        self.maxjpos=6# max pointer position
-        self.jpos=0# pointer position
-        if self.tosoundon:# turning back sound on
-            self.jpos=3
-        self.sprite_pointer.movetoy(380+self.jpos*30)
-        self.sprite_pen.movetoy(330+self.jpos*30)
+
         #
         # menu
-        ycount0=380
-        dycount=30
-        ycount=ycount0
-        self.keyboardqwerty=draw.obj_textbox('Keyboard: Qwerty (arrows = WASD)',(540,ycount),fontsize='smaller',xleft=True)
-        self.keyboardazerty=draw.obj_textbox('Keyboard: Azerty (arrows = ZQSD)',(540,ycount),fontsize='smaller',xleft=True)
-        self.addpart( self.keyboardqwerty )
-        self.addpart( self.keyboardazerty )
-        self.keyboardqwerty.show=not share.datamanager.doazerty
-        self.keyboardazerty.show=share.datamanager.doazerty
-        ycount += dycount
-        self.screennative=draw.obj_textbox('Display: Windowed (1280x720)',(540,ycount),fontsize='smaller',xleft=True)
-        self.screenadapted=draw.obj_textbox('Display: Fullscreen',(540,ycount),fontsize='smaller',xleft=True)
-        self.addpart( self.screennative )
-        self.addpart( self.screenadapted )
-        self.screennative.show=share.datamanager.donative
-        self.screenadapted.show=not share.datamanager.donative
-        ycount += dycount
-        self.musicoff=draw.obj_textbox('Music: Off',(540,ycount),fontsize='smaller',xleft=True)
-        self.musicon=draw.obj_textbox('Music: On',(540,ycount),fontsize='smaller',xleft=True)
-        self.addpart( self.musicoff )
-        self.addpart( self.musicon )
-        self.musicoff.show=not share.datamanager.domusic
-        self.musicon.show=share.datamanager.domusic
-        ycount += dycount
-        self.soundoff=draw.obj_textbox('Sound: Off',(540,ycount),fontsize='smaller',xleft=True)
-        self.soundon=draw.obj_textbox('Sound: On',(540,ycount),fontsize='smaller',xleft=True)
-        self.addpart( self.soundoff )
-        self.addpart( self.soundon )
-        self.soundoff.show=not share.datamanager.dosound
-        self.soundon.show=share.datamanager.dosound
-        ycount += dycount
-        self.addpart( draw.obj_textbox('Controls',(540,ycount),fontsize='smaller',xleft=True) )
-        ycount += dycount
-        self.addpart( draw.obj_textbox('Credits',(540,ycount),fontsize='smaller',xleft=True) )
-        ycount += dycount
-        self.addpart( draw.obj_textbox('Erase Book',(540,ycount),fontsize='smaller',xleft=True) )
+        self.sprite_back=draw.obj_textbox('back',(420,370),fontsize='larger',hover=True)
+        self.addpart(self.sprite_back)
+        xref=540
+        yref=360
+        dyref=40
+        fontref='smaller'
+        #
+        self.sprite_keyboard=draw.obj_textbox('xxx',(xref,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_keyboard)
+        if share.datamanager.doazerty:
+            self.sprite_keyboard.replacetext('Keyboard: Azerty (arrows = ZQSD)')
+        else:
+            self.sprite_keyboard.replacetext('Keyboard: Qwerty (arrows = WASD)')
+        #
+        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_display)
+        if share.datamanager.donative:
+            self.sprite_display.replacetext('Display: Windowed (1280x720)')
+        else:
+            self.sprite_display.replacetext('Display: Fullscreen')
+        #
+        self.sprite_music=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_music)
+        if share.datamanager.domusic:
+            self.sprite_music.replacetext('Music: On')
+        else:
+            self.sprite_music.replacetext('Music: Off')
+        #
+        self.sprite_sound=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_sound)
+        if share.datamanager.dosound:
+            self.sprite_sound.replacetext('Sound: On')
+        else:
+            self.sprite_sound.replacetext('Sound: Off')
+
+        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+4*dyref),fontsize=fontref,xleft=True)
+        self.addpart( self.sprite_controls )
+        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+5*dyref),fontsize=fontref,xleft=True)
+        self.addpart( self.sprite_credits )
+        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+6*dyref),fontsize=fontref,xleft=True)
+        self.addpart( self.sprite_erasebook )
+
         #
         # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
@@ -692,78 +650,76 @@ class obj_scene_settings(page.obj_page):
             self.addpart( draw.obj_music('tension') )
 
     def page(self,controls):
-        if controls.gd and controls.gdc:
-            self.sound_menugo.play()
-            # self.jpos=min(self.jpos+1,self.maxjpos)
-            self.jpos +=1
-            if self.jpos>self.maxjpos: self.jpos=0
-            self.sprite_pointer.movetoy(380+self.jpos*30)
-            self.sprite_pen.movetoy(330+self.jpos*30)
-        if controls.gu and controls.guc:
-            self.sound_menugo.play()
-            # self.jpos=max(self.jpos-1,0)
-            self.jpos -=1
-            if self.jpos<0: self.jpos=self.maxjpos
-            self.sprite_pointer.movetoy(380+self.jpos*30)
-            self.sprite_pen.movetoy(330+self.jpos*30)
-        #
-        # change keyboard type
-        if self.jpos==0 and (controls.ga and controls.gac):
+        # hovers
+        if self.sprite_back.isclicked(controls):
+            self.sound_menuback.play()
+            share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
+        elif self.sprite_keyboard.isclicked(controls):
             self.sound_menuback.play()
             share.datamanager.doazerty=not share.datamanager.doazerty
             share.controls.azerty=share.datamanager.doazerty# change controls as well
-            self.keyboardqwerty.show=not share.datamanager.doazerty
-            self.keyboardazerty.show=share.datamanager.doazerty
             share.datamanager.savesettings()# save settings
+            if share.datamanager.doazerty:
+                self.sprite_keyboard.replacetext('Keyboard: Azerty (arrows = ZQSD)')
+            else:
+                self.sprite_keyboard.replacetext('Keyboard: Qwerty (arrows = WASD)')
+
         # change display
-        elif self.jpos==1 and (controls.ga and controls.gac):
+        elif self.sprite_display.isclicked(controls):
             self.sound_menuback.play()
             share.datamanager.donative= not share.datamanager.donative
-            self.screennative.show=share.datamanager.donative
-            self.screenadapted.show=not share.datamanager.donative
             if share.datamanager.donative:
                 share.display.reset(native=True)
             else:
                 share.display.reset(native=False)
             share.datamanager.savesettings()# save settings
+            if share.datamanager.donative:
+                self.sprite_display.replacetext('Display: Windowed (1280x720)')
+            else:
+                self.sprite_display.replacetext('Display: Fullscreen')
+
         # toggle music
-        elif self.jpos==2 and (controls.ga and controls.gac):
+        elif self.sprite_music.isclicked(controls):
+            self.sound_menuback.play()
             share.datamanager.domusic=not share.datamanager.domusic
             if share.datamanager.domusic:
                 share.musicplayer.setmastervolume(1)
             else:
                 share.musicplayer.setmastervolume(0)
-            self.musicoff.show=not share.datamanager.domusic
-            self.musicon.show=share.datamanager.domusic
             share.datamanager.savesettings()# save settings
+            if share.datamanager.domusic:
+                self.sprite_music.replacetext('Music: On')
+            else:
+                self.sprite_music.replacetext('Music: Off')
+
         # toggle sound
-        elif self.jpos==3 and (controls.ga and controls.gac):
+        elif self.sprite_sound.isclicked(controls):
+            # self.sound_menuback.play()
             share.datamanager.dosound=not share.datamanager.dosound
             if share.datamanager.dosound:
                 share.soundplayer.setmastervolume(1)
             else:
                 share.soundplayer.setmastervolume(0)
-            self.soundoff.show=not share.datamanager.dosound
-            self.soundon.show=share.datamanager.dosound
             share.datamanager.savesettings()# save settings
-            share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))# reload scene
+            if share.datamanager.dosound:
+                self.sprite_sound.replacetext('Sound: On')
+            else:
+                self.sprite_sound.replacetext('Sound: Off')
+            share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))# reload scene with sound
+
         # instructions for controls
-        elif self.jpos==4 and (controls.ga and controls.gac):
+        elif self.sprite_controls.isclicked(controls):
             self.sound_menugo.play()
             share.scenemanager.switchscene(obj_scene_instructions_controls_screen())
         # read game credits
-        elif self.jpos==5 and (controls.ga and controls.gac):
+        elif self.sprite_credits.isclicked(controls):
             self.sound_menugo.play()
             share.scenemanager.switchscene(obj_scene_creditscreen())
         # erase book
-        elif self.jpos==6 and (controls.ga and controls.gac):
+        elif self.sprite_erasebook.isclicked(controls):
             self.sound_menugo.play()
             share.scenemanager.switchscene(obj_scene_erasebook())
-        #
-        # back to titlescreen
-        if (controls.gb and controls.gbc) or (controls.gq and controls.gqc):
-            self.sound_menuback.play()
-            share.scenemanager.switchscene(share.titlescreen,initstart=True)
+
 
 ####################################################################################################################
 ####################################################################################################################
