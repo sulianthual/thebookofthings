@@ -26,16 +26,25 @@ import world
 # Note: All tests are init on menu init (which is problematic, loads all assets at once)
 class obj_scene_testmenu(page.obj_page):
     def setup(self):
-        self.nrow=17# number of rows one column
+        self.nrow=10# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
-        self.addpart(draw.obj_textbox('Appendix Developer Tests [space: Read] [Tab: Back]',(640,50),fontsize='medium'))
-        for i,test in enumerate(self.list[:self.nrow-1]):
-            self.addpart(draw.obj_textbox(test.pagename(),(250,130+i*30),fontsize='smaller'))
-        for i,test in enumerate(self.list[self.nrow-1:]):
-            self.addpart(draw.obj_textbox(test.pagename(),(640,130+i*30),fontsize='smaller'))
-        self.sprite_pointer=draw.obj_textbox('---',(640,360),fontsize='smaller')# moved around
-        self.addpart(self.sprite_pointer)
+        self.addpart(draw.obj_textbox('Appendix Developer Tests',(640,50),fontsize='medium'))
+        self.sprite_back=draw.obj_textbox('[back]',(420,50),fontsize='medium',hover=True)
+        self.addpart(self.sprite_back)
+        #
+        self.textboxclickdict={}
+        for i,test in enumerate(self.list):
+            if i<=self.nrow-1:
+                xref=240
+
+            elif i>self.nrow-1 and i<=2*self.nrow-1:
+                xref=640
+            else:
+                xref=1040
+            tempo=draw.obj_textbox(test.pagename(),(xref,130+i%(self.nrow)*40),fontsize='smaller',hover=True)
+            self.textboxclickdict[str(i)]=tempo
+            self.addpart(tempo)
         #
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
         self.addpart( self.sound_menugo )
@@ -43,23 +52,14 @@ class obj_scene_testmenu(page.obj_page):
         self.addpart( self.sound_menuback )
         #
     def page(self,controls):
-        if share.itest<self.nrow-1:
-            self.sprite_pointer.movetox(60)
-            self.sprite_pointer.movetoy(130+share.itest*30)
-        else:
-            self.sprite_pointer.movetox(460)
-            self.sprite_pointer.movetoy(130+(share.itest-self.nrow+1)*30)
-        if controls.gd and controls.gdc:
-            self.sound_menugo.play()
-            share.itest += 1
-            if share.itest == self.listlen: share.itest=0
-        if controls.gu and controls.guc:
-            self.sound_menugo.play()
-            share.itest -= 1
-            if share.itest == -1: share.itest=self.listlen-1
-        if controls.ga and controls.gac:
-            self.sound_menugo.play()
-            share.scenemanager.switchscene(self.list[share.itest],initstart=True)
+        if self.sprite_back.isclicked(controls):
+            self.sound_menuback.play()
+            share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
+        #
+        for i in self.textboxclickdict.keys():
+            if self.textboxclickdict[str(i)].isclicked(controls):
+                share.scenemanager.switchscene(self.list[int(i)],initstart=True)
+
         if controls.gb and controls.gbc:
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen)
@@ -131,6 +131,9 @@ class obj_testpage(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):# no browsing
         share.scenemanager.switchscene(obj_scene_testmenu())
+    def textboxplace(self):# always top left
+        self.textboxprevpage_xy=( 50,30 )
+        self.textboxnextpage_xy=( 230,30 )
 
 
 #########################################################################
@@ -160,14 +163,14 @@ class obj_scene_testdevnotes(obj_testpage):
                     ('()=files imported by this file. ',share.colors.darkgreen),\
                     ('**=share, page, draw, world, tool. ',share.colors.darkgreen),\
                     #
-                    '\n\n ',('Top: ',share.colors.red),\
+                    '\n ',('Top: ',share.colors.red),\
                     ('main.py',share.colors.blue),(' (share)',share.colors.darkgreen),\
                     '=runs main loop. ',\
                     ('share.py',share.colors.blue),(' (core, datb, menu)',share.colors.darkgreen),\
                     '=defines and stores shared content',\
                     ' (global variables, instances of main game objects). ',\
                     #
-                    '\n\n ',('Modules: ',share.colors.red),\
+                    '\n ',('Modules: ',share.colors.red),\
                     ' these only hold classes/functions. ',\
                     ('page.py',share.colors.blue),(' (share, draw, tool)',share.colors.darkgreen),\
                     '=base structure for any page (or scene) in the game. ',\
@@ -180,7 +183,7 @@ class obj_scene_testdevnotes(obj_testpage):
                     ('tool.py',share.colors.blue),(' (external only)',share.colors.darkgreen),\
                     '=all external modules (math,os...) linked here. ',\
                     #
-                    '\n\n ',('Content: ',share.colors.red),\
+                    '\n ',('Content: ',share.colors.red),\
                     ' these only hold classes/functions. ',\
                     ('menu.py',share.colors.blue),(' (**,ch0,ch1..., test)',share.colors.darkgreen),\
                     '=main menu, settings pages. ',\

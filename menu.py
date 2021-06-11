@@ -448,16 +448,12 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_music('tension') )
         # devtools
         if share.devaccess:
-            tempo1= '['+share.datamanager.controlname('dev')+': toggle dev mode] '
-            tempo2= '['+share.datamanager.controlname('right')+': appendix of tests] '
-            tempo3= '['+share.datamanager.controlname('left')+': quick access scene] '
-            textmat=['Developper Access is on:',\
-            'Mouse browsing on='+str(share.datamanager.domousebrowse),\
-            '(edit settings.txt to change)',tempo1,tempo2,tempo3]
-            x1,y1,dy1=30,50,30
-            for i in textmat:
-                self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
-                y1 += dy1
+            self.addpart(draw.obj_textbox('developper mode is on (edit settings.txt to change)',(30,680),fontsize='smaller',xleft=True,color=share.colors.instructions))
+            self.sprite_appendix=draw.obj_textbox('appendix',(640,480),fontsize='small',color=share.colors.instructions,hover=True)
+            self.addpart(self.sprite_appendix)
+            self.sprite_quick=draw.obj_textbox('quickscene',(640,480+55),fontsize='small',color=share.colors.instructions,hover=True)
+            self.addpart(self.sprite_quick)
+
         # devtools: quick scene
         self.gotoquickscene=obj_quickscene()
 
@@ -485,12 +481,19 @@ class obj_scene_realtitlescreen(page.obj_page):
         #
         if controls.gq and controls.gqc:
             share.quitgame()
+        #
         #############################################3
+        # devtools
         if share.devaccess:
-            if controls.gr and controls.grc:
+            if self.sprite_appendix.isclicked(controls):
+                self.sound_menugo.play()
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
-            if controls.gl and controls.glc:
+
+            if self.sprite_quick.isclicked(controls):
+                self.sound_menugo.play()
                 self.gotoquickscene()
+
+
         #############################################3
 
 
@@ -514,7 +517,7 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
         yref=200
         dyref=55
         fontref='small'
-        self.sprite_back=draw.obj_textbox('back',(xref-70,yref),fontsize=fontref,hover=True)
+        self.sprite_back=draw.obj_textbox('[back]',(xref-70,yref),fontsize=fontref,hover=True)
         self.addpart(self.sprite_back)
         self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(xref,yref),fontsize=fontref,xleft=True, hover=True)
         self.addpart(self.sprite_prologue)
@@ -634,7 +637,7 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         dyref=55
         fontref='small'
         #
-        self.sprite_back=draw.obj_textbox('back',(xref-70,yref),fontsize=fontref,hover=True)
+        self.sprite_back=draw.obj_textbox('[back]',(xref-70,yref),fontsize=fontref,hover=True)
         self.addpart(self.sprite_back)
         self.sprite_keyboard=draw.obj_textbox('xxx',(xref,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_keyboard)
