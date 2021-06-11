@@ -30,7 +30,7 @@ class obj_world:
         self.creator=creator# created by scene (i.e. page)
         self.ruledict={}# dictionary of rules in the world (non-ordered)
         self.actorlist=[]# list of actors in the world (ordered for updates)
-        self.domousebrowse=share.datamanager.domousebrowse# check if mouse browsing or not
+        self.domousebrowse=True# mouse browsing on (MUST REMAIN TRUE)
         self.setup(**kwargs)
     def setup(self,**kwargs):# fill here for childs
         pass

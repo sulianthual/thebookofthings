@@ -327,9 +327,6 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p10())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p12())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch4_writebunny')
         self.text=[\

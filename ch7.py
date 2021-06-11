@@ -392,9 +392,6 @@ class obj_scene_ch7p12(page.obj_chapterpage):
                 share.scenemanager.switchscene(obj_scene_ch7p19())# shortcut
             else:
                 share.scenemanager.switchscene(obj_scene_ch7p12fail())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         self.text=[\
                   '"Please enter ',('password',share.colors.password),', blasted the castle\'s a.s.s. ',\
@@ -658,9 +655,6 @@ class obj_scene_ch7p18(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p19())
         else:
             share.scenemanager.switchscene(obj_scene_ch7p18fail())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         self.text=[\
                   '"go on, try this new ',('password',share.colors.password),', said the ',\
@@ -853,7 +847,7 @@ class obj_scene_ch7p22(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_dodgegunshots(self,incastle=True)
         self.addpart(self.world)
         #
@@ -977,7 +971,7 @@ class obj_scene_ch7p25(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
         #
@@ -1772,7 +1766,7 @@ class obj_scene_ch7p49(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
         #
@@ -1935,7 +1929,7 @@ class obj_scene_ch7ending(page.obj_chapterpage):
     def gameendingtext(self):
         self.addpart( draw.obj_textbox('A game by Sulian thual',(640,100),fontsize='large') )
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         #
         # background
         # self.addpart( draw.obj_image('mountain',(80,190),scale=0.29,rotate=0,fliph=False,flipv=False) )

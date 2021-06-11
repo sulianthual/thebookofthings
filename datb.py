@@ -443,6 +443,7 @@ class obj_datamanager:
         self.filesettings='book/settings.txt'
         self.loadsettings()
         self.temp=obj_datatemp()# object for temporal data storage (by anyone anytime)
+        self.domousebrowse=True# Use mouse scrolling (leave to always True now!)
     def getdevaccess(self):# tell if user has developper access (from reading settings.txt)
         return self.devaccess
     def erasebook(self):
@@ -512,8 +513,6 @@ class obj_datamanager:
                 f1.write(str(self.domusic)+'\n')#value
                 f1.write('dosound'+'\n')#key
                 f1.write(str(self.dosound)+'\n')#value
-                f1.write('domousebrowse'+'\n')#key
-                f1.write(str(self.domousebrowse)+'\n')#value
                 f1.write('devaccess'+'\n')#key
                 f1.write(str(self.devaccess)+'\n')#value
     def loadsettings(self):
@@ -533,9 +532,6 @@ class obj_datamanager:
                 self.dosound=line=='True'+'\n'
                 line=f1.readline()# dosound
                 line=f1.readline()
-                self.domousebrowse=line=='True'+'\n'
-                line=f1.readline()# domousebrowse
-                line=f1.readline()
                 self.devaccess=line=='True'+'\n'
         else:
             # default settings
@@ -544,7 +540,6 @@ class obj_datamanager:
             self.domusic=True# music on/off
             self.dosound=True# sound on/off
             self.devaccess=False# User has no dev access by default
-            self.domousebrowse=True# Use either Mouse or Tab/Space/Enter to scroll pages
             # write down default settings
             self.savesettings()
     #

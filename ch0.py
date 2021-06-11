@@ -375,39 +375,21 @@ class obj_scene_ch0p13(page.obj_chapterpage):
                    ]
         #
         # Game controls instructions
-        if not self.domousebrowse:
-            self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
-            self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
-            self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
-            #
-            self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('previous',(216,544),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
-        else:
-            self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
-            self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
-            self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
-            self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
-            #
-            self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
-            self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
+        self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
+
+        self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+        self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+        #
+        self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('play',(501,438),color=share.colors.instructions,fontsize='larger') )
+        self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
 
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)

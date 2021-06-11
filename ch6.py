@@ -384,9 +384,6 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p14())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch6_writesailor')
         self.text=[\
@@ -901,7 +898,7 @@ class obj_scene_ch6p31(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak2')
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_bushstealth2(self)
         self.addpart(self.world)
         #
@@ -925,7 +922,7 @@ class obj_scene_ch6p32(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak3')
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_bushstealth3(self)
         self.addpart(self.world)
         #
@@ -946,7 +943,7 @@ class obj_scene_ch6p33(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak4')
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')# modified win sound
         self.addpart(self.world)
         #
@@ -1089,7 +1086,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('arrows')+']'
-        self.text=['Way to go, said the book of things. ',\
+        self.text=['Lets go! ',\
                     'Move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
                    ]
         self.textkeys={'pos':(100,50),'xmin':100}
@@ -1173,8 +1170,8 @@ class obj_scene_ch6p39(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,520)
-        self.textboxnextpage_xy=(1230,520)
+        self.textboxprevpage_xy=(350,50)
+        self.textboxnextpage_xy=(530,50)
     def setup(self):
         self.text=[' ']
         self.world=world.obj_world_ridecow(self)

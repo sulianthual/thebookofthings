@@ -1251,7 +1251,7 @@ class obj_scene_ch3p36(page.obj_chapterpage):
         self.text=[\
                  '"In fact I am here to help you, said the ',('{bug}',share.colors.bug),'. ',\
                  'I know how to unlock ',('{villainname}',share.colors.villain),\
-                 '\'s ',('evil castle',share.colors.location2),'!". ',\
+                 '\'s ',('evil castle',share.colors.location2),'!" ',\
                    ]
         self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )

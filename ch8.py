@@ -34,7 +34,7 @@ class obj_scene_chapter8(page.obj_chapterpage):# just go to next page directly
         pass# no sound
     def setup(self):
         share.datamanager.setbookmark('ch8_start')
-        self.text=[]
+        self.text=[' ']
         #
         self.addpart( draw.obj_music('piano') )
 
@@ -72,6 +72,8 @@ class obj_scene_ch8roam(page.obj_chapterpage):
         return self.world.done
     def triggerprevpage(self,controls):
         return False
+    def textboxprevpage(self):
+        pass
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def soundnextpage(self):
@@ -82,7 +84,7 @@ class obj_scene_ch8roam(page.obj_chapterpage):
             self.start=kwargs["start"]
         else:
             self.start="home"
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_travel(self,start=self.start,goal='everywhere',chapter=8,boat=True,noending=True)
         self.addpart(self.world)
         #
@@ -133,7 +135,7 @@ class obj_scene_ch8homesleep(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
         #
@@ -151,7 +153,7 @@ class obj_scene_ch8homesleep2(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_gotobed(self,bug=True,alarmclock=True)
         self.addpart(self.world)
         #
@@ -168,7 +170,7 @@ class obj_scene_ch8homesleep3(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
         #
@@ -185,7 +187,7 @@ class obj_scene_ch8homesleep4(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
         self.addpart(self.world)
         #
@@ -197,6 +199,10 @@ class obj_scene_ch8homebye(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='home'))
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='home'))
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def setup(self):
         self.text=[\
                 '"Have a nice day, said the ',\
@@ -291,7 +297,7 @@ class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
         #
@@ -320,7 +326,11 @@ class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):
 
 class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='atpartner'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8atpartnerserenade())
@@ -355,7 +365,11 @@ class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
 
 class obj_scene_ch8atpartnerbye(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='atpartner'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='atpartner'))
     def setup(self):
@@ -425,7 +439,7 @@ class obj_scene_ch8pondfish(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
         #
@@ -442,7 +456,7 @@ class obj_scene_ch8pondeat(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
         #
@@ -451,7 +465,11 @@ class obj_scene_ch8pondeat(page.obj_chapterpage):
 
 class obj_scene_ch8pondreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8pondfish())
@@ -483,7 +501,11 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
 
 class obj_scene_ch8pondbye(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
     def setup(self):
@@ -548,7 +570,7 @@ class obj_scene_ch8mech(page.obj_chapterpage):
 
 class obj_scene_ch8mech2(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
+        share.scenemanager.switchscene(obj_scene_ch8mech())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8mech3())
     def setup(self):
@@ -571,7 +593,7 @@ class obj_scene_ch8mech2(page.obj_chapterpage):
 
 class obj_scene_ch8mech3(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
+        share.scenemanager.switchscene(obj_scene_ch8mech2())
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8mechfight())
@@ -602,7 +624,7 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
 
 class obj_scene_ch8mechfight(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
+        share.scenemanager.switchscene(obj_scene_ch8mechreplay())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8mechreplay())
     def triggernextpage(self,controls):
@@ -610,7 +632,7 @@ class obj_scene_ch8mechfight(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
         #
@@ -619,7 +641,11 @@ class obj_scene_ch8mechfight(page.obj_chapterpage):
 
 class obj_scene_ch8mechreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8mechfight())
@@ -649,7 +675,11 @@ class obj_scene_ch8mechreplay(page.obj_chapterpage):
 
 class obj_scene_ch8mechbye(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='mech'))
     def setup(self):
@@ -801,7 +831,7 @@ class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)
         #
@@ -818,7 +848,7 @@ class obj_scene_ch8weststomp(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
         #
@@ -827,7 +857,11 @@ class obj_scene_ch8weststomp(page.obj_chapterpage):
 
 class obj_scene_ch8westreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='castle'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('numchoice')=='1':
             share.scenemanager.switchscene(obj_scene_ch8westdodgebullets())
@@ -857,6 +891,10 @@ class obj_scene_ch8westreplay(page.obj_chapterpage):
 
 class obj_scene_ch8westbye(page.obj_chapterpage):
     def prevpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
         pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='castle'))
@@ -913,7 +951,11 @@ class obj_scene_ch8east(page.obj_chapterpage):
 
 class obj_scene_ch8eastreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_lyingstart())
@@ -947,7 +989,11 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
 
 class obj_scene_ch8eastbye(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
     def setup(self):
@@ -984,7 +1030,7 @@ class obj_scene_ch8north(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[]
+        self.text=[' ']
         self.world=world.obj_world_climbpeak(self)
         self.addpart(self.world)
         #
@@ -996,7 +1042,11 @@ class obj_scene_ch8north(page.obj_chapterpage):
 
 class obj_scene_ch8northtop(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='peak'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8north_rps())
@@ -1043,7 +1093,7 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)
         #
@@ -1052,7 +1102,11 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
 
 class obj_scene_ch8northreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='peak'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8north_rps())
@@ -1088,6 +1142,10 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
 
 class obj_scene_ch8northbye(page.obj_chapterpage):
     def prevpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
         pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='peak'))
@@ -1178,7 +1236,11 @@ class obj_scene_ch8southride(page.obj_chapterpage):
 
 class obj_scene_ch8southreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='beach'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8southride())
@@ -1213,6 +1275,10 @@ class obj_scene_ch8southreplay(page.obj_chapterpage):
 
 class obj_scene_ch8southbye(page.obj_chapterpage):
     def prevpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
         pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='beach'))
@@ -1292,7 +1358,7 @@ class obj_scene_ch8islandsneak(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-       self.text=[]
+       self.text=[' ']
        self.world=world.obj_world_bushstealth0(self)
        self.addpart(self.world)
        #
@@ -1312,7 +1378,7 @@ class obj_scene_ch8islandsneak1(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-       self.text=[]
+       self.text=[' ']
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
        #
@@ -1332,7 +1398,7 @@ class obj_scene_ch8islandsneak2(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-       self.text=[]
+       self.text=[' ']
        self.world=world.obj_world_bushstealth2(self)
        self.addpart(self.world)
        #
@@ -1352,7 +1418,7 @@ class obj_scene_ch8islandsneak3(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-       self.text=[]
+       self.text=[' ']
        self.world=world.obj_world_bushstealth3(self)
        self.addpart(self.world)
        #
@@ -1372,7 +1438,7 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-       self.text=[]
+       self.text=[' ']
        self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')
        self.addpart(self.world)
        #
@@ -1381,7 +1447,11 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
 
 class obj_scene_ch8islandreplay(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='beach'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
@@ -1420,7 +1490,11 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
 
 class obj_scene_ch8islandbye(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='beach'))
+        pass
+    def triggerprevpage(self,controls):
+        return False
+    def textboxprevpage(self):
+        pass
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='island'))
     def setup(self):

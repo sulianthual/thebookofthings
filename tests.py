@@ -73,6 +73,7 @@ class obj_scene_testmenu(page.obj_page):
         # page
         self.list.append(obj_scene_testpagefunctions())
         self.list.append(obj_scene_testpagebookmark())
+        self.list.append(obj_scene_testpagebacknext())
         self.list.append(obj_scene_testheadermaker())
         # text
         self.list.append(obj_scene_interactivetext())
@@ -283,6 +284,28 @@ class obj_scene_testpagebookmark(obj_testpage):
                    'Only certain pages are bookmarked. Test pages are not bookmarked (although they could be) ',\
                   'To bookmark a page, add a setbookmark in the setup(). ',\
                   'and add page to the listing in obj_bookmarkscene from menu.py ',\
+                   ]
+        # share.datamanager.setbookmark('ch0_drawpen')# this in a regular chapter page sets a bookmark
+
+
+# Scene: page bookmark
+class obj_scene_testpagebacknext(obj_testpage):
+    def prevpage(self):
+        pass
+    def triggerprevpage(self,controls):# this turns off the trigger from click
+        return False
+    def textboxprevpage(self):# this does show the [Back] textbox
+        pass
+    def pagename(self):
+        return 'Page [Back] [Next]'
+    def textboxplace(self):# This modifies the position of the textboxes
+        self.textboxprevpage_xy=(1050,660)
+        self.textboxnextpage_xy=(1230,660)
+    def setup(self):
+        self.text=['Page [Back] [Next]: by default all chapter pages have these clickable textboxes',\
+                   'Placement methods are  in page.py, obj_chapterpage (textboxplace, textboxprevpage, etc...). ',\
+                   'These textboxes try to go right after main text, but sometimes further adjustment are necessary ',\
+                   '\n (note: option domousebrowse has become permanent, must always remain =True) ',\
                    ]
         # share.datamanager.setbookmark('ch0_drawpen')# this in a regular chapter page sets a bookmark
 

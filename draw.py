@@ -260,6 +260,9 @@ class obj_drawing:
         # audio
         self.sounddrawstart=obj_sound('drawstart')
         self.sounddrawerase=obj_sound('drawerase')
+        # firstframe issues
+        self.updatedfirstframe=False# first frame was updated (needed for drawing click upon page transitions)
+        self.isdrawing=False# is drawing now
         #
     def clear(self):# clear self.sprite=first layer
         self.sprite.makeempty(self.rx,self.ry)
@@ -295,6 +298,8 @@ class obj_drawing:
         self.basedraw()
         self.display()
         if share.devmode: self.devtools()
+        if not self.updatedfirstframe:
+            self.updatedfirstframe=True
     def finish(self):
         # merge layers to sprite
         for i in self.layers:
@@ -311,8 +316,15 @@ class obj_drawing:
         self.sounddrawstart.finish()
         self.sounddrawerase.finish()
     def mousedraw(self,controls):
-        if controls.gm1 and tool.isinrect(controls.gmx,controls.gmy,self.rect):
+        if not self.isdrawing:
+            if controls.gm1 and controls.gm1c and self.updatedfirstframe:
+                self.isdrawing=True
+        else:
+            if not controls.gm1:
+                self.isdrawing=False
 
+        # if self.updatedfirstframe and controls.gm1 and tool.isinrect(controls.gmx,controls.gmy,self.rect):
+        if self.isdrawing and tool.isinrect(controls.gmx,controls.gmy,self.rect):
             sprite=self.layers[-1]# last sprite from layers
             xoff=int(self.x-sprite.getrx()+self.brush.getrx())
             yoff=int(self.y-sprite.getry()+self.brush.getry())

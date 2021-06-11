@@ -364,9 +364,6 @@ class obj_scene_ch5p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p11())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p15())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch5_writeelder')
         self.text=[\
@@ -578,9 +575,6 @@ class obj_scene_ch5p22(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p21())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p23())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch5_rps1')
         tempo='['+share.datamanager.controlname('arrows')+']'
@@ -600,12 +594,9 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p22())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p23a())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         self.text=[\
-               '"These are the healthbars, totally fair. If you loose a round, you loose a health. ',\
+               '"These are the healthbars. You loose a round, you loose a health. ',\
                   ]
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
@@ -625,9 +616,6 @@ class obj_scene_ch5p23a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p23())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p24())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         self.text=[' This is it, start when you are ready. ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
@@ -651,7 +639,7 @@ class obj_scene_ch5p24(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1)
         self.addpart(self.world)
         #
@@ -672,10 +660,9 @@ class obj_scene_ch5p25(page.obj_chapterpage):
                '"Oh, you lost, said ',('{eldername}',share.colors.elder),'. ',\
                'Better luck next time, hi hi hi. ',\
                'Do you want to play again". ',\
-               '\n\n Play again: ',\
                   ]
         y1=250
-        # self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
@@ -741,7 +728,7 @@ class obj_scene_ch5p26(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2)
         self.addpart(self.world)
         #
@@ -762,10 +749,9 @@ class obj_scene_ch5p27(page.obj_chapterpage):
                '"Oh noooo, you lost again, said ',('{eldername}',share.colors.elder),'. ',\
                'But you are getting better, hi hi hi. ',\
                'Do you want to play one last time". ',\
-               '\n\n Play again: ',\
                   ]
         y1=250
-        # self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
@@ -903,11 +889,10 @@ class obj_scene_ch5p29(page.obj_chapterpage):
                '"Well that was fun, said ',\
                ('{eldername}',share.colors.elder),'. ',\
                'But you gotta go now, goodbye!" ',\
-               '\n\n\n Play again: ',\
                   ]
         self.addpart( draw.obj_animation('ch5eldertalks3','elderbase',(640,360)) )
         y1=250
-        # self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
@@ -974,10 +959,9 @@ class obj_scene_ch5p30(page.obj_chapterpage):
                '"Oh I am really sorry, said ',('{eldername}',share.colors.elder),\
                ', but I dont have much time left for playing. ',\
                'Well its getting late, bye now!" ',\
-               '\n\n Play again: ',\
                   ]
         y1=250
-        # self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes!','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
@@ -1040,10 +1024,9 @@ class obj_scene_ch5p31(page.obj_chapterpage):
                '"You are starting to get on my nerves, said ',('{eldername}',share.colors.elder),'. ',\
                'It is near my bed time, so lets call it a day. ',\
                'Now scram! ". ',\
-               '\n\n Play again: ',\
                   ]
         y1=250
-        # self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. YEEEES!','yes',(340,y1))
         textchoice.addchoice('2. No','no',(540,y1))
@@ -1222,15 +1205,10 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p35())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p36())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch5_rps3')
-        tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
-                  'Epic Battle Time! ',\
-                  ('Press '+tempo+' when you are ready.',share.colors.instructions),\
+                  'Epic Battle Time! Start when you are ready. ',\
                    ]
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,tutorial=True)
         self.addpart(self.world)
@@ -1252,7 +1230,7 @@ class obj_scene_ch5p36(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        self.text=[' ']
+        self.text=['\n ']
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)
         #

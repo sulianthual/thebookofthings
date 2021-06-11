@@ -127,15 +127,13 @@ class obj_chapterpage(obj_page):
             self.textboxprevpage_xy=( 50,pagetext_y+90 )
             self.textboxnextpage_xy=( 230,pagetext_y+90 )
     def textboxprevpage(self):
-        if self.domousebrowse:
-            self.dotextboxprevpage=True
-            self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
-            self.addpart(self.textbox_prev)
+        self.dotextboxprevpage=True
+        self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
+        self.addpart(self.textbox_prev)
     def textboxnextpage(self):
-        if self.domousebrowse:
-            self.dotextboxnextpage=True
-            self.textbox_next=draw.obj_textbox('[next]',self.textboxnextpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xright=True)
-            self.addpart(self.textbox_next)
+        self.dotextboxnextpage=True
+        self.textbox_next=draw.obj_textbox('[next]',self.textboxnextpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xright=True)
+        self.addpart(self.textbox_next)
     #############
     def prepage(self,controls):# background
         super().prepage(controls)
@@ -144,15 +142,9 @@ class obj_chapterpage(obj_page):
         self.callexitpage(controls)
     # first level (may customize for pages, e.g. if minigame)
     def triggerprevpage(self,controls):
-        if self.domousebrowse:
-            return self.textbox_prev.isclicked(controls)
-        else:
-            return (controls.gb and controls.gbc)
+        return self.textbox_prev.isclicked(controls)
     def triggernextpage(self,controls):
-        if self.domousebrowse:
-            return self.textbox_next.isclicked(controls)
-        else:
-            return (controls.ga and controls.gac)
+        return self.textbox_next.isclicked(controls)
     def triggerexitpage(self,controls):
         return controls.gq and controls.gqc
     # second level (required in rare cases)
@@ -164,14 +156,12 @@ class obj_chapterpage(obj_page):
         return True and self.triggerexitpage(controls)
     # third level (dev)
     def triggerprevpage3(self,controls):
-        return self.triggerprevpage2(controls) or (share.devaccess and controls.gb and controls.gbc)
+        return self.triggerprevpage2(controls) or (share.devmode and controls.gb and controls.gbc)
     def triggernextpage3(self,controls):
-        return self.triggernextpage2(controls) or (share.devaccess and controls.ga and controls.gac)
+        return self.triggernextpage2(controls) or (share.devmode and controls.ga and controls.gac)
     def triggerexitpage3(self,controls):
         return self.triggerexitpage2(controls)
     #############################
-
-
     def callprevpage(self,controls):
         if self.triggerprevpage3(controls):
             self.preendpage()# template
