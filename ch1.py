@@ -77,7 +77,7 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         textchoice.addkey('hero_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -99,7 +99,7 @@ class obj_scene_ch1p2(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -121,7 +121,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
         drawing=draw.obj_drawing('happyface',(640,450),legend='draw a happy face',shadow=(200,200))
         self.addpart( drawing )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 class obj_scene_ch1p4(page.obj_chapterpage):
     def prevpage(self):
@@ -142,7 +142,7 @@ class obj_scene_ch1p4(page.obj_chapterpage):
         animation.addsound( "hero2", [170] )
         animation.addsound( "hero3", [132] )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -162,7 +162,7 @@ class obj_scene_ch1p5(page.obj_chapterpage):
         drawing=draw.obj_drawing('bed',(640,450),legend='draw a bed',shadow=(400,200))
         self.addpart( drawing )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -189,7 +189,7 @@ class obj_scene_ch1p6(page.obj_chapterpage):
         animation1.addsound( "wakeup_snore1", [14] )
         animation1.addsound( "wakeup_snore2", [134] )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -218,7 +218,7 @@ class obj_scene_ch1p7(page.obj_chapterpage):
         self.world=world.obj_world_wakeup(self,sun=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -239,7 +239,7 @@ class obj_scene_ch1p8(page.obj_chapterpage):
         animation.addsound( "hero2", [170] )
         animation.addsound( "hero3", [132] )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -260,7 +260,7 @@ class obj_scene_ch1p9(page.obj_chapterpage):
         self.addpart(draw.obj_drawing('hook',(240,450),legend='draw a hook',shadow=(200,200)))
         self.addpart(draw.obj_drawing('fish',(940,450),legend='draw a fish (facing left)',shadow=(300,200)))
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch1p10(page.obj_chapterpage):
@@ -280,7 +280,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch1p11(page.obj_chapterpage):
@@ -304,7 +304,7 @@ class obj_scene_ch1p11(page.obj_chapterpage):
         animation.addsound( "hero3", [193] )
         animation.addsound( "hero5", [82,240],skip=1 )
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 
@@ -331,7 +331,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
         self.world=world.obj_world_eatfish(self)# fishing mini-game
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch1p13(page.obj_chapterpage):
@@ -357,7 +357,7 @@ class obj_scene_ch1p13(page.obj_chapterpage):
         self.world=world.obj_world_gotobed(self,addmoon=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch1p14(page.obj_chapterpage):
@@ -379,7 +379,7 @@ class obj_scene_ch1p14(page.obj_chapterpage):
         self.addpart(draw.obj_drawing('sun',(300+50,450),legend='sun',shadow=(300,200)))
         self.addpart(draw.obj_drawing('moon',(1280-200-50,450),legend='moon',shadow=(200,200)))
         #
-        self.addpart( draw.obj_music('ch1') )
+        self.addpart( draw.obj_music('hero') )
 
 
 ##########################################################

@@ -44,20 +44,20 @@ class obj_quickscene():
             quickscene=obj_scene_settings()
 
             # quickscene=ch0.obj_scene_prologue()
-            quickscene=ch0.obj_scene_ch0p12()
+            # quickscene=ch0.obj_scene_ch0p12()
             # quickscene=ch1.obj_scene_ch1p12()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p6a()
             # quickscene=ch2.obj_scene_ch2play4()
-            # quickscene=ch3.obj_scene_ch3p24()
+            # quickscene=ch3.obj_scene_ch3p19()
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p11()
             # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p39()
-            # quickscene=ch6.obj_scene_ch6p27()
+            quickscene=ch6.obj_scene_ch6p2()
             # quickscene=ch6.obj_scene_ch6p39()
-            # quickscene=ch7.obj_scene_ch7p24()
+            # quickscene=ch7.obj_scene_ch7p19()
             # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
@@ -338,7 +338,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch5_eldercheatsecret' :
                 bookmarkscene=ch5.obj_scene_ch5p32()
             elif bookmarkname == 'ch5_rps3' :
-                bookmarkscene=ch5.obj_scene_ch5p35a()
+                bookmarkscene=ch5.obj_scene_ch5p36()
             elif bookmarkname == 'ch5_winrps3' :
                 bookmarkscene=ch5.obj_scene_ch5p37()
             elif bookmarkname == 'ch5_gohome' :
@@ -552,7 +552,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         # devtools
         if share.devaccess:
             self.addpart(draw.obj_textbox('developper mode is on (edit settings.txt to change)',(30,680),fontsize='smaller',xleft=True,color=share.colors.instructions))
-            self.sprite_quick=draw.obj_textbox('quickscene',(640,370),fontsize='small',color=share.colors.instructions,hover=True)
+            self.sprite_quick=draw.obj_textbox('quickscene [left]',(640,370),fontsize='small',color=share.colors.instructions,hover=True)
             self.addpart(self.sprite_quick)
             self.sprite_appendix=draw.obj_textbox('appendix',(640,430),fontsize='small',color=share.colors.instructions,hover=True)
             self.addpart(self.sprite_appendix)
@@ -593,7 +593,7 @@ class obj_scene_realtitlescreen(page.obj_page):
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
 
-            if self.sprite_quick.isclicked(controls):
+            if self.sprite_quick.isclicked(controls) or controls.gl and controls.glc:
                 self.sound_menugo.play()
                 self.gotoquickscene()
 

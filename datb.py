@@ -39,40 +39,41 @@ class obj_musics:
         # Use only ogg files!
         #
         # general
-        self.dict['error']=( 'general/error.wav' , 1 )
-        self.dict['tension']=( 'general/dungeon_ambient_1.ogg' , 1 )
-        self.dict['test']=( 'general/dungeon_ambient_1.ogg' , 0.2 )
+        self.dict['error']=( 'general/error.wav' , 1 )# when a music cant be found
+        self.dict['tension']=( 'general/dungeon_ambient_1.ogg' , 1 )# tense silence
+        self.dict['test']=self.dict['tension']
+        # upbeat musics
         # ch0
-        self.dict['piano']=( 'ch0/POL-you-and-me-short.ogg' , 0.2 )
+        self.dict['piano']=( 'ch0/POL-you-and-me-short.ogg' , 0.2 )# main theme (soft piano)
         # ch1
-        self.dict['ch1']=( 'ch1/POL-blob-tales-short.ogg' , 0.2 )
+        self.dict['hero']=( 'ch1/POL-blob-tales-short.ogg' , 0.2 )# draw the hero (energetic fun)
         # ch2
-        self.dict['ch2']=( 'ch2/POL-pet-park-short.ogg' , 0.2 )
+        self.dict['partner']=( 'ch2/POL-pet-park-short.ogg' , 0.2 )# partner music (cute)
         # ch3
-        self.dict['ch3']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )
-        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )# replace with villain
-        self.dict['fight1']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )# dodge bullets
-        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.ogg' , 0.2 )
-        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.ogg' , 0.2 )
+        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )# villain music (evil)
+        self.dict['gunfight']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )
+        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.ogg' , 0.2 )# castle music (technologic)
+        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.ogg' , 0.2 )# bug (tense)
         # ch4
-        self.dict['ch4']=( 'ch4/POL-azure-waters-short.ogg' , 0.2 )
-        self.dict['ch4play']=( 'ch4/POL-chubby-cat-short.ogg' , 0.2 )# lying game
+        self.dict['ch4']=( 'ch4/POL-azure-waters-short.ogg' , 0.2 )# start day (energetic cute)
+        self.dict['bunny']=( 'ch4/POL-mutant-jackrabbit-short.ogg' , 0.2 )
         # ch5
-        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.ogg' , 0.2 )
-        self.dict['ch5play']=( 'ch5/POL-find-the-exit-short.ogg' , 0.2 )# rps game
-        self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )
+        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.ogg' , 0.2 )# start the day (energetic)
+        self.dict['elder']=( 'ch5/POL-find-the-exit-short.ogg' , 0.2 )# elder music (for rps game)
+        self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )# winds on top of highest peak
         # ch6
-        self.dict['ch6']=( 'ch6/POL-jazzy-duck-short.ogg' , 0.2 )# could use for ch7 instead
-        self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )
-        self.dict['ch6play']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game
-        self.dict['race1']=( 'ch6/POL-tlalok-temple-short.ogg' , 0.2 )# ride cow game
+        self.dict['ch6']=self.dict['ch5']
+        self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )# sailor music (jungle jazz)
+        self.dict['stealth']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game (epiiiic)
+        self.dict['racing']=( 'ch6/POL-tlalok-temple-short.ogg' , 0.2 )# racing game (energetic)
         # ch7
-        self.dict['ch7']=( 'ch7/POL-galactic-trek-short.ogg' , 0.2 )
-        self.dict['fight2']=( 'ch7/POL-power-battle-short.ogg' , 0.2 )# stomp
-        self.dict['win']=( 'ch7/POL-gold-gryphons-short.ogg' , 0.2 )
-        self.dict['fight3']=( 'ch7/POL-underground-army-short.ogg' , 0.2 )# mech start
-        self.dict['fight4']=( 'ch7/POL-time-attack-short.ogg' , 0.2 )# mech fight
+        self.dict['ch7']=( 'ch7/POL-galactic-trek-short.ogg' , 0.2 )# start the last day (very energetic)
+        self.dict['fistfight']=( 'ch7/POL-time-attack-short.ogg' , 0.2 )
+        self.dict['mechs']=( 'ch7/POL-underground-army-short.ogg' , 0.2 )# mech transformations (technologic energetic)
+        self.dict['mechfight']=self.dict['fistfight']
+        self.dict['victory']=( 'ch7/POL-gold-gryphons-short.ogg' , 0.2 )# final victory (epic positive)
         # ch8
+        # (reuses all musics)
 
 
 

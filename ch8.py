@@ -284,7 +284,7 @@ class obj_scene_ch8atpartner(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'partner1','partner2','partner3') )
         animation1.addsound( "partner1", [54],skip=1 )
         #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('partner') )
 
 
 class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
@@ -301,7 +301,7 @@ class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
         self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('partner') )
 
 
 class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):
@@ -321,7 +321,7 @@ class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):
         self.world=world.obj_world_kiss(self,noending=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('partner') )
 
 
 class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
@@ -360,7 +360,7 @@ class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
         animation1.addsound( "partner1", [50] )
         animation1.addsound( "partner2", [110],skip=1 )
         #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('partner') )
 
 
 class obj_scene_ch8atpartnerbye(page.obj_chapterpage):
@@ -389,7 +389,7 @@ class obj_scene_ch8atpartnerbye(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'partner1','partner2','partner3') )
         animation1.addsound( "partner3", [51],skip=1 )
         #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('partner') )
 
 
 ###########
@@ -566,7 +566,7 @@ class obj_scene_ch8mech(page.obj_chapterpage):
         animation8.addsound( "mech_transform2", [170],skip=1 )
         # animation8.addsound( "villain2", [270],skip=1 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 class obj_scene_ch8mech2(page.obj_chapterpage):
     def prevpage(self):
@@ -588,7 +588,7 @@ class obj_scene_ch8mech2(page.obj_chapterpage):
         animation1.addsound( "mech_transform2", [101] )
         animation1.addsound( "hero5", [201],skip=1 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch8mech3(page.obj_chapterpage):
@@ -619,7 +619,7 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
         animation1.addsound( "villain2", [150] )
         animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch8mechfight(page.obj_chapterpage):
@@ -636,7 +636,7 @@ class obj_scene_ch8mechfight(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight4') )
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch8mechreplay(page.obj_chapterpage):
@@ -670,7 +670,7 @@ class obj_scene_ch8mechreplay(page.obj_chapterpage):
         animation1.addsound( "villain2", [150] )
         animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch8mechbye(page.obj_chapterpage):
@@ -696,7 +696,7 @@ class obj_scene_ch8mechbye(page.obj_chapterpage):
         animation1.addsound( "villain4", [150] )
         animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 ###########
@@ -835,7 +835,7 @@ class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight1') )
+        self.addpart( draw.obj_music('gunfight') )
 
 
 class obj_scene_ch8weststomp(page.obj_chapterpage):
@@ -852,7 +852,7 @@ class obj_scene_ch8weststomp(page.obj_chapterpage):
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight2') )
+        self.addpart( draw.obj_music('fistfight') )
 
 
 class obj_scene_ch8westreplay(page.obj_chapterpage):
@@ -946,7 +946,7 @@ class obj_scene_ch8east(page.obj_chapterpage):
         animation1.addsound( "bunny2", [128] )
         animation1.addsound( "bunny4", [43],skip=1 )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_ch8eastreplay(page.obj_chapterpage):
@@ -984,7 +984,7 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         animation1.addsound( "bunny5", [128] )
         animation1.addsound( "bunny4", [43] )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_ch8eastbye(page.obj_chapterpage):
@@ -1016,7 +1016,7 @@ class obj_scene_ch8eastbye(page.obj_chapterpage):
         animation1.addsound( "bunny2", [128] )
         animation1.addsound( "bunny3", [43],skip=1 )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 ###########
 # north peak
@@ -1080,7 +1080,7 @@ class obj_scene_ch8northtop(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
         animation1.addsound( "elder1", [111],skip=1 )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch8north_rps(page.obj_chapterpage):
@@ -1097,7 +1097,7 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch8northreplay(page.obj_chapterpage):
@@ -1137,7 +1137,7 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
         animation1.addsound( "elder5", [36] )
         animation1.addsound( "elder4", [200], skip=1 )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch8northbye(page.obj_chapterpage):
@@ -1169,7 +1169,7 @@ class obj_scene_ch8northbye(page.obj_chapterpage):
         animation1.addsound( "elder2", [200], skip=1 )
         animation1.addsound( "elder3", [36] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 ###########
@@ -1231,7 +1231,7 @@ class obj_scene_ch8southride(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch8southreplay(page.obj_chapterpage):
@@ -1342,7 +1342,7 @@ class obj_scene_ch8island(page.obj_chapterpage):
         animation1.addsound( "hero1", [15] )
         animation1.addsound( "hero3", [50],skip=1 )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandsneak(page.obj_chapterpage):
@@ -1362,7 +1362,7 @@ class obj_scene_ch8islandsneak(page.obj_chapterpage):
        self.world=world.obj_world_bushstealth0(self)
        self.addpart(self.world)
        #
-       self.addpart( draw.obj_music('ch6play') )
+       self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandsneak1(page.obj_chapterpage):
@@ -1382,7 +1382,7 @@ class obj_scene_ch8islandsneak1(page.obj_chapterpage):
        self.world=world.obj_world_bushstealth(self)
        self.addpart(self.world)
        #
-       self.addpart( draw.obj_music('ch6play') )
+       self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandsneak2(page.obj_chapterpage):
@@ -1402,7 +1402,7 @@ class obj_scene_ch8islandsneak2(page.obj_chapterpage):
        self.world=world.obj_world_bushstealth2(self)
        self.addpart(self.world)
        #
-       self.addpart( draw.obj_music('ch6play') )
+       self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandsneak3(page.obj_chapterpage):
@@ -1422,7 +1422,7 @@ class obj_scene_ch8islandsneak3(page.obj_chapterpage):
        self.world=world.obj_world_bushstealth3(self)
        self.addpart(self.world)
        #
-       self.addpart( draw.obj_music('ch6play') )
+       self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandsneak4(page.obj_chapterpage):
@@ -1442,7 +1442,7 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
        self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')
        self.addpart(self.world)
        #
-       self.addpart( draw.obj_music('ch6play') )
+       self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandreplay(page.obj_chapterpage):
@@ -1485,7 +1485,7 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
         animation1.addsound( "hero3", [15] )
         animation1.addsound( "hero5", [80],skip=1 )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch8islandbye(page.obj_chapterpage):
@@ -1525,7 +1525,7 @@ class obj_scene_ch8islandbye(page.obj_chapterpage):
         animation1.addsound( "hero1", [30] )
         animation1.addsound( "hero2", [100],skip=1 )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 #################################################################
 #################################################################
@@ -1560,7 +1560,7 @@ class obj_scene_lyingstart(page.obj_chapterpage):
         animation1.addsound( "bunny2", [128] )
         animation1.addsound( "bunny3", [43],skip=1 )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 # exit point
 class obj_scene_lyingend(page.obj_chapterpage):
@@ -1608,7 +1608,7 @@ class obj_scene_lyingend(page.obj_chapterpage):
         animation1.addsound( "bunny5", [128] )
         animation1.addsound( "bunny4", [43] )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 
@@ -1656,7 +1656,7 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_lyingp1q1(page.obj_chapterpage):
@@ -1701,7 +1701,7 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_lyingp1q2(obj_scene_lyingp1q1):# child of lying 1
@@ -1743,7 +1743,7 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_lyingpart1win(page.obj_chapterpage):
@@ -1778,7 +1778,7 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
         animation1.addsound( "bunny4", [128] )
         animation1.addsound( "bunny3", [43] )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 ##########################
@@ -1815,7 +1815,7 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_lyingp2q1(obj_scene_lyingp1q1):# child of lying 1
@@ -1865,7 +1865,7 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_lyingpart2win(page.obj_chapterpage):
@@ -1904,7 +1904,7 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
         animation1.addsound( "bunny4", [43,128] )
         # animation1.addsound( "bunny3", [43],skip=1 )
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 ##########################
@@ -1943,7 +1943,7 @@ class obj_scene_lyingpart3(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
@@ -2011,7 +2011,7 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch4play') )
+        self.addpart( draw.obj_music('bunny') )
 
 #################################################################
 #################################################################

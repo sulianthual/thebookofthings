@@ -787,7 +787,7 @@ class obj_scene_ch6p28(page.obj_chapterpage):
         animation1.addsound( "sailor4", [114] )
         animation1.addsound( "sailor5", [36] )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p29(page.obj_chapterpage):
@@ -826,7 +826,7 @@ class obj_scene_ch6p29(page.obj_chapterpage):
         animation1.addsound( "stealth_bush2", [384] )
         animation1.addsound( "stealth_bush3", [321, 461] )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p30(page.obj_chapterpage):
@@ -842,18 +842,18 @@ class obj_scene_ch6p30(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-       self.text=['"You are doing great, said ',\
+        self.text=['"You are doing great, said ',\
                    ('{sailorname}',share.colors.sailor),' on the radio. ',\
                    'Keep moving right." ',\
                    ]
-       self.world=world.obj_world_bushstealth0(self)
-       self.addpart(self.world)
-       #
-       self.sound=draw.obj_sound('sailor_radio')
-       self.addpart(self.sound)
-       self.sound.play()
-       #
-       self.addpart( draw.obj_music('ch6play') )
+        self.world=world.obj_world_bushstealth0(self)
+        self.addpart(self.world)
+        #
+        self.sound=draw.obj_sound('sailor_radio')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p30a(page.obj_chapterpage):
@@ -880,7 +880,7 @@ class obj_scene_ch6p30a(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 
@@ -902,7 +902,7 @@ class obj_scene_ch6p31(page.obj_chapterpage):
         self.world=world.obj_world_bushstealth2(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 
@@ -926,7 +926,7 @@ class obj_scene_ch6p32(page.obj_chapterpage):
         self.world=world.obj_world_bushstealth3(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p33(page.obj_chapterpage):
@@ -947,7 +947,7 @@ class obj_scene_ch6p33(page.obj_chapterpage):
         self.world=world.obj_world_bushstealth4(self,winsound='stealth_win')# modified win sound
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p34(page.obj_chapterpage):
@@ -971,7 +971,7 @@ class obj_scene_ch6p34(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
         #
 
 
@@ -1005,7 +1005,7 @@ class obj_scene_ch6p35(page.obj_chapterpage):
         self.addpart( draw.obj_soundplacer(animation1,'cow') )
         animation1.addsound( "cow", [50] )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p36(page.obj_chapterpage):
@@ -1037,7 +1037,7 @@ class obj_scene_ch6p36(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'skeleton1','skeleton2','skeleton3','skeleton4','skeleton5','cow') )
         animation1.addsound( "stealth_alarm", [5] )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p37(page.obj_chapterpage):
@@ -1075,7 +1075,7 @@ class obj_scene_ch6p37(page.obj_chapterpage):
         animation2.addsound( "cow", [80])
         animation2.addsound( "skeleton2", [1,6,11,16], skip=3 )
         #
-        self.addpart( draw.obj_music('ch6play') )
+        self.addpart( draw.obj_music('stealth') )
 
 
 class obj_scene_ch6p38(page.obj_chapterpage):
@@ -1098,7 +1098,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         #
         self.addpart( draw.obj_image('show1',(760,540),fliph=False,flipv=False,path='premade') )
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch6p38a(page.obj_chapterpage):
@@ -1120,7 +1120,7 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         #
         self.addpart( draw.obj_image('show3',(460,160),scale=1,fliph=False,flipv=True,path='premade') )
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch6p38b(page.obj_chapterpage):
@@ -1139,7 +1139,7 @@ class obj_scene_ch6p38b(page.obj_chapterpage):
         # self.addpart( draw.obj_image('show3',(418,300),path='premade') )
         self.addpart( draw.obj_image('show1',(970,520),fliph=True,flipv=False,path='premade') )
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch6p38c(page.obj_chapterpage):
@@ -1153,7 +1153,7 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch6p39(page.obj_chapterpage):
@@ -1181,7 +1181,7 @@ class obj_scene_ch6p39(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch6p39death(page.obj_chapterpage):
@@ -1232,7 +1232,7 @@ class obj_scene_ch6p40(page.obj_chapterpage):
         animation1.addsound( "sailor4", [1] )
         animation1.addsound( "cow", [40],skip=1 )
         #
-        self.addpart( draw.obj_music('race1') )
+        self.addpart( draw.obj_music('racing') )
 
 
 

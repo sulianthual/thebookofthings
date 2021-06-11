@@ -464,7 +464,7 @@ class obj_scene_ch5p17(page.obj_chapterpage):
         animation1.addsound( "elder1", [16] )
         animation1.addsound( "elder2", [110],skip=1 )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p18(page.obj_chapterpage):
@@ -495,7 +495,7 @@ class obj_scene_ch5p18(page.obj_chapterpage):
         animation1.addsound( "elder2", [200], skip=1 )
         animation1.addsound( "elder3", [36] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p19(page.obj_chapterpage):
@@ -518,7 +518,7 @@ class obj_scene_ch5p19(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(1172,376),scale=0.5,fliph=True) )
         self.addpart( draw.obj_image('interrogationmark',(1214,167),scale=1.2,path='premade') )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p20(page.obj_chapterpage):
@@ -547,7 +547,7 @@ class obj_scene_ch5p20(page.obj_chapterpage):
         animation1.addsound( "elder1", [22] )
         animation1.addsound( "elder3", [67],skip=1 )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p21(page.obj_chapterpage):
@@ -567,7 +567,7 @@ class obj_scene_ch5p21(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('paper',(640,450),legend='piece of paper',shadow=(200,200),brush=share.brushes.pen) )
         self.addpart( draw.obj_drawing('scissors',(1280-200-20,450),legend='pair of scissors',shadow=(200,200),brush=share.brushes.pen) )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p22(page.obj_chapterpage):
@@ -585,7 +585,7 @@ class obj_scene_ch5p22(page.obj_chapterpage):
         self.addpart(self.world)
         self.addpart( draw.obj_image('show3',(418,300),path='premade') )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 
@@ -607,7 +607,7 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 
@@ -643,7 +643,7 @@ class obj_scene_ch5p24(page.obj_chapterpage):
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p25(page.obj_chapterpage):
@@ -732,7 +732,7 @@ class obj_scene_ch5p26(page.obj_chapterpage):
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p27(page.obj_chapterpage):
@@ -837,7 +837,7 @@ class obj_scene_ch5p28(page.obj_chapterpage):
         animation1.addsound( "elder4", [190,406] )
         animation1.addsound( "elder5", [76] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p28a(page.obj_chapterpage):
@@ -872,7 +872,7 @@ class obj_scene_ch5p28a(page.obj_chapterpage):
         animation1.addsound( "elder4", [190,406] )
         animation1.addsound( "elder5", [76] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 
@@ -1109,7 +1109,7 @@ class obj_scene_ch5p32(page.obj_chapterpage):
         animation1.addsound( "elder4", [190,406] )
         animation1.addsound( "elder5", [76] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p33(page.obj_chapterpage):
@@ -1134,7 +1134,7 @@ class obj_scene_ch5p33(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( draw.obj_image('show3',(640+220,246+70),path='premade',fliph=True) )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p34(page.obj_chapterpage):
@@ -1163,7 +1163,7 @@ class obj_scene_ch5p34(page.obj_chapterpage):
         animation1.addsound( "elder5", [36] )
         animation1.addsound( "elder4", [200], skip=1 )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p35(page.obj_chapterpage):
@@ -1206,7 +1206,6 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p36())
     def setup(self):
-        share.datamanager.setbookmark('ch5_rps3')
         self.text=[\
                   'Epic Battle Time! Start when you are ready. ',\
                    ]
@@ -1230,11 +1229,12 @@ class obj_scene_ch5p36(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
+        share.datamanager.setbookmark('ch5_rps3')
         self.text=['\n ']
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p36fail(page.obj_chapterpage):
@@ -1265,7 +1265,7 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
         animation1.addsound( "elder5", [115] )
         animation1.addsound( "elder6", [9] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p37(page.obj_chapterpage):
@@ -1301,7 +1301,7 @@ class obj_scene_ch5p37(page.obj_chapterpage):
         animation1.addsound( "elder2", [200], skip=1 )
         animation1.addsound( "elder3", [36] )
         #
-        self.addpart( draw.obj_music('ch5play') )
+        self.addpart( draw.obj_music('elder') )
 
 
 class obj_scene_ch5p38(page.obj_chapterpage):

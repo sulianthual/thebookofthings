@@ -851,7 +851,7 @@ class obj_scene_ch7p22(page.obj_chapterpage):
         self.world=world.obj_world_dodgegunshots(self,incastle=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight1') )
+        self.addpart( draw.obj_music('gunfight') )
 
 
 class obj_scene_ch7p22death(page.obj_chapterpage):
@@ -915,7 +915,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight2') )
+        self.addpart( draw.obj_music('fistfight') )
 
 
 class obj_scene_ch7p24a(page.obj_chapterpage):
@@ -938,7 +938,7 @@ class obj_scene_ch7p24a(page.obj_chapterpage):
         #
         self.addpart(draw.obj_image('show1',(1130,360),path='premade',flipv=True))
         #
-        self.addpart( draw.obj_music('fight2') )
+        self.addpart( draw.obj_music('fistfight') )
 
 
 class obj_scene_ch7p24b(page.obj_chapterpage):
@@ -954,7 +954,7 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight2') )
+        self.addpart( draw.obj_music('fistfight') )
 
 
 class obj_scene_ch7p25(page.obj_chapterpage):
@@ -975,7 +975,7 @@ class obj_scene_ch7p25(page.obj_chapterpage):
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight2') )
+        self.addpart( draw.obj_music('fistfight') )
 
 
 class obj_scene_ch7p25death(page.obj_chapterpage):
@@ -1020,7 +1020,7 @@ class obj_scene_ch7p26(page.obj_chapterpage):
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_herowins3','villainbase',(640,360),record=False,sync=animation1) )
         #
-        self.addpart( draw.obj_music('win') )
+        self.addpart( draw.obj_music('victory') )
 
 class obj_scene_ch7p27(page.obj_chapterpage):
     def prevpage(self):
@@ -1050,7 +1050,7 @@ class obj_scene_ch7p27(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('win') )
+        self.addpart( draw.obj_music('victory') )
 
 
 class obj_scene_ch7p27a(page.obj_chapterpage):
@@ -1080,7 +1080,7 @@ class obj_scene_ch7p27a(page.obj_chapterpage):
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116])
         #
-        self.addpart( draw.obj_music('win') )
+        self.addpart( draw.obj_music('victory') )
 
 
 class obj_scene_ch7p28(page.obj_chapterpage):
@@ -1122,7 +1122,7 @@ class obj_scene_ch7p28(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('win') )
+        self.addpart( draw.obj_music('victory') )
 
 
 class obj_scene_ch7p29(page.obj_chapterpage):
@@ -1153,7 +1153,7 @@ class obj_scene_ch7p29(page.obj_chapterpage):
         animation1.addsound( "book2", [170] )
         animation1.addsound( "book3", [155],skip=1 )
         #
-        self.addpart( draw.obj_music('win') )
+        self.addpart( draw.obj_music('victory') )
 
 
 class obj_scene_ch7p30(page.obj_chapterpage):
@@ -1472,7 +1472,7 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         animation8.addsound( "mech_transform1", [70] )
         animation8.addsound( "mech_transform2", [170],skip=1 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p42(page.obj_chapterpage):
@@ -1505,7 +1505,7 @@ class obj_scene_ch7p42(page.obj_chapterpage):
         animation1.addsound( "mech_transform2", [101] )
         animation1.addsound( "villain4", [201],skip=1 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p43(page.obj_chapterpage):
@@ -1532,7 +1532,7 @@ class obj_scene_ch7p43(page.obj_chapterpage):
         animation1.addsound( "villain2", [150] )
         animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p44(page.obj_chapterpage):
@@ -1575,7 +1575,7 @@ class obj_scene_ch7p44(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p45(page.obj_chapterpage):
@@ -1618,7 +1618,7 @@ class obj_scene_ch7p45(page.obj_chapterpage):
         animation8.addsound( "mech_transform2", [170],skip=1 )
         # animation8.addsound( "villain2", [270],skip=1 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p46(page.obj_chapterpage):
@@ -1643,7 +1643,7 @@ class obj_scene_ch7p46(page.obj_chapterpage):
         animation1.addsound( "mech_transform2", [101] )
         animation1.addsound( "hero5", [201],skip=1 )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p47(page.obj_chapterpage):
@@ -1669,7 +1669,7 @@ class obj_scene_ch7p47(page.obj_chapterpage):
         animation1.addsound( "villain2", [150] )
         animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
-        self.addpart( draw.obj_music('fight3') )
+        self.addpart( draw.obj_music('mechs') )
 
 
 class obj_scene_ch7p48(page.obj_chapterpage):
@@ -1688,7 +1688,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight4') )
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch7p48a(page.obj_chapterpage):
@@ -1710,7 +1710,7 @@ class obj_scene_ch7p48a(page.obj_chapterpage):
         #
         self.addpart(draw.obj_image('show3',(850,270),scale=1,path='premade'))
         #
-        self.addpart( draw.obj_music('fight4') )
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch7p48b(page.obj_chapterpage):
@@ -1733,7 +1733,7 @@ class obj_scene_ch7p48b(page.obj_chapterpage):
         #
         self.addpart(draw.obj_image('show1',(640,300),scale=1,fliph=True,flipv=True,path='premade'))
         #
-        self.addpart( draw.obj_music('fight4') )
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch7p48c(page.obj_chapterpage):
@@ -1749,7 +1749,7 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight4') )
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch7p49(page.obj_chapterpage):
@@ -1770,7 +1770,7 @@ class obj_scene_ch7p49(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('fight4') )
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch7p49death(page.obj_chapterpage):
