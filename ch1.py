@@ -55,9 +55,6 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch1p2())
     def soundnextpage(self):
         pass# no sound
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
     def setup(self):
         share.datamanager.setbookmark('ch1_writehero')
         self.text=[\

@@ -44,7 +44,7 @@ class obj_quickscene():
             quickscene=obj_scene_settings()
 
             # quickscene=ch0.obj_scene_prologue()
-            quickscene=ch0.obj_scene_ch0p13()
+            quickscene=ch0.obj_scene_ch0p12()
             # quickscene=ch1.obj_scene_ch1p12()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p6a()
@@ -107,11 +107,9 @@ class obj_gotobookmark():
         self.dict={}# dictionary list of bookmarks and associated text
         self.chaptertext=''# associated text depending on chapter
     def __call__(self,chapter=None,launch=True,bookmark=None):
-        # bookmark (if none specified take last saved one from datb)
-        if bookmark is None:
-            bookmarkname=share.datamanager.getbookmark()
-        else:
-            bookmarkname=bookmark
+        # bookmark (if none specified we just use a default scene)
+        bookmarkname=bookmark
+        # if launch=False, we are not accessing scene, just making the dict and chaptertext data
         # bookmarked scene to launch (if none found doesnt launch)
         bookmarkscene=None
         # dictionary of scene comments (to make inventories for browsing without launching)
@@ -121,12 +119,12 @@ class obj_gotobookmark():
         #
         # ch0
             self.chaptertext='Prologue: The Book of Things'
-            self.dict['ch0_start']='Start Prologue'
-            self.dict['ch0_drawpen']='Draw the pen'
-            self.dict['ch0_draweraser']='Draw the eraser'
-            self.dict['ch0_drawbook']='Draw the book'
-            self.dict['ch0_meetbook']='Enter Profile name'
-            self.dict['ch0_drawpointer']='Draw the pointer'
+            self.dict['ch0_start']='start prologue'
+            self.dict['ch0_drawpen']='draw the pen'
+            self.dict['ch0_draweraser']='draw the eraser'
+            self.dict['ch0_drawbook']='draw the book'
+            self.dict['ch0_meetbook']='enter profile name'
+            self.dict['ch0_drawpointer']='draw the pointer'
             # self.dict['ch0_endunlock']='Prologue End'
             if bookmarkname == 'ch0_start':# also default in datb.py if book is empty
                 bookmarkscene=ch0.obj_scene_prologue()
@@ -149,7 +147,15 @@ class obj_gotobookmark():
             #
             # ch1
             self.chaptertext='Chapter I: The Hero'
-            self.dict['ch1_start']='Start Chapter'
+            self.dict['ch1_start']='start chapter'
+            self.dict['ch1_writehero']='draw and name the hero'
+            # self.dict['ch1_drawhero']='draw the hero'
+            self.dict['ch1_drawbed']='draw the bed'
+            self.dict['ch1_drawfish']='draw the fish and hook'
+            # self.dict['ch1_gotfish']='caugth a fish'
+            self.dict['ch1_drawsun']='draw the sun and moon'
+            self.dict['ch1_startplay']='replay the story'
+            # self.dict['ch1_endunlock']='Chapter End'
             if bookmarkname == 'ch1_start':
                 bookmarkscene=ch1.obj_scene_chapter1()
             elif bookmarkname == 'ch1_writehero':
@@ -174,7 +180,15 @@ class obj_gotobookmark():
             #
             # ch2
             self.chaptertext='Chapter II: Home Sweet Home'
-            self.dict['ch2_start']='Start Chapter'
+            self.dict['ch2_start']='start chapter'
+            self.dict['ch2_drawlove']='draw the love heart'
+            self.dict['ch2_writepartner']='draw and name the partner'
+            self.dict['ch2_drawmail']='draw the mailbox and mail letter'
+            self.dict['ch2_drawmusic']='draw the saxophone and music notes'
+            self.dict['ch2_drawhouse']='draw the house and pond'
+            self.dict['ch2_drawbush']='draw the bush and flower'
+            self.dict['ch2_startplay']='replay the story'
+            # self.dict['ch2_endunlock']='Chapter End'
             if bookmarkname == 'ch2_start':
                 bookmarkscene=ch2.obj_scene_chapter2()
             elif bookmarkname == 'ch2_drawlove':
@@ -199,7 +213,18 @@ class obj_gotobookmark():
             #
             # ch3
             self.chaptertext='Chapter III: Where are you'
-            self.dict['ch3_start']='Start Chapter'
+            self.dict['ch3_start']='start chapter'
+            self.dict['ch3_writevillain']='draw and name the villain'
+            # self.dict['ch3_startstory']='start the day'
+            # self.dict['ch3_checkmail']='read the mail'
+            self.dict['ch3_drawmountain']='draw the castle and mountain'
+            self.dict['ch3_drawgun']='draw the gun and bullet'
+            self.dict['ch3_startdodge']='fight the villain'
+            self.dict['ch3_windodge']='enter the password'
+            self.dict['ch3_gohome']='back at home'
+            self.dict['ch3_startbug']='name and draw the bug'
+            # self.dict['ch3_endbug']='go to sleep'
+            # self.dict['ch3_endunlock']='Chapter End'
             if bookmarkname == 'ch3_start':
                 bookmarkscene=ch3.obj_scene_chapter3()
             elif bookmarkname == 'ch3_writevillain':
@@ -213,13 +238,13 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch3_drawgun' :
                 bookmarkscene=ch3.obj_scene_ch3p15()
             elif bookmarkname == 'ch3_startdodge' :
-                bookmarkscene=ch3.obj_scene_ch3p16()
+                bookmarkscene=ch3.obj_scene_ch3p19()
             elif bookmarkname == 'ch3_windodge' :
                 bookmarkscene=ch3.obj_scene_ch3p20()
             elif bookmarkname == 'ch3_gohome' :
                 bookmarkscene=ch3.obj_scene_ch3p25a()
             elif bookmarkname == 'ch3_startbug' :
-                bookmarkscene=ch3.obj_scene_ch3p31()
+                bookmarkscene=ch3.obj_scene_ch3p32()
             elif bookmarkname == 'ch3_endbug' :
                 bookmarkscene=ch3.obj_scene_ch3p39a()
             elif bookmarkname == 'ch3_endunlock':
@@ -230,7 +255,18 @@ class obj_gotobookmark():
             #
             # ch4
             self.chaptertext='Chapter IV Something East'
-            self.dict['ch4_start']='Start Chapter'
+            self.dict['ch4_start']='start chapter'
+            self.dict['ch4_drawalarm']='draw the night stand and alarm clock'
+            # self.dict['ch4_startstory']='start the day'
+            # self.dict['ch4_checkmail']='read the mail'
+            self.dict['ch4_drawcave']='draw the cave and tree'
+            self.dict['ch4_writebunny']='draw and name the bunny'
+            self.dict['ch4_startlying']='play the lying game'
+            # self.dict['ch4_winlying1']='lying game round 2'
+            # self.dict['ch4_winlying2']='lying game round 3'
+            # self.dict['ch4_winlying3']='back at home'
+            self.dict['ch4_gohome']='back at home'
+            # self.dict['ch4_endunlock']='Chapter End'
             if bookmarkname == 'ch4_start':
                 bookmarkscene=ch4.obj_scene_chapter4()
             elif bookmarkname == 'ch4_drawalarm' :
@@ -261,7 +297,22 @@ class obj_gotobookmark():
             #
             # ch5
             self.chaptertext='Chapter V: Higher and Higher'
-            self.dict['ch5_start']='Start Chapter'
+            self.dict['ch5_start']='start chapter'
+            # self.dict['ch5_startstory']='start the day'
+            # self.dict['ch5_checkmail']='read the mail'
+            self.dict['ch5_drawcloud']='draw the cloud and lightning bolt'
+            # self.dict['ch5_climb']='climb the peak'
+            self.dict['ch5_writeelder']='draw and name the elder'
+            self.dict['ch5_drawrock']='draw rock paper scissors'
+            # self.dict['ch5_rps1']='learn rock paper scissors'
+            # self.dict['ch5_lostrps1']='loose'
+            # self.dict['ch5_lostrps2']='loose again'
+            # self.dict['ch5_strongwilled']='what a strong willed character'
+            # self.dict['ch5_eldercheatsecret']='how to cheat'
+            self.dict['ch5_rps3']='play rock paper scissors'
+            # self.dict['ch5_winrps3']='win rock paper scissors'
+            self.dict['ch5_gohome']='back at home'
+            # self.dict['ch5_endunlock']='Chapter End'
             if bookmarkname == 'ch5_start':
                 bookmarkscene=ch5.obj_scene_chapter5()
             elif bookmarkname == 'ch5_startstory':
@@ -300,7 +351,26 @@ class obj_gotobookmark():
             #
             # ch6
             self.chaptertext='Chapter VI: Treasure Hunt'
-            self.dict['ch6_start']='Start Chapter'
+            self.dict['ch6_start']='start chapter'
+            # self.dict['ch6_startstory']='start the day'
+            # self.dict['ch6_checkmail']='read the mail'
+            self.dict['ch6_drawwave']='draw the palm tree and wave'
+            self.dict['ch6_writesailor']='draw and name the sailor'
+            # self.dict['ch6_getlogs']='get some wood'
+            self.dict['ch6_drawship']='draw the ship and skeletons'
+            # self.dict['ch6_drawskull']='draw the skeletons'
+            # self.dict['ch6_startskullisland']='arrive at skull island'
+            self.dict['ch6_startsneak']='play the sneaking game'
+            # self.dict['ch6_sneak1']='sneak game round 1'
+            # self.dict['ch6_sneak2']='sneak game round 2'
+            # self.dict['ch6_sneak3']='sneak game round 3'
+            # self.dict['ch6_sneak4']='sneak game round 4'
+            self.dict['ch6_drawcow']='draw treasure'
+            self.dict['ch6_startride']='ride treasure'
+            # self.dict['ch6_winride']='made it to the ship'
+            # self.dict['ch6_byesailor']='bye bye sailor'
+            self.dict['ch6_gohome']='back at home'
+            # self.dict['ch6_endunlock']='Chapter End'
             if bookmarkname == 'ch6_start':
                 bookmarkscene=ch6.obj_scene_chapter6()
             elif bookmarkname == 'ch6_startstory':
@@ -332,7 +402,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch6_drawcow':
                 bookmarkscene=ch6.obj_scene_ch6p34()
             elif bookmarkname == 'ch6_startride':
-                bookmarkscene=ch6.obj_scene_ch6p38()
+                bookmarkscene=ch6.obj_scene_ch6p39()
             elif bookmarkname == 'ch6_winride':
                 bookmarkscene=ch6.obj_scene_ch6p40()
             elif bookmarkname == 'ch6_byesailor':
@@ -347,7 +417,21 @@ class obj_gotobookmark():
             #
             # ch7
             self.chaptertext='Chapter VII: Showtime'
-            self.dict['ch7_start']='Start Chapter'
+            self.dict['ch7_start']='start chapter'
+            # self.dict['ch7_startstory']='start the day'
+            # self.dict['ch7_checkmail']='read the mail'
+            # self.dict['ch7_gotocastle']='go the the castle'
+            self.dict['ch7_putpassword1']='enter the password'
+            # self.dict['ch7_putpassword2']='enter the correct password'
+            self.dict['ch7_startdodge']='fight the villain (guns)'
+            self.dict['ch7_startstomp']='fight the villain (kicks)'
+            # self.dict['ch7_winstomp']='victory'
+            self.dict['ch7_gohome']='back at home'
+            # self.dict['ch7_villainagain']='the villain is back'
+            self.dict['ch7_startmech']='super-mech-fight'
+            # self.dict['ch7_winmech']='victory again'
+            self.dict['ch7_drawcake']='draw the cake'
+            # self.dict['ch7_endunlock']='Chapter End'
             if bookmarkname == 'ch7_start':
                 bookmarkscene=ch7.obj_scene_chapter7()
             elif bookmarkname == 'ch7_startstory':
@@ -357,13 +441,13 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch7_gotocastle':
                 bookmarkscene=ch7.obj_scene_ch7p10()
             elif bookmarkname == 'ch7_putpassword1':
-                bookmarkscene=ch7.obj_scene_ch7p13()
+                bookmarkscene=ch7.obj_scene_ch7p11()
             elif bookmarkname == 'ch7_putpassword2':
                 bookmarkscene=ch7.obj_scene_ch7p19()
             elif bookmarkname == 'ch7_startdodge':
-                bookmarkscene=ch7.obj_scene_ch7p21a()
-            elif bookmarkname == 'ch7_windodge':
-                bookmarkscene=ch7.obj_scene_ch7p23()
+                bookmarkscene=ch7.obj_scene_ch7p22()
+            elif bookmarkname == 'ch7_startstomp':
+                bookmarkscene=ch7.obj_scene_ch7p25()
             elif bookmarkname == 'ch7_winstomp':
                 bookmarkscene=ch7.obj_scene_ch7p26()
             elif bookmarkname == 'ch7_gohome':
@@ -371,7 +455,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch7_villainagain':
                 bookmarkscene=ch7.obj_scene_ch7p40()
             elif bookmarkname == 'ch7_startmech':
-                bookmarkscene=ch7.obj_scene_ch7p48()
+                bookmarkscene=ch7.obj_scene_ch7p49()
             elif bookmarkname == 'ch7_winmech':
                 bookmarkscene=ch7.obj_scene_ch7p50()
             elif bookmarkname == 'ch7_drawcake':
@@ -384,7 +468,7 @@ class obj_gotobookmark():
             #
             # ch8
             self.chaptertext='Epilogue'
-            self.dict['ch8_start']='Start Epilogue'
+            self.dict['ch8_start']='start epilogue'
             if bookmarkname == 'ch8_start':
                 bookmarkscene=ch8.obj_scene_chapter8()
             else:
@@ -468,10 +552,11 @@ class obj_scene_realtitlescreen(page.obj_page):
         # devtools
         if share.devaccess:
             self.addpart(draw.obj_textbox('developper mode is on (edit settings.txt to change)',(30,680),fontsize='smaller',xleft=True,color=share.colors.instructions))
-            self.sprite_appendix=draw.obj_textbox('appendix',(640,480),fontsize='small',color=share.colors.instructions,hover=True)
-            self.addpart(self.sprite_appendix)
-            self.sprite_quick=draw.obj_textbox('quickscene',(640,480+55),fontsize='small',color=share.colors.instructions,hover=True)
+            self.sprite_quick=draw.obj_textbox('quickscene',(640,370),fontsize='small',color=share.colors.instructions,hover=True)
             self.addpart(self.sprite_quick)
+            self.sprite_appendix=draw.obj_textbox('appendix',(640,430),fontsize='small',color=share.colors.instructions,hover=True)
+            self.addpart(self.sprite_appendix)
+
 
         # devtools: quick scene
         self.gotoquickscene=obj_quickscene()
@@ -482,7 +567,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         if not self.hasbook:
             if self.sprite_continue.isclicked(controls):
                 self.sound_menugo.play()
-                share.scenemanager.switchscene(ch0.obj_scene_prologue())
+                share.scenemanager.switchscene(ch0.obj_scene_prologue())# directly to start of prologue
             elif self.sprite_settings.isclicked(controls):
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(obj_scene_settings())
@@ -627,8 +712,8 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
         if self.maxchapter>7:
             if self.sprite_ch8.isclicked(controls):
                 self.sound_menugo.play()
-                # share.scenemanager.switchscene(ch8.obj_scene_chapter8())
-                share.scenemanager.switchscene(obj_scene_chapterpartsscreen(chapter=8))
+                share.scenemanager.switchscene(ch8.obj_scene_chapter8())# go directly, there is only one bookmark
+                # share.scenemanager.switchscene(obj_scene_chapterpartsscreen(chapter=8))
 
 
 ####################################################################################################################
@@ -653,6 +738,12 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
         self.bookmarkdict=self.gotobookmarkscene.dict# ... and get back the dictionary
         self.bookmarktoptext=self.gotobookmarkscene.chaptertext#...on a header text for corresponding chapter
         #
+        self.boomarkdictunlocked={}# now compute subset of bookmarks that are already unlocked
+        for c,i in enumerate(self.bookmarkdict.keys()):
+            if i in share.datamanager.allbookmarks:
+                self.boomarkdictunlocked[i]=self.bookmarkdict[i]
+        self.hassinglebookmark=len(self.boomarkdictunlocked.keys())<2# if only one bookmark (or none)
+        #
         # menu
         xref=480
         yref=200
@@ -662,10 +753,11 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
         self.addpart(self.sprite_back)
         self.addpart( draw.obj_textbox(self.bookmarktoptext,(xref,yref),fontsize=fontref,hover=False,xleft=True) )
         self.textboxclickdict={}
-        for c,i in enumerate(self.bookmarkdict.keys()):
-            tempo=draw.obj_textbox('... '+self.bookmarkdict[i],(xref,yref+(c+1)*dyref),fontsize=fontref,hover=True,xleft=True)
+        for c,i in enumerate(self.boomarkdictunlocked.keys()):
+            tempo=draw.obj_textbox('... '+self.boomarkdictunlocked[i],(xref,yref+(c+1)*dyref),fontsize=fontref,hover=True,xleft=True)
             self.textboxclickdict[i]=tempo
             self.addpart(tempo)
+
         #
         # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
@@ -685,10 +777,13 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
             self.sound_menuback.play()
             share.scenemanager.switchscene(obj_scene_chaptersscreen())# back to chapters
         #
-        for i in self.textboxclickdict.keys():
-            if self.textboxclickdict[i].isclicked(controls):
-                self.sound_menugo.play()
-                self.gotobookmarkscene(chapter=self.tochapter,bookmark=i)
+        if self.hassinglebookmark:# single bookmark, just go directly to it
+            self.gotobookmarkscene(chapter=self.tochapter,bookmark=self.textboxclickdict.keys())
+        else:# multiple bookmark, give list
+            for i in self.textboxclickdict.keys():
+                if self.textboxclickdict[i].isclicked(controls):
+                    self.sound_menugo.play()
+                    self.gotobookmarkscene(chapter=self.tochapter,bookmark=i)
 
 ####################################################################################################################
 ####################################################################################################################
@@ -944,9 +1039,13 @@ class obj_scene_erasebook(page.obj_chapterpage):
         #
 
 class obj_scene_erasebookconfirmed(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_settings())
     def nextpage(self):
+        pass
+    def triggernextpage(self,controls):
+        return False
+    def textboxnextpage(self):
+        pass
+    def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
     def setup(self):
         tempo = 'The book has vanished... '

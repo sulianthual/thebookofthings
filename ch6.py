@@ -1084,7 +1084,6 @@ class obj_scene_ch6p38(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
     def setup(self):
-        share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Lets go! ',\
                     'Move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
@@ -1173,6 +1172,7 @@ class obj_scene_ch6p39(page.obj_chapterpage):
         self.textboxprevpage_xy=(350,50)
         self.textboxnextpage_xy=(530,50)
     def setup(self):
+        share.datamanager.setbookmark('ch6_startride')
         self.text=[' ']
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)

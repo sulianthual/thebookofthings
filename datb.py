@@ -460,31 +460,24 @@ class obj_datamanager:
         return self.chapter# last chapter unlocked
     def saveprogress(self):
         with open(self.fileprogress,'w+') as f1:
-            f1.write('chapter'+'\n')# highest unlocked chapter
+            f1.write('maxchapter:'+'\n')# highest unlocked chapter
             f1.write(str(self.chapter)+'\n')#
-            f1.write('bookmark'+'\n')# bookmark name (current page to return to)
-            f1.write(str(self.bookmarkname)+'\n')#
-            f1.write('allbookmarks'+'\n')# all unlocked bookmarks
+            f1.write('allbookmarks:'+'\n')# all unlocked bookmarks
             for i in self.allbookmarks:
                 f1.write(str(i)+'\n')#
-
     def loadprogress(self):
         if tool.ospathexists(self.fileprogress):
-            readheader=True
             self.allbookmarks=[]
-            with open(self.fileprogress,'r+') as f1:
-                if readheader:
-                    line=f1.readline()# highest unlocked chapter
-                    line=f1.readline()
-                    self.chapter=int(line)
-                    line=f1.readline()# bookmark name (current page to return to)
-                    line=f1.readline()
-                    self.bookmarkname=line[:-1]# omit \n
-                    line=f1.readline()# all bookmarks text
-                    readheader=False
-                else:
-                    line=f1.readline()
-                    self.allbookmarks.append(line[:-1])
+            f1=open(self.fileprogress,'r+')
+            line=f1.readline()# highest unlocked chapter
+            line=f1.readline()
+            self.chapter=int(line)
+            line=f1.readline()# all bookmarks text
+            line=f1.readline()
+            while line:
+                self.allbookmarks.append(line[:-1])
+                line=f1.readline()# all bookmarks text
+            f1.close()
         else:
             # default progress
             self.chapter=0
@@ -495,25 +488,23 @@ class obj_datamanager:
         if chapter:
             self.chapter=max(self.chapter,chapter)
         self.saveprogress()
+
     def setbookmark(self,bookmarkname):# update name of bookmark (current page to return to)
-        self.bookmarkname=bookmarkname
         if bookmarkname not in self.allbookmarks:# add to list of unlocked bookmarks
             self.allbookmarks.append(bookmarkname)
-        self.saveprogress()
-    def getbookmark(self):
-        return self.bookmarkname
+            self.saveprogress()
     #
     def savesettings(self):
         with open(self.filesettings,'w') as f1:
-                f1.write('doazerty'+'\n')#key
+                f1.write('doazerty:'+'\n')#key
                 f1.write(str(self.doazerty)+'\n')#value
-                f1.write('donative'+'\n')#key
+                f1.write('donative:'+'\n')#key
                 f1.write(str(self.donative)+'\n')#value
-                f1.write('domusic'+'\n')#key
+                f1.write('domusic:'+'\n')#key
                 f1.write(str(self.domusic)+'\n')#value
-                f1.write('dosound'+'\n')#key
+                f1.write('dosound:'+'\n')#key
                 f1.write(str(self.dosound)+'\n')#value
-                f1.write('devaccess'+'\n')#key
+                f1.write('devaccess:'+'\n')#key
                 f1.write(str(self.devaccess)+'\n')#value
     def loadsettings(self):
         if tool.ospathexists(self.filesettings):

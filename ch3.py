@@ -575,7 +575,6 @@ class obj_scene_ch3p16(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p17())
     def setup(self):
-        share.datamanager.setbookmark('ch3_startdodge')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Blockbuster action scene!',\
         ' Jump and crouch with the '+tempo+'. ',\
@@ -652,6 +651,7 @@ class obj_scene_ch3p19(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
+        share.datamanager.setbookmark('ch3_startdodge')
         self.text=['\n ']# non empty for browser adjustment
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)
@@ -1126,7 +1126,6 @@ class obj_scene_ch3p31(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p32())
     def setup(self):
-        share.datamanager.setbookmark('ch3_startbug')
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' was almost asleep, ',\
                   'when a small voice started whispering".',\
@@ -1149,6 +1148,7 @@ class obj_scene_ch3p32(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p33())
     def setup(self):
+        share.datamanager.setbookmark('ch3_startbug')
         self.text=[\
                    '"The small voice whispered: ',\
                    'please tell me. ',\

@@ -291,12 +291,17 @@ class obj_drawing:
             i.display(self.x,self.y)
         self.sprite_frame.display(share.colors.drawing,(self.x,self.y,2*self.rx,2*self.ry))
         if self.legend: self.sprite_legend.display(self.xl,self.yl)
+    def displaybrush(self,controls):
+        # display the brush where the mouse is (optional, kind of ugly)
+        if tool.isinrect(controls.gmx,controls.gmy,self.rect):
+            self.brush.display(controls.gmx,controls.gmy)
     def devtools(self):
         self.devcross.display(share.colors.drawing,(self.x,self.y),10,diagonal=True,thickness=6)
     def update(self,controls):
         self.draw(controls)
         self.basedraw()
         self.display()
+        # self.displaybrush(controls)
         if share.devmode: self.devtools()
         if not self.updatedfirstframe:
             self.updatedfirstframe=True

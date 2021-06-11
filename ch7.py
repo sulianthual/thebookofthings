@@ -348,6 +348,7 @@ class obj_scene_ch7p11(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p12())
     def setup(self):
+        share.datamanager.setbookmark('ch7_putpassword1')
         self.text=[\
                 '"',\
                 ('{heroname}',share.colors.hero),' arrived at the evil castle. ',\
@@ -461,7 +462,6 @@ class obj_scene_ch7p13(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p14())
     def setup(self):
-        share.datamanager.setbookmark('ch7_putpassword1')
         self.text=[\
                 '"You have entered: ',('"fight persevere overcome"',share.colors.password),' . ',\
                 'Wait a minute, said the castle\'s a.s.s. ',\
@@ -816,7 +816,6 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p22())
     def setup(self):
-        share.datamanager.setbookmark('ch7_startdodge')
         self.text=[\
                   '"I will not let you win this time, said ',\
                   ('{villainname}',share.colors.villain),'."',\
@@ -847,6 +846,7 @@ class obj_scene_ch7p22(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
+        share.datamanager.setbookmark('ch7_startdodge')
         self.text=['\n ']
         self.world=world.obj_world_dodgegunshots(self,incastle=True)
         self.addpart(self.world)
@@ -877,7 +877,6 @@ class obj_scene_ch7p23(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p24())
     def setup(self):
-        share.datamanager.setbookmark('ch7_windodge')
         self.text=[\
                   '"This isnt over yet, said ',\
                     ('{villainname}',share.colors.villain),\
@@ -971,6 +970,7 @@ class obj_scene_ch7p25(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
+        share.datamanager.setbookmark('ch7_startstomp')
         self.text=['\n ']
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
@@ -1681,7 +1681,6 @@ class obj_scene_ch7p48(page.obj_chapterpage):
         self.textboxprevpage_xy=(50,250)
         self.textboxnextpage_xy=(250,250)
     def setup(self):
-        share.datamanager.setbookmark('ch7_startmech')
         self.text=[\
                     'Oh boy, that is one epic fight, said the book of things. ',\
                     'Lets get started. ',\
@@ -1766,6 +1765,7 @@ class obj_scene_ch7p49(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
+        share.datamanager.setbookmark('ch7_startmech')
         self.text=['\n ']
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)

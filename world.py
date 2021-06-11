@@ -5086,8 +5086,8 @@ class obj_world_serenade(obj_world):
             self.score.addpart( 'img',draw.obj_image('musicscore',(640,380),path='premade') )
         ### melody to reproduce
         self.melody=obj_grandactor(self,(640,360))
-        self.melody.melodylength=8# number of notes to play
-        melodyx=[-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5]# x positions (scaled)
+        self.melody.melodylength=9#8# number of notes to play
+        melodyx=[-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5,4.5]# x positions (scaled)
         melodydx=50# x-spacing notes
         melodydy=30#y-spacing notes
         self.melody.melodynotes=[]

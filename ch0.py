@@ -405,11 +405,6 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-
-
-
-
-
 class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p13())
