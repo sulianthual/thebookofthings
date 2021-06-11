@@ -216,7 +216,7 @@ class obj_display:
         # Mouse
         self.mousescaling=(1280/self.displayresolution[0],720/ self.displayresolution[1])# scaling
         share.controls.mousescaling=self.mousescaling# tell controls about new mouse scaling
-        pygame.mouse.set_visible(True)# show mouse
+        pygame.mouse.set_visible(False)# show mouse
         # Other
         pygame.display.set_caption("The Book of Things")# window banner
         self.reseticon()# window icon

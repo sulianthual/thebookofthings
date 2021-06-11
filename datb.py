@@ -418,6 +418,7 @@ class obj_fonts:
 # brushes  database (used for drawing)
 class obj_brushes:
     def __init__(self):
+        self.megapen=('data/pen.png',(32,32))
         self.bigpen=('data/pen.png',(16,16))
         self.pen12=('data/pen.png',(12,12))
         self.pen=('data/pen.png',(8,8))
@@ -511,6 +512,8 @@ class obj_datamanager:
                 f1.write(str(self.domusic)+'\n')#value
                 f1.write('dosound'+'\n')#key
                 f1.write(str(self.dosound)+'\n')#value
+                f1.write('domousebrowse'+'\n')#key
+                f1.write(str(self.domousebrowse)+'\n')#value
                 f1.write('devaccess'+'\n')#key
                 f1.write(str(self.devaccess)+'\n')#value
     def loadsettings(self):
@@ -530,6 +533,9 @@ class obj_datamanager:
                 self.dosound=line=='True'+'\n'
                 line=f1.readline()# dosound
                 line=f1.readline()
+                self.domousebrowse=line=='True'+'\n'
+                line=f1.readline()# domousebrowse
+                line=f1.readline()
                 self.devaccess=line=='True'+'\n'
         else:
             # default settings
@@ -538,6 +544,7 @@ class obj_datamanager:
             self.domusic=True# music on/off
             self.dosound=True# sound on/off
             self.devaccess=False# User has no dev access by default
+            self.domousebrowse=True# Use either Mouse or Tab/Space/Enter to scroll pages
             # write down default settings
             self.savesettings()
     #

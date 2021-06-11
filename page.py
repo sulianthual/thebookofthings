@@ -30,10 +30,12 @@ class obj_page:
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
         self.pagemusic=draw.obj_music(None)# menu music by default
+        self.domousebrowse=share.datamanager.domousebrowse# check if mouse browsing or not
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup
         self.postsetup()
+        self.postpostsetup()
     def presetup(self):# background
         self.addpart(draw.obj_pagebackground())
         # share.soundplayer.stop()# stop all sounds for safety (omitted for soundnextpage,etc)
@@ -41,6 +43,8 @@ class obj_page:
         pass
     def postsetup(self):# foreground
         self.addpart(draw.obj_pagedisplay_fps())
+    def postpostsetup(self):# foreground (DO NOT APPEND)
+        self.addpart(draw.obj_pagemousepointer())
     #
     def pagename(self):# page has a name for scene inventories (optional)
         return None
@@ -49,7 +53,7 @@ class obj_page:
               'imageplacer','soundplacer',\
               'sound',\
               'rectangle',\
-              'pagebackground','pagefps','pagetext',\
+              'pagebackground','pagefps','pagetext','pagemousepointer',\
               'world']
         if element.type in term:
             self.to_update.append(element)
@@ -92,6 +96,7 @@ class obj_chapterpage(obj_page):
     def initstart(self,**kwargs):
         self.text=[]# Main body of text
         self.textkeys={}
+        self.domousebrowse=share.datamanager.domousebrowse# Use either Mouse or Tab/Space/Enter to scroll pages
         super().initstart(**kwargs)
     def presetup(self):
         super().presetup()
@@ -106,81 +111,91 @@ class obj_chapterpage(obj_page):
         self.pagetext.make(self.text,**self.textkeys)# rebuild main text
         self.addpart(self.pagetext)
         #
+        # Mouse Browsing (optional)
         self.textboxplace()# place textboxes
         self.dotextboxprevpage=False
         self.textboxprevpage()
         self.dotextboxnextpage=False
         self.textboxnextpage()
+    # textboxes for mouse browsing
     def textboxplace(self):
         pagetext_x,pagetext_y=self.pagetext.getposition()
-        self.textboxprevpage_xy=( 50,pagetext_y+90 )
-        self.textboxnextpage_xy=( 230,pagetext_y+90 )
-    #
-    #############################
-    #
-    # Option 1: browse pages with Space/Enter
+        if pagetext_x<1000:
+            self.textboxprevpage_xy=( pagetext_x+10,pagetext_y+33 )
+            self.textboxnextpage_xy=( pagetext_x+10+180,pagetext_y+33 )
+        else:
+            self.textboxprevpage_xy=( 50,pagetext_y+90 )
+            self.textboxnextpage_xy=( 230,pagetext_y+90 )
     def textboxprevpage(self):
-        pass
+        if self.domousebrowse:
+            self.dotextboxprevpage=True
+            self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
+            self.addpart(self.textbox_prev)
     def textboxnextpage(self):
-        pass
-    def triggerprevpage(self,controls):
-        return (controls.gb and controls.gbc)
-    def triggernextpage(self,controls):
-        return (controls.ga and controls.gac)
-    #
-    # Option 2: browse pages with Mouse
-    # def textboxprevpage(self):
-    #     self.dotextboxprevpage=True
-    #     self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(110,0,110),fontsize='medium',xleft=True)
-    #     self.addpart(self.textbox_prev)
-    # def textboxnextpage(self):
-    #     self.dotextboxnextpage=True
-    #     self.textbox_next=draw.obj_textbox('[next]',self.textboxnextpage_xy,color=(138,0,138),hover=True,hovercolor=(110,0,110),fontsize='medium',xright=True)
-    #     self.addpart(self.textbox_next)
-    # def triggerprevpage(self,controls):
-    #     return self.textbox_prev.isclicked(controls) or (share.devmode and controls.gb and controls.gbc)
-    # def triggernextpage(self,controls):
-    #     return self.textbox_next.isclicked(controls) or (share.devmode and controls.ga and controls.gac)
-    #
-    #############################
-    #
-
-
+        if self.domousebrowse:
+            self.dotextboxnextpage=True
+            self.textbox_next=draw.obj_textbox('[next]',self.textboxnextpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xright=True)
+            self.addpart(self.textbox_next)
+    #############
     def prepage(self,controls):# background
         super().prepage(controls)
         self.callprevpage(controls)
         self.callnextpage(controls)
         self.callexitpage(controls)
-
-
+    # first level (may customize for pages, e.g. if minigame)
+    def triggerprevpage(self,controls):
+        if self.domousebrowse:
+            return self.textbox_prev.isclicked(controls)
+        else:
+            return (controls.gb and controls.gbc)
+    def triggernextpage(self,controls):
+        if self.domousebrowse:
+            return self.textbox_next.isclicked(controls)
+        else:
+            return (controls.ga and controls.gac)
     def triggerexitpage(self,controls):
         return controls.gq and controls.gqc
+    # second level (required in rare cases)
+    def triggerprevpage2(self,controls):
+        return True and self.triggerprevpage(controls)
+    def triggernextpage2(self,controls):
+        return True and self.triggernextpage(controls)
+    def triggerexitpage2(self,controls):
+        return True and self.triggerexitpage(controls)
+    # third level (dev)
+    def triggerprevpage3(self,controls):
+        return self.triggerprevpage2(controls) or (share.devaccess and controls.gb and controls.gbc)
+    def triggernextpage3(self,controls):
+        return self.triggernextpage2(controls) or (share.devaccess and controls.ga and controls.gac)
+    def triggerexitpage3(self,controls):
+        return self.triggerexitpage2(controls)
+    #############################
 
 
+    def callprevpage(self,controls):
+        if self.triggerprevpage3(controls):
+            self.preendpage()# template
+            self.endpage()# customized
+            self.soundprevpage()
+            self.prevpage()# switch to prev page
+    def callexitpage(self,controls):
+        if self.triggerexitpage3(controls): # go back to main menu
+            self.preendpage()# template
+            self.endpage()# customized
+            self.soundexitpage()
+            self.exitpage()
+    def callnextpage(self,controls):
+        if self.triggernextpage3(controls):
+            self.preendpage()# template
+            self.endpage()# customized
+            self.soundnextpage()
+            self.nextpage()# switch to next page
     def soundprevpage(self):
         self.sound_menuback.play()
     def soundexitpage(self):
         self.sound_menuback.play()
     def soundnextpage(self):
         self.sound_menugo.play()
-    def callprevpage(self,controls):
-        if self.triggerprevpage(controls):
-            self.preendpage()# template
-            self.endpage()# customized
-            self.soundprevpage()
-            self.prevpage()# switch to prev page
-    def callexitpage(self,controls):
-        if self.triggerexitpage(controls): # go back to main menu
-            self.preendpage()# template
-            self.endpage()# customized
-            self.soundexitpage()
-            self.exitpage()
-    def callnextpage(self,controls):
-        if self.triggernextpage(controls):
-            self.preendpage()# template
-            self.endpage()# customized
-            self.soundnextpage()
-            self.nextpage()# switch to next page
     def endpage(self):# when exit page
         pass
     def prevpage(self):# actions to prev page (replace here)**

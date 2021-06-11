@@ -366,7 +366,7 @@ class obj_scene_textchoice(obj_testpage):
         textchoice2.addchoice('3. three','three',(1040,y2))
         self.addpart( textchoice2 )
 
-
+#*TEXTBOX
 class obj_scene_textbox(obj_testpage):
     def pagename(self):
         return 'Textbox Basics'
@@ -625,6 +625,7 @@ class obj_scene_testdispgroup(obj_testpage):
                    '[rmouse+left/right]:flip. ',\
                    '[rmouse+up/down]:rotate45 (use sparingly cf enlargen memory issue). ',\
                    '[lmouse+rmouse]: reset. ',\
+                   'Beware: elements of dispgroup dont update, they play! some restrictions like cant hover textbox, etc... ',\
                    ]
         self.dispgroup=draw.obj_dispgroup((640,360))# create dispgroup
         self.dispgroup.addpart( "key_element1", draw.obj_image('testimage1',(440,360)) )# add image

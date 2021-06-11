@@ -52,27 +52,16 @@ DO NOT add complex minigames that require a physics engine (e.g. platformer, bra
 It is NOT worth it to do with pygame (too painful to build from ground up)
 It should be done in NEXT games with other softwares that do this more easily (godot,etc...)
 
-
+- Added the option to browse pages with either Space/Enter and Tab, or with the Mouse [Next][Back]
+  (options can be tested in page.py, obj_chapterpage by commenting either option1 or option2)
+  (browsing with mouse requires a few adjustments of text, command instructions to be polished...)
+  It is much easier to browse with the mouse, but slightly less engaging
+  Using the keyboard feels more like browsing the pages of a book.
 
 ###########################################################
 ###########################################################
 * Final changes that should probably be made:
 
-
-- sound and music: volume bar (in settings). Just add volume multiplicators
-
-- do comprehensive cleanup of music and sounds.
-   - Avoid file duplicates
-   - look (briefly) at volume levels
-   - during page transitions: sometimes nosound, sometimes there is (with soundnextpage), clean it up
-   - animations properly finish(). they shut down all sounds. Do same for dispgroup that hold animations:
-     call finish() for dispgroup that calls finish for animations (that calls finish() for sounds)
-
-
-- change pages with the mouse? Like by clicking a "Next Page"?
-  could make it appear/load on a timer...
-
-- tff file: cannot do text for interrogation marks. correct the file ?
 
 - compile with pyinstaller: linux, windows, mac
 
@@ -84,6 +73,16 @@ It should be done in NEXT games with other softwares that do this more easily (g
 
 * Other Ideas (maybe later or never, not so important):
 
+- tff file: cannot do text for interrogation marks. correct the file ?
+
+- sound and music: volume bar (in settings). Just add volume multiplicators
+
+- do comprehensive cleanup of music and sounds.
+   - Avoid file duplicates
+   - look (briefly) at volume levels
+   - during page transitions: sometimes nosound, sometimes there is (with soundnextpage), clean it up
+   - animations properly finish(). they shut down all sounds. Do same for dispgroup that hold animations:
+     call finish() for dispgroup that calls finish for animations (that calls finish() for sounds)
 
 - draws objects fonctionality (for textbox, image,animation, or dispgroup):
   launches a timer that makes draw  draw.show=False after timer ends (timer is automatic from updates)

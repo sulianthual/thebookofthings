@@ -28,10 +28,21 @@ class obj_scene_prologue(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         share.datamanager.setbookmark('ch0_start')
-        tempo='['+share.datamanager.controlname('action')+']'
-        self.text=['-----   Prologue: The book of things   -----   ',\
-                   '\nIn the beginning, there was nothing. Absolutely nothing. But one could press '+tempo+' to continue.']
-        self.addpart(draw.obj_textbox('Press '+tempo+' to continue',(640,400),color=share.colors.instructions))
+        self.domousebrowse=share.datamanager.domousebrowse
+        if not self.domousebrowse:
+            tempo='['+share.datamanager.controlname('action')+']'
+            tempo2='But one could press '+tempo+' to continue.'
+        else:
+            tempo='['+share.datamanager.controlname('action')+']'
+            tempo2='But one could press [next] to continue.'
+
+        self.text=[\
+                    '-----   Prologue: The book of things   -----   ',\
+                    '\nIn the beginning, there was nothing. Absolutely nothing.',\
+                    tempo2,\
+                    ]
+        if not self.domousebrowse:
+            self.addpart(draw.obj_textbox('Press '+tempo+' to continue',(640,400),color=share.colors.instructions))
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -42,13 +53,20 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        tempo1='['+share.datamanager.controlname('action')+']'
-        tempo2='['+share.datamanager.controlname('back')+']'
-        tempo3='['+share.datamanager.controlname('quit')+']'
-        self.text=['One could press '+tempo1+' to continue, '+tempo2+' to go back, or '+tempo3+' to go back to the menu. It was always like that.']
-        self.addpart(draw.obj_textbox('press '+tempo1+' to continue',(640,400),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('press '+tempo2+' to go back',(640,500),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('press '+tempo3+' to return to menu',(640,600),color=share.colors.instructions))
+        self.domousebrowse=share.datamanager.domousebrowse
+        if not self.domousebrowse:
+            tempo1='['+share.datamanager.controlname('action')+']'
+            tempo2='['+share.datamanager.controlname('back')+']'
+            tempo3='['+share.datamanager.controlname('quit')+']'
+            self.text=['One could press '+tempo1+' to continue, '+tempo2+' to go back, or '+tempo3+' to go back to the menu. It was always like that.']
+            self.addpart(draw.obj_textbox('press '+tempo1+' to continue',(640,400),color=share.colors.instructions))
+            self.addpart(draw.obj_textbox('press '+tempo2+' to go back',(640,500),color=share.colors.instructions))
+            self.addpart(draw.obj_textbox('press '+tempo3+' to return to menu',(640,600),color=share.colors.instructions))
+        else:
+            self.text=['One could press [next] to continue, [back] to go back, or [esc] to go back to the menu. It was always like that.']
+            self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
+            self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
+            self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
         #
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)
@@ -75,7 +93,8 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['There was going to be a pen. ',\
                    'The pen was drawn with '+tempo1+' and erased with '+tempo2+'.',\
-                   ]
+                  '\n ',\
+                   ]# last line for [back][next] adjustment
         self.textkeys={'pos':(50,50),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
         self.addpart( draw.obj_drawing('pendraw',(940,360),legend=' Draw a Pen') )
         self.addpart(draw.obj_textbox('hold '+tempo1+' to draw',(420,400),color=share.colors.instructions))
@@ -117,7 +136,7 @@ class obj_scene_ch0p4(page.obj_chapterpage):
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['Along with the pen, there was going to be an eraser.',\
-                   '\nThe eraser was drawn with '+tempo1+' and erased with '+tempo2+'',\
+                   'The eraser was drawn with '+tempo1+' and erased with '+tempo2+'',\
                    ]
         self.addpart( draw.obj_drawing('eraserdraw',(900,450), legend='Draw an Eraser') )
         self.addpart( draw.obj_animation('penmove2','pen',(640,360)) )
@@ -223,14 +242,15 @@ class obj_scene_ch0p9(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
+
 class obj_scene_ch0p10(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p9())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
+        self.textboxprevpage_xy=(900,140)
+        self.textboxnextpage_xy=(1080,140)
     def setup(self):
 
         share.datamanager.setbookmark('ch0_meetbook')
@@ -305,32 +325,90 @@ class obj_scene_ch0p12(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0end())
+        if self.updateclicked:
+            share.scenemanager.switchscene(obj_scene_ch0p12())# reload
+        else:
+            share.scenemanager.switchscene(obj_scene_ch0p13())
+    def triggernextpage2(self,controls):
+        return self.updateclicked or self.triggernextpage(controls)
+    def endpage(self):
+        super().endpage()
+        # scale down mouse pointer draw
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('mousepointerbase',(640,360),scale=1,path='data'))
+        dispgroup1.addpart('part2',draw.obj_image('mousepointerdraw',(640+self.xoff*0.05,360+self.yoff*0.05),scale=0.05))
+        dispgroup1.snapshot((640,360,25,25),'mousepointer')
     def setup(self):
         self.text=[\
-                    'Lets make sure you have everything you need. ',\
+                'Lets change the mouse pointer to something more super-duper-',\
+                    ('{playermood}',share.colors.player),'! ',\
+                    ]
+        #
+        self.xoff=160
+        self.yoff=self.xoff
+        self.addpart( draw.obj_music('piano') )
+        drawing1= draw.obj_drawing('mousepointerdraw',\
+        (640,400),\
+        shadow=(400-self.xoff,400-self.yoff),\
+        legend='draw the mouse pointer',brush=share.brushes.megapen)
+        self.addpart( drawing1 )
+        self.addpart( draw.obj_image('mousepointerbase',(640-self.xoff,400-self.yoff),scale=20,path='data') )
+        self.textbox_refresh=draw.obj_textbox('[update]',(1000,300),color=share.colors.instructions,hover=True)
+        self.addpart(self.textbox_refresh)
+        self.updateclicked=False
+    def page(self,controls):
+        self.updateclicked=self.textbox_refresh.isclicked(controls)
+
+
+
+
+class obj_scene_ch0p13(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p12())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
+    def setup(self):
+
+        self.text=[\
+                    'One last thing, Lets make sure you have everything you need. ',\
                     'These are the game controls. ',\
                    ]
         #
         # Game controls instructions
-        self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
-        self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
-        self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
-        #
-        self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('previous',(216,544),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        if not self.domousebrowse:
+            self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
+            self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+            self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
+            #
+            self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('previous',(216,544),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        else:
+            self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
+            self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+            self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+            #
+            self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)
         self.addpart( animation1 )
@@ -345,9 +423,14 @@ class obj_scene_ch0p12(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
+
+
+
+
+
 class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p12())
+        share.scenemanager.switchscene(obj_scene_ch0p13())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):

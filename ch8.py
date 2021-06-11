@@ -69,7 +69,7 @@ class obj_scene_ch8roam(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8roam())# reload same scene
 
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def triggerprevpage(self,controls):
         return False
     def textboxnextpage(self):
@@ -129,7 +129,7 @@ class obj_scene_ch8homesleep(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8homesleep2())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -147,7 +147,7 @@ class obj_scene_ch8homesleep2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8homesleep3())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -164,7 +164,7 @@ class obj_scene_ch8homesleep3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8homesleep4())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -181,7 +181,7 @@ class obj_scene_ch8homesleep4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8homebye())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -223,12 +223,12 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def presetup(self):
         super().presetup()
-        self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
+        # self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def setup(self):
         credits=share.gamecredits.gettext()# game credits from database
         self.text=[credits]
@@ -287,7 +287,7 @@ class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8atpartnerkiss())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -304,7 +304,7 @@ class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8atpartnerreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -421,7 +421,7 @@ class obj_scene_ch8pondfish(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8pondeat())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -438,7 +438,7 @@ class obj_scene_ch8pondeat(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8pondreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -606,7 +606,7 @@ class obj_scene_ch8mechfight(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8mechreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -797,7 +797,7 @@ class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8westreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -814,7 +814,7 @@ class obj_scene_ch8weststomp(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8westreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass
     def setup(self):
@@ -980,7 +980,7 @@ class obj_scene_ch8north(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8northtop())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1039,7 +1039,7 @@ class obj_scene_ch8north_rps(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8northreplay())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done# CANT SKIP THIS ONE
+        return self.world.done# CANT SKIP THIS ONE
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1158,7 +1158,7 @@ class obj_scene_ch8southride(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8southreplay())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def textboxplace(self):
@@ -1288,7 +1288,7 @@ class obj_scene_ch8islandsneak(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1308,7 +1308,7 @@ class obj_scene_ch8islandsneak1(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak1())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1328,7 +1328,7 @@ class obj_scene_ch8islandsneak2(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak2())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1348,7 +1348,7 @@ class obj_scene_ch8islandsneak3(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak3())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1368,7 +1368,7 @@ class obj_scene_ch8islandsneak4(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandsneak4())
     def triggernextpage(self,controls):
-        return (controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):

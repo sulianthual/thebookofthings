@@ -204,7 +204,7 @@ class obj_scene_ch1p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p8())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):
@@ -272,7 +272,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p11())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):
@@ -284,6 +284,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch1') )
+
 
 class obj_scene_ch1p11(page.obj_chapterpage):
     def prevpage(self):
@@ -316,7 +317,7 @@ class obj_scene_ch1p12(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p13())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def soundnextpage(self):
@@ -342,7 +343,7 @@ class obj_scene_ch1p13(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p14())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):
@@ -426,7 +427,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play2())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):
@@ -457,7 +458,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play3())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):
@@ -479,7 +480,7 @@ class obj_scene_ch1play3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):
@@ -502,7 +503,7 @@ class obj_scene_ch1play4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1playend())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def soundnextpage(self):
         pass# no sound
     def textboxnextpage(self):

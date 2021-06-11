@@ -56,6 +56,24 @@ class obj_pagedisplay_fps:
         self.display()
 
 
+# mouse pointer image
+class obj_pagemousepointer:
+    def __init__(self):
+        self.type='pagemousepointer'
+        self.sprite=core.obj_sprite_image()
+        self.make()
+    def make(self):
+        if tool.ospathexists('book/mousepointer.png'):
+            self.sprite.load('book/mousepointer.png')
+        else:
+            self.sprite.load('data/mousepointerbase.png')
+
+    def display(self,controls):
+        self.sprite.display(controls.gmx,controls.gmy)
+    def update(self,controls):
+        self.make()# rebuild sprite every update
+        self.display(controls)
+
 ####################################################################################################################
 
 
@@ -539,7 +557,7 @@ class obj_textchoice:
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
     def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,\
-    xleft=False,xright=False,ytop=False,fillcolor=None,hover=False,hovercolor=(138,0,138)):
+    xleft=False,xright=False,ytop=False,fillcolor=None,hover=False,hovercolor=(220,0,220)):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
@@ -669,6 +687,8 @@ class obj_textbox:
         return tool.isinrect(controls.gmx,controls.gmy,rect )
     def isclicked(self,controls):# check is textbox is being clicked
         return controls.gm1 and controls.gm1c and self.ishovered(controls)
+    def isholdclicked(self,controls):# check is textbox is being hold clicked
+        return controls.gm1 and self.ishovered(controls)
     def trackhover(self,controls):
         if self.trackinghover:
             if self.ishovered(controls):
@@ -681,9 +701,6 @@ class obj_textbox:
                     self.hovered=False
                     self.color=self.nohovercolor
                     self.replacetext(self.text)
-
-
-
     def update(self,controls):
         self.play(controls)
         self.trackhover(controls)
@@ -1496,6 +1513,7 @@ class obj_dispgroup:
         if share.devmode: self.devtools()
     def update(self,controls):
         self.play(controls)
+
     def finish(self):# upon page exit
         for i in self.dict.keys():
             if self.dict[i].type=='animation':

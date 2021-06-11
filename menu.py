@@ -45,14 +45,14 @@ class obj_quickscene():
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
-            # quickscene=ch1.obj_scene_ch1p14()
+            # quickscene=ch1.obj_scene_ch1p12()
             # quickscene=ch1.obj_scene_ch1play3()
-            # quickscene=ch2.obj_scene_ch2p4()
+            # quickscene=ch2.obj_scene_ch2p6a()
             # quickscene=ch2.obj_scene_ch2play4()
-            # quickscene=ch3.obj_scene_ch3p12()
+            quickscene=ch3.obj_scene_ch3p24()
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            quickscene=ch4.obj_scene_ch4p12a()
+            # quickscene=ch4.obj_scene_ch4p12a()
             # quickscene=ch5.obj_scene_ch5p16()
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p42()
@@ -446,7 +446,9 @@ class obj_scene_realtitlescreen(page.obj_page):
             tempo1= '['+share.datamanager.controlname('dev')+': toggle dev mode] '
             tempo2= '['+share.datamanager.controlname('right')+': appendix of tests] '
             tempo3= '['+share.datamanager.controlname('left')+': quick access scene] '
-            textmat=['Developper Access is on:','(edit settings.txt to change)',tempo1,tempo2,tempo3]
+            textmat=['Developper Access is on:',\
+            'Mouse browsing on='+str(share.datamanager.domousebrowse),\
+            '(edit settings.txt to change)',tempo1,tempo2,tempo3]
             x1,y1,dy1=30,50,30
             for i in textmat:
                 self.addpart(draw.obj_textbox(i,(x1,y1),fontsize='smaller',xleft=True,color=share.colors.instructions))
@@ -760,32 +762,53 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_settings())
     def triggernextpage(self,controls):
         return False
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def setup(self):
         #
         self.maxchapter=share.datamanager.chapter# highest unlocked chapter
         self.hasbook=self.maxchapter>0# there is a started book or not
         #
-        self.text=['These are the controls. [tab: back] ']
+
+        self.text=['These are the game controls. [tab: back] ']
         #
         # Game controls instructions
-        self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
-        self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
-        self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
-        self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
-        #
-        self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('back',(216,544),color=share.colors.instructions,fontsize='larger') )
-        self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        if not self.domousebrowse:
+            self.text=['These are the game controls. [tab: back] ']
+            self.addpart( draw.obj_image('instructions_controls',(640,420),path='premade') )
+            self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[enter]',(732,525),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+            self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[tab]',(81,534),color=share.colors.black) )
+            #
+            self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('next',(778,580),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('previous',(216,544),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        else:
+            self.text=['These are the game controls. ']
+            self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
+            self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+            self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
+            self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
+            #
+            self.addpart( draw.obj_textbox('draw',(930,370),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('select',(930,437),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('play',(579,260),color=share.colors.instructions,fontsize='larger') )
+            self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+
         #
         if self.hasbook:
             self.addpart( draw.obj_music('piano') )
@@ -802,18 +825,20 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_settings())
     def triggernextpage(self,controls):
         return False
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def presetup(self):
         super().presetup()
-        self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
+        # self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
     def setup(self):
         #
         self.maxchapter=share.datamanager.chapter# highest unlocked chapter
         self.hasbook=self.maxchapter>0# there is a started book or not
         #
-
         credits=share.gamecredits.gettext()# game credits from database
-        self.text=[credits,\
-                   '['+share.datamanager.controlname('back')+': back]']
+        if not self.domousebrowse:
+            credits += '['+share.datamanager.controlname('back')+': back]'
+        self.text=[credits]
         #
         self.addpart( draw.obj_music('tension') )
         #
@@ -833,19 +858,21 @@ class obj_scene_erasebook(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
     def triggernextpage(self,controls):
-        return controls.gl and controls.gu and controls.gr and controls.ga
+        return controls.gl and controls.gu and controls.gr and controls.gd
+    def textboxnextpage(self):
+        pass# no textbox for nextpage
     def soundnextpage(self):
         pass# no sound
     def setup(self):
         tempo= 'Press ['+share.datamanager.controlname('left')
         tempo+= '+'+share.datamanager.controlname('up')
         tempo+= '+'+share.datamanager.controlname('right')
-        tempo+= '+'+share.datamanager.controlname('action')
-        tempo+= '] to erase the book.'
-        self.text=[tempo,\
-                    'You will loose all your drawings and progress. ',\
-                    '[',share.datamanager.controlname('back'),': back]',\
-                    ]
+        tempo+= '+'+share.datamanager.controlname('down')
+        tempo+= '] to erase the book. '
+        tempo+= 'You will loose all your drawings and progress. '
+        if not self.domousebrowse:
+            tempo += '[',share.datamanager.controlname('back'),': back]'
+        self.text=[tempo]
         #
         self.addpart( draw.obj_music('tension') )
         #
@@ -856,8 +883,11 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
     def setup(self):
-        self.text=['The book has vanished. ',\
-                   '[',share.datamanager.controlname('back'),': back]']
+        tempo = 'The book has vanished... '
+        if not self.domousebrowse:
+            tempo += '[',share.datamanager.controlname('back'),': back]'
+
+        self.text=[tempo]
         share.datamanager.erasebook()
         #
         self.sound=draw.obj_sound('erasebook')

@@ -94,7 +94,7 @@ class obj_scene_ch7p2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p3())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -114,7 +114,7 @@ class obj_scene_ch7p3(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p4())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -136,7 +136,7 @@ class obj_scene_ch7p4(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p5())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -330,7 +330,7 @@ class obj_scene_ch7p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p11())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -849,7 +849,7 @@ class obj_scene_ch7p22(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch7p22death())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -957,11 +957,7 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
         self.textboxprevpage_xy=(1050,620)
         self.textboxnextpage_xy=(1230,620)
     def setup(self):
-        tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[\
-                  ' This is it. ',\
-                  ('Press '+tempo+' when you are ready.',share.colors.instructions),\
-                   ]
+        self.text=[' This is it, start when you are ready. ']
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
         #
@@ -977,7 +973,7 @@ class obj_scene_ch7p25(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch7p25death())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1172,7 +1168,7 @@ class obj_scene_ch7p30(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p31())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1196,7 +1192,7 @@ class obj_scene_ch7p31(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p32())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1220,7 +1216,7 @@ class obj_scene_ch7p32(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p33())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1240,7 +1236,7 @@ class obj_scene_ch7p33(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p34())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1260,7 +1256,7 @@ class obj_scene_ch7p34(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p35())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1279,7 +1275,7 @@ class obj_scene_ch7p35(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p36())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
@@ -1756,11 +1752,7 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
         self.textboxprevpage_xy=(50,250)
         self.textboxnextpage_xy=(250,250)
     def setup(self):
-        tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[\
-                    'This is it. ',\
-                    ('Press '+tempo+' to start.',share.colors.instructions),\
-                   ]
+        self.text=[' This is it, start when you are ready. ']
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
         #
@@ -1776,7 +1768,7 @@ class obj_scene_ch7p49(page.obj_chapterpage):
         else:
             share.scenemanager.switchscene(obj_scene_ch7p49death())
     def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
+        return self.world.done
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
