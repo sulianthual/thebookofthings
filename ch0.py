@@ -252,7 +252,6 @@ class obj_scene_ch0p10(page.obj_chapterpage):
         self.textboxprevpage_xy=(900,140)
         self.textboxnextpage_xy=(1080,140)
     def setup(self):
-
         share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempom='['+share.datamanager.controlname('mouse')+']'
@@ -339,6 +338,7 @@ class obj_scene_ch0p12(page.obj_chapterpage):
         dispgroup1.addpart('part2',draw.obj_image('mousepointerdraw',(640+self.xoff*0.05,360+self.yoff*0.05),scale=0.05))
         dispgroup1.snapshot((640,360,25,25),'mousepointer')
     def setup(self):
+        share.datamanager.setbookmark('ch0_drawpointer')
         self.text=[\
                 'Lets change the mouse pointer to something more super-duper-',\
                     ('{playermood}',share.colors.player),'! ',\
