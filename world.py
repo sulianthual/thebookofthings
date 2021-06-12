@@ -963,18 +963,16 @@ class obj_world_fishing(obj_world):
         self.soundcatch=draw.obj_sound('fishing_catch')
         self.creator.addpart(self.soundcatch)
     def triggerlowerhook(self,controls):
-        if self.domousebrowse:
-            return controls.gd or self.textboxclick.isholdclicked(controls)
-        else:
-            return controls.gd
+        return controls.gd or self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
         if self.domousebrowse:
             self.textboxclick.trackhover(controls)
         # hook
         if self.triggerlowerhook(controls) and self.fishfree:
-            if controls.gdc:
+            if controls.gdc or self.textboxclick.isclicked(controls):
                 self.soundreel.play(loop=True)
+                # self.soundreel.play()
             if self.hook.y<720-50:
                 self.hook.movey(self.dydown)
             else:

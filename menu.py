@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        if True :
-        # if False :
+        # if True :
+        if False :
             # regular scenes
             #
             quickscene=obj_scene_settings()
@@ -50,22 +50,16 @@ class obj_quickscene():
             # quickscene=ch2.obj_scene_ch2p6a()
             # quickscene=ch2.obj_scene_ch2play4()
             # quickscene=ch3.obj_scene_ch3p19()
-            # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p11()
             # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p39()
-            quickscene=ch6.obj_scene_ch6p2()
+            # quickscene=ch6.obj_scene_ch6p2()
             # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch7.obj_scene_ch7p19()
-            # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
             # quickscene=ch8.obj_scene_ch8roam()
-
-            # quickscene=ch8.obj_scene_ch8homebye()
-            # quickscene=ch8.obj_scene_ch8weststomp()
-            # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             # minigames
             # quickscene=ch2.obj_scene_ch2p8()# ch2 serenade
@@ -78,7 +72,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
-            # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
+            quickscene=ch8.obj_scene_ch8roam()# ch8 travel
             # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
@@ -87,10 +81,10 @@ class obj_quickscene():
             # test scenes (must initstart because are inventoried)
             # quickscene=tests.obj_scene_testdevnotes()
             # quickscene=tests.obj_scene_testdevnotesfiles()
-            quickscene=tests.obj_scene_testpagebacknext()
+            # quickscene=tests.obj_scene_testpagebacknext()
             # quickscene=tests.obj_scene_textbox()
             #
-            # quickscene=tests.obj_scene_testdrafting()
+            quickscene=tests.obj_scene_testdrafting()
             #
             #
             share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)
@@ -498,17 +492,185 @@ class obj_scene_titlescreen(page.obj_page):
 class obj_scene_realtitlescreen(page.obj_page):
     def makedecorations(self):
         #
-        self.maxchapter=share.datamanager.chapter# highest unlocked chapter
-        self.hasbook=self.maxchapter>0# there is a started book or not
+        # choose a random decoration
+        decooptions=[]
+        if self.maxchapter>0:
+            decooptions.append('book')
+        if self.maxchapter>1:
+            decooptions.append('hero')
+            decooptions.append('hero2')
+            decooptions.append('fish')
+        if self.maxchapter>2:
+            decooptions.append('partner')
+            decooptions.append('house')
+        if self.maxchapter>3:
+            decooptions.append('villain')
+            decooptions.append('villain2')
+            decooptions.append('castle')
+            decooptions.append('bug')
+        if self.maxchapter>4:
+            decooptions.append('bunny')
+            decooptions.append('bunny2')
+            decooptions.append('bedroom')
+        if self.maxchapter>5:
+            decooptions.append('elder')
+            decooptions.append('elder2')
+        if self.maxchapter>6:
+            decooptions.append('sailor')
+            decooptions.append('sailor2')
+            decooptions.append('cow')
+            decooptions.append('ship')
+            decooptions.append('skeletons')
+        if self.maxchapter>7:
+            decooptions.append('mechs')
+            decooptions.append('cake')
         #
-        # decorations
-        self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
-        self.addpart(draw.obj_textbox('V1.0',(1210,670),fontsize='smaller'))
-        if self.hasbook:
-            pass
-            # self.addpart( draw.obj_image('book',(640,230), scale=0.5) )
-            # self.addpart( draw.obj_image('pen',(300,80), scale=0.25) )
-            # self.addpart( draw.obj_image('eraser',(1000,80), scale=0.25) )
+        decochoice=tool.randchoice(decooptions)
+        # decochoice='house'
+        #
+        if decochoice=='book':
+            self.addpart( draw.obj_image('book',(253,496),scale=0.7,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('eraser',(971,519),scale=0.54,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('pen',(1131,460),scale=0.69,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='hero':
+            self.addpart( draw.obj_image('herobasefish',(387,497),scale=0.82,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sun',(1076,195),scale=0.48,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='hero2':
+            self.addpart( draw.obj_image('herobase',(372,382),scale=0.63,rotate=140,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bed',(1058,237),scale=0.62,rotate=-44,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('fish',(802,449),scale=0.41,rotate=-230,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(147,587),scale=0.62,rotate=-328,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sun',(808,224),scale=0.42,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='fish':
+            self.addpart( draw.obj_image('fish',(980,437),scale=0.89,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('hook',(201,106),scale=0.73,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='partner':
+            self.addpart( draw.obj_image('partnerbase',(1088,451),scale=0.68,rotate=-22,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('herobase',(887,459),scale=0.68,rotate=-30,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('love',(986,190),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='house':
+            self.addpart( draw.obj_image('house',(640,453),scale=0.51,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mailbox',(827,360),scale=0.25,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('pond',(272,260),scale=0.49,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(122,338),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(472,223),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(155,96),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('flower',(981,588),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1090,567),scale=0.3,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('flower',(926,515),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1056,477),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1165,492),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='villain':
+            self.addpart( draw.obj_image('villainbase',(1036,447),scale=0.56,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('gun',(897,445),scale=0.23,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bullet',(740,431),scale=0.23,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('castle',(1083,146),scale=0.38,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1208,109),scale=0.32,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1189,272),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(972,209),scale=0.33,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('herobase',(214,472),scale=0.59,rotate=2,fliph=False,flipv=False) )
+        elif decochoice=='villain2':
+            self.addpart( draw.obj_image('love',(447,240),scale=0.48,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('villainbase',(253,660),scale=1.62,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1017,489),scale=1.01,rotate=22,fliph=False,flipv=False) )
+        elif decochoice=='castle':
+            self.addpart( draw.obj_image('castle',(955,414),scale=1.33,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(610,473),scale=0.49,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(432,498),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1190,623),scale=0.45,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1224,465),scale=0.26,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('sun',(1065,88),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('herobase',(105,564),scale=0.33,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bug',(232,659),scale=0.25,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='bug':
+            self.addpart( draw.obj_image('saxophone',(188,511),scale=1,rotate=26,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('musicnote',(491,477),scale=0.63,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('musicnote',(747,362),scale=0.36,rotate=0,fliph=False,flipv=True) )
+            self.addpart( draw.obj_image('musicnote',(346,232),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bug',(1009,302),scale=0.76,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='bunny':
+            self.addpart( draw.obj_image('bunnybase',(278,434),scale=0.56,rotate=4,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cave',(188,183),scale=0.41,rotate=4,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('tree',(80,340),scale=0.53,rotate=4,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('tree',(306,224),scale=0.32,rotate=4,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('tree',(59,154),scale=0.3,rotate=4,fliph=False,flipv=False) )
+        elif decochoice=='bedroom':
+            self.addpart( draw.obj_image('nightstand',(129,580),scale=0.63,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('alarmclock8am',(132,378),scale=0.44,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bed',(553,558),scale=0.75,rotate=0,fliph=False,flipv=False) )
+            # self.addpart( draw.obj_image('bug',(1075,604),scale=0.54,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('moon',(272,89),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='bunny2':
+            self.addpart( draw.obj_image('bunnyhead',(973,588),scale=0.77,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='elder':
+            self.addpart( draw.obj_image('elderbase',(196,475),scale=0.62,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1084,260),scale=0.62,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(927,201),scale=0.35,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(1121,58),scale=0.35,rotate=-186,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(1194,112),scale=0.24,rotate=-218,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(995,90),scale=0.24,rotate=-210,fliph=True,flipv=False) )
+        elif decochoice=='elder2':
+            self.addpart( draw.obj_image('elderbase',(722,717),scale=1.46,rotate=-118,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(185,445),scale=0.74,rotate=-88,fliph=False,flipv=False) )
+        elif decochoice=='sailor':
+            self.addpart( draw.obj_image('herobase',(351,666),scale=0.77,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sailorbase',(111,631),scale=0.77,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase',(962,326),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase_sailorhat',(1120,341),scale=0.4,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('palmtree',(431,309),scale=0.7,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(625,499),scale=0.59,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(814,599),scale=0.47,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('sailboat',(139,237),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(214,330),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(74,354),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(294,79),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='sailor2':
+            self.addpart( draw.obj_image('cow',(350,513),scale=0.81,rotate=12,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('herobase',(250,316),scale=0.48,rotate=-4,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sailorbase',(88,273),scale=0.48,rotate=24,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(750,446),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1093,626),scale=0.43,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('rock',(971,296),scale=0.35,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('palmtree',(1150,97),scale=0.52,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='cow':
+            self.addpart( draw.obj_image('cow',(301,526),scale=0.93,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('palmtree',(1098,303),scale=0.68,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('palmtree',(892,272),scale=0.5,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(763,478),scale=0.5,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(635,610),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(1104,69),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='ship':
+            self.addpart( draw.obj_image('sailboat',(337,455),scale=0.73,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(65,596),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(503,650),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(616,569),scale=0.49,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(886,624),scale=0.53,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(1077,575),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(944,334),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(82,246),scale=0.39,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(1177,461),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('sun',(1098,130),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='skeletons':
+            self.addpart( draw.obj_image('skeletonbase',(244,509),scale=0.57,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase_sailorhat',(496,499),scale=0.57,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase',(782,491),scale=0.57,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase_partnerhair',(1075,489),scale=0.57,rotate=22,fliph=False,flipv=False) )
+        elif decochoice=='mechs':
+            self.addpart( draw.obj_image('heromechpunch',(341,417),scale=0.76,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('villainmechbase',(955,415),scale=0.76,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1212,602),scale=0.32,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(130,85),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(1202,281),scale=0.3,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(838,209),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(1034,164),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='cake':
+            self.addpart( draw.obj_image('cake',(640,525),scale=0.66,rotate=0,fliph=False,flipv=False) )
+
+
+
+        else:
+            pass# dont draw anything
+
 
     def setup(self):
         #
@@ -518,6 +680,10 @@ class obj_scene_realtitlescreen(page.obj_page):
         # decorations (dependent on progress)
         self.makedecorations()
         share.display.reseticon()# window icon
+        #
+        # Main
+        self.textboxtitle=draw.obj_textbox('The Book of Things',(640,80),fontsize='big',hover=self.hasbook,hovercolor=(0,0,0))
+        self.addpart(self.textboxtitle)
         #
         # menu
         xref=640
@@ -551,11 +717,14 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_music('tension') )
         # devtools
         if share.devaccess:
-            self.addpart(draw.obj_textbox('developper mode is on (edit settings.txt to change)',(30,680),fontsize='smaller',xleft=True,color=share.colors.instructions))
-            self.sprite_quick=draw.obj_textbox('quickscene [left]',(640,370),fontsize='small',color=share.colors.instructions,hover=True)
-            self.addpart(self.sprite_quick)
-            self.sprite_appendix=draw.obj_textbox('appendix',(640,430),fontsize='small',color=share.colors.instructions,hover=True)
-            self.addpart(self.sprite_appendix)
+            tempo='developper mode is on (edit settings.txt to change) '
+            tempo += '[f:quickscene] '
+            tempo += '[space/enter:appendix] '
+            self.addpart(draw.obj_textbox(tempo,(30,680),fontsize='smaller',xleft=True,color=share.colors.instructions))
+            # self.sprite_quick=draw.obj_textbox('quickscene [left]',(xref,yref+3*dyref),fontsize=fontref,color=share.colors.instructions,hover=True)
+            # self.addpart(self.sprite_quick)
+            # self.sprite_appendix=draw.obj_textbox('appendix [right]',(xref,yref+4*dyref),fontsize=fontref,color=share.colors.instructions,hover=True)
+            # self.addpart(self.sprite_appendix)
 
 
         # devtools: quick scene
@@ -582,6 +751,10 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(obj_scene_settings())
             elif self.sprite_exit.isclicked(controls):
                 share.quitgame()
+
+
+            #
+
         #
         if controls.gq and controls.gqc:
             share.quitgame()
@@ -589,13 +762,20 @@ class obj_scene_realtitlescreen(page.obj_page):
         #############################################3
         # devtools
         if share.devaccess:
-            if self.sprite_appendix.isclicked(controls):
+            if controls.ga and controls.gac:
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
 
-            if self.sprite_quick.isclicked(controls) or controls.gl and controls.glc:
+            if controls.f and controls.fc:
                 self.sound_menugo.play()
                 self.gotoquickscene()
+
+            if self.textboxtitle.isclicked(controls):# reload
+                share.scenemanager.switchscene(share.titlescreen,initstart=True)
+            # self.sprite_appendix.show=share.devmode
+            # self.sprite_quick.show=share.devmode
+
+
 
 
         #############################################3
@@ -609,12 +789,12 @@ class obj_scene_realtitlescreen(page.obj_page):
 class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
     def setup(self):
         #
+        # Main
+        self.textboxtitle=draw.obj_textbox('The Book of Things',(640,80),fontsize='big')
+        self.addpart(self.textboxtitle)
         # current progress
         self.maxchapter=share.datamanager.chapter# highest unlocked chapter
         self.hasbook=self.maxchapter>0# there is a started book or not
-        # decorations (dependent on progress)
-        self.makedecorations()
-        #
         # menu
         xref=480
         yref=200
@@ -726,11 +906,13 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
         if (kwargs is not None) and ('chapter' in kwargs):
             self.tochapter=kwargs["chapter"]
         #
+        # Main
+        self.textboxtitle=draw.obj_textbox('The Book of Things',(640,80),fontsize='big')
+        self.addpart(self.textboxtitle)
         # current progress
         self.maxchapter=share.datamanager.chapter# highest unlocked chapter
         self.hasbook=self.maxchapter>0# there is a started book or not
-        # decorations (dependent on progress)
-        self.makedecorations()
+
         #
         # get list of subscenes
         self.gotobookmarkscene=obj_gotobookmark()
@@ -789,6 +971,9 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
 ####################################################################################################################
 # Settings Menu
 class obj_scene_settings(obj_scene_realtitlescreen):
+    def makedecorations(self):
+        self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
+        self.addpart(draw.obj_textbox('V1.0',(1210,670),fontsize='smaller'))
     def setup(self,**kwargs):
         self.tosoundon=False# start page when turning back sound on
         # options

@@ -198,7 +198,7 @@ class obj_sounds:
         self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
         self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
         # fishing
-        self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
+        self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.ogg' , 1 )
         self.dict['fishing_catch']=( 'world/fish/1up3.ogg' , 1 )
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
