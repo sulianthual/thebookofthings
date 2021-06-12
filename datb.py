@@ -89,8 +89,8 @@ class obj_sounds:
         #
         # general use
         self.dict['error']=( 'general/error.ogg' , 1 )# sound is missing
-        self.dict['menugo']=( 'general/drop_001.ogg' , 1 )# browse menu and pages (forward)
-        self.dict['menuback']=( 'general/drop_004.ogg' , 1 )# browse menu and pages (back)
+        self.dict['menugo']=( 'general/drop_001.ogg' , 0.5 )# browse menu and pages (forward)
+        self.dict['menuback']=( 'general/drop_004.ogg' , 0.5 )# browse menu and pages (back)
         self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
         self.dict['erasebook']=( 'general/link (3).wav' , 1 )# erase the book
         self.dict['revealscary']=( 'general/reveal_reversed-suspenseful-harp-3shorter.wav' , 1 )# erase the book
@@ -121,13 +121,13 @@ class obj_sounds:
         self.dict['book1']=( 'book/wall (4).wav' , 1 )
         self.dict['book3']=( 'book/wall (2).wav' , 1 )
         # ch1
-        # self.dict['hero1']=( 'hero/cute_03.ogg' , 1 )
         self.dict['hero1']=( 'hero/grunt_male-grunt-disapprove.wav' , 1 )
         self.dict['hero2']=( 'hero/haha01.wav' , 1 )
         self.dict['hero3']=( 'hero/sniff.wav' , 1 )
         self.dict['hero4']=( 'hero/grunt__oh-1.wav' , 1 )
         self.dict['hero5']=( 'hero/haha_laugh1.wav' , 1 )
         self.dict['hero6']=( 'hero/cough_02.ogg' , 1 )
+        self.dict['hero_what']=( 'hero/whatconfused-what_male.ogg' , 1 )# ch7
         # ch2
         self.dict['partner1']=( 'partner/haha-girlp1.ogg' , 1 )
         self.dict['partner2']=( 'partner/haha-girlp2.ogg' , 1 )
@@ -138,6 +138,7 @@ class obj_sounds:
         self.dict['villain2']=( 'villain/haha_evil-laughshort.wav' , 0.5 )
         self.dict['villain3']=( 'villain/grunt_03.ogg' , 1 )
         self.dict['villain4']=( 'villain/monster_07.ogg' , 1 )
+        self.dict['villain_bangdoor']=( 'villain/wood_hit_09.ogg' , 1 )# ch7
         self.dict['castle_elec']=( 'castle/paralyzer-discharge-03.wav' , 1 )
         self.dict['castle_hurt']=( 'castle/die_02.ogg' , 1 )
         self.dict['castle1']=( 'castle/robot_1.ogg' , 0.5 )
@@ -177,8 +178,8 @@ class obj_sounds:
         self.dict['skeleton5']=( 'skeleton/ghost_scream1.wav' , 1 )
         self.dict['cow']=( 'cow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
         # ch7
-        self.dict['hero_what']=( 'hero/what__confused-what_male.ogg' , 1 )
-        self.dict['villain_bangdoor']=( 'villain/wood_hit_09.ogg' , 1 )
+
+
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
@@ -572,7 +573,7 @@ class obj_datamanager:
         self.dictcontrolnames['down']='down'
         self.dictcontrolnames['left']='left'
         self.dictcontrolnames['right']='right'
-        self.dictcontrolnames['action']='enter/space'
+        self.dictcontrolnames['action']='space'
         self.dictcontrolnames['back']='tab'
         self.dictcontrolnames['quit']='esc'
         self.dictcontrolnames['dev']='lctrl'
@@ -826,30 +827,12 @@ class obj_snapshotmanager:
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
             dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-            dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-            dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-            dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-            dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+            dispgroup1.addpart( 'part3', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
             dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
-        if name in ['scar','angryface','castle','mountain','gun','lightningbolt','cave']:
-            # villainmech complete
-            dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature',(640,360)) )
-            dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
-            dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-            dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-            dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
-            dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
-            dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
-            dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-            dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-        if name in ['scar','angryface','castle','mountain','gun','lightningbolt','cave']:
+        if name in ['castle','mountain','gun','lightningbolt','cave']:
             # villainmech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1a', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-            dispgroup1.addpart( 'part2a', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-            dispgroup1.addpart( 'part3a', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-            dispgroup1.addpart( 'part4a', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+            dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
             dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
             dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
             dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
@@ -858,20 +841,24 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
+        if name in ['scar','angryface']:
+            # villainmech complete
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+            dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+            dispgroup1.addpart( 'part3', draw.obj_image('villainmechbase_noface',(640,360)) )
+            dispgroup1.snapshot((640,360,410,330),'villainmechbase')
         #
         if name=='happyface':
             # heromech armature
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-            dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
-            dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-            dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-            dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+            dispgroup1.addpart( 'part2', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
             dispgroup1.snapshot((640,360,300,220),'heromecharmature')
-        if name in ['happyface','house','bush','fish','flower','sailboat']:
-            # heromech complete
+        if name in ['house','bush','fish','flower','sailboat']:
+            # heromech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
+            dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
             dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
             dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
             dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
@@ -879,10 +866,16 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
             dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-            dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-            dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-            dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+            dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
+
+        if name =='happyface':
+            # heromech complete
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
+            dispgroup1.addpart( 'part2', draw.obj_image('heromechbase_noface',(640,360)) )
             dispgroup1.snapshot((640,360,410,330),'heromechbase')
+            print('redone')
+
 
 
 

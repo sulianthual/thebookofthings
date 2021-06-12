@@ -761,11 +761,11 @@ class obj_controls:
             self.glc=self.ac or self.leftc
             self.grc=self.dc or self.rightc
         #
-        self.ga=self.space or self.enter
+        self.ga=self.space# or self.enter
         self.gb=self.tab
         self.gq=self.esc
         self.gdev=self.lctrl
-        self.gac=self.spacec or self.enterc
+        self.gac=self.spacec# or self.enterc
         self.gbc=self.tabc
         self.gqc=self.escc
         self.gdevc=self.lctrlc

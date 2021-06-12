@@ -616,8 +616,15 @@ class obj_scene_ch5p23a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p23())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p24())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
     def setup(self):
-        self.text=[' This is it, start when you are ready. ']
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' This is it, press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
         #
@@ -1205,10 +1212,15 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p35())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p36())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
     def setup(self):
-        self.text=[\
-                  'Epic Battle Time! Start when you are ready. ',\
-                   ]
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' Battle time! Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,tutorial=True)
         self.addpart(self.world)
         #

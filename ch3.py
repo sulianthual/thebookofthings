@@ -627,8 +627,15 @@ class obj_scene_ch3p18a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p18())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p19())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
     def setup(self):
-        self.text=[' This is it, start when you are ready. ']
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' This is it, press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
         #
@@ -1186,7 +1193,7 @@ class obj_scene_ch3p33(page.obj_chapterpage):
         animation1.addsound( "bug1", [24, 49, 166],skip=1 )
         #
         bugword=share.datamanager.getword('bug')
-        self.addpart( draw.obj_drawing('bug',(640,450),legend='Draw a '+bugword+' ',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('bug',(640,450),legend='draw a '+bugword+' (facing right)',shadow=(200,200)) )
         #
 
         self.addpart( draw.obj_music('tension') )

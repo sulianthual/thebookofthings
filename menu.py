@@ -52,11 +52,12 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p19()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p11()
-            # quickscene=ch5.obj_scene_ch5p37()
+            # quickscene=ch5.obj_scene_ch5p35a()
             # quickscene=ch5.obj_scene_ch5p39()
-            quickscene=ch6.obj_scene_ch6p22()
-            # quickscene=ch6.obj_scene_ch6p39()
+            # quickscene=ch6.obj_scene_ch6p26()
+            # quickscene=ch6.obj_scene_ch6p38c()
             # quickscene=ch7.obj_scene_ch7p19()
+            quickscene=ch7.obj_scene_ch7p48c()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -1135,7 +1136,7 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         self.hasbook=self.maxchapter>0# there is a started book or not
         #
 
-        self.text=['These are the game controls. [tab: back] ']
+        self.text=['These are the game controls.']
         #
         # Game controls instructions
         self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
@@ -1181,11 +1182,7 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         self.hasbook=self.maxchapter>0# there is a started book or not
         #
         credits=share.gamecredits.gettext()# game credits from database
-        if not self.domousebrowse:
-            credits += '['+share.datamanager.controlname('back')+': back]'
         self.text=[credits]
-        #
-        self.addpart( draw.obj_music('tension') )
         #
         if self.hasbook:
             self.addpart( draw.obj_music('piano') )
@@ -1215,8 +1212,6 @@ class obj_scene_erasebook(page.obj_chapterpage):
         tempo+= '+'+share.datamanager.controlname('down')
         tempo+= '] to erase the book. '
         tempo+= 'You will loose all your drawings and progress. '
-        if not self.domousebrowse:
-            tempo += '[',share.datamanager.controlname('back'),': back]'
         self.text=[tempo]
         #
         self.addpart( draw.obj_music('tension') )
@@ -1232,11 +1227,7 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
     def setup(self):
-        tempo = 'The book has vanished... '
-        if not self.domousebrowse:
-            tempo += '[',share.datamanager.controlname('back'),': back]'
-
-        self.text=[tempo]
+        self.text=['The book has vanished...']
         share.datamanager.erasebook()
         #
         self.sound=draw.obj_sound('erasebook')

@@ -723,7 +723,7 @@ class obj_scene_ch6p26(page.obj_chapterpage):
         self.world=world.obj_world_travel(self,start='beach',goal='island',boat=True,chapter=6,sailor=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('sailor') )
 
 
 class obj_scene_ch6p27(page.obj_chapterpage):
@@ -1150,8 +1150,15 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p39())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
     def setup(self):
-        self.text=[' This is it, start when you are ready. ']
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' This is it, press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
         self.textkeys={'pos':(100,50),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)

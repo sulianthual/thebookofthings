@@ -31,7 +31,7 @@ class obj_scene_chapter1(page.obj_chapterpage):
         self.text=['-----   Chapter I: The Hero   -----   ',\
                    '\n It was a new day for the book of things, the pen and the eraser. ',\
                   'The book of things said: today, we are going to write an amazing story. ',\
-                  'Lets start by writing the first page. ',\
+                  'Lets start with the first page. ',\
                    ]
         animation1=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation1,scale=0.5)

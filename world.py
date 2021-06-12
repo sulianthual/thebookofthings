@@ -1153,30 +1153,7 @@ class obj_world_eatfish(obj_world):
 class obj_world_travel(obj_world):
     def setup(self,**kwargs):
         #
-        ##########################3
-        # Premake necessary images
-        # combine herohead+stickwalk = herowalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('herohead',(640,200),scale=0.5)
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',image1)
-        dispgroup1.addpart('part2',image2)
-        dispgroup1.snapshot((640,360,200,300),'herowalk')
-        # combine partnerhead+stickwalk = partnerwalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
-        image2=draw.obj_image('partnerhair',(640,200))
-        image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
-        dispgroup2=draw.obj_dispgroup((640,360))
-        dispgroup2.addpart('part1',image1)
-        dispgroup2.addpart('part2',image2)
-        dispgroup2.addpart('part3',image3)
-        dispgroup2.snapshot((640,330,200,330),'partnerwalk')
-        # combine sailorhead+stickwalk = sailorwalk
-        dispgroup2=draw.obj_dispgroup((640,360))
-        dispgroup2.addpart('part1',draw.obj_image('stickwalk',(640,460),path='premade') )
-        dispgroup2.addpart('part2',draw.obj_image('sailorbaldhead',(640,200),scale=0.5))
-        dispgroup2.addpart('part3',draw.obj_image('sailorhat',(640,200-100),scale=0.5))
-        dispgroup2.snapshot((640,360-15,200,360+15),'sailorwalk')
+
 
         #
         ##############################################3
@@ -1216,6 +1193,35 @@ class obj_world_travel(obj_world):
             if 'beachmark' in kwargs: self.addbeachmark=kwargs["beachmark"]
             if 'ambience' in kwargs: self.doambience=kwargs["ambience"]
             #
+        ##########################3
+        # Premake necessary images
+        # combine herohead+stickwalk = herowalk
+        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image2=draw.obj_image('herohead',(640,200),scale=0.5)
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',image1)
+        dispgroup1.addpart('part2',image2)
+        dispgroup1.snapshot((640,360,200,300),'herowalk')
+        # combine partnerhead+stickwalk = partnerwalk
+        if self.addpartner:
+            image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+            image2=draw.obj_image('partnerhair',(640,200))
+            image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
+            dispgroup2=draw.obj_dispgroup((640,360))
+            dispgroup2.addpart('part1',image1)
+            dispgroup2.addpart('part2',image2)
+            dispgroup2.addpart('part3',image3)
+            dispgroup2.snapshot((640,330,200,330),'partnerwalk')
+        # combine sailorhead+stickwalk = sailorwalk
+        if self.addsailor:
+            dispgroup2=draw.obj_dispgroup((640,360))
+            dispgroup2.addpart('part1',draw.obj_image('stickwalk',(640,460),path='premade') )
+            dispgroup2.addpart('part2',draw.obj_image('sailorbaldhead',(640,200),scale=0.5))
+            dispgroup2.addpart('part3',draw.obj_image('sailorhat',(640,200-100),scale=0.5))
+            dispgroup2.snapshot((640,360-15,200,360+15),'sailorwalk')
+        ##########################3
+        #
+        #
         if type(self.wherestart)==tuple:
             self.xyhero=self.wherestart
         else:
@@ -2028,7 +2034,7 @@ class obj_world_dodgegunshots(obj_world):
         # text
         self.text_undone.addpart( 'text1', \
         draw.obj_textbox('['+share.datamanager.controlname('up')+': jump] ['+share.datamanager.controlname('down')+': crouch]',(640,660),color=share.colors.instructions) )
-        self.text_donewin.addpart( 'text1', draw.obj_textbox('he is the one!',(640,360),fontsize='huge') )
+        self.text_donewin.addpart( 'text1', draw.obj_textbox('{hero_he} is the one!',(640,360),fontsize='huge') )
         self.text_donelost.addpart( 'text1', draw.obj_textbox('you are dead',(640,360),fontsize='huge') )
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
@@ -2204,7 +2210,6 @@ class obj_world_dodgegunshots(obj_world):
 class obj_world_stompfight(obj_world):
     def setup(self,**kwargs):
 
-
         ##########################3
         # Premake necessary images
         # combine stickkick+villainhead=villainkick
@@ -2360,7 +2365,7 @@ class obj_world_stompfight(obj_world):
         tempo='['+share.datamanager.controlname('left')
         tempo +='/'+share.datamanager.controlname('right')+': move] '
         tempo +='['+share.datamanager.controlname('up')+': jump] '
-        tempo +='['+share.datamanager.controlname('down')+': kick] '
+        tempo +='['+share.datamanager.controlname('action')+': kick] '
 
         # self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(25,self.ybar+75),xleft=True,color=share.colors.instructions) )
         self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(640,self.ybar+75),color=share.colors.instructions) )
@@ -2440,7 +2445,7 @@ class obj_world_stompfight(obj_world):
                             self.hero.dict['stand_left'].show=False
                             self.hero.dict['hurt'].show=False
                             self.hero.dict['hurttext'].show=False
-                    if controls.gd and controls.gdc:
+                    if controls.ga and controls.gac:
                         self.soundkick.play()
                         self.herokicking=True
                         self.hero.dict['kick_right'].show=self.herofaceright
@@ -3770,29 +3775,27 @@ class obj_grandactor_bushstealthskeleton_partnerhair(obj_grandactor_bushstealths
 class obj_world_bushstealth(obj_world):
     def setup(self,**kwargs):
         ####################################
+        # these drawings are already made at drawing time...
         # combine skeletonhead+stickbody = skeletonbase
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-        # dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
-        # dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
-        # dispgroup1.addpart('part6',draw.obj_image('scar',(640,200),scale=0.5) )
-        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        # dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        # dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
+        # dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
         # skeleton with hair
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
-        dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-        dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        # dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
+        # dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        # dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
+        # dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
         # skeleton with sailor hat
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-        dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-        dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
-        dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        # dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        # dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
+        # dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
+        # dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
         ####################################
         #
         # default parameters
@@ -4345,94 +4348,95 @@ class obj_world_ridecow(obj_world):
 class obj_world_mechfight(obj_world):
     def setup(self,**kwargs):
 
-
         ##########################3
-        # Premake necessary images
+        # Premake necessary images (can be slow to load!)
+        # (already done during drawing completion by datb.snapshotmanager)
         # villainmech armature
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
-        dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
-        # villainmech complete
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature',(640,360)) )
-        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-        dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-        #
-        # villainmech complete no face
-        dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1=draw.obj_dispgroup((640,360))
         # dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
         # dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
-        dispgroup1.snapshot((640,360,300,220),'villainmecharmature_noface')
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360)) )
-        dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-        dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        # dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
+        # villainmech complete
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature',(640,360)) )
+        # dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        # dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        # dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        # dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        # dispgroup1.snapshot((640,360,410,330),'villainmechbase')
+        #
+        # villainmech
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        # dispgroup1.snapshot((640,360,300,220),'villainmecharmature_noface')
+        # villainnech no face
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
+        # dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        # dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('lightningbolt',(640+300,470),scale=0.35,rotate=-45,fliph=True) )
+        # dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
+        # dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
+        # dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
         #
         # heromech armature
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
-        dispgroup1.snapshot((640,360,300,220),'heromecharmature')
-        # heromech complete
-        dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
-        dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
-        dispgroup1.snapshot((640,360,410,330),'heromechbase')
-        #
-        # heromech complete no face
-        dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1=draw.obj_dispgroup((640,360))
         # dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
-        dispgroup1.snapshot((640,360,300,220),'heromecharmature_noface')
-        dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360)) )
-        dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
-        dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
-        dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
-        dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
-        dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.snapshot((640,360,300,220),'heromecharmature')
+        # heromech complete
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
+        # dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
+        # dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        # dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        # dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.snapshot((640,360,410,330),'heromechbase')
         #
+        # heromech basis (redundant with villainmecharmature_noface expcept maybe for fliph)
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.snapshot((640,360,300,220),'heromecharmature_noface')# move to premade
+        # heromech no face
+        # dispgroup1=draw.obj_dispgroup((640,360))
+        # dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
+        # dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
+        # dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        # dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
+        # dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
+        # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
+        #
+        # The snapshots below are remade for the minigame, because they arent used anywhere else
         # villainmech punch
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )

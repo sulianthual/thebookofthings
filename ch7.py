@@ -910,7 +910,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
                     'Move with ','['+share.datamanager.controlname('left')+'/',\
                     share.datamanager.controlname('right')+']',', ',\
                     ' jump with ','['+share.datamanager.controlname('up')+']',\
-                    ' and kick with ','['+share.datamanager.controlname('down')+']','. ',\
+                    ' and kick with ','['+share.datamanager.controlname('action')+']','. ',\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
@@ -946,11 +946,18 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p24a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p25())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,620)
-        self.textboxnextpage_xy=(1230,620)
+    # def textboxplace(self):
+    #     self.textboxprevpage_xy=(1050,620)
+    #     self.textboxnextpage_xy=(1230,620)
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
     def setup(self):
-        self.text=[' This is it, start when you are ready. ']
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' This is it, press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
         #
@@ -1741,11 +1748,18 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p48b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p49())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(50,250)
-        self.textboxnextpage_xy=(250,250)
+    # def textboxplace(self):
+    #     self.textboxprevpage_xy=(50,250)
+    #     self.textboxnextpage_xy=(250,250)
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
     def setup(self):
-        self.text=[' This is it, start when you are ready. ']
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' This is it, press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
         #

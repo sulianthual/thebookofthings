@@ -28,21 +28,11 @@ class obj_scene_prologue(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         share.datamanager.setbookmark('ch0_start')
-        self.domousebrowse=share.datamanager.domousebrowse
-        if not self.domousebrowse:
-            tempo='['+share.datamanager.controlname('action')+']'
-            tempo2='But one could press '+tempo+' to continue.'
-        else:
-            tempo='['+share.datamanager.controlname('action')+']'
-            tempo2='But one could press [next] to continue.'
-
         self.text=[\
                     '-----   Prologue: The book of things   -----   ',\
                     '\nIn the beginning, there was nothing. Absolutely nothing.',\
-                    tempo2,\
+                    'But one could press [next] to continue.'
                     ]
-        if not self.domousebrowse:
-            self.addpart(draw.obj_textbox('Press '+tempo+' to continue',(640,400),color=share.colors.instructions))
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -53,20 +43,10 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        self.domousebrowse=share.datamanager.domousebrowse
-        if not self.domousebrowse:
-            tempo1='['+share.datamanager.controlname('action')+']'
-            tempo2='['+share.datamanager.controlname('back')+']'
-            tempo3='['+share.datamanager.controlname('quit')+']'
-            self.text=['One could press '+tempo1+' to continue, '+tempo2+' to go back, or '+tempo3+' to go back to the menu. It was always like that.']
-            self.addpart(draw.obj_textbox('press '+tempo1+' to continue',(640,400),color=share.colors.instructions))
-            self.addpart(draw.obj_textbox('press '+tempo2+' to go back',(640,500),color=share.colors.instructions))
-            self.addpart(draw.obj_textbox('press '+tempo3+' to return to menu',(640,600),color=share.colors.instructions))
-        else:
-            self.text=['One could press [next] to continue, [back] to go back, or [esc] to go back to the menu. It was always like that.']
-            self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
-            self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
-            self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
+        self.text=['One could press [next] to continue, [back] to go back, or [esc] to go back to the menu. It was always like that.']
+        self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
+        self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
         #
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)
@@ -295,7 +275,7 @@ class obj_scene_ch0p11(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p10())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p12())
+        share.scenemanager.switchscene(obj_scene_ch0p13())
     def setup(self):
         self.text=[\
                     'Very nice to meet you ',\
@@ -320,51 +300,51 @@ class obj_scene_ch0p11(page.obj_chapterpage):
 
 
 
-class obj_scene_ch0p12(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p11())
-    def nextpage(self):
-        if self.updateclicked:
-            share.scenemanager.switchscene(obj_scene_ch0p12())# reload
-        else:
-            share.scenemanager.switchscene(obj_scene_ch0p13())
-    def triggernextpage2(self,controls):
-        return self.updateclicked or self.triggernextpage(controls)
-    def endpage(self):
-        super().endpage()
-        # scale down mouse pointer draw
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('mousepointerbase',(640,360),scale=1,path='data'))
-        dispgroup1.addpart('part2',draw.obj_image('mousepointerdraw',(640+self.xoff*0.05,360+self.yoff*0.05),scale=0.05))
-        dispgroup1.snapshot((640,360,25,25),'mousepointer')
-    def setup(self):
-        share.datamanager.setbookmark('ch0_drawpointer')
-        self.text=[\
-                'Lets change the mouse pointer to something more super-duper-',\
-                    ('{playermood}',share.colors.player),'! ',\
-                    ]
-        #
-        self.xoff=160
-        self.yoff=self.xoff
-        self.addpart( draw.obj_music('piano') )
-        drawing1= draw.obj_drawing('mousepointerdraw',\
-        (640,400),\
-        shadow=(400-self.xoff,400-self.yoff),\
-        legend='draw the mouse pointer',brush=share.brushes.megapen)
-        self.addpart( drawing1 )
-        self.addpart( draw.obj_image('mousepointerbase',(640-self.xoff,400-self.yoff),scale=20,path='data') )
-        self.textbox_refresh=draw.obj_textbox('[update]',(1000,300),color=share.colors.instructions,hover=True)
-        self.addpart(self.textbox_refresh)
-        self.updateclicked=False
-    def page(self,controls):
-        self.updateclicked=self.textbox_refresh.isclicked(controls)
+# class obj_scene_ch0p12(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch0p11())
+#     def nextpage(self):
+#         if self.updateclicked:
+#             share.scenemanager.switchscene(obj_scene_ch0p12())# reload
+#         else:
+#             share.scenemanager.switchscene(obj_scene_ch0p13())
+#     def triggernextpage2(self,controls):
+#         return self.updateclicked or self.triggernextpage(controls)
+#     def endpage(self):
+#         super().endpage()
+#         # scale down mouse pointer draw
+#         dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+#         dispgroup1.addpart('part1',draw.obj_image('mousepointerbase',(640,360),scale=1,path='data'))
+#         dispgroup1.addpart('part2',draw.obj_image('mousepointerdraw',(640+self.xoff*0.05,360+self.yoff*0.05),scale=0.05))
+#         dispgroup1.snapshot((640,360,25,25),'mousepointer')
+#     def setup(self):
+#         share.datamanager.setbookmark('ch0_drawpointer')
+#         self.text=[\
+#                 'If you want, change the mouse pointer to something more super-duper-',\
+#                     ('{playermood}',share.colors.player),'! ',\
+#                     ]
+#         #
+#         self.xoff=160
+#         self.yoff=self.xoff
+#         self.addpart( draw.obj_music('piano') )
+#         drawing1= draw.obj_drawing('mousepointerdraw',\
+#         (640,400),\
+#         shadow=(400-self.xoff,400-self.yoff),\
+#         legend='draw the mouse pointer',brush=share.brushes.megapen)
+#         self.addpart( drawing1 )
+#         self.addpart( draw.obj_image('mousepointerbase',(640-self.xoff,400-self.yoff),scale=20,path='data') )
+#         self.textbox_refresh=draw.obj_textbox('[update]',(1000,300),color=share.colors.instructions,hover=True)
+#         self.addpart(self.textbox_refresh)
+#         self.updateclicked=False
+#     def page(self,controls):
+#         self.updateclicked=self.textbox_refresh.isclicked(controls)
 
 
 
 
 class obj_scene_ch0p13(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p12())
+        share.scenemanager.switchscene(obj_scene_ch0p11())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
