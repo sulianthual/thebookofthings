@@ -608,6 +608,9 @@ class obj_scene_ch6p22(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p21())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p23())
+    def textboxplace(self):
+        self.textboxprevpage_xy=(50,660)
+        self.textboxnextpage_xy=(230,660)
     def setup(self):
         share.datamanager.setbookmark('ch6_drawship')
         self.text=[\

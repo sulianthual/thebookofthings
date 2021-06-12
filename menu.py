@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        # if True :
-        if False :
+        if True :
+        # if False :
             # regular scenes
             #
             quickscene=obj_scene_settings()
@@ -54,7 +54,7 @@ class obj_quickscene():
             # quickscene=ch4.obj_scene_ch4p11()
             # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p39()
-            # quickscene=ch6.obj_scene_ch6p2()
+            quickscene=ch6.obj_scene_ch6p22()
             # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch7.obj_scene_ch7p19()
             # quickscene=ch7.obj_scene_ch7ending()
@@ -72,7 +72,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
-            quickscene=ch8.obj_scene_ch8roam()# ch8 travel
+            # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
             # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
