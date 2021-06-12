@@ -159,7 +159,7 @@ class obj_scene_ch1p5(page.obj_chapterpage):
                 'Now, lets draw a ',('bed',share.colors.item),' ',\
                 'such that our ',('hero',share.colors.hero2),' can wake up.',\
                    ]
-        drawing=draw.obj_drawing('bed',(640,450),legend='draw a bed',shadow=(400,200))
+        drawing=draw.obj_drawing('bed',(640,450),legend='draw a bed (facing right)',shadow=(400,200))
         self.addpart( drawing )
         #
         self.addpart( draw.obj_music('hero') )
