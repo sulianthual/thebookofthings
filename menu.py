@@ -525,7 +525,10 @@ class obj_scene_realtitlescreen(page.obj_page):
             decooptions.append('mechs')
             decooptions.append('cake')
         #
-        decochoice=tool.randchoice(decooptions)
+        if decooptions:
+            decochoice=tool.randchoice(decooptions)
+        else:
+            decochoice=None
         # decochoice='house'
         #
         if decochoice=='book':
