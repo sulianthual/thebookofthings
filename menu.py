@@ -44,7 +44,7 @@ class obj_quickscene():
             quickscene=obj_scene_settings()
 
             # quickscene=ch0.obj_scene_prologue()
-            # quickscene=ch0.obj_scene_ch0p12()
+            quickscene=ch0.obj_scene_ch0p10()
             # quickscene=ch1.obj_scene_ch1p12()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p6a()
@@ -57,7 +57,7 @@ class obj_quickscene():
             # quickscene=ch6.obj_scene_ch6p26()
             # quickscene=ch6.obj_scene_ch6p38c()
             # quickscene=ch7.obj_scene_ch7p19()
-            quickscene=ch7.obj_scene_ch7p48c()
+            quickscene=ch7.obj_scene_ch7p42()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -118,7 +118,7 @@ class obj_gotobookmark():
             self.dict['ch0_drawpen']='draw the pen'
             self.dict['ch0_draweraser']='draw the eraser'
             self.dict['ch0_drawbook']='draw the book'
-            self.dict['ch0_meetbook']='enter profile name'
+            self.dict['ch0_meetbook']='write your mood'
             self.dict['ch0_drawpointer']='draw the pointer'
             # self.dict['ch0_endunlock']='Prologue End'
             if bookmarkname == 'ch0_start':# also default in datb.py if book is empty

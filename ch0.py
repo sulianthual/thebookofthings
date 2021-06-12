@@ -229,31 +229,30 @@ class obj_scene_ch0p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def textboxplace(self):
-        self.textboxprevpage_xy=(900,140)
-        self.textboxnextpage_xy=(1080,140)
+        self.textboxprevpage_xy=(580,140)
+        self.textboxnextpage_xy=(760,140)
     def setup(self):
         share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempom='['+share.datamanager.controlname('mouse')+']'
         tempok='['+share.datamanager.controlname('keyboard')+']'
         self.text=['Well hello, said the book of things, ',\
-                'who do I have the honor of speaking with. ',\
-                    'Please write a profile name on my first page and your current mood. ',\
+                'very nice to meet you. ',\
+                    'How are you feeling today, could you tell me your current mood. ',\
                     '\n\n ',\
-                  ('select the box with '+tempo1+' and type a name with the '+tempok+'. ',share.colors.instructions),\
+                  ('select the box with '+tempo1+' and type a mood with the '+tempok+'. ',share.colors.instructions),\
                   '\n\n\n\n ',\
                  ('select an option with '+tempo1+'. ',share.colors.instructions),\
                  ]
-        self.addpart( draw.obj_textinput('playername',20,(640,330), legend='profile name') )
+        self.addpart( draw.obj_textinput('playermood',30,(640,330), legend='write down your mood') )
         #
-
         yref=560
-        self.addpart( draw.obj_textbox('current mood: ',(180,yref)) )
-        textchoice=draw.obj_textchoice('playermood')
-        textchoice.addchoice('1. whatever','whatever',(440,yref))
-        textchoice.addchoice('2. okay','okay',(640,yref))
-        textchoice.addchoice('3. amazing','amazing',(840,yref))
-        textchoice.addchoice('4. delirious','delirious',(1040,yref))
+        self.addpart( draw.obj_textbox('how much: ',(180,yref)) )
+        textchoice=draw.obj_textchoice('playermoodhowmuch')
+        textchoice.addchoice('1. a bit','a bit',(440,yref))
+        textchoice.addchoice('2. kinda','kinda',(640,yref))
+        textchoice.addchoice('3. very','very',(840,yref))
+        textchoice.addchoice('4. sooooo','sooooo',(1040,yref))
         self.addpart( textchoice )
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360-300),record=False)
@@ -278,10 +277,10 @@ class obj_scene_ch0p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p13())
     def setup(self):
         self.text=[\
-                    'Very nice to meet you ',\
-                    ('{playername}',share.colors.player), \
-                    ', said the book of things, ',\
-                    'I am also feeling very super-duper-',\
+                    'Very nice to meet you, ',\
+                    'said the book of things, ',\
+                    'I am also feeling ',\
+                    ('{playermoodhowmuch}',share.colors.player),' ',\
                     ('{playermood}',share.colors.player),'! ',\
                     ]
         animation1=draw.obj_animation('bookmove','book',(640,360),record=False)

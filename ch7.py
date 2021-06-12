@@ -2030,9 +2030,7 @@ class obj_scene_ch7end(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7endend())
     def setup(self):
         self.text=['This is goodbye, said the book of things. ',\
-                   'But come back anytime, ',\
-                   ('{playername}',share.colors.player),\
-                   '! ',\
+                   'But come back anytime! ',\
                    ]
         animation1=draw.obj_animation('bookmove','book',(640,360))
         self.addpart( animation1 )

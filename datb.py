@@ -841,7 +841,7 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
-        if name in ['scar','angryface']:
+        if name in ['scar','angryface','castle','mountain','gun','lightningbolt','cave']:
             # villainmech complete
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
@@ -867,8 +867,7 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
-
-        if name =='happyface':
+        if name in ['happyface','house','bush','fish','flower','sailboat']:
             # heromech complete
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
