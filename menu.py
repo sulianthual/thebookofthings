@@ -754,7 +754,8 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(obj_scene_settings())
             elif self.sprite_exit.isclicked(controls):
                 share.quitgame()
-
+            elif self.textboxtitle.isclicked(controls):# reload
+                share.scenemanager.switchscene(share.titlescreen,initstart=True)
 
             #
 
@@ -772,11 +773,6 @@ class obj_scene_realtitlescreen(page.obj_page):
             if controls.f and controls.fc:
                 self.sound_menugo.play()
                 self.gotoquickscene()
-
-            if self.textboxtitle.isclicked(controls):# reload
-                share.scenemanager.switchscene(share.titlescreen,initstart=True)
-            # self.sprite_appendix.show=share.devmode
-            # self.sprite_quick.show=share.devmode
 
 
 
