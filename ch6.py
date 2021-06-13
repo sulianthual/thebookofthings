@@ -220,10 +220,10 @@ class obj_scene_ch6p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p8())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -257,10 +257,10 @@ class obj_scene_ch6p8(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p9())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The second letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -354,8 +354,8 @@ class obj_scene_ch6p11(page.obj_chapterpage):
                     'Draw a ',('palm tree',share.colors.item),\
                     ' and a ',('wave',share.colors.item),' and we will be on our way. ',\
                     ]
-        self.addpart( draw.obj_drawing('palmtree',(340,450),legend='palm tree',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('wave',(940,450),legend='wave',shadow=(200,100)) )
+        self.addpart( draw.obj_drawing('palmtreedraw',(340,450-50),legend='palm tree',shadow=(250,250),brush=share.brushes.pen10) )
+        self.addpart( draw.obj_drawing('wave',(940,400),legend='wave',shadow=(200,100)) )
         #
         self.addpart( draw.obj_music('ch6') )
 
@@ -421,11 +421,11 @@ class obj_scene_ch6p14(page.obj_chapterpage):
                'Now draw the ',\
                ('sailor',share.colors.sailor),'\'s face, and make it look slightly to the right. ',\
                    ]
-        yref=460
-        self.addpart( draw.obj_image('stickhead',(640,yref),path='premade',scale=2)  )
-        self.addpart( draw.obj_drawing('sailorface',(640,yref),legend='Draw the sailor (facing right)',shadow=(200,200)) )
+        self.addpart( draw.obj_image('stickhead',(640,450-50),path='premade',scale=2*1.25)  )
+        self.addpart( draw.obj_drawing('sailorfacedraw',(640,450-50),legend='Draw the sailor (facing right)',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('ch6') )
+
 
 
 class obj_scene_ch6p15(page.obj_chapterpage):
@@ -440,8 +440,6 @@ class obj_scene_ch6p15(page.obj_chapterpage):
                   ' without a proper ',('sailor hat',share.colors.item),', ',\
                   'so draw that too. ',\
                    ]
-        # self.textkeys={'pos':(50,200),'xmax':640}
-        # self.textkeys={'xmax':740}
         yref=460
         self.addpart( draw.obj_image('sailorbaldhead',(640,yref)) )
         # self.addpart( draw.obj_drawing('sailorhat',(640,yref-200),shadow=(250,150)) )
@@ -665,13 +663,11 @@ class obj_scene_ch6p24(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch6_drawskull')
         self.text=[\
-                   '"Oh, it wont be easy said ',\
-                   ('{sailorname}',share.colors.sailor),'. ',\
+                   '"Oh but it wont be easy! ',\
                    'See, I lost my ',('treasure',share.colors.cow),\
                    ' in a very scary place called skull island". ',\
-                   'Well, lets draw a ',('skull',share.colors.item),' said the book of things. ',\
                    ]
-        self.addpart( draw.obj_drawing('skeletonhead',(640,450),legend='Skull (Facing Right)',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('skeletonheaddraw',(640,450-50),legend='Skull (Facing Right)',shadow=(250,250)) )
         #
         self.addpart( draw.obj_music('sailor') )
         #
@@ -685,9 +681,6 @@ class obj_scene_ch6p25(page.obj_chapterpage):
     def setup(self):
         self.text=['"The, arrr, slight problem is that ',\
                     ('spooky skeletons',share.colors.skeleton),' guard the place. ',\
-                    # ('skull island',share.colors.location2),\
-                    # ' is that it is inhabited by ',\
-                    # ('spooky skeletons',share.colors.skeleton),'. ',\
                     'These rotten mussels stole my ',('treasure',share.colors.cow),'. ',\
                     'Now lets get moving squid, ',\
                     'said ',('{sailorname}',share.colors.sailor),'." ',\
@@ -966,10 +959,8 @@ class obj_scene_ch6p34(page.obj_chapterpage):
                    'Its weird, said the book of things, there is nothing here except a ',\
                    ('cow',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('cow',(640,450),legend='draw a cow (facing right)',shadow=(300,200),brush=share.brushes.pen6) )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5','sailor_radio') )
-        #
+        # self.addpart( draw.obj_drawing('cow',(640,450),legend='draw a cow (facing right)',shadow=(300,200),brush=share.brushes.pen6) )
+        self.addpart( draw.obj_drawing('cowdraw',(640,450-50),legend='draw a cow (facing right)',shadow=(375,250)) )
         self.sound=draw.obj_sound('sailor_radio')
         self.addpart(self.sound)
         self.sound.play()
@@ -1091,7 +1082,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         self.text=['Lets go! ',\
                     'Move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
                    ]
-        self.textkeys={'pos':(100,50),'xmin':100}
+        self.textkeys={'pos':(100,20),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
@@ -1113,11 +1104,9 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         self.text=[\
                     'Trees and rocks will hurt ',\
                     ('{heroname}',share.colors.hero),\
-                    ' (but not ',\
-                    ('treasure',share.colors.cow),\
-                    '). '
+                    '. ',\
                    ]
-        self.textkeys={'pos':(100,50),'xmin':100}
+        self.textkeys={'pos':(100,20),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
@@ -1135,7 +1124,7 @@ class obj_scene_ch6p38b(page.obj_chapterpage):
         self.text=[\
                     'Ride until you make it to the ship. ',\
                    ]
-        self.textkeys={'pos':(100,50),'xmin':100}
+        self.textkeys={'pos':(100,20),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
@@ -1159,7 +1148,7 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
         self.text=[' This is it, press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
-        self.textkeys={'pos':(100,50),'xmin':100}
+        self.textkeys={'pos':(100,20),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #

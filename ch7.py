@@ -190,10 +190,10 @@ class obj_scene_ch7p6(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p7())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -227,10 +227,10 @@ class obj_scene_ch7p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p8())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The second letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -269,10 +269,10 @@ class obj_scene_ch7p8(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p9())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The third letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The third letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -907,7 +907,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                   'Boss battle final phase! ',\
-                    'Move with ','['+share.datamanager.controlname('left')+'/',\
+                    'Move with ','['+share.datamanager.controlname('arrows')+'/',\
                     share.datamanager.controlname('right')+']',', ',\
                     ' jump with ','['+share.datamanager.controlname('up')+']',\
                     ' and kick with ','['+share.datamanager.controlname('action')+']','. ',\
@@ -1926,7 +1926,7 @@ class obj_scene_ch7p53(page.obj_chapterpage):
         self.text=[\
             'Draw a ',('cake',share.colors.item),', said the book things. It is time to celebrate! ',\
                 ]
-        self.addpart( draw.obj_drawing('cake',(640,450),legend='Cake',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('cakedraw',(640,450-50),legend='Cake',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)

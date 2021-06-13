@@ -155,9 +155,8 @@ class obj_scene_ch3p3(page.obj_chapterpage):
                     ', and make ',('{villain_him}',share.colors.villain2),\
                     ' look slightly to the right. ',\
                    ]
-        self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2) )
-        drawing=draw.obj_drawing('angryface',(640,450),legend='Draw an angry face',shadow=(200,200))
-        self.addpart( drawing)
+        self.addpart( draw.obj_image('stickhead',(640,450-50),path='premade',scale=2.5) )
+        self.addpart( draw.obj_drawing('angryfacedraw',(640,450-50),legend='draw an angry face (facing right)',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('villain') )
 
@@ -174,9 +173,8 @@ class obj_scene_ch3p3a(page.obj_chapterpage):
                  'so lets add a big ',('scar',share.colors.item),' on ',\
                  ('{villain_his}',share.colors.villain2),' face. ',\
                    ]
-        self.addpart( draw.obj_image('angryhead',(640,450)) )
-        drawing=draw.obj_drawing('scar',(640,450),legend='Add a big scar',shadow=(200,200))
-        self.addpart( drawing)
+        self.addpart( draw.obj_image('angryhead',(640,450-50),scale=1.25) )
+        self.addpart( draw.obj_drawing('scardraw',(640,450-50),legend='add a big scar',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('villain') )
 
@@ -395,10 +393,10 @@ class obj_scene_ch3p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p11())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -464,8 +462,8 @@ class obj_scene_ch3p12(page.obj_chapterpage):
                  'Draw an ',('castle',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('castle',(340,450),legend='evil castle',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('mountain',(940,450),legend='mountain',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('castledraw',(340,450-50),legend='evil castle',shadow=(250,250)) )
+        self.addpart( draw.obj_drawing('mountaindraw',(940,450-50),legend='mountain',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('villain') )
 
@@ -1192,7 +1190,8 @@ class obj_scene_ch3p33(page.obj_chapterpage):
         animation1.addsound( "bug1", [24, 49, 166],skip=1 )
         #
         bugword=share.datamanager.getword('bug')
-        self.addpart( draw.obj_drawing('bug',(640,450),legend='draw a '+bugword+' (facing right)',shadow=(200,200)) )
+        # self.addpart( draw.obj_drawing('bug',(640,450),legend='draw a '+bugword+' (facing right)',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('bugdraw',(640,450-50),legend='draw a '+bugword+' (facing right)',shadow=(250,250)) )
         #
 
         self.addpart( draw.obj_music('tension') )

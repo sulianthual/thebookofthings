@@ -37,27 +37,27 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        # if True :
-        if False :
+        if True :
+        # if False :
             # regular scenes
             #
             # quickscene=obj_scene_settings()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
-            # quickscene=ch1.obj_scene_ch1p12()
+            # quickscene=ch1.obj_scene_ch1p3()
             # quickscene=ch1.obj_scene_ch1play3()
-            # quickscene=ch2.obj_scene_ch2p6a()
+            # quickscene=ch2.obj_scene_ch2p13()
             # quickscene=ch2.obj_scene_ch2play4()
-            # quickscene=ch3.obj_scene_ch3p19()
+            quickscene=ch3.obj_scene_ch3p3()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p11()
             # quickscene=ch5.obj_scene_ch5p35a()
             # quickscene=ch5.obj_scene_ch5p39()
-            # quickscene=ch6.obj_scene_ch6p26()
+            # quickscene=ch6.obj_scene_ch6p14()
             # quickscene=ch6.obj_scene_ch6p38c()
             # quickscene=ch7.obj_scene_ch7p19()
-            # quickscene=ch7.obj_scene_ch7p42()
+            # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -73,7 +73,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
-            quickscene=ch8.obj_scene_ch8roam()# ch8 travel
+            # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
             # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
@@ -809,11 +809,8 @@ class obj_scene_realtitlescreen(page.obj_page):
             tempo='developper mode is on (edit settings.txt to change) '
             tempo += '[f:quickscene] '
             tempo += '[space/enter:appendix] '
-            self.addpart(draw.obj_textbox(tempo,(30,680),fontsize='smaller',xleft=True,color=share.colors.instructions))
-            # self.sprite_quick=draw.obj_textbox('quickscene [left]',(xref,yref+3*dyref),fontsize=fontref,color=share.colors.instructions,hover=True)
-            # self.addpart(self.sprite_quick)
-            # self.sprite_appendix=draw.obj_textbox('appendix [right]',(xref,yref+4*dyref),fontsize=fontref,color=share.colors.instructions,hover=True)
-            # self.addpart(self.sprite_appendix)
+            self.addpart(draw.obj_textbox(tempo,(640,680),fontsize='smaller',color=share.colors.instructions))
+
 
 
         # devtools: quick scene

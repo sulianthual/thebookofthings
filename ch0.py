@@ -61,12 +61,6 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p1())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p3())
-    def endpage(self):
-        super().endpage()
-        # image pen is actually 66% scale of drawing
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('pendraw',(640,360),scale=0.666))
-        dispgroup1.snapshot((640,360,100,200),'pen')
     def setup(self):
         share.datamanager.setbookmark('ch0_drawpen')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
@@ -75,7 +69,7 @@ class obj_scene_ch0p2(page.obj_chapterpage):
                    'The pen was drawn with '+tempo1+' and erased with '+tempo2+'.',\
                   '\n ',\
                    ]# last line for [back][next] adjustment
-        self.textkeys={'pos':(50,50),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
+        self.textkeys={'pos':(50,20),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
         self.addpart( draw.obj_drawing('pendraw',(940,360),legend=' Draw a Pen') )
         self.addpart(draw.obj_textbox('hold '+tempo1+' to draw',(420,400),color=share.colors.instructions))
         self.addpart(draw.obj_textbox('press '+tempo2+' to erase',(420,500),color=share.colors.instructions))
@@ -105,12 +99,6 @@ class obj_scene_ch0p4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p5())
-    def endpage(self):
-        super().endpage()
-        # image eraser is actually 66% scale of drawing
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('eraserdraw',(640,360),scale=0.666))
-        dispgroup1.snapshot((640,360,135,135),'eraser')
     def setup(self):
         share.datamanager.setbookmark('ch0_draweraser')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
@@ -170,12 +158,6 @@ class obj_scene_ch0p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p8())
-    def endpage(self):
-        super().endpage()
-        # image book is actually 66% scale of drawing
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('bookdraw',(640,360),scale=0.666))
-        dispgroup1.snapshot((640,360,210,180),'book')
     def setup(self):
         share.datamanager.setbookmark('ch0_drawbook')
         self.text=['There was going to be a book. A very mysterious book.',\

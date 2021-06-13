@@ -229,10 +229,10 @@ class obj_scene_ch4p7(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p8())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -297,8 +297,8 @@ class obj_scene_ch4p9(page.obj_chapterpage):
                     'Draw a ',('cave',share.colors.item),\
                     ' and a ',('tree',share.colors.item),' and we will be on our way. ',\
                    ]
-        self.addpart( draw.obj_drawing('cave',(340,450),legend='Cave',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('tree',(940,450),legend='Tree',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('cavedraw',(340,450-50),legend='cave',shadow=(250,250),brush=share.brushes.pen10) )
+        self.addpart( draw.obj_drawing('treedraw',(940,450-50),legend='tree',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('ch4') )
 

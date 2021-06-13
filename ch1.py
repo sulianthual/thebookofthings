@@ -102,8 +102,6 @@ class obj_scene_ch1p2(page.obj_chapterpage):
         self.addpart( draw.obj_music('hero') )
 
 
-
-#*HEROHEAD *HEROBASE
 class obj_scene_ch1p3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1p2())
@@ -113,15 +111,14 @@ class obj_scene_ch1p3(page.obj_chapterpage):
         share.datamanager.setbookmark('ch1_drawhero')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempo2='['+share.datamanager.controlname('mouse2')+']'
-        self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', said the book of things, ',\
-                   'and make ', ('{hero_him}',share.colors.hero2),' look slightly to the right. ',\
-                   ('Draw with '+tempo1+' and erase with '+tempo2+'',share.colors.instructions),', but you should know this by now.',\
+        self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', ',\
+                   'said the book of things. ',\
                    ]
-        self.addpart( draw.obj_image('stickhead',(640,450),path='premade',scale=2)  )
-        drawing=draw.obj_drawing('happyface',(640,450),legend='draw a happy face',shadow=(200,200))
-        self.addpart( drawing )
+        self.addpart( draw.obj_image('stickhead',(640,450-50),path='premade',scale=2.5)  )
+        self.addpart( draw.obj_drawing('happyfacedraw',(640,450-50),legend='draw a happy face (facing right)',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('hero') )
+
 
 class obj_scene_ch1p4(page.obj_chapterpage):
     def prevpage(self):

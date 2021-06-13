@@ -50,7 +50,7 @@ class obj_pagedisplay_fps:
         self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
     def display(self):
         # self.sprite.display(50,20)
-        self.sprite.display(1230,20)
+        self.sprite.display(1240,20)
     def update(self,controls):
         self.make()# rebuild sprite every update
         self.display()
@@ -84,7 +84,7 @@ class obj_pagedisplay_text:
         self.type='pagetext'
         self.words_prerender=[]# list of words (sprites and positions)
         self.ipos=(0,0)
-    def make(self,textmatrix,pos=(50,50),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
+    def make(self,textmatrix,pos=(50,20),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
         self.words_prerender=[]
         formattextkwargs=share.datamanager.getwords()
         if textmatrix:

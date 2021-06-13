@@ -217,10 +217,10 @@ class obj_scene_ch5p7(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The first letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -251,10 +251,10 @@ class obj_scene_ch5p8(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p9())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The second letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -292,12 +292,12 @@ class obj_scene_ch5p9(page.obj_chapterpage):
         self.text=[\
                   'The second  ',('grandmaster',share.colors.grandmaster),\
                   ' lives in the north, on top of the ',\
-                  ('highest peak',share.colors.location2),', It is always covered by stormy clouds. ',\
-                  'Draw a ',('cloud',share.colors.item),' and a ',\
-                  ('lightning bolt',share.colors.item),' and we will get going. ',\
+                  ('highest peak',share.colors.location2),', It is always covered by stormy clouds, so ',\
+                  'draw a ',('cloud',share.colors.item),' and a ',\
+                  ('lightning bolt',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('cloud',(340,450),legend='Cloud',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('lightningbolt',(940,450),legend='Lightning Bolt',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('clouddraw',(340,450-50),legend='cloud',shadow=(250,250),brush=share.brushes.pen10) )
+        self.addpart( draw.obj_drawing('lightningboltdraw',(940,450-50),legend='lightning bolt',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('ch5') )
 
@@ -342,20 +342,6 @@ class obj_scene_ch5p11(page.obj_chapterpage):
         self.sound.play()
         #
         self.addpart( draw.obj_music('winds') )
-
-# keep this for more climbing minigame scenes
-# class obj_scene_ch5p12(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch5p11())
-#     def nextpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch5p13())
-#
-#
-# class obj_scene_ch5p13(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch5p12())
-#     def nextpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch5p14())
 
 
 class obj_scene_ch5p14(page.obj_chapterpage):
@@ -402,8 +388,8 @@ class obj_scene_ch5p15(page.obj_chapterpage):
                'Now draw the ',\
                ('elder',share.colors.elder),'\'s face, and make it look slightly to the right. ',\
                    ]
-        # self.addpart( draw.obj_drawing('elderhead',(640,450),legend='Draw the elder (facing right)') )
-        self.addpart( draw.obj_drawing('elderhead',(640,360),legend='Draw the elder (facing right)') )
+        self.addpart( draw.obj_image('stickhead',(640,450-50),path='premade',scale=2.5)  )
+        self.addpart( draw.obj_drawing('elderheaddraw',(640,450-50),legend='draw the elder (facing right)',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('winds') )
 

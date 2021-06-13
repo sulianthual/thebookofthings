@@ -423,8 +423,10 @@ class obj_brushes:
         self.megapen=('data/pen.png',(32,32))
         self.bigpen=('data/pen.png',(16,16))
         self.pen12=('data/pen.png',(12,12))
+        self.pen10=('data/pen.png',(10,10))
         self.pen=('data/pen.png',(8,8))
         self.pen6=('data/pen.png',(6,6))
+        self.pen5=('data/pen.png',(5,5))
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))
         self.shadowpen=('data/shadowpen.png',(64,64))
@@ -611,8 +613,28 @@ class obj_snapshotmanager:
     def remake(self,name):
         # Note: order matters! (some image needed for remaking others)
         #
+        # pen
+        if name=='pendraw':
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('pendraw',(640,360),scale=0.666))
+            dispgroup1.snapshot((640,360,100,200),'pen')
+        # eraser
+        if name=='eraserdraw':
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('eraserdraw',(640,360),scale=0.666))
+            dispgroup1.snapshot((640,360,135,135),'eraser')
+        # book
+        if name=='bookdraw':
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('bookdraw',(640,360),scale=0.666))
+            dispgroup1.snapshot((640,360,210,180),'book')
+
         # hero
-        if name=='happyface':
+        if name=='happyfacedraw':
+            # heroface redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('happyfacedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'happyface')
             # combine sitckhead+happyface=herohead
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
@@ -641,9 +663,18 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((940,360,300,200),'herocrouch')# 0 to 660 in height
-        #
+            # heromech armature
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
+            dispgroup1.addpart( 'part2', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
+            dispgroup1.snapshot((640,360,300,220),'heromecharmature')
+
         # partner
-        if name in ['happyface','partnerhair']:
+        if name in ['happyface','partnerhairdraw']:
+            # partnerface redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('partnerhairdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'partnerhair')
             # combine stickbody+stickhead+partnerhair=partnerbasenoface
             image1=draw.obj_image('stickbody',(640,460),path='premade')
             image2=draw.obj_image('partnerhair',(640,200))
@@ -669,9 +700,17 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,200,200,200),'partnerhead')
-        #
+
         # villain
-        if name in ['scar','angryface']:
+        if name in ['scardraw','angryfacedraw']:
+            # angryface redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('angryfacedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'angryface')
+            # scar redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('scardraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'scar')
             # save angry head
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade'))
@@ -694,7 +733,13 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,360+100-50,300,250),'villainshootcrouch')# 0 to 660 in height
-        if name in ['scar','angryface','partnerhair']:
+            # villainmech armature
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
+            dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
+            dispgroup1.addpart( 'part3', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
+            dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
+        if name in ['scardraw','angryfacedraw','partnerhairdraw']:
             # villainbase+partnerbase=villainholdspartner
             image1=draw.obj_image('villainbase',(640,360))
             image2=draw.obj_image('partnerbase',(640-70,360+80),rotate=90)
@@ -703,7 +748,13 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,360,400,330),'villainholdspartner')
 
-        #
+        #bug
+        if name=='bugdraw':
+            # bug redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('bugdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'bug')
+
         # grandmasters
         if name =='bunnyface':
             # save bunny head
@@ -718,7 +769,12 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',draw.obj_image('bunnybody',(640,360+65)))
             dispgroup1.addpart('part2',draw.obj_image('bunnyhead',(640,360-150),scale=0.5))
             dispgroup1.snapshot((640,295,200,235+50),'bunnybase')
-        if name =='elderhead':
+        if name =='elderheaddraw':
+            # elderhead redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part0',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('elderheaddraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'elderhead')
             # # save elder full body (slight offset made)
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
@@ -729,13 +785,17 @@ class obj_snapshotmanager:
             dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
             dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
             dispgroup2.snapshot((640,360,200,300),'elderbase2')
-        if name =='sailorface':
+        if name =='sailorfacedraw':
+            # sailorface redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('sailorfacedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'sailorface')
             # combine sitckhead+sailorface=sailorbaldhead
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
             dispgroup1.addpart('part2',draw.obj_image('sailorface',(640,360)) )
             dispgroup1.snapshot((640,360,200,200),'sailorbaldhead')
-        if name in ['sailorface','sailorhat']:
+        if name in ['sailorfacedraw','sailorhat']:
             # save sailor head
             dispgroup1=draw.obj_dispgroup((640,450))# create dispgroup
             dispgroup1.addpart('part1',draw.obj_image('sailorbaldhead',(640,450),scale=1))
@@ -749,26 +809,26 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360-15,200,300+15),'sailorbase')
         #
         # skeletons
-        if name =='skeletonhead':
+        if name =='skeletonheaddraw':
+            #skeletonhead redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('skeletonheaddraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'skeletonhead')
             # combine skeletonhead+stickbody = skeletonbase
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
             dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
             dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
-            # dispgroup1.addpart('part4',draw.obj_image('partnerhair',(640,200)) )
-            # dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
-            # dispgroup1.addpart('part6',draw.obj_image('scar',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
-        if name in ['skeletonhead','partnerhair']:
+        if name in ['skeletonheaddraw','partnerhairdraw']:
             # skeleton with hair
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
             dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
             dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
-            # dispgroup1.addpart('part3',draw.obj_image('stickhead',(640,200),path='premade') )
             dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
-        if name in ['skeletonhead','sailorhat']:
+        if name in ['skeletonheaddraw','sailorhat']:
             # skeleton with sailor hat
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
@@ -776,15 +836,41 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
+
         #
-        # others
-        if name in ['happyface','fish']:
+        # chapter items
+        if name in ['happyfacedraw','fish']:
             # combine hero+fish into: hero holding fish
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',draw.obj_image('herobase',(640,452), scale=0.7))
             dispgroup1.addpart('part2',draw.obj_image('fish',(776,486), scale=0.4,rotate=-90))
             dispgroup1.snapshot((700,452,200,260),'herobasefish')
-        if name in ['scar','angryface','gun']:
+        if name=='housedraw':
+            # house redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('housedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'house')
+        if name=='ponddraw':
+            # pond redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('ponddraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'pond')
+        if name=='castledraw':
+            # castle redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('castledraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'castle')
+        if name=='bushdraw':
+            # bush redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('bushdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'bush')
+        if name=='flowerdraw':
+            # flower redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('flowerdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'flower')
+        if name in ['scardraw','angryfacedraw','gun']:
             # villainbase+gun =villainbasegun (for cutscenes)
             image1=draw.obj_image('villainbase',(640,330))
             image2=draw.obj_image('gun',(640+180,330),scale=0.4)
@@ -792,6 +878,11 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640+50,330,200+50,330),'villainbasegun')# 0 to 660 in height
+        if name=='mountaindraw':
+            # mountain redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('mountaindraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'mountain')
         if name =='alarmclockext':
             # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
             image1=draw.obj_image('alarmclockext',(640,360))
@@ -814,22 +905,46 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,360,200,200),'alarmclock12am')
-        if name in ['happyface','cow']:
+        if name=='cavedraw':
+            # cave redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('cavedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'cave')
+        if name=='treedraw':
+            # tree redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('treedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'tree')
+        if name=='clouddraw':
+            # cloud redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('clouddraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'cloud')
+        if name=='lightningboltdraw':
+            # lightningbolt redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('lightningboltdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'lightningbolt')
+        if name=='palmtreedraw':
+            # palmtree redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('palmtreedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'palmtree')
+        if name=='cowdraw':
+            # cow redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('cowdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,300,200),'cow')
+        if name in ['happyfacedraw','cowdraw']:
             # combine herobase+cow=heroridecow
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5) )
             dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
             dispgroup1.snapshot((640,360+25,300,300-25),'heroridecow')
-        #
+
+
         # mechs
-        if name in ['scar','angryface']:
-            # villainmech armature
-            dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
-            dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-            dispgroup1.addpart( 'part3', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
-            dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
-        if name in ['castle','mountain','gun','lightningbolt','cave']:
+        if name in ['castledraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
             # villainmech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
@@ -841,21 +956,14 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
-        if name in ['scar','angryface','castle','mountain','gun','lightningbolt','cave']:
+        if name in ['scardraw','angryfacedraw','castledraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
             # villainmech complete
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
             dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
             dispgroup1.addpart( 'part3', draw.obj_image('villainmechbase_noface',(640,360)) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-        #
-        if name=='happyface':
-            # heromech armature
-            dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-            dispgroup1.addpart( 'part2', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
-            dispgroup1.snapshot((640,360,300,220),'heromecharmature')
-        if name in ['house','bush','fish','flower','sailboat']:
+        if name in ['housedraw','bushdraw','fish','flowerdraw','sailboat']:
             # heromech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
@@ -867,15 +975,18 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
-        if name in ['happyface','house','bush','fish','flower','sailboat']:
+        if name in ['happyfacedraw','housedraw','bushdraw','fish','flowerdraw','sailboat']:
             # heromech complete
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )
             dispgroup1.addpart( 'part2', draw.obj_image('heromechbase_noface',(640,360)) )
             dispgroup1.snapshot((640,360,410,330),'heromechbase')
-            print('redone')
-
-
+        #
+        if name=='cakedraw':
+            # cake redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('cakedraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'cake')
 
 
 

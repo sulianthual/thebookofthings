@@ -162,22 +162,42 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('partner') )
 
-#*PARTNERBASE
+
+# class obj_scene_ch2p4(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2p3())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2p5())
+#     def setup(self):
+#         self.text=['Now draw ',('{partnername}',share.colors.partner),'\'s hair, said the book of things. ',\
+#                    'Draw something pretty that our ',('hero',share.colors.hero),' will fall in ',('love',share.colors.partner2),' with. '\
+#                    ]
+#         self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner\'s Hair',shadow=(200,200),brush=share.brushes.smallpen) )
+#         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
+#         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=False,scale=0.3))
+#         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.3))
+#         #
+#         self.addpart( draw.obj_music('partner') )
+
+
+
 class obj_scene_ch2p4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p5())
     def setup(self):
-        self.text=['Now draw ',('{partnername}',share.colors.partner),'\'s hair, said the book of things. ',\
-                   'Draw something pretty that our ',('hero',share.colors.hero),' will fall in ',('love',share.colors.partner2),' with. '\
+        self.text=['Now draw some pretty hair for ',\
+                    ('{partnername}',share.colors.partner),'\'s hair, said the book of things. ',\
                    ]
-        self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner\'s Hair',shadow=(200,200),brush=share.brushes.smallpen) )
-        self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
+        self.addpart( draw.obj_drawing('partnerhairdraw',(640,450-50),legend='draw the partner\'s hair',shadow=(250,250),brush=share.brushes.pen5) )
+
+        self.addpart( draw.obj_image('herohead',(640,450-50),path='shadows',scale=0.625) )# add empty head on top
         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=False,scale=0.3))
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.3))
         #
         self.addpart( draw.obj_music('partner') )
+
 
 class obj_scene_ch2p5(page.obj_chapterpage):
     def prevpage(self):
@@ -243,7 +263,7 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
                    'Alright, so first our lovers want to send each other some passionate letters. ',\
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
                    ]
-        self.textkeys={'pos':(500,50),'xmin':500}# same as ={}
+        # self.textkeys={'pos':(500,20),'xmin':500}# same as ={}
         self.addpart( draw.obj_drawing('mailbox',(200+50,450-50),legend='Mailbox (on a pole)',shadow=(200,250)) )
         self.addpart( draw.obj_drawing('mailletter',(1280-200-50,450),legend='Mail Letter',shadow=(200,200)) )
         #
@@ -286,10 +306,10 @@ class obj_scene_ch2p6c(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p7())
     def textboxplace(self):
-        self.textboxprevpage_xy=(1050,85)
-        self.textboxnextpage_xy=(1230,85)
+        self.textboxprevpage_xy=(1050,55)
+        self.textboxnextpage_xy=(1230,55)
     def setup(self):
-        self.addpart( draw.obj_textbox('"The letter said:"',(50,83),xleft=True) )
+        self.addpart( draw.obj_textbox('"The letter said:"',(50,53),xleft=True) )
         xmargin=150
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':740}# same as ={}
@@ -418,10 +438,11 @@ class obj_scene_ch2p11(page.obj_chapterpage):
                    'Ewww gross, get some privacy next time. ',\
                    'Moving on, lets draw a ',\
                    ('house',share.colors.item),' with a ',\
-                   ('pond',share.colors.item),' where our lovers live happily together. ',\
+                   ('pond',share.colors.item),' where they live happily together. ',\
                    ]
-        self.addpart( draw.obj_drawing('house',(340,450),legend='House',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('pond',(940,450),legend='Pond',shadow=(200,200)) )
+        # self.addpart( draw.obj_drawing('house',(940,450),legend='House',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('housedraw',(350,450-50),legend='House',shadow=(250,250)) )
+        self.addpart( draw.obj_drawing('ponddraw',(1280-350,450-50),legend='Pond',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('partner') )
 
@@ -453,8 +474,9 @@ class obj_scene_ch2p13(page.obj_chapterpage):
                    ('bushes',share.colors.item),' around the pond, and some ',\
                    ('flowers',share.colors.item),' to make a nice garden. ',\
                    ]
-        self.addpart( draw.obj_drawing('bush',(340,450),legend='Bush',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('flower',(940,450),legend='Flower',shadow=(200,200)) )
+        # self.addpart( draw.obj_drawing('bush',(340,450),legend='Bush',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('bushdraw',(340,450-50),legend='bush',shadow=(250,250),brush=share.brushes.pen10) )
+        self.addpart( draw.obj_drawing('flowerdraw',(940,450-50),legend='flower',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('partner') )
 
