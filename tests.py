@@ -969,186 +969,31 @@ class obj_scene_testdrafting(obj_testpage):
         # Image from textbox
         # self.textbox=draw.obj_textbox('start!',(640,360),fontsize='huge')
         # self.textbox.snapshot('messagestart')
-
         #
         # drawing=draw.obj_drawing('mechsparks',(640,360),legend='sparks',shadow=(50,50))
         # self.addpart(drawing)
         #
         # Make main menu animations
-
-        # decorations
-        self.text=[]
-        self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
-        self.addpart(draw.obj_textbox('V1.0',(1210,670),fontsize='smaller'))
-        # menu
-        xref=640
-        yref=200#+100
-        dyref=55
-        xleftref=False
-        fontref='small'
-        self.sprite_chapters=draw.obj_textbox('read',(xref,yref),fontsize=fontref,xleft=xleftref,hover=True)
-        self.sprite_settings=draw.obj_textbox('settings',(xref,yref+dyref),fontsize=fontref,xleft=xleftref,hover=True)
-        self.sprite_exit=draw.obj_textbox('exit',(xref,yref+2*dyref),fontsize=fontref,xleft=xleftref,hover=True)
-        self.addpart(self.sprite_chapters)
-        self.addpart(self.sprite_settings)
-        self.addpart(self.sprite_exit)
-        # xref=480
-        # yref=200
-        # dyref=55
-        # fontref='small'
-        # self.sprite_back=draw.obj_textbox('[back]',(xref-70,yref),fontsize=fontref,hover=True)
-        # self.addpart(self.sprite_back)
-        # self.sprite_prologue=draw.obj_textbox('Prologue: The Book of Things',(xref,yref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_prologue)
-        # self.sprite_ch1=draw.obj_textbox('Chapter I: The Hero',(xref,yref+dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch1)
-        # self.sprite_ch2=draw.obj_textbox('Chapter II: Home Sweet Home',(xref,yref+2*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch2)
-        # self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch3)
-        # self.sprite_ch4=draw.obj_textbox('Chapter IV Something East',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(xref,yref+5*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch5)
-        # self.sprite_ch6=draw.obj_textbox('Chapter VI: Treasure Hunt',(xref,yref+6*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch6)
-        # self.sprite_ch7=draw.obj_textbox('Chapter VII: Showtime',(xref,yref+7*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch7)
-        # self.sprite_ch8=draw.obj_textbox('Epilogue',(xref,yref+8*dyref),fontsize=fontref,xleft=True, hover=True)
-        # self.addpart(self.sprite_ch8)
-
-        #####
+        if True:
+            # decorations
+            self.text=[]
+            self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
+            # menu
+            xref=640
+            yref=200#+100
+            dyref=55
+            xleftref=False
+            fontref='small'
+            self.sprite_chapters=draw.obj_textbox('read',(xref,yref),fontsize=fontref,xleft=xleftref,hover=True)
+            self.sprite_settings=draw.obj_textbox('settings',(xref,yref+dyref),fontsize=fontref,xleft=xleftref,hover=True)
+            self.sprite_exit=draw.obj_textbox('exit',(xref,yref+2*dyref),fontsize=fontref,xleft=xleftref,hover=True)
+            self.addpart(self.sprite_chapters)
+            self.addpart(self.sprite_settings)
+            self.addpart(self.sprite_exit)
         #
-        # ch0 completed
+        # Place images: by chapters
         # self.addpart( draw.obj_imageplacer(self,'book','eraser','pen') )
-        # self.addpart( draw.obj_image('book',(213,353),scale=0.59,rotate=6,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('eraser',(943,365),scale=0.48,rotate=6,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('pen',(1117,342),scale=0.48,rotate=6,fliph=True,flipv=False) )
-    #
-        # animation1=draw.obj_animation('menu_ch0_book','book',(640,360),record=False)
-        # animation1.addimage('empty',path='premade')
-        # self.addpart( animation1 )
-        # animation2=draw.obj_animation('menu_ch0_eraser','eraser',(640,360),record=False,sync=animation1)
-        # animation2.addimage('empty',path='premade')
-        # self.addpart( animation2 )
-        # animation3=draw.obj_animation('menu_ch0_pen','pen',(640,360),record=True,sync=animation2)
-        # animation3.addimage('empty',path='premade')
-        # self.addpart( animation3 )
-        #
-        # ch1
-        # self.addpart( draw.obj_imageplacer(self,'herobase','herobasefish','bed','sun','fish') )
-        # self.addpart( draw.obj_image('herobase',(960,397),scale=0.5,rotate=6,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('sun',(1072,99),scale=0.36,rotate=6,fliph=False,flipv=False) )
-        #
-        # animation1=draw.obj_animation('menu_ch0_book','book',(640,360),record=False)
-        # animation1.addimage('empty',path='premade')
-        # self.addpart( animation1 )
-        # animation2=draw.obj_animation('menu_ch1_hero','herobase',(640,360),record=False,sync=animation1)
-        # animation2.addimage('herobasefish')
-        # self.addpart( animation2 )
-        # animation3=draw.obj_animation('menu_ch1_sun','sun',(640,360),record=False,sync=animation2)
-        # animation3.addimage('moon')
-        # self.addpart( animation3 )
-        #
-        # ch2
-        # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','love','saxophone','musicnote','house','pond','bush','flower') )
-        # self.addpart( draw.obj_image('herobase',(108,154),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('partnerbase',(270,140),scale=0.37,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('pond',(978,262),scale=0.59,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('house',(1139,493),scale=0.59,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('bush',(944,589),scale=0.49,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('bush',(307,313),scale=0.4,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(1146,299),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(1223,213),scale=0.37,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(1138,132),scale=0.27,rotate=0,fliph=False,flipv=False) )
-        # # self.addpart( draw.obj_image('love',(186,39),scale=0.2,rotate=0,fliph=False,flipv=False) )
-        # animation1=draw.obj_animation('menu_ch2_hero','herobase',(640,360),record=False)
-        # animation1.addimage('empty',path='premade')
-        # self.addpart( animation1 )
-        # animation2=draw.obj_animation('menu_ch2_partner','partnerbase',(640,360),record=False,sync=animation1)
-        # animation2.addimage('empty',path='premade')
-        # self.addpart( animation2 )
-        # animation3=draw.obj_animation('menu_ch2_love','love',(640,360),record=False,sync=animation2)
-        # animation3.addimage('empty',path='premade')
-        # self.addpart( animation3 )
-        #
-        # ch3
-        # self.addpart( draw.obj_imageplacer(self,'herobase','herocrouch','villainbase','mountain','castle','gun','sun') )
-        # self.addpart( draw.obj_image('herobase',(261,441),scale=0.56,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('villainbase',(1025,429),scale=0.56,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('gun',(896,433),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('castle',(1183,151),scale=0.39,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('mountain',(1214,302),scale=0.39,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('mountain',(959,218),scale=0.39,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('mountain',(1048,109),scale=0.36,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('mountain',(1071,199),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('sun',(182,123),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        # animation1=draw.obj_animation('menu_ch3_bullet','bullet',(640,360),record=False)
-        # animation1.addimage('empty',path='premade')
-        # self.addpart( animation1 )
-        # animation4=draw.obj_animation('menu_ch3_hero','herobase',(640,360),record=False,sync=animation1)
-        # animation4.addimage('herocrouch')
-        # self.addpart( animation4 )
-        # animation3=draw.obj_animation('menu_ch3_villain','villainbase',(640,360),record=False,sync=animation1)
-        # animation3.addimage('villainshootcrouch')
-        # self.addpart( animation3 )
-        # animation2=draw.obj_animation('menu_ch3_bug','bug',(640,360),record=False,sync=animation4)
-        # self.addpart( animation2 )
-        #
-        # ch4
-        # # self.addpart( draw.obj_imageplacer(self,'herobase','bunnybase','cave','tree','sun') )
-        # # self.addpart( draw.obj_imageplacer(self,'nightstand','alarmclock8am','bed','mountain','bush','flower') )
-        # # self.addpart( draw.obj_image('bunnybase',(1121,384),scale=0.48,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('cave',(1077,156),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        # # self.addpart( draw.obj_image('tree',(1202,79),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        # # self.addpart( draw.obj_image('tree',(940,238),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # # self.addpart( draw.obj_image('tree',(977,75),scale=0.27,rotate=0,fliph=True,flipv=False) )
-        # # self.addpart( draw.obj_image('sun',(168,108),scale=0.38,rotate=0,fliph=True,flipv=False) )
-        # # self.addpart( draw.obj_image('nightstand',(97,619),scale=0.46,rotate=0,fliph=False,flipv=False) )
-        # # self.addpart( draw.obj_image('alarmclock8am',(101,472),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('bed',(181,318),scale=0.41,rotate=0,fliph=False,flipv=False) )
-        # # self.addpart( draw.obj_image('bush',(954,533),scale=0.31,rotate=0,fliph=True,flipv=False) )
-        # # self.addpart( draw.obj_image('bush',(1096,597),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        # animation1=draw.obj_animation('menu_ch4_bunny','bunnybase',(640,360),record=False)
-        # self.addpart( animation1 )
-        # animation2=draw.obj_animation('menu_ch4_bush1','bush',(640,360),sync=animation1,record=False)
-        # animation2.addimage('empty',path='premade')
-        # animation2.addimage('poof',path='premade')
-        # self.addpart( animation2 )
-        # animation2a=draw.obj_animation('menu_ch4_bush2','bush',(640,360),sync=animation1,record=False )
-        # animation2a.addimage('empty',path='premade')
-        # animation2a.addimage('poof',path='premade')
-        # self.addpart( animation2a )
-        # animation2b=draw.obj_animation('menu_ch4_tree1','tree',(640,360),sync=animation1,record=False )
-        # animation2b.addimage('empty',path='premade')
-        # animation2b.addimage('poof',path='premade')
-        # self.addpart( animation2b )
-        # animation2c=draw.obj_animation('menu_ch4_tree2','tree',(640,360),sync=animation1,record=False )
-        # animation2c.addimage('empty',path='premade')
-        # animation2c.addimage('poof',path='premade')
-        # self.addpart( animation2c )
-        # animation2d=draw.obj_animation('menu_ch4_tree3','tree',(640,360),sync=animation1,record=False )
-        # animation2d.addimage('empty',path='premade')
-        # animation2d.addimage('poof',path='premade')
-        # self.addpart( animation2d )
-        # animation3=draw.obj_animation('menu_ch4_nightstand','nightstand',(640,360),sync=animation1,record=False )
-        # animation3.addimage('empty',path='premade')
-        # animation3.addimage('poof',path='premade')
-        # self.addpart( animation3 )
-        # animation3a=draw.obj_animation('menu_ch4_alarmclock8am','alarmclock8am',(640,360),sync=animation1,record=False )
-        # animation3a.addimage('empty',path='premade')
-        # animation3a.addimage('poof',path='premade')
-        # self.addpart( animation3a )
-        # animation3b=draw.obj_animation('menu_ch4_sun','sun',(640,360),sync=animation1,record=False )
-        # animation3b.addimage('empty',path='premade')
-        # animation3b.addimage('poof',path='premade')
-        # self.addpart( animation3b )
-        #
-        # Just put some pictures!!!
-
-
-
-        # self.addpart( draw.obj_imageplacer(self,'book','eraser','pen') )
-        # self.addpart( draw.obj_imageplacer(self,'herobase','herobasefish','sun','moon','bed') )
+        # self.addpart( draw.obj_imageplacer(self,'herobase','herobasefish','sun','moon','bed','fish') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','love','house','pond','bush','flower','saxophone','musicnote','sun','moon') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','villainbase','bug','castle','mountain','gun','bullet') )
         # self.addpart( draw.obj_imageplacer(self,'bunnybase','cave','tree','nightstand','alarmclock8am') )
@@ -1156,7 +1001,7 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'herobase','elderbase','mountain','cloud','lightningbolt','sun','moon','tree','bush') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','cow','skeletonbase','skeletonbase_sailorhat','sailboat','palmtree','wave','bush','moon') )
         #
-        #
+        # Place images: by main categories
         # self.addpart( draw.obj_imageplacer(self,'heromechbase','villainmechbase','house','tree','mountain','cloud','moon') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','herobasefish','partnerbase','villainbase','bug','cow','heromechbase','villainmechbase') )
         # self.addpart( draw.obj_imageplacer(self,'bunnybase','elderbase','sailorbase','skeletonbase','skeletonbase_sailorhat') )
@@ -1164,24 +1009,41 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'house','pond','castle','cave','lightningbolt','sailboat') )
         # self.addpart( draw.obj_imageplacer(self,'bed','fish','saxophone','musicnote','gun','bullet','nightstand','alarmclock8am','cake') )
         #
-
+        # Place images: by ideas
         # self.addpart( draw.obj_imageplacer(self,'fish','hook') )
-        # self.addpart( draw.obj_imageplacer(self,'bed','bug','nightstand','alarmclock8am','moon') )
+        # self.addpart( draw.obj_imageplacer(self,'bed','nightstand','alarmclock8am','moon') )
         # self.addpart( draw.obj_imageplacer(self,'cake') )
         # self.addpart( draw.obj_imageplacer(self,'sailboat','wave','cloud','sun') )
         # self.addpart( draw.obj_imageplacer(self,'saxophone','musicnote','bug','partnerhead') )
         # self.addpart( draw.obj_imageplacer(self,'skeletonbase','skeletonbase_sailorhat','skeletonbase_partnerhair') )
         # self.addpart( draw.obj_imageplacer(self,'cow','palmtree','bush','moon') )
-        # self.addpart( draw.obj_imageplacer(self,'castle','mountain','cloud','sun','tree','bush','herobase','bug') )
+        # self.addpart( draw.obj_imageplacer(self,'castle','mountain','cloud','sun','tree','bush','herobase','herozapped') )
         # self.addpart( draw.obj_imageplacer(self,'elderbase','lightningbolt') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','sun','moon','bed','fish') )
         # self.addpart( draw.obj_imageplacer(self,'villainbase','flower','love') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','love') )
         # self.addpart( draw.obj_imageplacer(self,'house','flower','mailbox','pond','bush') )
-        self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','cow','bush','palmtree','rock') )
+        # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','cow','bush','palmtree','rock') )
+        # self.addpart( draw.obj_imageplacer(self,'book','eraser','pen') )
+        # self.addpart( draw.obj_imageplacer(self,'fish') )
+        # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','skeletonbase','skeletonbase_sailorhat','palmtree','bush','mountain','moon') )
+        # dxref=330
+        # dyref=300
+        # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','skeletonbase','palmtree','wave','cloud','sailboat','mountain','bush') )
+        # self.addpart( draw.obj_imageplacer(self,'bunnybase','elderbase','sailorbase') )
+        # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','love') )
+        # self.addpart( draw.obj_imageplacer(self,'mountain','cloud','moon','wave') )
+        # self.addpart( draw.obj_imageplacer(self,'mailletter','mailbox','flower','bush') )
 
 
-
+        # self.addpart( draw.obj_image('partnerbase',(320,426),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('musicnote',(485,278),scale=0.36,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('musicnote',(356,189),scale=0.22,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('mailbox',(1073,463),scale=1,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(772,595),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('flower',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('mailletter',(252,96),scale=0.39,rotate=0,fliph=False,flipv=False) )
 
 
 ####################################################################################################################

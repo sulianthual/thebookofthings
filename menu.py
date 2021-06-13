@@ -37,14 +37,14 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        if True :
-        # if False :
+        # if True :
+        if False :
             # regular scenes
             #
-            quickscene=obj_scene_settings()
+            # quickscene=obj_scene_settings()
 
             # quickscene=ch0.obj_scene_prologue()
-            quickscene=ch0.obj_scene_ch0p10()
+            # quickscene=ch0.obj_scene_ch0p10()
             # quickscene=ch1.obj_scene_ch1p12()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p6a()
@@ -57,7 +57,7 @@ class obj_quickscene():
             # quickscene=ch6.obj_scene_ch6p26()
             # quickscene=ch6.obj_scene_ch6p38c()
             # quickscene=ch7.obj_scene_ch7p19()
-            quickscene=ch7.obj_scene_ch7p42()
+            # quickscene=ch7.obj_scene_ch7p42()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -73,7 +73,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
-            # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
+            quickscene=ch8.obj_scene_ch8roam()# ch8 travel
             # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
@@ -249,7 +249,7 @@ class obj_gotobookmark():
         elif chapter==4:
             #
             # ch4
-            self.chaptertext='Chapter IV Something East'
+            self.chaptertext='Chapter IV: Something East'
             self.dict['ch4_start']='start chapter'
             self.dict['ch4_drawalarm']='draw the night stand and alarm clock'
             # self.dict['ch4_startstory']='start the day'
@@ -497,33 +497,43 @@ class obj_scene_realtitlescreen(page.obj_page):
         decooptions=[]
         if self.maxchapter>0:
             decooptions.append('book')
+            decooptions.append('book2')
+            decooptions.append('book3')
         if self.maxchapter>1:
             decooptions.append('hero')
             decooptions.append('hero2')
+            decooptions.append('hero3')
             decooptions.append('fish')
         if self.maxchapter>2:
             decooptions.append('partner')
+            decooptions.append('partner2')
             decooptions.append('house')
+            decooptions.append('mailbox')
         if self.maxchapter>3:
             decooptions.append('villain')
             decooptions.append('villain2')
             decooptions.append('castle')
+            decooptions.append('castle2')
             decooptions.append('bug')
         if self.maxchapter>4:
             decooptions.append('bunny')
             decooptions.append('bunny2')
+            decooptions.append('cave')
             decooptions.append('bedroom')
         if self.maxchapter>5:
             decooptions.append('elder')
-            decooptions.append('elder2')
+            decooptions.append('highestpeak')
         if self.maxchapter>6:
             decooptions.append('sailor')
             decooptions.append('sailor2')
             decooptions.append('cow')
             decooptions.append('ship')
             decooptions.append('skeletons')
+            decooptions.append('skullisland')
+            decooptions.append('grandmasters')
         if self.maxchapter>7:
             decooptions.append('mechs')
+            decooptions.append('mechs2')
             decooptions.append('cake')
         #
         if decooptions:
@@ -536,6 +546,14 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('book',(253,496),scale=0.7,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('eraser',(971,519),scale=0.54,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('pen',(1131,460),scale=0.69,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='book2':
+            self.addpart( draw.obj_image('book',(190,140),scale=0.74,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('eraser',(503,271),scale=0.49,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('pen',(782,245),scale=0.49,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='book3':
+            self.addpart( draw.obj_image('book',(256,249),scale=0.95,rotate=-228,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('eraser',(898,445),scale=0.54,rotate=-224,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('pen',(1126,588),scale=0.54,rotate=-170,fliph=False,flipv=False) )
         elif decochoice=='hero':
             self.addpart( draw.obj_image('herobasefish',(387,497),scale=0.82,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('sun',(1076,195),scale=0.48,rotate=0,fliph=False,flipv=False) )
@@ -545,13 +563,28 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('fish',(802,449),scale=0.41,rotate=-230,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('moon',(147,587),scale=0.62,rotate=-328,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('sun',(808,224),scale=0.42,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='hero3':
+            self.addpart( draw.obj_image('herobase',(629,546),scale=0.57,rotate=-210,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('sun',(247,127),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(1027,120),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('fish',(462,252),scale=0.31,rotate=0,fliph=True,flipv=False) )
         elif decochoice=='fish':
-            self.addpart( draw.obj_image('fish',(980,437),scale=0.89,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('hook',(201,106),scale=0.73,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('hookline',(340,380-390),path='premade') )
+            self.addpart( draw.obj_image('hook',(340,380),scale=0.25) )
+            self.addpart( draw.obj_image('fish',(799,374),scale=0.4,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='partner':
             self.addpart( draw.obj_image('partnerbase',(1088,451),scale=0.68,rotate=-22,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('herobase',(887,459),scale=0.68,rotate=-30,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('love',(986,190),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='partner2':
+            self.addpart( draw.obj_image('bush',(1071,266),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(876,282),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('pond',(997,404),scale=0.62,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1154,613),scale=0.5,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('partnerbase',(209,478),scale=0.51,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('musicnote',(385,344),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('musicnote',(264,215),scale=0.29,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('musicnote',(324,56),scale=0.25,rotate=0,fliph=True,flipv=True) )
         elif decochoice=='house':
             self.addpart( draw.obj_image('house',(640,453),scale=0.51,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mailbox',(827,360),scale=0.25,rotate=0,fliph=False,flipv=False) )
@@ -564,28 +597,42 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('flower',(926,515),scale=0.3,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('flower',(1056,477),scale=0.3,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('flower',(1165,492),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='mailbox':
+            self.addpart( draw.obj_image('mailbox',(1073,463),scale=1,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(772,595),scale=0.54,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('mailletter',(252,96),scale=0.39,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='villain':
-            self.addpart( draw.obj_image('villainbase',(1036,447),scale=0.56,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('gun',(897,445),scale=0.23,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('bullet',(740,431),scale=0.23,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('castle',(1083,146),scale=0.38,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('mountain',(1208,109),scale=0.32,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('mountain',(1189,272),scale=0.39,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('mountain',(972,209),scale=0.33,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('herobase',(214,472),scale=0.59,rotate=2,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('herobase',(200,500-50),scale=0.5) )
+            self.addpart( draw.obj_image('villainshootcrouch',(1280-200,500+50+40+30-100),scale=0.5) )
+            self.addpart( draw.obj_image('gun',(1280-200-175,500+50+40+30-100),scale=0.25,fliph=True) )
+            self.addpart( draw.obj_image('bullet',(650,500),scale=0.25,fliph=True) )
+            self.addpart( draw.obj_image('castle',(1044,176),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1189,266),scale=0.45,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(880,198),scale=0.35,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1194,94),scale=0.28,rotate=0,fliph=True,flipv=False) )
         elif decochoice=='villain2':
-            self.addpart( draw.obj_image('love',(447,240),scale=0.48,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('villainbase',(253,660),scale=1.62,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1017,489),scale=1.01,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('villainbase',(819,626),scale=1.33,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1127,557),scale=0.63,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('love',(1001,253),scale=0.34,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='castle':
-            self.addpart( draw.obj_image('castle',(955,414),scale=1.33,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('castle',(955,414),scale=1.3,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('mountain',(610,473),scale=0.49,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('mountain',(432,498),scale=0.36,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mountain',(1190,623),scale=0.45,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mountain',(1224,465),scale=0.26,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('sun',(1065,88),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('herobase',(105,564),scale=0.33,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('bug',(232,659),scale=0.25,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('herozapped',(243,496),scale=0.46,rotate=42,fliph=False,flipv=False) )
+        elif decochoice=='castle2':
+            dxref=-270
+            dyref=90
+            self.addpart(  draw.obj_image('castle',(640+dxref,360+dyref),scale=0.5) )
+            self.addpart(  draw.obj_image('mountain',(1007+dxref,385+dyref),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('mountain',(404+dxref,499+dyref),scale=0.53,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('mountain',(508+dxref,162+dyref),scale=0.35,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('mountain',(731+dxref,155+dyref),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('mountain',(987+dxref,526+dyref),scale=0.26,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(62,413),scale=0.29,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(530,636),scale=0.42,rotate=0,fliph=True,flipv=False) )
         elif decochoice=='bug':
             self.addpart( draw.obj_image('saxophone',(188,511),scale=1,rotate=26,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('musicnote',(491,477),scale=0.63,rotate=0,fliph=False,flipv=False) )
@@ -598,36 +645,49 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('tree',(80,340),scale=0.53,rotate=4,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('tree',(306,224),scale=0.32,rotate=4,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('tree',(59,154),scale=0.3,rotate=4,fliph=False,flipv=False) )
-        elif decochoice=='bedroom':
-            self.addpart( draw.obj_image('nightstand',(129,580),scale=0.63,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('alarmclock8am',(132,378),scale=0.44,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('bed',(553,558),scale=0.75,rotate=0,fliph=False,flipv=False) )
-            # self.addpart( draw.obj_image('bug',(1075,604),scale=0.54,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('moon',(272,89),scale=0.54,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='bunny2':
             self.addpart( draw.obj_image('bunnyhead',(973,588),scale=0.77,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='cave':
+            dxref=200
+            dyref=110
+            self.addpart(  draw.obj_image('cave',(dxref+640,360+dyref),scale=0.5) )
+            self.addpart(  draw.obj_image('tree',(dxref+395,512+dyref),scale=0.46,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+826,137+dyref),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+919,331+dyref),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+843,514+dyref),scale=0.44,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+243,394+dyref),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+475,350+dyref),scale=0.36,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+667,164+dyref),scale=0.36,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('tree',(dxref+997,477+dyref),scale=0.36,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='bedroom':
+            self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bed',(440,500),scale=0.75,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('alarmclock8am',(97,382),scale=0.52,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(306,80),scale=0.33,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='elder':
-            self.addpart( draw.obj_image('elderbase',(196,475),scale=0.62,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('mountain',(1084,260),scale=0.62,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('cloud',(927,201),scale=0.35,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('lightningbolt',(1121,58),scale=0.35,rotate=-186,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('lightningbolt',(1194,112),scale=0.24,rotate=-218,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('lightningbolt',(995,90),scale=0.24,rotate=-210,fliph=True,flipv=False) )
-        elif decochoice=='elder2':
             self.addpart( draw.obj_image('elderbase',(722,717),scale=1.46,rotate=-118,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('lightningbolt',(185,445),scale=0.74,rotate=-88,fliph=False,flipv=False) )
+        elif decochoice=='highestpeak':
+            dxref=330
+            dyref=300
+            self.addpart( draw.obj_image('mountain',(640+dxref,200+dyref)) )
+            self.addpart( draw.obj_image('cloud',(865+dxref,205+dyref),scale=0.38,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(417+dxref,151+dyref),scale=0.45,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(640+dxref,8+dyref),scale=0.33,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(500+dxref,31+dyref),scale=0.33,rotate=-34,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('lightningbolt',(800+dxref,30+dyref),scale=0.33,rotate=-30,fliph=False,flipv=False) )
         elif decochoice=='sailor':
-            self.addpart( draw.obj_image('herobase',(351,666),scale=0.77,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('sailorbase',(111,631),scale=0.77,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('skeletonbase',(962,326),scale=0.39,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('skeletonbase_sailorhat',(1120,341),scale=0.4,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('palmtree',(431,309),scale=0.7,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('bush',(625,499),scale=0.59,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('bush',(814,599),scale=0.47,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('sailboat',(139,237),scale=0.36,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(214,330),scale=0.36,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(74,354),scale=0.36,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('moon',(294,79),scale=0.43,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('mountain',(1169,276),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase',(1089,389),scale=0.39,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase_sailorhat',(942,364),scale=0.39,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(940,566),scale=0.6,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(707,467),scale=0.56,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1203,556),scale=0.41,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('palmtree',(466,311),scale=0.67,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('palmtree',(260,317),scale=0.47,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('moon',(133,154),scale=0.42,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('herobase',(398,712),scale=0.92,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sailorbase',(158,679),scale=0.91,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='sailor2':
             self.addpart( draw.obj_image('cow',(350,513),scale=0.81,rotate=12,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('herobase',(250,316),scale=0.48,rotate=-4,fliph=False,flipv=False) )
@@ -644,34 +704,59 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('bush',(635,610),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('moon',(1104,69),scale=0.44,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='ship':
-            self.addpart( draw.obj_image('sailboat',(337,455),scale=0.73,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(65,596),scale=0.5,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(503,650),scale=0.5,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(616,569),scale=0.49,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(886,624),scale=0.53,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('wave',(1077,575),scale=0.41,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('cloud',(944,334),scale=0.5,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('cloud',(82,246),scale=0.39,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('cloud',(1177,461),scale=0.36,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('sun',(1098,130),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sailboat',(369,479),scale=0.77,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(582,650),scale=0.56,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(92,601),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(843,603),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(86,334),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(966,482),scale=0.3,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(1182,420),scale=0.3,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='skeletons':
-            self.addpart( draw.obj_image('skeletonbase',(244,509),scale=0.57,rotate=22,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('skeletonbase_sailorhat',(496,499),scale=0.57,rotate=22,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('skeletonbase',(782,491),scale=0.57,rotate=22,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('skeletonbase_partnerhair',(1075,489),scale=0.57,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase',(640-300,500),scale=0.5,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase_sailorhat',(640-100,500),scale=0.5,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase',(640+100,500),scale=0.5,rotate=22,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('skeletonbase_partnerhair',(640+300,500),scale=0.5,rotate=22,fliph=False,flipv=False) )
+        elif decochoice=='skullisland':
+            dyref=130
+            self.addpart( draw.obj_image('wave',(90,267),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('wave',(288,631),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('island1',(640,360+dyref),path='premade') )
+            self.addpart(  draw.obj_image('skeletonhead',(640,360+dyref),scale=0.5) )
+            self.addpart(  draw.obj_image('mountain',(392,319+dyref),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('mountain',(224,280+dyref),scale=0.35,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('mountain',(371,165+dyref),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('palmtree',(870,470+dyref),scale=0.4,rotate=0,fliph=True,flipv=False) )
+            self.addpart(  draw.obj_image('palmtree',(1017,418+dyref),scale=0.4,rotate=0,fliph=False,flipv=False) )
+            self.addpart(  draw.obj_image('cloud',(978,255+dyref),scale=0.4,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(1146,291),scale=0.34,rotate=0,fliph=False,flipv=False) )
+        elif decochoice=='grandmasters':
+            self.addpart( draw.obj_image('house',(1041,376),scale=0.48,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('moon',(869,277),scale=0.27,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(81,478),scale=0.38,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1174,607),scale=0.31,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1078,555),scale=0.31,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(1184,499),scale=0.24,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bunnybase',(724,501),scale=0.63,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('elderbase',(505,432),scale=0.63,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('sailorbase',(277,442),scale=0.63,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='mechs':
             self.addpart( draw.obj_image('heromechpunch',(341,417),scale=0.76,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('villainmechbase',(955,415),scale=0.76,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('mountain',(1212,602),scale=0.32,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('moon',(130,85),scale=0.39,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('cloud',(1202,281),scale=0.3,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('cloud',(838,209),scale=0.3,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('cloud',(1034,164),scale=0.3,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='mechs2':
+            self.addpart( draw.obj_image('villainmechbase_noface',(1029,524),scale=0.73,rotate=-118,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(129,606),scale=0.52,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(760,582),scale=0.23,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(539,601),scale=0.27,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(349,603),scale=0.22,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('flower',(412,627),scale=0.22,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(820,301),scale=0.32,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(985,223),scale=0.32,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('cloud',(1207,321),scale=0.32,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='cake':
             self.addpart( draw.obj_image('cake',(640,525),scale=0.66,rotate=0,fliph=False,flipv=False) )
-
-
-
         else:
             pass# dont draw anything
 

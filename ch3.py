@@ -741,7 +741,6 @@ class obj_scene_ch3p21(page.obj_chapterpage):
         self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
         self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
         #
         animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
