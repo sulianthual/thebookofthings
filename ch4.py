@@ -119,10 +119,32 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
                    'Draw a ',('night stand',share.colors.item),\
                    ' and an ',('alarm clock',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='Night Stand',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='Alarm Clock (draw the exterior)',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='night stand',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='alarm clock (draw the exterior)',shadow=(200,200)) )
         self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
         self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
+        #
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
+class obj_scene_ch4p2a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p2())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p3())
+    def setup(self):
+        share.datamanager.setbookmark('ch4_drawalarm')
+        self.text=[\
+                   'First, lets make sure ',('{heroname}',share.colors.hero),\
+                   ' wakes up on time today, said the book of things. ',\
+                   'Draw a ',('night stand',share.colors.item),\
+                   ' and an ',('alarm clock',share.colors.item),'. ',\
+                   ]
+        self.addpart( draw.obj_drawing('nightstanddraw',(340,450-50),legend='night stand',shadow=(250,250)) )
+        self.addpart( draw.obj_drawing('alarmclockextdraw',(940,450-50),legend='alarm clock (draw the exterior)',shadow=(250,250)) )
+        self.addpart( draw.obj_image('alarmclockfill',(940,450-50),path='premade',scale=1.25) )
+        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450-50),path='premade',scale=1.25) )
         #
         self.addpart( draw.obj_music('piano') )
 

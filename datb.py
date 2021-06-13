@@ -886,7 +886,16 @@ class obj_snapshotmanager:
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('mountaindraw',(640,360),scale=0.8))
             dispgroup1.snapshot((640,360,200,200),'mountain')
-        if name =='alarmclockext':
+        if name=='nightstanddraw':
+            # nightstand redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('nightstanddraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'nightstand')
+        if name =='alarmclockextdraw':
+            # alarmclockext redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('alarmclockextdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'alarmclockext')
             # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
             image1=draw.obj_image('alarmclockext',(640,360))
             image2=draw.obj_image('alarmclockfill',(640,360),path='premade')

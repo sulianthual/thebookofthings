@@ -896,7 +896,7 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
             self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch3)
         if self.maxchapter>3:
-            self.sprite_ch4=draw.obj_textbox('Chapter IV Something East',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.sprite_ch4=draw.obj_textbox('Chapter IV: Something East',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch4)
         if self.maxchapter>4:
             self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(xref,yref+5*dyref),fontsize=fontref,xleft=True, hover=True)
