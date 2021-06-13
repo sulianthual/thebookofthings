@@ -756,16 +756,19 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'bug')
 
         # grandmasters
-        if name =='bunnyface':
+        if name =='bunnyfacedraw':
             # save bunny head
-            dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-            # dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360+150),scale=1.5,path='premade'))
+            dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('bunnystickhead',(640,360+150),scale=0.75,path='premade'))
-            dispgroup1.addpart('part2',draw.obj_image('bunnyface',(640,360)))
+            dispgroup1.addpart('part2',draw.obj_image('bunnyfacedraw',(640,360)))
             dispgroup1.snapshot((640,360,400,300),'bunnyhead')
-        if name in ['bunnyface','bunnybody']:
-            # save angry head
-            dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        if name in ['bunnyfacedraw','bunnybodydraw']:
+            # bunny body redux
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('bunnybodydraw',(640,360),scale=0.666))
+            dispgroup1.snapshot((640,360,200,155),'bunnybody')
+            # bunny head+body
+            dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('bunnybody',(640,360+65)))
             dispgroup1.addpart('part2',draw.obj_image('bunnyhead',(640,360-150),scale=0.5))
             dispgroup1.snapshot((640,295,200,235+50),'bunnybase')

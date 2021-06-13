@@ -353,9 +353,26 @@ class obj_scene_ch4p12(page.obj_chapterpage):
         self.textboxnextpage_xy=(1280-100,360)
         self.text=[]
         self.addpart( draw.obj_image('bunnystickhead',(640,360+150-10),scale=0.75,path='premade') )
-        self.addpart( draw.obj_drawing('bunnyface',(640,360-10),legend='draw a bunny head (facing right)',shadow=(400,300)) )
+        self.addpart( draw.obj_drawing('bunnyfacedraw',(640,360-10),legend='draw a bunny head (facing right)',shadow=(400,300)) )
         #
         self.addpart( draw.obj_music('ch4') )
+
+
+# class obj_scene_ch4p12a(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p12())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p13())
+#     def setup(self):
+#         self.text=[\
+#                 'Now draw ',('{bunnyname}',share.colors.bunny),'\'s body. ',\
+#                 'Remember to make it very cute! ',\
+#                    ]
+#         yref=400
+#         self.addpart( draw.obj_drawing('bunnybody',(640,yref+65),legend='bunny body (facing right)',shadow=(200,105+50),brush=share.brushes.pen6) )
+#         self.addpart( draw.obj_image('bunnyhead',(640,yref-150),scale=0.5) )
+#         #
+#         self.addpart( draw.obj_music('ch4') )
 
 
 class obj_scene_ch4p12a(page.obj_chapterpage):
@@ -364,15 +381,12 @@ class obj_scene_ch4p12a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p13())
     def setup(self):
-        self.text=[\
-                'Now draw ',('{bunnyname}',share.colors.bunny),'\'s body. ',\
-                'Remember to make it very cute! ',\
-                   ]
-        yref=400
-        self.addpart( draw.obj_drawing('bunnybody',(640,yref+65),legend='bunny body (facing right)',shadow=(200,105+50),brush=share.brushes.pen6) )
-        self.addpart( draw.obj_image('bunnyhead',(640,yref-150),scale=0.5) )
+        self.text=[' ']
+        self.addpart( draw.obj_drawing('bunnybodydraw',(640,400+98-100),legend='draw the bunny\'s body (facing right)',shadow=(300,233)) )
+        self.addpart( draw.obj_image('bunnyhead',(640,400-225-100),scale=0.75) )
         #
         self.addpart( draw.obj_music('ch4') )
+
 
 
 class obj_scene_ch4p13(page.obj_chapterpage):
