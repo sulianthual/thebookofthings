@@ -232,7 +232,7 @@ class obj_drawing:
             self.brush.makebrush(self.brushtype)
         # brush tip (useful for visibility e.g. if drawing black on black)
         self.sprite_brushtip=core.obj_sprite_image()
-        self.sprite_brushtip.load('data/mousepointerdraw.png',convert=False)
+        self.sprite_brushtip.load('data/mousepointerdraw.png')
         # shadow (start of the drawing)
         self.sprite_shadow=core.obj_sprite_image()
         if self.shadow:
