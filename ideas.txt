@@ -70,11 +70,18 @@ It should be done in NEXT games with other softwares that do this more easily (g
 
 ###########################################################
 ###########################################################
-
 * Other Ideas (maybe later or never, not so important):
 
-- male the player draw the stickman, the ? and the ! (these are images in premade),
-  add expressions drawn by player, like " ", poof, etc...
+
+- Make a first chapter (the prologue or between prologue and chapter I) that mimicks the creation of the universe
+  make a big bang (done by the book of things who is like god in this universe)
+  then start drawing with very simple shapes (line, circles)
+  the first shapes are like bacteria, they fight and each other (can have minigames)
+  then become terrific monster (like dinosaurs that fly, roam,eat each others)
+  then at the end, those shapes create the "stickman". It has all the basic actions of move, jump
+  can also draw the "emotions" (that didnt exist before) like the ?, the !, the "", etc
+
+
 - tff file: cannot do text for interrogation marks. correct the file ?
 
 

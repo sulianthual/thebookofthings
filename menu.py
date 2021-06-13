@@ -843,20 +843,19 @@ class obj_scene_realtitlescreen(page.obj_page):
             #
 
         #
-        if controls.gq and controls.gqc:
-            share.quitgame()
-        #
         #############################################3
         # devtools
         if share.devaccess:
             if controls.ga and controls.gac:
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(tests.obj_scene_testmenu())
-
+            #
             if controls.f and controls.fc:
                 self.sound_menugo.play()
                 self.gotoquickscene()
-
+            #
+            if controls.gq and controls.gqc:
+                share.quitgame()
 
 
 
