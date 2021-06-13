@@ -210,9 +210,9 @@ class obj_scene_ch0p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p9())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(580,140)
-        self.textboxnextpage_xy=(760,140)
+    # def textboxplace(self):
+    #     self.textboxprevpage_xy=(580,140)
+    #     self.textboxnextpage_xy=(760,140)
     def setup(self):
         share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'
@@ -221,12 +221,10 @@ class obj_scene_ch0p10(page.obj_chapterpage):
         self.text=['Well hello, said the book of things, ',\
                 'very nice to meet you. ',\
                     'How are you feeling today, could you tell me your current mood. ',\
-                    '\n\n ',\
-                  ('select the box with '+tempo1+' and type a mood with the '+tempok+'. ',share.colors.instructions),\
-                  '\n\n\n\n ',\
-                 ('select an option with '+tempo1+'. ',share.colors.instructions),\
                  ]
+        self.addpart( draw.obj_textbox('select the box with '+tempo1+' and type a mood with the '+tempok+'. ',(50,220),color=share.colors.instructions,xleft=True) )
         self.addpart( draw.obj_textinput('playermood',30,(640,330), legend='write down your mood') )
+        self.addpart( draw.obj_textbox('select an option with '+tempo1,(50,450),color=share.colors.instructions,xleft=True) )
         #
         yref=560
         self.addpart( draw.obj_textbox('how much: ',(180,yref)) )
