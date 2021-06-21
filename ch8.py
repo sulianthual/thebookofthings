@@ -55,7 +55,7 @@ class obj_scene_ch8roam(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8atpartner())
         elif self.world.goalname=='mech':
             share.scenemanager.switchscene(obj_scene_ch8mech())
-        elif self.world.goalname=='castle':
+        elif self.world.goalname=='tower':
             share.scenemanager.switchscene(obj_scene_ch8west())
         elif self.world.goalname=='forest':
             share.scenemanager.switchscene(obj_scene_ch8east())
@@ -700,13 +700,13 @@ class obj_scene_ch8mechbye(page.obj_chapterpage):
 
 
 ###########
-# west castle
+# west tower
 
 class obj_scene_ch8west(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='castle'))
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='tower'))
     def nextpage(self):
-        trypassword=share.datamanager.getword('castlepassword')
+        trypassword=share.datamanager.getword('towerpassword')
         shouldpassword='lie cheat steal'
         if share.devmode or tool.comparestringparts(trypassword,shouldpassword):
             share.scenemanager.switchscene(obj_scene_ch8westcorrectpassword())
@@ -714,24 +714,24 @@ class obj_scene_ch8west(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8westwrongpassword())
     def setup(self):
         self.text=[\
-                  '"Welcome back, blasted the castle\'s a.s.s. (automated security system). ',\
+                  '"Welcome back, blasted the tower\'s a.s.s. (automated security system). ',\
                   'Please enter the ',('password',share.colors.password),
                 '". ',\
                    ]
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('castlepassword',30,(380,260), legend='Castle Password',default='lie cheat steal')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='lie cheat steal')
         self.addpart( self.textinput )
         #
-        animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
+        animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
-        animation1.addsound( "castle1", [16, 79] )
-        animation1.addsound( "castle2", [91] )
-        animation1.addsound( "castle4", [99] )
+        animation1.addsound( "tower1", [16, 79] )
+        animation1.addsound( "tower2", [91] )
+        animation1.addsound( "tower4", [99] )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 class obj_scene_ch8westwrongpassword(page.obj_chapterpage):
     def prevpage(self):
@@ -740,60 +740,60 @@ class obj_scene_ch8westwrongpassword(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8west())
     def setup(self):
         self.text=[\
-                  '"Wrong, blasted the castle\'s ',\
+                  '"Wrong, blasted the tower\'s ',\
                   'a.s.s., zapping engaged! In case you already forgot, the password is ',\
                 ('"lie cheat steal"',share.colors.password),\
                 '. Now try again". ',\
                    ]
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
         #
-        self.sound=draw.obj_sound('castle5')
+        self.sound=draw.obj_sound('tower5')
         self.addpart(self.sound)
         self.sound.play()
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle_elec','castle_hurt') )
-        animation1.addsound( "castle_elec", [1, 115,261] )
-        animation1.addsound( "castle_hurt", [0,115,261],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower_elec','tower_hurt') )
+        animation1.addsound( "tower_elec", [1, 115,261] )
+        animation1.addsound( "tower_hurt", [0,115,261],skip=1 )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 class obj_scene_ch8westcorrectpassword(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='castle'))
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='tower'))
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8westinside())
     def setup(self):
         self.text=[\
-                  '"Password is correct. You may enter, said the castle\'s a.s.s."',\
+                  '"Password is correct. You may enter, said the tower\'s a.s.s."',\
                    ]
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch7_heroenterscastle','herobase',(640,360),record=False)
+        animation1=draw.obj_animation('ch7_heroenterstower','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        animation1.addsound( "castle1", [48] )
-        animation1.addsound( "castle2", [30,93] )
-        animation1.addsound( "castle4", [42,] )
-        animation1.addsound( "castle3", [108] )
-        animation1.addsound( "castle6", [110],skip=1 )
+        animation1.addsound( "tower1", [48] )
+        animation1.addsound( "tower2", [30,93] )
+        animation1.addsound( "tower4", [42,] )
+        animation1.addsound( "tower3", [108] )
+        animation1.addsound( "tower6", [110],skip=1 )
         #
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch8westinside(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='castle'))
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='tower'))
     def nextpage(self):
         if share.datamanager.getword('numchoice')=='1':
             share.scenemanager.switchscene(obj_scene_ch8westdodgebullets())
@@ -897,7 +897,7 @@ class obj_scene_ch8westbye(page.obj_chapterpage):
     def textboxprevpage(self):
         pass
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='castle'))
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='tower'))
     def setup(self):
         self.text=[\
                 '"Alright bye, said ',\

@@ -59,7 +59,7 @@ class obj_scene_ch5p1(page.obj_chapterpage):
                   '"',\
                      ('{heroname}',share.colors.hero),' is visiting the ',\
                      ('grandmasters of deceit',share.colors.grandmaster),\
-                     ' to figure out the castle\'s ',\
+                     ' to figure out the tower\'s ',\
                      ('password',share.colors.password2),'. ',\
                    'So far, the first part of the password is ',('"fight"',share.colors.password),'. ',\
                    ]
@@ -68,7 +68,7 @@ class obj_scene_ch5p1(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         #
-        self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='premade')
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade') )
@@ -461,7 +461,7 @@ class obj_scene_ch5p18(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"So you want to know ',\
-                ('my part of the castle\'s password',share.colors.password),'. ',\
+                ('my part of the tower\'s password',share.colors.password),'. ',\
                     ' Well I might certainly help, said ',\
                     ('{eldername}',share.colors.elder),'. ',\
                     'hi hi hi". ',\

@@ -458,11 +458,11 @@ class obj_scene_ch3p12(page.obj_chapterpage):
         share.datamanager.setbookmark('ch3_drawmountain')
         self.text=[\
 
-                 'Lets continue: "the evil lair was a castle in the mountains". '\
-                 'Draw an ',('castle',share.colors.item),\
+                 'Lets continue: "the evil lair was a tower in the mountains". '\
+                 'Draw an ',('tower',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('castledraw',(340,450-50),legend='evil castle',shadow=(250,250)) )
+        self.addpart( draw.obj_drawing('towerdraw',(340,450-50),legend='evil tower',shadow=(250,250)) )
         self.addpart( draw.obj_drawing('mountaindraw',(940,450-50),legend='mountain',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('villain') )
@@ -479,9 +479,9 @@ class obj_scene_ch3p13(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         self.text=[\
-                'go to the evil castle in the west',\
+                'go to the evil tower in the west',\
                    ]
-        self.world=world.obj_world_travel(self,start='home',goal='castle',chapter=3,ambience=False)
+        self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3,ambience=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('villain') )
@@ -496,12 +496,12 @@ class obj_scene_ch3p14(page.obj_chapterpage):
         self.text=[\
                   '"',\
                   ('{heroname}',share.colors.hero),\
-                    ' arrived at the ',('evil castle',share.colors.location2),'. ',\
+                    ' arrived at the ',('evil tower',share.colors.location2),'. ',\
                   ('{villainname}',share.colors.villain),' said: muahaha, who dares appear before me. ',\
                   'Get ready to ',\
                   ('fight',share.colors.villain2),'!". ',\
                    ]
-        self.addpart( draw.obj_image('castle',(1100,310), scale=0.7) )
+        self.addpart( draw.obj_image('tower',(1100,310), scale=0.7) )
         # self.addpart( draw.obj_image('partnerbase',(1100,530), scale=0.4,rotate=90) )
         self.addpart( draw.obj_image('mountain',(881,292),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(709,245),scale=0.29,rotate=0,fliph=False,flipv=False) )
@@ -693,11 +693,11 @@ class obj_scene_ch3p20(page.obj_chapterpage):
                   ('{villainname}',share.colors.villain),\
                   ' ran out of bullets and headed towards ',\
                   ('{villain_his}',share.colors.villain2),' ',\
-                  ('evil castle',share.colors.location2),'". ',\
+                  ('evil tower',share.colors.location2),'". ',\
                    ]
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
         self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
-        self.addpart( draw.obj_image('castle',(1143,318),scale=0.67) )
+        self.addpart( draw.obj_image('tower',(1143,318),scale=0.67) )
         # self.addpart( draw.obj_image('mountain',(1110,380),scale=0.8,fliph=True) )
         self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
         #
@@ -705,7 +705,7 @@ class obj_scene_ch3p20(page.obj_chapterpage):
         self.addpart( animation1 )
         # self.addpart( draw.obj_animation('ch3_herowins2','partnerbase',(640,360),record=False,sync=animation1) )
         self.addpart( draw.obj_animation('ch3_herowins3','villainbase',(640,360),record=False,sync=animation1) )
-        # self.addpart(draw.obj_imageplacer(self,'castle','mountain'))
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain'))
         #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
         animation1.addsound( "villain1", [17] )
@@ -715,7 +715,7 @@ class obj_scene_ch3p20(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p21(page.obj_chapterpage):
@@ -728,35 +728,35 @@ class obj_scene_ch3p21(page.obj_chapterpage):
                   '"',\
                   ('{villainname}',share.colors.villain),' entered ',\
                   ('{villain_his}',share.colors.villain2),' ',\
-                  ('evil castle',share.colors.location2),' and said: ',\
+                  ('evil tower',share.colors.location2),' and said: ',\
                   'muahaha, my ',\
-                  ('castle',share.colors.location2),' is locked tight and protected by a ',\
+                  ('tower',share.colors.location2),' is locked tight and protected by a ',\
                   ('password',share.colors.password),'. ',\
                   'You will never get in!".  ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        self.addpart( draw.obj_animation('ch3_suntower','sun',(640,360),record=False) )
         #
-        animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
+        animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle1','castle2','castle3','castle4','castle5','castle6') )
-        animation1.addsound( "castle1", [48] )
-        animation1.addsound( "castle2", [30] )
-        animation1.addsound( "castle4", [42] )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower1','tower2','tower3','tower4','tower5','tower6') )
+        animation1.addsound( "tower1", [48] )
+        animation1.addsound( "tower2", [30] )
+        animation1.addsound( "tower4", [42] )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p22(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p21())
     def nextpage(self):
-        trypassword=share.datamanager.getword('castlepassword')
+        trypassword=share.datamanager.getword('towerpassword')
         earlypassword='lie cheat steal'
         if share.devmode or tool.comparestringparts(trypassword,earlypassword):
             share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
@@ -766,27 +766,27 @@ class obj_scene_ch3p22(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-                  '"The  ',('castle',share.colors.location2),'\'s a.s.s.',\
+                  '"The  ',('tower',share.colors.location2),'\'s a.s.s.',\
                   ' (automated security system) blasted: ',\
                   'lockdown engaged, password required. Please enter ',\
                   ('password',share.colors.password),'". ',\
                    ]
-        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('castlepassword',30,(380,260), legend='Castle Password',default='...')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
         self.addpart( self.textinput )
         #
-        animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
+        animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
-        animation1.addsound( "castle1", [16, 79] )
-        animation1.addsound( "castle2", [91] )
-        animation1.addsound( "castle4", [99] )
+        animation1.addsound( "tower1", [16, 79] )
+        animation1.addsound( "tower2", [91] )
+        animation1.addsound( "tower4", [99] )
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle1','castle2','castle3','castle4','castle5') )
-        self.addpart( draw.obj_music('castle') )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower1','tower2','tower3','tower4','tower5') )
+        self.addpart( draw.obj_music('tower') )
 
 
 # easter egg: correct password entered too early
@@ -798,25 +798,25 @@ class obj_scene_ch3p22easteregg(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"You have entered: ',('"lie cheat steal"',share.colors.password),' . ',\
-                'That... that is correct, said the castle\'s a.s.s. ',\
+                'That... that is correct, said the tower\'s a.s.s. ',\
                 'But how... how could you possibly know. ',\
                 'I... I guess you may come in then". ',\
                    ]
-        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        self.addpart( draw.obj_animation('ch3_suntower','sun',(640,360),record=False) )
         #
-        animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
+        animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        animation1.addsound( "castle1", [48] )
-        animation1.addsound( "castle2", [30,93] )
-        animation1.addsound( "castle4", [42,] )
-        animation1.addsound( "castle3", [108] )
-        animation1.addsound( "castle6", [110],skip=1 )
+        animation1.addsound( "tower1", [48] )
+        animation1.addsound( "tower2", [30,93] )
+        animation1.addsound( "tower4", [42,] )
+        animation1.addsound( "tower3", [108] )
+        animation1.addsound( "tower6", [110],skip=1 )
         #
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)
@@ -832,29 +832,29 @@ class obj_scene_ch3p22easteregg2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
         self.text=[\
-                  '"Just joking, blasted the ',('castle',share.colors.location2),'\'s a.s.s., ',\
+                  '"Just joking, blasted the ',('tower',share.colors.location2),'\'s a.s.s., ',\
                   ' there is ',('NOOOO WAAAAY',share.colors.red),' i am letting you in this early in the game! ',\
                   'Nice try tho you little cheat." ',\
                    ]
-        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
         #
-        self.sound=draw.obj_sound('castle5')
+        self.sound=draw.obj_sound('tower5')
         self.addpart(self.sound)
         self.sound.play()
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle_elec','castle_hurt') )
-        animation1.addsound( "castle_elec", [1, 115,261] )
-        animation1.addsound( "castle_hurt", [0,115,261],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower_elec','tower_hurt') )
+        animation1.addsound( "tower_elec", [1, 115,261] )
+        animation1.addsound( "tower_hurt", [0,115,261],skip=1 )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p23(page.obj_chapterpage):
@@ -863,32 +863,32 @@ class obj_scene_ch3p23(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
-        trypassword=share.datamanager.getword('castlepassword')
+        trypassword=share.datamanager.getword('towerpassword')
         self.text=[\
                   '"You have entered: ',('"'+trypassword+'"',share.colors.password),' . ',\
-                  'Wrong password, blasted the ',('castle',share.colors.location2),\
+                  'Wrong password, blasted the ',('tower',share.colors.location2),\
                   '\'s a.s.s.! And it zapped ',\
                   ('{heroname}',share.colors.hero),' with an electric shock". ',\
                    ]
-        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
         #
-        self.sound=draw.obj_sound('castle5')
+        self.sound=draw.obj_sound('tower5')
         self.addpart(self.sound)
         self.sound.play()
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle_elec','castle_hurt') )
-        animation1.addsound( "castle_elec", [1, 115,261] )
-        animation1.addsound( "castle_hurt", [0,115,261],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower_elec','tower_hurt') )
+        animation1.addsound( "tower_elec", [1, 115,261] )
+        animation1.addsound( "tower_hurt", [0,115,261],skip=1 )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p24(page.obj_chapterpage):
@@ -898,7 +898,7 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch3p25())
         else:
-            trypassword=share.datamanager.getword('castlepassword')
+            trypassword=share.datamanager.getword('towerpassword')
             earlypassword='lie cheat steal'
             if share.devmode or tool.comparestringparts(trypassword,earlypassword):
                 share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
@@ -906,21 +906,21 @@ class obj_scene_ch3p24(page.obj_chapterpage):
                 share.scenemanager.switchscene(obj_scene_ch3p24fail())
     def setup(self):
         self.text=[\
-                  '"The  ',('castle',share.colors.location2),'\'s a.s.s. blasted: ',\
+                  '"The  ',('tower',share.colors.location2),'\'s a.s.s. blasted: ',\
                   'You may leave or dare try again". ',\
                    ]
-        # self.addpart(draw.obj_imageplacer(self,'castle','mountain','herobase','villainbase'))
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch3_castletalk','herobase',(640,360),record=False)
+        animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
         self.addpart( animation1 )
-        animation1.addsound( "castle1", [16, 79] )
-        animation1.addsound( "castle2", [91] )
-        animation1.addsound( "castle4", [99] )
+        animation1.addsound( "tower1", [16, 79] )
+        animation1.addsound( "tower2", [91] )
+        animation1.addsound( "tower4", [99] )
         #
-        self.textinput=draw.obj_textinput('castlepassword',30,(380,260), legend='Castle Password',default='...')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
         self.addpart( self.textinput )
         y1=170
         # self.addpart( draw.obj_textbox('Leave:',(90,y1),xleft=True) )
@@ -929,7 +929,7 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         textchoice.addchoice('Try Again','no',(460,y1))
         self.addpart( textchoice )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p24fail(page.obj_chapterpage):
@@ -938,31 +938,31 @@ class obj_scene_ch3p24fail(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
-        trypassword=share.datamanager.getword('castlepassword')
+        trypassword=share.datamanager.getword('towerpassword')
         randolist=['Wrooooong','Failed again','Haha, I bet you are enjoying this']
         randotext=tool.randchoice(randolist)
         self.text=[\
                   '"You have entered: ',('"'+trypassword+'"',share.colors.password),' . ',\
-                  ''+randotext+', blasted the ',('castle',share.colors.location2),\
+                  ''+randotext+', blasted the ',('tower',share.colors.location2),\
                   '\'s a.s.s. , zapping engaged! ',\
                    ]
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('castlesparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
         animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
         animation1.addimage('herozapped')
         self.addpart( animation1 )
         #
-        self.sound=draw.obj_sound('castle5')
+        self.sound=draw.obj_sound('tower5')
         self.addpart(self.sound)
         self.sound.play()
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle_elec','castle_hurt') )
-        animation1.addsound( "castle_elec", [1, 115,261] )
-        animation1.addsound( "castle_hurt", [115,261],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower_elec','tower_hurt') )
+        animation1.addsound( "tower_elec", [1, 115,261] )
+        animation1.addsound( "tower_hurt", [115,261],skip=1 )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p25(page.obj_chapterpage):
@@ -974,23 +974,23 @@ class obj_scene_ch3p25(page.obj_chapterpage):
         self.text=[\
                 '"',\
                 ('{heroname}',share.colors.hero),' gave up. ',\
-                'Till next time looser, blasted the castle\'s a.s.s." ',\
+                'Till next time looser, blasted the tower\'s a.s.s." ',\
                    ]
-        self.addpart( draw.obj_image('castle',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_animation('ch3_suncastle','sun',(640,360),record=False) )
+        self.addpart( draw.obj_animation('ch3_suntower','sun',(640,360),record=False) )
         #
         animation1=draw.obj_animation('ch3_heroabandons','herobase',(640,360),record=False)
         self.addpart( animation1 )
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'castle1','castle2','castle3','castle4','castle5','castle6') )
-        animation1.addsound( "castle2", [3] )
-        animation1.addsound( "castle3", [18] )
-        animation1.addsound( "castle6", [20],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'tower1','tower2','tower3','tower4','tower5','tower6') )
+        animation1.addsound( "tower2", [3] )
+        animation1.addsound( "tower3", [18] )
+        animation1.addsound( "tower6", [20],skip=1 )
         #
-        self.addpart( draw.obj_music('castle') )
+        self.addpart( draw.obj_music('tower') )
 
 
 class obj_scene_ch3p25a(page.obj_chapterpage):
@@ -1005,7 +1005,7 @@ class obj_scene_ch3p25a(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch3_gohome')
         self.text=['go back home']
-        self.world=world.obj_world_travel(self,start='castle',goal='home',chapter=3)
+        self.world=world.obj_world_travel(self,start='tower',goal='home',chapter=3)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music(None) )
@@ -1255,14 +1255,14 @@ class obj_scene_ch3p36(page.obj_chapterpage):
         self.text=[\
                  '"In fact I am here to help you, said the ',('{bug}',share.colors.bug),'. ',\
                  'I know how to unlock ',('{villainname}',share.colors.villain),\
-                 '\'s ',('evil castle',share.colors.location2),'!" ',\
+                 '\'s ',('evil tower',share.colors.location2),'!" ',\
                    ]
         self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         #
-        self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(340,360))
         self.addpart( animation1 )
         #
@@ -1314,7 +1314,7 @@ class obj_scene_ch3p38(page.obj_chapterpage):
                    ' has learned all ',('{villain_his}',share.colors.villain2),\
                    ' evil ways from three ',('grandmasters of deceit',share.colors.grandmaster),'. ',\
                    'And they each know ',\
-                   ('one part',share.colors.password),' of the castle\'s password." ',\
+                   ('one part',share.colors.password),' of the tower\'s password." ',\
                    ]
 
         self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
@@ -1323,12 +1323,12 @@ class obj_scene_ch3p38(page.obj_chapterpage):
         self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         #
         self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='premade')
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='premade') )
-        # self.addpart( draw.obj_imageplacer(self,'castle','villainhead') )
+        # self.addpart( draw.obj_imageplacer(self,'tower','villainhead') )
         #
         self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
         animation1.addsound( "villain2", [111],skip=1 )

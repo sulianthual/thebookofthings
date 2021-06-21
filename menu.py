@@ -212,7 +212,7 @@ class obj_gotobookmark():
             self.dict['ch3_writevillain']='draw and name the villain'
             # self.dict['ch3_startstory']='start the day'
             # self.dict['ch3_checkmail']='read the mail'
-            self.dict['ch3_drawmountain']='draw the castle and mountain'
+            self.dict['ch3_drawmountain']='draw the tower and mountain'
             self.dict['ch3_drawgun']='draw the gun and bullet'
             self.dict['ch3_startdodge']='fight the villain'
             self.dict['ch3_windodge']='enter the password'
@@ -415,7 +415,7 @@ class obj_gotobookmark():
             self.dict['ch7_start']='start chapter'
             # self.dict['ch7_startstory']='start the day'
             # self.dict['ch7_checkmail']='read the mail'
-            # self.dict['ch7_gotocastle']='go the the castle'
+            # self.dict['ch7_gototower']='go the the tower'
             self.dict['ch7_putpassword1']='enter the password'
             # self.dict['ch7_putpassword2']='enter the correct password'
             self.dict['ch7_startdodge']='fight the villain (guns)'
@@ -433,7 +433,7 @@ class obj_gotobookmark():
                 bookmarkscene=ch7.obj_scene_ch7p2()
             elif bookmarkname == 'ch7_checkmail':
                 bookmarkscene=ch7.obj_scene_ch7p5()
-            elif bookmarkname == 'ch7_gotocastle':
+            elif bookmarkname == 'ch7_gototower':
                 bookmarkscene=ch7.obj_scene_ch7p10()
             elif bookmarkname == 'ch7_putpassword1':
                 bookmarkscene=ch7.obj_scene_ch7p11()
@@ -513,8 +513,8 @@ class obj_scene_realtitlescreen(page.obj_page):
         if self.maxchapter>3:
             decooptions.append('villain')
             decooptions.append('villain2')
-            decooptions.append('castle')
-            decooptions.append('castle2')
+            decooptions.append('tower')
+            decooptions.append('tower2')
             decooptions.append('bug')
         if self.maxchapter>4:
             decooptions.append('bunny')
@@ -605,7 +605,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('villainshootcrouch',(1280-200,500+50+40+30-100),scale=0.5) )
             self.addpart( draw.obj_image('gun',(1280-200-175,500+50+40+30-100),scale=0.25,fliph=True) )
             self.addpart( draw.obj_image('bullet',(650,500),scale=0.25,fliph=True) )
-            self.addpart( draw.obj_image('castle',(1044,176),scale=0.46,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('tower',(1044,176),scale=0.46,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mountain',(1189,266),scale=0.45,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mountain',(880,198),scale=0.35,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('mountain',(1194,94),scale=0.28,rotate=0,fliph=True,flipv=False) )
@@ -613,16 +613,16 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('villainbase',(819,626),scale=1.33,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('flower',(1127,557),scale=0.63,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('love',(1001,253),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        elif decochoice=='castle':
-            self.addpart( draw.obj_image('castle',(955,414),scale=1.3,rotate=0,fliph=True,flipv=False) )
+        elif decochoice=='tower':
+            self.addpart( draw.obj_image('tower',(955,414),scale=1.3,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('mountain',(610,473),scale=0.49,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mountain',(1190,623),scale=0.45,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mountain',(1224,465),scale=0.26,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('herozapped',(243,496),scale=0.46,rotate=42,fliph=False,flipv=False) )
-        elif decochoice=='castle2':
+        elif decochoice=='tower2':
             dxref=-270
             dyref=90
-            self.addpart(  draw.obj_image('castle',(640+dxref,360+dyref),scale=0.5) )
+            self.addpart(  draw.obj_image('tower',(640+dxref,360+dyref),scale=0.5) )
             self.addpart(  draw.obj_image('mountain',(1007+dxref,385+dyref),scale=0.44,rotate=0,fliph=True,flipv=False) )
             self.addpart(  draw.obj_image('mountain',(404+dxref,499+dyref),scale=0.53,rotate=0,fliph=False,flipv=False) )
             self.addpart(  draw.obj_image('mountain',(508+dxref,162+dyref),scale=0.35,rotate=0,fliph=True,flipv=False) )

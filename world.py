@@ -1235,7 +1235,7 @@ class obj_world_travel(obj_world):
                 self.xyhero=(1100-640,10-360)
             elif self.wherestart=='cake':
                 self.xyhero=(210,-50)
-            elif self.wherestart=='castle':
+            elif self.wherestart=='tower':
                 self.xyhero=(-1280,0)
             elif self.wherestart=='forest':
                 self.xyhero=(1280,0)
@@ -1259,7 +1259,7 @@ class obj_world_travel(obj_world):
             self.xygoal=(1100-640,10-360)
         elif self.whereends=='cake':
             self.xygoal=(210,-50)
-        elif self.whereends=='castle':
+        elif self.whereends=='tower':
             self.xygoal=(-1280,0)
         elif self.whereends=='forest':
             self.xygoal=(1280,0)
@@ -1277,7 +1277,7 @@ class obj_world_travel(obj_world):
             self.allxygoals['mech']=(1100-640,10-360)
             self.allxygoals['cake']=(210,-50)
             self.allxygoals['atpartner']=(870-640,570-360)
-            self.allxygoals['castle']=(-1280,0)
+            self.allxygoals['tower']=(-1280,0)
             self.allxygoals['forest']=(1280,0)
             self.allxygoals['peak']=(0,-1080-80)
             self.allxygoals['beach']=(-1280,1080-120)
@@ -1370,10 +1370,10 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( 'refroam_partner', draw.obj_image('partnerbase',(870+70,570),scale=0.25,fliph=True) )
             self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(870,570),scale=0.5,path='premade') )
         #
-        # west panel 0-1: villain castle
+        # west panel 0-1: villain tower
         if self.chapter>=3:
-            self.staticactor01.addpart( 'textref', draw.obj_textbox('evil castle',(640,360+120),color=share.colors.location) )
-            self.staticactor01.addpart( 'ref', draw.obj_image('castle',(640,360),scale=0.5) )
+            self.staticactor01.addpart( 'textref', draw.obj_textbox('evil tower',(640,360+120),color=share.colors.location) )
+            self.staticactor01.addpart( 'ref', draw.obj_image('tower',(640,360),scale=0.5) )
             #
             self.staticactor01.addpart( "img2", draw.obj_image('mountain',(845,587),scale=0.57,rotate=0,fliph=True,flipv=False) )
             self.staticactor01.addpart( "img3", draw.obj_image('mountain',(1007,385),scale=0.44,rotate=0,fliph=True,flipv=False) )
@@ -1389,7 +1389,7 @@ class obj_world_travel(obj_world):
                 self.staticactor01.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
         if self.chapter>=8:
             self.staticactor01.addpart( 'refroam', draw.obj_image('villainbase',(640-150,360),scale=0.25) )
-            self.staticactor01.addpart( 'refmark_castle', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
+            self.staticactor01.addpart( 'refmark_tower', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
         #
         # east panel 2-1: magical forest and cave
         if self.chapter>=4:
@@ -1924,13 +1924,13 @@ class obj_world_dodgegunshots(obj_world):
         # default options
         self.heroisangry=False# hero is angry during fight
         self.partnerisenemy=False# parnter is alongside enemy during fight
-        self.incastle=False# inside castle not outside
+        self.intower=False# inside tower not outside
         self.dotutorial=False# do the tutorial
         # scene tuning
         if kwargs is not None:
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# OBSOLETE
             if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]# OBSOLETE
-            if 'incastle' in kwargs: self.incastle=kwargs["incastle"]
+            if 'intower' in kwargs: self.intower=kwargs["intower"]
             if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
         #
         self.done=False# end of minigame
@@ -1952,7 +1952,7 @@ class obj_world_dodgegunshots(obj_world):
         self.text_start.show=True
         # static
         self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
-        # if not self.incastle:
+        # if not self.intower:
             # self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
             # self.staticactor.addpart( 'sun', draw.obj_image('sun',(470,190),scale=0.4) )
         # hero
@@ -4363,7 +4363,7 @@ class obj_world_mechfight(obj_world):
         # villainmech complete
         # dispgroup1=draw.obj_dispgroup((640,360))
         # dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature',(640,360)) )
-        # dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        # dispgroup1.addpart( 'part2', draw.obj_image('tower',(640,180),scale=0.35) )
         # dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         # dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         # dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
@@ -4382,7 +4382,7 @@ class obj_world_mechfight(obj_world):
         # villainnech no face
         # dispgroup1=draw.obj_dispgroup((640,360))
         # dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
-        # dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+        # dispgroup1.addpart( 'part2', draw.obj_image('tower',(640,180),scale=0.35) )
         # dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         # dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         # dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
@@ -4442,7 +4442,7 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part4', draw.obj_image('tower',(640,180),scale=0.35) )
         dispgroup1.addpart( 'part5', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         dispgroup1.addpart( 'part7', draw.obj_image('mechpunch',(640,360),path='premade') )
@@ -4470,7 +4470,7 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
         dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        dispgroup1.addpart( 'part5', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part5', draw.obj_image('tower',(640,180),scale=0.35) )
         dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         dispgroup1.addpart( 'part7', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         dispgroup1.addpart( 'part8', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
@@ -4499,7 +4499,7 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
         dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        dispgroup1.addpart( 'part5', draw.obj_image('castle',(640,180),scale=0.35) )
+        dispgroup1.addpart( 'part5', draw.obj_image('tower',(640,180),scale=0.35) )
         dispgroup1.addpart( 'part6', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part7', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
         dispgroup1.addpart( 'part8', draw.obj_image('mechhit',(640,360-100),path='premade') )

@@ -59,12 +59,12 @@ class obj_scene_ch4p1(page.obj_chapterpage):
                   '"',
                    ('{partnername}',share.colors.partner),' is being held captive in ',\
                     ('{villainname}',share.colors.villain),'\'s ',\
-                     ('evil castle',share.colors.location2),', and ',\
-                     ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
+                     ('evil tower',share.colors.location2),', and ',\
+                     ('{heroname}',share.colors.hero),' is trying to figure out the tower\'s ',\
                      ('password',share.colors.password2),'. ',\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
-        self.addpart( draw.obj_image('castle',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(981,265),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(866,243),scale=0.23,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
@@ -93,7 +93,7 @@ class obj_scene_ch4p2(page.obj_chapterpage):
                    ' has befriended a terrifying ',('{bug}',share.colors.bug),\
                     ', and they need to visit three ',\
                     ('grandmaster of deceit',share.colors.grandmaster),\
-                    ' that know parts of the castle\'s password."',\
+                    ' that know parts of the tower\'s password."',\
                    ]
         self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False)
@@ -262,7 +262,7 @@ class obj_scene_ch4p7(page.obj_chapterpage):
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                     '\nWasup. Last time I checked, ',('{partnername}',share.colors.partner),\
                     ' is still being held hostage in my ',\
-                     ('evil castle',share.colors.location2),'. Come save ',\
+                     ('evil tower',share.colors.location2),'. Come save ',\
                      ('{partner_him}',share.colors.partner2),' if you dare. ',\
                      'Whenever, muahahahaha. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
@@ -534,7 +534,7 @@ class obj_scene_ch4p17(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"So you want to know ',\
-                ('my part of the castle\'s password',share.colors.password),'. ',\
+                ('my part of the tower\'s password',share.colors.password),'. ',\
                 'Tell you what, I will give it to you if you win my ',('lying game',share.colors.grandmaster2),\
                 '." ',\
                    ]
@@ -1042,7 +1042,7 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p19())
     def setup(self):
         self.text=[\
-                    '"The first part of the castle\'s password is: ',\
+                    '"The first part of the tower\'s password is: ',\
                     ('"fight"',share.colors.password),'. ',\
                     'That\'s my motto: fight in any situation, that I taught to ',\
                     ('{villainname}',share.colors.villain),' when ',\

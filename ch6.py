@@ -59,12 +59,12 @@ class obj_scene_ch6p1(page.obj_chapterpage):
                   '"',
                    ('{partnername}',share.colors.partner),' is being held captive in ',\
                     ('{villainname}',share.colors.villain),'\'s ',\
-                     ('evil castle',share.colors.location2),', and ',\
-                     ('{heroname}',share.colors.hero),' is trying to figure out the castle\'s ',\
+                     ('evil tower',share.colors.location2),', and ',\
+                     ('{heroname}',share.colors.hero),' is trying to figure out the tower\'s ',\
                      ('password',share.colors.password2),'. ',\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
-        self.addpart( draw.obj_image('castle',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(981,265),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(866,243),scale=0.23,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
@@ -73,7 +73,7 @@ class obj_scene_ch6p1(page.obj_chapterpage):
         animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
         animation2.addimage('empty',path='premade')
         self.addpart( animation2 )
-        # self.addpart( draw.obj_imageplacer(self,'castle','mountain') )
+        # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
         animation1.addsound( "villain1", [20] )
@@ -92,7 +92,7 @@ class obj_scene_ch6p2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',\
-                'So far, the castle\'s password is ',('"fight persevere"',share.colors.password),'. ',\
+                'So far, the tower\'s password is ',('"fight persevere"',share.colors.password),'. ',\
                      ('{heroname}',share.colors.hero),' must visit one last ',\
                      ('grandmaster of deceit',share.colors.grandmaster),\
                      ' to figure out the last part." ',\
@@ -102,7 +102,7 @@ class obj_scene_ch6p2(page.obj_chapterpage):
         self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('castle',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade')
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346),imgscale=0.25,sync=animation1) )
@@ -515,7 +515,7 @@ class obj_scene_ch6p18(page.obj_chapterpage):
                     'This is your lucky day squid, ',\
                     'I happen to be looking for a skilled crewmate. ',\
                     'Tell you what, If you do well I will even tell you the ',\
-                    ('last part of the castle\'s password',share.colors.password),'." '
+                    ('last part of the tower\'s password',share.colors.password),'." '
                   ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
@@ -1323,7 +1323,7 @@ class obj_scene_ch6p44(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p45())
     def setup(self):
         self.text=[\
-                   '"One last thing, the last part of the  castle\'s password is: ',\
+                   '"One last thing, the last part of the  tower\'s password is: ',\
                    ('"overcome"',share.colors.password),'. ',\
                     'That\'s my motto: overcome everything. ',\
                     'Till next time squid".',\
@@ -1356,7 +1356,7 @@ class obj_scene_ch6p45(page.obj_chapterpage):
                   '"The ',('{bug}',share.colors.bug),\
                   ' crawled out of ',('{heroname}',share.colors.hero),\
                   '\'s pocket and whispered: ',\
-                   'this is it, we have completed the castle\'s ',\
+                   'this is it, we have completed the tower\'s ',\
                    ('password',share.colors.password2),'. It reads: ',\
                     ('"fight persevere overcome"',share.colors.password),\
                     '. Lets get a good night sleep and tomorrow we will finally rescue ',\

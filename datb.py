@@ -54,7 +54,7 @@ class obj_musics:
         # ch3
         self.dict['villain']=( 'ch3/POL-spooky-toyland-short.wav' , tempo )# villain music (evil)
         self.dict['gunfight']=( 'ch3/POL-knock-out-short.wav' , tempo )
-        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.wav' , tempo )# castle music (technologic)
+        self.dict['tower']=( 'ch3/POL-nuts-and-bolts-short.wav' , tempo )# tower music (technologic)
         self.dict['bug']=( 'ch3/POL-bomb-carrier-short.wav' , tempo )# bug (tense)
         # ch4
         self.dict['ch4']=( 'ch4/POL-azure-waters-short.wav' , tempo )# start day (energetic cute)
@@ -141,14 +141,14 @@ class obj_sounds:
         self.dict['villain3']=( 'villain/grunt_03.wav' , 1 )
         self.dict['villain4']=( 'villain/monster_07.wav' , 1 )
         self.dict['villain_bangdoor']=( 'villain/wood_hit_09.wav' , 1 )# ch7
-        self.dict['castle_elec']=( 'castle/paralyzer-discharge-03.wav' , 1 )
-        self.dict['castle_hurt']=( 'castle/die_02.wav' , 1 )
-        self.dict['castle1']=( 'castle/robot_1.wav' , 0.5 )
-        self.dict['castle2']=( 'castle/robot_2.wav' , 0.5 )
-        self.dict['castle3']=( 'castle/robot_3.wav' , 0.5 )
-        self.dict['castle4']=( 'castle/robot_4.wav' , 0.5 )
-        self.dict['castle5']=( 'castle/r2d2.wav' , 1 )
-        self.dict['castle6']=( 'castle/robot_classic-computing-sound_short.wav' , 1 )
+        self.dict['tower_elec']=( 'tower/paralyzer-discharge-03.wav' , 1 )
+        self.dict['tower_hurt']=( 'tower/die_02.wav' , 1 )
+        self.dict['tower1']=( 'tower/robot_1.wav' , 0.5 )
+        self.dict['tower2']=( 'tower/robot_2.wav' , 0.5 )
+        self.dict['tower3']=( 'tower/robot_3.wav' , 0.5 )
+        self.dict['tower4']=( 'tower/robot_4.wav' , 0.5 )
+        self.dict['tower5']=( 'tower/r2d2.wav' , 1 )
+        self.dict['tower6']=( 'tower/robot_classic-computing-sound_short.wav' , 1 )
         self.dict['bug1']=( 'bug/move.wav' , 1 )
         self.dict['bug2']=( 'bug/alien_09.wav' , 1 )
         # ch4
@@ -863,11 +863,11 @@ class obj_snapshotmanager:
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('ponddraw',(640,360),scale=0.8))
             dispgroup1.snapshot((640,360,200,200),'pond')
-        if name=='castledraw':
-            # castle redux
+        if name=='towerdraw':
+            # tower redux
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('castledraw',(640,360),scale=0.8))
-            dispgroup1.snapshot((640,360,200,200),'castle')
+            dispgroup1.addpart('part1',draw.obj_image('towerdraw',(640,360),scale=0.8))
+            dispgroup1.snapshot((640,360,200,200),'tower')
         if name=='bushdraw':
             # bush redux
             dispgroup1=draw.obj_dispgroup((640,360))
@@ -961,11 +961,11 @@ class obj_snapshotmanager:
 
 
         # mechs
-        if name in ['castledraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
+        if name in ['towerdraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
             # villainmech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
-            dispgroup1.addpart( 'part2', draw.obj_image('castle',(640,180),scale=0.35) )
+            dispgroup1.addpart( 'part2', draw.obj_image('tower',(640,180),scale=0.35) )
             dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
             dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
             dispgroup1.addpart( 'part5', draw.obj_image('gun',(640-300,470),scale=0.3,rotate=-45,fliph=True) )
@@ -973,7 +973,7 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part7', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase_noface')
-        if name in ['scardraw','angryfacedraw','castledraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
+        if name in ['scardraw','angryfacedraw','towerdraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
             # villainmech complete
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )

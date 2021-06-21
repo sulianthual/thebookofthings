@@ -916,7 +916,7 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','pond','bush','flower']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['villainhead','gun','bullet','castle','mountain','bug']):
+        for c,value in enumerate(['villainhead','gun','bullet','tower','mountain','bug']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
         for c,value in enumerate(['bunnyhead','nightstand','alarmclock8am','cave','tree']):
@@ -995,7 +995,7 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'book','eraser','pen') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','herobasefish','sun','moon','bed','fish') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','love','house','pond','bush','flower','saxophone','musicnote','sun','moon') )
-        # self.addpart( draw.obj_imageplacer(self,'herobase','villainbase','bug','castle','mountain','gun','bullet') )
+        # self.addpart( draw.obj_imageplacer(self,'herobase','villainbase','bug','tower','mountain','gun','bullet') )
         # self.addpart( draw.obj_imageplacer(self,'bunnybase','cave','tree','nightstand','alarmclock8am') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','elderbase','mountain','cloud','lightningbolt','rock','paper','scissors') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','elderbase','mountain','cloud','lightningbolt','sun','moon','tree','bush') )
@@ -1006,7 +1006,7 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'herobase','herobasefish','partnerbase','villainbase','bug','cow','heromechbase','villainmechbase') )
         # self.addpart( draw.obj_imageplacer(self,'bunnybase','elderbase','sailorbase','skeletonbase','skeletonbase_sailorhat') )
         # self.addpart( draw.obj_imageplacer(self,'sun','moon','mountain','cloud','tree','bush','palmtree','wave','flower') )
-        # self.addpart( draw.obj_imageplacer(self,'house','pond','castle','cave','lightningbolt','sailboat') )
+        # self.addpart( draw.obj_imageplacer(self,'house','pond','tower','cave','lightningbolt','sailboat') )
         # self.addpart( draw.obj_imageplacer(self,'bed','fish','saxophone','musicnote','gun','bullet','nightstand','alarmclock8am','cake') )
         #
         # Place images: by ideas
@@ -1017,7 +1017,7 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'saxophone','musicnote','bug','partnerhead') )
         # self.addpart( draw.obj_imageplacer(self,'skeletonbase','skeletonbase_sailorhat','skeletonbase_partnerhair') )
         # self.addpart( draw.obj_imageplacer(self,'cow','palmtree','bush','moon') )
-        # self.addpart( draw.obj_imageplacer(self,'castle','mountain','cloud','sun','tree','bush','herobase','herozapped') )
+        # self.addpart( draw.obj_imageplacer(self,'tower','mountain','cloud','sun','tree','bush','herobase','herozapped') )
         # self.addpart( draw.obj_imageplacer(self,'elderbase','lightningbolt') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','sun','moon','bed','fish') )
         # self.addpart( draw.obj_imageplacer(self,'villainbase','flower','love') )
