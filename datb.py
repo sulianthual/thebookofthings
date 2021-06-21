@@ -36,42 +36,44 @@ class obj_musics:
           return self.dict['error'][1]
     def setup(self):
         # dictionary= tuples of filename, volume level
-        # Use only ogg files!
+        # Use only ogg files! => Not compiled by pygame/pyinstaller on windows
+        # so use only wav files!
         #
+        tempo=0.15# reference (0.2 or less)
         # general
         self.dict['error']=( 'general/error.wav' , 1 )# when a music cant be found
-        self.dict['tension']=( 'general/dungeon_ambient_1.ogg' , 1 )# tense silence
+        self.dict['tension']=( 'general/dungeon_ambient_1.wav' , 0.8 )# tense silence
         self.dict['test']=self.dict['tension']
         # upbeat musics
         # ch0
-        self.dict['piano']=( 'ch0/POL-you-and-me-short.ogg' , 0.2 )# main theme (soft piano)
+        self.dict['piano']=( 'ch0/POL-you-and-me-short.wav' , 0.2 )# main theme (soft piano)
         # ch1
-        self.dict['hero']=( 'ch1/POL-blob-tales-short.ogg' , 0.2 )# draw the hero (energetic fun)
+        self.dict['hero']=( 'ch1/POL-blob-tales-short.wav' , tempo )# draw the hero (energetic fun)
         # ch2
-        self.dict['partner']=( 'ch2/POL-pet-park-short.ogg' , 0.2 )# partner music (cute)
+        self.dict['partner']=( 'ch2/POL-pet-park-short.wav' , tempo )# partner music (cute)
         # ch3
-        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.ogg' , 0.2 )# villain music (evil)
-        self.dict['gunfight']=( 'ch3/POL-knock-out-short.ogg' , 0.2 )
-        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.ogg' , 0.2 )# castle music (technologic)
-        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.ogg' , 0.2 )# bug (tense)
+        self.dict['villain']=( 'ch3/POL-spooky-toyland-short.wav' , tempo )# villain music (evil)
+        self.dict['gunfight']=( 'ch3/POL-knock-out-short.wav' , tempo )
+        self.dict['castle']=( 'ch3/POL-nuts-and-bolts-short.wav' , tempo )# castle music (technologic)
+        self.dict['bug']=( 'ch3/POL-bomb-carrier-short.wav' , tempo )# bug (tense)
         # ch4
-        self.dict['ch4']=( 'ch4/POL-azure-waters-short.ogg' , 0.2 )# start day (energetic cute)
-        self.dict['bunny']=( 'ch4/POL-mutant-jackrabbit-short.ogg' , 0.2 )
+        self.dict['ch4']=( 'ch4/POL-azure-waters-short.wav' , tempo )# start day (energetic cute)
+        self.dict['bunny']=( 'ch4/POL-mutant-jackrabbit-short.wav' , tempo )
         # ch5
-        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.ogg' , 0.2 )# start the day (energetic)
-        self.dict['elder']=( 'ch5/POL-find-the-exit-short.ogg' , 0.2 )# elder music (for rps game)
-        self.dict['winds']=( 'ch5/wind woosh loop.ogg' , 1 )# winds on top of highest peak
+        self.dict['ch5']=( 'ch5/POL-king-of-coins-short.wav' , tempo )# start the day (energetic)
+        self.dict['elder']=( 'ch5/POL-find-the-exit-short.wav' , tempo )# elder music (for rps game)
+        self.dict['winds']=( 'ch5/wind woosh loop.wav' , 1 )# winds on top of highest peak
         # ch6
         self.dict['ch6']=self.dict['ch5']
-        self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.ogg' , 0.2 )# sailor music (jungle jazz)
-        self.dict['stealth']=( 'ch6/POL-stealth-mode-short.ogg' , 0.2 )# stealth game (epiiiic)
-        self.dict['racing']=( 'ch6/POL-tlalok-temple-short.ogg' , 0.2 )# racing game (energetic)
+        self.dict['sailor']=( 'ch6/POL-jungle-hideout-short.wav' , tempo )# sailor music (jungle jazz)
+        self.dict['stealth']=( 'ch6/POL-stealth-mode-short.wav' , tempo )# stealth game (epiiiic)
+        self.dict['racing']=( 'ch6/POL-tlalok-temple-short.wav' , tempo )# racing game (energetic)
         # ch7
-        self.dict['ch7']=( 'ch7/POL-galactic-trek-short.ogg' , 0.2 )# start the last day (very energetic)
-        self.dict['fistfight']=( 'ch7/POL-time-attack-short.ogg' , 0.2 )
-        self.dict['mechs']=( 'ch7/POL-underground-army-short.ogg' , 0.2 )# mech transformations (technologic energetic)
+        self.dict['ch7']=( 'ch7/POL-galactic-trek-short.wav' , tempo )# start the last day (very energetic)
+        self.dict['fistfight']=( 'ch7/POL-time-attack-short.wav' , tempo )
+        self.dict['mechs']=( 'ch7/POL-underground-army-short.wav' , tempo )# mech transformations (technologic energetic)
         self.dict['mechfight']=self.dict['fistfight']
-        self.dict['victory']=( 'ch7/POL-gold-gryphons-short.ogg' , 0.2 )# final victory (epic positive)
+        self.dict['victory']=( 'ch7/POL-gold-gryphons-short.wav' , tempo )# final victory (epic positive)
         # ch8
         # (reuses all musics)
 
@@ -88,33 +90,33 @@ class obj_sounds:
         # Only ogg (preferred) or wav files!
         #
         # general use
-        self.dict['error']=( 'general/error.ogg' , 1 )# sound is missing
-        self.dict['menugo']=( 'general/drop_001.ogg' , 0.5 )# browse menu and pages (forward)
-        self.dict['menuback']=( 'general/drop_004.ogg' , 0.5 )# browse menu and pages (back)
-        self.dict['unlock']=( 'general/Cure.ogg' , 1 )# unlock new chapter
+        self.dict['error']=( 'general/error.wav' , 1 )# sound is missing
+        self.dict['menugo']=( 'general/drop_001.wav' , 0.5 )# browse menu and pages (forward)
+        self.dict['menuback']=( 'general/drop_004.wav' , 0.5 )# browse menu and pages (back)
+        self.dict['unlock']=( 'general/Cure.wav' , 1 )# unlock new chapter
         self.dict['erasebook']=( 'general/link (3).wav' , 1 )# erase the book
         self.dict['revealscary']=( 'general/reveal_reversed-suspenseful-harp-3shorter.wav' , 1 )# erase the book
         #
         # draw functions (draw, enter text, etc)
-        self.dict['drawstart']=( 'draw/pen1.ogg' , 0.2 )# when draws (looped)
-        self.dict['drawerase']=( 'draw/bookFlip2a.ogg' , 1 )# erase
-        self.dict['pen']=( 'draw/pen2.ogg' , 1 )# pen character
-        self.dict['eraser']=( 'draw/bookFlip2a.ogg' , 1 )# eraser character
-        self.dict['textchoicego']=( 'draw/bookFlip3a.ogg' , 0.5 )# change a textchoice
-        self.dict['textinputkeyboard']=( 'draw/click_002.ogg' , 1 )# keyboard sound when entering text
-        self.dict['textinputedit']=( 'draw/bookFlip3a.ogg' , 1 )# when entering edit mode
-        self.dict['textinputdone']=( 'draw/maximize_006.ogg' , 0.5 )# when exiting edit mode
+        self.dict['drawstart']=( 'draw/pen1.wav' , 0.2 )# when draws (looped)
+        self.dict['drawerase']=( 'draw/bookFlip2a.wav' , 1 )# erase
+        self.dict['pen']=( 'draw/pen2.wav' , 1 )# pen character
+        self.dict['eraser']=( 'draw/bookFlip2a.wav' , 1 )# eraser character
+        self.dict['textchoicego']=( 'draw/bookFlip3a.wav' , 0.5 )# change a textchoice
+        self.dict['textinputkeyboard']=( 'draw/click_002.wav' , 1 )# keyboard sound when entering text
+        self.dict['textinputedit']=( 'draw/bookFlip3a.wav' , 1 )# when entering edit mode
+        self.dict['textinputdone']=( 'draw/maximize_006.wav' , 0.5 )# when exiting edit mode
         #
         ### SPECIFIC TO CHAPTERS/CHARACTERS
         # tests
-        self.dict['test1']=( 'tests/phaseJump1.ogg' , 1 )
-        self.dict['test2']=( 'tests/footstep_grass_001.ogg' , 1 )
-        self.dict['test3']=( 'tests/troll_01.ogg' , 1 )
-        self.dict['test4']=( 'tests/desert-ambience.ogg' , 1 )# looped
-        self.dict['test3a']=( 'tests/male_standard_1.ogg' , 0.1 )
-        self.dict['test3b']=( 'tests/male_standard_2.ogg' , 0.1 )
-        self.dict['test3c']=( 'tests/male_standard_3.ogg' , 0.1 )
-        self.dict['test3d']=( 'tests/male_standard_4.ogg' , 0.1 )
+        self.dict['test1']=( 'tests/phaseJump1.wav' , 1 )
+        self.dict['test2']=( 'tests/footstep_grass_001.wav' , 1 )
+        self.dict['test3']=( 'tests/troll_01.wav' , 1 )
+        self.dict['test4']=( 'tests/desert-ambience.wav' , 1 )# looped
+        self.dict['test3a']=( 'tests/male_standard_1.wav' , 0.1 )
+        self.dict['test3b']=( 'tests/male_standard_2.wav' , 0.1 )
+        self.dict['test3c']=( 'tests/male_standard_3.wav' , 0.1 )
+        self.dict['test3d']=( 'tests/male_standard_4.wav' , 0.1 )
         # ch0
         self.dict['bookscene']=( 'book/link (3).wav' , 0.5 )# a scene with the book of things
         self.dict['book2']=( 'book/part (3).wav' , 0.7 )
@@ -126,162 +128,162 @@ class obj_sounds:
         self.dict['hero3']=( 'hero/sniff.wav' , 1 )
         self.dict['hero4']=( 'hero/grunt__oh-1.wav' , 1 )
         self.dict['hero5']=( 'hero/haha_laugh1.wav' , 1 )
-        self.dict['hero6']=( 'hero/cough_02.ogg' , 1 )
-        self.dict['hero_what']=( 'hero/whatconfused-what_male.ogg' , 1 )# ch7
+        self.dict['hero6']=( 'hero/cough_02.wav' , 1 )
+        self.dict['hero_what']=( 'hero/whatconfused-what_male.wav' , 1 )# ch7
         # ch2
-        self.dict['partner1']=( 'partner/haha-girlp1.ogg' , 1 )
-        self.dict['partner2']=( 'partner/haha-girlp2.ogg' , 1 )
+        self.dict['partner1']=( 'partner/haha-girlp1.wav' , 1 )
+        self.dict['partner2']=( 'partner/haha-girlp2.wav' , 1 )
         self.dict['partner3']=( 'partner/giggle_small-giggle.wav' , 1 )
         self.dict['partner_scared']=( 'partner/grunt_female__oh-gah.wav' , 1 )# oh no for any purpose
         # ch3
-        self.dict['villain1']=( 'villain/grunt_01.ogg' , 1 )
+        self.dict['villain1']=( 'villain/grunt_01.wav' , 1 )
         self.dict['villain2']=( 'villain/haha_evil-laughshort.wav' , 0.5 )
-        self.dict['villain3']=( 'villain/grunt_03.ogg' , 1 )
-        self.dict['villain4']=( 'villain/monster_07.ogg' , 1 )
-        self.dict['villain_bangdoor']=( 'villain/wood_hit_09.ogg' , 1 )# ch7
+        self.dict['villain3']=( 'villain/grunt_03.wav' , 1 )
+        self.dict['villain4']=( 'villain/monster_07.wav' , 1 )
+        self.dict['villain_bangdoor']=( 'villain/wood_hit_09.wav' , 1 )# ch7
         self.dict['castle_elec']=( 'castle/paralyzer-discharge-03.wav' , 1 )
-        self.dict['castle_hurt']=( 'castle/die_02.ogg' , 1 )
-        self.dict['castle1']=( 'castle/robot_1.ogg' , 0.5 )
-        self.dict['castle2']=( 'castle/robot_2.ogg' , 0.5 )
-        self.dict['castle3']=( 'castle/robot_3.ogg' , 0.5 )
-        self.dict['castle4']=( 'castle/robot_4.ogg' , 0.5 )
+        self.dict['castle_hurt']=( 'castle/die_02.wav' , 1 )
+        self.dict['castle1']=( 'castle/robot_1.wav' , 0.5 )
+        self.dict['castle2']=( 'castle/robot_2.wav' , 0.5 )
+        self.dict['castle3']=( 'castle/robot_3.wav' , 0.5 )
+        self.dict['castle4']=( 'castle/robot_4.wav' , 0.5 )
         self.dict['castle5']=( 'castle/r2d2.wav' , 1 )
         self.dict['castle6']=( 'castle/robot_classic-computing-sound_short.wav' , 1 )
         self.dict['bug1']=( 'bug/move.wav' , 1 )
-        self.dict['bug2']=( 'bug/alien_09.ogg' , 1 )
+        self.dict['bug2']=( 'bug/alien_09.wav' , 1 )
         # ch4
-        self.dict['bunny1']=( 'bunny/cute_07.ogg' , 1 )
+        self.dict['bunny1']=( 'bunny/cute_07.wav' , 1 )
         self.dict['bunny2']=( 'bunny/giggle__dumb-heh.wav' , 1 )
-        self.dict['bunny3']=( 'bunny/cute_08.ogg' , 1 )
+        self.dict['bunny3']=( 'bunny/cute_08.wav' , 1 )
         self.dict['bunny4']=( 'bunny/grunt_femalegrunt1.wav' , 1 )
         self.dict['bunny5']=( 'bunny/Pixie.wav' , 1 )
-        self.dict['bunny_hit']=( 'bunny/Punch4.ogg' , 1 )
+        self.dict['bunny_hit']=( 'bunny/Punch4.wav' , 1 )
         # ch5
         self.dict['elder1']=( 'elder/grunt_malegrunt1.wav' , 1 )
         self.dict['elder2']=( 'elder/hahaha_elder.wav' , 1 )
         self.dict['elder3']=( 'elder/grunt_malegrunt3.wav' , 1 )
         self.dict['elder4']=( 'elder/haha_evil-man-laughing.wav' , 1 )
-        self.dict['elder5']=( 'elder/weird_07.ogg' , 1 )
+        self.dict['elder5']=( 'elder/weird_07.wav' , 1 )
         self.dict['elder6']=( 'elder/grunt_malegrunt2.wav' , 1 )
         # ch6
         self.dict['sailor1']=( 'sailor/humanYell3.wav' , 1 )
         self.dict['sailor2']=( 'sailor/uhuh.wav' , 1 )
         self.dict['sailor3']=( 'sailor/humanYell4.wav' , 1 )
-        self.dict['sailor4']=( 'sailor/drunk-hic.ogg' , 1 )
+        self.dict['sailor4']=( 'sailor/drunk-hic.wav' , 1 )
         self.dict['sailor5']=( 'sailor/pirate_arrshort2.wav' , 0.5 )
-        self.dict['sailor_radio']=( 'sailor/radiocut2.ogg' ,1 )
+        self.dict['sailor_radio']=( 'sailor/radiocut2.wav' ,1 )
 
-        self.dict['skeleton1']=( 'skeleton/wood_squeak_01.ogg' , 0.5 )
-        self.dict['skeleton3']=( 'skeleton/wood_squeak_02.ogg' , 0.5 )
+        self.dict['skeleton1']=( 'skeleton/wood_squeak_01.wav' , 0.5 )
+        self.dict['skeleton3']=( 'skeleton/wood_squeak_02.wav' , 0.5 )
         self.dict['skeleton2']=( 'skeleton/ghost_SpiritShout.wav' , 0.4 )
         self.dict['skeleton4']=( 'skeleton/ghostshort1.wav' , 0.4 )
         self.dict['skeleton5']=( 'skeleton/ghost_scream1.wav' , 1 )
-        self.dict['cow']=( 'cow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
+        self.dict['cow']=( 'cow/cow-mooing-in-south-of-france-limousin-short.wav' , 1 )
         # ch7
 
 
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
-        self.dict['sunrise_start']=( 'world/sunrise/1up3.ogg' , 1 )
+        self.dict['sunrise_start']=( 'world/sunrise/1up3.wav' , 1 )
         # self.dict['sunrise_end']=( 'world/sunrise/wall (2).wav' , 0.5 )
         self.dict['sunrise_end']=( 'world/sunrise/rooster2.wav' , 0.5 )
         # sunset
-        self.dict['sunset_start']=( 'world/sunset/Lose4.ogg' , 1 )
+        self.dict['sunset_start']=( 'world/sunset/Lose4.wav' , 1 )
         self.dict['sunset_end']=( 'world/sunset/howling_shorter.wav' , 1 )
         # wakeup
-        self.dict['wakeup_snore1']=( 'world/wakeup/snore.ogg' , 1 )
-        self.dict['wakeup_snore2']=( 'world/wakeup/snore1.ogg' , 1 )
-        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.ogg' , 1 )
+        self.dict['wakeup_snore1']=( 'world/wakeup/snore.wav' , 1 )
+        self.dict['wakeup_snore2']=( 'world/wakeup/snore1.wav' , 1 )
+        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.wav' , 1 )
         self.dict['wakeup_wake2']=( 'world/wakeup/yawn_male-yawnshorter.wav' , 1 )
-        self.dict['wakeup_alarm']=( 'world/wakeup/alarm_03.ogg' , 0.4 )
+        self.dict['wakeup_alarm']=( 'world/wakeup/alarm_03.wav' , 0.4 )
         # gotobed
-        self.dict['gotobed_start']=( 'world/gotobed/scream-6.ogg' , 2 )
-        self.dict['gotobed_end']=( 'world/gotobed/snore1.ogg' , 1 )
+        self.dict['gotobed_start']=( 'world/gotobed/scream-6.wav' , 2 )
+        self.dict['gotobed_end']=( 'world/gotobed/snore1.wav' , 1 )
         # fishing
-        self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.ogg' , 1 )
-        self.dict['fishing_catch']=( 'world/fish/1up3.ogg' , 1 )
+        self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
+        self.dict['fishing_catch']=( 'world/fish/1up3.wav' , 1 )
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
         self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
         # mail
-        self.dict['mailjump']=( 'world/mail/woosh-3.ogg' , 1 )
-        self.dict['mailopen']=( 'world/mail/paper_01.ogg' , 1 )
+        self.dict['mailjump']=( 'world/mail/woosh-3.wav' , 1 )
+        self.dict['mailopen']=( 'world/mail/paper_01.wav' , 1 )
         # serenade
-        self.dict['noted']=( 'world/serenade/note_1.ogg' , 1 )
-        self.dict['notel']=( 'world/serenade/note_3.ogg' , 1 )
-        self.dict['noter']=( 'world/serenade/note_5.ogg' , 1 )
-        self.dict['noteu']=( 'world/serenade/note_8.ogg' , 1 )
+        self.dict['noted']=( 'world/serenade/note_1.wav' , 1 )
+        self.dict['notel']=( 'world/serenade/note_3.wav' , 1 )
+        self.dict['noter']=( 'world/serenade/note_5.wav' , 1 )
+        self.dict['noteu']=( 'world/serenade/note_8.wav' , 1 )
         self.dict['serenade_ambience']=( 'world/serenade/record_player_loop.wav' , 1 )# loop
-        self.dict['serenade_cheer']=( 'world/serenade/cheer1.ogg' , 0.2 )
-        self.dict['serenade_cheeralone']=( 'world/serenade/clapalone1.ogg' , 1 )
+        self.dict['serenade_cheer']=( 'world/serenade/cheer1.wav' , 0.2 )
+        self.dict['serenade_cheeralone']=( 'world/serenade/clapalone1.wav' , 1 )
         # kiss
-        self.dict['kiss_start']=( 'world/kiss/scream-6.ogg' , 1 )
+        self.dict['kiss_start']=( 'world/kiss/scream-6.wav' , 1 )
         self.dict['kiss_kiss']=( 'world/kiss/kiss_cartoon-kiss-cjohnstone.wav' , 1 )
-        self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.ogg' , 1 )
+        self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.wav' , 1 )
         self.dict['kiss_cheer2']=( 'world/kiss/haha01.wav' , 1 )
         # travel
-        self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.ogg' , 1 )
-        self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.ogg' , 1 )
-        self.dict['travel_choplast']=( 'world/travel/Cure.ogg' , 1 )
-        self.dict['travel_enter']=( 'world/travel/1up3.ogg' , 1 )
+        self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.wav' , 1 )
+        self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.wav' , 1 )
+        self.dict['travel_choplast']=( 'world/travel/Cure.wav' , 1 )
+        self.dict['travel_enter']=( 'world/travel/1up3.wav' , 1 )
         # dodgebullets
         self.dict['dodgebullets_start']=( 'world/dodgebullets/fight_lowreverb.wav' , 1 )
-        self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.ogg' , 0.5 )
-        self.dict['dodgebullets_hit']=( 'world/dodgebullets/die_02.ogg' , 1 )
-        self.dict['dodgebullets_die']=( 'world/dodgebullets/die_04.ogg' , 1 )
-        self.dict['dodgebullets_win']=( 'world/dodgebullets/cheer1.ogg' , 0.5 )
+        self.dict['dodgebullets_shoot']=( 'world/dodgebullets/gun-5.wav' , 0.5 )
+        self.dict['dodgebullets_hit']=( 'world/dodgebullets/die_02.wav' , 1 )
+        self.dict['dodgebullets_die']=( 'world/dodgebullets/die_04.wav' , 1 )
+        self.dict['dodgebullets_win']=( 'world/dodgebullets/cheer1.wav' , 0.5 )
         self.dict['dodgebullets_jump']=( 'world/dodgebullets/sfx_movement_jump13.wav' , 0.3 )
         self.dict['dodgebullets_crouch']=( 'world/dodgebullets/swish-9.wav' , 0.5 )
         # climb
         self.dict['climb_jump']=( 'world/climb/sfx_movement_jump13.wav' , 0.3 )
         self.dict['climb_fall']=( 'world/climb/fall4.wav' , 1 )
         # rps=rock paper scissors (8 sounds=max?)
-        self.dict['rps_select']=( 'world/rps/select.ogg' , 1 )
+        self.dict['rps_select']=( 'world/rps/select.wav' , 1 )
         self.dict['rps_start']=( 'world/rps/fight_lowreverb.wav' , 1 )
-        self.dict['rps_count']=( 'world/rps/FX01.ogg' , 1 )
-        self.dict['rps_hit']=( 'world/rps/die_02.ogg' , 1 )
-        self.dict['rps_strike']=( 'world/rps/1up3.ogg' , 1 )
-        self.dict['rps_tie']=( 'world/rps/alert.ogg' , 1 )
-        self.dict['rps_die']=( 'world/rps/die_04.ogg' , 1 )
-        self.dict['rps_win']=( 'world/rps/cheer1.ogg' , 0.2 )
+        self.dict['rps_count']=( 'world/rps/FX01.wav' , 1 )
+        self.dict['rps_hit']=( 'world/rps/die_02.wav' , 1 )
+        self.dict['rps_strike']=( 'world/rps/1up3.wav' , 1 )
+        self.dict['rps_tie']=( 'world/rps/alert.wav' , 1 )
+        self.dict['rps_die']=( 'world/rps/die_04.wav' , 1 )
+        self.dict['rps_win']=( 'world/rps/cheer1.wav' , 0.2 )
         # stealth
-        self.dict['stealth_jumpinbush']=( 'world/stealth/scream-6.ogg' , 0.5 )# cutscene only
-        self.dict['stealth_bush1']=( 'world/stealth/rustle13.ogg' , 0.5 )
-        self.dict['stealth_bush2']=( 'world/stealth/rustle14.ogg' , 0.5 )
-        self.dict['stealth_bush3']=( 'world/stealth/rustle20.ogg' , 0.5 )
-        self.dict['stealth_next']=( 'world/stealth/Cure.ogg' , 0.5 )
-        self.dict['stealth_win']=( 'world/stealth/cheer1.ogg' , 0.5 )
+        self.dict['stealth_jumpinbush']=( 'world/stealth/scream-6.wav' , 0.5 )# cutscene only
+        self.dict['stealth_bush1']=( 'world/stealth/rustle13.wav' , 0.5 )
+        self.dict['stealth_bush2']=( 'world/stealth/rustle14.wav' , 0.5 )
+        self.dict['stealth_bush3']=( 'world/stealth/rustle20.wav' , 0.5 )
+        self.dict['stealth_next']=( 'world/stealth/Cure.wav' , 0.5 )
+        self.dict['stealth_win']=( 'world/stealth/cheer1.wav' , 0.5 )
         # self.dict['stealth_alarm']=( 'skeleton/ghost_scream1.wav' , 1 )
         self.dict['stealth_alarm']=( 'world/stealth/alarmwtf-02.wav' , 1 )
         # ride cow
-        self.dict['ridecow_hit']=( 'world/ridecow/Punch4.ogg' , 1 )
-        self.dict['ridecow_hitgasp']=( 'world/ridecow/die_02.ogg' , 1 )
-        # self.dict['ridecow_die']=( 'world/ridecow/die_04.ogg' , 1 )
-        self.dict['ridecow_die']=( 'world/ridecow/cow-mooing-in-south-of-france-limousin-short.ogg' , 1 )
-        self.dict['ridecow_win']=( 'world/ridecow/cheer1.ogg' , 0.5 )
+        self.dict['ridecow_hit']=( 'world/ridecow/Punch4.wav' , 1 )
+        self.dict['ridecow_hitgasp']=( 'world/ridecow/die_02.wav' , 1 )
+        # self.dict['ridecow_die']=( 'world/ridecow/die_04.wav' , 1 )
+        self.dict['ridecow_die']=( 'world/ridecow/cow-mooing-in-south-of-france-limousin-short.wav' , 1 )
+        self.dict['ridecow_win']=( 'world/ridecow/cheer1.wav' , 0.5 )
         self.dict['ridecow_start']=( 'world/ridecow/fight_lowreverb.wav' , 1 )
         # stomp
         self.dict['stomp_jump']=( 'world/stomp/sfx_movement_jump13.wav' , 0.3 )
-        self.dict['stomp_hit']=( 'world/stomp/die_02.ogg', 1 )
-        self.dict['stomp_die']=( 'world/stomp/die_04.ogg', 1 )
-        self.dict['stomp_strike']=( 'world/stomp/Death1.ogg', 0.5 )
-        self.dict['stomp_win']=( 'world/stomp/cheer1.ogg', 0.5 )
+        self.dict['stomp_hit']=( 'world/stomp/die_02.wav', 1 )
+        self.dict['stomp_die']=( 'world/stomp/die_04.wav', 1 )
+        self.dict['stomp_strike']=( 'world/stomp/Death1.wav', 0.5 )
+        self.dict['stomp_win']=( 'world/stomp/cheer1.wav', 0.5 )
         self.dict['stomp_kick']=( 'world/stomp/swish-9.wav', 1 )
-        self.dict['stomp_contact']=( 'world/stomp/Punch4.ogg', 1 )
+        self.dict['stomp_contact']=( 'world/stomp/Punch4.wav', 1 )
         self.dict['stomp_start']=( 'world/stomp/fight_lowreverb.wav' , 1 )
         # mech
-        self.dict['mech_transform1']=( 'world/mech/transformers-sound.ogg', 1 )
-        self.dict['mech_transform2']=( 'world/mech/transformers-sound_pitch2.ogg', 1 )
-        self.dict['mech_stomp']=( 'world/mech/stomp_mixedlow.ogg', 1 )
+        self.dict['mech_transform1']=( 'world/mech/transformers-sound.wav', 1 )
+        self.dict['mech_transform2']=( 'world/mech/transformers-sound_pitch2.wav', 1 )
+        self.dict['mech_stomp']=( 'world/mech/stomp_mixedlow.wav', 1 )
         self.dict['mech_start']=( 'world/mech/fight_lowreverb.wav' , 1 )
-        self.dict['mech_hit']=( 'world/mech/die_02.ogg' , 1 )
-        self.dict['mech_strike']=( 'world/mech/Death1.ogg', 0.5 )
-        self.dict['mech_die']=( 'world/mech/die_04.ogg' , 1 )
-        self.dict['mech_win']=( 'world/mech/cheer1.ogg' , 0.5 )
-        self.dict['mech_contact']=( 'world/mech/Punch4.ogg', 1 )
-        self.dict['mech_counter']=( 'world/mech/Whip.ogg', 1 )
-        self.dict['mech_correct']=( 'world/mech/confirmation_002.ogg', 1 )
+        self.dict['mech_hit']=( 'world/mech/die_02.wav' , 1 )
+        self.dict['mech_strike']=( 'world/mech/Death1.wav', 0.5 )
+        self.dict['mech_die']=( 'world/mech/die_04.wav' , 1 )
+        self.dict['mech_win']=( 'world/mech/cheer1.wav' , 0.5 )
+        self.dict['mech_contact']=( 'world/mech/Punch4.wav', 1 )
+        self.dict['mech_counter']=( 'world/mech/Whip.wav', 1 )
+        self.dict['mech_correct']=( 'world/mech/confirmation_002.wav', 1 )
         self.dict['mech_wrong']=( 'world/mech/fail.wav', 1 )
         #
     def getsoundfilename(self,name):
@@ -502,7 +504,7 @@ class obj_datamanager:
         with open(self.filesettings,'w') as f1:
                 f1.write('doazerty:'+'\n')#key
                 f1.write(str(self.doazerty)+'\n')#value
-                f1.write('donative:'+'\n')#key
+                f1.write('dowindowed:'+'\n')#key
                 f1.write(str(self.donative)+'\n')#value
                 f1.write('domusic:'+'\n')#key
                 f1.write(str(self.domusic)+'\n')#value
@@ -516,7 +518,7 @@ class obj_datamanager:
                 line=f1.readline()# difficulty
                 line=f1.readline()
                 self.doazerty=line=='True'+'\n'
-                line=f1.readline()# donative
+                line=f1.readline()# donative (dowindowed)
                 line=f1.readline()
                 self.donative=line=='True'+'\n'
                 line=f1.readline()# domusic

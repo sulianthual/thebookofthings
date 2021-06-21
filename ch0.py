@@ -329,8 +329,8 @@ class obj_scene_ch0p13(page.obj_chapterpage):
     def setup(self):
 
         self.text=[\
-                    'One last thing, Lets make sure you have everything you need. ',\
-                    'These are the game controls. ',\
+                    'One last thing, these are the game controls. ',\
+                    'You can check them anytime in the settings. ',\
                    ]
         #
         # Game controls instructions

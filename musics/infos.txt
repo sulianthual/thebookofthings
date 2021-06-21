@@ -23,4 +23,6 @@ there is still inconsistencies where files play at different speeds depending on
 3) safest for compatibility is to convert everything to .ogg (in folder dats):
 for i in *.wav; do ffmpeg -i "$i" -f ogg dats/"${i%.*}.ogg"; done
 
+4) compiling for windows, oggs are NOT READ (this is a pygame/pyinstaller problem)
+   so we are reconverted all files to wav
 ###############################

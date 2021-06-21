@@ -497,12 +497,13 @@ class obj_scene_realtitlescreen(page.obj_page):
         decooptions=[]
         if self.maxchapter>0:
             decooptions.append('book')
+        elif self.maxchapter>3:
             decooptions.append('book2')
             decooptions.append('book3')
         if self.maxchapter>1:
             decooptions.append('hero')
             decooptions.append('hero2')
-            decooptions.append('hero3')
+        elif self.maxchapter>4:
             decooptions.append('fish')
         if self.maxchapter>2:
             decooptions.append('partner')
@@ -542,6 +543,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             decochoice=None
         # decochoice='house'
         #
+        # print(decochoice)
         if decochoice=='book':
             self.addpart( draw.obj_image('book',(253,496),scale=0.7,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('eraser',(971,519),scale=0.54,rotate=0,fliph=False,flipv=False) )
@@ -563,11 +565,6 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('fish',(802,449),scale=0.41,rotate=-230,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('moon',(147,587),scale=0.62,rotate=-328,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('sun',(808,224),scale=0.42,rotate=0,fliph=False,flipv=False) )
-        elif decochoice=='hero3':
-            self.addpart( draw.obj_image('herobase',(629,546),scale=0.57,rotate=-210,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('sun',(247,127),scale=0.41,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('moon',(1027,120),scale=0.41,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('fish',(462,252),scale=0.31,rotate=0,fliph=True,flipv=False) )
         elif decochoice=='fish':
             self.addpart( draw.obj_image('hookline',(340,380-390),path='premade') )
             self.addpart( draw.obj_image('hook',(340,380),scale=0.25) )
