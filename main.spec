@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['/media/sul/Data/Games/thebookofthings/code'],
+             pathex=[],
              binaries=[],
              datas=[('book','book'),('data','data')],
              hiddenimports=[],
@@ -21,11 +21,12 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='main',
+          name='_!THEBOOKOFTHINGS_LAUNCHER',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
+          icon='mainicon.ico',
           console=True )
 coll = COLLECT(exe,
                a.binaries,
@@ -34,4 +35,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='main')
+               name='thebookofthings')
