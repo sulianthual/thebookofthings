@@ -180,21 +180,18 @@ class obj_sounds:
         self.dict['skeleton5']=( 'skeleton/ghost_scream1.wav' , 1 )
         self.dict['cow']=( 'cow/cow-mooing-in-south-of-france-limousin-short.wav' , 1 )
         # ch7
-
-
         #
         ### SPECIFIC TO MINIGAMES
         # sunrise
         self.dict['sunrise_start']=( 'world/sunrise/1up3.wav' , 1 )
-        # self.dict['sunrise_end']=( 'world/sunrise/wall (2).wav' , 0.5 )
-        self.dict['sunrise_end']=( 'world/sunrise/rooster2.wav' , 0.5 )
+        self.dict['sunrise_end']=( 'world/sunrise/rooster2.wav' , 0.7 )
         # sunset
         self.dict['sunset_start']=( 'world/sunset/Lose4.wav' , 1 )
-        self.dict['sunset_end']=( 'world/sunset/howling_shorter.wav' , 1 )
+        self.dict['sunset_end']=( 'world/sunset/howling_shorter.wav' , 2 )
         # wakeup
         self.dict['wakeup_snore1']=( 'world/wakeup/snore.wav' , 1 )
         self.dict['wakeup_snore2']=( 'world/wakeup/snore1.wav' , 1 )
-        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.wav' , 1 )
+        self.dict['wakeup_wake1']=( 'world/wakeup/scream-6.wav' , 2 )
         self.dict['wakeup_wake2']=( 'world/wakeup/yawn_male-yawnshorter.wav' , 1 )
         self.dict['wakeup_alarm']=( 'world/wakeup/alarm_03.wav' , 0.4 )
         # gotobed
@@ -506,6 +503,8 @@ class obj_datamanager:
                 f1.write(str(self.doazerty)+'\n')#value
                 f1.write('dowindowed:'+'\n')#key
                 f1.write(str(self.donative)+'\n')#value
+                f1.write('doshowfps:'+'\n')#key
+                f1.write(str(self.doshowfps)+'\n')#value
                 f1.write('domusic:'+'\n')#key
                 f1.write(str(self.domusic)+'\n')#value
                 f1.write('dosound:'+'\n')#key
@@ -521,6 +520,9 @@ class obj_datamanager:
                 line=f1.readline()# donative (dowindowed)
                 line=f1.readline()
                 self.donative=line=='True'+'\n'
+                line=f1.readline()# doshowfps
+                line=f1.readline()
+                self.doshowfps=line=='True'+'\n'
                 line=f1.readline()# domusic
                 line=f1.readline()
                 self.domusic=line=='True'+'\n'
@@ -534,6 +536,7 @@ class obj_datamanager:
             # default settings
             self.doazerty=False# qwerty keyboard
             self.donative=True# 1280x720(native windowed) or adapted (fullscreen) resolution
+            self.doshowfps=False# show fps on/off
             self.domusic=True# music on/off
             self.dosound=True# sound on/off
             self.devaccess=False# User has no dev access by default

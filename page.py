@@ -42,7 +42,8 @@ class obj_page:
     def setup(self,**kwargs):# custom elements
         pass
     def postsetup(self):# foreground
-        self.addpart(draw.obj_pagedisplay_fps())
+        if share.datamanager.doshowfps:
+            self.addpart(draw.obj_pagedisplay_fps())
     def postpostsetup(self):# foreground (DO NOT APPEND)
         self.addpart(draw.obj_pagemousepointer())
     #

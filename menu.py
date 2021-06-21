@@ -1089,27 +1089,33 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         else:
             self.sprite_display.replacetext('Display: Fullscreen')
         #
-        self.sprite_music=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_showfps)
+        if share.datamanager.doshowfps:
+            self.sprite_showfps.replacetext('Show FPS: On')
+        else:
+            self.sprite_showfps.replacetext('Show FPS: Off')
+        #
+        self.sprite_music=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_music)
         if share.datamanager.domusic:
             self.sprite_music.replacetext('Music: On')
         else:
             self.sprite_music.replacetext('Music: Off')
         #
-        self.sprite_sound=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_sound=draw.obj_textbox('xxx',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_sound)
         if share.datamanager.dosound:
             self.sprite_sound.replacetext('Sound: On')
         else:
             self.sprite_sound.replacetext('Sound: Off')
-
-        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
+        #
+        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+5*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_controls )
-        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+5*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+6*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_credits )
-        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+6*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+7*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_erasebook )
-
         #
         # audio
         self.sound_menugo=draw.obj_sound('menugo')# sound is loaded but not played
@@ -1152,6 +1158,17 @@ class obj_scene_settings(obj_scene_realtitlescreen):
                 self.sprite_display.replacetext('Display: Windowed (1280x720)')
             else:
                 self.sprite_display.replacetext('Display: Fullscreen')
+
+        # toggle show fps
+        elif self.sprite_showfps.isclicked(controls):
+            self.sound_menuback.play()
+            share.datamanager.doshowfps=not share.datamanager.doshowfps
+            share.datamanager.savesettings()# save settings
+            if share.datamanager.doshowfps:
+                self.sprite_showfps.replacetext('Show FPS: On')
+            else:
+                self.sprite_showfps.replacetext('Show FPS: Off')
+            share.scenemanager.switchscene(obj_scene_settings())# reload scene
 
         # toggle music
         elif self.sprite_music.isclicked(controls):
