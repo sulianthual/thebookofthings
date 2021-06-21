@@ -28,7 +28,7 @@ class obj_scene_chapter3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p1())
     def setup(self):
         share.datamanager.setbookmark('ch3_start')
-        self.text=['-----   Chapter III: Where are you   -----   ',\
+        self.text=['-----   Chapter III: In Another Castle   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: lets see how our story is going so far. ',\
                    ]
@@ -481,10 +481,12 @@ class obj_scene_ch3p13(page.obj_chapterpage):
         self.text=[\
                 'go to the evil tower in the west',\
                    ]
-        self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3,ambience=False)
+        # self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3,ambience=False)
+        self.world=world.obj_world_travel(self,start='home',goal='tower',chapter=3)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('villain') )
+        # self.addpart( draw.obj_music(None) )
 
 
 class obj_scene_ch3p14(page.obj_chapterpage):

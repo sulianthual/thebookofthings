@@ -29,7 +29,7 @@ class obj_scene_chapter4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def setup(self):
         share.datamanager.setbookmark('ch4_start')
-        self.text=['-----   Chapter IV: Something East   -----   ',\
+        self.text=['-----   Chapter IV: Down the Rabbit Hole   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: well, lets continue our story where we left. ',\
                    ]

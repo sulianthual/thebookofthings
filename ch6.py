@@ -441,9 +441,10 @@ class obj_scene_ch6p15(page.obj_chapterpage):
                   'so draw that too. ',\
                    ]
         yref=460
-        self.addpart( draw.obj_image('sailorbaldhead',(640,yref)) )
+
         # self.addpart( draw.obj_drawing('sailorhat',(640,yref-200),shadow=(250,150)) )
         self.addpart( draw.obj_drawing('sailorhat',(640,yref-200),shadow=(400,150)) )# WIDER
+        self.addpart( draw.obj_image('sailorbaldhead',(640,yref)) )
         self.addpart( draw.obj_textbox('Add a sailor hat',(640,yref+230),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('ch6') )

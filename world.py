@@ -1523,9 +1523,10 @@ class obj_world_travel(obj_world):
         #
         # individual elements
         if self.chapter>=3:# west
-            self.staticactorplus.addpart( "imgw1", draw.obj_image('path1',(640-640,360+0),path='data/premade',fliph=True) )
+            pass
+            # self.staticactorplus.addpart( "imgw1", draw.obj_image('path1',(640-640,360+0),path='data/premade',fliph=True) )
         if self.chapter>=5:# north
-            self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='data/premade') )
+            # self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='data/premade') )
             self.staticactorplus.addpart( "imgn2", draw.obj_image('horizon1',(640,360-1080-50),path='data/premade') )
             self.staticactorplus.addpart( "imgn3", draw.obj_image('horizon2',(1280+320,360-1080-50),path='data/premade') )
             self.staticactorplus.addpart( "imgn4", draw.obj_image('horizon3',(1280+640+320,360-1080+180-50),path='data/premade') )
@@ -1599,7 +1600,9 @@ class obj_world_travel(obj_world):
 
         self.herofaceright=True
         self.herowalking=False# hero walking or standing
-        self.herosails=False# hero is sailing
+        self.herosails=False# hero is sailing (obsolete notation)
+        self.herosailing=self.herosails# hero is sailing or not
+        self.heronearpeak=False# hero is near the peak (play wind sound ambience)
         self.hero.dict['face_right'].show=not self.herosails and (self.herofaceright and not self.herowalking)
         self.hero.dict['face_left'].show=not self.herosails and (not self.herofaceright and not self.herowalking)
         self.hero.dict['walk_right'].show=not self.herosails and (self.herofaceright and self.herowalking)
@@ -1667,10 +1670,16 @@ class obj_world_travel(obj_world):
         self.creator.addpart(self.soundenter)
         # ambience sounds (add to page!)
         if self.doambience:
-            self.soundambience=draw.obj_sound('travel_ambience')
-            self.creator.addpart(self.soundambience)
+            self.soundambience_forest=draw.obj_sound('travel_forest')
+            self.creator.addpart(self.soundambience_forest)
+            self.soundambience_ocean=draw.obj_sound('travel_ocean')
+            self.creator.addpart(self.soundambience_ocean)
+            self.soundambience_winds=draw.obj_sound('travel_winds')
+            self.creator.addpart(self.soundambience_winds)
+            #
+            self.ambiencesoundname='forest'# name of ambience sound name (default one)
+            self.soundambience=self.soundambience_forest
             self.soundambience.play(loop=True)# should die when exit page
-
 
         #####
         # minigame flowers
@@ -1774,6 +1783,31 @@ class obj_world_travel(obj_world):
     ####
     def update(self,controls):
         super().update(controls)
+        #
+        # sounds
+        if self.doambience:
+            if self.herosailing:
+                if self.ambiencesoundname !='ocean':# switch to sailing sound ambience
+                    self.soundambience.stop()
+                    self.soundambience=self.soundambience_ocean
+                    self.soundambience.play(loop=True)
+                    self.ambiencesoundname='ocean'
+            else:
+                self.heronearpeak=(self.yhw<-840 and self.xhw<640 and self.xhw>-640) or (self.xhw<-840 and self.yhw<360 and self.yhw>-360)# hero is near windy peak or villain lair
+                if self.heronearpeak:
+                    if self.ambiencesoundname !='winds':# switch to winds sound ambience
+                        self.soundambience.stop()
+                        self.soundambience=self.soundambience_winds
+                        self.soundambience.play(loop=True)
+                        self.ambiencesoundname='winds'
+                else:
+                    if self.ambiencesoundname !='forest':# switch to forest sound ambience
+                        self.soundambience.stop()
+                        self.soundambience=self.soundambience_forest
+                        self.soundambience.play(loop=True)
+                        self.ambiencesoundname='forest'
+
+
         if not self.goal:
             # goal unreached state
             # Hero motion
@@ -5108,7 +5142,7 @@ class obj_world_serenade(obj_world):
                 note='R'
                 ynote=0.5
             self.melody.melodynotes.append(note)
-            position=(640+melodyx[i]*melodydx,380-ynote*melodydy)
+            position=(640-15+melodyx[i]*melodydx,380-ynote*melodydy)
             self.melody.addpart("imgnotebase_"+str(i), draw.obj_image('musicnotesquare',position,path='data/premade') )
             self.melody.addpart("imgnoteplay_"+str(i), draw.obj_image('musicnotesquare_played',position,path='data/premade') )
             self.melody.dict["imgnoteplay_"+str(i)].show=False

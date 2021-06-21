@@ -47,11 +47,11 @@ class obj_quickscene():
             # quickscene=ch0.obj_scene_ch0p10()
             # quickscene=ch1.obj_scene_ch1p3()
             # quickscene=ch1.obj_scene_ch1play3()
-            # quickscene=ch2.obj_scene_ch2p13()
+            # quickscene=ch2.obj_scene_ch2p8()
             # quickscene=ch2.obj_scene_ch2play4()
             # quickscene=ch3.obj_scene_ch3p3()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            quickscene=ch4.obj_scene_ch4p2a()
+            # quickscene=ch4.obj_scene_ch4p2a()
             # quickscene=ch5.obj_scene_ch5p35a()
             # quickscene=ch5.obj_scene_ch5p39()
             # quickscene=ch6.obj_scene_ch6p14()
@@ -73,7 +73,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22()# ch7 dodge
             # quickscene=ch7.obj_scene_ch7p25()# ch7 stomp
             # quickscene=ch7.obj_scene_ch7p49()# ch7 mechs
-            # quickscene=ch8.obj_scene_ch8roam()# ch8 travel
+            quickscene=ch8.obj_scene_ch8roam()# ch8 travel
             # quickscene=ch8.obj_scene_ch8roam(start='island')
             #
             #
@@ -207,7 +207,7 @@ class obj_gotobookmark():
         elif chapter==3:
             #
             # ch3
-            self.chaptertext='Chapter III: Where are you'
+            self.chaptertext='Chapter III: In Another Castle'
             self.dict['ch3_start']='start chapter'
             self.dict['ch3_writevillain']='draw and name the villain'
             # self.dict['ch3_startstory']='start the day'
@@ -217,7 +217,7 @@ class obj_gotobookmark():
             self.dict['ch3_startdodge']='fight the villain'
             self.dict['ch3_windodge']='enter the password'
             self.dict['ch3_gohome']='back at home'
-            self.dict['ch3_startbug']='name and draw the bug'
+            self.dict['ch3_startbug']='draw and name the bug'
             # self.dict['ch3_endbug']='go to sleep'
             # self.dict['ch3_endunlock']='Chapter End'
             if bookmarkname == 'ch3_start':
@@ -249,7 +249,7 @@ class obj_gotobookmark():
         elif chapter==4:
             #
             # ch4
-            self.chaptertext='Chapter IV: Something East'
+            self.chaptertext='Chapter IV: Down the Rabbit Hole'
             self.dict['ch4_start']='start chapter'
             self.dict['ch4_drawalarm']='draw the night stand and alarm clock'
             # self.dict['ch4_startstory']='start the day'
@@ -541,7 +541,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             decochoice=tool.randchoice(decooptions)
         else:
             decochoice=None
-        # decochoice='house'
+        decochoice='book'
         #
         # print(decochoice)
         if decochoice=='book':
@@ -889,10 +889,10 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
             self.sprite_ch2=draw.obj_textbox('Chapter II: Home Sweet Home',(xref,yref+2*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch2)
         if self.maxchapter>2:
-            self.sprite_ch3=draw.obj_textbox('Chapter III: Where are you',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.sprite_ch3=draw.obj_textbox('Chapter III: In Another Castle',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch3)
         if self.maxchapter>3:
-            self.sprite_ch4=draw.obj_textbox('Chapter IV: Something East',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.sprite_ch4=draw.obj_textbox('Chapter IV: Down the Rabbit Hole',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch4)
         if self.maxchapter>4:
             self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(xref,yref+5*dyref),fontsize=fontref,xleft=True, hover=True)

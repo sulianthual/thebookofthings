@@ -220,7 +220,9 @@ class obj_sounds:
         self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.wav' , 1 )
         self.dict['kiss_cheer2']=( 'world/kiss/haha01.wav' , 1 )
         # travel
-        self.dict['travel_ambience']=( 'world/travel/forest-birds-loop-02.wav' , 1 )
+        self.dict['travel_forest']=( 'world/travel/forest-birds-loop-02.wav' , 1 )
+        self.dict['travel_ocean']=( 'world/travel/ocean-waves.wav' , 1 )
+        self.dict['travel_winds']=( 'world/travel/wind woosh loop.wav' , 1 )
         self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.wav' , 1 )
         self.dict['travel_choplast']=( 'world/travel/Cure.wav' , 1 )
         self.dict['travel_enter']=( 'world/travel/1up3.wav' , 1 )
@@ -675,7 +677,7 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,300,220),'heromecharmature')
 
         # partner
-        if name in ['happyface','partnerhairdraw']:
+        if name in ['happyfacedraw','partnerhairdraw']:
             # partnerface redux
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('partnerhairdraw',(640,360),scale=0.8))

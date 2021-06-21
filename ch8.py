@@ -36,7 +36,8 @@ class obj_scene_chapter8(page.obj_chapterpage):# just go to next page directly
         share.datamanager.setbookmark('ch8_start')
         self.text=[' ']
         #
-        self.addpart( draw.obj_music('piano') )
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music(None) )
 
 
 ###########
@@ -88,8 +89,8 @@ class obj_scene_ch8roam(page.obj_chapterpage):
         self.world=world.obj_world_travel(self,start=self.start,goal='everywhere',chapter=8,boat=True,noending=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('piano') )
-
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music(None) )
 
 ###########
 # home
