@@ -541,7 +541,6 @@ class obj_scene_realtitlescreen(page.obj_page):
             decochoice=tool.randchoice(decooptions)
         else:
             decochoice=None
-        decochoice='book'
         #
         # print(decochoice)
         if decochoice=='book':
