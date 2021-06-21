@@ -69,7 +69,7 @@ class obj_scene_ch7p1(page.obj_chapterpage):
         self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('towersparks',(754,418-60),scale=0.8,path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(754,418-60),scale=0.8,path='data/premade') )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','sailorhead',(137,564),imgscale=0.25)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346),imgscale=0.25,sync=animation1) )
@@ -167,13 +167,13 @@ class obj_scene_ch7p5(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2  )
         animation3=draw.obj_animation('ch2_mail4add','mailletter',(640,360),sync=animation1,record=False)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
         #
@@ -207,7 +207,7 @@ class obj_scene_ch7p6(page.obj_chapterpage):
                       'And remember my motto: "overcome everything!" ',\
                   '\n\nsigned: ',('{sailorname}',share.colors.sailor),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('sailorhead',(1065,305),scale=0.5) )
         #
         animation1=draw.obj_animation('ch2_mailhead','sailorhead',(640,360),imgscale=0.7)
@@ -241,7 +241,7 @@ class obj_scene_ch7p7(page.obj_chapterpage):
                     ' Good luck fighting ',('{villainname}',share.colors.villain),'. ',\
                   '\n\nsigned: ',('the grandmasters of deceit',share.colors.grandmaster),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('bunnyhead',(1065+60,305+50),scale=0.3) )
         # self.addpart( draw.obj_image('sailorhead',(1065-100,305),scale=0.3) )
         # self.addpart( draw.obj_image('elderhead',(1065,305-50),scale=0.3) )
@@ -283,7 +283,7 @@ class obj_scene_ch7p8(page.obj_chapterpage):
                     'Come face me if you dare, I will be waiting for you. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
         #
         animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
@@ -433,7 +433,7 @@ class obj_scene_ch7p12fail(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='data/premade') )
         #
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
         self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
@@ -510,7 +510,7 @@ class obj_scene_ch7p14(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='data/premade') )
         #
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
         self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
@@ -587,8 +587,8 @@ class obj_scene_ch7p16(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailorhead',(131,511),scale=0.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_bugthinks1','bug',(840,360),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch7_bugthinks2','interrogationmark',(840,360),record=False,sync=animation1,path='premade')
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch7_bugthinks2','interrogationmark',(840,360),record=False,sync=animation1,path='data/premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
@@ -630,8 +630,8 @@ class obj_scene_ch7p17(page.obj_chapterpage):
         self.addpart( draw.obj_image('sailorhead',(131,511),scale=0.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_bugthinks1','bug',(840,360),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch7_bugthinks2','exclamationmark',(840,360),record=False,sync=animation1,path='premade')
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch7_bugthinks2','exclamationmark',(840,360),record=False,sync=animation1,path='data/premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
@@ -696,7 +696,7 @@ class obj_scene_ch7p18fail(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='data/premade') )
         #
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud'))
         self.addpart( draw.obj_image('cloud',(415,303),scale=0.27,rotate=4,fliph=False,flipv=False) )
@@ -730,7 +730,7 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('towersparks',(1000,310),path='premade') )
+        # self.addpart( draw.obj_image('towersparks',(1000,310),path='data/premade') )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
         #
@@ -820,11 +820,11 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
                   '"I will not let you win this time, said ',\
                   ('{villainname}',share.colors.villain),'."',\
                    ]
-        self.addpart( draw.obj_image('floor1',(640,500),path='premade') )
+        self.addpart( draw.obj_image('floor1',(640,500),path='data/premade') )
         self.addpart( draw.obj_image('herobase',(200,500-50),scale=0.5) )
         self.addpart( draw.obj_image('villainbase',(1280-150,450-50),scale=0.5,fliph=True) )
         self.addpart( draw.obj_image('gun',(1280-150-175,445-50),scale=0.25,fliph=True) )
-        self.addpart( draw.obj_image('stickshootarm',(1280-260,442-50),scale=0.5,path='premade') )# missing small piece
+        self.addpart( draw.obj_image('stickshootarm',(1280-260,442-50),scale=0.5,path='data/premade') )# missing small piece
         #
         self.sound=draw.obj_sound('villain2')
         self.addpart(self.sound)
@@ -936,7 +936,7 @@ class obj_scene_ch7p24a(page.obj_chapterpage):
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show1',(1130,360),path='premade',flipv=True))
+        self.addpart(draw.obj_image('show1',(1130,360),path='data/premade',flipv=True))
         #
         self.addpart( draw.obj_music('fistfight') )
 
@@ -1116,7 +1116,7 @@ class obj_scene_ch7p28(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         animation2=draw.obj_animation('ch7_bugtalkslove','love',(840,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart(animation2)
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2','partner1','partner2') )
@@ -1151,8 +1151,8 @@ class obj_scene_ch7p29(page.obj_chapterpage):
         #
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='premade',sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='data/premade',sync=animation1)
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
@@ -1325,7 +1325,7 @@ class obj_scene_ch7p37(page.obj_chapterpage):
                    ]
 
         self.addpart(  draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
-        self.addpart(  draw.obj_image('horizon',(640,720-150),path='premade') )
+        self.addpart(  draw.obj_image('horizon',(640,720-150),path='data/premade') )
         self.addpart(  draw.obj_image('house',(296,443),scale=0.5) )
         self.addpart(  draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
         self.addpart(  draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
@@ -1357,7 +1357,7 @@ class obj_scene_ch7p38(page.obj_chapterpage):
         animation1= draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5)
         self.addpart(animation1)
         # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase') )
-        animation2=draw.obj_animation('ch7_knockondoor','interrogationmark',(840,360),record=False,sync=animation1,path='premade')
+        animation2=draw.obj_animation('ch7_knockondoor','interrogationmark',(840,360),record=False,sync=animation1,path='data/premade')
         self.addpart(animation2)
         #
         # self.addpart( draw.obj_soundplacer(animation1,'hero_what','wakeup_wake1','villain_bangdoor') )
@@ -1388,8 +1388,8 @@ class obj_scene_ch7p39(page.obj_chapterpage):
         # self.addpart( draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
         animation1= draw.obj_animation('ch7_knockondoor2','herobase',(640,360),record=False)
         self.addpart(animation1)
-        animation2=draw.obj_animation('ch7_knockondoor2aa','interrogationmark',(840,360),record=False,sync=animation1,path='premade')
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch7_knockondoor2aa','interrogationmark',(840,360),record=False,sync=animation1,path='data/premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart(animation2)
         #
         # self.addpart( draw.obj_soundplacer(animation1,'hero_what','wakeup_wake1','villain_bangdoor') )
@@ -1453,25 +1453,25 @@ class obj_scene_ch7p41(page.obj_chapterpage):
         self.addpart( animation1 )
 
         animation2=draw.obj_animation('ch7_villainmech_assemble_larm','gun',(640,360),record=False)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch7_villainmech_assemble_rarm','lightningbolt',(640,360),record=False)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch7_villainmech_assemble_lleg','cave',(640,360),record=False)
-        animation4.addimage('empty',path='premade')
+        animation4.addimage('empty',path='data/premade')
         self.addpart( animation4 )
         animation5=draw.obj_animation('ch7_villainmech_assemble_rleg','cave',(640,360),record=False)
-        animation5.addimage('empty',path='premade')
+        animation5.addimage('empty',path='data/premade')
         self.addpart( animation5 )
         animation6=draw.obj_animation('ch7_villainmech_assemble_lshoulder','mountain',(640,360),record=False)
-        animation6.addimage('empty',path='premade')
+        animation6.addimage('empty',path='data/premade')
         self.addpart( animation6 )
         animation7=draw.obj_animation('ch7_villainmech_assemble_rshoulder','mountain',(640,360),record=False)
-        animation7.addimage('empty',path='premade')
+        animation7.addimage('empty',path='data/premade')
         self.addpart( animation7 )
         animation8=draw.obj_animation('ch7_villainmech_assemble_tpp','tower',(640,360),record=False)
-        animation8.addimage('empty',path='premade')
+        animation8.addimage('empty',path='data/premade')
         self.addpart( animation8 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_transform1','mech_transform2') )
@@ -1598,25 +1598,25 @@ class obj_scene_ch7p45(page.obj_chapterpage):
         animation1.addimage('heromecharmature')
         self.addpart( animation1 )
         animation2=draw.obj_animation('ch7_villainmech_assemble_larm','fish',(640,360),record=False,imgfliph=True)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch7_villainmech_assemble_rarm','flower',(640,360),record=False,imgfliph=True,imgflipv=True)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch7_villainmech_assemble_lleg','sailboat',(640-10,360),record=False,imgscale=0.7)
-        animation4.addimage('empty',path='premade')
+        animation4.addimage('empty',path='data/premade')
         self.addpart( animation4 )
         animation5=draw.obj_animation('ch7_villainmech_assemble_rleg','sailboat',(640+10,360),record=False,imgscale=0.7)
-        animation5.addimage('empty',path='premade')
+        animation5.addimage('empty',path='data/premade')
         self.addpart( animation5 )
         animation6=draw.obj_animation('ch7_villainmech_assemble_lshoulder','bush',(640,360),record=False)
-        animation6.addimage('empty',path='premade')
+        animation6.addimage('empty',path='data/premade')
         self.addpart( animation6 )
         animation7=draw.obj_animation('ch7_villainmech_assemble_rshoulder','bush',(640,360),record=False)
-        animation7.addimage('empty',path='premade')
+        animation7.addimage('empty',path='data/premade')
         self.addpart( animation7 )
         animation8=draw.obj_animation('ch7_villainmech_assemble_tpp','house',(640,360),record=False)
-        animation8.addimage('empty',path='premade')
+        animation8.addimage('empty',path='data/premade')
         self.addpart( animation8 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','mech_transform1','mech_transform2') )
@@ -1715,7 +1715,7 @@ class obj_scene_ch7p48a(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show3',(850,270),scale=1,path='premade'))
+        self.addpart(draw.obj_image('show3',(850,270),scale=1,path='data/premade'))
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1738,7 +1738,7 @@ class obj_scene_ch7p48b(page.obj_chapterpage):
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show1',(640,300),scale=1,fliph=True,flipv=True,path='premade'))
+        self.addpart(draw.obj_image('show1',(640,300),scale=1,fliph=True,flipv=True,path='data/premade'))
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1821,7 +1821,7 @@ class obj_scene_ch7p50(page.obj_chapterpage):
         # self.addpart( draw.obj_imageplacer(self,'villainmechbase_noface','villainbase','moon','heromechbase','cloud','house','bush','pond','flower') )
         self.addpart( draw.obj_image('villainmechbase_noface',(1029,524),scale=0.73,rotate=-118,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7villainfrommec','villainbase',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart( animation1 )
         self.addpart( draw.obj_image('bush',(129,606),scale=0.52,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(760,582),scale=0.23,rotate=0,fliph=True,flipv=False) )

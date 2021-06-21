@@ -71,7 +71,7 @@ class obj_scene_ch6p1(page.obj_chapterpage):
         animation1.addimage('villainholdspartner')
         self.addpart( animation1 )
         animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         # self.addpart( draw.obj_imageplacer(self,'tower','mountain') )
         #
@@ -103,7 +103,7 @@ class obj_scene_ch6p2(page.obj_chapterpage):
         self.addpart( draw.obj_image('sun',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='premade')
+        animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='data/premade')
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346),imgscale=0.25,sync=animation1) )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark2','bunnyhead',(640,360),sync=animation1) )
@@ -200,10 +200,10 @@ class obj_scene_ch6p6(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2  )
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
         #
@@ -237,7 +237,7 @@ class obj_scene_ch6p7(page.obj_chapterpage):
                       'And remember my motto: "always perservere!" ',\
                   '\n\nsigned: ',('{eldername}',share.colors.elder),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('elderhead',(1065,305),scale=0.5) )
         #
         animation1=draw.obj_animation('ch2_mailhead','elderhead',(640,360),imgscale=0.7)
@@ -272,7 +272,7 @@ class obj_scene_ch6p8(page.obj_chapterpage):
                     'are you up to something. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
         #
         animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
@@ -301,7 +301,7 @@ class obj_scene_ch6p9(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','paper',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
         #
@@ -329,7 +329,7 @@ class obj_scene_ch6p10(page.obj_chapterpage):
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('paper',(333,442),scale=0.33,rotate=6,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail2','sun',(640,360))
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         #
         self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
@@ -421,7 +421,7 @@ class obj_scene_ch6p14(page.obj_chapterpage):
                'Now draw the ',\
                ('sailor',share.colors.sailor),'\'s face, and make it look slightly to the right. ',\
                    ]
-        self.addpart( draw.obj_image('stickhead',(640,450-50),path='premade',scale=2*1.25)  )
+        self.addpart( draw.obj_image('stickhead',(640,450-50),path='data/premade',scale=2*1.25)  )
         self.addpart( draw.obj_drawing('sailorfacedraw',(640,450-50),legend='Draw the sailor (facing right)',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('ch6') )
@@ -804,9 +804,9 @@ class obj_scene_ch6p29(page.obj_chapterpage):
         self.addpart( draw.obj_image('palmtree',(973,302),scale=0.42,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('moon',(821,256),scale=0.33,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch6_herotobush','herobase',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         animation2=draw.obj_animation('ch6_herotobush2','herohead',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         animation3=draw.obj_animation('ch6_herotobush3','bush',(640,360),record=False,sync=animation1)
         self.addpart( animation1 )
         self.addpart( animation3 )
@@ -1020,7 +1020,7 @@ class obj_scene_ch6p36(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(624,383),scale=0.35,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(1188,292),scale=0.44,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('moon',(480,235),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('exclamationmark',(948,260),scale=1,path='premade') )
+        self.addpart( draw.obj_image('exclamationmark',(948,260),scale=1,path='data/premade') )
         animation1=draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(933,485),imgfliph=True)
         self.addpart(animation1)
         animation2=draw.obj_animation('ch6_heroalertgiven','herobase',(640,360),record=False,sync=animation1)
@@ -1048,10 +1048,10 @@ class obj_scene_ch6p37(page.obj_chapterpage):
         # self.addpart( draw.obj_imageplacer(self,'herobase','skeletonbase','cow','bush','palmtree','moon','heroridecow') )
         # self.addpart(draw.obj_animation('ch1_hero1','heroridecow',(360,360)))
         # self.addpart( draw.obj_image('heroridecow',(564,453),scale=0.74,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('exclamationmark',(122,498-200),path='premade') )
-        self.addpart( draw.obj_image('exclamationmark',(263,472-200),path='premade') )
-        self.addpart( draw.obj_image('exclamationmark',(1010,469-200),path='premade') )
-        self.addpart( draw.obj_image('exclamationmark',(1156,510-200),path='premade') )
+        self.addpart( draw.obj_image('exclamationmark',(122,498-200),path='data/premade') )
+        self.addpart( draw.obj_image('exclamationmark',(263,472-200),path='data/premade') )
+        self.addpart( draw.obj_image('exclamationmark',(1010,469-200),path='data/premade') )
+        self.addpart( draw.obj_image('exclamationmark',(1156,510-200),path='data/premade') )
         animation1=draw.obj_animation('bushstealth_skeletonalert','skeletonbase_sailorhat',(122,498))
         self.addpart(animation1)
         self.addpart( draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(263,472),sync=animation1) )
@@ -1088,7 +1088,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_image('show1',(760,540),fliph=False,flipv=False,path='premade') )
+        self.addpart( draw.obj_image('show1',(760,540),fliph=False,flipv=False,path='data/premade') )
         #
         self.addpart( draw.obj_music('racing') )
 
@@ -1108,7 +1108,7 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_image('show3',(460,160),scale=1,fliph=False,flipv=True,path='premade') )
+        self.addpart( draw.obj_image('show3',(460,160),scale=1,fliph=False,flipv=True,path='data/premade') )
         #
         self.addpart( draw.obj_music('racing') )
 
@@ -1126,8 +1126,8 @@ class obj_scene_ch6p38b(page.obj_chapterpage):
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
         self.addpart(self.world)
         #
-        # self.addpart( draw.obj_image('show3',(418,300),path='premade') )
-        self.addpart( draw.obj_image('show1',(970,520),fliph=True,flipv=False,path='premade') )
+        # self.addpart( draw.obj_image('show3',(418,300),path='data/premade') )
+        self.addpart( draw.obj_image('show1',(970,520),fliph=True,flipv=False,path='data/premade') )
         #
         self.addpart( draw.obj_music('racing') )
 
@@ -1306,7 +1306,7 @@ class obj_scene_ch6p43(page.obj_chapterpage):
         animation2=draw.obj_animation('ch6sailortalks3love','cow',(640,360),record=False,sync=animation1)
         self.addpart(animation2)
         animation3=draw.obj_animation('ch6sailortalks3love2','love',(640,360),record=False,sync=animation2)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart(animation3)
         #
         # self.addpart( draw.obj_soundplacer(animation1,'sailor1','sailor2','sailor3','sailor4','sailor5','cow') )

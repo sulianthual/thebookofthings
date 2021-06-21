@@ -566,7 +566,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('moon',(147,587),scale=0.62,rotate=-328,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('sun',(808,224),scale=0.42,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='fish':
-            self.addpart( draw.obj_image('hookline',(340,380-390),path='premade') )
+            self.addpart( draw.obj_image('hookline',(340,380-390),path='data/premade') )
             self.addpart( draw.obj_image('hook',(340,380),scale=0.25) )
             self.addpart( draw.obj_image('fish',(799,374),scale=0.4,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='partner':
@@ -717,7 +717,7 @@ class obj_scene_realtitlescreen(page.obj_page):
             dyref=130
             self.addpart( draw.obj_image('wave',(90,267),scale=0.46,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('wave',(288,631),scale=0.46,rotate=0,fliph=False,flipv=False) )
-            self.addpart(  draw.obj_image('island1',(640,360+dyref),path='premade') )
+            self.addpart(  draw.obj_image('island1',(640,360+dyref),path='data/premade') )
             self.addpart(  draw.obj_image('skeletonhead',(640,360+dyref),scale=0.5) )
             self.addpart(  draw.obj_image('mountain',(392,319+dyref),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.addpart(  draw.obj_image('mountain',(224,280+dyref),scale=0.35,rotate=0,fliph=True,flipv=False) )
@@ -1234,7 +1234,7 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         self.text=['These are the game controls.']
         #
         # Game controls instructions
-        self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
+        self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='data/premade') )
         self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )

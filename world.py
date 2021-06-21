@@ -398,7 +398,7 @@ class obj_world_sunrise(obj_world):
         # static actor
         self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
         #
-        self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
         self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
         self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
         #
@@ -541,9 +541,9 @@ class obj_world_wakeup(obj_world):
         animation.addsound( "wakeup_snore1", [14] )
         animation.addsound( "wakeup_snore2", [134] )
         self.startactor.addpart( 'anim1', animation )
-        self.startactor.addpart( 'anim1a', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),path='premade'))
-        self.startactor.addpart( 'anim1b', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),path='premade',imgscale=0.7))
-        self.startactor.addpart( 'anim1c', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),path='premade',imgscale=0.5))
+        self.startactor.addpart( 'anim1a', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),path='data/premade'))
+        self.startactor.addpart( 'anim1b', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),path='data/premade',imgscale=0.7))
+        self.startactor.addpart( 'anim1c', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),path='data/premade',imgscale=0.5))
 
 
         # ungoing actor
@@ -652,15 +652,15 @@ class obj_world_breakfastdrinking(obj_world):
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_done=obj_grandactor(self,(640,360))
         # static
-        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-150),path='premade') )
+        self.staticactor.addpart( 'img1', draw.obj_image('floor3',(640,720-150),path='data/premade') )
         if self.addpartner:
             self.staticactor.addpart( 'img2', draw.obj_image('coffeecup',(640+180,600),scale=0.4,fliph=False) )
         self.staticactor.addpart( 'img3', draw.obj_image('coffeecup',(640-180,600),scale=0.4,fliph=True) )
         self.staticactor.addpart( 'img4', draw.obj_image('flowervase',(640,440),scale=0.5) )
         # progress bar
-        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,200),path='premade') )
-        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,200),path='premade') )
-        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,200),path='premade') )
+        self.progressbar.addpart( 'bar', draw.obj_image('completion1fill',(640,200),path='data/premade') )
+        self.progressbar.addpart( 'slide', draw.obj_image('completion1slide',(640,200),path='data/premade') )
+        self.progressbar.addpart( 'borders', draw.obj_image('completion1',(640,200),path='data/premade') )
         self.progressbar.addpart( 'textbox', draw.obj_textbox('0%',(640,270)) )
         self.progressmx=2#1# move rate of progressbar (respect to self.progress)
         self.progressmax=int(567/self.progressmx)# max progress
@@ -684,14 +684,14 @@ class obj_world_breakfastdrinking(obj_world):
         self.herohappytimer=tool.obj_timer(100)# timer for happy after drinking
         # partner
         if self.addpartner:
-            self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15+ydown),scale=1.15,fliph=True,path='premade') )
+            self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15+ydown),scale=1.15,fliph=True,path='data/premade') )
             self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15+ydown),scale=1.15,fliph=True) )
             self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15+ydown),scale=1.15,fliph=False) )
             self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15+ydown),scale=1.15,rotate=15,fliph=False) )
             self.partner.addpart( 'waiting_headrightbobble', draw.obj_image('partnerheadangry',(1160-50+30,340+15+ydown),scale=1.15,rotate=-15,fliph=False) )
             self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360+ydown)) )
-            self.partner.addpart( 'bustingmark', draw.obj_image('exclamationmark',(1100,130+ydown),scale=1.5,path='premade') )
-            self.partner.addpart( 'whatmark', draw.obj_image('interrogationmark',(1160,130+ydown),scale=1.5,path='premade') )
+            self.partner.addpart( 'bustingmark', draw.obj_image('exclamationmark',(1100,130+ydown),scale=1.5,path='data/premade') )
+            self.partner.addpart( 'whatmark', draw.obj_image('interrogationmark',(1160,130+ydown),scale=1.5,path='data/premade') )
             self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(640,400+ydown),fontsize='huge') )
             self.partner.dict['waiting_base'].show=True
             self.partner.dict['waiting_headleft'].show=False
@@ -927,7 +927,7 @@ class obj_world_fishing(obj_world):
         self.hook.rx=30
         self.hook.ry=30
         self.hook.r=30
-        self.hook.addpart( 'line',draw.obj_image('hookline',(640,100-390),path='premade') )
+        self.hook.addpart( 'line',draw.obj_image('hookline',(640,100-390),path='data/premade') )
         self.hook.addpart( 'img_fish',draw.obj_image('fish',(640,100+50),scale=0.25,rotate=-90) )
         self.hook.dict['img_fish'].show=False
         self.hook.addpart( 'img_hook',draw.obj_image('hook',(640,100),scale=0.25) )
@@ -1196,7 +1196,7 @@ class obj_world_travel(obj_world):
         ##########################3
         # Premake necessary images
         # combine herohead+stickwalk = herowalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image1=draw.obj_image('stickwalk',(640,460),path='data/premade')# snapshot
         image2=draw.obj_image('herohead',(640,200),scale=0.5)
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',image1)
@@ -1204,7 +1204,7 @@ class obj_world_travel(obj_world):
         dispgroup1.snapshot((640,360,200,300),'herowalk')
         # combine partnerhead+stickwalk = partnerwalk
         if self.addpartner:
-            image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+            image1=draw.obj_image('stickwalk',(640,460),path='data/premade')# snapshot
             image2=draw.obj_image('partnerhair',(640,200))
             image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
             dispgroup2=draw.obj_dispgroup((640,360))
@@ -1215,7 +1215,7 @@ class obj_world_travel(obj_world):
         # combine sailorhead+stickwalk = sailorwalk
         if self.addsailor:
             dispgroup2=draw.obj_dispgroup((640,360))
-            dispgroup2.addpart('part1',draw.obj_image('stickwalk',(640,460),path='premade') )
+            dispgroup2.addpart('part1',draw.obj_image('stickwalk',(640,460),path='data/premade') )
             dispgroup2.addpart('part2',draw.obj_image('sailorbaldhead',(640,200),scale=0.5))
             dispgroup2.addpart('part3',draw.obj_image('sailorhat',(640,200-100),scale=0.5))
             dispgroup2.snapshot((640,360-15,200,360+15),'sailorwalk')
@@ -1358,17 +1358,17 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
         if self.chapter>=8:
             self.staticactor11.addpart( 'refcake', draw.obj_image('cake',(640+210,360-50),scale=0.25) )
-            self.staticactor11.addpart( 'refmark_cake', draw.obj_image('exclamationmarkred',(640+210,360-50),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'refmark_cake', draw.obj_image('exclamationmarkred',(640+210,360-50),scale=0.5,path='data/premade') )
             self.staticactor11.addpart( 'textrefcake', draw.obj_textbox('Credits',(640+210,360-50+60),color=share.colors.location) )
             #
             self.staticactor11.addpart( 'refroam_bug', draw.obj_image('bug',(640-150,360),scale=0.25) )
-            self.staticactor11.addpart( 'refmark_home', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
-            self.staticactor11.addpart( 'refmark_pond', draw.obj_image('exclamationmarkred',(640-320,360-180),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'refmark_home', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='data/premade') )
+            self.staticactor11.addpart( 'refmark_pond', draw.obj_image('exclamationmarkred',(640-320,360-180),scale=0.5,path='data/premade') )
             self.staticactor11.addpart( 'refroam_mech', draw.obj_image('villainmechbase_noface',(1100,10),scale=0.4,rotate=-118,fliph=False,flipv=False) )
-            self.staticactor11.addpart( 'refmark_mech', draw.obj_image('exclamationmarkred',(1100,10),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'refmark_mech', draw.obj_image('exclamationmarkred',(1100,10),scale=0.5,path='data/premade') )
             #
             self.staticactor11.addpart( 'refroam_partner', draw.obj_image('partnerbase',(870+70,570),scale=0.25,fliph=True) )
-            self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(870,570),scale=0.5,path='premade') )
+            self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(870,570),scale=0.5,path='data/premade') )
         #
         # west panel 0-1: villain tower
         if self.chapter>=3:
@@ -1389,7 +1389,7 @@ class obj_world_travel(obj_world):
                 self.staticactor01.addpart( "img14", draw.obj_image('cloud',(627,570),scale=0.28,rotate=0,fliph=True,flipv=False) )
         if self.chapter>=8:
             self.staticactor01.addpart( 'refroam', draw.obj_image('villainbase',(640-150,360),scale=0.25) )
-            self.staticactor01.addpart( 'refmark_tower', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
+            self.staticactor01.addpart( 'refmark_tower', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='data/premade') )
         #
         # east panel 2-1: magical forest and cave
         if self.chapter>=4:
@@ -1414,7 +1414,7 @@ class obj_world_travel(obj_world):
             self.staticactor21.addpart( "img16", draw.obj_image('tree',(185,644),scale=0.36,rotate=0,fliph=True,flipv=False) )
         if self.chapter>=8:
             self.staticactor21.addpart( 'refroam', draw.obj_image('bunnybase',(640+150,360),scale=0.25,fliph=True) )
-            self.staticactor21.addpart( 'refmark_cave', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
+            self.staticactor21.addpart( 'refmark_cave', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='data/premade') )
         #
         # north panel 1-0: highest peak
         if self.chapter>=5:
@@ -1428,7 +1428,7 @@ class obj_world_travel(obj_world):
             self.staticactor10.addpart( "img5a", draw.obj_image('lightningbolt',(800,30),scale=0.33,rotate=-30,fliph=False,flipv=False) )
         if self.chapter>=8:
             self.staticactor10.addpart( 'refroam', draw.obj_image('elderbase',(640-150,200+100),scale=0.25) )
-            self.staticactor10.addpart( 'refmark_peak', draw.obj_image('exclamationmarkred',(640,360-50),scale=0.5,path='premade') )
+            self.staticactor10.addpart( 'refmark_peak', draw.obj_image('exclamationmarkred',(640,360-50),scale=0.5,path='data/premade') )
         # north east panel 2-0: sun and horizon
         if self.chapter>=5:
             self.staticactor20.addpart( "img1", draw.obj_image('sun',(1009,167),scale=0.68,rotate=0,fliph=False,flipv=False) )
@@ -1471,9 +1471,9 @@ class obj_world_travel(obj_world):
             if self.addsailorwait:
                 self.staticactor02.addpart( 'ref', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
             if self.addbeachquestionmark:
-                self.staticactor02.addpart( 'refqmark', draw.obj_image('interrogationmark',(640,360-120),path='premade') )
+                self.staticactor02.addpart( 'refqmark', draw.obj_image('interrogationmark',(640,360-120),path='data/premade') )
             if self.addbeachmark:
-                self.staticactor02.addpart( 'refmark', draw.obj_image('smallcross',(640,360-120),path='premade') )
+                self.staticactor02.addpart( 'refmark', draw.obj_image('smallcross',(640,360-120),path='data/premade') )
             self.staticactor02.addpart( 'textref', draw.obj_textbox('beach',(640,360),color=share.colors.location) )
             self.staticactor02.addpart( "img1", draw.obj_image('palmtree',(1040,199),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor02.addpart( "img2", draw.obj_image('palmtree',(255,21),scale=0.5,rotate=0,fliph=True,flipv=False) )
@@ -1485,11 +1485,11 @@ class obj_world_travel(obj_world):
         if self.chapter>=8:
             self.staticactor02.addpart( 'refroam', draw.obj_image('sailorbase',(640-70,360-120),scale=0.25) )
             self.staticactor02.addpart( 'refroam_cow', draw.obj_image('cow',(640-70-100,360-120-200),scale=0.4) )
-            self.staticactor02.addpart( 'refmark_atsailor', draw.obj_image('exclamationmarkred',(640,360-120),scale=0.5,path='premade') )
+            self.staticactor02.addpart( 'refmark_atsailor', draw.obj_image('exclamationmarkred',(640,360-120),scale=0.5,path='data/premade') )
         # south-south east panel 2-3: island south east
         if self.chapter>=6:
             self.staticactor23.addpart( 'textref', draw.obj_textbox('Skull Island',(640,360+120),color=share.colors.location) )
-            self.staticactor23.addpart( 'imgref', draw.obj_image('island1',(640,360),path='premade') )
+            self.staticactor23.addpart( 'imgref', draw.obj_image('island1',(640,360),path='data/premade') )
             self.staticactor23.addpart( 'imgref2', draw.obj_image('skeletonhead',(640,360),scale=0.5) )
             self.staticactor23.addpart( "img1", draw.obj_image('mountain',(392,319),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.staticactor23.addpart( "img2", draw.obj_image('mountain',(224,280),scale=0.35,rotate=0,fliph=True,flipv=False) )
@@ -1502,7 +1502,7 @@ class obj_world_travel(obj_world):
             self.staticactor23.addpart( "img5a", draw.obj_image('cloud',(978,255),scale=0.4,rotate=0,fliph=True,flipv=False) )
         if self.chapter>=8:
             self.staticactor23.addpart( 'refroam', draw.obj_image('skeletonbase',(640+150,360),scale=0.25,fliph=True) )
-            self.staticactor23.addpart( 'refmark_island', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='premade') )
+            self.staticactor23.addpart( 'refmark_island', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='data/premade') )
         # south-south panel 1-3: just ocean
         if self.chapter>=6:
             self.staticactor13.addpart( "img1", draw.obj_image('wave',(1053,445),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -1523,20 +1523,20 @@ class obj_world_travel(obj_world):
         #
         # individual elements
         if self.chapter>=3:# west
-            self.staticactorplus.addpart( "imgw1", draw.obj_image('path1',(640-640,360+0),path='premade',fliph=True) )
+            self.staticactorplus.addpart( "imgw1", draw.obj_image('path1',(640-640,360+0),path='data/premade',fliph=True) )
         if self.chapter>=5:# north
-            self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='premade') )
-            self.staticactorplus.addpart( "imgn2", draw.obj_image('horizon1',(640,360-1080-50),path='premade') )
-            self.staticactorplus.addpart( "imgn3", draw.obj_image('horizon2',(1280+320,360-1080-50),path='premade') )
-            self.staticactorplus.addpart( "imgn4", draw.obj_image('horizon3',(1280+640+320,360-1080+180-50),path='premade') )
-            self.staticactorplus.addpart( "imgn5", draw.obj_image('horizon4',(-640+320,360-1080-50),path='premade') )# redo this
-            self.staticactorplus.addpart( "imgn6", draw.obj_image('horizon3',(-1280+640-320,360-1080+180-50),path='premade',fliph=True) )
+            self.staticactorplus.addpart( "imgn1", draw.obj_image('path2',(640+0,360-540),rotate=90,path='data/premade') )
+            self.staticactorplus.addpart( "imgn2", draw.obj_image('horizon1',(640,360-1080-50),path='data/premade') )
+            self.staticactorplus.addpart( "imgn3", draw.obj_image('horizon2',(1280+320,360-1080-50),path='data/premade') )
+            self.staticactorplus.addpart( "imgn4", draw.obj_image('horizon3',(1280+640+320,360-1080+180-50),path='data/premade') )
+            self.staticactorplus.addpart( "imgn5", draw.obj_image('horizon4',(-640+320,360-1080-50),path='data/premade') )# redo this
+            self.staticactorplus.addpart( "imgn6", draw.obj_image('horizon3',(-1280+640-320,360-1080+180-50),path='data/premade',fliph=True) )
         if self.chapter>=6:# south
-            self.staticactorplus.addpart( "imgs1", draw.obj_image('beach1',(640,360+1080),path='premade') )
-            self.staticactorplus.addpart( "imgs2", draw.obj_image('beach2',(640+1280-320,360+1080),path='premade') )
-            self.staticactorplus.addpart( "imgs3", draw.obj_image('beach3',(640+1280+320,360+1080-180),path='premade') )
-            self.staticactorplus.addpart( "imgs4", draw.obj_image('beach4',(640-1280+320,360+1080),path='premade') )
-            self.staticactorplus.addpart( "imgs5", draw.obj_image('beach3',(640-1280-320,360+1080-180),fliph=True,path='premade') )
+            self.staticactorplus.addpart( "imgs1", draw.obj_image('beach1',(640,360+1080),path='data/premade') )
+            self.staticactorplus.addpart( "imgs2", draw.obj_image('beach2',(640+1280-320,360+1080),path='data/premade') )
+            self.staticactorplus.addpart( "imgs3", draw.obj_image('beach3',(640+1280+320,360+1080-180),path='data/premade') )
+            self.staticactorplus.addpart( "imgs4", draw.obj_image('beach4',(640-1280+320,360+1080),path='data/premade') )
+            self.staticactorplus.addpart( "imgs5", draw.obj_image('beach3',(640-1280-320,360+1080-180),fliph=True,path='data/premade') )
 
         ###############
         # boundaries (chapter dependent. At max should be +-1280,+-720, with small additional margin  )
@@ -1951,9 +1951,9 @@ class obj_world_dodgegunshots(obj_world):
         self.text_start=obj_grandactor(self,(640,360))# text message at start
         self.text_start.show=True
         # static
-        self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
+        self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='data/premade') )
         # if not self.intower:
-            # self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='premade') )
+            # self.staticactor.addpart( 'floor', draw.obj_image('floor1',(640,500),path='data/premade') )
             # self.staticactor.addpart( 'sun', draw.obj_image('sun',(470,190),scale=0.4) )
         # hero
         self.hero.addpart( 'stand', draw.obj_image('herobase',(200,500+self.yoff),scale=0.5) )
@@ -1992,7 +1992,7 @@ class obj_world_dodgegunshots(obj_world):
         # villain
         self.villain.addpart( 'stand', draw.obj_image('villainbase',(1280-150,450+self.yoff),scale=0.5,fliph=True) )
         self.villain.addpart( 'standgun', draw.obj_image('gun',(1280-150-175,445+self.yoff),scale=0.25,fliph=True) )
-        self.villain.addpart( 'standarm', draw.obj_image('stickshootarm',(1280-260,442+self.yoff),scale=0.5,path='premade') )# missing small piece
+        self.villain.addpart( 'standarm', draw.obj_image('stickshootarm',(1280-260,442+self.yoff),scale=0.5,path='data/premade') )# missing small piece
         self.villain.addpart( 'crouch', draw.obj_image('villainshootcrouch',(1280-150,500+50+40+30-50+self.yoff),scale=0.5) )
         self.villain.addpart( 'crouchgun', draw.obj_image('gun',(1280-150-175,500+50+40+30-50+self.yoff),scale=0.25,fliph=True) )
         self.villain.dict['stand'].show=True
@@ -2039,7 +2039,7 @@ class obj_world_dodgegunshots(obj_world):
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
         if not self.dotutorial:
-            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='data/premade') )
             self.timerfightmessage.start()
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
@@ -2213,14 +2213,14 @@ class obj_world_stompfight(obj_world):
         ##########################3
         # Premake necessary images
         # combine stickkick+villainhead=villainkick
-        image1=draw.obj_image('stickkick',(640,460),path='premade')# snapshot
+        image1=draw.obj_image('stickkick',(640,460),path='data/premade')# snapshot
         image2=draw.obj_image('villainhead',(640,200),scale=0.5)
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.snapshot((640,360,300,300),'villainkick')
         # combine stickkick+herohead=herokick
-        image1=draw.obj_image('stickkick',(640,460),path='premade')# snapshot
+        image1=draw.obj_image('stickkick',(640,460),path='data/premade')# snapshot
         image2=draw.obj_image('herohead',(640,200),scale=0.5)
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',image1)
@@ -2255,7 +2255,7 @@ class obj_world_stompfight(obj_world):
         self.text_start=obj_grandactor(self,(640,360))# text message at start
         self.text_start.show=True
         # static
-        self.staticactor.addpart( 'floor', draw.obj_image('floor2',(640,self.yground+90),path='premade') )
+        self.staticactor.addpart( 'floor', draw.obj_image('floor2',(640,self.yground+90),path='data/premade') )
         # self.staticactor.addpart( 'sun', draw.obj_image('sun',(640,280),scale=0.4) )
         # hero
         self.hero.addpart( 'stand_right', draw.obj_image('herobase',(340,self.yground),scale=0.35) )
@@ -2374,7 +2374,7 @@ class obj_world_stompfight(obj_world):
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
         if not self.dotutorial:
-            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='data/premade') )
             self.timerfightmessage.start()
         # timer for done part
         self.timerendwin=tool.obj_timer(120)# goal to done
@@ -2847,8 +2847,8 @@ class obj_world_climbpeak(obj_world):
         self.text_done.show=False
         # static
         self.staticactor.addpart( 'img1', draw.obj_image('sun',(218,233),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img4', draw.obj_image('floor1',(640,720-100),path='premade') )
-        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(1110,100),path='premade') )
+        self.staticactor.addpart( 'img4', draw.obj_image('floor1',(640,720-100),path='data/premade') )
+        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(1110,100),path='data/premade') )
         self.staticactor.addpart( 'img5',draw.obj_image('mountain',(779,624),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img6',draw.obj_image('mountain',(1070,605),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img7',draw.obj_image('mountain',(1203,585),scale=0.38,rotate=0,fliph=True,flipv=False) )
@@ -2858,7 +2858,7 @@ class obj_world_climbpeak(obj_world):
         self.platformsxy=[(1110,195),(813,385),(457,575)]
         for c,xy in enumerate(self.platformsxy):
             platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='data/premade') )
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
@@ -2909,7 +2909,7 @@ class obj_world_climbpeak(obj_world):
             i.clearparts()
             i.kill()
         # static
-        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(250,200),path='premade') )
+        self.staticactor.addpart( 'img1a', draw.obj_image('arrowup',(250,200),path='data/premade') )
         self.staticactor.addpart( 'img2',draw.obj_image('cloud',(1060,167),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img3',draw.obj_image('cloud',(533,329),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img4',draw.obj_image('cloud',(335,620),scale=0.41,rotate=0,fliph=True,flipv=False) )
@@ -2929,7 +2929,7 @@ class obj_world_climbpeak(obj_world):
         # platformes
         for c,xy in enumerate(self.platformsxy):
             platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='data/premade') )
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
@@ -2950,7 +2950,7 @@ class obj_world_climbpeak(obj_world):
             i.clearparts()
             i.kill()
         # static
-        self.staticactor.addpart( 'img0a', draw.obj_image('arrowup',(1110,50),path='premade') )
+        self.staticactor.addpart( 'img0a', draw.obj_image('arrowup',(1110,50),path='data/premade') )
         self.staticactor.addpart( 'text1', draw.obj_textbox('Almost there!',(827,398)) )
         self.staticactor.addpart( 'img1b', draw.obj_image('cloud',(478,227),scale=0.66,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img2b', draw.obj_image('cloud',(1146,626),scale=0.39,rotate=0,fliph=False,flipv=False) )
@@ -2971,7 +2971,7 @@ class obj_world_climbpeak(obj_world):
         # platformes
         for c,xy in enumerate(self.platformsxy):
             platformi=obj_grandactor(self,xy)
-            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='premade') )
+            platformi.addpart( 'img', draw.obj_image('platform1',xy,path='data/premade') )
             platformi.rx=150
             platformi.ry=5
             self.platforms.append(platformi)
@@ -3075,14 +3075,14 @@ class obj_world_rockpaperscissors(obj_world):
         ##########################3
         # Premake necessary images
         # combine herohead+stickwalk = herowalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image1=draw.obj_image('stickwalk',(640,460),path='data/premade')# snapshot
         image2=draw.obj_image('herohead',(640,200),scale=0.5)
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',image1)
         dispgroup1.addpart('part2',image2)
         dispgroup1.snapshot((640,360,200,300),'herowalk')
         # combine elderhead+stickwalk=elderwalk
-        image1=draw.obj_image('stickwalk',(640,460),path='premade')# snapshot
+        image1=draw.obj_image('stickwalk',(640,460),path='data/premade')# snapshot
         image2=draw.obj_image('elderhead',(640,200),scale=0.5)
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart('part1',image1)
@@ -3130,7 +3130,7 @@ class obj_world_rockpaperscissors(obj_world):
         self.text_start.show=True
         #
         # static
-        self.staticactor.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='premade') )
+        self.staticactor.addpart( 'floor', draw.obj_image('floor5',(640,720-100),path='data/premade') )
         self.staticactor.addpart( 'hero', draw.obj_image('herobase',(640-240,530),scale=0.5) )
         self.staticactor.addpart( 'elder', draw.obj_image('elderbase2',(640+240,530),scale=0.5,fliph=True) )
         animation1=draw.obj_animation('rps_herowalk','herobase',(640-240,360))
@@ -3166,8 +3166,8 @@ class obj_world_rockpaperscissors(obj_world):
         if self.dotutorial:
             self.instructions.dict['texts'].show=False
         # hero
-        # self.hero.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='premade') )
-        # self.hero.addpart( 'talkcloud', draw.obj_image('talkcloud',(200,320),path='premade') )
+        # self.hero.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(200,320),path='data/premade') )
+        # self.hero.addpart( 'talkcloud', draw.obj_image('talkcloud',(200,320),path='data/premade') )
         self.hero.addpart( 'thinkcloud', draw.obj_rectangle((100+50,320),120,120,color=share.colors.drawing) )
         if self.dotutorial:
             self.hero.addpart( 'talkcloud', draw.obj_rectangle((100+50,320),120,120,color=share.colors.drawing) )
@@ -3184,8 +3184,8 @@ class obj_world_rockpaperscissors(obj_world):
         self.hero.dict['thinkcloud'].show=False
         self.hero.dict['talkcloud'].show=True
         # elder
-        # self.elder.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(1280-200,320),fliph=True,path='premade') )
-        # self.elder.addpart( 'talkcloud', draw.obj_image('talkcloud',(1280-200,320),fliph=True,path='premade') )
+        # self.elder.addpart( 'thinkcloud', draw.obj_image('thinkcloud',(1280-200,320),fliph=True,path='data/premade') )
+        # self.elder.addpart( 'talkcloud', draw.obj_image('talkcloud',(1280-200,320),fliph=True,path='data/premade') )
         self.elder.addpart( 'thinkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=share.colors.drawing) )
         if self.dotutorial:
             self.elder.addpart( 'talkcloud', draw.obj_rectangle((1280-100-50,320),120,120,color=share.colors.drawing) )
@@ -3197,9 +3197,9 @@ class obj_world_rockpaperscissors(obj_world):
             self.elder.addpart( 'paper', draw.obj_image('paper',(1280-100-50,320),scale=0.5) )
             self.elder.addpart( 'scissors', draw.obj_image('scissors',(1280-100-50,320),scale=0.5) )
         else:
-            self.elder.addpart( 'rock', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='premade') )
-            self.elder.addpart( 'paper', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='premade') )
-            self.elder.addpart( 'scissors', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='premade') )
+            self.elder.addpart( 'rock', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='data/premade') )
+            self.elder.addpart( 'paper', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='data/premade') )
+            self.elder.addpart( 'scissors', draw.obj_image('interrogationmark',(1280-100-50,320),scale=1,path='data/premade') )
         self.elder.show=True# show what the elder is thinking or not
         self.elderchoice=tool.randchoice([0,1,2])# 0,1,2 for rock, paper scissors
         self.elder.dict['rock'].show=self.elderchoice==0
@@ -3227,8 +3227,8 @@ class obj_world_rockpaperscissors(obj_world):
         self.result.dict['elderpaper'].show=False
         self.result.dict['elderscissors'].show=False
         self.computedresults=False# has computed results (one frame each round)
-        self.result.addpart( 'win',  draw.obj_image('largecross',(1280-100-50,320),path='premade')  )
-        self.result.addpart( 'loose', draw.obj_image('largecross',(100+50,320),path='premade')  )
+        self.result.addpart( 'win',  draw.obj_image('largecross',(1280-100-50,320),path='data/premade')  )
+        self.result.addpart( 'loose', draw.obj_image('largecross',(100+50,320),path='data/premade')  )
         # self.result.addpart( 'paperrock', draw.obj_textbox('Paper Beats Rock',(640,350),fontsize='big',scale=0.9)  )
         # self.result.addpart( 'rockscissors', draw.obj_textbox('Rock Beats Scissors',(640,350),fontsize='big',scale=0.9)  )
         # self.result.addpart( 'scissorspaper', draw.obj_textbox('Scissors Beats Paper',(640,350),fontsize='big',scale=0.9)  )
@@ -3267,12 +3267,12 @@ class obj_world_rockpaperscissors(obj_world):
         self.healthbar.addpart('face1', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         for i in range(self.herohealthmax):
             self.healthbar.addpart('hero_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
-            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('smallcrossred',(150+i*75,self.ybar),scale=0.5,path='premade') )
+            self.healthbar.addpart('herocross_'+str(i), draw.obj_image('smallcrossred',(150+i*75,self.ybar),scale=0.5,path='data/premade') )
             self.healthbar.dict['herocross_'+str(i)].show=False
         self.healthbar.addpart('face2', draw.obj_image('elderhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.elderhealthmax):
             self.healthbar.addpart('elder_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
-            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.5,path='premade') )
+            self.healthbar.addpart('eldercross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.5,path='data/premade') )
             self.healthbar.dict['eldercross_'+str(i)].show=False
         # text
         self.text_donewin.addpart( 'text1', draw.obj_textbox('victory!',(640,150),fontsize='huge') )
@@ -3280,7 +3280,7 @@ class obj_world_rockpaperscissors(obj_world):
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
         if not self.dotutorial:
-            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='data/premade') )
             self.timerfightmessage.start()
         # endgame animations
         self.endgame.addpart( 'loose', draw.obj_animation('ch5_rpsloose','herobase',(640,360)) )
@@ -3622,8 +3622,8 @@ class obj_grandactor_bushstealthskeleton(obj_grandactor):
         self.maxvision=500# vision max distance (must be <)
         # images
         self.makebaseimages()
-        self.addpart('viewright', draw.obj_image('skeletonview',(self.x+250,self.y),path='premade') )
-        self.addpart('viewleft', draw.obj_image('skeletonview',(self.x-250,self.y),path='premade',fliph=True) )
+        self.addpart('viewright', draw.obj_image('skeletonview',(self.x+250,self.y),path='data/premade') )
+        self.addpart('viewleft', draw.obj_image('skeletonview',(self.x-250,self.y),path='data/premade',fliph=True) )
         self.dict['standing'].show=True
         self.dict['walking'].show=False
         self.dict['thinking'].show=False
@@ -3643,9 +3643,9 @@ class obj_grandactor_bushstealthskeleton(obj_grandactor):
         animation1.addsound("skeleton1", [5])
         animation1.addsound("skeleton3", [40])
         self.addpart('walking', animation1)
-        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='data/premade') )
         self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase',(self.x,self.y)) )
-        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='data/premade') )
     def makebasesounds(self):
         self.soundthink=draw.obj_sound('skeleton2')
         self.creator.creator.addpart(self.soundthink)# add to page (from hierarchy page>world>grandactor)
@@ -3747,9 +3747,9 @@ class obj_grandactor_bushstealthskeleton_sailorhat(obj_grandactor_bushstealthske
         animation1.addsound("skeleton1", [5])
         animation1.addsound("skeleton3", [40])
         self.addpart('walking', animation1)
-        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='data/premade') )
         self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase_sailorhat',(self.x,self.y)) )
-        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='data/premade') )
     def makebasesounds(self):
         self.soundthink=draw.obj_sound('skeleton4')
         self.creator.creator.addpart(self.soundthink)# add to page (from hierarchy page>world>grandactor)
@@ -3763,9 +3763,9 @@ class obj_grandactor_bushstealthskeleton_partnerhair(obj_grandactor_bushstealths
         animation1.addsound("skeleton1", [5])
         animation1.addsound("skeleton3", [40])
         self.addpart('walking', animation1)
-        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('thinking', draw.obj_image('interrogationmark',(self.x,self.y-200),scale=1,path='data/premade') )
         self.addpart('busting', draw.obj_animation('bushstealth_skeletonalert','skeletonbase_partnerhair',(self.x,self.y)) )
-        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='premade') )
+        self.addpart('bustingmark', draw.obj_image('exclamationmark',(self.x,self.y-200),scale=1,path='data/premade') )
     def makebasesounds(self):
         self.soundthink=draw.obj_sound('skeleton4')
         self.creator.creator.addpart(self.soundthink)# add to page (from hierarchy page>world>grandactor)
@@ -3778,21 +3778,21 @@ class obj_world_bushstealth(obj_world):
         # these drawings are already made at drawing time...
         # combine skeletonhead+stickbody = skeletonbase
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        # dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+        # dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
         # dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
         # dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
         # skeleton with hair
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
         # dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
-        # dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        # dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
         # dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
         # dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
         # skeleton with sailor hat
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-        # dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+        # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+        # dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
         # dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
         # dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
         # dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
@@ -3826,11 +3826,11 @@ class obj_world_bushstealth(obj_world):
         self.text_donelost.show=False
         # background
         self.makebackground()# make the background
-        self.staticactor.addpart( 'imgarrow', draw.obj_image('arrowup',(1280-100,600),rotate=-90,path='premade') )
+        self.staticactor.addpart( 'imgarrow', draw.obj_image('arrowup',(1280-100,600),rotate=-90,path='data/premade') )
         # hero
         self.hero.addpart( 'standing', draw.obj_image('bush',self.heroxystart,scale=0.5) )
         self.hero.addpart( 'moving', draw.obj_animation('bushstealth_bushmove','bush',self.heroxystart) )
-        self.hero.addpart( 'movingspark', draw.obj_image('bushspark',(self.heroxystart[0],self.heroxystart[1]-100),path='premade') )
+        self.hero.addpart( 'movingspark', draw.obj_image('bushspark',(self.heroxystart[0],self.heroxystart[1]-100),path='data/premade') )
         self.hero.dict['moving'].show=False
         self.hero.dict['movingspark'].show=False
         self.hero.dict['standing'].show=True
@@ -3871,12 +3871,12 @@ class obj_world_bushstealth(obj_world):
     def makebackground(self):
         self.staticactor.addpart( 'img1', draw.obj_image('palmtree',(1148,291),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( 'img2', draw.obj_image('palmtree',(1010,268),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( 'img3', draw.obj_image('floor6',(640,300),path='premade') )
+        self.staticactor.addpart( 'img3', draw.obj_image('floor6',(640,300),path='data/premade') )
         self.staticactor.addpart( "img1a", draw.obj_image('bush',(890,342),scale=0.35,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img2a", draw.obj_image('bush',(307,363),scale=0.27,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( "img3a", draw.obj_animation('bushstealth_moonmove','moon',(640,360),record=False) )
 
-        # self.staticactor.addpart( 'img4', draw.obj_image('floor6',(640,720-50),path='premade') )
+        # self.staticactor.addpart( 'img4', draw.obj_image('floor6',(640,720-50),path='data/premade') )
     def makeskeletons(self):
         self.skeletons=[]
         self.skeletons.append( obj_grandactor_bushstealthskeleton(self,(800,500),foreground=False)   )
@@ -3980,7 +3980,7 @@ class obj_world_bushstealth2(obj_world_bushstealth):
         self.staticactor.addpart( "img2", draw.obj_image('palmtree',(298,284),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img4", draw.obj_image('palmtree',(860,261),scale=0.52,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( "img5", draw.obj_image('bush',(1035,519),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img3a', draw.obj_image('floor7',(640,300),path='premade') )
+        self.staticactor.addpart( 'img3a', draw.obj_image('floor7',(640,300),path='data/premade') )
         self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640+300,360+10),record=False) )
     def makeskeletons(self):
         self.skeletons=[]
@@ -3994,7 +3994,7 @@ class obj_world_bushstealth3(obj_world_bushstealth):
         self.staticactor.addpart( "img2", draw.obj_image('palmtree',(298,284),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img4", draw.obj_image('palmtree',(860,261),scale=0.52,rotate=0,fliph=True,flipv=False) )
         self.staticactor.addpart( "img5", draw.obj_image('bush',(1035,519),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img3a', draw.obj_image('floor7',(640,300),path='premade') )
+        self.staticactor.addpart( 'img3a', draw.obj_image('floor7',(640,300),path='data/premade') )
         self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640+300,360+10),record=False) )
     def makeskeletons(self):
         self.skeletons=[]
@@ -4010,7 +4010,7 @@ class obj_world_bushstealth4(obj_world_bushstealth):
         self.staticactor.addpart( "img2", draw.obj_image('mountain',(971,304),scale=0.41,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img4", draw.obj_image('palmtree',(150,299),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img6", draw.obj_image('bush',(417,571),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( 'img3a', draw.obj_image('floor8',(640,300),path='premade') )
+        self.staticactor.addpart( 'img3a', draw.obj_image('floor8',(640,300),path='data/premade') )
         self.staticactor.addpart( "img3b", draw.obj_animation('bushstealth_moonmove','moon',(640-500,360+20),record=False) )
     def makeskeletons(self):
         self.skeletons=[]
@@ -4165,7 +4165,7 @@ class obj_world_ridecow(obj_world):
         # start message at beginning
         self.timerfightmessage=tool.obj_timer(80)
         if not self.dotutorial:
-            self.text_start.addpart( 'startmessage', draw.obj_animation('dodgebullets_fightmessage','messagestart',(640,360), path='premade') )
+            self.text_start.addpart( 'startmessage', draw.obj_animation('dodgebullets_fightmessage','messagestart',(640,360), path='data/premade') )
             self.timerfightmessage.start()
 
         # devtool
@@ -4355,10 +4355,10 @@ class obj_world_mechfight(obj_world):
         # dispgroup1=draw.obj_dispgroup((640,360))
         # dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
         # dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='data/premade') )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='data/premade') )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='data/premade') )
         # dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
         # villainmech complete
         # dispgroup1=draw.obj_dispgroup((640,360))
@@ -4374,14 +4374,14 @@ class obj_world_mechfight(obj_world):
         #
         # villainmech
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
-        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='premade') )
-        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='premade') )
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='data/premade') )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640-200,400),path='data/premade') )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640+200,400),path='data/premade') )
         # dispgroup1.snapshot((640,360,300,220),'villainmecharmature_noface')
         # villainnech no face
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
+        # dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='data/premade') )
         # dispgroup1.addpart( 'part2', draw.obj_image('tower',(640,180),scale=0.35) )
         # dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         # dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
@@ -4394,10 +4394,10 @@ class obj_world_mechfight(obj_world):
         # heromech armature
         # dispgroup1=draw.obj_dispgroup((640,360))
         # dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
-        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade',fliph=True ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='data/premade',fliph=True) )
         # dispgroup1.snapshot((640,360,300,220),'heromecharmature')
         # heromech complete
         # dispgroup1=draw.obj_dispgroup((640,360))
@@ -4409,21 +4409,21 @@ class obj_world_mechfight(obj_world):
         # dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
         # dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
         # dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='data/premade',fliph=True) )
         # dispgroup1.snapshot((640,360,410,330),'heromechbase')
         #
         # heromech basis (redundant with villainmecharmature_noface expcept maybe for fliph)
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade',fliph=True ) )
-        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade',fliph=True ) )
+        # dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part5', draw.obj_image('villainmech_larm1',(640+200,400),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('villainmech_rarm1',(640-200,400),path='data/premade',fliph=True) )
         # dispgroup1.snapshot((640,360,300,220),'heromecharmature_noface')# move to premade
         # heromech no face
         # dispgroup1=draw.obj_dispgroup((640,360))
-        # dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
+        # dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='data/premade') )
         # dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
         # dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         # dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
@@ -4431,9 +4431,9 @@ class obj_world_mechfight(obj_world):
         # dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
         # dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
         # dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='premade',fliph=True) )
-        # dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='premade',fliph=True) )
+        # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part10', draw.obj_image('villainmech_larm1',(640+200,400),path='data/premade',fliph=True) )
+        # dispgroup1.addpart( 'part11', draw.obj_image('villainmech_rarm1',(640-200,400),path='data/premade',fliph=True) )
         # dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
         #
         # The snapshots below are remade for the minigame, because they arent used anywhere else
@@ -4441,11 +4441,11 @@ class obj_world_mechfight(obj_world):
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
         dispgroup1.addpart( 'part4', draw.obj_image('tower',(640,180),scale=0.35) )
         dispgroup1.addpart( 'part5', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part7', draw.obj_image('mechpunch',(640,360),path='premade') )
+        dispgroup1.addpart( 'part7', draw.obj_image('mechpunch',(640,360),path='data/premade') )
         dispgroup1.addpart( 'part8', draw.obj_image('gun',(233,373),scale=0.3,rotate=0,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part9', draw.obj_image('cave',(585,619),scale=0.35,rotate=0,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part10', draw.obj_image('cave',(838,617),scale=0.35,rotate=0,fliph=False,flipv=False) )
@@ -4454,11 +4454,11 @@ class obj_world_mechfight(obj_world):
         # heromech punch
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
         dispgroup1.addpart( 'part3', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part4', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         dispgroup1.addpart( 'part5', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
-        dispgroup1.addpart( 'part6', draw.obj_image('mechpunch',(640,360),path='premade') )
+        dispgroup1.addpart( 'part6', draw.obj_image('mechpunch',(640,360),path='data/premade') )
         dispgroup1.addpart( 'part7', draw.obj_image('fish',(233,373),scale=0.3,rotate=0,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(585,619),scale=0.25,rotate=0,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part9', draw.obj_image('sailboat',(838,617),scale=0.25,rotate=0,fliph=False,flipv=False) )
@@ -4468,28 +4468,28 @@ class obj_world_mechfight(obj_world):
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='data/premade') )
         dispgroup1.addpart( 'part5', draw.obj_image('tower',(640,180),scale=0.35) )
         dispgroup1.addpart( 'part6', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         dispgroup1.addpart( 'part7', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         dispgroup1.addpart( 'part8', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part9', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-        dispgroup1.addpart( 'part10', draw.obj_image('mechblock',(640-200,360),path='premade') )
+        dispgroup1.addpart( 'part10', draw.obj_image('mechblock',(640-200,360),path='data/premade') )
         dispgroup1.addpart( 'part11', draw.obj_image('gun',(242,316),scale=0.3,rotate=66,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part12', draw.obj_image('lightningbolt',(378,324),scale=0.35,rotate=174,fliph=True,flipv=False) )
         dispgroup1.snapshot((640-80,360,500-80,330),'villainmechblock')
         # heromech block
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='data/premade') )
         dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part5', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         dispgroup1.addpart( 'part6', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
         dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        dispgroup1.addpart( 'part9', draw.obj_image('mechblock',(640-200,360),path='premade') )
+        dispgroup1.addpart( 'part9', draw.obj_image('mechblock',(640-200,360),path='data/premade') )
         dispgroup1.addpart( 'part10', draw.obj_image('fish',(242,316),scale=0.3,rotate=-66,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part11', draw.obj_image('flower',(378,324),scale=0.35,rotate=174,fliph=False,flipv=True) )
         dispgroup1.snapshot((640-80,360,500-80,330),'heromechblock')
@@ -4497,34 +4497,34 @@ class obj_world_mechfight(obj_world):
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
         dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
+        dispgroup1.addpart( 'part4', draw.obj_image('villainmech_legs1',(640,520),path='data/premade') )
         dispgroup1.addpart( 'part5', draw.obj_image('tower',(640,180),scale=0.35) )
         dispgroup1.addpart( 'part6', draw.obj_image('cave',(640-70,620),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part7', draw.obj_image('cave',(640+70,620),scale=0.35,fliph=False) )
-        dispgroup1.addpart( 'part8', draw.obj_image('mechhit',(640,360-100),path='premade') )
+        dispgroup1.addpart( 'part8', draw.obj_image('mechhit',(640,360-100),path='data/premade') )
         dispgroup1.addpart( 'part10', draw.obj_image('gun',(467,104),scale=0.3,rotate=90,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part11', draw.obj_image('lightningbolt',(821,102),scale=0.35,fliph=True,flipv=True) )
         dispgroup1.addpart( 'part12', draw.obj_image('mountain',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part13', draw.obj_image('mountain',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
-        dispgroup1.addpart( 'part14', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='premade') )
-        dispgroup1.addpart( 'part15', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='premade') )
+        dispgroup1.addpart( 'part14', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='data/premade') )
+        dispgroup1.addpart( 'part15', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='data/premade') )
         dispgroup1.snapshot((640,360,300,350),'villainmechhit')
         # heromech hit
         dispgroup1=draw.obj_dispgroup((640,360))
         dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5,fliph=True) )
-        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='premade' ) )
-        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='premade') )
+        dispgroup1.addpart( 'part2', draw.obj_image('villainmechcase',(640,360),path='data/premade' ) )
+        dispgroup1.addpart( 'part3', draw.obj_image('villainmech_legs1',(640,520),path='data/premade') )
         dispgroup1.addpart( 'part4', draw.obj_image('house',(640,180),scale=0.35,fliph=True) )
         dispgroup1.addpart( 'part5', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
         dispgroup1.addpart( 'part6', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
-        dispgroup1.addpart( 'part7', draw.obj_image('mechhit',(640,360-100),path='premade') )
+        dispgroup1.addpart( 'part7', draw.obj_image('mechhit',(640,360-100),path='data/premade') )
         dispgroup1.addpart( 'part8', draw.obj_image('fish',(467,104),scale=0.3,rotate=90,fliph=True,flipv=True) )
         dispgroup1.addpart( 'part9', draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part10', draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part11', draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
-        dispgroup1.addpart( 'part12', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='premade') )
-        dispgroup1.addpart( 'part13', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='premade') )
+        dispgroup1.addpart( 'part12', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='data/premade') )
+        dispgroup1.addpart( 'part13', draw.obj_image('mechsparks',(640-240,270),scale=1,rotate=0,fliph=True,flipv=False,path='data/premade') )
         dispgroup1.snapshot((640,360,300,350),'heromechhit')
         # Prompt Images
 
@@ -4583,11 +4583,11 @@ class obj_world_mechfight(obj_world):
         # self.promptactor.addpart( 'prompt_s', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.black) )
         # self.promptactor.addpart( 'prompt_a', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.black) )
         # self.promptactor.addpart( 'prompt_d', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.black) )
-        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale) )
-        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale,flipv=True) )
-        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale,rotate=90) )
-        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrowpurple',(640,y2),path='premade',scale=promptarrows_scale,rotate=90,fliph=True) )
-        animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='premade',imgscale=promptcircle_scale)
+        self.promptactor.addpart( 'prompt_w', draw.obj_image('arrowpurple',(640,y2),path='data/premade',scale=promptarrows_scale) )
+        self.promptactor.addpart( 'prompt_s', draw.obj_image('arrowpurple',(640,y2),path='data/premade',scale=promptarrows_scale,flipv=True) )
+        self.promptactor.addpart( 'prompt_a', draw.obj_image('arrowpurple',(640,y2),path='data/premade',scale=promptarrows_scale,rotate=90) )
+        self.promptactor.addpart( 'prompt_d', draw.obj_image('arrowpurple',(640,y2),path='data/premade',scale=promptarrows_scale,rotate=90,fliph=True) )
+        animation1=draw.obj_animation('mechfight_circleskrink','mechfightcircle',(640,360-160+y2-200),path='data/premade',imgscale=promptcircle_scale)
         self.promptactor.addpart( 'shrink', animation1 )
         # self.promptactor.addpart( 'prompt', draw.obj_textbox('Prompt',(640,200),fontsize='huge',color=share.colors.red) )
         self.promptactor.dict['hero'].show=True
@@ -4673,15 +4673,15 @@ class obj_world_mechfight(obj_world):
         # self.actionactor.addpart( 'prompt_swin', draw.obj_textbox('D',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
         # self.actionactor.addpart( 'prompt_awin', draw.obj_textbox('L',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
         # self.actionactor.addpart( 'prompt_dwin', draw.obj_textbox('R',(640,y2),fontsize='huge',color=share.colors.darkgreen) )
-        self.actionactor.addpart( 'prompt_wfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale) )
-        self.actionactor.addpart( 'prompt_sfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale,flipv=True) )
-        self.actionactor.addpart( 'prompt_afail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale,rotate=90) )
-        self.actionactor.addpart( 'prompt_dfail', draw.obj_image('arrowred',(640,y2),path='premade',scale=promptarrows_scale,rotate=90,fliph=True) )
-        self.actionactor.addpart( 'prompt_wwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale) )
-        self.actionactor.addpart( 'prompt_swin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale,flipv=True) )
-        self.actionactor.addpart( 'prompt_awin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale,rotate=90) )
-        self.actionactor.addpart( 'prompt_dwin', draw.obj_image('arrowdarkgreen',(640,y2),path='premade',scale=promptarrows_scale,rotate=90,fliph=True) )
-        self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='premade',scale=0.5*promptarrows_scale) )
+        self.actionactor.addpart( 'prompt_wfail', draw.obj_image('arrowred',(640,y2),path='data/premade',scale=promptarrows_scale) )
+        self.actionactor.addpart( 'prompt_sfail', draw.obj_image('arrowred',(640,y2),path='data/premade',scale=promptarrows_scale,flipv=True) )
+        self.actionactor.addpart( 'prompt_afail', draw.obj_image('arrowred',(640,y2),path='data/premade',scale=promptarrows_scale,rotate=90) )
+        self.actionactor.addpart( 'prompt_dfail', draw.obj_image('arrowred',(640,y2),path='data/premade',scale=promptarrows_scale,rotate=90,fliph=True) )
+        self.actionactor.addpart( 'prompt_wwin', draw.obj_image('arrowdarkgreen',(640,y2),path='data/premade',scale=promptarrows_scale) )
+        self.actionactor.addpart( 'prompt_swin', draw.obj_image('arrowdarkgreen',(640,y2),path='data/premade',scale=promptarrows_scale,flipv=True) )
+        self.actionactor.addpart( 'prompt_awin', draw.obj_image('arrowdarkgreen',(640,y2),path='data/premade',scale=promptarrows_scale,rotate=90) )
+        self.actionactor.addpart( 'prompt_dwin', draw.obj_image('arrowdarkgreen',(640,y2),path='data/premade',scale=promptarrows_scale,rotate=90,fliph=True) )
+        self.actionactor.addpart( 'cross',draw.obj_image('largecrossblack',(640,y2),path='data/premade',scale=0.5*promptarrows_scale) )
         #
         self.actionactor.dict['heropunch'].show=False
         self.actionactor.dict['villainpunch'].show=False
@@ -4722,12 +4722,12 @@ class obj_world_mechfight(obj_world):
         self.herohealthbar.addpart('face', draw.obj_image('herohead',(50,self.ybar),scale=0.2) )
         for i in range(self.maxherohealth):
             self.herohealthbar.addpart('heart_'+str(i), draw.obj_image('love',(150+i*75,self.ybar),scale=0.125) )
-            self.herohealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(150+i*75,self.ybar),scale=0.75,path='premade') )
+            self.herohealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(150+i*75,self.ybar),scale=0.75,path='data/premade') )
             self.herohealthbar.dict['heartcross_'+str(i)].show=False
         self.villainhealthbar.addpart('face', draw.obj_image('villainhead',(1280-50,self.ybar),scale=0.2,fliph=True) )
         for i in range(self.maxvillainhealth):
             self.villainhealthbar.addpart('heart_'+str(i), draw.obj_image('lightningbolt',(1280-130-i*70,self.ybar),scale=0.2) )
-            self.villainhealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.75,path='premade') )
+            self.villainhealthbar.addpart('heartcross_'+str(i), draw.obj_image('smallcrossred',(1280-130-i*70,self.ybar),scale=0.75,path='data/premade') )
             self.villainhealthbar.dict['heartcross_'+str(i)].show=False
         self.herohealthbar.show=self.dohealth
         self.villainhealthbar.show=self.dohealth
@@ -4748,7 +4748,7 @@ class obj_world_mechfight(obj_world):
         # fight message at beginning
         self.timerfightmessage=tool.obj_timer(80)
         if not self.dotutorial:
-            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='premade') )
+            self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='data/premade') )
             self.timerfightmessage.start()
         # timer for done part
         self.timerendwin=tool.obj_timer(220)# goal to done
@@ -5085,7 +5085,7 @@ class obj_world_serenade(obj_world):
         # melody score
         if True:
             self.score=obj_grandactor(self,(640,380))
-            self.score.addpart( 'img',draw.obj_image('musicscore',(640,380),path='premade') )
+            self.score.addpart( 'img',draw.obj_image('musicscore',(640,380),path='data/premade') )
         ### melody to reproduce
         self.melody=obj_grandactor(self,(640,360))
         self.melody.melodylength=9#8# number of notes to play
@@ -5109,18 +5109,18 @@ class obj_world_serenade(obj_world):
                 ynote=0.5
             self.melody.melodynotes.append(note)
             position=(640+melodyx[i]*melodydx,380-ynote*melodydy)
-            self.melody.addpart("imgnotebase_"+str(i), draw.obj_image('musicnotesquare',position,path='premade') )
-            self.melody.addpart("imgnoteplay_"+str(i), draw.obj_image('musicnotesquare_played',position,path='premade') )
+            self.melody.addpart("imgnotebase_"+str(i), draw.obj_image('musicnotesquare',position,path='data/premade') )
+            self.melody.addpart("imgnoteplay_"+str(i), draw.obj_image('musicnotesquare_played',position,path='data/premade') )
             self.melody.dict["imgnoteplay_"+str(i)].show=False
             # self.melody.addpart("textboxnote_"+str(i), draw.obj_textbox(note,position) )
             if note=='U':
-                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35) )
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='data/premade',scale=0.35) )
             elif note=='D':
-                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35,flipv=True) )
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='data/premade',scale=0.35,flipv=True) )
             elif note=='L':
-                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35,rotate=90) )
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='data/premade',scale=0.35,rotate=90) )
             elif note=='R':
-                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='premade',scale=0.35,rotate=90,fliph=True) )
+                self.melody.addpart("textboxnote_"+str(i), draw.obj_image('arrow',position,path='data/premade',scale=0.35,rotate=90,fliph=True) )
 
         self.melody.melodyi=0# index of completed note (must reach melodylength)
         # floating notes
@@ -5363,7 +5363,7 @@ class obj_world_sunset(obj_world):
 
         # static actor
         if self.landtype=='island':
-            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
             self.staticactor.addpart( "img1", draw.obj_image('sailboat',(296,445),scale=0.35,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img3", draw.obj_image('palmtree',(991,448),scale=0.35,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img4", draw.obj_image('palmtree',(1105,506),scale=0.33,rotate=0,fliph=True,flipv=False) )
@@ -5371,11 +5371,11 @@ class obj_world_sunset(obj_world):
             self.staticactor.addpart( "img6", draw.obj_image('wave',(480,544),scale=0.35,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img7", draw.obj_image('wave',(704,679),scale=0.35,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img8", draw.obj_image('mountain',(671,438),scale=0.4,rotate=0,fliph=False,flipv=False) )
-            self.staticactor.addpart( "img9", draw.obj_image('islandsunset',(840,550),path='premade') )
+            self.staticactor.addpart( "img9", draw.obj_image('islandsunset',(840,550),path='data/premade') )
             self.staticactor.addpart( "img2", draw.obj_image('skeletonhead',(837,456),scale=0.35,rotate=0,fliph=False,flipv=False) )
         else:
             self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
-            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='premade') )
+            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
             self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
             self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
@@ -5523,9 +5523,9 @@ class obj_world_gotobed(obj_world):
             self.finishactor.addpart( 'img1', draw.obj_image('herobaseangry',(420,490),scale=0.7,rotate=80) )
         else:
             self.finishactor.addpart( 'img1', draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
-        self.finishactor.addpart( 'anim1a', draw.obj_image('sleepZ',(700,400),path='premade'))
-        self.finishactor.addpart( 'anim1b', draw.obj_image('sleepZ',(700+60,400-20),path='premade',scale=0.7))
-        self.finishactor.addpart( 'anim1c', draw.obj_image('sleepZ',(700+100,400-30),path='premade',scale=0.5))
+        self.finishactor.addpart( 'anim1a', draw.obj_image('sleepZ',(700,400),path='data/premade'))
+        self.finishactor.addpart( 'anim1b', draw.obj_image('sleepZ',(700+60,400-20),path='data/premade',scale=0.7))
+        self.finishactor.addpart( 'anim1c', draw.obj_image('sleepZ',(700+100,400-30),path='data/premade',scale=0.5))
 
         # text
         self.textboxclick=draw.obj_textbox('hold ['+share.datamanager.controlname('left')+'] to go to sleep',(1100,480),color=share.colors.instructions,hover=self.domousebrowse)

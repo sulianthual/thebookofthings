@@ -108,10 +108,10 @@ class obj_musicplayer:
                 self.play()
     def load(self,name):
         self.name=name
-        path='musics/'+share.musics.getmusicfilename(name)
+        path='data/musics/'+share.musics.getmusicfilename(name)
         if not tool.ospathexists(path):
             self.name='error'
-            path='musics/'+share.musics.getmusicfilename(self.name)
+            path='data/musics/'+share.musics.getmusicfilename(self.name)
         pygame.mixer.music.load(path)
         self.musicfilevolume=share.musics.getmusicvolume(self.name)
         self.set_volume(self.mastervolume*self.musicfilevolume)
@@ -165,10 +165,10 @@ class obj_soundsprite:
         self.mastervolume=mastervolume# mastervolume from soundplayer
         self.setup()
     def setup(self):
-        path='sounds/'+share.sounds.getsoundfilename(self.name)
+        path='data/sounds/'+share.sounds.getsoundfilename(self.name)
         if not tool.ospathexists(path):
             self.name='error'
-            path='sounds/'+share.sounds.getsoundfilename(self.name)
+            path='data/sounds/'+share.sounds.getsoundfilename(self.name)
         self.sound=pygame.mixer.Sound(path)# pygame sound (loaded to a channel)
         volume=share.sounds.getsoundvolume(self.name)
         self.set_volume(self.mastervolume*volume)

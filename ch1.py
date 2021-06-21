@@ -92,7 +92,7 @@ class obj_scene_ch1p2(page.obj_chapterpage):
                    ', that I made all by myself. I call it the "Stickman".',\
                    ' It is near perfect, but you could still improve on it a little. ',\
                    ]
-        animation=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='premade')
+        animation=draw.obj_animation('ch1_stickbase1','stickbase',(640,360),scale=0.75,record=False,path='data/premade')
         self.addpart(animation)
         #
         self.sound=draw.obj_sound('unlock')
@@ -114,7 +114,7 @@ class obj_scene_ch1p3(page.obj_chapterpage):
         self.text=['Draw a happy face for ',('{heroname}',share.colors.hero),', ',\
                    'said the book of things. ',\
                    ]
-        self.addpart( draw.obj_image('stickhead',(640,450-50),path='premade',scale=2.5)  )
+        self.addpart( draw.obj_image('stickhead',(640,450-50),path='data/premade',scale=2.5)  )
         self.addpart( draw.obj_drawing('happyfacedraw',(640,450-50),legend='draw a happy face (facing right)',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('hero') )
@@ -178,9 +178,9 @@ class obj_scene_ch1p6(page.obj_chapterpage):
         # self.addpart( draw.obj_image('herobase',(420,490), scale=0.7,rotate=80) )
         animation1=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
         self.addpart(animation1)
-        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),record=True,sync=animation1,path='premade'))
-        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),sync=animation1,path='premade',imgscale=0.7))
-        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),sync=animation1,path='premade',imgscale=0.5))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),record=True,sync=animation1,path='data/premade'))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),sync=animation1,path='data/premade',imgscale=0.7))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),sync=animation1,path='data/premade',imgscale=0.5))
         #
         # self.addpart( draw.obj_soundplacer(animation1,'wakeup_snore1','wakeup_snore2') )
         animation1.addsound( "wakeup_snore1", [14] )

@@ -95,8 +95,8 @@ class obj_scene_ch2p1a(page.obj_chapterpage):
                    ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='premade',sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='data/premade',sync=animation1)
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
@@ -163,23 +163,6 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         self.addpart( draw.obj_music('partner') )
 
 
-# class obj_scene_ch2p4(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch2p3())
-#     def nextpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch2p5())
-#     def setup(self):
-#         self.text=['Now draw ',('{partnername}',share.colors.partner),'\'s hair, said the book of things. ',\
-#                    'Draw something pretty that our ',('hero',share.colors.hero),' will fall in ',('love',share.colors.partner2),' with. '\
-#                    ]
-#         self.addpart( draw.obj_drawing('partnerhair',(640,420),legend='Partner\'s Hair',shadow=(200,200),brush=share.brushes.smallpen) )
-#         self.addpart( draw.obj_image('herohead',(640,420),path='shadows',scale=0.5) )# add empty head on top
-#         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=False,scale=0.3))
-#         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.3))
-#         #
-#         self.addpart( draw.obj_music('partner') )
-
-
 
 class obj_scene_ch2p4(page.obj_chapterpage):
     def prevpage(self):
@@ -192,7 +175,7 @@ class obj_scene_ch2p4(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('partnerhairdraw',(640,450-50),legend='draw the partner\'s hair',shadow=(250,250),brush=share.brushes.pen5) )
 
-        self.addpart( draw.obj_image('herohead',(640,450-50),path='shadows',scale=0.625) )# add empty head on top
+        self.addpart( draw.obj_image('herohead',(640,450-50),path='data/premade',scale=0.625) )# add empty head on top
         self.addpart(draw.obj_animation('ch2_love2','love',(220,360),record=False,scale=0.3))
         self.addpart(draw.obj_animation('ch2_love2','love',(1280-220,360),scale=0.3))
         #
@@ -289,7 +272,7 @@ class obj_scene_ch2p6b(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
         #
@@ -319,7 +302,7 @@ class obj_scene_ch2p6c(page.obj_chapterpage):
                     '\nXOXO, ',\
                     '\n\nsigned: ',('{partnername}',share.colors.partner),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('partnerhead',(1065,305),scale=0.5) )
         self.addpart( draw.obj_image('love',(716,546),scale=0.25) )
         #
@@ -616,7 +599,7 @@ class obj_scene_ch2play3(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
         #

@@ -237,8 +237,8 @@ class obj_scene_ch0p10(page.obj_chapterpage):
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360-300),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360-300),record=True,sync=animation1,path='premade')
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360-300),record=True,sync=animation1,path='data/premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         # self.addpart(draw.obj_animation('ch1_pen2','pen',(1180,400),record=False,scale=0.5))
@@ -334,7 +334,7 @@ class obj_scene_ch0p13(page.obj_chapterpage):
                    ]
         #
         # Game controls instructions
-        self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='premade') )
+        self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='data/premade') )
         self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
@@ -353,8 +353,8 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360),record=True,sync=animation1,path='premade')
-        animation2.addimage('empty',path='premade')
+        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360),record=True,sync=animation1,path='data/premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )

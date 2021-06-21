@@ -239,7 +239,7 @@ class obj_drawing:
             self.sprite_shadow.makeempty(self.shadow[0],self.shadow[1])
             self.rx,self.ry=self.shadow
         else:
-            self.sprite_shadow.load('shadows/'+self.name+'.png',convert=False)
+            self.sprite_shadow.load('data/shadows/'+self.name+'.png',convert=False)
             self.rx,self.ry=self.sprite_shadow.getrxry()
         # base
         if self.base:
@@ -730,7 +730,7 @@ class obj_textbox:
 ####################################################################################################################
 
 # A simple image (from the book folder) to display at a given location
-#0
+#*IMAGE
 class obj_image:
     def __init__(self,name,xy,scale=1,rotate=0,fliph=False,flipv=False,fliphv=False,show=True,path='book'):
         self.type='image'# object type
@@ -1299,7 +1299,7 @@ class obj_animationsequence:
         if not share.fps==60:
             print('WARNING: Animation sequence not recorded, can only record at 60 fps')
         else:
-            with open('animations/'+self.name+'.txt', 'w+') as f1:
+            with open('data/animations/'+self.name+'.txt', 'w+') as f1:
                 f1.write('t,x,y,fh,fv,r,s,frame:'+'\n')# first line
                 for i in range(0,len(self.data)):
                     line=str(self.data[i][0])# ta
@@ -1333,8 +1333,8 @@ class obj_animationsequence:
             self.data=[]
             term=0
             linenumber=0
-            if tool.ospathexists('animations/'+self.name+'.txt'):
-                with open('animations/'+self.name+'.txt','r+') as f1:
+            if tool.ospathexists('data/animations/'+self.name+'.txt'):
+                with open('data/animations/'+self.name+'.txt','r+') as f1:
                     line=f1.readline()# first line skip
                     while line:
                         line=f1.readline()

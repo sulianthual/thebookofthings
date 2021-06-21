@@ -642,27 +642,27 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'happyface')
             # combine sitckhead+happyface=herohead
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('happyface',(640,360)) )
             dispgroup1.snapshot((640,360,200,200),'herohead')
             # combine herohead+stickbody = herobase
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360,200,300),'herobase')
             # make herobaseangry (obsolete, used to be with angry head)
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360,200,300),'herobaseangry')
             # herohead+stickbody+zapaura=herozapped
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup2.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
-            dispgroup2.addpart('part3',draw.obj_image('zapaura',(640,360),path='premade') )
+            dispgroup2.addpart('part3',draw.obj_image('zapaura',(640,360),path='data/premade') )
             dispgroup2.snapshot((640,360,200,300),'herozapped')
             # herohead+stickcrouch =herocrouch
-            image1=draw.obj_image('stickcrouch',(940,360),path='premade')
+            image1=draw.obj_image('stickcrouch',(940,360),path='data/premade')
             image2=draw.obj_image('herohead',(800,360),scale=0.5,rotate=90)
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',image1)
@@ -671,7 +671,7 @@ class obj_snapshotmanager:
             # heromech armature
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('happyface',(640,360),scale=0.5) )
-            dispgroup1.addpart( 'part2', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
+            dispgroup1.addpart( 'part2', draw.obj_image('heromecharmature_noface',(640,360),path='data/premade') )
             dispgroup1.snapshot((640,360,300,220),'heromecharmature')
 
         # partner
@@ -681,16 +681,16 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',draw.obj_image('partnerhairdraw',(640,360),scale=0.8))
             dispgroup1.snapshot((640,360,200,200),'partnerhair')
             # combine stickbody+stickhead+partnerhair=partnerbasenoface
-            image1=draw.obj_image('stickbody',(640,460),path='premade')
+            image1=draw.obj_image('stickbody',(640,460),path='data/premade')
             image2=draw.obj_image('partnerhair',(640,200))
-            image3=draw.obj_image('stickhead',(640,200),path='premade')# hero instead of stick head
+            image3=draw.obj_image('stickhead',(640,200),path='data/premade')# hero instead of stick head
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.addpart('part3',image3)
             dispgroup1.snapshot((640,330,200,330),'partnerbasenoface')# 0 to 660 in height
             # combine stickbody+herohead+partnerhair=partnerbase
-            image1=draw.obj_image('stickbody',(640,460),path='premade')
+            image1=draw.obj_image('stickbody',(640,460),path='data/premade')
             image2=draw.obj_image('partnerhair',(640,200))
             image3=draw.obj_image('herohead',(640,200),scale=0.5)# hero instead of stick head
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
@@ -718,7 +718,7 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'scar')
             # save angry head
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade'))
+            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='data/premade'))
             dispgroup1.addpart('part2',draw.obj_image('angryface',(640,360)))
             dispgroup1.snapshot((640,360,200,200),'angryhead')
             # save villain head drawing
@@ -728,11 +728,11 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'villainhead')
             # save villain full body (slightly different than hero, because originally we could include partnerhair)
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
             dispgroup2.snapshot((640,330,200,330),'villainbase')
             # villainhead+stickshootcrouch =villainshootcrouch (beware larger if girl)
-            image1=draw.obj_image('stickshootcrouch',(640,360+100),path='premade')
+            image1=draw.obj_image('stickshootcrouch',(640,360+100),path='data/premade')
             image2=draw.obj_image('villainhead',(640,360),scale=0.5,fliph=True)
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',image1)
@@ -742,7 +742,7 @@ class obj_snapshotmanager:
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )
             dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
-            dispgroup1.addpart( 'part3', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
+            dispgroup1.addpart( 'part3', draw.obj_image('villainmecharmature_noface',(640,360),path='data/premade') )
             dispgroup1.snapshot((640,360,300,220),'villainmecharmature')
         if name in ['scardraw','angryfacedraw','partnerhairdraw']:
             # villainbase+partnerbase=villainholdspartner
@@ -764,7 +764,7 @@ class obj_snapshotmanager:
         if name =='bunnyfacedraw':
             # save bunny head
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('bunnystickhead',(640,360+150),scale=0.75,path='premade'))
+            dispgroup1.addpart('part1',draw.obj_image('bunnystickhead',(640,360+150),scale=0.75,path='data/premade'))
             dispgroup1.addpart('part2',draw.obj_image('bunnyfacedraw',(640,360)))
             dispgroup1.snapshot((640,360,400,300),'bunnyhead')
         if name in ['bunnyfacedraw','bunnybodydraw']:
@@ -780,17 +780,17 @@ class obj_snapshotmanager:
         if name =='elderheaddraw':
             # elderhead redux
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part0',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
+            dispgroup1.addpart('part0',draw.obj_image('stickhead',(640,360),scale=2,path='data/premade') )
             dispgroup1.addpart('part1',draw.obj_image('elderheaddraw',(640,360),scale=0.8))
             dispgroup1.snapshot((640,360,200,200),'elderhead')
             # # save elder full body (slight offset made)
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
             dispgroup2.snapshot((640,330,200,330),'elderbase')
             # save elder full body (This is the CORRECT way, is used for some animations)
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup2.addpart('part2',draw.obj_image('elderhead',(640,200),scale=0.5) )
             dispgroup2.snapshot((640,360,200,300),'elderbase2')
         if name =='sailorfacedraw':
@@ -800,7 +800,7 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'sailorface')
             # combine sitckhead+sailorface=sailorbaldhead
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickhead',(640,360),scale=2,path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('sailorface',(640,360)) )
             dispgroup1.snapshot((640,360,200,200),'sailorbaldhead')
         if name in ['sailorfacedraw','sailorhat']:
@@ -811,7 +811,7 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,325+50,250,275),'sailorhead')
             # combine herohead+stickbody = herobase
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('sailorbaldhead',(640,200),scale=0.5))
             dispgroup1.addpart('part3',draw.obj_image('sailorhat',(640,200-100),scale=0.5))
             dispgroup1.snapshot((640,360-15,200,300+15),'sailorbase')
@@ -824,23 +824,23 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'skeletonhead')
             # combine skeletonhead+stickbody = skeletonbase
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
             dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
         if name in ['skeletonheaddraw','partnerhairdraw']:
             # skeleton with hair
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
-            dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+            dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
             dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
         if name in ['skeletonheaddraw','sailorhat']:
             # skeleton with sailor hat
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='premade') )
-            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
             dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
@@ -903,21 +903,21 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'alarmclockext')
             # combine alarmclockext+alarmclockfill=alarmclock (no hour shown)
             image1=draw.obj_image('alarmclockext',(640,360))
-            image2=draw.obj_image('alarmclockfill',(640,360),path='premade')
+            image2=draw.obj_image('alarmclockfill',(640,360),path='data/premade')
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,360,200,200),'alarmclock')
             # combine alarmclock+alarmclockcenter8am=alarmclock8am (morning)
             image1=draw.obj_image('alarmclock',(640,360))
-            image2=draw.obj_image('alarmclockcenter8am',(640,360),path='premade')
+            image2=draw.obj_image('alarmclockcenter8am',(640,360),path='data/premade')
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,360,200,200),'alarmclock8am')
             # combine alarmclock+alarmclockcenter8am=alarmclock8am (night)
             image1=draw.obj_image('alarmclock',(640,360))
-            image2=draw.obj_image('alarmclockcenter12am',(640,360),path='premade')
+            image2=draw.obj_image('alarmclockcenter12am',(640,360),path='data/premade')
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
@@ -964,7 +964,7 @@ class obj_snapshotmanager:
         if name in ['towerdraw','mountaindraw','gun','lightningboltdraw','cavedraw']:
             # villainmech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='premade') )
+            dispgroup1.addpart( 'part1', draw.obj_image('villainmecharmature_noface',(640,360),path='data/premade') )
             dispgroup1.addpart( 'part2', draw.obj_image('tower',(640,180),scale=0.35) )
             dispgroup1.addpart( 'part3', draw.obj_image('mountain',(640-170,240),scale=0.4,rotate=45,fliph=False) )
             dispgroup1.addpart( 'part4', draw.obj_image('mountain',(640+170,240),scale=0.4,rotate=45,fliph=True) )
@@ -983,7 +983,7 @@ class obj_snapshotmanager:
         if name in ['housedraw','bushdraw','fish','flowerdraw','sailboat']:
             # heromech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='premade') )
+            dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='data/premade') )
             dispgroup1.addpart( 'part2', draw.obj_image('house',(640,180),scale=0.35) )
             dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
             dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )

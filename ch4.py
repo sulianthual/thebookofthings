@@ -71,7 +71,7 @@ class obj_scene_ch4p1(page.obj_chapterpage):
         animation1.addimage('villainholdspartner')
         self.addpart( animation1 )
         animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
+        animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
@@ -121,8 +121,8 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='night stand',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='alarm clock (draw the exterior)',shadow=(200,200)) )
-        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='premade') )
-        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='premade') )
+        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='data/premade') )
+        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='data/premade') )
         #
         #
         self.addpart( draw.obj_music('piano') )
@@ -143,8 +143,8 @@ class obj_scene_ch4p2a(page.obj_chapterpage):
                    ]
         self.addpart( draw.obj_drawing('nightstanddraw',(340,450-50),legend='night stand',shadow=(250,250)) )
         self.addpart( draw.obj_drawing('alarmclockextdraw',(940,450-50),legend='alarm clock (draw the exterior)',shadow=(250,250)) )
-        self.addpart( draw.obj_image('alarmclockfill',(940,450-50),path='premade',scale=1.25) )
-        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450-50),path='premade',scale=1.25) )
+        self.addpart( draw.obj_image('alarmclockfill',(940,450-50),path='data/premade',scale=1.25) )
+        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450-50),path='data/premade',scale=1.25) )
         #
         self.addpart( draw.obj_music('piano') )
 
@@ -234,7 +234,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
         #
@@ -267,7 +267,7 @@ class obj_scene_ch4p7(page.obj_chapterpage):
                      'Whenever, muahahahaha. ',\
                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
                    ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='premade') )
+        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
         #
         animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
@@ -374,7 +374,7 @@ class obj_scene_ch4p12(page.obj_chapterpage):
     def setup(self):
         self.textboxnextpage_xy=(1280-100,360)
         self.text=[]
-        self.addpart( draw.obj_image('bunnystickhead',(640,360+150-10),scale=0.75,path='premade') )
+        self.addpart( draw.obj_image('bunnystickhead',(640,360+150-10),scale=0.75,path='data/premade') )
         self.addpart( draw.obj_drawing('bunnyfacedraw',(640,360-10),legend='draw a bunny head (facing right)',shadow=(400,300)) )
         #
         self.addpart( draw.obj_music('ch4') )
@@ -471,20 +471,20 @@ class obj_scene_ch4p14(page.obj_chapterpage):
         animation1=draw.obj_animation('ch4_bunnyeats1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
         animation2=draw.obj_animation('ch4_bunnyeats2','tree',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='premade')
-        animation2.addimage('poof',path='premade')
+        animation2.addimage('empty',path='data/premade')
+        animation2.addimage('poof',path='data/premade')
         self.addpart( animation2 )
         animation3=draw.obj_animation('ch4_bunnyeats3','tree',(640,360),record=False,sync=animation1)
-        animation3.addimage('empty',path='premade')
-        animation3.addimage('poof',path='premade')
+        animation3.addimage('empty',path='data/premade')
+        animation3.addimage('poof',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch4_bunnyeats4','tree',(640,360),record=False,sync=animation1)
-        animation4.addimage('empty',path='premade')
-        animation4.addimage('poof',path='premade')
+        animation4.addimage('empty',path='data/premade')
+        animation4.addimage('poof',path='data/premade')
         self.addpart( animation4 )
         animation5=draw.obj_animation('ch4_bunnyeats5','tree',(640,360),record=False,sync=animation1)
-        animation5.addimage('empty',path='premade')
-        animation5.addimage('poof',path='premade')
+        animation5.addimage('empty',path='data/premade')
+        animation5.addimage('poof',path='data/premade')
         self.addpart( animation5 )
         #
         self.sound=draw.obj_sound('revealscary')
@@ -737,7 +737,7 @@ class obj_scene_lyingpart1win(page.obj_chapterpage):
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         #
         self.sound=draw.obj_sound('unlock')
@@ -861,10 +861,10 @@ class obj_scene_lyingpart2win(page.obj_chapterpage):
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation1)
-        animation4.addimage('empty',path='premade')
+        animation4.addimage('empty',path='data/premade')
         self.addpart( animation4 )
         #
         self.sound=draw.obj_sound('unlock')
@@ -1008,13 +1008,13 @@ class obj_scene_lyingend(page.obj_chapterpage):
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
-        animation3.addimage('empty',path='premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation1)
-        animation4.addimage('empty',path='premade')
+        animation4.addimage('empty',path='data/premade')
         self.addpart( animation4 )
         animation5=draw.obj_animation('ch4_herowalkbunny2love3','love',(640,360),record=False,sync=animation1)
-        animation5.addimage('empty',path='premade')
+        animation5.addimage('empty',path='data/premade')
         self.addpart( animation5 )
         #
         self.sound=draw.obj_sound('unlock')
@@ -1058,8 +1058,8 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
-        animation3=draw.obj_animation('ch4_herowalkbunny3inter','interrogationmark',(640,360),record=False,sync=animation1,path='premade')
-        animation3.addimage('empty',path='premade')
+        animation3=draw.obj_animation('ch4_herowalkbunny3inter','interrogationmark',(640,360),record=False,sync=animation1,path='data/premade')
+        animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )

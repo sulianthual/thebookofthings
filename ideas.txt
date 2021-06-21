@@ -50,13 +50,7 @@ KEEP the premade stickmans (do NOT make player draw them):
 * Minigames:
 DO NOT add complex minigames that require a physics engine (e.g. platformer, brawler...)
 It is NOT worth it to do with pygame (too painful to build from ground up)
-It should be done in NEXT games with other softwares that do this more easily (godot,etc...)
-
-- Added the option to browse pages with either Space/Enter and Tab, or with the Mouse [Next][Back]
-  (options can be tested in page.py, obj_chapterpage by commenting either option1 or option2)
-  (browsing with mouse requires a few adjustments of text, command instructions to be polished...)
-  It is much easier to browse with the mouse, but slightly less engaging
-  Using the keyboard feels more like browsing the pages of a book.
+It should be done in OTHER games with other softwares that do this more easily (godot,etc...)
 
 ###########################################################
 ###########################################################
