@@ -12,9 +12,9 @@ references: https://github.com/sulianthual/thebookofthings
 
 <h4>Instructions:</h4> 
 
-1) You need python 3 installed as well as python module: pygame. 
+1) You need python 3 installed as well as pygame (https://www.pygame.org/wiki/GettingStarted).
 
 
-2) Run the file main.py to execute: $ python3 main.py (or python)
+2) while in folder code/, run main.py: ($python3 main.py or $python main.py)
 
 
