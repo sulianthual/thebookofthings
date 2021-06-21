@@ -1,5 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+# Use this spec file to compile code using pyinstaller:
+# $pyinstaller main.spec
+# (compiled code to distribute is the folder dist/thebookofthings. executable is _!THEBOOKOFTHINGS_LAUNCHER within)
+# when finished can use mainicon.png to change folder icon manually
+#
+# alternatively one can compile for a single file ($pyinstaller --onefile main.py with extra steps...) but doesnt work well
+#
+# 
 block_cipher = None
 
 
