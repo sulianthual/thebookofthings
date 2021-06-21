@@ -26,7 +26,7 @@ import world
 # Note: All tests are init on menu init (which is problematic, loads all assets at once)
 class obj_scene_testmenu(page.obj_page):
     def setup(self):
-        self.nrow=10# number of rows one column
+        self.nrow=14# number of rows one column
         self.list=[]# list of tests
         self.loadtests()
         self.addpart(draw.obj_textbox('Appendix Developer Tests',(640,50),fontsize='medium'))
@@ -51,7 +51,7 @@ class obj_scene_testmenu(page.obj_page):
         self.sound_menuback=draw.obj_sound('menuback')# sound is loaded but not played
         self.addpart( self.sound_menuback )
         #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music(None) )
     def page(self,controls):
         if self.sprite_back.isclicked(controls):
             self.sound_menuback.play()
@@ -98,7 +98,6 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testworld())
         self.list.append(obj_scene_testworldgrandactor())
         self.list.append(obj_scene_testrigidbody())
-        self.list.append(obj_scene_testbreakfastdrinking())
         # audio
         self.list.append(obj_scene_testmusic())
         self.list.append(obj_scene_testsounds())
@@ -106,6 +105,9 @@ class obj_scene_testmenu(page.obj_page):
         # drafts
         self.list.append(obj_scene_alldrawings())
         self.list.append(obj_scene_testdrafting())
+        #
+        # ideas
+        self.list.append(obj_scene_testbreakfastdrinking())
         #
         self.listlen=len(self.list)
 
@@ -133,12 +135,15 @@ class obj_testpage(page.obj_chapterpage):
     def nextpage(self):# no browsing
         share.scenemanager.switchscene(obj_scene_testmenu())
     def textboxplace(self):# always top left
-        self.textboxprevpage_xy=( 50,30 )
-        self.textboxnextpage_xy=( 230,30 )
+        self.textboxprevpage_xy=( 10,690 )
+        self.textboxnextpage_xy=( 190,690 )
     def triggerprevpage3(self,controls):
-        return self.triggerprevpage2(controls) or (share.devaccess and controls.gb and controls.gbc)
+        return self.triggerprevpage2(controls) or (controls.gb and controls.gbc)
     def triggernextpage3(self,controls):
-        return self.triggernextpage2(controls) or (share.devaccess and controls.ga and controls.gac)
+        return self.triggernextpage2(controls) or (controls.ga and controls.gac)
+
+
+
 
 #########################################################################
 #########################################################################
@@ -818,17 +823,7 @@ class obj_scene_testrigidbody(obj_testpage):
             if controls.gr: self.rigidbody.movex(5)
 
 
-class obj_scene_testbreakfastdrinking(obj_testpage):
-    def pagename(self):
-        return 'Minigame breakfast drinking'
-    def triggernextpage(self,controls):
-        return (share.devmode and controls.ga and controls.gac) or self.world.done
-    def setup(self):
-        self.text=['Minigame breakfast drinking: ',\
-                   'This game is unused but could be easily recycled to some stealth minigame (cutting some rope, pickpocketing, stabbing....) ',\
-                   ]
-        self.world=world.obj_world_breakfastdrinking(self)
-        self.addpart(self.world)
+
 
 class obj_scene_testmusic(obj_testpage):
     def pagename(self):
@@ -1048,6 +1043,48 @@ class obj_scene_testdrafting(obj_testpage):
 
 ####################################################################################################################
 ####################################################################################################################
+# Other ideas (not in game yet, written as chapter pages)
+
+
+######################
+
+class obj_scene_testbreakfastdrinking(page.obj_chapterpage):
+    def pagename(self):
+        return 'Minigame breakfast drinking'
+    def prevpage(self):# no browsing
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testbreakfastdrinking2())
+    def setup(self):
+        self.text=['Minigame breakfast drinking: ',\
+                   'can recycle into stealth (cut rope, pickpocket, stab....) ',\
+                   ]
+        self.addpart( draw.obj_drawing('coffeecup',(200+10,450-50),legend='coffee cup',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('flowervase',(1280-200-10,450-50),legend='flower vase',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('drink',(640,450-50),legend='drink',shadow=(200,200)) )
+
+
+class obj_scene_testbreakfastdrinking2(page.obj_chapterpage):
+    def prevpage(self):# no browsing
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def nextpage(self):# no browsing
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def setup(self):
+        self.text=[]
+        self.world=world.obj_world_breakfastdrinking(self)
+        self.addpart(self.world)
+
+
+######################
+
+
+
+
+
+
+
+####################################################################################################################
+####################################################################################################################
 
 
 
@@ -1060,6 +1097,15 @@ class obj_scene_testdrafting(obj_testpage):
 
 
 
+
+
+
+
+
+
+
+
+#
 
 
 

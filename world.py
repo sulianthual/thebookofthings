@@ -685,11 +685,11 @@ class obj_world_breakfastdrinking(obj_world):
         # partner
         if self.addpartner:
             self.partner.addpart( 'waiting_base', draw.obj_image('stickbody',(1160-50,640+15+ydown),scale=1.15,fliph=True,path='data/premade') )
-            self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerheadangry',(1160-50,340+15+ydown),scale=1.15,fliph=True) )
-            self.partner.addpart( 'waiting_headright', draw.obj_image('partnerheadangry',(1160-50+30,340+15+ydown),scale=1.15,fliph=False) )
-            self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerheadangry',(1160-50+20,340+15+ydown),scale=1.15,rotate=15,fliph=False) )
-            self.partner.addpart( 'waiting_headrightbobble', draw.obj_image('partnerheadangry',(1160-50+30,340+15+ydown),scale=1.15,rotate=-15,fliph=False) )
-            self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbaseangry',(640,360+ydown)) )
+            self.partner.addpart( 'waiting_headleft', draw.obj_image('partnerhead',(1160-50,340+15+ydown),scale=1.15,fliph=True) )
+            self.partner.addpart( 'waiting_headright', draw.obj_image('partnerhead',(1160-50+30,340+15+ydown),scale=1.15,fliph=False) )
+            self.partner.addpart( 'waiting_headrightup', draw.obj_image('partnerhead',(1160-50+20,340+15+ydown),scale=1.15,rotate=15,fliph=False) )
+            self.partner.addpart( 'waiting_headrightbobble', draw.obj_image('partnerhead',(1160-50+30,340+15+ydown),scale=1.15,rotate=-15,fliph=False) )
+            self.partner.addpart( 'busting', draw.obj_animation('world_breakfastdrinking2','partnerbase',(640,360+ydown)) )
             self.partner.addpart( 'bustingmark', draw.obj_image('exclamationmark',(1100,130+ydown),scale=1.5,path='data/premade') )
             self.partner.addpart( 'whatmark', draw.obj_image('interrogationmark',(1160,130+ydown),scale=1.5,path='data/premade') )
             self.partner.addpart( 'bustedtext', draw.obj_textbox('Busted!',(640,400+ydown),fontsize='huge') )
