@@ -44,3 +44,9 @@ coll = COLLECT(exe,
                upx=True,
                upx_exclude=[],
                name='thebookofthings',icon='mainicon.ico')
+
+               # if compiling for MAC OS X need this too
+app = BUNDLE(exe,
+         name='thebookofthings.app',
+         icon='mainicon.ico',
+         bundle_identifier=None)
