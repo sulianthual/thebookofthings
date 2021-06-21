@@ -1071,7 +1071,7 @@ class obj_world_eatfish(obj_world):
         self.text2.show=False
         # textbox crunch
         self.text3=obj_grandactor(self,(640,360))
-        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(860,180),fontsize='large') )
+        self.text3.addpart( 'textbox1', draw.obj_textbox('Crunch!',(893,236),fontsize='large') )
         self.text3.show=False
         # timer for eating
         self.timer=tool.obj_timer(50)
@@ -1080,8 +1080,12 @@ class obj_world_eatfish(obj_world):
         #
         self.soundeat=draw.obj_sound('eat')
         self.creator.addpart(self.soundeat)
-        self.soundeatend=draw.obj_sound('eatend')
-        self.creator.addpart(self.soundeatend)
+        if self.eatcake:
+            self.soundeatend=draw.obj_sound('eatendpowerup')# different sound if eating cake
+            self.creator.addpart(self.soundeatend)
+        else:
+            self.soundeatend=draw.obj_sound('eatend')
+            self.creator.addpart(self.soundeatend)
         #
     def eatfood(self):
         if self.bites in [6,4,2]:
@@ -1359,7 +1363,7 @@ class obj_world_travel(obj_world):
         if self.chapter>=8:
             self.staticactor11.addpart( 'refcake', draw.obj_image('cake',(640+210,360-50),scale=0.25) )
             self.staticactor11.addpart( 'refmark_cake', draw.obj_image('exclamationmarkred',(640+210,360-50),scale=0.5,path='data/premade') )
-            self.staticactor11.addpart( 'textrefcake', draw.obj_textbox('Credits',(640+210,360-50+60),color=share.colors.location) )
+            self.staticactor11.addpart( 'textrefcake', draw.obj_textbox('Credits',(640+210,360-50+70),color=share.colors.location) )
             #
             self.staticactor11.addpart( 'refroam_bug', draw.obj_image('bug',(640-150,360),scale=0.25) )
             self.staticactor11.addpart( 'refmark_home', draw.obj_image('exclamationmarkred',(640,360),scale=0.5,path='data/premade') )

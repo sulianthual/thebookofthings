@@ -228,7 +228,7 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
+        share.scenemanager.switchscene(obj_scene_ch8atcake())# cant each forever
     def triggernextpage(self,controls):
         return self.world.done
     def textboxnextpage(self):
@@ -242,11 +242,7 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
         self.world=world.obj_world_eatfish(self,cake=True)
         self.addpart(self.world)
         #
-        self.sound=draw.obj_sound('unlock')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('ch7') )
 
 
 ###########
@@ -427,7 +423,8 @@ class obj_scene_ch8pond(page.obj_chapterpage):
         animation1.addsound( "hero2", [140] )
         animation1.addsound( "hero3", [50],skip=1 )
         #
-        self.addpart( draw.obj_music('piano') )
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch8pondfish(page.obj_chapterpage):
@@ -444,7 +441,8 @@ class obj_scene_ch8pondfish(page.obj_chapterpage):
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('piano') )
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch8pondeat(page.obj_chapterpage):
@@ -461,7 +459,8 @@ class obj_scene_ch8pondeat(page.obj_chapterpage):
         self.world=world.obj_world_eatfish(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('piano') )
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch8pondreplay(page.obj_chapterpage):
@@ -497,7 +496,8 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6') )
         animation1.addsound( "hero1", [101],skip=1 )
         #
-        self.addpart( draw.obj_music('piano') )
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
 
 
 class obj_scene_ch8pondbye(page.obj_chapterpage):
@@ -523,7 +523,8 @@ class obj_scene_ch8pondbye(page.obj_chapterpage):
         animation1.addsound( "hero3", [35] )
         animation1.addsound( "hero5", [105],skip=1 )
         #
-        self.addpart( draw.obj_music('piano') )
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
 
 
 ###########

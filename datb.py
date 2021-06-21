@@ -203,6 +203,7 @@ class obj_sounds:
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
         self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
+        self.dict['eatendpowerup']=( 'world/eat/1up3.wav' , 1 )
         # mail
         self.dict['mailjump']=( 'world/mail/woosh-3.wav' , 1 )
         self.dict['mailopen']=( 'world/mail/paper_01.wav' , 1 )
