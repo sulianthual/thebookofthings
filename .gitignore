@@ -1,6 +1,8 @@
 # Ignore everything in these directories
 book/*
 __pycache__/*
+build/*
+dist/*
 # But dont ignore these files
 !.gitignore
 !book/.gitkeep
