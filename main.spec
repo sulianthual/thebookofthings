@@ -1,8 +1,9 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 # Use this spec file to compile code using pyinstaller:
+# 0) be sure to install pyinstaller from outside anaconda env (or executables will be much bigger), e.g. with pip3
 # 1) $pyinstaller main.spec
-# 2) move dist/code/data/launcher to dist/code
+# 2) move dist/code/data/forpyinstaller/launcher to dist/code
 # 3) zip and distribute the dist (with code/ and launcher inside)
 # 4) can manually change folder/app icons using data/mainicon.png or data/mainicon.ico
 #

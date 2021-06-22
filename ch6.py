@@ -666,7 +666,7 @@ class obj_scene_ch6p24(page.obj_chapterpage):
                    'See, I lost my ',('treasure',share.colors.cow),\
                    ' in a very scary place called skull island". ',\
                    ]
-        self.addpart( draw.obj_drawing('skeletonheaddraw',(640,450-50),legend='Skull (Facing Right)',shadow=(250,250)) )
+        self.addpart( draw.obj_drawing('skeletonheaddraw',(640,450-50),legend='draw a skull (facing right)',shadow=(250,250)) )
         #
         self.addpart( draw.obj_music('sailor') )
         #
