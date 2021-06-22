@@ -10,6 +10,10 @@ A simple adventure game with a twist: you draw everything! Takes about one hour 
 
 references: https://github.com/sulianthual/thebookofthings
 
+
+Executables (updated occasionally) are available at: https://sites.google.com/site/sulianthual/the-book-of-things
+
+
 <h4>Instructions:</h4> 
 
 1) You need python 3 installed as well as pygame (https://www.pygame.org/wiki/GettingStarted).
@@ -17,4 +21,6 @@ references: https://github.com/sulianthual/thebookofthings
 
 2) run main.py from the main folder ($python3 main.py or $python main.py)
 
+
+3) Alternatively
 
