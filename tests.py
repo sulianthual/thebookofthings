@@ -1000,7 +1000,7 @@ class obj_scene_testtrailer_p2(page.obj_chapterpage):
         self.world.text_undone.show=False
         self.world.text_done.dict['text1'].replacetext(' ')
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('winds') )
 
 
 class obj_scene_testtrailer_p2a(page.obj_chapterpage):
@@ -1142,7 +1142,7 @@ class obj_scene_testtrailer_p6(page.obj_chapterpage):
         self.text=[]
         self.addpart ( draw.obj_textbox('and a villain',(640,80),fontsize='huge'))
         #
-        self.world=world.obj_world_dodgegunshots(self)
+        self.world=world.obj_world_dodgegunshots(self,trailer=True)
         self.addpart(self.world)
         self.world.healthbar.show=False
         self.world.bulletbar.show=False
@@ -1246,7 +1246,7 @@ class obj_scene_testtrailer_p9(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('crappy minigames',(640,80),fontsize='huge'))
+        self.addpart ( draw.obj_textbox('so many confusing minigames',(640,80),fontsize='huge'))
         #
         self.world=world.obj_world_serenade(self,partner=True,heroangry=False)# big clap
         # self.world=world.obj_world_serenade(self,partner=False,heroangry=True)# small clap
@@ -1445,11 +1445,14 @@ class obj_scene_testtrailer_p13(page.obj_chapterpage):
         self.text=[]
         self.addpart( draw.obj_textbox('no adventure',(640,80),fontsize='huge') )
         #
-        self.world=world.obj_world_travel(self,start=(630-1280,375+100+1440),goal='everywhere',chapter=8,boat=True,noending=True)
+        self.world=world.obj_world_travel(self,start=(610-1280,375+200+1440),goal='everywhere',chapter=8,boat=True,noending=True)
         self.addpart(self.world)
         self.world.staticactor23.dict['refroam'].show=False
         self.world.staticactor23.dict['refmark_island'].show=False
         self.world.staticactor23.dict['textref'].show=False
+        # self.world.staticactor12.dict['img6'].show=False# cloud in the way
+        self.world.staticactor12.dict['img6'].movey(150)# cloud in the way
+        self.world.staticactor13.dict['img2'].movey(-100)# wave in the way
         self.world.text_undone.dict['text1'].replacetext(' ')
         #
         self.addpart( draw.obj_music('ch5') )
@@ -1462,10 +1465,6 @@ class obj_scene_testtrailer_p13(page.obj_chapterpage):
         for j in self.world.panels:
             for i in j.dict.values():
                 i.movex(-self.world.heromx)
-        self.world.yhw += 1
-        for j in self.world.panels:
-            for i in j.dict.values():
-                i.movey(-1)
 
 
 
@@ -1555,7 +1554,7 @@ class obj_scene_testtrailer_p15(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(205,150),scale=0.4,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
         animation1.addsound( "villain1", [40] )
@@ -1754,15 +1753,17 @@ class obj_scene_testtrailer_p20(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         self.addpart( draw.obj_music('piano') )
+        share.musicplayer.fadeout(amount=5000)
         #
-        self.timer=tool.obj_timer(1400)
+        self.timer=tool.obj_timer(400)
         self.addpart(self.timer)
+
 
 class obj_scene_testtrailer_p21(page.obj_chapterpage):
     def soundnextpage(self):
         pass
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_testtrailer_p21())
+        share.scenemanager.switchscene(obj_scene_testtrailer_p20())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def textboxprevpage(self):
@@ -1775,6 +1776,16 @@ class obj_scene_testtrailer_p21(page.obj_chapterpage):
         return controls.ga and controls.gac
     def setup(self):
         self.text=[]
+        self.addpart( draw.obj_textbox('THE BOOK OF THINGS',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('https://sites.google.com/site/sulianthual/thebookofthings',(640,400),fontsize='medium') )
+        self.addpart( draw.obj_textbox('https://github.com/sulianthual/thebookofthings',(640,455),fontsize='medium') )
+        self.addpart( draw.obj_textbox('musics from PlayOnLoop.com (CC-BY 4.0)',(640,620),fontsize='small') )
+        self.addpart( draw.obj_textbox('sounds from opengameart.com and freesound.com (CC0) ',(640,675),fontsize='small') )
+        #
+        # animation1=draw.obj_animation('ch0_bookinstructions','book',(640-520,360-380),record=False)
+        # self.addpart( animation1 )
+        self.addpart( draw.obj_image('book',(650,245),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_imageplacer(self,'book') )
 
 
 ####################################################################################################################

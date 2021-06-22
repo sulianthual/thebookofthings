@@ -85,7 +85,7 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_testpagebacknext()
             # quickscene=tests.obj_scene_textbox()
             #
-            quickscene=tests.obj_scene_testtrailer_p18()
+            quickscene=tests.obj_scene_testtrailer_p1()
             #
             # quickscene=tests.obj_scene_testdrafting()
             #

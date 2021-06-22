@@ -1964,12 +1964,14 @@ class obj_world_dodgegunshots(obj_world):
         self.partnerisenemy=False# parnter is alongside enemy during fight
         self.intower=False# inside tower not outside
         self.dotutorial=False# do the tutorial
+        self.dotrailer=False# do a trailer (control villain shooting)
         # scene tuning
         if kwargs is not None:
             if 'heroangry' in kwargs: self.heroisangry=kwargs["heroangry"]# OBSOLETE
             if 'partnerenemy' in kwargs: self.partnerisenemy=kwargs["partnerenemy"]# OBSOLETE
             if 'intower' in kwargs: self.intower=kwargs["intower"]
             if 'tutorial' in kwargs: self.dotutorial=kwargs["tutorial"]
+            if 'trailer' in kwargs: self.dotrailer=kwargs["trailer"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached (doesnt necessarily mean game is won)
@@ -2038,7 +2040,7 @@ class obj_world_dodgegunshots(obj_world):
         self.villain.dict['standgun'].show=True
         self.villain.dict['standarm'].show=True
         self.villain.dict['crouchgun'].show=False
-        self.villaincrouch=False# villain is crouching or not (switch randomly every shot)
+        self.villaincrouch=True# villain is crouching or not (switch randomly every shot)
         self.villainshots=15# number of shots
         self.villaintimer=80# shot reload time
         self.villaintimermin=50# min time
@@ -2157,7 +2159,11 @@ class obj_world_dodgegunshots(obj_world):
                 if self.villaintimershoot.ring:
                     # faster consecutive shots after first one
                     self.villaintimershoot.amount=max(self.villaintimershoot.amount*self.villaintimerm,self.villaintimermin)
-                    self.villaincrouch=tool.randbool()# villain stands or crouches
+                    if self.dotrailer:
+                        self.villaincrouch=not self.villaincrouch
+                    else:
+                        self.villaincrouch=tool.randbool()# villain stands or crouches
+
                     if self.villaincrouch:# crouches
                         self.makecannonball(860,600+self.yoff-50)
                         self.villainshots -= 1

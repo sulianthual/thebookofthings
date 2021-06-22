@@ -35,7 +35,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          icon='data/mainicon.ico',
+          icon='data/forpyinstaller/mainicon.ico',
           console=True )
 coll = COLLECT(exe,
                a.binaries,
@@ -45,5 +45,5 @@ coll = COLLECT(exe,
                upx=True,
                upx_exclude=[],
                name='code',
-               icon='data/mainicon.ico')
+               icon='data/forpyinstaller/mainicon.ico')
 

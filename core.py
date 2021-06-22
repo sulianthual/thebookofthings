@@ -119,8 +119,8 @@ class obj_musicplayer:
         pygame.mixer.music.play(-1)# loop
     def pause(self):
         pygame.mixer.music.pause()
-    def fadeout(self):
-        pygame.mixer.music.fadeout(1000)#
+    def fadeout(self,amount=1000):
+        pygame.mixer.music.fadeout(amount)#
     def rewind(self):
         pygame.mixer.music.rewind()
     def stop(self):
