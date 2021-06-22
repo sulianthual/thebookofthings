@@ -11,7 +11,7 @@ A simple adventure game with a twist: you draw everything! Takes about one hour 
 references: https://github.com/sulianthual/thebookofthings
 
 
-Executables (updated occasionally) are available at: https://sites.google.com/site/sulianthual/the-book-of-things
+Executables (updated occasionally) are available at: https://sites.google.com/site/sulianthual/thebookofthings
 
 
 <h4>Instructions:</h4> 
