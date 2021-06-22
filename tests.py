@@ -104,6 +104,7 @@ class obj_scene_testmenu(page.obj_page):
         self.list.append(obj_scene_testsoundplacer())
         # drafts
         self.list.append(obj_scene_alldrawings())
+        self.list.append(obj_scene_testtrailer())
         self.list.append(obj_scene_testdrafting())
         #
         # ideas
@@ -930,11 +931,858 @@ class obj_scene_alldrawings(obj_testpage):
         #     self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
 
 
+####################################################################################################################
+####################################################################################################################
+# Game trailer
+
+class obj_scene_testtrailer(page.obj_chapterpage):
+    def pagename(self):
+        return 'trailer'
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p1())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def setup(self):
+        self.text=['trailer starts here...(place mouse pointer)']
+
+class obj_scene_testtrailer_p1(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p2())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def setup(self):
+        self.text=[]
+
+class obj_scene_testtrailer_p2(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p1())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p2a())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.world.done
+    def setup(self):
+        self.text=[]
+        # self.addpart( draw.obj_textbox('once upon a time',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('THE BOOK OF THINGS',(640,80),fontsize='huge') )
+        #
+        self.world=world.obj_world_sunrise(self)
+        self.addpart(self.world)
+        self.world.text_undone.show=False
+        self.world.text_done.dict['text1'].replacetext(' ')
+        #
+        self.addpart( draw.obj_music(None) )
+
+
+class obj_scene_testtrailer_p2a(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p2())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p3())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('a story so unoriginal',(640,80),fontsize='huge') )
+        #
+        self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
+        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        self.addpart( draw.obj_image('alarmclock8am',(100,370),scale=0.4) )
+        animation1=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
+        self.addpart(animation1)
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),record=True,sync=animation1,path='data/premade'))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),sync=animation1,path='data/premade',imgscale=0.7))
+        self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),sync=animation1,path='data/premade',imgscale=0.5))
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'wakeup_snore1','wakeup_snore2') )
+        # animation1.addsound( "wakeup_snore1", [14] )
+        animation1.addsound( "wakeup_snore2", [44] )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        # share.musicplayer.setmastervolume(2)
+        #
+        self.timer=tool.obj_timer(150)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p3(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p2a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p4())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('it\'s about some hero',(640,80),fontsize='huge') )
+        #
+        self.addpart( draw.obj_image('bed',(440,500),scale=0.75) )
+        animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
+        animation1.addsound( "wakeup_alarm", [5] )
+        self.addpart(animation1 )
+        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        self.addpart( draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7) )
+        # animation1.addsound( "hero1", [28] )
+        animation1.addsound( "wakeup_wake2", [28] )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        # share.musicplayer.setmastervolume(2)
+        #
+        self.timer=tool.obj_timer(100)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p4(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p3())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p6())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('it\'s about some hero',(640,80),fontsize='huge') )
+        #
+        self.addpart( draw.obj_image('bed',(440,500),scale=0.75) )
+        animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
+        animation1.addsound( "wakeup_alarm", [5] )
+        self.addpart(animation1 )
+        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        animation2=draw.obj_animation('ch1_awaken','herobase',(640,360),record=False,scale=0.7)
+        self.addpart(animation2)
+        # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3') )
+        # animation2.addsound( "hero1", [28] )
+        animation2.addsound( "hero3", [30] )
+        # animation2.addsound( "hero3", [132] )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(100)
+        self.addpart(self.timer)
+
+
+
+class obj_scene_testtrailer_p6(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p4())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p7())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('and a villain',(640,80),fontsize='huge'))
+        #
+        self.world=world.obj_world_dodgegunshots(self)
+        self.addpart(self.world)
+        self.world.healthbar.show=False
+        self.world.bulletbar.show=False
+        self.world.villaintimershoot.t=1
+        self.world.text_start.show=False
+        self.world.soundstart.stop()
+        self.world.text_undone.show=False
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(230)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p7(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p6())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p8())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        #
+        self.world=world.obj_world_fishing(self)# fishing mini-game
+        self.addpart(self.world)
+        self.world.text1.show=False
+        self.world.hook.y=250#620
+        self.soundreel=draw.obj_sound('fishing_reel')
+        self.addpart(self.soundreel)
+        # self.soundreel.play(loop=True)
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.addpart( draw.obj_textbox('           ',(640,40),fontsize='huge',fillcolor=share.colors.white) )# over the reel
+        self.addpart( draw.obj_textbox('graphics soooo crappy',(640,80),fontsize='huge',fillcolor=share.colors.white) )
+        #
+        self.timer=tool.obj_timer(200)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p8(page.obj_chapterpage):
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p7())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p9())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('YOU HAVE TO DRAW EVERYTHING!',(640,80),fontsize='huge'))
+        #
+        # heroface redux
+        dispgroup1=draw.obj_dispgroup((640,360))
+        dispgroup1.addpart('part1',draw.obj_image('herohead',(640,360),scale=1.25))
+        dispgroup1.snapshot((640,360,250,250),'heroheadtrailerdraw')
+        #
+        self.addpart( draw.obj_drawing('heroheadtrailerdraw',(640,450-50),legend='draw the hero',shadow=(250,250),brush=share.brushes.pen10) )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(250)
+        self.addpart(self.timer)
+
+
+
+class obj_scene_testtrailer_p9(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p8())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p10())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart ( draw.obj_textbox('crappy minigames',(640,80),fontsize='huge'))
+        #
+        self.world=world.obj_world_serenade(self,partner=True,heroangry=False)# big clap
+        # self.world=world.obj_world_serenade(self,partner=False,heroangry=True)# small clap
+        self.addpart(self.world)
+        self.world.soundambience.stop()
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(280)
+        self.addpart(self.timer)
+        #
+        self.timerclap=tool.obj_timer(150)
+        self.addpart(self.timerclap)
+    def page(self,controls):
+        if self.timerclap.ring:
+            self.world.soundcheer.play()
+
+
+
+class obj_scene_testtrailer_p10(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p9())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p11())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('overly cheesy humor',(640,80),fontsize='huge') )
+        #
+        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
+        # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+
+        self.addpart( draw.obj_animation('ch3_suntower','sun',(640+900,360-200),record=False,imgscale=0.7) )
+
+        # self.addpart( draw.obj_image('sun',(1152,92),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1222,247),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(842,223),scale=0.28,rotate=0,fliph=False,flipv=False) )
+
+
+        animation1=draw.obj_animation('ch3_herozapped','herobase',(640,360),record=False)
+        animation1.addimage('herozapped')
+        self.addpart( animation1 )
+        #
+        # self.sound=draw.obj_sound('tower5')
+        # self.addpart(self.sound)
+        # self.sound.play()
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'tower_elec','tower_hurt') )
+        animation1.addsound( "tower_elec", [1, 115,261] )
+        animation1.addsound( "tower_hurt", [0,115,261],skip=1 )
+        #
+        self.addpart( draw.obj_textbox('electric shock hahaha !!!',(650,304),fontsize='medium') )
+        self.addpart( draw.obj_image('show1black',(417,363),scale=0.5,path='data/premade',rotate=90,fliph=True) )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(350)
+        self.addpart(self.timer)
+        #
+    # def page(self,controls):
+    #     print(self.timer.t)
+
+
+
+class obj_scene_testtrailer_p11(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p10())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p12())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('forgettable characters',(640,80),fontsize='huge') )
+        #
+        self.addpart( draw.obj_image('tree',(982,295),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(1100,365),scale=0.4,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(1191,185),scale=0.34,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(78,533),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(1194,520),scale=0.29,rotate=0,fliph=True,flipv=False) )
+
+        animation1=draw.obj_animation('ch7_villainmech_masters1','bunnybase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch7_villainmech_masters2','elderbase',(640,360),record=False,sync=animation1)
+        self.addpart( animation2 )
+        animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
+        self.addpart( animation3 )
+        fref=50
+        animation1.rewind(frame=fref)
+        animation2.rewind(frame=fref)
+        animation3.rewind(frame=fref)
+        #
+        animation1.addsound( "bunny4", [60] )
+        animation1.addsound( "elder4", [90] )
+        animation1.addsound( "sailor5", [150],skip=1 )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(190)
+        self.addpart(self.timer)
+        #
+        # self.addpart( draw.obj_imageplacer(self,'tree','mountain','house','palmtree','wave','bush','moon','flower') )
+
+class obj_scene_testtrailer_p12(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p11())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p13())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('not spooky at all',(640,80),fontsize='huge') )
+        #
+        self.addpart( draw.obj_image('palmtree',(1198,227),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1108,285),scale=0.32,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(1201,350),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('sailboat',(105,209),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('wave',(73,317),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('wave',(199,290),scale=0.26,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(1190,76),scale=0.26,rotate=0,fliph=False,flipv=False) )
+
+
+        animation1=draw.obj_animation('ch1_hero1','skeletonbase',(360-100,360))
+        self.addpart(animation1)
+        self.addpart(draw.obj_animation('ch1_hero1','skeletonbase_sailorhat',(360+100,360)))
+        self.addpart(draw.obj_animation('ch1_hero1','skeletonbase',(360-300,360)))
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'skeleton1','skeleton2','skeleton3','skeleton4','skeleton5') )
+        animation1.addsound( "skeleton1", [22, 121] )
+        animation1.addsound( "skeleton3", [66, 165] )
+        animation1.addsound( "skeleton4", [22] )
+        animation1.addsound( "skeleton2", [81] )
+        # animation1.addsound( "skeleton5", [1] )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(150)
+        self.addpart(self.timer)
+        #
+        # self.addpart( draw.obj_imageplacer(self,'cow','sailboat','palmtree','wave','bush','moon') )
+
+
+class obj_scene_testtrailer_p13(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p12())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p14())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('no adventure',(640,80),fontsize='huge') )
+        #
+        self.world=world.obj_world_travel(self,start=(630-1280,375+100+1440),goal='everywhere',chapter=8,boat=True,noending=True)
+        self.addpart(self.world)
+        self.world.staticactor23.dict['refroam'].show=False
+        self.world.staticactor23.dict['refmark_island'].show=False
+        self.world.staticactor23.dict['textref'].show=False
+        self.world.text_undone.dict['text1'].replacetext(' ')
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(200)
+        self.addpart(self.timer)
+    def page(self,controls):
+        # move hero in world
+        self.world.xhw += self.world.heromx
+        for j in self.world.panels:
+            for i in j.dict.values():
+                i.movex(-self.world.heromx)
+        self.world.yhw += 1
+        for j in self.world.panels:
+            for i in j.dict.values():
+                i.movey(-1)
+
+
+
+class obj_scene_testtrailer_p14(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p13())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p15())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('no passion',(640,80),fontsize='huge') )
+        #
+
+        animation2=draw.obj_animation('ch2_kiss2','partnerbase',(640,360))
+        self.addpart(  animation2 )
+        animation1=draw.obj_animation('ch2_kiss1','herobase',(640,360))
+        self.addpart(  animation1 )
+        animation1.addsound('kiss_kiss',[100])
+        animation1.addsound('kiss_cheer',150)
+        # animation1.addsound('kiss_cheer2',200)
+
+        fref=50
+        animation1.rewind(frame=fref)
+        animation2.rewind(frame=fref)
+
+        self.animation3a=draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4)
+        self.animation3b=draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4)
+        self.addpart( self.animation3a  )
+        self.addpart( self.animation3b  )
+        self.animation3a.show=False
+        self.animation3b.show=False
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(200)
+        self.addpart(self.timer)
+    def page(self,controls):
+        if self.timer.t<120:
+            self.animation3a.show=True
+            self.animation3b.show=True
+
+
+class obj_scene_testtrailer_p15(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p14())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p16())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('no suspense',(640,80),fontsize='huge') )
+        #
+
+        # animation1=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360))
+        # animation1.addimage('heromechpunch')
+        # self.addpart(animation1)
+        # animation1=draw.obj_animation('mechfight_heropunches2','villainmechbase',(640,360))
+        # animation1.addimage('villainmechhit')
+        # animation1.addsound( "mech_stomp", [10,108] )
+        # animation1.addsound( "mech_contact", [58] )
+        # animation1.addsound( "mech_strike", [58] )
+        # self.addpart(animation1)
+        #
+        self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation1.addsound( "villain1", [40] )
+        animation1.addsound( "villain4", [130] )
+        animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
+        #
+        self.addpart( draw.obj_music('ch5') )
+        #
+        self.timer=tool.obj_timer(200)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p16(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p15())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p17())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('it\'s all in: THE BOOK OF THINGS',(640,80),fontsize='huge') )
+        #
+        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='data/premade',sync=animation1)
+        animation2.addimage('empty',path='data/premade')
+        self.addpart( animation2 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book1", [13] )
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book3", [155],skip=1 )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('tension') )
+        #
+        self.timer=tool.obj_timer(275)
+        self.addpart(self.timer)
+
+class obj_scene_testtrailer_p17(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p16())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p18())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('the book of all things ',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('where all things would be',(640,220),fontsize='huge') )
+        #
+        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch5whatbook2','empty',(640,360),record=False,path='data/premade',sync=animation1)
+        animation2.addimage('empty',path='data/premade')
+        self.addpart( animation2 )
+        #
+        fref=200
+        animation1.rewind(frame=fref)
+        animation2.rewind(frame=fref)
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        # animation1.addsound( "book1", [13] )
+        animation1.addsound( "book2", [50] )
+        animation1.addsound( "book3", [35] )
+        #
+        self.addpart( draw.obj_music('piano') )
+        #
+        self.timer=tool.obj_timer(300)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p18(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p17())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p19())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('dont buy it (its free)',(640,80),fontsize='huge') )
+        #
+        animation1=draw.obj_animation('bookmove','book',(640+200,360-50),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        # animation1.addsound( "book3", [107] )
+        # animation1.addsound( "book2", [270] )
+        animation1.addsound( "book1", [50] )
+        #
+        self.addpart( draw.obj_music('piano') )
+        #
+        self.timer=tool.obj_timer(150)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p19(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p18())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p20())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('(dont tell all your friends)',(640,80),fontsize='huge') )
+        #
+        animation1=draw.obj_animation('bookmove','book',(640+200,360-50),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        # animation1.addsound( "book3", [107] )
+        # animation1.addsound( "book2", [200] )
+        # animation1.addsound( "book1", [200],skip=1 )
+        #
+        fref=150
+        animation1.rewind(frame=fref)
+        #
+        self.addpart( draw.obj_music('piano') )
+        #
+        self.timer=tool.obj_timer(250)
+        self.addpart(self.timer)
+
+
+class obj_scene_testtrailer_p20(page.obj_chapterpage):
+    def postpostsetup(self):
+        pass# no mouse pointer
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p19())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p21())
+    def textboxprevpage(selfdd):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return (controls.ga and controls.gac) or self.timer.off
+    def setup(self):
+        self.text=[]
+        self.addpart( draw.obj_textbox('THE BOOK OF THINGS',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('https://sites.google.com/site/sulianthual/thebookofthings',(640,400),fontsize='medium') )
+        self.addpart( draw.obj_textbox('https://github.com/sulianthual/thebookofthings',(640,455),fontsize='medium') )
+        self.addpart( draw.obj_textbox('musics from PlayOnLoop.com (CC-BY 4.0)',(640,620),fontsize='small') )
+        self.addpart( draw.obj_textbox('sounds from opengameart.com and freesound.com (CC0) ',(640,675),fontsize='small') )
+        #
+        animation1=draw.obj_animation('ch0_bookinstructions','book',(640-520,360-380),record=False)
+        self.addpart( animation1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+        #
+        self.timer=tool.obj_timer(1400)
+        self.addpart(self.timer)
+
+class obj_scene_testtrailer_p21(page.obj_chapterpage):
+    def soundnextpage(self):
+        pass
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testtrailer_p21())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def textboxprevpage(self):
+        pass
+    def textboxnextpage(self):
+        pass
+    def triggerprevpage(self,controls):
+        return controls.gb and controls.gbc
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def setup(self):
+        self.text=[]
+
+
+####################################################################################################################
+####################################################################################################################
+
 class obj_scene_testdrafting(obj_testpage):
     def pagename(self):
         return 'Drafting Board'
-
-
     def textboxprevpage(self):
         pass
     def textboxnextpage(self):
@@ -1051,7 +1899,7 @@ class obj_scene_testdrafting(obj_testpage):
 class obj_scene_testbreakfastdrinking(page.obj_chapterpage):
     def pagename(self):
         return 'Minigame breakfast drinking'
-    def prevpage(self):# no browsing
+    def prevpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testbreakfastdrinking2())
@@ -1065,9 +1913,9 @@ class obj_scene_testbreakfastdrinking(page.obj_chapterpage):
 
 
 class obj_scene_testbreakfastdrinking2(page.obj_chapterpage):
-    def prevpage(self):# no browsing
+    def prevpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
-    def nextpage(self):# no browsing
+    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def setup(self):
         self.text=[]

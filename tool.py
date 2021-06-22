@@ -128,6 +128,7 @@ def comparestringparts(a,b):
 # Timer for any purpose
 class obj_timer:
     def __init__(self,amount,cycle=False):
+        self.type='timer'
         self.amount=round(amount)
         # 3 states for the timer: on, ring (1 frame), off
         self.on=False# countdown happens
@@ -146,7 +147,8 @@ class obj_timer:
         self.off=False
     def run(self):# run timer (without restarting)
         if not self.on: self.start()
-    def update(self):# update timer
+    def update(self,*args):# update timer
+        # print(self.t)
         if self.on:
             self.t -= 1
             if self.t <0:

@@ -26,6 +26,7 @@ class obj_page:
         self.initstart(**kwargs)
     def initstart(self,**kwargs):# start
         # elements
+        self.to_start=[]# elements to start when they are added
         self.to_update=[]# elements to manage at page update
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
@@ -50,19 +51,27 @@ class obj_page:
     def pagename(self):# page has a name for scene inventories (optional)
         return None
     def addpart(self,element):
+        term=['timer']
+        if element.type in term:
+            self.to_start.append(element)
+            element.start()# element is started as it is added
+        #
         term=['drawing','textinput','textchoice','textbox','image','animation','dispgroup',\
               'imageplacer','soundplacer',\
               'sound',\
               'rectangle',\
+              'timer',\
               'pagebackground','pagefps','pagetext','pagemousepointer',\
               'world']
         if element.type in term:
             self.to_update.append(element)
+        #
         term=['drawing','textinput','textchoice',\
                 'imageplacer',\
                 'dispgroup','animation','sound']# dispgroups hold animations hold sounds, so all must finish
         if element.type in term:
             self.to_finish.append(element)
+        #
         if element.type=='music':# override page music (unique element)
             self.pagemusic=element
     def removepart(self,element):

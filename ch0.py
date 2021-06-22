@@ -175,7 +175,7 @@ class obj_scene_ch0p8(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p9())
     def setup(self):
-        self.text=['It was the book of things. The book of all things were all things would be.',
+        self.text=['It was the book of things. The book of all things where all things would be.',
                    'With the help of the pen and eraser, there would be many things to write in the book.',\
                    ]
         animation1=draw.obj_animation('bookmove','book',(640,360),record=False)
