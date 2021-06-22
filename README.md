@@ -5,7 +5,7 @@
 
 code by Sulian Thual (2020)
 
-A simple adventure game with a twist: you draw everything! Takes about one hour to complete. Made to learn object-oriented programming (OOP) with python. 
+A simple adventure game with a twist: you draw everything! Takes about one hour to complete. Made to learn object-oriented programming with python and pygame. 
 
 
 references: https://github.com/sulianthual/thebookofthings

@@ -1,0 +1,12 @@
+#!/bin/bash
+# This file launches the code from one directory above
+# 
+# 1) compile game with pyinstaller ($pyinstaller main.spec)
+# 2) move this file from dist/code/data to dist/code
+# 3) distribute folder dist (rename it thebookofthings) with code/ and launcher inside
+# 4) on any system one should allow execution of launcher and click it to launch application
+# 
+# we change current directory
+cd `dirname "$0"`"/code"
+# then execute the regular launcher
+./_\!launcher

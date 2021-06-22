@@ -1,9 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 # Use this spec file to compile code using pyinstaller:
-# $pyinstaller main.spec
-# (compiled code to distribute is the folder dist/thebookofthings. executable is _!THEBOOKOFTHINGS_LAUNCHER within)
-# when finished can use mainicon.png to change folder icon manually
+# 1) $pyinstaller main.spec
+# 2) move dist/code/data/launcher to dist/code
+# 3) zip and distribute the dist (with code/ and launcher inside)
+# 4) can manually change folder/app icons using data/mainicon.png or data/mainicon.ico
 #
 # alternatively one can compile for a single file ($pyinstaller --onefile main.py with extra steps...) but doesnt work well
 #
@@ -29,12 +30,12 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='_!THEBOOKOFTHINGS_LAUNCHER',
+          name='_!launcher',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          icon='mainicon.ico',
+          icon='data/mainicon.ico',
           console=True )
 coll = COLLECT(exe,
                a.binaries,
@@ -43,5 +44,6 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='thebookofthings',icon='mainicon.ico')
+               name='code',
+               icon='data/mainicon.ico')
 
