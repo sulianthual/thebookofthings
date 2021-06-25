@@ -1085,9 +1085,9 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         self.sprite_keyboard=draw.obj_textbox('xxx',(xref,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_keyboard)
         if share.datamanager.doazerty:
-            self.sprite_keyboard.replacetext('Keyboard: Azerty (ZQSD)')
+            self.sprite_keyboard.replacetext('Keyboard: Azerty (arrows = ZQSD)')
         else:
-            self.sprite_keyboard.replacetext('Keyboard: Qwerty (WASD)')
+            self.sprite_keyboard.replacetext('Keyboard: Qwerty (arrows = WASD)')
         #
         self.sprite_display=draw.obj_textbox('xxx',(xref,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_display)
