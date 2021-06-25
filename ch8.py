@@ -598,7 +598,7 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8mech2())
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch8mechfight())
+            share.scenemanager.switchscene(obj_scene_ch8mechfightstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8mechbye())
     def setup(self):
@@ -622,6 +622,27 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
         animation1.addsound( "mech_stomp", [21, 85, 151, 251, 309, 371] )
         #
         self.addpart( draw.obj_music('mechs') )
+
+
+class obj_scene_ch8mechfightstandby(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8mechreplay())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8mechfight())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=['Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,230),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('mechfight') )
 
 
 class obj_scene_ch8mechfight(page.obj_chapterpage):
@@ -650,7 +671,7 @@ class obj_scene_ch8mechreplay(page.obj_chapterpage):
         pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch8mechfight())
+            share.scenemanager.switchscene(obj_scene_ch8mechfightstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8mechbye())
     def setup(self):
@@ -798,9 +819,9 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='tower'))
     def nextpage(self):
         if share.datamanager.getword('numchoice')=='1':
-            share.scenemanager.switchscene(obj_scene_ch8westdodgebullets())
+            share.scenemanager.switchscene(obj_scene_ch8westdodgebulletsstandby())
         elif share.datamanager.getword('numchoice')=='2':
-            share.scenemanager.switchscene(obj_scene_ch8weststomp())
+            share.scenemanager.switchscene(obj_scene_ch8weststompstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8westbye())
     def setup(self):
@@ -823,6 +844,28 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
         self.addpart( draw.obj_music('villain') )
 
 
+
+class obj_scene_ch8westdodgebulletsstandby(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8westreplay())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8westdodgebullets())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.world=world.obj_world_dodgegunshots(self,tutorial=True)
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('gunfight') )
+
+
 class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8westreplay())
@@ -838,6 +881,28 @@ class obj_scene_ch8westdodgebullets(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('gunfight') )
+
+
+class obj_scene_ch8weststompstandby(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8westreplay())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8weststomp())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=['Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.world=world.obj_world_stompfight(self,tutorial=True)
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('fistfight') )
+
 
 
 class obj_scene_ch8weststomp(page.obj_chapterpage):
@@ -866,9 +931,9 @@ class obj_scene_ch8westreplay(page.obj_chapterpage):
         pass
     def nextpage(self):
         if share.datamanager.getword('numchoice')=='1':
-            share.scenemanager.switchscene(obj_scene_ch8westdodgebullets())
+            share.scenemanager.switchscene(obj_scene_ch8westdodgebulletsstandby())
         elif share.datamanager.getword('numchoice')=='2':
-            share.scenemanager.switchscene(obj_scene_ch8weststomp())
+            share.scenemanager.switchscene(obj_scene_ch8weststompstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8westbye())
     def setup(self):
@@ -1051,7 +1116,7 @@ class obj_scene_ch8northtop(page.obj_chapterpage):
         pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch8north_rps())
+            share.scenemanager.switchscene(obj_scene_ch8north_rpsstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8northbye())
     def setup(self):
@@ -1085,6 +1150,28 @@ class obj_scene_ch8northtop(page.obj_chapterpage):
         self.addpart( draw.obj_music('elder') )
 
 
+class obj_scene_ch8north_rpsstandby(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8northreplay())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8north_rps())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=['Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,tutorial=True)
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('winds') )
+
+
+
 class obj_scene_ch8north_rps(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8northreplay())
@@ -1111,7 +1198,7 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
         pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch8north_rps())
+            share.scenemanager.switchscene(obj_scene_ch8north_rpsstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8northbye())
     def setup(self):
@@ -1181,7 +1268,7 @@ class obj_scene_ch8south(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='beach'))
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch8southride())
+            share.scenemanager.switchscene(obj_scene_ch8southridestandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8southbye())
     def setup(self):
@@ -1210,6 +1297,31 @@ class obj_scene_ch8south(page.obj_chapterpage):
         animation1.addsound( "sailor5", [32],skip=1 )
         #
         self.addpart( draw.obj_music('sailor') )
+
+
+class obj_scene_ch8southridestandby(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8southreplay())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8southride())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
+    def textboxplace(self):
+        self.textboxprevpage_xy=(1050,520)
+        self.textboxnextpage_xy=(1230,520)
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=['Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.textkeys={'pos':(100,20),'xmin':100}
+        self.world=world.obj_world_ridecow(self,tutorial=True,trees=True)
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('racing') )
 
 
 class obj_scene_ch8southride(page.obj_chapterpage):
@@ -1245,7 +1357,7 @@ class obj_scene_ch8southreplay(page.obj_chapterpage):
         pass
     def nextpage(self):
         if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch8southride())
+            share.scenemanager.switchscene(obj_scene_ch8southridestandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8southbye())
     def setup(self):

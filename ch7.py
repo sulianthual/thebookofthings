@@ -814,7 +814,7 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p21())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p22())
+        share.scenemanager.switchscene(obj_scene_ch7p21b())
     def setup(self):
         self.text=[\
                   '"I will not let you win this time, said ',\
@@ -833,9 +833,29 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
         self.addpart( draw.obj_music('tension') )
 
 
-class obj_scene_ch7p22(page.obj_chapterpage):
+class obj_scene_ch7p21b(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p21a())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p22())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxnextpage(self):
+        pass
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.world=world.obj_world_dodgegunshots(self,tutorial=True,intower=True)
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
+        #
+        self.addpart( draw.obj_music('gunfight') )
+
+class obj_scene_ch7p22(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch7p21b())
     def nextpage(self):
         if self.world.win:
             share.scenemanager.switchscene(obj_scene_ch7p23())
@@ -856,17 +876,26 @@ class obj_scene_ch7p22(page.obj_chapterpage):
 
 class obj_scene_ch7p22death(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p22())
+        share.scenemanager.switchscene(obj_scene_ch7p21b())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p22())
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch7p21b())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch7p23())# skip
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic". ',\
+                'Now go back and try to act more "heroic"',\
+                ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        y1=260
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Abandon (skip)','no',(820,y1))
+        self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -906,14 +935,15 @@ class obj_scene_ch7p24(page.obj_chapterpage):
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
-                  'Boss battle final phase! ',\
-                    'Move with ','['+share.datamanager.controlname('arrows')+'/',\
+                  'Instructions: ',\
+                    'move with ','['+share.datamanager.controlname('arrows')+'/',\
                     share.datamanager.controlname('right')+']',', ',\
                     ' jump with ','['+share.datamanager.controlname('up')+']',\
                     ' and kick with ','['+share.datamanager.controlname('action')+']','. ',\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('fistfight') )
 
@@ -937,6 +967,7 @@ class obj_scene_ch7p24a(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart(draw.obj_image('show1',(1130,360),path='data/premade',flipv=True))
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('fistfight') )
 
@@ -955,11 +986,12 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
         pass
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' This is it, press ',\
+        self.text=['Press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('fistfight') )
 
@@ -987,17 +1019,26 @@ class obj_scene_ch7p25(page.obj_chapterpage):
 
 class obj_scene_ch7p25death(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p25())
+        share.scenemanager.switchscene(obj_scene_ch7p24b())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p25())
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch7p24b())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch7p26())# skip
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic". ',\
+                'Now go back and try to act more "heroic"',\
+                ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        y1=260
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Abandon (skip)','no',(820,y1))
+        self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -1694,6 +1735,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,220),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1709,13 +1751,14 @@ class obj_scene_ch7p48a(page.obj_chapterpage):
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
-                    'Using the '+tempo+', ',\
-                    'enter the correct command when prompted. ',\
+                    'Instructions: using '+tempo+', ',\
+                    'enter the correct command quickly when prompted. ',\
                    ]
         self.world=world.obj_world_mechfight(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show3',(850,270),scale=1,path='data/premade'))
+        self.addpart(draw.obj_image('show3',(440,270),scale=1,path='data/premade',fliph=True))
+        self.addpart( draw.obj_textbox('(not the actual fight)',(980,230),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1735,10 +1778,11 @@ class obj_scene_ch7p48b(page.obj_chapterpage):
                   ('{villain_his}',share.colors.villain2),' health down ',\
                   '(when the fight starts). ',\
                    ]
-        self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
+        self.world=world.obj_world_mechfight(self,tutorial=True)#,prompt=False)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show1',(640,300),scale=1,fliph=True,flipv=True,path='data/premade'))
+        # self.addpart(draw.obj_image('show1',(640,300),scale=1,fliph=True,flipv=True,path='data/premade'))
+        self.addpart( draw.obj_textbox('(not the actual fight)',(980,220),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1757,11 +1801,12 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
         pass
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' This is it, press ',\
+        self.text=['Press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,230),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1789,17 +1834,26 @@ class obj_scene_ch7p49(page.obj_chapterpage):
 
 class obj_scene_ch7p49death(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p49())
+        share.scenemanager.switchscene(obj_scene_ch7p48c())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p49())
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch7p48c())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch7p50())# skip
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic". ',\
+                'Now go back and try to act more "heroic"',\
+                ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        y1=260
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Abandon (skip)','no',(820,y1))
+        self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tension') )
 

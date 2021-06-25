@@ -422,7 +422,7 @@ class obj_scene_textbox(obj_testpage):
             '\n 3) can be hovered ',\
                    ]
         self.addpart(draw.obj_textbox('textbox',(140,560)))# standard
-        self.addpart(draw.obj_textbox('custom',(240,460),color=share.colors.blue, fontsize='big',fillcolor=share.colors.black))#customize font and color
+        self.addpart(draw.obj_textbox('custom',(240,460),color=share.colors.blue, fontsize='big',fillcolor=share.colors.black,blinking=30))#customize font and color
         self.addpart(draw.obj_textbox('xleft-ytop',(240,560),xleft=True,ytop=True))# line adjusted
         self.addpart(draw.obj_textbox('from keyword: {test1}',(240,660),color=share.colors.green))
         self.textbox=draw.obj_textbox('textbox:move me',(840,560),color=share.colors.red,fillcolor=share.colors.blue)

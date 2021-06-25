@@ -565,11 +565,12 @@ class obj_scene_ch5p22(page.obj_chapterpage):
         share.datamanager.setbookmark('ch5_rps1')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
-               'Epic battle time! This is you selection, change it with the '+tempo+'. ',\
+               'Instructions: change selection with the '+tempo+'. ',\
                   ]
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
-        self.addpart( draw.obj_image('show3',(418,300),path='data/premade') )
+        self.addpart( draw.obj_image('show3',(380,300),path='data/premade') )
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('elder') )
 
@@ -588,6 +589,7 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         self.addpart(self.world)
         self.addpart( draw.obj_image('show3',(280,150),scale=0.65,fliph=False,flipv=True,path='data/premade') )
         self.addpart( draw.obj_image('show3',(620,150),scale=0.65,fliph=True,flipv=True,path='data/premade') )
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.sound=draw.obj_sound('elder3')
         self.addpart(self.sound)
@@ -608,11 +610,12 @@ class obj_scene_ch5p23a(page.obj_chapterpage):
         pass
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' This is it, press ',\
+        self.text=[' Press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
         #
         self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
@@ -1125,7 +1128,8 @@ class obj_scene_ch5p33(page.obj_chapterpage):
         animation1.addimage('paper')
         animation1.addimage('scissors')
         self.addpart( animation1 )
-        self.addpart( draw.obj_image('show3',(640+220,246+70),path='data/premade',fliph=True) )
+        self.addpart( draw.obj_image('show3',(640+220+40,246+70),path='data/premade',fliph=True) )
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('elder') )
 
@@ -1204,11 +1208,12 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
         pass
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' Battle time! Press ',\
+        self.text=['Press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,tutorial=True)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('winds') )
 
@@ -1237,9 +1242,12 @@ class obj_scene_ch5p36(page.obj_chapterpage):
 
 class obj_scene_ch5p36fail(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p36())
+        share.scenemanager.switchscene(obj_scene_ch5p35a())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p36())
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch5p35a())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch5p37())
     def setup(self):
         self.text=[\
                'OWWWW you really dont listen, said ',('{eldername}',share.colors.elder),'. ',\
@@ -1256,6 +1264,12 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
         animation3=draw.obj_animation('ch5eldertalks5b','lightningbolt',(640,360),record=False,sync=animation1)
         animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
+        #
+        y1=190
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(840,y1))
+        textchoice.addchoice('Abandon (skip)','no',(1100,y1))
+        self.addpart( textchoice )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4','elder5','elder6') )
         animation1.addsound( "elder1", [84] )

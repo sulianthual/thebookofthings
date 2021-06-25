@@ -44,9 +44,9 @@ class obj_scene_ch0p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
         self.text=['One could press [next] to continue, [back] to go back, or [esc] to go back to the menu. It was always like that.']
-        self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
-        self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
+        # self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
+        # self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
+        # self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
         #
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)

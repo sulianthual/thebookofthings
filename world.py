@@ -2544,7 +2544,8 @@ class obj_world_stompfight(obj_world):
                 if self.villainstate=='stand':
                     self.villaintimerstand.update()
                     if self.villaintimerstand.ring:
-                        if self.dotutorial:# no kicking during tutorial, rest directly
+                        # if self.dotutorial:# no kicking during tutorial, rest directly
+                        if False:
                             self.villainstate='rest'
                             self.villaintimerrest.start()
                             self.villain.movetoy(self.yground-12)
@@ -2673,8 +2674,8 @@ class obj_world_stompfight(obj_world):
             #
             #
             # Hero and Villain hit each other
-            if not self.dotutorial and not self.herohurt and not self.villainhurt:
-            # if not self.herohurt and not self.villainhurt:
+            # if not self.dotutorial and not self.herohurt and not self.villainhurt:
+            if not self.herohurt and not self.villainhurt:
             #
                 # villain hits hero (state kick and stand)
                 # if self.villainstate in ['stand','kick']:
@@ -2760,25 +2761,28 @@ class obj_world_stompfight(obj_world):
                 self.timerendwin.update()
                 if self.timerendwin.ring:
                     self.done=True# end of minigame
+
+                #
+                # finish hero kick (only if winning)
+                if self.herokicking:
+                    self.herokicktimer.update()
+                    if self.herofaceright:
+                        self.hero.movex(self.heromxkick)
+                    else:
+                        self.hero.movex(-self.heromxkick)
+                    if self.herokicktimer.ring:
+                        self.herokicking=False
+                        self.herofaceright = self.hero.x<self.villain.x# face the villain
+                        self.hero.dict['kick_right'].show=False
+                        self.hero.dict['kick_left'].show=False
+                        self.hero.dict['stand_right'].show=self.herofaceright
+                        self.hero.dict['stand_left'].show=not self.herofaceright
+
             else:# lost minigame
                 self.timerendloose.update()
                 if self.timerendloose.ring:
                     self.done=True# end of minigame
-            #
-            # finish hero kick
-            if self.herokicking:
-                self.herokicktimer.update()
-                if self.herofaceright:
-                    self.hero.movex(self.heromxkick)
-                else:
-                    self.hero.movex(-self.heromxkick)
-                if self.herokicktimer.ring:
-                    self.herokicking=False
-                    self.herofaceright = self.hero.x<self.villain.x# face the villain
-                    self.hero.dict['kick_right'].show=False
-                    self.hero.dict['kick_left'].show=False
-                    self.hero.dict['stand_right'].show=self.herofaceright
-                    self.hero.dict['stand_left'].show=not self.herofaceright
+
 
             # hero fall (even if already dead/won)
             self.herov += self.herovg# gravity
@@ -3195,9 +3199,12 @@ class obj_world_rockpaperscissors(obj_world):
         # self.staticactor.addpart( 'img6a', draw.obj_image('cloud',(118,564),scale=0.2,rotate=0,fliph=True,flipv=False) )
         # instructions
         yrpsinfo=300
-        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,yrpsinfo),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
+        # self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
+        # self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,yrpsinfo),fontsize='small',color=share.colors.instructions) )
+        # self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(40,480),xleft=True,fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(40,480+55),xleft=True,fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(40,480+55*2),xleft=True,fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,yrpsinfo),color=share.colors.instructions) )
         self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,yrpsinfo),color=share.colors.instructions) )
         self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,yrpsinfo),color=share.colors.instructions) )

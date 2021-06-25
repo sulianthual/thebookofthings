@@ -575,13 +575,14 @@ class obj_scene_ch3p16(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p17())
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
-        self.text=['Blockbuster action scene!',\
-        ' Jump and crouch with the '+tempo+'. ',\
+        self.text=['Instructions: ',\
+        'Jump and crouch with the '+tempo+'. ',\
                     ]
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
         #
         self.addpart(draw.obj_image('show1',(560,540),path='data/premade',fliph=True))
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('gunfight') )
 
@@ -601,6 +602,7 @@ class obj_scene_ch3p17(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart(draw.obj_image('show1',(390,290),path='data/premade',flipv=True))
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('gunfight') )
 
@@ -617,7 +619,8 @@ class obj_scene_ch3p18(page.obj_chapterpage):
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
         #
-        self.addpart(draw.obj_image('show1',(740,290),path='data/premade',fliph=True,flipv=True))
+        self.addpart(draw.obj_image('show1',(857,313),path='data/premade',fliph=True,flipv=True))
+        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('gunfight') )
 
@@ -633,11 +636,12 @@ class obj_scene_ch3p18a(page.obj_chapterpage):
         pass
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' This is it, press ',\
+        self.text=[' Press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
         self.world=world.obj_world_dodgegunshots(self,tutorial=True)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('gunfight') )
 
@@ -664,19 +668,29 @@ class obj_scene_ch3p19(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('gunfight') )
 
+
 class obj_scene_ch3p19death(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p19())
+        share.scenemanager.switchscene(obj_scene_ch3p18a())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p19())
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch3p18a())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch3p20())# skip
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic". ',\
+                'Now go back and try to act more "heroic"',\
+                ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        y1=260
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Abandon (skip)','no',(820,y1))
+        self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -892,7 +906,6 @@ class obj_scene_ch3p23(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('tower') )
 
-
 class obj_scene_ch3p24(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p23())
@@ -900,19 +913,44 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch3p25())
         else:
-            trypassword=share.datamanager.getword('towerpassword')
-            earlypassword='lie cheat steal'
-            if share.devmode or tool.comparestringparts(trypassword,earlypassword):
-                share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
-            else:
-                share.scenemanager.switchscene(obj_scene_ch3p24fail())
+            share.scenemanager.switchscene(obj_scene_ch3p24a())
     def setup(self):
         self.text=[\
                   '"The  ',('tower',share.colors.location2),'\'s a.s.s. blasted: ',\
-                  'You may leave or dare try again". ',\
+                  'leave or dare try another password". ',\
                    ]
-        # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
-        # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation1.addsound( "tower1", [16, 79] )
+        animation1.addsound( "tower2", [91] )
+        animation1.addsound( "tower4", [99] )
+        #
+        y1=170
+        textchoice=draw.obj_textchoice('choice_yesno',default='no')
+        textchoice.addchoice('Leave','yes',(240,y1))
+        textchoice.addchoice('Try Again','no',(460,y1))
+        self.addpart( textchoice )
+        #
+        self.addpart( draw.obj_music('tower') )
+
+
+class obj_scene_ch3p24a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch3p24())
+    def nextpage(self):
+        trypassword=share.datamanager.getword('towerpassword')
+        earlypassword='lie cheat steal'
+        if share.devmode or tool.comparestringparts(trypassword,earlypassword):
+            share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch3p24fail())
+    def setup(self):
+        self.text=[\
+                  '"Please enter password, said the  ',('tower',share.colors.location2),'\'s a.s.s."',\
+                   ]
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
@@ -924,15 +962,8 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         #
         self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
         self.addpart( self.textinput )
-        y1=170
-        # self.addpart( draw.obj_textbox('Leave:',(90,y1),xleft=True) )
-        textchoice=draw.obj_textchoice('choice_yesno',default='no')
-        textchoice.addchoice('Leave','yes',(240,y1))
-        textchoice.addchoice('Try Again','no',(460,y1))
-        self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tower') )
-
 
 class obj_scene_ch3p24fail(page.obj_chapterpage):
     def prevpage(self):

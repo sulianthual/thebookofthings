@@ -578,7 +578,7 @@ class obj_textchoice:
 # acts like an image (can be moved/scaled, part of a animgroup)
 class obj_textbox:
     def __init__(self,text,xy,fontsize='medium',color=(0,0,0),scale=1,rotate=0,\
-    xleft=False,xright=False,ytop=False,fillcolor=None,hover=False,hovercolor=(220,0,220)):
+    xleft=False,xright=False,ytop=False,fillcolor=None,hover=False,hovercolor=(220,0,220),blinking=None):
         self.type='textbox'# object type
         self.text=text
         self.xini=xy[0]# initial position
@@ -592,6 +592,7 @@ class obj_textbox:
         self.trackinghover=hover# track if hovered or not (and change color accordingly)
         self.nohovercolor=color# color when not hovered
         self.hovercolor=hovercolor# color when hovered (if tracked, default = dark purple)
+        self.blinking=blinking# blinking time (in frames), If None, then no textbox blinking
         self.setup()
         if scale != 1: self.scale(scale)
         if rotate != 0: self.rotate(rotate)
@@ -612,6 +613,11 @@ class obj_textbox:
         self.ry=self.sprite.getry()
         # hover
         self.hovered=False# is it being hovered
+        # blinking
+        if self.blinking is not None:
+            self.blinkingtimer=tool.obj_timer(self.blinking)
+            self.blinkingtimer.start()
+            self.blinkingshow=True# staet on/off during blinking
         # devtools
         self.devcross=core.obj_sprite_cross()
         self.devrect=core.obj_sprite_rect()
@@ -695,7 +701,12 @@ class obj_textbox:
         snap.save(path+'/'+filename+'.png')
     def display(self):
         if self.show:
-            self.sprite.display(self.x+self.xoffset,self.y+self.yoffset)
+            if self.blinking:
+                if self.blinkingshow:
+                    self.sprite.display(self.x+self.xoffset,self.y+self.yoffset)
+            else:
+                self.sprite.display(self.x+self.xoffset,self.y+self.yoffset)
+
     def devtools(self):
         self.devcross.display(share.colors.devtextbox,(self.x+self.xoffset,self.y+self.yoffset),10)
         termx,termy=self.sprite.getrxry()
@@ -722,8 +733,16 @@ class obj_textbox:
                     self.hovered=False
                     self.color=self.nohovercolor
                     self.replacetext(self.text)
+    def updateblinking(self):
+        if self.blinking:
+            self.blinkingtimer.update()
+            if self.blinkingtimer.ring or self.blinkingtimer.off:
+                self.blinkingshow=not self.blinkingshow
+                self.blinkingtimer.start()
+
     def update(self,controls):
         self.play(controls)
+        self.updateblinking()
         self.trackhover(controls)
 
 

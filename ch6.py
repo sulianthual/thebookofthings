@@ -865,9 +865,8 @@ class obj_scene_ch6p30a(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak1')
-        self.text=['"Uh oh, we have company! You are on your own now, good luck squid."',\
+        self.text=['"Uh oh, we have company! Stand still when you are in its field of vision."',\
                    ]
-
         self.world=world.obj_world_bushstealth(self)
         self.addpart(self.world)
         #
@@ -893,14 +892,17 @@ class obj_scene_ch6p31(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         share.datamanager.setbookmark('ch6_sneak2')
-        self.text=[' ']
+        self.text=['"Well done, now just keep going. ',\
+                    ('{sailorname}',share.colors.sailor),' out. "',\
+                   ]
         self.world=world.obj_world_bushstealth2(self)
         self.addpart(self.world)
         #
+        self.sound=draw.obj_sound('sailor_radio')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
         self.addpart( draw.obj_music('stealth') )
-
-
-
 
 
 class obj_scene_ch6p32(page.obj_chapterpage):
@@ -1078,8 +1080,8 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
-        self.text=['Lets go! ',\
-                    'Move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
+        self.text=['Instructions: ',\
+                    'move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
                    ]
         self.textkeys={'pos':(100,20),'xmin':100}
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
@@ -1090,6 +1092,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
         self.sound.play()
         #
         self.addpart( draw.obj_image('show1',(760,540),fliph=False,flipv=False,path='data/premade') )
+        self.addpart( draw.obj_textbox('(not the actual chase)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('racing') )
 
@@ -1101,17 +1104,22 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38b())
     def setup(self):
         self.text=[\
-                    'Trees and rocks will hurt ',\
-                    ('{heroname}',share.colors.hero),\
-                    '. ',\
+                    'Trees and rocks will hurt the ',\
+                    ('hero',share.colors.hero),\
+                    ' (but not ',\
+                    ('treasure',share.colors.cow),\
+                    '!). ',\
                    ]
         self.textkeys={'pos':(100,20),'xmin':100}
-        self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
+        self.world=world.obj_world_ridecow(self,tutorial=True,trees=True)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_image('show3',(460,160),scale=1,fliph=False,flipv=True,path='data/premade') )
+        self.addpart( draw.obj_textbox('(not the actual chase)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('racing') )
+
+
 
 
 class obj_scene_ch6p38b(page.obj_chapterpage):
@@ -1121,14 +1129,14 @@ class obj_scene_ch6p38b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p38c())
     def setup(self):
         self.text=[\
-                    'Ride until you make it to the ship. ',\
+                    'Ride until bar reaches 100%. ',\
                    ]
         self.textkeys={'pos':(100,20),'xmin':100}
-        self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
+        self.world=world.obj_world_ridecow(self,tutorial=True,trees=True)
         self.addpart(self.world)
         #
-        # self.addpart( draw.obj_image('show3',(418,300),path='data/premade') )
         self.addpart( draw.obj_image('show1',(970,520),fliph=True,flipv=False,path='data/premade') )
+        self.addpart( draw.obj_textbox('(not the actual chase)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('racing') )
 
@@ -1144,12 +1152,13 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
         pass
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' This is it, press ',\
+        self.text=['Press ',\
                     (tempo,share.colors.instructions),\
                     ' when you are ready. ']
         self.textkeys={'pos':(100,20),'xmin':100}
-        self.world=world.obj_world_ridecow(self,tutorial=True,trees=False)
+        self.world=world.obj_world_ridecow(self,tutorial=True,trees=True)
         self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('racing') )
 
@@ -1184,19 +1193,30 @@ class obj_scene_ch6p39(page.obj_chapterpage):
 
 class obj_scene_ch6p39death(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p39())
+        share.scenemanager.switchscene(obj_scene_ch6p38c())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p39())
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch6p38c())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch6p40())# skip
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic". ',\
+                'Now go back and try to act more "heroic"',\
+                ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
+        y1=260
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Abandon (skip)','no',(820,y1))
+        self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tension') )
+
+
 
 
 class obj_scene_ch6p40(page.obj_chapterpage):
