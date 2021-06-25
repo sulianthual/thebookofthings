@@ -825,7 +825,8 @@ class obj_scene_realtitlescreen(page.obj_page):
         if not self.hasbook:
             if self.sprite_continue.isclicked(controls):
                 self.sound_menugo.play()
-                share.scenemanager.switchscene(ch0.obj_scene_prologue())# directly to start of prologue
+                share.scenemanager.switchscene(obj_scene_chaptersscreen())# still go to chapters
+                # share.scenemanager.switchscene(ch0.obj_scene_prologue())# directly to start of prologue
             elif self.sprite_settings.isclicked(controls):
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(obj_scene_settings())
