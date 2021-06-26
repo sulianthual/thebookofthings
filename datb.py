@@ -226,6 +226,7 @@ class obj_sounds:
         self.dict['travel_winds']=( 'world/travel/wind woosh loop.wav' , 1 )
         self.dict['travel_chop']=( 'world/travel/chop-into-wood-little-debris.wav' , 1 )
         self.dict['travel_choplast']=( 'world/travel/Cure.wav' , 1 )
+        self.dict['travel_pickflower']=( 'world/travel/click18.wav' , 1 )
         self.dict['travel_enter']=( 'world/travel/1up3.wav' , 1 )
         # dodgebullets
         self.dict['dodgebullets_start']=( 'world/dodgebullets/fight_lowreverb.wav' , 1 )

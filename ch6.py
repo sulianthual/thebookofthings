@@ -596,7 +596,8 @@ class obj_scene_ch6p21(page.obj_chapterpage):
         self.text=[\
                    'Get 10 wood logs for the sailor.',\
                    ]
-        self.world=world.obj_world_travel(self,start=(-1280+100,1080-120),goal='beach',chapter=6,minigame='logs',sailorwait=True,noending='True')
+        self.world=world.obj_world_travel(self,start=(-1280+100,1080-120),\
+        goal='beach',chapter=6,minigame='logs',sailorwait=True,noending='True')
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('sailor') )

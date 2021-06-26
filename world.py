@@ -1234,7 +1234,7 @@ class obj_world_travel(obj_world):
             elif self.wherestart=='pond':
                 self.xyhero=(-320,-180)
             elif self.wherestart=='atpartner':
-                self.xyhero=(870-640,570-360)
+                self.xyhero=(172-640,571-360)#(870-640,570-360)
             elif self.wherestart=='mech':
                 self.xyhero=(1100-640,10-360)
             elif self.wherestart=='cake':
@@ -1258,7 +1258,7 @@ class obj_world_travel(obj_world):
         elif self.whereends=='pond':
             self.xygoal=(-320,-180)
         elif self.whereends=='atpartner':
-            self.xygoal=(870-640,570-360)
+            self.xygoal=(172-640,571-360)#(870-640,570-360)
         elif self.whereends=='mech':
             self.xygoal=(1100-640,10-360)
         elif self.whereends=='cake':
@@ -1280,7 +1280,7 @@ class obj_world_travel(obj_world):
             self.allxygoals['pond']=(-320,-180)
             self.allxygoals['mech']=(1100-640,10-360)
             self.allxygoals['cake']=(210,-50)
-            self.allxygoals['atpartner']=(870-640,570-360)
+            self.allxygoals['atpartner']=(172-640,571-360)
             self.allxygoals['tower']=(-1280,0)
             self.allxygoals['forest']=(1280,0)
             self.allxygoals['peak']=(0,-1080-80)
@@ -1344,8 +1344,9 @@ class obj_world_travel(obj_world):
         # textpass=share.datamanager.getword('housename')
         self.staticactor11.addpart( 'textref', draw.obj_textbox('Home Sweet Home',(640,360+120),color=share.colors.location) )
         self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
-        self.staticactor11.addpart( 'textref2', draw.obj_textbox('Pond',(640-320,360-180+120),color=share.colors.location) )
-        self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(640-320,360-180),scale=0.5) )
+        if 'pond' not in self.removelist:
+            self.staticactor11.addpart( 'textref2', draw.obj_textbox('Pond',(640-320,360-180+120),color=share.colors.location) )
+            self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(640-320,360-180),scale=0.5) )
         self.staticactor11.addpart( 'ref3', draw.obj_image('mailbox',(834,182),scale=0.25) )
         #
         if 'garden' not in self.removelist:
@@ -1371,8 +1372,12 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( 'refroam_mech', draw.obj_image('villainmechbase_noface',(1100,10),scale=0.4,rotate=-118,fliph=False,flipv=False) )
             self.staticactor11.addpart( 'refmark_mech', draw.obj_image('exclamationmarkred',(1100,10),scale=0.5,path='data/premade') )
             #
-            self.staticactor11.addpart( 'refroam_partner', draw.obj_image('partnerbase',(870+70,570),scale=0.25,fliph=True) )
-            self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(870,570),scale=0.5,path='data/premade') )
+        if self.chapter>=8 or self.minigame=='flowers':
+            self.staticactor11.addpart( 'refroam_partner', draw.obj_image('partnerbase',(172-50,571),scale=0.25,fliph=False) )
+        if self.chapter>=8:
+            self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(172,571),scale=0.5,path='data/premade') )
+
+
         #
         # west panel 0-1: villain tower
         if self.chapter>=3:
@@ -1660,6 +1665,8 @@ class obj_world_travel(obj_world):
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions) )
         elif self.chapter>=8:
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions) )
+        elif self.minigame=='flowers':
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': give flower]',(640,680),color=share.colors.instructions) )
         else:# enter a location
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions) )
         #
@@ -1689,10 +1696,13 @@ class obj_world_travel(obj_world):
         # minigame flowers
         # *FLOWERS
         self.flowercount=0# picked flowers
-        self.flowerneed=3# needed flowers for goal
+        self.flowerneed=1# needed flowers for goal
         self.floweractors=[]# make a list of grandactors flowers
         if self.minigame=='flowers':
-            self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions)
+            if self.flowerneed == 1:
+                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flower',(640,610),color=share.colors.instructions)
+            else:
+                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textflowers', self.flowermessage  )
             for i in self.panels:# remove flower from panels and make them into individual grandactors
                 panelflowerkeys=[]# list of flowers keys in this panel
@@ -1710,6 +1720,8 @@ class obj_world_travel(obj_world):
                     i.removepart(j)
             for k in self.floweractors:# append flower actors to tracked hitboxes
                 self.hitboxes.append(k)
+            self.soundpickflower=draw.obj_sound('travel_pickflower')
+            self.creator.addpart(self.soundpickflower)
         #
         #####
         # minigame logs (go on logs an pickup with Space)
@@ -1918,12 +1930,16 @@ class obj_world_travel(obj_world):
                     for i in self.floweractors:
                         if tool.checkrectcollide(self.hero,i):
                             self.flowercount += 1
-                            self.flowermessage.replacetext('You have collected '+str(self.flowercount)+'/'+str(self.flowerneed)+' flowers')
+                            if self.flowerneed == 1:
+                                self.flowermessage.replacetext('You have collected '+str(self.flowercount)+'/'+str(self.flowerneed)+' flower')
+                            else:
+                                self.flowermessage.replacetext('You have collected '+str(self.flowercount)+'/'+str(self.flowerneed)+' flowers')
                             tokill.append(i)
                     for i in tokill:
                         self.floweractors.remove(i)
                         i.clearparts()
                         i.kill()
+                        self.soundpickflower.play()
                 else:# when obtained all flowers can reach goal
                     self.reachgoal(controls)
             #

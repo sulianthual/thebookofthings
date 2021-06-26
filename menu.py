@@ -41,14 +41,14 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
-            quickscene=obj_scene_settings()
+            # quickscene=obj_scene_settings()
             # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
-            # quickscene=ch2.obj_scene_ch2p10()
+            quickscene=ch2.obj_scene_ch2p12()
             # quickscene=ch2.obj_scene_ch2play2()
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p8()
@@ -193,8 +193,8 @@ class obj_gotobookmark():
             self.dict['ch2_writepartner']='draw and name the partner'
             self.dict['ch2_drawmail']='draw the mailbox and mail letter'
             self.dict['ch2_drawmusic']='draw the saxophone and music notes'
-            self.dict['ch2_drawhouse']='draw the house and pond'
-            self.dict['ch2_drawbush']='draw the bush and flower'
+            self.dict['ch2_drawhouse']='draw the house and flower'
+            self.dict['ch2_drawbush']='draw the pond and bush'
             self.dict['ch2_startplay']='replay the story'
             # self.dict['ch2_endunlock']='Chapter End'
             if bookmarkname == 'ch2_start':
