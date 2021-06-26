@@ -41,8 +41,8 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
-            # quickscene=obj_scene_settings()
-            quickscene=obj_scene_instructions_controls_screen()
+            quickscene=obj_scene_settings()
+            # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
@@ -508,47 +508,52 @@ class obj_scene_realtitlescreen(page.obj_page):
         #
         # choose a random decoration
         decooptions=[]
-        if self.maxchapter>0:
-            decooptions.append('book')
-        elif self.maxchapter>3:
-            decooptions.append('book2')
-            decooptions.append('book3')
-        if self.maxchapter>1:
-            decooptions.append('hero')
-            decooptions.append('hero2')
-        elif self.maxchapter>4:
-            decooptions.append('fish')
-        if self.maxchapter>2:
-            decooptions.append('partner')
-            decooptions.append('partner2')
-            decooptions.append('house')
-            decooptions.append('mailbox')
-        if self.maxchapter>3:
-            decooptions.append('villain')
-            decooptions.append('villain2')
-            decooptions.append('tower')
-            decooptions.append('tower2')
-            decooptions.append('bug')
-        if self.maxchapter>4:
-            decooptions.append('bunny')
-            decooptions.append('bunny2')
-            decooptions.append('cave')
-            decooptions.append('bedroom')
-        if self.maxchapter>5:
-            decooptions.append('elder')
-            decooptions.append('highestpeak')
-        if self.maxchapter>6:
-            decooptions.append('sailor')
-            decooptions.append('sailor2')
-            decooptions.append('cow')
-            decooptions.append('ship')
-            decooptions.append('skeletons')
-            decooptions.append('skullisland')
-            decooptions.append('grandmasters')
-        if self.maxchapter>7:
-            decooptions.append('mechs')
-            decooptions.append('mechs2')
-            decooptions.append('cake')
+        # single options (first chapters)
+        if self.maxchapter==1:# right after prologue, single option
+            decooptions=['book']
+        elif self.maxchapter==2:# right after chapter 1, single option
+            decooptions=['hero2']
+        else:
+            # randomized options (later chapters)
+            if self.maxchapter>0:
+                decooptions.append('book')
+                decooptions.append('book2')
+                decooptions.append('book3')
+            if self.maxchapter>1:
+                decooptions.append('hero')
+                decooptions.append('hero2')
+                decooptions.append('fish')
+            if self.maxchapter>2:
+                decooptions.append('partner')
+                decooptions.append('partner2')
+                decooptions.append('house')
+                decooptions.append('mailbox')
+            if self.maxchapter>3:
+                decooptions.append('villain')
+                decooptions.append('villain2')
+                decooptions.append('tower')
+                decooptions.append('tower2')
+                decooptions.append('bug')
+            if self.maxchapter>4:
+                decooptions.append('bunny')
+                decooptions.append('bunny2')
+                decooptions.append('cave')
+                decooptions.append('bedroom')
+            if self.maxchapter>5:
+                decooptions.append('elder')
+                decooptions.append('highestpeak')
+            if self.maxchapter>6:
+                decooptions.append('sailor')
+                decooptions.append('sailor2')
+                decooptions.append('cow')
+                decooptions.append('ship')
+                decooptions.append('skeletons')
+                decooptions.append('skullisland')
+                decooptions.append('grandmasters')
+            if self.maxchapter>7:
+                decooptions.append('mechs')
+                decooptions.append('mechs2')
+                decooptions.append('cake')
         #
         if decooptions:
             decochoice=tool.randchoice(decooptions)
@@ -1104,19 +1109,29 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         else:
             self.sprite_showfps.replacetext('Show FPS: Off')
         #
-        self.sprite_music=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_music)
-        if share.datamanager.domusic:
-            self.sprite_music.replacetext('Music: On')
-        else:
-            self.sprite_music.replacetext('Music: Off')
+        self.addpart( draw.obj_textbox('Music Volume: ',(xref,yref+2*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_musicless=draw.obj_textbox('-',(xref+200,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_musicless)
+        self.sprite_musicmore=draw.obj_textbox('+',(xref+330,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_musicmore)
+        self.sprite_musicvol=draw.obj_textbox('xxx',(xref+250,yref+2*dyref),fontsize=fontref,xleft=True)
+        self.addpart(self.sprite_musicvol)
+        self.musicvoldisps=['off','.','..','...','....','max']
+        self.sprite_musicvol.replacetext( self.musicvoldisps[share.datamanager.musicvol]  )
         #
-        self.sprite_sound=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_sound)
-        if share.datamanager.dosound:
-            self.sprite_sound.replacetext('Sound: On')
-        else:
-            self.sprite_sound.replacetext('Sound: Off')
+
+
+        #
+        self.addpart( draw.obj_textbox('Sound Volume: ',(xref,yref+3*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_soundless=draw.obj_textbox('-',(xref+200,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_soundless)
+        self.sprite_soundmore=draw.obj_textbox('+',(xref+330,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_soundmore)
+        self.sprite_soundvol=draw.obj_textbox('xxx',(xref+250,yref+3*dyref),fontsize=fontref,xleft=True)
+        self.addpart(self.sprite_soundvol)
+        self.soundvoldisps=['off','.','..','...','....','max']
+        self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
+        #
         #
         self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_controls )
@@ -1139,11 +1154,11 @@ class obj_scene_settings(obj_scene_realtitlescreen):
             self.addpart( draw.obj_music('tension') )
 
     def page(self,controls):
-        # hovers
+        # go back
         if self.sprite_back.isclicked(controls):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
-
+        #
         # change display
         elif self.sprite_display.isclicked(controls):
             self.sound_menuback.play()
@@ -1157,7 +1172,7 @@ class obj_scene_settings(obj_scene_realtitlescreen):
                 self.sprite_display.replacetext('Fullscreen: Off')
             else:
                 self.sprite_display.replacetext('Fullscreen: On')
-
+        #
         # toggle show fps
         elif self.sprite_showfps.isclicked(controls):
             self.sound_menuback.play()
@@ -1168,36 +1183,52 @@ class obj_scene_settings(obj_scene_realtitlescreen):
             else:
                 self.sprite_showfps.replacetext('Show FPS: Off')
             share.scenemanager.switchscene(obj_scene_settings())# reload scene
+        #
+        # toggle music (less)
+        elif self.sprite_musicless.isclicked(controls):
+            if share.datamanager.musicvol>0:# not zero already
+                self.sound_menuback.play()
+                share.datamanager.musicvol -= 1
+                if share.datamanager.musicvol==0:
+                    share.datamanager.domusic=False# turn off boolean too
+                share.datamanager.savesettings()# save settings
+                share.musicplayer.setmastervolume(share.datamanager.musicvol*0.2)# change music volume 0 to 1
+                self.sprite_musicvol.replacetext( self.musicvoldisps[share.datamanager.musicvol]  )
+        #
+        # toggle music (more)
+        elif self.sprite_musicmore.isclicked(controls):
+            if share.datamanager.musicvol<5:# not max already
+                self.sound_menuback.play()
+                share.datamanager.musicvol += 1
+                share.datamanager.domusic=True# boolean change too
+                share.datamanager.savesettings()# save settings
+                share.musicplayer.setmastervolume(share.datamanager.musicvol*0.2)# change music volume 0 to 1
+                self.sprite_musicvol.replacetext( self.musicvoldisps[share.datamanager.musicvol]  )
+        #
+        # toggle sound (less)
+        elif self.sprite_soundless.isclicked(controls):
+            if share.datamanager.soundvol>0:# not zero already
 
-        # toggle music
-        elif self.sprite_music.isclicked(controls):
-            self.sound_menuback.play()
-            share.datamanager.domusic=not share.datamanager.domusic
-            if share.datamanager.domusic:
-                share.musicplayer.setmastervolume(1)
-            else:
-                share.musicplayer.setmastervolume(0)
-            share.datamanager.savesettings()# save settings
-            if share.datamanager.domusic:
-                self.sprite_music.replacetext('Music: On')
-            else:
-                self.sprite_music.replacetext('Music: Off')
-
-        # toggle sound
-        elif self.sprite_sound.isclicked(controls):
-            # self.sound_menuback.play()
-            share.datamanager.dosound=not share.datamanager.dosound
-            if share.datamanager.dosound:
-                share.soundplayer.setmastervolume(1)
-            else:
-                share.soundplayer.setmastervolume(0)
-            share.datamanager.savesettings()# save settings
-            if share.datamanager.dosound:
-                self.sprite_sound.replacetext('Sound: On')
-            else:
-                self.sprite_sound.replacetext('Sound: Off')
-            share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))# reload scene with sound
-
+                share.datamanager.soundvol -= 1
+                if share.datamanager.soundvol==0:
+                    share.datamanager.dosound=False# turn off boolean too
+                share.datamanager.savesettings()# save settings
+                share.soundplayer.setmastervolume(share.datamanager.soundvol*0.2)# change sound volume 0 to 1
+                self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
+                # reset page (such that sound changes take effect, and play sound on page start)
+                share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))
+        #
+        # toggle sound (more)
+        elif self.sprite_soundmore.isclicked(controls):
+            if share.datamanager.soundvol<5:# not max already
+                share.datamanager.soundvol += 1
+                share.datamanager.dosound=True# boolean change too
+                share.datamanager.savesettings()# save settings
+                share.soundplayer.setmastervolume(share.datamanager.soundvol*0.2)# change sound volume 0 to 1
+                self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
+                # reset page (such that sound changes take effect, and play sound on page start)
+                share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))
+        #
         # instructions for controls
         elif self.sprite_controls.isclicked(controls):
             self.sound_menugo.play()

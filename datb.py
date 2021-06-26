@@ -510,8 +510,12 @@ class obj_datamanager:
                 f1.write(str(self.doshowfps)+'\n')#value
                 f1.write('domusic:'+'\n')#key
                 f1.write(str(self.domusic)+'\n')#value
+                f1.write('musicvol:'+'\n')#key
+                f1.write(str(self.musicvol)+'\n')#value
                 f1.write('dosound:'+'\n')#key
                 f1.write(str(self.dosound)+'\n')#value
+                f1.write('soundvol:'+'\n')#key
+                f1.write(str(self.soundvol)+'\n')#value
                 f1.write('devaccess:'+'\n')#key
                 f1.write(str(self.devaccess)+'\n')#value
     def loadsettings(self):
@@ -529,11 +533,21 @@ class obj_datamanager:
                 line=f1.readline()# domusic
                 line=f1.readline()
                 self.domusic=line=='True'+'\n'
+                line=f1.readline()# musicvol
+                line=f1.readline()
+                self.musicvol=int(line)
+                self.musicvol=max(0,self.musicvol)# safety checks
+                self.musicvol=min(5,self.musicvol)
                 line=f1.readline()# dosound
                 line=f1.readline()
                 self.dosound=line=='True'+'\n'
-                line=f1.readline()# dosound
+                line=f1.readline()# soundvol
                 line=f1.readline()
+                self.soundvol=int(line)
+                self.soundvol=max(0,self.soundvol)# safety checks
+                self.soundvol=min(5,self.soundvol)
+                line=f1.readline()# dev access
+                line=f1.readline()#
                 self.devaccess=line=='True'+'\n'
         else:
             # default settings
@@ -541,7 +555,9 @@ class obj_datamanager:
             self.donative=True# 1280x720(native windowed) or adapted (fullscreen) resolution
             self.doshowfps=False# show fps on/off
             self.domusic=True# music on/off
+            self.musicvol=3# 0-5 music volume
             self.dosound=True# sound on/off
+            self.soundvol=3# 0-5 sound volume
             self.devaccess=False# User has no dev access by default
             # write down default settings
             self.savesettings()

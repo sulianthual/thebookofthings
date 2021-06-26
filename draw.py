@@ -1605,6 +1605,8 @@ class obj_sound:
             self.soundsprite.stop()
             self.playing=False
             # print('stop='+self.name)
+    def reset_volume(self):# reset sound sprite volume (to mastervolume*soundfilevolume )
+        self.soundsprite.reset_volume()
     def update(self,controls):
         pass
     def finish(self):

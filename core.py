@@ -92,9 +92,9 @@ class obj_musicplayer:
         self.setup()
     def setup(self):
         self.name=None# current music being played (None=silence)
-        # volume=mastervolume*filevolume
+        #
         if share.datamanager.domusic:# launch options
-            self.mastervolume=1# master volume for music (changed in settings, ref=1)
+            self.mastervolume=share.datamanager.musicvol*0.2# master volume for music (changed in settings, 0-1)
         else:
             self.mastervolume=0
         self.musicfilevolume=1# volume specific to current music file being played
@@ -114,7 +114,8 @@ class obj_musicplayer:
             path='data/musics/'+share.musics.getmusicfilename(self.name)
         pygame.mixer.music.load(path)
         self.musicfilevolume=share.musics.getmusicvolume(self.name)
-        self.set_volume(self.mastervolume*self.musicfilevolume)
+        self.resetvolume()
+        # self.set_volume(self.mastervolume*self.musicfilevolume)
     def play(self):
         pygame.mixer.music.play(-1)# loop
     def pause(self):
@@ -127,12 +128,15 @@ class obj_musicplayer:
         pygame.mixer.music.stop()
     def set_volume(self,volume):
         pygame.mixer.music.set_volume(volume)
-    def set_volume_mult(self,volumemult):# set volume using multiplier
-        volume=pygame.mixer.music.get_volume()
-        pygame.mixer.music.set_volume(volume*volumemult)
     def setmastervolume(self,volume):
         self.mastervolume=volume
-        self.set_volume(self.mastervolume*self.musicfilevolume)
+        self.resetvolume()
+        # self.set_volume(self.volumerefmult*self.mastervolume*self.musicfilevolume)
+    def resetvolume(self):# reset volume to expected level
+        volumerefmult= 2 # IMPORTANT: arbitrary grand volume multiplicator (for all musics)
+        self.set_volume(volumerefmult*self.mastervolume*self.musicfilevolume)
+
+
 
 
 # Sound Player
@@ -142,7 +146,7 @@ class obj_soundplayer:
         self.setup()
     def setup(self):
         if share.datamanager.dosound:# launch options
-            self.mastervolume=1# master volume for sounds (changed in settings, ref=1)
+            self.mastervolume=share.datamanager.soundvol*0.2# master volume for sounds (changed in settings, ref=1)
         else:
             self.mastervolume=0
         # self.nchannels=16# max number of channels allowed
@@ -170,8 +174,8 @@ class obj_soundsprite:
             self.name='error'
             path='data/sounds/'+share.sounds.getsoundfilename(self.name)
         self.sound=pygame.mixer.Sound(path)# pygame sound (loaded to a channel)
-        volume=share.sounds.getsoundvolume(self.name)
-        self.set_volume(self.mastervolume*volume)
+        self.soundfilevolume=share.sounds.getsoundvolume(self.name)
+        self.reset_volume()
     def play(self,loop=False):
         if loop:
             self.sound.play(-1)
@@ -179,8 +183,12 @@ class obj_soundsprite:
             self.sound.play()
     def stop(self):
         self.sound.stop()
-    def set_volume(self,volume):
+    def set_volume(self,volume):# set sound volume in sprite
         self.sound.set_volume(volume)
+    def reset_volume(self):# reset volume to expected level
+        volumerefmult= 2 # IMPORTANT: arbitrary grand volume multiplicator (for all sounds)
+        self.set_volume(volumerefmult*self.mastervolume*self.soundfilevolume)
+
 
 
 ####################################################################################################################
