@@ -47,10 +47,11 @@ class obj_pagedisplay_fps:
         self.make()
     def make(self):
         text='FPS='+str(int(share.clock.getfps()))
-        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0))
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0),fillcolor=(255,255,255))
     def display(self):
         # self.sprite.display(50,20)
         self.sprite.display(1240,20)
+        # self.sprite.display(640,20)
     def update(self,controls):
         self.make()# rebuild sprite every update
         self.display()

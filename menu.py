@@ -513,8 +513,10 @@ class obj_scene_realtitlescreen(page.obj_page):
             decooptions=['book']
         elif self.maxchapter==2:# right after chapter 1, single option
             decooptions=['hero2']
+        elif self.maxchapter==3:# right after chapter 2, single option
+            decooptions=['partner']
         else:
-            # randomized options (later chapters)
+            # randomized options (after chapter 3)
             if self.maxchapter>0:
                 decooptions.append('book')
                 decooptions.append('book2')
@@ -560,6 +562,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         else:
             decochoice=None
         #
+        # decochoice='tower2'
         # print(decochoice)
         if decochoice=='book':
             self.addpart( draw.obj_image('book',(253,496),scale=0.7,rotate=0,fliph=True,flipv=False) )
@@ -1069,7 +1072,6 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
 class obj_scene_settings(obj_scene_realtitlescreen):
     def makedecorations(self):
         self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
-        self.addpart(draw.obj_textbox('V1.0',(1210,670),fontsize='smaller'))
     def setup(self,**kwargs):
         self.tosoundon=False# start page when turning back sound on
         # options
@@ -1094,44 +1096,40 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         self.sprite_back=draw.obj_textbox('[back]',(xref-70,yref),fontsize=fontref,hover=True)
         self.addpart(self.sprite_back)
         #
+
+        self.addpart( draw.obj_textbox('Music Volume: ',(xref,yref+0*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_musicless=draw.obj_textbox('-',(xref+200,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_musicless)
+        self.sprite_musicmore=draw.obj_textbox('+',(xref+330,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_musicmore)
+        self.sprite_musicvol=draw.obj_textbox('xxx',(xref+250,yref+0*dyref),fontsize=fontref,xleft=True)
+        self.addpart(self.sprite_musicvol)
+        self.musicvoldisps=['off','.','..','...','....','max']
+        self.sprite_musicvol.replacetext( self.musicvoldisps[share.datamanager.musicvol]  )
         #
-        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart( draw.obj_textbox('Sound Volume: ',(xref,yref+1*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_soundless=draw.obj_textbox('-',(xref+200,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_soundless)
+        self.sprite_soundmore=draw.obj_textbox('+',(xref+330,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_soundmore)
+        self.sprite_soundvol=draw.obj_textbox('xxx',(xref+250,yref+1*dyref),fontsize=fontref,xleft=True)
+        self.addpart(self.sprite_soundvol)
+        self.soundvoldisps=['off','.','..','...','....','max']
+        self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
+        #
+        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_display)
         if share.datamanager.donative:
             self.sprite_display.replacetext('Fullscreen: Off')
         else:
             self.sprite_display.replacetext('Fullscreen: On')
         #
-        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_showfps)
         if share.datamanager.doshowfps:
             self.sprite_showfps.replacetext('Show FPS: On')
         else:
             self.sprite_showfps.replacetext('Show FPS: Off')
-        #
-        self.addpart( draw.obj_textbox('Music Volume: ',(xref,yref+2*dyref),fontsize=fontref,xleft=True) )
-        self.sprite_musicless=draw.obj_textbox('-',(xref+200,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_musicless)
-        self.sprite_musicmore=draw.obj_textbox('+',(xref+330,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_musicmore)
-        self.sprite_musicvol=draw.obj_textbox('xxx',(xref+250,yref+2*dyref),fontsize=fontref,xleft=True)
-        self.addpart(self.sprite_musicvol)
-        self.musicvoldisps=['off','.','..','...','....','max']
-        self.sprite_musicvol.replacetext( self.musicvoldisps[share.datamanager.musicvol]  )
-        #
-
-
-        #
-        self.addpart( draw.obj_textbox('Sound Volume: ',(xref,yref+3*dyref),fontsize=fontref,xleft=True) )
-        self.sprite_soundless=draw.obj_textbox('-',(xref+200,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_soundless)
-        self.sprite_soundmore=draw.obj_textbox('+',(xref+330,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_soundmore)
-        self.sprite_soundvol=draw.obj_textbox('xxx',(xref+250,yref+3*dyref),fontsize=fontref,xleft=True)
-        self.addpart(self.sprite_soundvol)
-        self.soundvoldisps=['off','.','..','...','....','max']
-        self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
-        #
         #
         self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_controls )
