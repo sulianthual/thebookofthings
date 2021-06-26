@@ -42,13 +42,13 @@ class obj_quickscene():
             # regular scenes
             #
             # quickscene=obj_scene_settings()
-            # quickscene=obj_scene_instructions_controls_screen()
+            quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
-            quickscene=ch2.obj_scene_ch2p10()
+            # quickscene=ch2.obj_scene_ch2p10()
             # quickscene=ch2.obj_scene_ch2play2()
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p8()
@@ -132,7 +132,7 @@ class obj_gotobookmark():
             self.dict['ch0_draweraser']='draw the eraser'
             self.dict['ch0_drawbook']='draw the book'
             self.dict['ch0_meetbook']='write your mood'
-            self.dict['ch0_drawpointer']='draw the pointer'
+            self.dict['ch0_checkcontrols']='check the game controls'
             # self.dict['ch0_endunlock']='Prologue End'
             if bookmarkname == 'ch0_start':# also default in datb.py if book is empty
                 bookmarkscene=ch0.obj_scene_prologue()
@@ -144,8 +144,8 @@ class obj_gotobookmark():
                 bookmarkscene=ch0.obj_scene_ch0p7()
             elif bookmarkname == 'ch0_meetbook':
                 bookmarkscene=ch0.obj_scene_ch0p10()
-            elif bookmarkname == 'ch0_drawpointer':
-                bookmarkscene=ch0.obj_scene_ch0p12()
+            elif bookmarkname == 'ch0_checkcontrols':
+                bookmarkscene=ch0.obj_scene_ch0p13()
             elif bookmarkname == 'ch0_endunlock':
                 bookmarkscene=ch0.obj_scene_ch0unlocknext()
             else:
@@ -1088,46 +1088,41 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         #
         self.sprite_back=draw.obj_textbox('[back]',(xref-70,yref),fontsize=fontref,hover=True)
         self.addpart(self.sprite_back)
-        self.sprite_keyboard=draw.obj_textbox('xxx',(xref,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
-        self.addpart(self.sprite_keyboard)
-        if share.datamanager.doazerty:
-            self.sprite_keyboard.replacetext('Keyboard: Azerty (arrows = ZQSD)')
-        else:
-            self.sprite_keyboard.replacetext('Keyboard: Qwerty (arrows = WASD)')
         #
-        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        #
+        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_display)
         if share.datamanager.donative:
             self.sprite_display.replacetext('Fullscreen: Off')
         else:
             self.sprite_display.replacetext('Fullscreen: On')
         #
-        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_showfps)
         if share.datamanager.doshowfps:
             self.sprite_showfps.replacetext('Show FPS: On')
         else:
             self.sprite_showfps.replacetext('Show FPS: Off')
         #
-        self.sprite_music=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_music=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_music)
         if share.datamanager.domusic:
             self.sprite_music.replacetext('Music: On')
         else:
             self.sprite_music.replacetext('Music: Off')
         #
-        self.sprite_sound=draw.obj_textbox('xxx',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_sound=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_sound)
         if share.datamanager.dosound:
             self.sprite_sound.replacetext('Sound: On')
         else:
             self.sprite_sound.replacetext('Sound: Off')
         #
-        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+5*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_controls )
-        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+6*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+5*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_credits )
-        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+7*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+6*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_erasebook )
         #
         # audio
@@ -1148,15 +1143,6 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         if self.sprite_back.isclicked(controls):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
-        elif self.sprite_keyboard.isclicked(controls):
-            self.sound_menuback.play()
-            share.datamanager.doazerty=not share.datamanager.doazerty
-            share.controls.azerty=share.datamanager.doazerty# change controls as well
-            share.datamanager.savesettings()# save settings
-            if share.datamanager.doazerty:
-                self.sprite_keyboard.replacetext('Keyboard: Azerty (arrows = ZQSD)')
-            else:
-                self.sprite_keyboard.replacetext('Keyboard: Qwerty (arrows = WASD)')
 
         # change display
         elif self.sprite_display.isclicked(controls):
@@ -1240,19 +1226,22 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         #
+        self.doazertymode=share.datamanager.doazerty# True/False
         self.maxchapter=share.datamanager.chapter# highest unlocked chapter
         self.hasbook=self.maxchapter>0# there is a started book or not
         #
-
-        self.text=['These are the game controls. If you have a french keyboard select azerty.']
+        self.text=['These are the game controls. If you have a french keyboard select azerty mode.']
         #
         # Game controls instructions
         self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='data/premade') )
         self.addpart( draw.obj_textbox('[left mouse]',(927,311),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[right mouse]',(1136,252),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[space]',(564,533),color=share.colors.black) )
-
-        self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.black) )
+        #
+        if self.doazertymode:
+            self.addpart( draw.obj_textbox('[zqsd]',(430,260),color=share.colors.red) )
+        else:
+            self.addpart( draw.obj_textbox('[wasd]',(430,260),color=share.colors.red) )
         self.addpart( draw.obj_textbox(   'or',(508,267),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[arrows]',(555,320),color=share.colors.black) )
         self.addpart( draw.obj_textbox('[esc]',(153,249),color=share.colors.black) )
@@ -1262,12 +1251,31 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
         self.addpart( draw.obj_textbox('play',(501,438),color=share.colors.instructions,fontsize='larger') )
         self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
-
+        #
+        self.sprite_keyboard=draw.obj_textbox('xxx',(640,140),hover=True)
+        self.addpart(self.sprite_keyboard)
+        if self.doazertymode:
+            self.sprite_keyboard.replacetext('keyboard mode: azerty (french keyboards)')
+        else:
+            self.sprite_keyboard.replacetext('keyboard mode: qwerty (most keyboards)')
+        #
+        self.sound_menuback=draw.obj_sound('menuback')
+        self.addpart( self.sound_menuback )
         #
         if self.hasbook:
             self.addpart( draw.obj_music('piano') )
         else:
             self.addpart( draw.obj_music('tension') )
+        #
+    def page(self,controls):
+        # hovers
+        if self.sprite_keyboard.isclicked(controls):
+            self.sound_menuback.play()
+            share.datamanager.doazerty=not share.datamanager.doazerty
+            share.controls.azerty=share.datamanager.doazerty# change controls as well
+            share.datamanager.savesettings()# save settings
+            share.scenemanager.switchscene(obj_scene_instructions_controls_screen())# reload scene with sound
+
 
 ####################################################################################################################
 ####################################################################################################################
