@@ -5300,10 +5300,10 @@ class obj_world_kiss(obj_world):
         # start actor
         self.startactor.addpart( 'img1', draw.obj_image('herobase',(240,400),scale=0.7) )
         self.startactor.addpart( 'img2', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7) )
-        # ungoing actor)
+        # ungoing actor
+        self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','partnerbase',(640,360)) )# partner first (background)
         self.animation=draw.obj_animation('ch2_kiss1','herobase',(640,360))
         self.ungoingactor.addpart( 'anim1', self.animation )
-        self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','partnerbase',(640,360)) )
         self.animation.addsound('kiss_kiss',100)
         # finish actor
         self.finishactor.addpart( 'img1', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )

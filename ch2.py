@@ -575,7 +575,7 @@ class obj_scene_ch2play2(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish."',\
+                     ' went to the pond and caught a fish."\n ',\
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)

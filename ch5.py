@@ -168,7 +168,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish".',
+                     ' went to the pond and caught a fish".\n ',
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)
@@ -1357,6 +1357,40 @@ class obj_scene_ch5p39(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('piano') )
 
+#
+# class obj_scene_ch5p40(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p39())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p41())
+#     def setup(self):
+#         self.text=[\
+#                    '"But when it was time for dinner, ',\
+#                    ('{heroname}',share.colors.hero),' remembered that ',\
+#                    ('{hero_he}',share.colors.hero2),' had given ',\
+#                    ('{hero_his}',share.colors.hero2),' fish to ',\
+#                    ('{eldername}',share.colors.elder),'". ',\
+#                    ]
+#         animation1=draw.obj_animation('ch5_herohungry','fish',(640,360),record=False)
+#         animation1.addimage('elderhead')
+#         self.addpart( animation1 )
+#         #
+#         animation2=draw.obj_animation('ch5_herohungry2','interrogationmark',(640,360),record=False,sync=animation1,path='data/premade')
+#         animation2.addimage('exclamationmark',path='data/premade')
+#         animation2.addimage('empty',path='data/premade')
+#         self.addpart( animation2 )
+#         #
+#         animation3=draw.obj_animation('ch5_herohungry3','herobase',(640,360),record=False,sync=animation1)
+#         self.addpart( animation3 )
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'hero1','elder1','elder2','elder3','elder4','elder5') )
+#         animation1.addsound( "hero1", [69] )
+#         animation1.addsound( "elder1", [200] )
+#         animation1.addsound( "elder4", [330],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('piano') )
+#         #
+
 
 class obj_scene_ch5p40(page.obj_chapterpage):
     def prevpage(self):
@@ -1371,25 +1405,29 @@ class obj_scene_ch5p40(page.obj_chapterpage):
                    ('{hero_his}',share.colors.hero2),' fish to ',\
                    ('{eldername}',share.colors.elder),'". ',\
                    ]
-        animation1=draw.obj_animation('ch5_herohungry','fish',(640,360),record=False)
-        animation1.addimage('elderhead')
+
+        animation1=draw.obj_animation('ch5_herohungry2','interrogationmark',(640,360),record=False,path='data/premade')
+        animation1.addimage('exclamationmark',path='data/premade')
+        animation1.addimage('empty',path='data/premade')
         self.addpart( animation1 )
         #
-        animation2=draw.obj_animation('ch5_herohungry2','interrogationmark',(640,360),record=False,sync=animation1,path='data/premade')
-        animation2.addimage('exclamationmark',path='data/premade')
-        animation2.addimage('empty',path='data/premade')
-        self.addpart( animation2 )
+        animation1=draw.obj_animation('ch5_herohungry3','herobase',(640,360),record=False,sync=animation1)
+        self.addpart( animation1 )
         #
-        animation3=draw.obj_animation('ch5_herohungry3','herobase',(640,360),record=False,sync=animation1)
-        self.addpart( animation3 )
+        animation4=draw.obj_animation('ch5_herohungry1','elderhead',(640,360),record=False,sync=animation1)
+        self.addpart( animation4 )
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'hero1','elder1','elder2','elder3','elder4','elder5') )
-        animation1.addsound( "hero1", [69] )
-        animation1.addsound( "elder1", [200] )
-        animation1.addsound( "elder4", [330],skip=1 )
+        # self.addpart( draw.obj_imageplacer(self,'fish') )
+        self.addpart( draw.obj_image('fish',(1050,351),scale=0.5,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('largecross',(1050,351),scale=1.3,path='data/premade') )
+        animation1.addsound( "hero1", [20] )
+        animation1.addsound( "elder1", [100] )
+        animation1.addsound( "elder4", [140] )
         #
         self.addpart( draw.obj_music('piano') )
-        #
+
+
+
 
 class obj_scene_ch5p41(page.obj_chapterpage):
     def prevpage(self):

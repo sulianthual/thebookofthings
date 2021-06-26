@@ -298,7 +298,7 @@ class obj_scene_ch8atpartnerserenade(page.obj_chapterpage):
         self.world=world.obj_world_serenade(self)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music('partner') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch8atpartnerkiss(page.obj_chapterpage):

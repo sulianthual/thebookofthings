@@ -273,7 +273,7 @@ class obj_scene_ch1p10(page.obj_chapterpage):
         pass# no textbox for nextpage
     def setup(self):
         tempo='['+share.datamanager.controlname('down')+']. '
-        self.text=['Lower the hook with '+tempo]
+        self.text=['Lower the hook with '+tempo+'\n ']
         self.world=world.obj_world_fishing(self)# fishing mini-game
         self.addpart(self.world)
         #
@@ -292,7 +292,7 @@ class obj_scene_ch1p11(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' is going places. ',\
                     'Lets write down in our story: "',\
                     'the ',('hero',share.colors.hero),\
-                    ' went fishing and caught a ',('fish',share.colors.item2),'". ',\
+                    ' went fishing and caught a ',('fish',share.colors.item2),'".',\
                    ]
         animation=draw.obj_animation('ch1_herofishmove','herobasefish',(640,360),record=False)
         self.addpart(animation)
@@ -461,7 +461,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
                      ' went fishing and caught a ',\
-                     ('fish',share.colors.item2),'."',\
+                     ('fish',share.colors.item2),'."\n ',\
                    ]
         self.world=world.obj_world_fishing(self)
         self.addpart(self.world)

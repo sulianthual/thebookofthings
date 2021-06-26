@@ -42,28 +42,33 @@ class obj_quickscene():
             # regular scenes
             #
             # quickscene=obj_scene_settings()
-            quickscene=obj_scene_instructions_controls_screen()
+            # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
-            # quickscene=ch1.obj_scene_ch1p3()
+            # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
-            # quickscene=ch2.obj_scene_ch2p8()
-            # quickscene=ch2.obj_scene_ch2play4()
+            quickscene=ch2.obj_scene_ch2p10()
+            # quickscene=ch2.obj_scene_ch2play2()
             # quickscene=ch3.obj_scene_ch3p19death()
-            # quickscene=ch3.obj_scene_ch3p24()
+            # quickscene=ch3.obj_scene_ch3p8()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_ch4p2a()
-            # quickscene=ch5.obj_scene_ch5p35a()
-            # quickscene=ch5.obj_scene_ch5p39()
+            # quickscene=ch4.obj_scene_ch4p5()
+            # quickscene=ch5.obj_scene_ch5p5()
+            # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
+            # quickscene=ch6.obj_scene_ch6p5()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p39death()
+            # quickscene=ch7.obj_scene_ch7p4()
+            # quickscene=ch7.obj_scene_ch7p48b()
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
+            # quickscene=ch8.obj_scene_ch8atpartner()
             # quickscene=ch8.obj_scene_ch8roam()
+
             #
 
             #
