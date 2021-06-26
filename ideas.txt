@@ -66,6 +66,23 @@ It should be done in OTHER games with other softwares that do this more easily (
 ###########################################################
 * Other Ideas (maybe later or never, not so important):
 
+- Chapter 2: is a bit long with lots of drawings. Add minigames:
+             can be tennis (play pong) with partner
+             can be around the flowers....: collect as many as possible (like coins)
+
+- Chapter 4: add zelda like minigame while in hero enters the woods (like in the lost woods of zelda oot)
+            1.) do smallish scenes with trees, bushes, flowers
+            2.) scenes exits are several doors, all lead back to beginning of scene except one (that has music)
+            3.) add a weapon to hero (sword?), and battle 2 critters: draw a bat, and a rat (can be reused later on), or a snake
+
+- Chapter 4: to make the lying game slightly more engaging:
+             put two platforms, one for True, one for False
+             then have the hero physically move/jump on one platform to make his choice
+             (or make them large switches to activate: wrong answer makes a snake fall that has to be killed)
+
+- Chapter 7: boss fight, add ligntningbolts that villain can throw horizontally (replacing the kick)
+
+
 
 - Make a first chapter (the prologue or between prologue and chapter I) that mimicks the creation of the universe
   make a big bang (done by the book of things who is like god in this universe)
@@ -186,7 +203,7 @@ BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
 
 - allow player to use color on drawings???
 
-
+- Manu idea: follow Gulliver on asset reuse (same worlds but small/big, logic/illogic)
 - allow player to name more stuff: like locations (the evil lair, home, the highest peak, etc...)
 - Make game website (thebookofthings.com). with game download etc...
 - remove unlock system (?)

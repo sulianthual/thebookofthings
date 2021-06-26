@@ -130,7 +130,8 @@ class obj_chapterpage(obj_page):
     # textboxes for mouse browsing
     def textboxplace(self):
         pagetext_x,pagetext_y=self.pagetext.getposition()
-        if pagetext_x<1000:
+        # print(pagetext_x)
+        if pagetext_x<1080:
             self.textboxprevpage_xy=( pagetext_x+10,pagetext_y+33 )
             self.textboxnextpage_xy=( pagetext_x+10+180,pagetext_y+33 )
         else:

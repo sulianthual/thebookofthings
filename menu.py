@@ -42,6 +42,7 @@ class obj_quickscene():
             # regular scenes
             #
             # quickscene=obj_scene_settings()
+            quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
@@ -58,7 +59,7 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p36fail()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p39death()
-            quickscene=ch7.obj_scene_ch7p49death()
+            # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
@@ -1238,7 +1239,7 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         self.hasbook=self.maxchapter>0# there is a started book or not
         #
 
-        self.text=['These are the game controls.']
+        self.text=['These are the game controls. If you have a french keyboard select azerty.']
         #
         # Game controls instructions
         self.addpart( draw.obj_image('instructions_controls_domousebrowse',(640,420),path='data/premade') )
