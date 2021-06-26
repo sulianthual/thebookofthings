@@ -843,6 +843,7 @@ class obj_scene_ch7p21b(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
+        share.datamanager.setbookmark('ch7_startdodge')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[' Press ',\
                     (tempo,share.colors.instructions),\
@@ -866,7 +867,6 @@ class obj_scene_ch7p22(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        share.datamanager.setbookmark('ch7_startdodge')
         self.text=['\n ']
         self.world=world.obj_world_dodgegunshots(self,intower=True)
         self.addpart(self.world)
@@ -985,6 +985,7 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
+        share.datamanager.setbookmark('ch7_startstomp')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -1009,7 +1010,6 @@ class obj_scene_ch7p25(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        share.datamanager.setbookmark('ch7_startstomp')
         self.text=['\n ']
         self.world=world.obj_world_stompfight(self)
         self.addpart(self.world)
@@ -1800,6 +1800,7 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
+        share.datamanager.setbookmark('ch7_startmech')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -1824,7 +1825,6 @@ class obj_scene_ch7p49(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        share.datamanager.setbookmark('ch7_startmech')
         self.text=['\n ']
         self.world=world.obj_world_mechfight(self)
         self.addpart(self.world)

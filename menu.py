@@ -246,7 +246,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch3_drawgun' :
                 bookmarkscene=ch3.obj_scene_ch3p15()
             elif bookmarkname == 'ch3_startdodge' :
-                bookmarkscene=ch3.obj_scene_ch3p19()
+                bookmarkscene=ch3.obj_scene_ch3p18a()
             elif bookmarkname == 'ch3_windodge' :
                 bookmarkscene=ch3.obj_scene_ch3p20()
             elif bookmarkname == 'ch3_gohome' :
@@ -346,7 +346,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch5_eldercheatsecret' :
                 bookmarkscene=ch5.obj_scene_ch5p32()
             elif bookmarkname == 'ch5_rps3' :
-                bookmarkscene=ch5.obj_scene_ch5p36()
+                bookmarkscene=ch5.obj_scene_ch5p35a()
             elif bookmarkname == 'ch5_winrps3' :
                 bookmarkscene=ch5.obj_scene_ch5p37()
             elif bookmarkname == 'ch5_gohome' :
@@ -374,7 +374,7 @@ class obj_gotobookmark():
             # self.dict['ch6_sneak3']='sneak game round 3'
             # self.dict['ch6_sneak4']='sneak game round 4'
             self.dict['ch6_drawcow']='draw treasure'
-            self.dict['ch6_startride']='ride treasure'
+            self.dict['ch6_startride']='play the chase game'
             # self.dict['ch6_winride']='made it to the ship'
             # self.dict['ch6_byesailor']='bye bye sailor'
             self.dict['ch6_gohome']='back at home'
@@ -398,7 +398,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch6_startskullisland':
                 bookmarkscene=ch6.obj_scene_ch6p27()
             elif bookmarkname == 'ch6_startsneak':
-                bookmarkscene=ch6.obj_scene_ch6p29()
+                bookmarkscene=ch6.obj_scene_ch6p30()
             elif bookmarkname == 'ch6_sneak1':
                 bookmarkscene=ch6.obj_scene_ch6p30a()
             elif bookmarkname == 'ch6_sneak2':
@@ -410,7 +410,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch6_drawcow':
                 bookmarkscene=ch6.obj_scene_ch6p34()
             elif bookmarkname == 'ch6_startride':
-                bookmarkscene=ch6.obj_scene_ch6p39()
+                bookmarkscene=ch6.obj_scene_ch6p38c()
             elif bookmarkname == 'ch6_winride':
                 bookmarkscene=ch6.obj_scene_ch6p40()
             elif bookmarkname == 'ch6_byesailor':
@@ -453,9 +453,9 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch7_putpassword2':
                 bookmarkscene=ch7.obj_scene_ch7p19()
             elif bookmarkname == 'ch7_startdodge':
-                bookmarkscene=ch7.obj_scene_ch7p22()
+                bookmarkscene=ch7.obj_scene_ch7p21b()
             elif bookmarkname == 'ch7_startstomp':
-                bookmarkscene=ch7.obj_scene_ch7p25()
+                bookmarkscene=ch7.obj_scene_ch7p24b()
             elif bookmarkname == 'ch7_winstomp':
                 bookmarkscene=ch7.obj_scene_ch7p26()
             elif bookmarkname == 'ch7_gohome':
@@ -463,7 +463,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch7_villainagain':
                 bookmarkscene=ch7.obj_scene_ch7p40()
             elif bookmarkname == 'ch7_startmech':
-                bookmarkscene=ch7.obj_scene_ch7p49()
+                bookmarkscene=ch7.obj_scene_ch7p48c()
             elif bookmarkname == 'ch7_winmech':
                 bookmarkscene=ch7.obj_scene_ch7p50()
             elif bookmarkname == 'ch7_drawcake':

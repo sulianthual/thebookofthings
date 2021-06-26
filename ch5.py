@@ -1207,6 +1207,7 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
+        share.datamanager.setbookmark('ch5_rps3')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -1232,7 +1233,6 @@ class obj_scene_ch5p36(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        share.datamanager.setbookmark('ch5_rps3')
         self.text=['\n ']
         self.world=world.obj_world_rockpaperscissors(self)
         self.addpart(self.world)

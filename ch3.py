@@ -635,6 +635,7 @@ class obj_scene_ch3p18a(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
+        share.datamanager.setbookmark('ch3_startdodge')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -661,7 +662,6 @@ class obj_scene_ch3p19(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
-        share.datamanager.setbookmark('ch3_startdodge')
         self.text=['\n ']# non empty for browser adjustment
         self.world=world.obj_world_dodgegunshots(self)
         self.addpart(self.world)

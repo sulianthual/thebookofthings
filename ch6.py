@@ -791,7 +791,6 @@ class obj_scene_ch6p29(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p30())
     def setup(self):
-        share.datamanager.setbookmark('ch6_startsneak')
         self.text=[\
                    '"Good luck squid! said ',('{sailorname}',share.colors.sailor),'. ',\
                    'I will be on the radio if you need any help. ',\
@@ -837,6 +836,7 @@ class obj_scene_ch6p30(page.obj_chapterpage):
     def textboxnextpage(self):
         pass# no textbox for nextpage
     def setup(self):
+        share.datamanager.setbookmark('ch6_startsneak')
         self.text=['"You are doing great, said ',\
                    ('{sailorname}',share.colors.sailor),' on the radio. ',\
                    'Keep moving right." ',\
@@ -1151,6 +1151,7 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
     def textboxnextpage(self):
         pass
     def setup(self):
+        share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -1179,7 +1180,6 @@ class obj_scene_ch6p39(page.obj_chapterpage):
         self.textboxprevpage_xy=(350,50)
         self.textboxnextpage_xy=(530,50)
     def setup(self):
-        share.datamanager.setbookmark('ch6_startride')
         self.text=[' ']
         self.world=world.obj_world_ridecow(self)
         self.addpart(self.world)
