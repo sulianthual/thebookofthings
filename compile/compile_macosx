@@ -1,0 +1,50 @@
+#!/bin/bash
+# 
+# version for : macosx
+# This code compiles the executable, zips it etc...
+#
+###############################
+# PARAMETERS
+# name of application
+
+appnamepre='thebookofthings'
+
+###############################
+
+
+# compile with pyinstaller (and main.spec file)
+# this creates executable folder in dist
+# (should have proper main.spec ready beforehand)
+cp forpyinstaller/main.spec ../
+cd ../
+pyinstaller main.spec
+
+# make game folder (name specific to platform
+appname=$appnamepre'_macosx'
+\rm -R dist/$appname
+mkdir dist/$appname
+
+# add code to game folder
+mv dist/code dist/$appname
+
+# add launcher to game folder 
+# (should have proper launcher in data/pyinstaller, .bat for windows, bash for linux/mac)
+launchername='launcher'
+cp compile/forpyinstaller/$launchername dist/$appname
+
+# zip the game folder (move it alongsize main folder)
+cd dist
+zip -r $appname $appname
+mv $appname.zip ../..
+cd ../
+
+#cleanup pyinstaller
+\rm main.spec
+\rm -R dist
+\rm -R build
+\rm -R __pycache__
+
+
+
+
+

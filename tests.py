@@ -109,6 +109,7 @@ class obj_scene_testmenu(page.obj_page):
         #
         # ideas
         self.list.append(obj_scene_testbreakfastdrinking())
+        self.list.append(obj_scene_testforestgame())
         #
         self.listlen=len(self.list)
 
@@ -1937,6 +1938,21 @@ class obj_scene_testbreakfastdrinking2(page.obj_chapterpage):
 ######################
 
 
+######################
+
+# minigame from after chapter 4: small sword and enemies, find ones way in the forest
+# possible enemies:  (snake, bat, crow)
+class obj_scene_testforestgame(page.obj_chapterpage):
+    def pagename(self):
+        return 'Forest with enemies'
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_testmenu())
+    def nextpage(self):
+        pass
+    def setup(self):
+        self.text=['Forest with enemies: ',\
+                   'for chapt 4 ',\
+                   ]
 
 
 
