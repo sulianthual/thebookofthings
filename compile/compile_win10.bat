@@ -18,8 +18,7 @@ SET appname=%appnamepre%_win10
 @RD /S /Q dist\%appname%
 MKDIR dist\%appname%
 MKDIR dist\%appname%\code
-@Rem ROBOCOPY dist\code dist\%appname%\code /E
-MOVE dist\code dist\%appname%
+ROBOCOPY /E /MOVE dist\code dist\%appname%\code 
 XCOPY  /S compile\forpyinstaller\launcher.bat dist\%appname%
 
 @Rem zip the folder (you need 7zip installed)
