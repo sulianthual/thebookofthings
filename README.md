@@ -5,7 +5,7 @@
 
 code by Sulian Thual (2020)
 
-A simple adventure game with a twist: you draw everything! Takes about one hour to complete. Made to learn object-oriented programming with python and pygame. 
+A short adventure game with a twist: you draw everything! Your hero is on a quest to save his/her partner, and will meet many characters along the way. Free to play, supports keyboard and mouse controls, and takes about one hour to complete. Made with Python and Pygame (2021). 
 
 
 references: https://github.com/sulianthual/thebookofthings
@@ -19,6 +19,6 @@ references: https://github.com/sulianthual/thebookofthings
 2) run main.py from the main folder ($python3 main.py or $python main.py)
 
 
-3) Alternatively, you can simply run a compiled executable for your platform (windows, mac or linux). Executables (updated occasionally) are available on my webpage [here](https://sites.google.com/site/sulianthual/thebookofthings).
+3) Alternatively, you can simply download the executable for either windows, mac or linux [here](https://sulianthual.itch.io/the-book-of-things).
 
 
