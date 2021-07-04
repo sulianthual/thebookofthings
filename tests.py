@@ -136,9 +136,8 @@ class obj_testpage(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):# no browsing
         share.scenemanager.switchscene(obj_scene_testmenu())
-    def textboxplace(self):# always top left
-        self.textboxprevpage_xy=( 10,690 )
-        self.textboxnextpage_xy=( 190,690 )
+    def textboxset(self):
+        self.textboxopt={'xy':(0,690),'text':'[back]'}
     def triggerprevpage3(self,controls):
         return self.triggerprevpage2(controls) or (controls.gb and controls.gbc)
     def triggernextpage3(self,controls):
@@ -307,24 +306,15 @@ class obj_scene_testpagebookmark(obj_testpage):
 class obj_scene_testpagebacknext(obj_testpage):
     def prevpage(self):
         pass
-    def triggerprevpage(self,controls):# this turns off the trigger from click
-        return False
-    def textboxprevpage(self):# this does show the [Back] textbox
-        pass
     def pagename(self):
-        return 'Page [Back] [Next]'
-    def textboxplace(self):# This modifies the position of the textboxes
-        self.textboxprevpage_xy=(1050,660)
-        self.textboxnextpage_xy=(1230,660)
+        return 'Page [Next]'
+    def textboxset(self):
+        # change options here !
+        self.textboxopt={'do':True, 'xy':(640,360),'text':'[test]','align':'center'}
     def setup(self):
-        self.text=['Page [Back] [Next]: by default all chapter pages have these clickable textboxes',\
-                   'Placement methods are  in page.py, obj_chapterpage (textboxplace, textboxprevpage, etc...). ',\
-                   'These textboxes try to go right after main text, but sometimes further adjustment are necessary ',\
-                   '\n (note: option domousebrowse has become permanent, must always remain =True) ',\
+        self.text=['Page [Next]: by default all chapter pages have that clickable textboxes',\
+                   'change options in page by adding def textboxset(), and edit the dictionary. ',\
                    ]
-        # share.datamanager.setbookmark('ch0_drawpen')# this in a regular chapter page sets a bookmark
-
-
 
 # Scene: page basics
 class obj_scene_testheadermaker(obj_testpage):
@@ -913,16 +903,16 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','flower','pond','bush']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['villainhead','gun','bullet','tower','mountain','bug']):
+        for c,value in enumerate(['villainhead','tower','mountain','gun','bullet','bug']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['bunnyhead','cave','tree']):
+        for c,value in enumerate(['cave','tree','bunnyhead','bunnybody','lyingnote']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['elderhead','cloud','lightningbolt','rock','paper','scissors']):
+        for c,value in enumerate(['cloud','lightningbolt','elderhead','rock','paper','scissors']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['sailorhead','skeletonhead','cow','sailboat','palmtree','wave']):
+        for c,value in enumerate(['palmtree','wave','sailorhead','sailorhat','sailboat','skeletonhead','cow']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
         for c,value in enumerate(['cake']):
@@ -943,10 +933,8 @@ class obj_scene_testtrailer(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p1())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -963,10 +951,8 @@ class obj_scene_testtrailer_p1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p2())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -983,10 +969,8 @@ class obj_scene_testtrailer_p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p1())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p2a())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1013,10 +997,8 @@ class obj_scene_testtrailer_p2a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p3())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1054,10 +1036,8 @@ class obj_scene_testtrailer_p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p2a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p4())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1091,10 +1071,8 @@ class obj_scene_testtrailer_p4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p6())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1131,10 +1109,8 @@ class obj_scene_testtrailer_p6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p7())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1167,10 +1143,8 @@ class obj_scene_testtrailer_p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p8())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1202,10 +1176,8 @@ class obj_scene_testtrailer_p8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p7())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p9())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1237,10 +1209,8 @@ class obj_scene_testtrailer_p9(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p8())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p10())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1276,10 +1246,8 @@ class obj_scene_testtrailer_p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p9())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p11())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1335,10 +1303,8 @@ class obj_scene_testtrailer_p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p10())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p12())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1384,10 +1350,8 @@ class obj_scene_testtrailer_p12(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p11())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p13())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1434,10 +1398,8 @@ class obj_scene_testtrailer_p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p14())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1478,10 +1440,8 @@ class obj_scene_testtrailer_p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p13())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p15())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1529,10 +1489,8 @@ class obj_scene_testtrailer_p15(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p14())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p16())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1577,10 +1535,8 @@ class obj_scene_testtrailer_p16(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p15())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p17())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1618,10 +1574,8 @@ class obj_scene_testtrailer_p17(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p16())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p18())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1661,10 +1615,8 @@ class obj_scene_testtrailer_p18(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p17())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p19())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1696,10 +1648,8 @@ class obj_scene_testtrailer_p19(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p18())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p20())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1734,10 +1684,8 @@ class obj_scene_testtrailer_p20(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p19())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testtrailer_p21())
-    def textboxprevpage(selfdd):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1767,10 +1715,8 @@ class obj_scene_testtrailer_p21(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testtrailer_p20())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggerprevpage(self,controls):
         return controls.gb and controls.gbc
     def triggernextpage(self,controls):
@@ -1795,12 +1741,8 @@ class obj_scene_testtrailer_p21(page.obj_chapterpage):
 class obj_scene_testdrafting(obj_testpage):
     def pagename(self):
         return 'Drafting Board'
-    def textboxprevpage(self):
-        pass
-    def textboxnextpage(self):
-        pass
-    def triggerprevpage(self,controls):
-        return False
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def triggernextpage(self,controls):
         return False
 

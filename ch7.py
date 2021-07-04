@@ -95,8 +95,8 @@ class obj_scene_ch7p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p3())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         share.datamanager.setbookmark('ch7_startstory')
         self.text=[\
@@ -115,8 +115,8 @@ class obj_scene_ch7p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p4())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                 ('{heroname}',share.colors.hero),' ',\
@@ -137,8 +137,8 @@ class obj_scene_ch7p4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p5())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
@@ -189,9 +189,8 @@ class obj_scene_ch7p6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p7())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,55)
-        self.textboxnextpage_xy=(1230,55)
+    def textboxset(self):
+        self.textboxopt={'xy':(1230-180,55)}
     def setup(self):
         self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
         xmargin=100
@@ -226,9 +225,8 @@ class obj_scene_ch7p7(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p8())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,55)
-        self.textboxnextpage_xy=(1230,55)
+    def textboxset(self):
+        self.textboxopt={'xy':(1230-180,55)}
     def setup(self):
         self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
         xmargin=100
@@ -268,9 +266,8 @@ class obj_scene_ch7p8(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p7())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p9())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,55)
-        self.textboxnextpage_xy=(1230,55)
+    def textboxset(self):
+        self.textboxopt={'xy':(1230-180,55)}
     def setup(self):
         self.addpart( draw.obj_textbox('"The third letter said:"',(50,53),xleft=True) )
         xmargin=100
@@ -331,8 +328,8 @@ class obj_scene_ch7p10(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p11())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         share.datamanager.setbookmark('ch7_gototower')
         self.text=['go to the tower in the west']
@@ -839,8 +836,8 @@ class obj_scene_ch7p21b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p22())
     def triggernextpage(self,controls):
         return controls.ga and controls.gac
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         share.datamanager.setbookmark('ch7_startdodge')
         tempo='['+share.datamanager.controlname('action')+']'
@@ -863,8 +860,8 @@ class obj_scene_ch7p22(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p22death())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=['\n ']
         self.world=world.obj_world_dodgegunshots(self,intower=True)
@@ -928,9 +925,8 @@ class obj_scene_ch7p24(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p23())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p24a())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,620)
-        self.textboxnextpage_xy=(1230,620)
+    def textboxset(self):
+        self.textboxopt={'xy':(1230-80,620)}
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
@@ -952,9 +948,8 @@ class obj_scene_ch7p24a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p24())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p24b())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(1050,620)
-        self.textboxnextpage_xy=(1230,620)
+    def textboxset(self):
+        self.textboxopt={'xy':(1230-80,620)}
     def setup(self):
         self.text=[\
                   'Kick ',\
@@ -976,13 +971,10 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p24a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p25())
-    # def textboxplace(self):
-    #     self.textboxprevpage_xy=(1050,620)
-    #     self.textboxnextpage_xy=(1230,620)
     def triggernextpage(self,controls):
         return controls.ga and controls.gac
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         share.datamanager.setbookmark('ch7_startstomp')
         tempo='['+share.datamanager.controlname('action')+']'
@@ -1006,8 +998,8 @@ class obj_scene_ch7p25(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p25death())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=['\n ']
         self.world=world.obj_world_stompfight(self)
@@ -1210,8 +1202,8 @@ class obj_scene_ch7p30(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p31())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         share.datamanager.setbookmark('ch7_gohome')
         self.text=[\
@@ -1234,8 +1226,8 @@ class obj_scene_ch7p31(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p32())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),' and ',\
@@ -1258,8 +1250,8 @@ class obj_scene_ch7p32(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p33())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                    '"',('{heroname}',share.colors.hero),' charmed ',\
@@ -1278,8 +1270,8 @@ class obj_scene_ch7p33(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p34())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                    '"...and then they kissed. It was the ',\
@@ -1298,8 +1290,8 @@ class obj_scene_ch7p34(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p35())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                 '"It was already night."',\
@@ -1317,8 +1309,8 @@ class obj_scene_ch7p35(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p36())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                    '"',\
@@ -1724,9 +1716,8 @@ class obj_scene_ch7p48(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p47())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p48a())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(50,250)
-        self.textboxnextpage_xy=(250,250)
+    def textboxset(self):
+        self.textboxopt={'xy':(1230-80,620)}
     def setup(self):
         self.text=[\
                     'Oh boy, that is one epic fight, said the book of things. ',\
@@ -1744,9 +1735,8 @@ class obj_scene_ch7p48a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p48())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p48b())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(50,250)
-        self.textboxnextpage_xy=(250,250)
+    def textboxset(self):
+        self.textboxopt={'xy':(1280-180,220)}
     def setup(self):
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
@@ -1757,7 +1747,7 @@ class obj_scene_ch7p48a(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart(draw.obj_image('show3',(440,270),scale=1,path='data/premade',fliph=True))
-        self.addpart( draw.obj_textbox('(not the actual fight)',(980,230),color=share.colors.instructions) )
+        self.addpart( draw.obj_textbox('(not the actual fight)',(250,220),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1767,9 +1757,8 @@ class obj_scene_ch7p48b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p48a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p48c())
-    def textboxplace(self):
-        self.textboxprevpage_xy=(50,250)
-        self.textboxnextpage_xy=(250,250)
+    def textboxset(self):
+        self.textboxopt={'xy':(1280-180,220)}
     def setup(self):
         self.text=[\
                   'Hit ',\
@@ -1781,7 +1770,7 @@ class obj_scene_ch7p48b(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart(draw.obj_image('show1',(487,232),scale=0.75,fliph=True,flipv=True,path='data/premade'))
-        self.addpart( draw.obj_textbox('(not the actual fight)',(980,220),color=share.colors.instructions) )
+        self.addpart( draw.obj_textbox('(not the actual fight)',(250,220),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 
@@ -1791,13 +1780,10 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p48b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p49())
-    # def textboxplace(self):
-    #     self.textboxprevpage_xy=(50,250)
-    #     self.textboxnextpage_xy=(250,250)
     def triggernextpage(self,controls):
         return controls.ga and controls.gac
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         share.datamanager.setbookmark('ch7_startmech')
         tempo='['+share.datamanager.controlname('action')+']'
@@ -1821,8 +1807,8 @@ class obj_scene_ch7p49(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p49death())
     def triggernextpage(self,controls):
         return self.world.done
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=['\n ']
         self.world=world.obj_world_mechfight(self)

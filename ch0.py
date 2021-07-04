@@ -43,7 +43,7 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        self.text=['One could press [next] to continue, [back] to go back, or [esc] to go back to the menu. It was always like that.']
+        self.text=['One could always press [next] to continue, unless there was something else to do. One could also press [esc] to go back to the menu. ']
         # self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
@@ -204,15 +204,13 @@ class obj_scene_ch0p9(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-
 class obj_scene_ch0p10(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p9())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
-    # def textboxplace(self):
-    #     self.textboxprevpage_xy=(580,140)
-    #     self.textboxnextpage_xy=(760,140)
+    def textboxset(self):
+        self.textboxopt={'xy':(640,650),'text':'[confirm]'}
     def setup(self):
         share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'

@@ -30,7 +30,6 @@ class obj_world:
         self.creator=creator# created by scene (i.e. page)
         self.ruledict={}# dictionary of rules in the world (non-ordered)
         self.actorlist=[]# list of actors in the world (ordered for updates)
-        self.domousebrowse=True# mouse browsing on (MUST REMAIN TRUE)
         self.setup(**kwargs)
     def setup(self,**kwargs):# fill here for childs
         pass
@@ -417,7 +416,7 @@ class obj_world_sunrise(obj_world):
 
         # text
         self.textboxclick=draw.obj_textbox('Hold ['+share.datamanager.controlname('up')\
-        +'] to rise the sun',(1000,620),color=share.colors.instructions,hover=self.domousebrowse)
+        +'] to rise the sun',(1000,620),color=share.colors.instructions,hover=True)
         self.text_undone.addpart( 'text1', self.textboxclick )
         self.text_done.addpart( 'text1', draw.obj_textbox('Morning Time!',(1000,620)) )
         # timer for ungoing part
@@ -433,16 +432,12 @@ class obj_world_sunrise(obj_world):
 
 
     def triggerungoing(self,controls):
-        return controls.gu and controls.guc or (self.domousebrowse and self.textboxclick.isclicked(controls))
+        return controls.gu and controls.guc or (True and self.textboxclick.isclicked(controls))
     def triggerstart(self,controls):
-        if self.domousebrowse:
-            return not controls.gu and not self.textboxclick.isholdclicked(controls)
-        else:
-            return not controls.gu
+        return not controls.gu and not self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         if not self.goal:
             # goal unreached state
             if not self.ungoing:
@@ -559,7 +554,7 @@ class obj_world_wakeup(obj_world):
             self.finishactor.addpart( 'imgadd2', draw.obj_image('bug',(1168,595),scale=0.33) )
         self.finishactor.addpart( 'img1', draw.obj_image(self.herobaseimg,(903,452),scale=0.7) )
         # text
-        self.textboxclick=draw.obj_textbox('Hold ['+share.datamanager.controlname('right')+'] to Wake up',(1100,480),color=share.colors.instructions,hover=self.domousebrowse)
+        self.textboxclick=draw.obj_textbox('Hold ['+share.datamanager.controlname('right')+'] to Wake up',(1100,480),color=share.colors.instructions,hover=True)
         self.text_undone.addpart( 'text1', self.textboxclick )
         self.text_done.addpart( 'text1', draw.obj_textbox('Good Morning!',(1150,480)) )
 
@@ -576,16 +571,12 @@ class obj_world_wakeup(obj_world):
         self.creator.addpart(self.sounddone)
 
     def triggerungoing(self,controls):
-        return controls.gr and controls.grc or (self.domousebrowse and self.textboxclick.isclicked(controls))
+        return controls.gr and controls.grc or (True and self.textboxclick.isclicked(controls))
     def triggerstart(self,controls):
-        if self.domousebrowse:
-            return not controls.gr and not self.textboxclick.isholdclicked(controls)
-        else:
-            return not controls.gr
+        return not controls.gr and not self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         if not self.goal:
             # goal unreached state
             if not self.ungoing:
@@ -951,7 +942,7 @@ class obj_world_fishing(obj_world):
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
         tempo='['+share.datamanager.controlname('down')+': lower hook]'
-        self.textboxclick=draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions,hover=self.domousebrowse)
+        self.textboxclick=draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions,hover=True)
         self.text1.addpart( 'textbox1',self.textboxclick )
         self.text2=obj_grandactor(self,(840,500))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,460)) )
@@ -966,8 +957,7 @@ class obj_world_fishing(obj_world):
         return controls.gd or self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         # hook
         if self.triggerlowerhook(controls) and self.fishfree:
             if controls.gdc or self.textboxclick.isclicked(controls):
@@ -1063,7 +1053,7 @@ class obj_world_eatfish(obj_world):
         self.text1=obj_grandactor(self,(640,360))
         tempo='alternate ['+share.datamanager.controlname('left')
         tempo +='] and ['+share.datamanager.controlname('right')+'] to eat'
-        self.textboxclick=draw.obj_textbox(tempo,(480,660),color=share.colors.instructions,hover=self.domousebrowse)
+        self.textboxclick=draw.obj_textbox(tempo,(480,660),color=share.colors.instructions,hover=True)
         self.text1.addpart( 'textbox1',self.textboxclick )
         self.text2=obj_grandactor(self,(640,360))
         self.text2.addpart( 'textbox2',draw.obj_textbox('Burp!',(800,390),fontsize='large') )
@@ -1102,20 +1092,12 @@ class obj_world_eatfish(obj_world):
         else:
             self.fish.addpart( 'img_fish',draw.obj_image('fish',(800,450), scale=self.fishscale,rotate=-45) )
     def triggerleftbite(self,controls):
-        if self.domousebrowse:
-            return (controls.gl and controls.glc) or self.textboxclick.isclicked(controls)
-        else:
-            return controls.gl and controls.glc
+        return (controls.gl and controls.glc) or self.textboxclick.isclicked(controls)
     def triggerrightbite(self,controls):
-        if self.domousebrowse:
-            return (controls.gr and controls.grc) or self.textboxclick.isclicked(controls)
-        else:
-            return controls.gr and controls.grc
-
+        return (controls.gr and controls.grc) or self.textboxclick.isclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         if not self.doneeating:
             if self.alternate_LR:
                 if self.triggerleftbite(controls):
@@ -5339,7 +5321,7 @@ class obj_world_kiss(obj_world):
         self.textboxclick=draw.obj_textbox(\
         'Hold ['+share.datamanager.controlname('left')\
         +']+['+share.datamanager.controlname('right')+'] to kiss',\
-        (640,660),color=share.colors.instructions,hover=self.domousebrowse)
+        (640,660),color=share.colors.instructions,hover=True)
         self.text_undone.addpart( 'text1', self.textboxclick )
         self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
         # timer for ungoing part
@@ -5355,16 +5337,12 @@ class obj_world_kiss(obj_world):
         self.creator.addpart(self.soundend2)
 
     def triggerungoing(self,controls):
-        return ( (controls.gl and controls.gr) and (controls.glc or controls.grc) ) or (self.domousebrowse and self.textboxclick.isclicked(controls))
+        return ( (controls.gl and controls.gr) and (controls.glc or controls.grc) ) or (True and self.textboxclick.isclicked(controls))
     def triggerstart(self,controls):
-        if self.domousebrowse:
-            return not (controls.gl and controls.gr) and not self.textboxclick.isholdclicked(controls)
-        else:
-            return not (controls.gl and controls.gr)
+        return not (controls.gl and controls.gr) and not self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         if not self.goal:
             # goal unreached state
             if not self.ungoing:
@@ -5469,7 +5447,7 @@ class obj_world_sunset(obj_world):
 
         # text
         self.textboxclick=draw.obj_textbox('Hold ['+share.datamanager.controlname('down')\
-        +'] to lower the sun',(1000,620),color=share.colors.instructions,hover=self.domousebrowse)
+        +'] to lower the sun',(1000,620),color=share.colors.instructions,hover=True)
         self.text_undone.addpart( 'text1', self.textboxclick )
         self.text_done.addpart( 'text1', draw.obj_textbox('Nighty Night!',(1000,620)) )
         # timer for ungoing part
@@ -5483,16 +5461,12 @@ class obj_world_sunset(obj_world):
         self.creator.addpart(self.soundend)
         #
     def triggerungoing(self,controls):
-        return controls.gd and controls.gdc or (self.domousebrowse and self.textboxclick.isclicked(controls))
+        return controls.gd and controls.gdc or (True and self.textboxclick.isclicked(controls))
     def triggerstart(self,controls):
-        if self.domousebrowse:
-            return not controls.gd and not self.textboxclick.isholdclicked(controls)
-        else:
-            return not controls.gd
+        return not controls.gd and not self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         if not self.goal:
             # goal unreached state
             if not self.ungoing:
@@ -5603,7 +5577,7 @@ class obj_world_gotobed(obj_world):
         self.finishactor.addpart( 'anim1c', draw.obj_image('sleepZ',(700+100,400-30),path='data/premade',scale=0.5))
 
         # text
-        self.textboxclick=draw.obj_textbox('hold ['+share.datamanager.controlname('left')+'] to go to sleep',(1100,480),color=share.colors.instructions,hover=self.domousebrowse)
+        self.textboxclick=draw.obj_textbox('hold ['+share.datamanager.controlname('left')+'] to go to sleep',(1100,480),color=share.colors.instructions,hover=True)
         self.text_undone.addpart( 'text1', self.textboxclick )
         self.text_done.addpart( 'text1', draw.obj_textbox('Sweet Dreams!',(1100,480)) )
         # timer for ungoing part
@@ -5617,18 +5591,12 @@ class obj_world_gotobed(obj_world):
         self.creator.addpart(self.sounddone)
         #
     def triggerungoing(self,controls):
-        return controls.gl and controls.glc or (self.domousebrowse and self.textboxclick.isclicked(controls))
+        return controls.gl and controls.glc or (True and self.textboxclick.isclicked(controls))
     def triggerstart(self,controls):
-        if self.domousebrowse:
-            return not controls.gl and not self.textboxclick.isholdclicked(controls)
-        else:
-            return not controls.gl
-
-        return not controls.gl
+        return not controls.gl and not self.textboxclick.isholdclicked(controls)
     def update(self,controls):
         super().update(controls)
-        if self.domousebrowse:
-            self.textboxclick.trackhover(controls)
+        self.textboxclick.trackhover(controls)
         if not self.goal:
             # goal unreached state
             if not self.ungoing:

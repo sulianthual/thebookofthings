@@ -450,7 +450,6 @@ class obj_datamanager:
         self.filesettings='book/settings.txt'
         self.loadsettings()
         self.temp=obj_datatemp()# object for temporal data storage (by anyone anytime)
-        self.domousebrowse=True# Use mouse scrolling (leave to always True now!)
     def getdevaccess(self):# tell if user has developper access (from reading settings.txt)
         return self.devaccess
     def erasebook(self):

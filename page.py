@@ -31,7 +31,6 @@ class obj_page:
         self.to_finish=[]# elements to manage at page finish
         # unique page elements (one per page therefore are overwritten)
         self.pagemusic=draw.obj_music(None)# menu music by default
-        self.domousebrowse=share.datamanager.domousebrowse# check if mouse browsing or not
         # setup
         self.presetup()
         self.setup(**kwargs)# potential kwargs passed to setup
@@ -106,7 +105,6 @@ class obj_chapterpage(obj_page):
     def initstart(self,**kwargs):
         self.text=[]# Main body of text
         self.textkeys={}
-        self.domousebrowse=share.datamanager.domousebrowse# Use either Mouse or Tab/Space/Enter to scroll pages
         super().initstart(**kwargs)
     def presetup(self):
         super().presetup()
@@ -123,6 +121,8 @@ class obj_chapterpage(obj_page):
         #
         # Mouse Browsing (optional)
         self.textboxplace()# place textboxes
+        self.textboxopt={}# default
+        self.textboxset()# set options
         self.dotextboxprevpage=False
         self.textboxprevpage()
         self.dotextboxnextpage=False
@@ -132,19 +132,44 @@ class obj_chapterpage(obj_page):
         pagetext_x,pagetext_y=self.pagetext.getposition()
         # print(pagetext_x)
         if pagetext_x<1080:
-            self.textboxprevpage_xy=( pagetext_x+10,pagetext_y+33 )
-            self.textboxnextpage_xy=( pagetext_x+10+180,pagetext_y+33 )
+            self.textboxnextpage_xy=( pagetext_x+10,pagetext_y+33 )
+            # self.textboxprevpage_xy=( pagetext_x+10,pagetext_y+33 )
+            # self.textboxnextpage_xy=( pagetext_x+10+180,pagetext_y+33 )
         else:
-            self.textboxprevpage_xy=( 50,pagetext_y+90 )
-            self.textboxnextpage_xy=( 230,pagetext_y+90 )
-    def textboxprevpage(self):
-        self.dotextboxprevpage=True
-        self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
-        self.addpart(self.textbox_prev)
+            self.textboxnextpage_xy=( 50,pagetext_y+90 )
+            # self.textboxprevpage_xy=( 50,pagetext_y+90 )
+            # self.textboxnextpage_xy=( 230,pagetext_y+90 )
+        # self.textboxprevpage_text='[back]'
+
+    def textboxprevpage(self): # BACK OPTION REMOVED IN MOST CASES
+        self.dotextboxprevpage=False
+        # self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
+        # self.addpart(self.textbox_prev)
+    def textboxset(self):# change textboxopt by user here
+        pass# user options for the nextpage
+        # self.textboxopt={'show',False}# remnoves the textbox
+        # self.textboxopt={'xy',(640,510)}# set position
+        # self.textboxopt={'text','[continue]'}# set text
+        # self.textboxopt={'align','center'}# set align ('left','right' or 'center')
+
     def textboxnextpage(self):
-        self.dotextboxnextpage=True
-        self.textbox_next=draw.obj_textbox('[next]',self.textboxnextpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xright=True)
-        self.addpart(self.textbox_next)
+        self.dotextboxnextpage=True# keep
+        self.textboxref={'do':True, 'xy':self.textboxnextpage_xy,'text':'[next]','align':'left'}# default
+        for i in self.textboxopt.keys():# replace with optional keys if any
+            self.textboxref[i]=self.textboxopt[i]
+        # make
+        self.dotextboxnextpage=self.textboxref['do']
+        if self.dotextboxnextpage:
+            if self.textboxref['text']=='right':
+                self.textbox_next=draw.obj_textbox(self.textboxref['text'],\
+                self.textboxref['xy'],color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xright=True)
+            elif self.textboxref['text']=='center':
+                self.textbox_next=draw.obj_textbox(self.textboxref['text'],\
+                self.textboxref['xy'],color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium')
+            else:
+                self.textbox_next=draw.obj_textbox(self.textboxref['text'],\
+                self.textboxref['xy'],color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
+            self.addpart(self.textbox_next)
     #############
     def prepage(self,controls):# background
         super().prepage(controls)
@@ -153,7 +178,8 @@ class obj_chapterpage(obj_page):
         self.callexitpage(controls)
     # first level (may customize for pages, e.g. if minigame)
     def triggerprevpage(self,controls):
-        return self.textbox_prev.isclicked(controls)
+        return False
+        # return self.textbox_prev.isclicked(controls)
     def triggernextpage(self,controls):
         return self.textbox_next.isclicked(controls)
     def triggerexitpage(self,controls):

@@ -46,27 +46,29 @@ class obj_quickscene():
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p10()
+            # quickscene=ch1.obj_scene_ch1p7()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
+            # quickscene=ch2.obj_scene_ch2p6c()
             # quickscene=ch2.obj_scene_ch2p12()
-            quickscene=ch2.obj_scene_ch2play3a()
+            # quickscene=ch2.obj_scene_ch2play3a()
             # quickscene=ch3.obj_scene_ch3p19death()
-            # quickscene=ch3.obj_scene_ch3p8()
+            # quickscene=ch3.obj_scene_ch3p10()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_ch4p5()
-            # quickscene=ch5.obj_scene_ch5p5()
+            # quickscene=ch4.obj_scene_ch4p12()
+            # quickscene=ch5.obj_scene_ch5p33()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
-            # quickscene=ch6.obj_scene_ch6p5()
+            # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p39death()
-            # quickscene=ch7.obj_scene_ch7p4()
-            # quickscene=ch7.obj_scene_ch7p48b()
+            # quickscene=ch7.obj_scene_ch7p24()
+            # quickscene=ch7.obj_scene_ch7p48a()
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8west()
-            # quickscene=ch8.obj_scene_ch8atpartner()
+            quickscene=ch8.obj_scene_ch8southridestandby()
             # quickscene=ch8.obj_scene_ch8roam()
 
             #
@@ -1252,8 +1254,8 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_settings())
     def triggernextpage(self,controls):
         return False
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         #
         self.doazertymode=share.datamanager.doazerty# True/False
@@ -1317,8 +1319,8 @@ class obj_scene_creditscreen(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_settings())
     def triggernextpage(self,controls):
         return False
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def presetup(self):
         super().presetup()
         # self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
@@ -1347,8 +1349,8 @@ class obj_scene_erasebook(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
     def triggernextpage(self,controls):
         return controls.gl and controls.gu and controls.gr and controls.gd
-    def textboxnextpage(self):
-        pass# no textbox for nextpage
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def soundnextpage(self):
         pass# no sound
     def setup(self):
@@ -1368,8 +1370,8 @@ class obj_scene_erasebookconfirmed(page.obj_chapterpage):
         pass
     def triggernextpage(self,controls):
         return False
-    def textboxnextpage(self):
-        pass
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
     def setup(self):
