@@ -124,7 +124,7 @@ class obj_scene_ch7p3(page.obj_chapterpage):
                 'with ',('{hero_his}',share.colors.hero2),\
                 ' friend the ',('{bug}',share.colors.bug),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch7') )
@@ -543,7 +543,6 @@ class obj_scene_ch7p15(page.obj_chapterpage):
                   ' crawled out of ',('{heroname}',share.colors.hero),\
                   '\'s pocket and whispered: ',\
                    'This cannot be, lets review what we did wrong." ',\
-                    '".',\
                    ]
         self.addpart( draw.obj_image('herobaseangry',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_animation('ch3_bugtalks1','bug',(840,360),record=False) )
@@ -1326,7 +1325,7 @@ class obj_scene_ch7p35(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
                    ' went to bed." ',\
                    ]
-        self.world=world.obj_world_gotobed(self,partner=True,alarmclock=True,bug=True)
+        self.world=world.obj_world_gotobed(self,partner=True,alarmclock=False,bug=True)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
@@ -1344,8 +1343,8 @@ class obj_scene_ch7p36(page.obj_chapterpage):
                    ('{hero_he}',share.colors.hero2),' and ',\
                    ('{partnername}',share.colors.partner),' were together again..."',\
                    ]
-        self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
         self.addpart( draw.obj_image('partnerbase',(420+100,490),scale=0.7,rotate=80) )
         self.addpart( draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
@@ -1390,8 +1389,8 @@ class obj_scene_ch7p38(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),' heard a knock on the door. ',\
                    'Who could it possibly be at this hour."',\
                    ]
-        self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
         self.addpart( draw.obj_image('partnerbase',(420+100,490),scale=0.7,rotate=80) )
         self.addpart( draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )
@@ -1422,8 +1421,8 @@ class obj_scene_ch7p39(page.obj_chapterpage):
                    '"',\
                    ('{heroname}',share.colors.hero),' woke back up and went to open the door". ',\
                    ]
-        self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
         self.addpart( draw.obj_image('partnerbase',(420+100,490),scale=0.7,rotate=80) )
         # self.addpart( draw.obj_image('herobase',(420,490),scale=0.7,rotate=80) )

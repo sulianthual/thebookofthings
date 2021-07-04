@@ -86,7 +86,7 @@ class obj_scene_ch4p2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p1())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p2a())
+        share.scenemanager.switchscene(obj_scene_ch4p3())
     def setup(self):
         self.text=[\
                   '"',('{heroname}',share.colors.hero),\
@@ -105,53 +105,30 @@ class obj_scene_ch4p2(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('piano') )
 
-
-class obj_scene_ch4p2a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p2())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p3())
-    def setup(self):
-        share.datamanager.setbookmark('ch4_drawalarm')
-        self.text=[\
-                   'First, lets make sure ',('{heroname}',share.colors.hero),\
-                   ' wakes up on time today, said the book of things. ',\
-                   'Draw a ',('night stand',share.colors.item),\
-                   ' and an ',('alarm clock',share.colors.item),'. ',\
-                   ]
-        self.addpart( draw.obj_drawing('nightstand',(200+50,450),legend='night stand',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('alarmclockext',(940,450),legend='alarm clock (draw the exterior)',shadow=(200,200)) )
-        self.addpart( draw.obj_image('alarmclockfill',(940,450),path='data/premade') )
-        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450),path='data/premade') )
-        #
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-class obj_scene_ch4p2a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p2())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p3())
-    def setup(self):
-        share.datamanager.setbookmark('ch4_drawalarm')
-        self.text=[\
-                   'First, lets make sure ',('{heroname}',share.colors.hero),\
-                   ' wakes up on time today, said the book of things. ',\
-                   'Draw a ',('night stand',share.colors.item),\
-                   ' and an ',('alarm clock',share.colors.item),'. ',\
-                   ]
-        self.addpart( draw.obj_drawing('nightstanddraw',(340,450-50),legend='night stand',shadow=(250,250)) )
-        self.addpart( draw.obj_drawing('alarmclockextdraw',(940,450-50),legend='alarm clock (draw the exterior)',shadow=(250,250)) )
-        self.addpart( draw.obj_image('alarmclockfill',(940,450-50),path='data/premade',scale=1.25) )
-        self.addpart( draw.obj_image('alarmclockcenter8am',(940,450-50),path='data/premade',scale=1.25) )
-        #
-        self.addpart( draw.obj_music('piano') )
+# class obj_scene_ch4p2a(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p2())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p3())
+#     def setup(self):
+#         share.datamanager.setbookmark('ch4_drawalarm')
+#         self.text=[\
+#                    'First, lets make sure ',('{heroname}',share.colors.hero),\
+#                    ' wakes up on time today, said the book of things. ',\
+#                    'Draw a ',('night stand',share.colors.item),\
+#                    ' and an ',('alarm clock',share.colors.item),'. ',\
+#                    ]
+#         self.addpart( draw.obj_drawing('nightstanddraw',(340,450-50),legend='night stand',shadow=(250,250)) )
+#         self.addpart( draw.obj_drawing('alarmclockextdraw',(940,450-50),legend='alarm clock (draw the exterior)',shadow=(250,250)) )
+#         self.addpart( draw.obj_image('alarmclockfill',(940,450-50),path='data/premade',scale=1.25) )
+#         self.addpart( draw.obj_image('alarmclockcenter8am',(940,450-50),path='data/premade',scale=1.25) )
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch4p3(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p2a())
+        share.scenemanager.switchscene(obj_scene_ch4p2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p4())
     def triggernextpage(self,controls):
@@ -190,7 +167,7 @@ class obj_scene_ch4p4(page.obj_chapterpage):
                 ('{hero_his}',share.colors.hero2),\
                 ' new friend the ',('{bug}',share.colors.bug),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch4') )

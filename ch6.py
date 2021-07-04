@@ -157,7 +157,7 @@ class obj_scene_ch6p4(page.obj_chapterpage):
                 'with ',('{hero_his}',share.colors.hero2),\
                 ' friend the ',('{bug}',share.colors.bug),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch6') )
@@ -1498,7 +1498,7 @@ class obj_scene_ch6p50(page.obj_chapterpage):
                    ' went back to bed with a large smile on ',\
                    ('{hero_his}',share.colors.hero2),' face ".',\
                    ]
-        self.world=world.obj_world_gotobed(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_gotobed(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )

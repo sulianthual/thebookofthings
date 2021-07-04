@@ -115,8 +115,8 @@ class obj_scene_ch8home(page.obj_chapterpage):
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
-        self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
         animation1=draw.obj_animation('ch1_awaken','bug',(640+100,360),scale=0.7,imgscale=0.5)
         self.addpart( animation1 )
         #
@@ -155,7 +155,7 @@ class obj_scene_ch8homesleep2(page.obj_chapterpage):
         pass
     def setup(self):
         self.text=[' ']
-        self.world=world.obj_world_gotobed(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_gotobed(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
@@ -189,7 +189,7 @@ class obj_scene_ch8homesleep4(page.obj_chapterpage):
         pass
     def setup(self):
         self.text=[' ']
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
@@ -210,8 +210,8 @@ class obj_scene_ch8homebye(page.obj_chapterpage):
                 ('{bug}',share.colors.bug),'." ',\
                    ]
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
-        self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
         animation1=draw.obj_animation('ch1_awaken','bug',(640+100,360),scale=0.7,imgscale=0.5)
         self.addpart( animation1 )
         #

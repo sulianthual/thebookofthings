@@ -150,7 +150,7 @@ class obj_scene_ch5p4(page.obj_chapterpage):
                 'with ',('{hero_his}',share.colors.hero2),\
                 ' friend the ',('{bug}',share.colors.bug),'." ',\
                    ]
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=True)
+        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch5') )
@@ -1444,7 +1444,7 @@ class obj_scene_ch5p41(page.obj_chapterpage):
                    ('{heroname}',share.colors.hero),\
                    ' went straight to bed starving and angry." ',\
                    ]
-        self.world=world.obj_world_gotobed(self,bug=True,addmoon=False,addsun=True,alarmclock=True)
+        self.world=world.obj_world_gotobed(self,bug=True,addmoon=False,addsun=True,alarmclock=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )

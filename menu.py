@@ -265,7 +265,7 @@ class obj_gotobookmark():
             # ch4
             self.chaptertext='Chapter IV: Down the Rabbit Hole'
             self.dict['ch4_start']='start chapter'
-            self.dict['ch4_drawalarm']='draw the night stand and alarm clock'
+            # self.dict['ch4_drawalarm']='draw the night stand and alarm clock'# BROKEN
             # self.dict['ch4_startstory']='start the day'
             # self.dict['ch4_checkmail']='read the mail'
             self.dict['ch4_drawcave']='draw the cave and tree'
@@ -278,8 +278,8 @@ class obj_gotobookmark():
             # self.dict['ch4_endunlock']='Chapter End'
             if bookmarkname == 'ch4_start':
                 bookmarkscene=ch4.obj_scene_chapter4()
-            elif bookmarkname == 'ch4_drawalarm' :
-                bookmarkscene=ch4.obj_scene_ch4p2a()
+            # elif bookmarkname == 'ch4_drawalarm' :
+            #     bookmarkscene=ch4.obj_scene_ch4p2a()
             elif bookmarkname == 'ch4_startstory' :
                 bookmarkscene=ch4.obj_scene_ch4p3()
             elif bookmarkname == 'ch4_checkmail' :
@@ -563,7 +563,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         else:
             decochoice=None
         #
-        # decochoice='tower2'
+        # decochoice='bedroom'
         # print(decochoice)
         if decochoice=='book':
             self.addpart( draw.obj_image('book',(253,496),scale=0.7,rotate=0,fliph=True,flipv=False) )
@@ -678,9 +678,9 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart(  draw.obj_image('tree',(dxref+667,164+dyref),scale=0.36,rotate=0,fliph=True,flipv=False) )
             self.addpart(  draw.obj_image('tree',(dxref+997,477+dyref),scale=0.36,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='bedroom':
-            self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5,rotate=0,fliph=False,flipv=False) )
+            # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bed',(440,500),scale=0.75,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('alarmclock8am',(97,382),scale=0.52,rotate=0,fliph=False,flipv=False) )
+            # self.addpart( draw.obj_image('alarmclock8am',(97,382),scale=0.52,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('moon',(306,80),scale=0.33,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='elder':
             self.addpart( draw.obj_image('elderbase',(722,717),scale=1.46,rotate=-118,fliph=False,flipv=False) )
