@@ -411,7 +411,10 @@ class obj_sprite_text(obj_sprite_image):
         super().__init__()
         self.spritetype='text'
     def make(self,text,font,color,bold=True,fillcolor=None):
-        self.surf=font.render(text,bold,color,fillcolor=fillcolor)
+        if fillcolor==None:# separate because leads to different qualities
+            self.surf=font.render(text,bold,color)
+        else:
+            self.surf=font.render(text,bold,color,fillcolor=fillcolor)
         self.rx,self.ry=self.getrxry()
 
 

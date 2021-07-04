@@ -910,13 +910,13 @@ class obj_scene_alldrawings(obj_testpage):
         for c,value in enumerate(['herohead','bed','fish','hook','sun','moon']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','pond','bush','flower']):
+        for c,value in enumerate(['partnerhead','love','mailbox','mailletter','saxophone','musicnote','house','flower','pond','bush']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
         for c,value in enumerate(['villainhead','gun','bullet','tower','mountain','bug']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
-        for c,value in enumerate(['bunnyhead','nightstand','alarmclock8am','cave','tree']):
+        for c,value in enumerate(['bunnyhead','cave','tree']):
             self.addpart( draw.obj_image(value,(x1+c*dx1,y1), scale=ss) )
         y1+=dy1
         for c,value in enumerate(['elderhead','cloud','lightningbolt','rock','paper','scissors']):

@@ -85,8 +85,9 @@ class obj_pagedisplay_text:
         self.type='pagetext'
         self.words_prerender=[]# list of words (sprites and positions)
         self.ipos=(0,0)
-    def make(self,textmatrix,pos=(50,20),xmin=50,xmax=1230, linespacing=55,fontsize='medium'):
+    def make(self,textmatrix,pos=(50,20),xmin=50,xmax=1230, linespacing=55,fontsize='medium',fillcolor=(255,255,255)):
         self.words_prerender=[]
+        self.rects_prerender=[]
         formattextkwargs=share.datamanager.getwords()
         if textmatrix:
             self.ipos=pos# text cursor position
@@ -96,8 +97,8 @@ class obj_pagedisplay_text:
                 else:
                     text, color = i# input: (text,color)
                 text=tool.formattext(text,**formattextkwargs)
-                self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color)
-    def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0)):
+                self.ipos=self.rebuildtext(text,self.ipos,share.fonts.font(fontsize),xmin,xmax,linespacing,color=color,fillcolor=fillcolor)
+    def rebuildtext(self,text,pos,font,xmin,xmax,linespacing,color=(0,0,0),fillcolor=(255,255,255)):
         wordmatrix=[row.split(' ') for row in text.splitlines()]# 2D array of words
         space_width=font.size(' ')[0]# width of a space
         space_widthnone=font.size('')[0]# width of no separation
@@ -106,12 +107,26 @@ class obj_pagedisplay_text:
         for count,line in enumerate(wordmatrix):
             for word in line:
                 word_surface=core.obj_sprite_text()# New sprite_text object for each word
+                # word_surface.make(word,font,color,fillcolor)# not rendering properly as pygame sprite, omit
                 word_surface.make(word,font,color)
                 word_width, word_height = 2*word_surface.getrx(),2*word_surface.getry()
                 if x + word_width >= xmax:# return to line auto
                     x = xmin
                     y += linespacing
+                # background rectangle from fillcolor (cleaner than fillcolor in pygame sprite)
+                if False:# experimental, add a surface rect for EACH WORD (crashes sometimes)
+                    word_fillrect=core.obj_sprite_image()
+                    tempo=word_width+20
+                    if x+tempo>=xmax:
+                        tempo=word_width+xmax-x
+                    elif x-tempo<=xmin:
+                        tempo=word_width+x-xmin
+                    word_fillrect.makeempty(tempo/2,word_height/2)
+                    word_fillrect.fill( fillcolor )
+                    self.rects_prerender.append( (word_fillrect,(x+word_width/2,y+word_height/2)) )
+                # word
                 self.words_prerender.append( (word_surface,(x+word_width/2,y+word_height/2)) )# record prerendered text
+
                 x += word_width + space_width
             # return to line from user
             if count<len(wordmatrix)-1:
@@ -123,6 +138,9 @@ class obj_pagedisplay_text:
     def getposition(self):# return last known text position
         return self.ipos
     def display(self):
+        for i in self.rects_prerender:
+            word_fillrect, xy=i
+            word_fillrect.display(xy[0],xy[1])
         for i in self.words_prerender:
             word_surface, xy=i
             word_surface.display(xy[0],xy[1])

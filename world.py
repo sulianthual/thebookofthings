@@ -1157,8 +1157,6 @@ class obj_world_eatfish(obj_world):
 class obj_world_travel(obj_world):
     def setup(self,**kwargs):
         #
-
-
         #
         ##############################################3
 
@@ -1478,11 +1476,13 @@ class obj_world_travel(obj_world):
         # south panel 0-2: beach south west
         if self.chapter>=6:
             if self.addsailorwait:
-                self.staticactor02.addpart( 'ref', draw.obj_image('sailorbase',(640,360-120),scale=0.25) )
+                self.staticactor02.addpart( 'ref', draw.obj_image('sailorbase',(640-50,360-120),scale=0.25) )
             if self.addbeachquestionmark:
-                self.staticactor02.addpart( 'refqmark', draw.obj_image('interrogationmark',(640,360-120),path='data/premade') )
+                pass# NOT NEEDED, WE HAVE THE RED MARKER NOW
+                # self.staticactor02.addpart( 'refqmark', draw.obj_image('interrogationmark',(640,360-120),path='data/premade') )
             if self.addbeachmark:
-                self.staticactor02.addpart( 'refmark', draw.obj_image('smallcross',(640,360-120),path='data/premade') )
+                pass# NOT NEEDED, WE HAVE THE RED MARKER NOW
+                # self.staticactor02.addpart( 'refmark', draw.obj_image('smallcross',(640,360-120),path='data/premade') )
             self.staticactor02.addpart( 'textref', draw.obj_textbox('beach',(640,360),color=share.colors.location) )
             self.staticactor02.addpart( "img1", draw.obj_image('palmtree',(1040,199),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor02.addpart( "img2", draw.obj_image('palmtree',(255,21),scale=0.5,rotate=0,fliph=True,flipv=False) )
@@ -1547,6 +1547,11 @@ class obj_world_travel(obj_world):
             self.staticactorplus.addpart( "imgs3", draw.obj_image('beach3',(640+1280+320,360+1080-180),path='data/premade') )
             self.staticactorplus.addpart( "imgs4", draw.obj_image('beach4',(640-1280+320,360+1080),path='data/premade') )
             self.staticactorplus.addpart( "imgs5", draw.obj_image('beach3',(640-1280-320,360+1080-180),fliph=True,path='data/premade') )
+
+        # ADD MARKER TO GOAL
+        if not (self.multiplegoals or self.whereends=='everywhere' or self.whereends=='nowhere'):
+            tempo=(640+self.xygoal[0],360+self.xygoal[1])
+            self.staticactorplus.addpart( 'refmark_goal', draw.obj_image('exclamationmarkred',tempo,scale=0.5,path='data/premade') )
 
         ###############
         # boundaries (chapter dependent. At max should be +-1280,+-720, with small additional margin  )
@@ -1656,21 +1661,24 @@ class obj_world_travel(obj_world):
             k.movex(640-self.xhw)
             k.movey(360-self.yhw)
         #
+        # text rect for main body
+        # image1=draw.obj_image('textbanner',(640,70),path='data/premade')# Not great
+        # self.text_undone.addpart('textwhiterect', image1)
         # text
         self.text_undone.addpart( 'text1', \
-        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move]',(640,680),color=share.colors.instructions) )
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
         if self.addsailorwait or self.addbeachmark:# talk to a character
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': talk]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': talk]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
         elif self.addbeachquestionmark:# investigate
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
         elif self.chapter>=8:
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
         elif self.minigame=='flowers':
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': give flower]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': give flower]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
         else:# enter a location
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
         #
-        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680),fillcolor=share.colors.white) )
         self.text_undone.show=True
         self.text_undoneenter.show=False
         self.text_done.show=False
@@ -1700,16 +1708,16 @@ class obj_world_travel(obj_world):
         self.floweractors=[]# make a list of grandactors flowers
         if self.minigame=='flowers':
             if self.flowerneed == 1:
-                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flower',(640,610),color=share.colors.instructions)
+                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flower',(640,610),color=share.colors.instructions,fillcolor=share.colors.white)
             else:
-                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions)
+                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions,fillcolor=share.colors.white)
             self.text_undone.addpart( 'textflowers', self.flowermessage  )
             for i in self.panels:# remove flower from panels and make them into individual grandactors
                 panelflowerkeys=[]# list of flowers keys in this panel
                 for k in i.dict.keys():# browse elements
                     j=i.dict[k]
                     if j.type=='image' and j.name=='flower':
-                        passactor=obj_grandactor(self,(j.x,j.y))# make a new grandactor
+                        passactor=obj_grandactor(self,(j.x,j.y),foreground=False)# make a new grandactor (in background)
                         j.xytoxyini()# reinitialize initial coordinates of image
                         passactor.addpart('img', j )# add flower image to it
                         passactor.rx=25# hitbox
@@ -1730,7 +1738,7 @@ class obj_world_travel(obj_world):
         self.logneed=10# needed logs for goal
         self.logactors=[]# make a list of grandactors logs
         if self.minigame=='logs':
-            self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions)
+            self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions,fillcolor=share.colors.white)
             self.text_undone.addpart( 'textlogs', self.logmessage  )
             # self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D]')
             for i in self.panels:# remove tree from panels and make them into individual grandactors

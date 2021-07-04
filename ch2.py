@@ -247,8 +247,8 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
                    ]
         # self.textkeys={'pos':(500,20),'xmin':500}# same as ={}
-        self.addpart( draw.obj_drawing('mailbox',(200+50,450-50),legend='Mailbox (on a pole)',shadow=(200,250)) )
-        self.addpart( draw.obj_drawing('mailletter',(1280-200-50,450),legend='Mail Letter',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('mailbox',(340,450-50),legend='Mailbox (on a pole)',shadow=(200,250)) )
+        self.addpart( draw.obj_drawing('mailletter',(1280-340,450),legend='Mail Letter',shadow=(200,200)) )
         #
         self.addpart( draw.obj_music('partner') )
 
@@ -619,14 +619,20 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3b())
+    def triggernextpage(self,controls):
+        return self.world.done
     def setup(self):
         self.text=[\
                     '"',\
                     ('{heroname}',share.colors.hero),' and ',\
-                    ('{partnername}',share.colors.partner),' spent the day talking and walking around the house." ',\
+                    ('{partnername}',share.colors.partner),\
+                    ' spent the day talking and walking, then they went back home."',\
                    ]
-        self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,partner=True)
+        self.world=world.obj_world_travel(self,start=(-610,-330),goal='home',chapter=2,partner=True)
         self.addpart(self.world)
+        #
+        # self.addpart( draw.obj_drawing('textbanner',(640,70),shadow=(600,70)) )
+        # self.addpart( draw.obj_image('textbanner',(640,70),path='data/premade') )
         #
         self.addpart( draw.obj_music('piano') )
 
@@ -740,9 +746,9 @@ class obj_scene_ch2playend(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2unlocknext())
     def setup(self):
         self.text=[\
-                   '"And they lived happily ever after, the end". ',\
-                    'Well, thats all the story for today, said the book of things. ',
-                   'But tomorrow we will make this story even better! ',\
+                    'Well, thats all for today, said the book of things. ',
+                   'This story looks really perfect, ',\
+                   'but maybe something really really bad will happen tommorrow. Who knows! ',\
                    ]
         animation1=draw.obj_animation('bookmove','book',(640,360))
         self.addpart( animation1 )

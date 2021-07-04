@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        # if True :
-        if False :
+        if True :
+        # if False :
             # regular scenes
             #
             # quickscene=obj_scene_settings()
@@ -49,7 +49,7 @@ class obj_quickscene():
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p12()
-            # quickscene=ch2.obj_scene_ch2play2()
+            quickscene=ch2.obj_scene_ch2play3a()
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p8()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
