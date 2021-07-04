@@ -280,7 +280,7 @@ class obj_scene_ch0p13(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0end())
+        share.scenemanager.switchscene(obj_scene_ch0p14())
     def setup(self):
         share.datamanager.setbookmark('ch0_checkcontrols')
         self.doazertymode=share.datamanager.doazerty# True/False
@@ -289,7 +289,7 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         else:
             tempo='qwerty'
         self.text=[\
-                    'One last thing, these are the game controls. ',\
+                    'These are the game controls. ',\
                     'Keyboard mode is currently ',\
                     (tempo,share.colors.red),\
                     ' (if you have a french keyboard go to the settings and select azerty mode). ',\
@@ -329,9 +329,32 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0end(page.obj_chapterpage):
+class obj_scene_ch0p14(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p13())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0end())
+    def setup(self):
+        share.datamanager.setbookmark('ch0_learnbrowse')
+        self.text=[\
+                    'One last thing: ',\
+                    'if you ever skip a drawing or miss something, you can always go back! ',\
+                    'Return to any chapter part you have already read from the main menu. ',\
+                    ]
+        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart(draw.obj_textbox('press [esc] to return to the main menu',(640,200),color=share.colors.instructions))
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+        animation1.addsound( "book1", [13] )
+        animation1.addsound( "book2", [170] )
+        animation1.addsound( "book3", [155],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
+class obj_scene_ch0end(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p14())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):

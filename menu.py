@@ -45,7 +45,7 @@ class obj_quickscene():
             # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
-            # quickscene=ch0.obj_scene_ch0p10()
+            quickscene=ch0.obj_scene_ch0p14()
             # quickscene=ch1.obj_scene_ch1p7()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
@@ -66,7 +66,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22death()
             # quickscene=ch7.obj_scene_ch7p25death()
             # quickscene=ch7.obj_scene_ch7p48()
-            quickscene=ch7.obj_scene_ch7p49death()
+            # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
             # quickscene=ch8.obj_scene_ch8islandreplay()
@@ -138,6 +138,7 @@ class obj_gotobookmark():
             self.dict['ch0_drawbook']='draw the book'
             self.dict['ch0_meetbook']='write your mood'
             self.dict['ch0_checkcontrols']='check the game controls'
+            self.dict['ch0_learnbrowse']='learn to go back'
             # self.dict['ch0_endunlock']='Prologue End'
             if bookmarkname == 'ch0_start':# also default in datb.py if book is empty
                 bookmarkscene=ch0.obj_scene_prologue()
@@ -151,6 +152,8 @@ class obj_gotobookmark():
                 bookmarkscene=ch0.obj_scene_ch0p10()
             elif bookmarkname == 'ch0_checkcontrols':
                 bookmarkscene=ch0.obj_scene_ch0p13()
+            elif bookmarkname == 'ch0_learnbrowse':
+                bookmarkscene=ch0.obj_scene_ch0p14()
             elif bookmarkname == 'ch0_endunlock':
                 bookmarkscene=ch0.obj_scene_ch0unlocknext()
             else:
