@@ -1365,6 +1365,8 @@ class obj_scene_erasebook(page.obj_chapterpage):
         self.textbox1=draw.obj_textbox(' ',(640,360))
         self.addpart( self.textbox1 )
         #
+        self.haserasedbook=False# has already erased
+        #
         self.sound1=draw.obj_sound('erasebook')
         self.addpart(self.sound1)
         #
@@ -1372,9 +1374,11 @@ class obj_scene_erasebook(page.obj_chapterpage):
     def page(self,controls):
         # erase the book
         if controls.gl and controls.gu and controls.gr and controls.gd:
-            share.datamanager.erasebook()
-            self.textbox1.replacetext('the book has vanished...')
-            self.sound1.play()
+            if not self.haserasedbook:
+                share.datamanager.erasebook()
+                self.textbox1.replacetext('the book has vanished...')
+                self.sound1.play()
+                self.haserasedbook=True
 
 
 

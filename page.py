@@ -142,7 +142,6 @@ class obj_chapterpage(obj_page):
         # self.textboxopt={'xy',(640,510)}# set position
         # self.textboxopt={'text','[continue]'}# set text
         # self.textboxopt={'align','center'}# set align ('left','right' or 'center')
-
     def textboxnextpage(self):
         self.dotextboxnextpage=True# keep
         self.textboxref={'do':True, 'xy':self.textboxnextpage_xy,'text':'[next]','align':'left'}# default

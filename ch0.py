@@ -43,7 +43,9 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        self.text=['One could always press [next] to continue, unless there was something else to do. One could also press [esc] to go back to the menu. ']
+        self.text=['One could always press [next] to continue, ',\
+        'unless there was something else to do. ',\
+        'One could also press [esc] to go back to the main menu. ']
         # self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
@@ -66,7 +68,8 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         tempo1='['+share.datamanager.controlname('mouse1')+']'
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['There was going to be a pen. ',\
-                   'The pen was drawn with '+tempo1+' and erased with '+tempo2+'.',\
+                   'The pen was drawn with '+tempo1+' and erased with '+tempo2+'. ',\
+                   'It didnt have to follow exactly the grayed area. ',\
                   '\n ',\
                    ]# last line for [back][next] adjustment
         self.textkeys={'pos':(50,20),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}

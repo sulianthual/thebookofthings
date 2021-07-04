@@ -71,7 +71,7 @@ class obj_scene_ch1p1(page.obj_chapterpage):
         self.addpart( draw.obj_textinput('heroname',20,(750,yref), legend='hero name') )
         #
         self.addpart( draw.obj_textbox('and the hero was:',(180,yref+dyref)) )
-        textchoice=draw.obj_textchoice('hero_he')
+        textchoice=draw.obj_textchoice('hero_he',suggested='he')
         textchoice.addchoice('1. A guy','he',(440,yref+dyref))
         textchoice.addchoice('2. A girl','she',(740,yref+dyref))
         textchoice.addchoice('3. A thing','it',(1040,yref+dyref))

@@ -400,7 +400,7 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         self.addpart( draw.obj_textinput('sailorname',20,(750,yref), legend='sailor name') )
         #
         self.addpart( draw.obj_textbox('and the sailor was:',(180,yref+dyref)) )
-        textchoice=draw.obj_textchoice('sailor_he')
+        textchoice=draw.obj_textchoice('sailor_he',suggested='he')
         textchoice.addchoice('1. A guy','he',(440,yref+dyref))
         textchoice.addchoice('2. A girl','she',(740,yref+dyref))
         textchoice.addchoice('3. A thing','it',(1040,yref+dyref))

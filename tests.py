@@ -379,7 +379,9 @@ class obj_scene_textchoice(obj_testpage):
             ]
         y1=450
         self.addpart( draw.obj_textbox("The test gender was:",(200,y1)) )
-        textchoice=draw.obj_textchoice('test_he')# optional to set default choice
+        textchoice=draw.obj_textchoice('test_he')#
+        # textchoice=draw.obj_textchoice('test_he',default='he')# default choice each time
+        # textchoice=draw.obj_textchoice('test_he',suggested='he')# suggested if first time choice
         textchoice.addchoice('1. A guy','he',(440,y1))
         textchoice.addchoice('2. A girl','she',(640,y1))
         textchoice.addchoice('3. A thing','it',(840,y1))

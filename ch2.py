@@ -150,7 +150,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         self.addpart( draw.obj_textinput('partnername',20,(750,yref), legend='partner name') )
         #
         self.addpart( draw.obj_textbox('and the partner was:',(180,yref+dyref)) )
-        textchoice=draw.obj_textchoice('partner_he',default='she')
+        textchoice=draw.obj_textchoice('partner_he',suggested='she')
         textchoice.addchoice('1. A guy','he',(440,yref+dyref))
         textchoice.addchoice('2. A girl','she',(740,yref+dyref))
         textchoice.addchoice('3. A thing','it',(1040,yref+dyref))

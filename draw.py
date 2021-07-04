@@ -512,11 +512,12 @@ class obj_textinput:
 # $ textchoice.addchoice('2. A girl','she',(640,360))
 # $ textchoice.addkey('hero_his',{'he':'his','she':'her'})
 class obj_textchoice:
-    def __init__(self,key,default=None):
+    def __init__(self,key,default=None,suggested=''):
         self.type='textchoice'
         self.key=key# key from choice that will be saved (in words.txt)
-        if default:# impose default choice
+        if default:# impose a default choice each time
             self.setdefault(default)
+        self.suggested=suggested# suggest a choice if none already exist
         self.setup()
     def setup(self):
         self.choices=[]
@@ -532,7 +533,7 @@ class obj_textchoice:
         share.datamanager.writeword(self.key,default)
     def keytodict(self,key):# write key in dictionary if not there
         if not key in share.datamanager.getwordkeys():
-            share.datamanager.writeword(key,'')
+            share.datamanager.writeword(key,self.suggested)# write the suggested outcome
     def addchoice(self,text,value,xy,fontsize='medium',bold=True,color=(0,0,0)):
         formattextkwargs=share.datamanager.getwords()
         text=tool.formattext(text,**formattextkwargs)# replace with book of things keywords
