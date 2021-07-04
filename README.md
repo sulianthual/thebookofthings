@@ -19,6 +19,6 @@ references: https://github.com/sulianthual/thebookofthings
 2) run main.py from the main folder ($python3 main.py or $python main.py)
 
 
-3) Alternatively, you can simply download the executable for either windows, mac or linux [here](https://sulianthual.itch.io/the-book-of-things).
+3) Alternatively, you can simply download the executable for either windows, mac or linux on Itcho.io [here](https://sulianthual.itch.io/the-book-of-things).
 
 
