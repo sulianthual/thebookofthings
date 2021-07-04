@@ -325,6 +325,8 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p10())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p12())
+    def textboxset(self):
+        self.textboxopt={'xy':(750,410),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch4_writebunny')
         self.text=[\

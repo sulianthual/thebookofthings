@@ -119,6 +119,8 @@ class obj_scene_ch3p2(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p1a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p3())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,510),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch3_writevillain')
         self.text=[\
@@ -779,6 +781,8 @@ class obj_scene_ch3p22(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch3p23())
     def soundnextpage(self):
         pass# no sound
+    def textboxset(self):
+        self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
         self.text=[\
                   '"The  ',('tower',share.colors.location2),'\'s a.s.s.',\
@@ -791,7 +795,7 @@ class obj_scene_ch3p22(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default='...')
         self.addpart( self.textinput )
         #
         animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
@@ -913,6 +917,8 @@ class obj_scene_ch3p24(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch3p25())
         else:
             share.scenemanager.switchscene(obj_scene_ch3p24a())
+    def textboxset(self):
+        self.textboxopt={'xy':(330,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                   '"The  ',('tower',share.colors.location2),'\'s a.s.s. blasted: ',\
@@ -929,8 +935,8 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         #
         y1=170
         textchoice=draw.obj_textchoice('choice_yesno',default='no')
-        textchoice.addchoice('Leave','yes',(240,y1))
-        textchoice.addchoice('Try Again','no',(460,y1))
+        textchoice.addchoice('Leave','yes',(330-100,y1))
+        textchoice.addchoice('Try Again','no',(330+100,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_music('tower') )
@@ -946,6 +952,8 @@ class obj_scene_ch3p24a(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
         else:
             share.scenemanager.switchscene(obj_scene_ch3p24fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
         self.text=[\
                   '"Please enter password, said the  ',('tower',share.colors.location2),'\'s a.s.s."',\
@@ -959,7 +967,7 @@ class obj_scene_ch3p24a(page.obj_chapterpage):
         animation1.addsound( "tower2", [91] )
         animation1.addsound( "tower4", [99] )
         #
-        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default='...')
         self.addpart( self.textinput )
         #
         self.addpart( draw.obj_music('tower') )
@@ -1182,6 +1190,8 @@ class obj_scene_ch3p32(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p31())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p33())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,410),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch3_startbug')
         self.text=[\

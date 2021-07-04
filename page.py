@@ -130,21 +130,12 @@ class obj_chapterpage(obj_page):
     # textboxes for mouse browsing
     def textboxplace(self):
         pagetext_x,pagetext_y=self.pagetext.getposition()
-        # print(pagetext_x)
         if pagetext_x<1080:
             self.textboxnextpage_xy=( pagetext_x+10,pagetext_y+33 )
-            # self.textboxprevpage_xy=( pagetext_x+10,pagetext_y+33 )
-            # self.textboxnextpage_xy=( pagetext_x+10+180,pagetext_y+33 )
         else:
             self.textboxnextpage_xy=( 50,pagetext_y+90 )
-            # self.textboxprevpage_xy=( 50,pagetext_y+90 )
-            # self.textboxnextpage_xy=( 230,pagetext_y+90 )
-        # self.textboxprevpage_text='[back]'
-
-    def textboxprevpage(self): # BACK OPTION REMOVED IN MOST CASES
+    def textboxprevpage(self):# no back option anymore (obsolete)
         self.dotextboxprevpage=False
-        # self.textbox_prev=draw.obj_textbox('[back]',self.textboxprevpage_xy,color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xleft=True)
-        # self.addpart(self.textbox_prev)
     def textboxset(self):# change textboxopt by user here
         pass# user options for the nextpage
         # self.textboxopt={'show',False}# remnoves the textbox
@@ -160,10 +151,10 @@ class obj_chapterpage(obj_page):
         # make
         self.dotextboxnextpage=self.textboxref['do']
         if self.dotextboxnextpage:
-            if self.textboxref['text']=='right':
+            if self.textboxref['align']=='right':
                 self.textbox_next=draw.obj_textbox(self.textboxref['text'],\
                 self.textboxref['xy'],color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium',xright=True)
-            elif self.textboxref['text']=='center':
+            elif self.textboxref['align']=='center':
                 self.textbox_next=draw.obj_textbox(self.textboxref['text'],\
                 self.textboxref['xy'],color=(138,0,138),hover=True,hovercolor=(220,0,220),fontsize='medium')
             else:

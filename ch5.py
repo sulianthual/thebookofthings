@@ -348,6 +348,8 @@ class obj_scene_ch5p14(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p11())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p15())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,510),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch5_writeelder')
         self.text=[\
@@ -648,6 +650,8 @@ class obj_scene_ch5p25(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5p26())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p25fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch5_lostrps1')
         self.text=[\
@@ -655,7 +659,7 @@ class obj_scene_ch5p25(page.obj_chapterpage):
                'Better luck next time, hi hi hi. ',\
                'Do you want to play again". ',\
                   ]
-        y1=250
+        y1=200
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(340,y1))
@@ -737,6 +741,8 @@ class obj_scene_ch5p27(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5p28())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p27fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch5_lostrps2')
         self.text=[\
@@ -744,7 +750,7 @@ class obj_scene_ch5p27(page.obj_chapterpage):
                'But you are getting better, hi hi hi. ',\
                'Do you want to play one last time". ',\
                   ]
-        y1=250
+        y1=200
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(340,y1))
@@ -878,6 +884,8 @@ class obj_scene_ch5p29(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5p30())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p29fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                '"Well that was fun, said ',\
@@ -885,7 +893,7 @@ class obj_scene_ch5p29(page.obj_chapterpage):
                'But you gotta go now, goodbye!" ',\
                   ]
         self.addpart( draw.obj_animation('ch5eldertalks3','elderbase',(640,360)) )
-        y1=250
+        y1=200
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(340,y1))
@@ -948,13 +956,15 @@ class obj_scene_ch5p30(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5p31())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p30fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                '"Oh I am really sorry, said ',('{eldername}',share.colors.elder),\
                ', but I dont have much time left for playing. ',\
                'Well its getting late, bye now!" ',\
                   ]
-        y1=250
+        y1=200
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes!','yes',(340,y1))
@@ -1013,13 +1023,15 @@ class obj_scene_ch5p31(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5p32())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p31fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                '"You are starting to get on my nerves, said ',('{eldername}',share.colors.elder),'. ',\
                'It is near my bed time, so lets call it a day. ',\
                'Now scram! ". ',\
                   ]
-        y1=250
+        y1=200
         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. YEEEES!','yes',(340,y1))
@@ -1282,6 +1294,8 @@ class obj_scene_ch5p37(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch5p36())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p38())
+    def textboxset(self):
+        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch5_winrps3')
         self.text=[\
@@ -1289,7 +1303,7 @@ class obj_scene_ch5p37(page.obj_chapterpage):
                'You need to respect the elders more, you know. ',\
                'Oh what is the world going to, back in my time..." ',\
                   ]
-        y1=240+60
+        y1=200
         self.addpart( draw.obj_textbox('Well :',(130,y1)) )
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Goodbye','yes',(340,y1))

@@ -382,6 +382,8 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch6p12())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p14())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,510),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch6_writesailor')
         self.text=[\

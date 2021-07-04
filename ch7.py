@@ -390,6 +390,8 @@ class obj_scene_ch7p12(page.obj_chapterpage):
                 share.scenemanager.switchscene(obj_scene_ch7p19())# shortcut
             else:
                 share.scenemanager.switchscene(obj_scene_ch7p12fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
         self.text=[\
                   '"Please enter ',('password',share.colors.password),', blasted the tower\'s a.s.s. ',\
@@ -401,7 +403,7 @@ class obj_scene_ch7p12(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default='...')
         self.addpart( self.textinput )
         #
         animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
@@ -651,6 +653,8 @@ class obj_scene_ch7p18(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p19())
         else:
             share.scenemanager.switchscene(obj_scene_ch7p18fail())
+    def textboxset(self):
+        self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
         self.text=[\
                   '"go on, try this new ',('password',share.colors.password),', said the ',\
@@ -663,7 +667,7 @@ class obj_scene_ch7p18(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='...')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default='...')
         self.addpart( self.textinput )
         #
         animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
@@ -1717,7 +1721,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p48a())
     def textboxset(self):
-        self.textboxopt={'xy':(1230-80,620)}
+        self.textboxopt={'xy':(1230-180,220)}
     def setup(self):
         self.text=[\
                     'Oh boy, that is one epic fight, said the book of things. ',\
@@ -1725,7 +1729,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_mechfight(self,tutorial=True,prompt=False)
         self.addpart(self.world)
-        self.addpart( draw.obj_textbox('(not the actual fight)',(640,220),color=share.colors.instructions) )
+        self.addpart( draw.obj_textbox('(not the actual fight)',(250,220),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('mechfight') )
 

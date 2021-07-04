@@ -49,26 +49,26 @@ class obj_quickscene():
             # quickscene=ch1.obj_scene_ch1p7()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
-            # quickscene=ch2.obj_scene_ch2p6c()
+            # quickscene=ch2.obj_scene_ch2p3()
             # quickscene=ch2.obj_scene_ch2p12()
             # quickscene=ch2.obj_scene_ch2play3a()
             # quickscene=ch3.obj_scene_ch3p19death()
-            # quickscene=ch3.obj_scene_ch3p10()
+            # quickscene=ch3.obj_scene_ch3p32()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_ch4p12()
-            # quickscene=ch5.obj_scene_ch5p33()
+            # quickscene=ch4.obj_scene_ch4p11()
+            # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
-            # quickscene=ch6.obj_scene_ch6p39()
+            # quickscene=ch6.obj_scene_ch6p13()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p39death()
-            # quickscene=ch7.obj_scene_ch7p24()
-            # quickscene=ch7.obj_scene_ch7p48a()
+            # quickscene=ch7.obj_scene_ch7p18()
+            # quickscene=ch7.obj_scene_ch7p48()
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
-            # quickscene=ch8.obj_scene_ch8west()
-            quickscene=ch8.obj_scene_ch8southridestandby()
+            quickscene=ch8.obj_scene_ch8islandreplay()
+            # quickscene=ch8.obj_scene_ch8southridestandby()
             # quickscene=ch8.obj_scene_ch8roam()
 
             #
@@ -1252,10 +1252,10 @@ class obj_scene_settings(obj_scene_realtitlescreen):
 class obj_scene_instructions_controls_screen(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
-    def triggernextpage(self,controls):
-        return False
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
     def textboxset(self):
-        self.textboxopt={'do':False}
+        self.textboxopt={'text':'[back]'}
     def setup(self):
         #
         self.doazertymode=share.datamanager.doazerty# True/False
@@ -1317,10 +1317,10 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
 class obj_scene_creditscreen(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
-    def triggernextpage(self,controls):
-        return False
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_settings())
     def textboxset(self):
-        self.textboxopt={'do':False}
+        self.textboxopt={'text':'[back]'}
     def presetup(self):
         super().presetup()
         # self.textkeys={'fontsize':'small','linespacing': 45}# modified main text formatting
@@ -1346,13 +1346,9 @@ class obj_scene_erasebook(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_settings())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_erasebookconfirmed())
-    def triggernextpage(self,controls):
-        return controls.gl and controls.gu and controls.gr and controls.gd
+        share.scenemanager.switchscene(obj_scene_settings())
     def textboxset(self):
-        self.textboxopt={'do':False}
-    def soundnextpage(self):
-        pass# no sound
+        self.textboxopt={'text':'[back]'}
     def setup(self):
         tempo= 'Press ['+share.datamanager.controlname('left')
         tempo+= '+'+share.datamanager.controlname('up')
@@ -1361,30 +1357,21 @@ class obj_scene_erasebook(page.obj_chapterpage):
         tempo+= '] to erase the book. '
         tempo+= 'You will loose all your drawings and progress. '
         self.text=[tempo]
+        self.textbox1=draw.obj_textbox(' ',(640,360))
+        self.addpart( self.textbox1 )
+        #
+        self.sound1=draw.obj_sound('erasebook')
+        self.addpart(self.sound1)
         #
         self.addpart( draw.obj_music('tension') )
-        #
+    def page(self,controls):
+        # erase the book
+        if controls.gl and controls.gu and controls.gr and controls.gd:
+            share.datamanager.erasebook()
+            self.textbox1.replacetext('the book has vanished...')
+            self.sound1.play()
 
-class obj_scene_erasebookconfirmed(page.obj_chapterpage):
-    def nextpage(self):
-        pass
-    def triggernextpage(self,controls):
-        return False
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_settings())
-    def setup(self):
-        self.text=['The book has vanished...']
-        share.datamanager.erasebook()
-        #
-        self.sound=draw.obj_sound('erasebook')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('tension') )
 
-        #
 
 ####################################################################################################################
 ####################################################################################################################

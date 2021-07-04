@@ -56,7 +56,7 @@ class obj_scene_ch1p1(page.obj_chapterpage):
     def soundnextpage(self):
         pass# no sound
     def textboxset(self):
-        self.textboxopt={'xy':(640,510),'text':'[confirm]'}
+        self.textboxopt={'xy':(640,510),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch1_writehero')
         self.text=[\

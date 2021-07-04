@@ -210,7 +210,7 @@ class obj_scene_ch0p10(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def textboxset(self):
-        self.textboxopt={'xy':(640,650),'text':'[confirm]'}
+        self.textboxopt={'xy':(640,650),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch0_meetbook')
         tempo1='['+share.datamanager.controlname('mouse1')+']'

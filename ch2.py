@@ -132,6 +132,8 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p4())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,510),'text':'[confirm]','align':'center'}
     def setup(self):
         share.datamanager.setbookmark('ch2_writepartner')
         self.text=[\
@@ -156,9 +158,8 @@ class obj_scene_ch2p3(page.obj_chapterpage):
         textchoice.addkey('partner_him',{'he':'him','she':'her','it':'it'})
         self.addpart( textchoice )
         #
-        self.addpart(draw.obj_animation('ch2_love1','love',(640,540),record=False,scale=0.3))
-        self.addpart(draw.obj_animation('ch2_love1','love',(340,540),scale=0.3))
-        self.addpart(draw.obj_animation('ch2_love1','love',(940,540),scale=0.3))
+        self.addpart(draw.obj_animation('ch2_love1','love',(220,540),scale=0.3))
+        self.addpart(draw.obj_animation('ch2_love1','love',(1280-220,540),scale=0.3))
         #
         self.addpart( draw.obj_music('partner') )
 

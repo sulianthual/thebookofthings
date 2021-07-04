@@ -98,6 +98,8 @@ class obj_scene_ch8home(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8homesleep())
         else:
             share.scenemanager.switchscene(obj_scene_ch8homebye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said the ',\
@@ -107,7 +109,7 @@ class obj_scene_ch8home(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
@@ -220,7 +222,7 @@ class obj_scene_ch8atcake(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8atcake())# cant each forever
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='cake'))
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -248,6 +250,8 @@ class obj_scene_ch8atpartner(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8atpartnerserenade())
         else:
             share.scenemanager.switchscene(obj_scene_ch8atpartnerbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said ',\
@@ -257,7 +261,7 @@ class obj_scene_ch8atpartner(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         # self.addpart(draw.obj_imageplacer(self,'mailbox','flower','cloud'))
@@ -321,6 +325,8 @@ class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8atpartnerserenade())
         else:
             share.scenemanager.switchscene(obj_scene_ch8atpartnerbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Do you want to play again, said ',\
@@ -329,7 +335,7 @@ class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('mailbox',(167,347),scale=0.44,rotate=0,fliph=False,flipv=False) )
@@ -384,6 +390,8 @@ class obj_scene_ch8pond(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8pondfish())
         else:
             share.scenemanager.switchscene(obj_scene_ch8pondbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"',\
@@ -392,7 +400,7 @@ class obj_scene_ch8pond(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
@@ -455,6 +463,8 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8pondfish())
         else:
             share.scenemanager.switchscene(obj_scene_ch8pondbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"',\
@@ -463,7 +473,7 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
@@ -577,12 +587,14 @@ class obj_scene_ch8mech3(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8mechfightstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8mechbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=['"Do you want to replay the mech fight". ']
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
@@ -646,12 +658,14 @@ class obj_scene_ch8mechreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8mechfightstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8mechbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=['"That was a nice fight. Do you want to play again". ']
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('cloud',(127,658),scale=0.44,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
@@ -703,6 +717,8 @@ class obj_scene_ch8west(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8westcorrectpassword())
         else:
             share.scenemanager.switchscene(obj_scene_ch8westwrongpassword())
+    def textboxset(self):
+        self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
         self.text=[\
                   '"Welcome back, blasted the tower\'s a.s.s. (automated security system). ',\
@@ -713,7 +729,7 @@ class obj_scene_ch8west(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('towerpassword',30,(380,260), legend='tower password',default='lie cheat steal')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default='lie cheat steal')
         self.addpart( self.textinput )
         #
         animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
@@ -792,6 +808,8 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8weststompstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8westbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said ',\
@@ -800,9 +818,9 @@ class obj_scene_ch8westinside(page.obj_chapterpage):
                    ]
         y1=200
         textchoice=draw.obj_textchoice('numchoice',default='1')
-        textchoice.addchoice('1. Guns','1',(310,y1))
-        textchoice.addchoice('2. Fists','2',(580,y1))
-        textchoice.addchoice('3. Nothing Really','3',(840,y1))
+        textchoice.addchoice('1. Guns','1',(420,y1))
+        textchoice.addchoice('2. Fists','2',(640,y1))
+        textchoice.addchoice('3. Not Really','3',(900,y1))
         self.addpart( textchoice )
         animation1=draw.obj_animation('ch3_villainconfront1','herobase',(640,360),record=False)
         animation2=draw.obj_animation('ch3_villainconfront2','villainbase',(640,360),record=False,sync=animation1)
@@ -900,6 +918,8 @@ class obj_scene_ch8westreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8weststompstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8westbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Nicely done, said ',\
@@ -908,9 +928,9 @@ class obj_scene_ch8westreplay(page.obj_chapterpage):
                    ]
         y1=200
         textchoice=draw.obj_textchoice('numchoice',default='3')
-        textchoice.addchoice('1. Guns','1',(310,y1))
-        textchoice.addchoice('2. Fists','2',(580,y1))
-        textchoice.addchoice('3. Nope','3',(840,y1))
+        textchoice.addchoice('1. Guns','1',(420,y1))
+        textchoice.addchoice('2. Fists','2',(640,y1))
+        textchoice.addchoice('3. Nope','3',(900,y1))
         self.addpart( textchoice )
         animation1=draw.obj_animation('ch3_villainconfront1','herobase',(640,360),record=False)
         animation2=draw.obj_animation('ch3_villainconfront2','villainbase',(640,360),record=False,sync=animation1)
@@ -948,6 +968,8 @@ class obj_scene_ch8east(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_lyingstart())
         else:
             share.scenemanager.switchscene(obj_scene_ch8eastbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said ',\
@@ -957,7 +979,7 @@ class obj_scene_ch8east(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -965,7 +987,7 @@ class obj_scene_ch8east(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -984,6 +1006,8 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_lyingstart())
         else:
             share.scenemanager.switchscene(obj_scene_ch8eastbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Do you want to play again." ',\
@@ -991,7 +1015,7 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -999,7 +1023,7 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -1067,6 +1091,8 @@ class obj_scene_ch8northtop(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8north_rpsstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8northbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said ',\
@@ -1076,7 +1102,7 @@ class obj_scene_ch8northtop(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('elderbase',(964,325),scale=0.48,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('mountain',(72,655),scale=0.34,rotate=0,fliph=False,flipv=False) )
@@ -1145,6 +1171,8 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8north_rpsstandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8northbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"That was a nice game, said ',\
@@ -1153,7 +1181,7 @@ class obj_scene_ch8northreplay(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -1211,6 +1239,8 @@ class obj_scene_ch8south(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8southridestandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8southbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said ',\
@@ -1220,7 +1250,7 @@ class obj_scene_ch8south(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(968,411),scale=0.42,rotate=0,fliph=True,flipv=False) )
@@ -1290,6 +1320,8 @@ class obj_scene_ch8southreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8southridestandby())
         else:
             share.scenemanager.switchscene(obj_scene_ch8southbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"That was nice. Do you want to play again".',\
@@ -1297,7 +1329,7 @@ class obj_scene_ch8southreplay(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(968,411),scale=0.42,rotate=0,fliph=True,flipv=False) )
@@ -1353,6 +1385,8 @@ class obj_scene_ch8island(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"',\
@@ -1361,7 +1395,7 @@ class obj_scene_ch8island(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('mountain',(1169,276),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -1493,6 +1527,8 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch8islandsneak())
         else:
             share.scenemanager.switchscene(obj_scene_ch8islandbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"That was fun. Do you want to play again".',\
@@ -1500,7 +1536,7 @@ class obj_scene_ch8islandreplay(page.obj_chapterpage):
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='no')
         textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('mountain',(1169,276),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -1533,11 +1569,6 @@ class obj_scene_ch8islandbye(page.obj_chapterpage):
         self.text=[\
                 '"Alright, bye".',\
                    ]
-        y1=200
-        textchoice=draw.obj_textchoice('yesno',default='no')
-        textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(660,y1))
-        self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('mountain',(1169,276),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(940,566),scale=0.6,rotate=0,fliph=False,flipv=False) )
