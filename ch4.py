@@ -621,9 +621,11 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         return ['Now tell me if this is true or false (1/3):']
     def textchoice_lyinggame(self):
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('True','yes',(640-100,310))
-        textchoice.addchoice('False','no',(640+100,310))
+        textchoice.addchoice('True','yes',(640-100,250))
+        textchoice.addchoice('False','no',(640+100,250))
         self.addpart( textchoice )
+    def textboxset(self):
+        self.textboxopt={'xy':(640,350),'text':'[confirm]','align':'center'}
     def setup(self,**kwargs):
         # inherit world
         if (kwargs is not None) and ('world' in kwargs):
@@ -633,7 +635,7 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         self.world.makequestion()
         # Page text
         self.text=self.text_lyinggame()
-        self.addpart( draw.obj_textbox( '" '+self.world.getquestion()+'"',(640,190)) )
+        self.addpart( draw.obj_textbox( '" '+self.world.getquestion()+'"',(640,150)) )
         self.textchoice_lyinggame()
         # Drawing
         drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
@@ -912,8 +914,8 @@ class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
                 ('wrong answer',share.colors.red),') (1/3): ']
     def textchoice_lyinggame(self):# textchoice is "ironic"
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('"True"','yes',(640-100,310))
-        textchoice.addchoice('"False"','no',(640+100,310))
+        textchoice.addchoice('"True"','yes',(640-100,250))
+        textchoice.addchoice('"False"','no',(640+100,250))
         self.addpart( textchoice )
 
 class obj_scene_lyingp3q2(obj_scene_lyingp3q1):# child of lying 3

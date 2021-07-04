@@ -1257,6 +1257,8 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch5p35a())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p37())
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                'OWWWW you really dont listen, said ',('{eldername}',share.colors.elder),'. ',\
@@ -1274,10 +1276,10 @@ class obj_scene_ch5p36fail(page.obj_chapterpage):
         animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         #
-        y1=190
+        y1=200
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('Retry','yes',(840,y1))
-        textchoice.addchoice('Abandon (skip)','no',(1100,y1))
+        textchoice.addchoice('Retry','yes',(540,y1))
+        textchoice.addchoice('Abandon (skip)','no',(740,y1))
         self.addpart( textchoice )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4','elder5','elder6') )

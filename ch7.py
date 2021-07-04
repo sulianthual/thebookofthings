@@ -882,6 +882,8 @@ class obj_scene_ch7p22death(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p21b())
         else:
             share.scenemanager.switchscene(obj_scene_ch7p23())# skip
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
@@ -890,10 +892,10 @@ class obj_scene_ch7p22death(page.obj_chapterpage):
                 ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
-        y1=260
+        self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
+        y1=200
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Retry','yes',(500,y1))
         textchoice.addchoice('Abandon (skip)','no',(820,y1))
         self.addpart( textchoice )
         #
@@ -1020,6 +1022,8 @@ class obj_scene_ch7p25death(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p24b())
         else:
             share.scenemanager.switchscene(obj_scene_ch7p26())# skip
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
@@ -1028,10 +1032,10 @@ class obj_scene_ch7p25death(page.obj_chapterpage):
                 ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
-        y1=260
+        self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
+        y1=200
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Retry','yes',(500,y1))
         textchoice.addchoice('Abandon (skip)','no',(820,y1))
         self.addpart( textchoice )
         #
@@ -1829,6 +1833,8 @@ class obj_scene_ch7p49death(page.obj_chapterpage):
             share.scenemanager.switchscene(obj_scene_ch7p48c())
         else:
             share.scenemanager.switchscene(obj_scene_ch7p50())# skip
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
@@ -1837,10 +1843,10 @@ class obj_scene_ch7p49death(page.obj_chapterpage):
                 ' (or you can always abandon and skip the fight). ',\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
-        self.addpart(draw.obj_textbox('You are Dead',(640,360),fontsize='large') )
-        y1=260
+        self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
+        y1=200
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('Retry','yes',(420,y1))
+        textchoice.addchoice('Retry','yes',(500,y1))
         textchoice.addchoice('Abandon (skip)','no',(820,y1))
         self.addpart( textchoice )
         #
