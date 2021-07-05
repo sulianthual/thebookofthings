@@ -1115,7 +1115,7 @@ class obj_scene_ch6p38a(page.obj_chapterpage):
         self.world=world.obj_world_ridecow(self,tutorial=True,trees=True)
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_image('show3',(460,160),scale=1,fliph=False,flipv=True,path='data/premade') )
+        self.addpart( draw.obj_image('show3',(830,160),scale=1,fliph=False,flipv=True,path='data/premade') )
         self.addpart( draw.obj_textbox('(not the actual chase)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('racing') )

@@ -621,6 +621,8 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play3b())
     def triggernextpage(self,controls):
         return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
                     '"',\

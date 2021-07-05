@@ -63,20 +63,22 @@ def sqrt(x):
 def randint(minrange,maxrange):# returns integer within range with equal probabilities
     return random_randint(minrange,maxrange)
 
-def randchoice(list,probas=None):# returns element from list (with either equal probabilities or weights)
+def randchoice(mylist,probas=None):# returns element from list (with either equal probabilities or weights)
     if probas is None:
-        return random_randchoice(list)[0]
+        return random_randchoice(mylist)[0]
     else:
-        return random_randchoice(list,weights=probas,k=1)[0]
+        return random_randchoice(mylist,weights=probas,k=1)[0]
 
-def randsample(list,n):# returns n element from list chosen randomly WITHOUT REPETITIONS
-    return random_randsample(list,n)
+def randsample(mylist,n):# returns n element from list chosen randomly WITHOUT REPETITIONS
+    return random_randsample(mylist,n)
 
 def randgauss(mean,std):# returns normal gaussian distribution of given mean and std
     return random_randgauss(mean,std)
 
 def randbool():# return True or False with equal probabilities
     return bool(random_randint(0,1))
+
+
 ####################################################################################################################
 # General Functions and objects for all uses
 

@@ -45,7 +45,7 @@ class obj_quickscene():
             # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
-            quickscene=ch0.obj_scene_ch0p14()
+            # quickscene=ch0.obj_scene_ch0p14()
             # quickscene=ch1.obj_scene_ch1p7()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
@@ -55,17 +55,20 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p32()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_lyingp1q1()
+            # quickscene=ch4.obj_scene_lyingpart1()
             # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
             # quickscene=ch6.obj_scene_ch6p13()
             # quickscene=ch6.obj_scene_ch6p30a()
+            # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch6.obj_scene_ch6p39death()
             # quickscene=ch7.obj_scene_ch7p18()
             # quickscene=ch7.obj_scene_ch7p22death()
+            quickscene=ch7.obj_scene_ch7p25()
             # quickscene=ch7.obj_scene_ch7p25death()
             # quickscene=ch7.obj_scene_ch7p48()
+            # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
@@ -101,9 +104,9 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_textbox()
             #
             # quickscene=tests.obj_scene_testtrailer_p1()
-            quickscene=tests.obj_scene_testforestgame()
+            # quickscene=tests.obj_scene_testforestgame()
             #
-            # quickscene=tests.obj_scene_testdrafting()
+            quickscene=tests.obj_scene_testdrafting()
             #
             #
             share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)

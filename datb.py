@@ -757,6 +757,11 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',image1)
             dispgroup1.addpart('part2',image2)
             dispgroup1.snapshot((640,360+100-50,300,250),'villainshootcrouch')# 0 to 660 in height
+            # villain rest
+            dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+            dispgroup1.addpart('part1',draw.obj_image('stickbodyrest',(640,460),path='data/premade') )
+            dispgroup1.addpart('part2',draw.obj_image('villainhead',(640+80,200+50),scale=0.5,rotate=-10) )
+            dispgroup1.snapshot((640,330,200,330),'villainbaserest')
             # villainmech armature
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('angryface',(640,360),scale=0.5,fliph=True) )

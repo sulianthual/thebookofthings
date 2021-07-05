@@ -934,7 +934,6 @@ class obj_scene_ch7p24(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(1230-80,620)}
     def setup(self):
-        tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                   'Instructions: ',\
                     'move with ','['+share.datamanager.controlname('arrows')+'/',\
@@ -945,6 +944,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
         self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
+        self.world.text_undone.show=False
         #
         self.addpart( draw.obj_music('fistfight') )
 
@@ -960,8 +960,7 @@ class obj_scene_ch7p24a(page.obj_chapterpage):
         self.text=[\
                   'Kick ',\
                   ('{villainname}',share.colors.villain),' to bring ',\
-                  ('{villain_his}',share.colors.villain2),' health down ',\
-                  '(when the fight starts). ',\
+                  ('{villain_his}',share.colors.villain2),' health down (when the fight starts). ',\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)

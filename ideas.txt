@@ -16,7 +16,7 @@ Keep it simple or will never finish this game !!!:
 No more advanced physics! Only simple goofy minigames
 No more advanced drawings! Only simple and goofy.
 No more advanced modular story! Only one linear story.
-
+No more advanced gaming. All games easily won with very few controls.
 
 * Game Progression:
 - Chapter I, II: set hero, partner, home (story setting)
@@ -49,112 +49,41 @@ KEEP the premade stickmans (do NOT make player draw them):
 
 * Minigames:
 DO NOT add complex minigames that require a physics engine (e.g. platformer, brawler...)
-It is NOT worth it to do with pygame (too painful to build from ground up)
-It should be done in OTHER games with other softwares that do this more easily (godot,etc...)
+It is NOT worth it to do with pygame (too painful to build from ground up, prefer other softwares like godot)
+Keep few controls and make all minigames easily won: this is a game for non-gamers too.
 
 ###########################################################
 ###########################################################
-* Final changes that should probably be made:
+* Ideas (implement maybe later or never, not so important):
+
+- make all games easier to win, with fewer controls
+
+- tff file: this font cannot do interrogation marks.
 
 
-- compile with pyinstaller: linux, windows, mac
 
 
-
-
-###########################################################
-###########################################################
-* Other Ideas (maybe later or never, not so important):
-
+*Content
 - Chapter 2: is a bit long with lots of drawings. Add minigames:
              can be tennis (play pong) with partner
-             can be around the flowers....: collect as many as possible (like coins)
 
 - Chapter 4: add zelda like minigame while in hero enters the woods (like in the lost woods of zelda oot)
             1.) do smallish scenes with trees, bushes, flowers
             2.) scenes exits are several doors, all lead back to beginning of scene except one (that has music)
             3.) add a weapon to hero (sword?), and battle 2 critters: draw a bat, and a rat (can be reused later on), or a snake
+            or....
+            4.) meet bunny at entrance, then have to chase it through the woods.
+            5.) add minigame with 3 bushes (similar to 3 cups and a ball) quickly shuffled before must guess in which bunny is hidding.
 
 - Chapter 4: to make the lying game slightly more engaging:
              put two platforms, one for True, one for False
              then have the hero physically move/jump on one platform to make his choice
              (or make them large switches to activate: wrong answer makes a snake fall that has to be killed)
 
-- Chapter 7: boss fight, add ligntningbolts that villain can throw horizontally (replacing the kick)
-
-
-
-- Make a first chapter (the prologue or between prologue and chapter I) that mimicks the creation of the universe
-  make a big bang (done by the book of things who is like god in this universe)
-  then start drawing with very simple shapes (line, circles)
-  the first shapes are like bacteria, they fight and each other (can have minigames)
-  then become terrific monster (like dinosaurs that fly, roam,eat each others)
-  then at the end, those shapes create the "stickman". It has all the basic actions of move, jump
-  can also draw the "emotions" (that didnt exist before) like the ?, the !, the "", etc
-
-
-- tff file: cannot do text for interrogation marks. correct the file ?
-
-
-
-- do comprehensive cleanup of music and sounds.
-   - Avoid file duplicates
-   - look (briefly) at volume levels
-   - during page transitions: sometimes nosound, sometimes there is (with soundnextpage), clean it up
-   - animations properly finish(). they shut down all sounds. Do same for dispgroup that hold animations:
-     call finish() for dispgroup that calls finish for animations (that calls finish() for sounds)
-- sound and music: volume bar (in settings). Just add volume multiplicators
-
-- draws add a vanish timer fonctionality (for textbox, image,animation, or dispgroup):
-  launches a timer that makes draw  draw.show=False after timer ends (timer is automatic from updates)
-  1) use option vanish=amount (starts timer) at creation to start timer
-  2) or invoke draw.vanish(amount) to (re)start timer
-  3) can easily be reversed using draw.show=False
-useful for:
-* healthbars: when hit add a cross that disappears fast.
-* to make some cool effects , like dust or else in minigames/story
-
-- customize locations: give them names
-
-- Add better character customization (influences text only):
-  name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
-
-- make other games:
- cheap spinoffs of famous games, where
- we draw all game assets then play a dumbed down/funny version.
- we can even do the same for the game audio with a mic.
-E.g: kind of doom, kind of zelda, kind of mario
-BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
-
-- text: (main text and textbox, textinput, textchoice). Can add options:
-  fillcolor (background) (already possible for textbox)
-  bold (no real difference with current font)
-  italic
-  underline (only pygame 2.0)
-  => need to find a way to insert in self.text=['this is ', ('it',(255,255,255))]
-
-- difficulty levels: select at profile setup, and can change in settings...(not too important)
-
-- storytelling:
-  some events are repetitive (like going to bed etc)
-  in some place, could rewrite the story slightly with twists:
-    1) point of view changes (shortly tell story from villain, partner, bug point of view)
-       have other characters make some minigames, e.g. the villain wakes up and hero is at this door, etc...
-    2) cut the chronology (like Pulp fiction type), justified by the book jumping between pages
-
-
-- Somewhere...: fps game with simple shooting + arrows to move
-            should be fairly simple to code, just enemies/items with small animations
-            and that are always facing the player (only scale and fliph them)
-
-- Chapter 2: add a minigame to pickup flowers for the partner
-             add a tennis game to play against the partner
-
 - Chapter 4: add the stomping minigame with the bunny (just adapt it)
              could add doom-like scary game in the forest
              could add stomping minigame with bunny (bunny demultiplies, jumps on hero, hero jumps on all bunnies)
              could add stomping minigame combined with lying minigame: fight/avoid while using correct True/Wrong (e.g. go to either area).
-
 
 - Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
              could add stomping minigame combined with rockpaperscissors minigame: fight/avoid obstacles while using correct prompts
@@ -169,53 +98,27 @@ BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
 - Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
 
 - Chapter 7: extend it reusing all games from previous chapter (e.g. sneak in villains room, etc...)
+- Chapter 7: boss fight, add ligntningbolts that villain can throw horizontally
 
 - Somewhere...: Add a game with parabolic shooting ?
              can be done easily with naval battle and a cannon
              (could have been arc and bow for hunting too)
              or can be arc+bow on beach: multiple skeleton running from right to left (very slowly)
-
 -Somewhere: recycle the breakfast drinking minigame
             (change the animations)
             e.g. use it to cut a rope, when the hero sneaks in castle and unties partner
+- Somewhere...: fps game with simple shooting + arrows to move
+            should be fairly simple to code, just enemies/items with small animations
+            and that are always facing the player (only scale and fliph them)
 
-- Credits: Make a song about "lie, cheat and steal"
-          Play it with everyone dancing, with a little ball like a karaoke
-          Write some verses about the story that rhymes
-          "Once upon a time there was a hero in his prime, "
-          "He saved his partner in no time. "
-          ....
-          And the chorus is:
-          LIE, CHEAT AND STEAL!
-          learn how to LIE, CHEAT AND STEAL!
-          its great to LIE, CHEAT AND STEAL!
-          so fun to LIE, CHEAT AND STEAL!
-          when life pulls you down and you just feel like a clown
-          you will come around if you LIE, CHEAT AND STEAL!
-          (you can replace learn how to=> you need to, and so on...)
+Somwhere:
+  rewrite story parts  with twists:
+    1) point of view changes (shortly tell story from villain, partner, bug point of view)
+    2) cut the chronology (like Pulp fiction type), justified by the book jumping between pages
+    3) Add better character customization (influences text only):
+      name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
 
-- World Map: path should not be drawn except by player
-
-- new game plus (more options in text, customize characters with hats/clothes...).
-
-
-- allow player to choose text font at beginning
-
-- allow player to use color on drawings???
-
-- Manu idea: follow Gulliver on asset reuse (same worlds but small/big, logic/illogic)
-- allow player to name more stuff: like locations (the evil lair, home, the highest peak, etc...)
-- Make game website (thebookofthings.com). with game download etc...
-- remove unlock system (?)
-- in file progress, add part: this can tell which part of chapter is done,
-  if exiting and wanting to go back
-  - Main menu should be: "settings, drawings, chapters, continue"
-- add place where all drawings can be redone (maybe free roaming once region is unlocked)
-- add new game plus: replay the game, but a few options are unlocked
-                    like making more complex drawings, adding hats/pets/clothes....
-                    and other small customizations
-                    as well as making some games slightly harder
-- when moving on map, remove all text? It is more beautiful
+- Somewhere:
 - medieval setting with a fight for the partner=princess
 - space setting (villain is the father?) (space element on everyone)
 - the hero is an anti-hero. partner rescues the hero
@@ -223,15 +126,9 @@ BUT DO THIS WITH GODOT, pygame is not scalable for big projects!
 - the fish becomes a river spirit (is huge)
 - they are all super-heroes
 - the fabric of reality: break everything, swapping images randomly
-- add flavors to characters:
-   the hero was "always angry", "dumb as a rock", etc...
-    then it may just affect the story text with options, but still add a lot of depth to the story
-- Somewhere: add a mirror in villain chapter? in his lair?
-            easy to make a character reflection in the mirror
-            the villain and mirror can have conversations, and the mirror can be his sidekick (to be defeated)
-- allow player to place items (e.g. place 3 trees near the hero house, etc...)
+- add a mirror in villain chapter? in his lair?
 
-- Possible minigame additions:
+- Some minigame ideas:
 Hunt = Arrow Parabolic Arc [A][D] then [W]
 Flappy Bird [W]
 Play Pong [W][S] (tennis with partner)
@@ -247,7 +144,7 @@ breakout game (pad, ball and horizontal layers of bricks)
 helicopters for hero/villain with flappy bird and shooting
 writing game: type quickly text or answer to it. What is your favorite color? ...etc...
 skiing game like classic game
-Atari games: https://games.aarp.org/category/atari-games
+
 
 
 

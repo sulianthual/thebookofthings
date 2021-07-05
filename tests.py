@@ -1773,7 +1773,7 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart(drawing)
         #
         # Make main menu animations
-        if True:
+        if False:
             # decorations
             self.text=[]
             self.addpart(draw.obj_textbox('The Book of Things',(640,80),fontsize='big'))
@@ -1838,12 +1838,27 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_image('partnerbase',(320,426),scale=0.54,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('musicnote',(485,278),scale=0.36,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('musicnote',(356,189),scale=0.22,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mailbox',(1073,463),scale=1,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bush',(772,595),scale=0.54,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mailletter',(252,96),scale=0.39,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mailbox',(1073,463),scale=1,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('bush',(772,595),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('flower',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('flower',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('mailletter',(252,96),scale=0.39,rotate=0,fliph=False,flipv=False) )
 
+        # save villain full body (slightly different than hero, because originally we could include partnerhair)
+        # dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
+        # dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+        # dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
+        # dispgroup2.snapshot((640,330,200,330),'villainbaserest')
+        # self.addpart( dispgroup2)
+        # self.addpart( draw.obj_image('stickbody',(340,460),path='data/premade') )
+        # self.addpart( draw.obj_image('villainhead',(340,200),scale=0.5) )
+        # self.addpart( draw.obj_drawing('stickbodyrest',(940,460),shadow=(200,200)) )
+        # self.addpart( draw.obj_image('villainhead',(940+80,200+50),scale=0.5,rotate=-10) )
+
+        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        dispgroup1.addpart('part1',draw.obj_image('stickbodyrest',(640,460),path='data/premade') )
+        dispgroup1.addpart('part2',draw.obj_image('villainhead',(640+80,200+50),scale=0.5,rotate=-10) )
+        dispgroup1.snapshot((640,330,200,330),'villainbaserest')
 
 ####################################################################################################################
 ####################################################################################################################
