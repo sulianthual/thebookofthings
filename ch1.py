@@ -256,8 +256,8 @@ class obj_scene_ch1p9(page.obj_chapterpage):
                 ('hook',share.colors.item),' and we will be on our way. ',\
 
                    ]
-        self.addpart(draw.obj_drawing('hook',(240,450),legend='draw a hook',shadow=(200,200)))
-        self.addpart(draw.obj_drawing('fish',(940,450),legend='draw a fish (facing left)',shadow=(300,200)))
+        self.addpart(draw.obj_drawing('hook',(200+50,450),legend='draw a hook',shadow=(200,200)))
+        self.addpart(draw.obj_drawing('fish',(1280-300-50,450),legend='draw a fish (facing left)',shadow=(300,200)))
         #
         self.addpart( draw.obj_music('hero') )
 
