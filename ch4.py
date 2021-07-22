@@ -184,9 +184,11 @@ class obj_scene_ch4p5(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish."\n ',\
+                     ' went to the pond and caught a fish ',\
+                      '(with a newly aquired gun).',\
+                       '"\n ',\
                    ]
-        self.world=world.obj_world_fishing(self)
+        self.world=world.obj_world_fishing_withgun(self)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch4') )

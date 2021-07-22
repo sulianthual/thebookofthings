@@ -41,7 +41,7 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
-            # quickscene=obj_scene_settings()
+            quickscene=obj_scene_settings()
             # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
@@ -55,17 +55,21 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p32()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
+            # quickscene=ch4.obj_scene_ch4p5()
             # quickscene=ch4.obj_scene_lyingpart1()
             # quickscene=ch4.obj_scene_lyingfailpart1()
-            quickscene=ch4.obj_scene_lyingfailpart2()
+            # quickscene=ch4.obj_scene_lyingfailpart2()
             # quickscene=ch4.obj_scene_lyingfailpart3()
+            # quickscene=ch5.obj_scene_ch5p5()
             # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
+            # quickscene=ch6.obj_scene_ch6p5()
             # quickscene=ch6.obj_scene_ch6p13()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch6.obj_scene_ch6p39death()
+            # quickscene=ch7.obj_scene_ch7p4()
             # quickscene=ch7.obj_scene_ch7p18()
             # quickscene=ch7.obj_scene_ch7p22death()
             # quickscene=ch7.obj_scene_ch7p25()
@@ -75,6 +79,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
+            quickscene=ch8.obj_scene_ch8pond()
             # quickscene=ch8.obj_scene_ch8islandreplay()
             # quickscene=ch8.obj_scene_ch8southridestandby()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -109,7 +114,7 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_testtrailer_p1()
             # quickscene=tests.obj_scene_testforestgame()
             #
-            quickscene=tests.obj_scene_testdrafting()
+            # quickscene=tests.obj_scene_testdrafting()
             #
             #
             share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)
@@ -1106,50 +1111,68 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         yref=200
         dyref=55
         fontref='small'
+        jcount=-1
         #
         self.sprite_back=draw.obj_textbox('[back]',(xref-70,yref),fontsize=fontref,hover=True)
         self.addpart(self.sprite_back)
         #
-
-        self.addpart( draw.obj_textbox('Music Volume: ',(xref,yref+0*dyref),fontsize=fontref,xleft=True) )
-        self.sprite_musicless=draw.obj_textbox('-',(xref+200,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
+        jcount += 1
+        self.addpart( draw.obj_textbox('Music Volume: ',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_musicless=draw.obj_textbox('-',(xref+200,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_musicless)
-        self.sprite_musicmore=draw.obj_textbox('+',(xref+330,yref+0*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_musicmore=draw.obj_textbox('+',(xref+330,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_musicmore)
-        self.sprite_musicvol=draw.obj_textbox('xxx',(xref+250,yref+0*dyref),fontsize=fontref,xleft=True)
+        self.sprite_musicvol=draw.obj_textbox('xxx',(xref+250,yref+jcount*dyref),fontsize=fontref,xleft=True)
         self.addpart(self.sprite_musicvol)
         self.musicvoldisps=['off','.','..','...','....','max']
         self.sprite_musicvol.replacetext( self.musicvoldisps[share.datamanager.musicvol]  )
         #
-        self.addpart( draw.obj_textbox('Sound Volume: ',(xref,yref+1*dyref),fontsize=fontref,xleft=True) )
-        self.sprite_soundless=draw.obj_textbox('-',(xref+200,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        jcount += 1
+        self.addpart( draw.obj_textbox('Sound Volume: ',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_soundless=draw.obj_textbox('-',(xref+200,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_soundless)
-        self.sprite_soundmore=draw.obj_textbox('+',(xref+330,yref+1*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.sprite_soundmore=draw.obj_textbox('+',(xref+330,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_soundmore)
-        self.sprite_soundvol=draw.obj_textbox('xxx',(xref+250,yref+1*dyref),fontsize=fontref,xleft=True)
+        self.sprite_soundvol=draw.obj_textbox('xxx',(xref+250,yref+jcount*dyref),fontsize=fontref,xleft=True)
         self.addpart(self.sprite_soundvol)
         self.soundvoldisps=['off','.','..','...','....','max']
         self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
         #
-        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+2*dyref),fontsize=fontref,xleft=True,hover=True)
+        # jcount += 1
+        # self.addpart( draw.obj_textbox('Brightness: ',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True) )
+        # self.sprite_backcolorless=draw.obj_textbox('-',(xref+200,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
+        # self.addpart(self.sprite_backcolorless)
+        # self.sprite_backcolormore=draw.obj_textbox('+',(xref+330,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
+        # self.addpart(self.sprite_backcolormore)
+        # self.sprite_backcolorvol=draw.obj_textbox('xxx',(xref+250,yref+jcount*dyref),fontsize=fontref,xleft=True)
+        # self.addpart(self.sprite_backcolorvol)
+        # self.backcolorvoldisps=['min','.','..','...','....','max']
+        # self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
+        #
+        jcount += 1
+        self.sprite_display=draw.obj_textbox('xxx',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_display)
         if share.datamanager.donative:
             self.sprite_display.replacetext('Fullscreen: Off')
         else:
             self.sprite_display.replacetext('Fullscreen: On')
         #
-        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+3*dyref),fontsize=fontref,xleft=True,hover=True)
+        jcount += 1
+        self.sprite_showfps=draw.obj_textbox('xxx',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_showfps)
         if share.datamanager.doshowfps:
             self.sprite_showfps.replacetext('Show FPS: On')
         else:
             self.sprite_showfps.replacetext('Show FPS: Off')
         #
-        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+4*dyref),fontsize=fontref,xleft=True,hover=True)
+        jcount += 1
+        self.sprite_controls=draw.obj_textbox('Controls',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_controls )
-        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+5*dyref),fontsize=fontref,xleft=True,hover=True)
+        jcount += 1
+        self.sprite_credits=draw.obj_textbox('Credits',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_credits )
-        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+6*dyref),fontsize=fontref,xleft=True,hover=True)
+        jcount += 1
+        self.sprite_erasebook=draw.obj_textbox('Erase Book',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart( self.sprite_erasebook )
         #
         # audio
@@ -1170,31 +1193,6 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         if self.sprite_back.isclicked(controls):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
-        #
-        # change display
-        elif self.sprite_display.isclicked(controls):
-            self.sound_menuback.play()
-            share.datamanager.donative= not share.datamanager.donative
-            if share.datamanager.donative:
-                share.display.reset(native=True)
-            else:
-                share.display.reset(native=False)
-            share.datamanager.savesettings()# save settings
-            if share.datamanager.donative:
-                self.sprite_display.replacetext('Fullscreen: Off')
-            else:
-                self.sprite_display.replacetext('Fullscreen: On')
-        #
-        # toggle show fps
-        elif self.sprite_showfps.isclicked(controls):
-            self.sound_menuback.play()
-            share.datamanager.doshowfps=not share.datamanager.doshowfps
-            share.datamanager.savesettings()# save settings
-            if share.datamanager.doshowfps:
-                self.sprite_showfps.replacetext('Show FPS: On')
-            else:
-                self.sprite_showfps.replacetext('Show FPS: Off')
-            share.scenemanager.switchscene(obj_scene_settings())# reload scene
         #
         # toggle music (less)
         elif self.sprite_musicless.isclicked(controls):
@@ -1240,6 +1238,49 @@ class obj_scene_settings(obj_scene_realtitlescreen):
                 self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
                 # reset page (such that sound changes take effect, and play sound on page start)
                 share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))
+        #
+        # # brightness (less)
+        # elif self.sprite_backcolorless.isclicked(controls):
+        #     if share.datamanager.brightness>0:# not zero already
+        #         self.sound_menuback.play()
+        #         share.datamanager.brightness -= 1
+        #         share.datamanager.savesettings()# save settings
+        #         self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
+        #         share.scenemanager.switchscene(obj_scene_settings())# reload scene
+        # #
+        # # brightness (more)
+        # elif self.sprite_backcolormore.isclicked(controls):
+        #     if share.datamanager.brightness<5:# not max already
+        #         self.sound_menuback.play()
+        #         share.datamanager.brightness += 1
+        #         share.datamanager.savesettings()# save settings
+        #         self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
+        #         share.scenemanager.switchscene(obj_scene_settings())# reload scene
+        #
+        # change display
+        elif self.sprite_display.isclicked(controls):
+            self.sound_menuback.play()
+            share.datamanager.donative= not share.datamanager.donative
+            if share.datamanager.donative:
+                share.display.reset(native=True)
+            else:
+                share.display.reset(native=False)
+            share.datamanager.savesettings()# save settings
+            if share.datamanager.donative:
+                self.sprite_display.replacetext('Fullscreen: Off')
+            else:
+                self.sprite_display.replacetext('Fullscreen: On')
+        #
+        # toggle show fps
+        elif self.sprite_showfps.isclicked(controls):
+            self.sound_menuback.play()
+            share.datamanager.doshowfps=not share.datamanager.doshowfps
+            share.datamanager.savesettings()# save settings
+            if share.datamanager.doshowfps:
+                self.sprite_showfps.replacetext('Show FPS: On')
+            else:
+                self.sprite_showfps.replacetext('Show FPS: Off')
+            share.scenemanager.switchscene(obj_scene_settings())# reload scene
         #
         # instructions for controls
         elif self.sprite_controls.isclicked(controls):

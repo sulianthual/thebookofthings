@@ -993,6 +993,276 @@ class obj_world_fishing(obj_world):
                 self.done=True
 
 
+# Mini Game: Fishing (with a gun)
+class obj_world_fishing_withgun(obj_world):
+    def setup(self,**kwargs):
+        self.done=False# mini game is finished
+
+        # hook (gun)
+        self.ygun=150
+        self.hook=obj_grandactor(self,(640,self.ygun))
+        self.hook.addpart( 'gun1',draw.obj_image('gun',(640,self.ygun),scale=0.25,rotate=-90) )
+        self.hook.addpart( 'gun2',draw.obj_image('hookline',(640,self.ygun-390),path='data/premade') )
+        self.dxhori=5
+        # bullets
+        # cannonballs
+        self.cannonballs=[]# empty list
+        self.timerreload=tool.obj_timer(20)#reload time
+        # fish status
+        self.fishfree=True# fish not caugth (yet)
+        # fish animation
+        self.fish=obj_grandactor(self,(640,360))
+        animation=draw.obj_animation('fishmovegun1','fish',(640,360),imgscale=1)
+        # animation.addsound( "fishing_swim", [13, 97, 258, 316, 510, 565, 734, 766] )
+        self.fish.addpart( 'anim_fish',animation )
+        self.fish.addpart( 'dead_fish',draw.obj_image('fish',(640,360),scale=0.25,flipv=True) )
+        self.fish.dict['dead_fish'].show=False
+        # fish hit box
+        self.fishbox=obj_grandactor(self,(340,360))
+        self.fishbox.actortype='fish'
+        self.fishbox.rx=50
+        self.fishbox.ry=30
+        self.fishbox.r=30
+        # short timer at end
+        self.timerend=tool.obj_timer(90)# 90
+        # textbox when caught
+        self.text1=obj_grandactor(self,(840,500))
+        tempo='['+share.datamanager.controlname('arrows')+': move/shoot]'
+        self.textboxclick=draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions,hover=True)
+        self.text1.addpart( 'textbox1',self.textboxclick )
+        self.text2=obj_grandactor(self,(840,500))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,460)) )
+        self.text1.show=True
+        self.text2.show=False
+        #
+        self.soundreel=draw.obj_sound('fishing_reel')
+        self.creator.addpart(self.soundreel)
+        self.soundcatch=draw.obj_sound('fishing_catch')
+        self.creator.addpart(self.soundcatch)
+        self.soundhit=draw.obj_sound('fishing_hit')
+        self.creator.addpart(self.soundhit)
+        self.soundshoot=draw.obj_sound('fishing_shoot')
+        self.creator.addpart(self.soundshoot)
+
+    def makecannonball(self,x,y):# shoot
+        self.soundreel.stop()
+        self.soundshoot.play()
+        cannonball=obj_grandactor(self,(x,y))
+        cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=True,rotate=-90) )
+        cannonball.rx=15# hitbox
+        cannonball.ry=15
+        cannonball.r=15
+        cannonball.speed=12#vertical speed
+        self.cannonballs.append(cannonball)
+    def killcannonball(self,cannonball):
+        self.cannonballs.remove(cannonball)
+        cannonball.kill()
+    def update(self,controls):
+        super().update(controls)
+        self.textboxclick.trackhover(controls)
+
+        # motion (even during ending)
+        if self.cannonballs:
+            for i in self.cannonballs:
+                i.movey(i.speed)
+                if i.y>720+50: self.killcannonball(i)# disappears on bottom edge of screen        #
+        # game
+        if self.fishfree:
+            # move gun
+            if controls.gr and self.hook.x<1280-50:
+                self.hook.movex(self.dxhori)
+                if controls.grc:
+                    self.hook.fliph()
+                    self.soundreel.stop()
+                    self.soundreel.play(loop=True)
+            elif controls.gl and self.hook.x>50:
+
+                self.hook.movex(-self.dxhori)
+                if controls.glc:
+                    self.hook.fliph()
+                    self.soundreel.stop()
+                    self.soundreel.play(loop=True)
+            else:
+                self.soundreel.stop()
+            # shoot
+            if self.timerreload.off:
+                if controls.gd and controls.gdc:
+                    self.makecannonball(self.hook.x,self.hook.y+95)
+                    self.timerreload.start()
+            else:# reload
+                self.timerreload.update()
+
+            # fish box
+            self.fishbox.x=self.fish.dict['anim_fish'].devxy[0]# hitbox follows animation
+            self.fishbox.y=self.fish.dict['anim_fish'].devxy[1]
+            # check collision
+            if self.cannonballs:
+                for i in self.cannonballs:
+                    if tool.checkrectcollide(i,self.fishbox):
+                        #
+                        self.fish.dict['dead_fish'].x=i.x
+                        self.fish.dict['dead_fish'].y=i.y+50
+                        self.fish.dict['anim_fish'].show=False
+                        self.fish.dict['dead_fish'].show=True
+                        self.killcannonball(i)
+                        #
+                        self.timerend.start()
+                        self.fishfree=False
+                        self.soundreel.stop()
+                        self.soundcatch.play()
+                        self.soundhit.play()
+
+        else:
+            # end of mini-game
+            self.timerend.update()
+            self.fish.dict['dead_fish'].movey(-1)
+            if self.timerend.ring:
+                self.done=True
+
+
+# Mini Game: Fishing (with scissors like a boomerang)
+class obj_world_fishing_withscissors(obj_world):
+    def setup(self,**kwargs):
+        self.done=False# mini game is finished
+
+        # hook (gun)
+        self.ygun=150
+        self.hook=obj_grandactor(self,(640,self.ygun))
+        self.hook.addpart( 'gun1',draw.obj_image('scissors',(640,self.ygun),scale=0.3,rotate=-180) )
+        self.hook.addpart( 'gun2',draw.obj_image('hookline',(640,self.ygun-390),path='data/premade') )
+        self.hook.addpart( 'shoot',draw.obj_animation('fishmovescissors1','scissors',(640,360)) )
+        self.hook.dict['shoot'].show=False
+        self.dxhori=5
+        self.timerreload=tool.obj_timer(150)#reload time
+        self.shooting=False
+        # kill box that kills fish
+        self.killbox=obj_grandactor(self,(640,self.ygun))
+        self.killbox.rx=30
+        self.killbox.ry=30
+        self.killbox.r=30
+        # fish status
+        self.fishfree=True# fish not caugth (yet)
+        # fish animation
+        self.fish=obj_grandactor(self,(640,360))
+        animation=draw.obj_animation('fishmovegun1','fish',(640,360),imgscale=1)
+        # animation.addsound( "fishing_swim", [13, 97, 258, 316, 510, 565, 734, 766] )
+        self.fish.addpart( 'anim_fish',animation )
+        self.fish.addpart( 'dead_fish',draw.obj_image('fish',(640,360),scale=0.25,flipv=True) )
+        self.fish.addpart( 'dead_fish2',draw.obj_image('scissors',(640,360),scale=0.25,flipv=True) )
+        self.fish.dict['dead_fish'].show=False
+        self.fish.dict['dead_fish2'].show=False
+        # fish hit box
+        self.fishbox=obj_grandactor(self,(340,360))
+        self.fishbox.actortype='fish'
+        self.fishbox.rx=50
+        self.fishbox.ry=30
+        self.fishbox.r=30
+        # short timer at end
+        self.timerend=tool.obj_timer(90)# 90
+        # textbox when caught
+        self.text1=obj_grandactor(self,(840,500))
+        tempo='['+share.datamanager.controlname('arrows')+': move/shoot]'
+        self.textboxclick=draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions,hover=True)
+        self.text1.addpart( 'textbox1',self.textboxclick )
+        self.text2=obj_grandactor(self,(840,500))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,460)) )
+        self.text1.show=True
+        self.text2.show=False
+        #
+        self.soundreel=draw.obj_sound('fishing_reel')
+        self.creator.addpart(self.soundreel)
+        self.soundcatch=draw.obj_sound('fishing_catch')
+        self.creator.addpart(self.soundcatch)
+        self.soundhit=draw.obj_sound('fishing_hit')
+        self.creator.addpart(self.soundhit)
+        self.soundthrow=draw.obj_sound('fishing_throw')
+        self.creator.addpart(self.soundthrow)
+
+
+
+    def update(self,controls):
+        super().update(controls)
+        self.textboxclick.trackhover(controls)
+
+        # motion (even during ending)
+
+        # game
+        if self.fishfree:
+            # move gun
+            if not self.shooting:
+                if controls.gr and self.hook.x<1280-50:
+                    self.hook.movex(self.dxhori)
+                    if controls.grc:
+                        self.hook.fliph()
+                        self.soundreel.stop()
+                        self.soundreel.play(loop=True)
+                elif controls.gl and self.hook.x>50:
+                    self.hook.movex(-self.dxhori)
+                    if controls.glc:
+                        self.hook.fliph()
+                        self.soundreel.stop()
+                        self.soundreel.play(loop=True)
+                else:
+                    self.soundreel.stop()
+
+            # shoot
+            if self.timerreload.off:
+                if controls.gd and controls.gdc:
+                    self.shooting=True
+                    self.hook.dict['shoot'].rewind()
+                    self.hook.dict['shoot'].show=True
+                    self.hook.dict['gun1'].show=False
+                    self.timerreload.start()
+                    self.soundreel.stop()
+                    self.soundthrow.play()
+            else:# reload
+                self.timerreload.update()
+                if self.timerreload.ring:
+                    self.shooting=False
+                    self.hook.dict['shoot'].show=False
+                    self.hook.dict['gun1'].show=True
+                    # play reel if touch pressed
+                    if (controls.gr and self.hook.x<1280-50) or (controls.gl and self.hook.x>50):
+                        self.soundreel.play(loop=True)
+
+
+            # fish box
+            self.fishbox.x=self.fish.dict['anim_fish'].devxy[0]# hitbox follows animation
+            self.fishbox.y=self.fish.dict['anim_fish'].devxy[1]
+            # kill box
+            self.killbox.x=self.hook.dict['shoot'].devxy[0]
+            self.killbox.y=self.hook.dict['shoot'].devxy[1]
+            # check collision
+            if tool.checkrectcollide(self.killbox,self.fishbox):
+                #
+                self.fish.dict['dead_fish'].x=self.killbox.x
+                self.fish.dict['dead_fish'].y=self.killbox.y+50
+                self.fish.dict['dead_fish2'].x=self.killbox.x
+                self.fish.dict['dead_fish2'].y=self.killbox.y-10
+                self.fish.dict['anim_fish'].show=False
+                self.fish.dict['dead_fish'].show=True
+                self.fish.dict['dead_fish2'].show=True
+                #
+                self.hook.dict['shoot'].show=False
+                self.hook.dict['gun1'].show=False
+
+                self.timerend.start()
+                self.fishfree=False
+                self.soundreel.stop()
+                self.soundcatch.play()
+                self.soundhit.play()
+
+        else:
+            # end of mini-game
+            self.timerend.update()
+            self.fish.dict['dead_fish'].movey(-1)
+            self.fish.dict['dead_fish2'].movey(-1)
+            if self.timerend.ring:
+                self.done=True
+
+
+
+
 
 ####################################################################################################################
 
@@ -1648,19 +1918,19 @@ class obj_world_travel(obj_world):
         # self.text_undone.addpart('textwhiterect', image1)
         # text
         self.text_undone.addpart( 'text1', \
-        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
+        draw.obj_textbox('['+share.datamanager.controlname('arrows')+': move]',(640,680),color=share.colors.instructions) )
         if self.addsailorwait or self.addbeachmark:# talk to a character
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': talk]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': talk]',(640,680),color=share.colors.instructions) )
         elif self.addbeachquestionmark:# investigate
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions) )
         elif self.chapter>=8:
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions) )
         elif self.minigame=='flowers':
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': give flower]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': give flower]',(640,680),color=share.colors.instructions) )
         else:# enter a location
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions,fillcolor=share.colors.white) )
+            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions) )
         #
-        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680),fillcolor=share.colors.white) )
+        self.text_done.addpart( 'text1', draw.obj_textbox('We made it!',(640,680)) )
         self.text_undone.show=True
         self.text_undoneenter.show=False
         self.text_done.show=False
@@ -1690,9 +1960,10 @@ class obj_world_travel(obj_world):
         self.floweractors=[]# make a list of grandactors flowers
         if self.minigame=='flowers':
             if self.flowerneed == 1:
-                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flower',(640,610),color=share.colors.instructions,fillcolor=share.colors.white)
+                print(share.datamanager.getbackcolor())
+                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flower',(640,610),color=share.colors.instructions)
             else:
-                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions,fillcolor=share.colors.white)
+                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textflowers', self.flowermessage  )
             for i in self.panels:# remove flower from panels and make them into individual grandactors
                 panelflowerkeys=[]# list of flowers keys in this panel
@@ -1720,7 +1991,7 @@ class obj_world_travel(obj_world):
         self.logneed=10# needed logs for goal
         self.logactors=[]# make a list of grandactors logs
         if self.minigame=='logs':
-            self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions,fillcolor=share.colors.white)
+            self.logmessage=draw.obj_textbox('You have collected 0/'+str(self.logneed)+' logs',(640,610),color=share.colors.instructions)
             self.text_undone.addpart( 'textlogs', self.logmessage  )
             # self.text_undone.dict['text1'].replacetext('Move with [W][A][S][D]')
             for i in self.panels:# remove tree from panels and make them into individual grandactors

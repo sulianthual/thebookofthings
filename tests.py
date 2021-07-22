@@ -1907,13 +1907,22 @@ class obj_scene_testforestgame(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):
-        pass
+        share.scenemanager.switchscene(obj_scene_testmenu())
+
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
     def setup(self):
         self.text=['Forest with enemies: ',\
                    'for chapt 4 ',\
                    ]
-
-
+        tempo='['+share.datamanager.controlname('down')+']. '
+        self.text=['The hero went fishing but with a gun']
+        self.world=world.obj_world_fishing_withgun(self)# fishing mini-game
+        self.addpart(self.world)
+        animation1=draw.obj_animation('fishmovegun1','fish',(640,360),record=True)
+        # self.addpart( animation1 )
 
 
 

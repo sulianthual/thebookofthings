@@ -25,10 +25,12 @@ import core
 class obj_pagebackground:
     def __init__(self):
         self.type='pagebackground'
-        self.sprite=core.obj_sprite_background()
-        self.color=(255,255,255)
+        self.sprite=core.obj_sprite_background()# background sprite
+        self.color=(255,255,255)# default white
         self.make()
     def make(self):
+        tempcolor=share.datamanager.getbackcolor()
+        self.color=(tempcolor,tempcolor,tempcolor)
         self.sprite.make(self.color)
     def display(self):
         self.sprite.display()
@@ -47,7 +49,8 @@ class obj_pagedisplay_fps:
         self.make()
     def make(self):
         text='FPS='+str(int(share.clock.getfps()))
-        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0),fillcolor=(255,255,255))
+        tempcolor=share.datamanager.getbackcolor()
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0),fillcolor=(tempcolor,tempcolor,tempcolor))
     def display(self):
         # self.sprite.display(50,20)
         self.sprite.display(1240,20)

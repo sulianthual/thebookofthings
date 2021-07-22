@@ -142,12 +142,16 @@ class obj_scene_ch7p4(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish".\n ',
+                     ' went to the pond and caught a fish ',\
+                       '"\n ',\
                    ]
-        self.world=world.obj_world_fishing(self)
+        self.world=world.obj_world_fishing_withscissors(self)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch7') )
+
+        # animation1=draw.obj_animation('fishmoveskeleton','skeletonheaddraw',(640,360),record=True)
+        # self.addpart( animation1 )
 
 
 class obj_scene_ch7p5(page.obj_chapterpage):

@@ -200,6 +200,10 @@ class obj_sounds:
         # fishing
         self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
         self.dict['fishing_catch']=( 'world/fish/1up3.wav' , 1 )
+        self.dict['fishing_shoot']=( 'world/fish/gun-5.wav' , 0.5 )
+        self.dict['fishing_throw']=( 'world/fish/swish-9.wav' , 0.5 )
+        self.dict['fishing_hit']=( 'world/fish/die_02.wav' , 1 )
+        self.dict['fishing_summon']=( 'skeleton/ghost_SpiritShout.wav' , 0.4 )
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
         self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
@@ -516,6 +520,8 @@ class obj_datamanager:
                 f1.write(str(self.dosound)+'\n')#value
                 f1.write('soundvol:'+'\n')#key
                 f1.write(str(self.soundvol)+'\n')#value
+                f1.write('brightness:'+'\n')#key
+                f1.write(str(self.brightness)+'\n')#value
                 f1.write('devaccess:'+'\n')#key
                 f1.write(str(self.devaccess)+'\n')#value
     def loadsettings(self):
@@ -546,6 +552,11 @@ class obj_datamanager:
                 self.soundvol=int(line)
                 self.soundvol=max(0,self.soundvol)# safety checks
                 self.soundvol=min(5,self.soundvol)
+                line=f1.readline()# backgroundcolor
+                line=f1.readline()
+                self.brightness=int(line)
+                self.brightness=max(0,self.brightness)# safety checks
+                self.brightness=min(5,self.brightness)
                 line=f1.readline()# dev access
                 line=f1.readline()#
                 self.devaccess=line=='True'+'\n'
@@ -558,9 +569,13 @@ class obj_datamanager:
             self.musicvol=3# 0-5 music volume
             self.dosound=True# sound on/off
             self.soundvol=3# 0-5 sound volume
+            self.brightness=5# background color (0-5 for gray to white, default=white)
             self.devaccess=False# User has no dev access by default
             # write down default settings
             self.savesettings()
+    def getbackcolor(self):# return background color (0-255) from brightness level (0-5)
+        minbri=220# min brightness (0-255)
+        return int( self.brightness/5*(255-minbri) )+minbri
     #
     # words written by user
     def getwords(self):

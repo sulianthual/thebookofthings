@@ -386,21 +386,27 @@ class obj_scene_ch8pond(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
     def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
+        if share.datamanager.getword('numchoice')=='1':
             share.scenemanager.switchscene(obj_scene_ch8pondfish())
+        elif share.datamanager.getword('numchoice')=='2':
+            share.scenemanager.switchscene(obj_scene_ch8pondfish_withgun())
+        elif share.datamanager.getword('numchoice')=='3':
+            share.scenemanager.switchscene(obj_scene_ch8pondfish_withscissors())
         else:
             share.scenemanager.switchscene(obj_scene_ch8pondbye())
     def textboxset(self):
-        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"',\
                 'Do you want to fish. " ',\
                    ]
         y1=200
-        textchoice=draw.obj_textchoice('yesno',default='yes')
-        textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(650,y1))
+        textchoice=draw.obj_textchoice('numchoice',default='1')
+        textchoice.addchoice('1. Hook','1',(640-300,y1))
+        textchoice.addchoice('2. Gun','2',(640-100,y1))
+        textchoice.addchoice('3. Scissors','3',(640+100,y1))
+        textchoice.addchoice('4. Nevermind','4',(640+300,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
@@ -436,6 +442,40 @@ class obj_scene_ch8pondfish(page.obj_chapterpage):
         # self.addpart( draw.obj_music('piano') )
         self.addpart( draw.obj_music('hero') )
 
+class obj_scene_ch8pondfish_withgun(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8pondeat())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def setup(self):
+        self.text=[' ']
+        self.world=world.obj_world_fishing_withgun(self)
+        self.addpart(self.world)
+        #
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
+
+class obj_scene_ch8pondfish_withscissors(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8pondeat())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def setup(self):
+        self.text=[' ']
+        self.world=world.obj_world_fishing_withscissors(self)
+        self.addpart(self.world)
+        #
+        # self.addpart( draw.obj_music('piano') )
+        self.addpart( draw.obj_music('hero') )
+
 
 class obj_scene_ch8pondeat(page.obj_chapterpage):
     def prevpage(self):
@@ -459,21 +499,27 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
     def prevpage(self):
         pass
     def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
+        if share.datamanager.getword('numchoice')=='1':
             share.scenemanager.switchscene(obj_scene_ch8pondfish())
+        elif share.datamanager.getword('numchoice')=='2':
+            share.scenemanager.switchscene(obj_scene_ch8pondfish_withgun())
+        elif share.datamanager.getword('numchoice')=='3':
+            share.scenemanager.switchscene(obj_scene_ch8pondfish_withscissors())
         else:
             share.scenemanager.switchscene(obj_scene_ch8pondbye())
     def textboxset(self):
-        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"',\
                 '"Do you want to fish again." ',\
                    ]
         y1=200
-        textchoice=draw.obj_textchoice('yesno',default='no')
-        textchoice.addchoice('1. Yes','yes',(450,y1))
-        textchoice.addchoice('2. No','no',(650,y1))
+        textchoice=draw.obj_textchoice('numchoice',default='1')
+        textchoice.addchoice('1. Hook','1',(640-300,y1))
+        textchoice.addchoice('2. Gun','2',(640-100,y1))
+        textchoice.addchoice('3. Scissors','3',(640+100,y1))
+        textchoice.addchoice('4. Nevermind','4',(640+300,y1))
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )

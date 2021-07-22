@@ -175,13 +175,16 @@ class obj_scene_ch6p5(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish".\n ',
+                     ' went to the pond and caught a fish ',\
+                      '(with newly aquired scissors).',\
+                       '"\n ',\
                    ]
-        self.world=world.obj_world_fishing(self)
+        self.world=world.obj_world_fishing_withscissors(self)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch6') )
-
+        # animation1=draw.obj_animation('fishmovescissors1','scissors',(640,360),record=True)
+        # self.addpart( animation1 )
 
 class obj_scene_ch6p6(page.obj_chapterpage):
     def prevpage(self):
