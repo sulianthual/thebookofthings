@@ -441,7 +441,7 @@ class obj_scene_ch5p17(page.obj_chapterpage):
                '"The ',('elder',share.colors.elder),' said: oh, a visitor. ',\
                'I am ',('{eldername}',share.colors.elder),' the ',\
                ('grandmaster of deceit',share.colors.grandmaster),' of the north! ',\
-               'I can teach you all sorts of evil ways, hi hi hi". ',\
+               'I can teach you all sorts of evil ways, he he he". ',\
                   ]
         animation1=draw.obj_animation('ch5eldertalks1','elderbase',(640,360),record=False)
         self.addpart( animation1 )
@@ -464,7 +464,7 @@ class obj_scene_ch5p18(page.obj_chapterpage):
                 ('my part of the tower\'s password',share.colors.password),'. ',\
                     ' Well I might certainly help, said ',\
                     ('{eldername}',share.colors.elder),'. ',\
-                    'hi hi hi". ',\
+                    'he he he". ',\
                   ]
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -497,7 +497,7 @@ class obj_scene_ch5p19(page.obj_chapterpage):
         self.text=[\
                     '"First, lets cover my fee. ',\
                     'I see you have caught a yummy ',\
-                    ('fish',share.colors.item2),', so that will be my lunch hi hi hi".',\
+                    ('fish',share.colors.item2),', so that will be my lunch he he he".',\
                    ]
         self.world=world.obj_world_eatfish(self,eldereats=True)
         self.addpart(self.world)
@@ -516,7 +516,7 @@ class obj_scene_ch5p20(page.obj_chapterpage):
         self.text=[\
                '"Burp, that was nice thanks. Now all you have to do is win my game of rock paper scissors ',\
                'and I will tell you ',\
-               ('my part of the password',share.colors.password),', hi hi hi. ',\
+               ('my part of the password',share.colors.password),', he he he. ',\
                   ]
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
@@ -656,7 +656,7 @@ class obj_scene_ch5p25(page.obj_chapterpage):
         share.datamanager.setbookmark('ch5_lostrps1')
         self.text=[\
                '"Oh, you lost, said ',('{eldername}',share.colors.elder),'. ',\
-               'Better luck next time, hi hi hi. ',\
+               'Better luck next time, he he he. ',\
                'Do you want to play again". ',\
                   ]
         y1=200
@@ -699,7 +699,7 @@ class obj_scene_ch5p25fail(page.obj_chapterpage):
                'Giving up already. ',\
                'Well, that doesnt seem to be the story, said the book of things.  ',\
                'It looks like you should just go back and ',\
-               ('perservere',share.colors.grandmaster),' a little more. ',\
+               ('persevere',share.colors.grandmaster),' a little more. ',\
                   ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
         self.addpart( animation1 )
@@ -747,7 +747,7 @@ class obj_scene_ch5p27(page.obj_chapterpage):
         share.datamanager.setbookmark('ch5_lostrps2')
         self.text=[\
                '"Oh noooo, you lost again, said ',('{eldername}',share.colors.elder),'. ',\
-               'But you are getting better, hi hi hi. ',\
+               'But you are getting better, he he he. ',\
                'Do you want to play one last time". ',\
                   ]
         y1=200
@@ -790,7 +790,7 @@ class obj_scene_ch5p27fail(page.obj_chapterpage):
                'Oh, you want to give up. ',\
                'Sorry, that doesnt seem to be in the story, said the book of things.  ',\
                'It looks like you should just go back and ',\
-               ('perservere',share.colors.grandmaster),' a little more. ',\
+               ('persevere',share.colors.grandmaster),' a little more. ',\
                   ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
         self.addpart( animation1 )
@@ -849,7 +849,7 @@ class obj_scene_ch5p28a(page.obj_chapterpage):
         self.text=[\
                 '"I am so impressed that I will tell you the second part of the password. It is:',\
                 ('"persevere"',share.colors.password),'. ',\
-                'That\'s my motto: always perservere!, that I taught to ',\
+                'That\'s my motto: always persevere!, that I taught to ',\
                 ('{villainname}',share.colors.villain),'." ',\
                   ]
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
@@ -1152,7 +1152,7 @@ class obj_scene_ch5p34(page.obj_chapterpage):
         self.text=[\
                '"Well, that is the reason you havent won a single time, ',\
                'said ',('{eldername}',share.colors.elder),'. ',\
-                'I was peeking at your selection the whole time, hi hi hi ".',\
+                'I was peeking at your selection the whole time, he he he".',\
                   ]
         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )

@@ -146,6 +146,9 @@ writing game: type quickly text or answer to it. What is your favorite color? ..
 skiing game like classic game
 
 
+space invaders but from the right:
+jump and throw stone horizontally to right.
+3 bats (3 heights) coming from right very slowly, must stone all 3 before reach player
 
 
 ####################################################################################################################

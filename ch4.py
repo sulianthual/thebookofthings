@@ -673,7 +673,13 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1(world=self.world))
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart1(world=self.world))
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_lyingpart1(world=self.world))
+        else:
+            # share.scenemanager.switchscene(obj_scene_lyingpart1win())# forget lying game database
+            share.scenemanager.switchscene(obj_scene_lyingend())# finish game
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self,**kwargs):
         # inherit world
         if (kwargs is not None) and ('world' in kwargs):
@@ -686,6 +692,12 @@ class obj_scene_lyingfailpart1(page.obj_chapterpage):
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        y1=200
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(540,y1))
+        textchoice.addchoice('Abandon (skip)','no',(740,y1))
+        self.addpart( textchoice )
         #
         self.sound=draw.obj_sound('bunny5')
         self.addpart(self.sound)
@@ -794,7 +806,13 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart2(world=self.world))
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart2(world=self.world))
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_lyingpart2(world=self.world))
+        else:
+            # share.scenemanager.switchscene(obj_scene_lyingpart2win())# forget lying game database
+            share.scenemanager.switchscene(obj_scene_lyingend())# finish game
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self,**kwargs):
         # inherit world
         if (kwargs is not None) and ('world' in kwargs):
@@ -809,6 +827,12 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        y1=200
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(540,y1))
+        textchoice.addchoice('Abandon (skip)','no',(740,y1))
+        self.addpart( textchoice )
         #
         self.sound=draw.obj_sound('bunny5')
         self.addpart(self.sound)
@@ -939,16 +963,20 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart3(world=self.world))
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart3(world=self.world))
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_lyingpart3(world=self.world))
+        else:
+            share.scenemanager.switchscene(obj_scene_lyingend())# forget lying game database
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self,**kwargs):
         # inherit world
         if (kwargs is not None) and ('world' in kwargs):
             self.world=kwargs["world"]# inherit lying database
         else:
             self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),', ',\
-                    'you actually gave me the correct answer. ',\
-                    'For this third round, remember that ',\
+        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
+                    'For this round, remember that ',\
                     ('all my statements are false',share.colors.red),\
                     ', and that you must ',\
                     ('always give me the wrong answer',share.colors.red),'. ',\
@@ -956,6 +984,12 @@ class obj_scene_lyingfailpart3(page.obj_chapterpage):
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
+        #
+        y1=200
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(540,y1))
+        textchoice.addchoice('Abandon (skip)','no',(740,y1))
+        self.addpart( textchoice )
         #
         self.sound=draw.obj_sound('bunny5')
         self.addpart(self.sound)

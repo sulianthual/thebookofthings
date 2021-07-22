@@ -1065,7 +1065,7 @@ class obj_scene_ch3p26(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Back at home, ',('{heroname}',share.colors.hero),' was very sad. ',\
-                   ('{hero_he}',share.colors.hero2), ' though about how ',\
+                   ('{hero_he}',share.colors.hero2), ' thought about how ',\
                    ('{hero_he}',share.colors.hero2),' used to charm ',\
                    ('{partnername}',share.colors.partner),' with a serenade." ',\
                    ]

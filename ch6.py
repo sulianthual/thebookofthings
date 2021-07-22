@@ -233,7 +233,7 @@ class obj_scene_ch6p7(page.obj_chapterpage):
                     'Come back anytime to the ',\
                     ('highest peak',share.colors.location2),' if you want ',\
                     'more training in the ',('evil ways',share.colors.grandmaster2),'. ',\
-                      'And remember my motto: "always perservere!" ',\
+                      'And remember my motto: "always persevere!" ',\
                   '\n\nsigned: ',('{eldername}',share.colors.elder),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
@@ -1452,7 +1452,7 @@ class obj_scene_ch6p48(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"',\
-                   ('{hero_he}',share.colors.hero),' though about how ',\
+                   ('{hero_he}',share.colors.hero),' thought about how ',\
                    ('{hero_him}',share.colors.hero2),' and ',\
                    ('{partnername}',share.colors.partner),' would soon be kissing". ',\
                    ]
