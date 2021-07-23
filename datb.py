@@ -201,9 +201,9 @@ class obj_sounds:
         self.dict['fishing_reel']=( 'world/fish/Fidget_Spinner2.wav' , 1 )
         self.dict['fishing_catch']=( 'world/fish/1up3.wav' , 1 )
         self.dict['fishing_shoot']=( 'world/fish/gun-5.wav' , 0.5 )
-        self.dict['fishing_throw']=( 'world/fish/swish-9.wav' , 0.5 )
         self.dict['fishing_hit']=( 'world/fish/die_02.wav' , 1 )
-        self.dict['fishing_summon']=( 'skeleton/ghost_SpiritShout.wav' , 0.4 )
+        self.dict['fishing_throw']=( 'world/fish/swish-9.wav' , 0.5 )
+        self.dict['fishing_boomerang']=( 'world/fish/swosh-06.wav' , 2 )#
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
         self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )
@@ -569,7 +569,7 @@ class obj_datamanager:
             self.musicvol=3# 0-5 music volume
             self.dosound=True# sound on/off
             self.soundvol=3# 0-5 sound volume
-            self.brightness=5# background color (0-5 for gray to white, default=white)
+            self.brightness=3# background color (0-5 for gray to white, default=white)
             self.devaccess=False# User has no dev access by default
             # write down default settings
             self.savesettings()

@@ -46,7 +46,7 @@ class obj_quickscene():
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p14()
-            quickscene=ch1.obj_scene_ch1p3()
+            # quickscene=ch1.obj_scene_ch1p3()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p3()
@@ -64,7 +64,7 @@ class obj_quickscene():
             # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
-            # quickscene=ch6.obj_scene_ch6p5()
+            quickscene=ch6.obj_scene_ch6p5()
             # quickscene=ch6.obj_scene_ch6p13()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p39()
@@ -807,9 +807,13 @@ class obj_scene_realtitlescreen(page.obj_page):
         share.display.reseticon()# window icon
         #
         # Main
-        self.textboxtitle=draw.obj_textbox('The Book of Things',(640,80),fontsize='big',hover=self.hasbook,hovercolor=(0,0,0))
+        self.textboxtitle=draw.obj_textbox('The Book of Things',(640,80),fontsize='big')
         self.addpart(self.textboxtitle)
         #
+        self.textboxswapdeco=draw.obj_textbox('*',(20,30),fontsize='medium',hover=self.hasbook)
+        self.addpart(self.textboxswapdeco)
+        self.doswapdeco=self.hasbook and self.maxchapter>3
+        self.textboxswapdeco.show=self.doswapdeco
         # menu
         xref=640
         yref=200#+100
@@ -874,7 +878,8 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(obj_scene_settings())
             elif self.sprite_exit.isclicked(controls):
                 share.quitgame()
-            elif self.textboxtitle.isclicked(controls):# reload
+            elif self.doswapdeco and self.textboxswapdeco.isclicked(controls):# reload
+                self.sound_menugo.play()
                 share.scenemanager.switchscene(share.titlescreen,initstart=True)
 
             #

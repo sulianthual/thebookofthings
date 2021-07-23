@@ -994,6 +994,7 @@ class obj_world_fishing(obj_world):
 
 
 # Mini Game: Fishing (with a gun)
+# *FISH *GUN
 class obj_world_fishing_withgun(obj_world):
     def setup(self,**kwargs):
         self.done=False# mini game is finished
@@ -1121,6 +1122,7 @@ class obj_world_fishing_withgun(obj_world):
 
 
 # Mini Game: Fishing (with scissors like a boomerang)
+# *FISHING *SCISSORS
 class obj_world_fishing_withscissors(obj_world):
     def setup(self,**kwargs):
         self.done=False# mini game is finished
@@ -1177,6 +1179,8 @@ class obj_world_fishing_withscissors(obj_world):
         self.creator.addpart(self.soundhit)
         self.soundthrow=draw.obj_sound('fishing_throw')
         self.creator.addpart(self.soundthrow)
+        self.soundboomerang=draw.obj_sound('fishing_boomerang')
+        self.creator.addpart(self.soundboomerang)
 
 
 
@@ -1190,6 +1194,7 @@ class obj_world_fishing_withscissors(obj_world):
         if self.fishfree:
             # move gun
             if not self.shooting:
+                self.soundthrow.stop()
                 if controls.gr and self.hook.x<1280-50:
                     self.hook.movex(self.dxhori)
                     if controls.grc:
@@ -1215,9 +1220,12 @@ class obj_world_fishing_withscissors(obj_world):
                     self.timerreload.start()
                     self.soundreel.stop()
                     self.soundthrow.play()
+                    self.soundboomerang.stop()
+                    self.soundboomerang.play(loop=True)
             else:# reload
                 self.timerreload.update()
                 if self.timerreload.ring:
+                    self.soundboomerang.stop()
                     self.shooting=False
                     self.hook.dict['shoot'].show=False
                     self.hook.dict['gun1'].show=True
@@ -1249,6 +1257,7 @@ class obj_world_fishing_withscissors(obj_world):
                 self.timerend.start()
                 self.fishfree=False
                 self.soundreel.stop()
+                self.soundboomerang.stop()
                 self.soundcatch.play()
                 self.soundhit.play()
 
