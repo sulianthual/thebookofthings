@@ -1020,9 +1020,9 @@ class obj_world_fishing_withgun(obj_world):
         # fish hit box
         self.fishbox=obj_grandactor(self,(340,360))
         self.fishbox.actortype='fish'
-        self.fishbox.rx=50
-        self.fishbox.ry=30
-        self.fishbox.r=30
+        self.fishbox.rx=75
+        self.fishbox.ry=50
+        self.fishbox.r=1
         # short timer at end
         self.timerend=tool.obj_timer(90)# 90
         # textbox when caught
@@ -1049,10 +1049,10 @@ class obj_world_fishing_withgun(obj_world):
         self.soundshoot.play()
         cannonball=obj_grandactor(self,(x,y))
         cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=True,rotate=-90) )
-        cannonball.rx=15# hitbox
-        cannonball.ry=15
-        cannonball.r=15
-        cannonball.speed=12#vertical speed
+        cannonball.rx=35# hitbox
+        cannonball.ry=35
+        cannonball.r=1
+        cannonball.speed=12#12#vertical speed
         self.cannonballs.append(cannonball)
     def killcannonball(self,cannonball):
         self.cannonballs.remove(cannonball)
@@ -1154,9 +1154,9 @@ class obj_world_fishing_withscissors(obj_world):
         # fish hit box
         self.fishbox=obj_grandactor(self,(340,360))
         self.fishbox.actortype='fish'
-        self.fishbox.rx=50
-        self.fishbox.ry=30
-        self.fishbox.r=30
+        self.fishbox.rx=75
+        self.fishbox.ry=50
+        self.fishbox.r=1
         # short timer at end
         self.timerend=tool.obj_timer(90)# 90
         # textbox when caught
