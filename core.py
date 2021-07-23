@@ -342,13 +342,15 @@ class obj_sprite_image(obj_sprite):
         self.surf=pygame.Surface((2*rx,2*ry))
         self.addtransparency()
         self.fill(self.colorkey)
-    def load(self,path,convert=True,failsafe=True):
+    def load(self,path,convert=True,failsafe=True,replacewhite=True):
         if tool.ospathexists(path):
             if convert:
                 self.surf=pygame.image.load(path).convert()
             else:
                 self.surf=pygame.image.load(path)
             self.addtransparency()
+            if replacewhite:
+                self.replacewhite()# white to gray
             return True# load succeeded
         elif failsafe:
             self.surf=pygame.image.load('data/error.png').convert()
@@ -356,6 +358,10 @@ class obj_sprite_image(obj_sprite):
             return True
         else:
             return False# load failed
+    def replacewhite(self):# replace white in images with background game color (gray)
+        self.replacecolor((245,245,245),share.datamanager.getbackcolor())
+    def replacecolor(self,color,newcolor,treshold=(10,10,10)):
+        pygame.transform.threshold(self.surf,self.surf,color,treshold,newcolor,inverse_set=True)
     def save(self,name):
         pygame.image.save(self.surf,name)
     def addtransparency(self):

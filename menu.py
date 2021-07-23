@@ -41,12 +41,12 @@ class obj_quickscene():
         # if False :
             # regular scenes
             #
-            quickscene=obj_scene_settings()
+            # quickscene=obj_scene_settings()
             # quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p14()
-            # quickscene=ch1.obj_scene_ch1p7()
+            quickscene=ch1.obj_scene_ch1p3()
             # quickscene=ch1.obj_scene_ch1play2()
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p3()
@@ -79,7 +79,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
-            quickscene=ch8.obj_scene_ch8pond()
+            # quickscene=ch8.obj_scene_ch8pond()
             # quickscene=ch8.obj_scene_ch8islandreplay()
             # quickscene=ch8.obj_scene_ch8southridestandby()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -1138,17 +1138,17 @@ class obj_scene_settings(obj_scene_realtitlescreen):
         self.soundvoldisps=['off','.','..','...','....','max']
         self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
         #
-        # jcount += 1
-        # self.addpart( draw.obj_textbox('Brightness: ',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True) )
-        # self.sprite_backcolorless=draw.obj_textbox('-',(xref+200,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
-        # self.addpart(self.sprite_backcolorless)
-        # self.sprite_backcolormore=draw.obj_textbox('+',(xref+330,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
-        # self.addpart(self.sprite_backcolormore)
-        # self.sprite_backcolorvol=draw.obj_textbox('xxx',(xref+250,yref+jcount*dyref),fontsize=fontref,xleft=True)
-        # self.addpart(self.sprite_backcolorvol)
-        # self.backcolorvoldisps=['min','.','..','...','....','max']
-        # self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
-        #
+        jcount += 1
+        self.addpart( draw.obj_textbox('Brightness: ',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True) )
+        self.sprite_backcolorless=draw.obj_textbox('-',(xref+200,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_backcolorless)
+        self.sprite_backcolormore=draw.obj_textbox('+',(xref+330,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
+        self.addpart(self.sprite_backcolormore)
+        self.sprite_backcolorvol=draw.obj_textbox('xxx',(xref+250,yref+jcount*dyref),fontsize=fontref,xleft=True)
+        self.addpart(self.sprite_backcolorvol)
+        self.backcolorvoldisps=['min','.','..','...','....','max']
+        self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
+
         jcount += 1
         self.sprite_display=draw.obj_textbox('xxx',(xref,yref+jcount*dyref),fontsize=fontref,xleft=True,hover=True)
         self.addpart(self.sprite_display)
@@ -1238,25 +1238,25 @@ class obj_scene_settings(obj_scene_realtitlescreen):
                 self.sprite_soundvol.replacetext( self.soundvoldisps[share.datamanager.soundvol]  )
                 # reset page (such that sound changes take effect, and play sound on page start)
                 share.scenemanager.switchscene(obj_scene_settings(tosoundon=True))
+
+        # brightness (less)
+        elif self.sprite_backcolorless.isclicked(controls):
+            if share.datamanager.brightness>0:# not zero already
+                self.sound_menuback.play()
+                share.datamanager.brightness -= 1
+                share.datamanager.savesettings()# save settings
+                self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
+                share.scenemanager.switchscene(obj_scene_settings())# reload scene
         #
-        # # brightness (less)
-        # elif self.sprite_backcolorless.isclicked(controls):
-        #     if share.datamanager.brightness>0:# not zero already
-        #         self.sound_menuback.play()
-        #         share.datamanager.brightness -= 1
-        #         share.datamanager.savesettings()# save settings
-        #         self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
-        #         share.scenemanager.switchscene(obj_scene_settings())# reload scene
-        # #
-        # # brightness (more)
-        # elif self.sprite_backcolormore.isclicked(controls):
-        #     if share.datamanager.brightness<5:# not max already
-        #         self.sound_menuback.play()
-        #         share.datamanager.brightness += 1
-        #         share.datamanager.savesettings()# save settings
-        #         self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
-        #         share.scenemanager.switchscene(obj_scene_settings())# reload scene
-        #
+        # brightness (more)
+        elif self.sprite_backcolormore.isclicked(controls):
+            if share.datamanager.brightness<5:# not max already
+                self.sound_menuback.play()
+                share.datamanager.brightness += 1
+                share.datamanager.savesettings()# save settings
+                self.sprite_backcolorvol.replacetext( self.backcolorvoldisps[share.datamanager.brightness]  )
+                share.scenemanager.switchscene(obj_scene_settings())# reload scene
+
         # change display
         elif self.sprite_display.isclicked(controls):
             self.sound_menuback.play()

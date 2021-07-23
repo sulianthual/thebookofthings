@@ -29,8 +29,7 @@ class obj_pagebackground:
         self.color=(255,255,255)# default white
         self.make()
     def make(self):
-        tempcolor=share.datamanager.getbackcolor()
-        self.color=(tempcolor,tempcolor,tempcolor)
+        self.color=share.datamanager.getbackcolor()
         self.sprite.make(self.color)
     def display(self):
         self.sprite.display()
@@ -49,8 +48,7 @@ class obj_pagedisplay_fps:
         self.make()
     def make(self):
         text='FPS='+str(int(share.clock.getfps()))
-        tempcolor=share.datamanager.getbackcolor()
-        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0),fillcolor=(tempcolor,tempcolor,tempcolor))
+        self.sprite.make(text,share.fonts.font('smaller'),(0,0,0),fillcolor=share.datamanager.getbackcolor())
     def display(self):
         # self.sprite.display(50,20)
         self.sprite.display(1240,20)
@@ -337,6 +335,7 @@ class obj_drawing:
             self.sprite.blitfrom(i,0,0)# back
         # manage if base
         if self.base:
+            # replace background color in base
             self.sprite_base.blitfrom(self.sprite,0,0)# to base
             self.sprite.clear()
             self.sprite.blitfrom(self.sprite_base,0,0)# back
@@ -816,6 +815,8 @@ class obj_image:
         self.sprite.flip(self.fh,self.fv)
         self.sprite.scale(self.s)
         self.sprite.rotate(self.r)
+    def replacecolor(self,color,newcolor,treshold=(5,5,5)):
+        self.sprite.replacecolor(color,newcolor,treshold=treshold)
     def xytoxyini(self):# reinitialize initial coordinates to current ones
         self.xini=self.x# (useful if adding existing images to a dispgroup)
         self.yini=self.y

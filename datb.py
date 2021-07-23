@@ -574,8 +574,9 @@ class obj_datamanager:
             # write down default settings
             self.savesettings()
     def getbackcolor(self):# return background color (0-255) from brightness level (0-5)
-        minbri=220# min brightness (0-255)
-        return int( self.brightness/5*(255-minbri) )+minbri
+        minbri=235# min brightness (keep >= 235 cf pen/eraser/book shadows are at 225)
+        tempo=int( self.brightness/5*(255-minbri) )+minbri
+        return (tempo,tempo,tempo)
     #
     # words written by user
     def getwords(self):
@@ -864,7 +865,7 @@ class obj_snapshotmanager:
             # combine skeletonhead+stickbody = skeletonbase
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
-            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
+            dispgroup1.addpart('part2',draw.obj_image('skullheadnocontours',(640,200),path='data/premade') )
             dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase')
         if name in ['skeletonheaddraw','partnerhairdraw']:
@@ -872,14 +873,14 @@ class obj_snapshotmanager:
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('partnerhair',(640,200)) )
-            dispgroup1.addpart('part3',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
+            dispgroup1.addpart('part3',draw.obj_image('skullheadnocontours',(640,200),path='data/premade') )
             dispgroup1.addpart('part4',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_partnerhair')
         if name in ['skeletonheaddraw','sailorhat']:
             # skeleton with sailor hat
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
-            dispgroup1.addpart('part2',draw.obj_image('stickheadnocontours',(640,200),path='data/premade') )
+            dispgroup1.addpart('part2',draw.obj_image('skullheadnocontours',(640,200),path='data/premade') )
             dispgroup1.addpart('part3',draw.obj_image('skeletonhead',(640,200),scale=0.5) )
             dispgroup1.addpart('part5',draw.obj_image('sailorhat',(640,200-100),scale=0.5) )
             dispgroup1.snapshot((640,360-15,200,300+15),'skeletonbase_sailorhat')
