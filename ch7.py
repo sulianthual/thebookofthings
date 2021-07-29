@@ -1993,7 +1993,7 @@ class obj_scene_ch7ending(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7ending2())
     def gameendingtext(self):
-        self.addpart( draw.obj_textbox('A game by Sulian thual',(640,100),fontsize='large') )
+        self.addpart( draw.obj_textbox('Thank you for playing',(640,100),fontsize='large') )
     def setup(self):
         self.text=[' ']
         #
@@ -2059,25 +2059,13 @@ class obj_scene_ch7ending2(obj_scene_ch7ending):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7ending())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7ending3())
-    def gameendingtext(self):
-        self.addpart( draw.obj_textbox('Thank you so much for playing...',(640,100),fontsize='large') )
-
-
-
-class obj_scene_ch7ending3(obj_scene_ch7ending):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7ending2())
-    def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7end())
     def gameendingtext(self):
         self.addpart( draw.obj_textbox('The End',(640,100),fontsize='huge') )
 
-
-
 class obj_scene_ch7end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7ending3())
+        share.scenemanager.switchscene(obj_scene_ch7ending2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7endend())
     def setup(self):
