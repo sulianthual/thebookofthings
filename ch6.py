@@ -1464,29 +1464,10 @@ class obj_scene_ch6p48(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('piano') )
 
-
+# no need for sunset (already done on skull island)
 class obj_scene_ch6p49(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p48())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p50())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                '"It was already night".',\
-                   ]
-        self.world=world.obj_world_sunset(self)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-class obj_scene_ch6p50(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p49())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6end())
     def triggernextpage(self,controls):
