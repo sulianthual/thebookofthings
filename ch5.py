@@ -167,6 +167,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
+                    '        ',\
                     '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish".\n ',
                    ]

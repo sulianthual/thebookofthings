@@ -993,6 +993,7 @@ class obj_world_fishing(obj_world):
                 self.done=True
 
 
+
 # Mini Game: Fishing (with a gun)
 # *FISH *GUN
 class obj_world_fishing_withgun(obj_world):
@@ -1001,19 +1002,20 @@ class obj_world_fishing_withgun(obj_world):
 
         # hook (gun)
         self.ygun=150
-        self.hook=obj_grandactor(self,(640,self.ygun))
-        self.hook.addpart( 'gun1',draw.obj_image('gun',(640,self.ygun),scale=0.25,rotate=-90) )
-        self.hook.addpart( 'gun2',draw.obj_image('hookline',(640,self.ygun-390),path='data/premade') )
-        self.dxhori=5
+        self.hook=obj_grandactor(self,(80,self.ygun))
+        self.hook.addpart( 'gun1',draw.obj_image('gun',(80,self.ygun),scale=0.25,rotate=0) )
+        self.hook.addpart( 'gun2',draw.obj_image('hookline',(80,self.ygun-390),path='data/premade') )
+        self.dydown=5
+        self.dyup=2
         # bullets
         # cannonballs
         self.cannonballs=[]# empty list
-        self.timerreload=tool.obj_timer(20)#reload time
+        self.timerreload=tool.obj_timer(30)#reload time
         # fish status
         self.fishfree=True# fish not caugth (yet)
         # fish animation
         self.fish=obj_grandactor(self,(640,360))
-        animation=draw.obj_animation('fishmovegun1','fish',(640,360),imgscale=1)
+        animation=draw.obj_animation('fishmovevertigun1','fish',(640,360),imgscale=1)
         # animation.addsound( "fishing_swim", [13, 97, 258, 316, 510, 565, 734, 766] )
         self.fish.addpart( 'anim_fish',animation )
         self.fish.addpart( 'dead_fish',draw.obj_image('fish',(640,360),scale=0.25,flipv=True) )
@@ -1021,18 +1023,18 @@ class obj_world_fishing_withgun(obj_world):
         # fish hit box
         self.fishbox=obj_grandactor(self,(340,360))
         self.fishbox.actortype='fish'
-        self.fishbox.rx=75
-        self.fishbox.ry=50
+        self.fishbox.rx=60
+        self.fishbox.ry=30
         self.fishbox.r=1
         # short timer at end
         self.timerend=tool.obj_timer(90)# 90
         # textbox when caught
-        self.text1=obj_grandactor(self,(840,500))
+        self.text1=obj_grandactor(self,(640,360))
         tempo='['+share.datamanager.controlname('arrows')+': move/shoot]'
-        self.textboxclick=draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions,hover=True)
+        self.textboxclick=draw.obj_textbox(tempo,(640,650),color=share.colors.instructions,hover=True)
         self.text1.addpart( 'textbox1',self.textboxclick )
-        self.text2=obj_grandactor(self,(840,500))
-        self.text2.addpart( 'textbox2',draw.obj_textbox('Nice Catch!',(1100,460)) )
+        self.text2=obj_grandactor(self,(640,650))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Pew pew pew!',(640,650)) )
         self.text1.show=True
         self.text2.show=False
         #
@@ -1044,16 +1046,17 @@ class obj_world_fishing_withgun(obj_world):
         self.creator.addpart(self.soundhit)
         self.soundshoot=draw.obj_sound('fishing_shoot')
         self.creator.addpart(self.soundshoot)
-
+    def triggerlowerhook(self,controls):
+        return controls.gd or self.textboxclick.isholdclicked(controls)
     def makecannonball(self,x,y):# shoot
         self.soundreel.stop()
         self.soundshoot.play()
         cannonball=obj_grandactor(self,(x,y))
-        cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=True,rotate=-90) )
-        cannonball.rx=35# hitbox
-        cannonball.ry=35
+        cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=False,rotate=0) )
+        cannonball.rx=30# hitbox
+        cannonball.ry=30
         cannonball.r=1
-        cannonball.speed=12#12#vertical speed
+        cannonball.speed=12
         self.cannonballs.append(cannonball)
     def killcannonball(self,cannonball):
         self.cannonballs.remove(cannonball)
@@ -1065,30 +1068,26 @@ class obj_world_fishing_withgun(obj_world):
         # motion (even during ending)
         if self.cannonballs:
             for i in self.cannonballs:
-                i.movey(i.speed)
-                if i.y>720+50: self.killcannonball(i)# disappears on bottom edge of screen        #
+                i.movex(i.speed)
+                if i.x>1280+50: self.killcannonball(i)# disappears on bottom edge of screen        #
         # game
         if self.fishfree:
             # move gun
-            if controls.gr and self.hook.x<1280-50:
-                self.hook.movex(self.dxhori)
-                if controls.grc:
-                    self.hook.fliph()
-                    self.soundreel.stop()
+            if self.triggerlowerhook(controls) and self.fishfree:
+                if controls.gdc or self.textboxclick.isclicked(controls):
                     self.soundreel.play(loop=True)
-            elif controls.gl and self.hook.x>50:
-
-                self.hook.movex(-self.dxhori)
-                if controls.glc:
-                    self.hook.fliph()
+                    # self.soundreel.play()
+                if self.hook.y<720-50:
+                    self.hook.movey(self.dydown)
+                else:
                     self.soundreel.stop()
-                    self.soundreel.play(loop=True)
             else:
                 self.soundreel.stop()
+                if self.hook.y>80+50: self.hook.movey(-self.dyup)
             # shoot
             if self.timerreload.off:
-                if controls.gd and controls.gdc:
-                    self.makecannonball(self.hook.x,self.hook.y+95)
+                if controls.gr and controls.grc:
+                    self.makecannonball(self.hook.x+95,self.hook.y)
                     self.timerreload.start()
             else:# reload
                 self.timerreload.update()
@@ -1101,8 +1100,10 @@ class obj_world_fishing_withgun(obj_world):
                 for i in self.cannonballs:
                     if tool.checkrectcollide(i,self.fishbox):
                         #
-                        self.fish.dict['dead_fish'].x=i.x
-                        self.fish.dict['dead_fish'].y=i.y+50
+                        # self.fish.dict['dead_fish'].x=i.x+95
+                        # self.fish.dict['dead_fish'].y=i.y
+                        self.fish.dict['dead_fish'].x=self.fish.dict['anim_fish'].devxy[0]
+                        self.fish.dict['dead_fish'].y=self.fish.dict['anim_fish'].devxy[1]
                         self.fish.dict['anim_fish'].show=False
                         self.fish.dict['dead_fish'].show=True
                         self.killcannonball(i)
@@ -1112,6 +1113,8 @@ class obj_world_fishing_withgun(obj_world):
                         self.soundreel.stop()
                         self.soundcatch.play()
                         self.soundhit.play()
+                        self.text1.show=False
+                        self.text2.show=True
 
         else:
             # end of mini-game
@@ -1119,6 +1122,11 @@ class obj_world_fishing_withgun(obj_world):
             self.fish.dict['dead_fish'].movey(-1)
             if self.timerend.ring:
                 self.done=True
+
+
+
+
+
 
 
 # Mini Game: Fishing (with scissors like a boomerang)

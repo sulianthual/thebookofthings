@@ -183,6 +183,7 @@ class obj_scene_ch4p5(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
+                    '        ',\
                     '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish ',\
                       '(with a newly aquired gun).',\
@@ -192,7 +193,8 @@ class obj_scene_ch4p5(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch4') )
-
+        # self.addpart(draw.obj_animation('fishmovegun1','fish',(640,360),record=False))
+        # self.addpart(draw.obj_animation('fishmovevertigun1','fish',(640,360),record=True))
 
 class obj_scene_ch4p6(page.obj_chapterpage):
     def prevpage(self):

@@ -1091,7 +1091,7 @@ class obj_animation:
         self.devrect=core.obj_sprite_rect()
         self.devcrossref=core.obj_sprite_cross()
         self.devlineseq=core.obj_sprite_linesequence()
-        self.devxy=(self.x,self.y)
+        self.devxy=(self.x,self.y)# used in minigames to track image center (fishing), not just for dev
         self.devarea=(self.x,self.y, 2*self.rx, 2*self.ry )
     def addimage(self,imgname,scale=1,fliph=False,flipv=False,path='book'):
         sprite=core.obj_sprite_image()
@@ -1203,7 +1203,7 @@ class obj_animation:
             # display
             self.sprite.display(xd,yd)
             # devtools
-            self.devxy=(xd,yd)
+            self.devxy=(xd,yd)# this is actually used in some minigames
             self.devarea=(xd,yd, 2*self.sprite.getrx(), 2*self.sprite.getry() )
             # play sounds
             if self.nsilentloops>0:
