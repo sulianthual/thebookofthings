@@ -563,13 +563,13 @@ class obj_datamanager:
         else:
             # default settings
             self.doazerty=False# qwerty keyboard
-            self.donative=True# 1280x720(native windowed) or adapted (fullscreen) resolution
+            self.donative=False# 1280x720(native windowed) or adapted (fullscreen) resolution
             self.doshowfps=False# show fps on/off
             self.domusic=True# music on/off
             self.musicvol=3# 0-5 music volume
             self.dosound=True# sound on/off
             self.soundvol=3# 0-5 sound volume
-            self.brightness=3# background color (0-5 for gray to white, default=white)
+            self.brightness=4# background color (0-5 for gray to white, default=white)
             self.devaccess=False# User has no dev access by default
             # write down default settings
             self.savesettings()
