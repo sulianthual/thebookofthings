@@ -5,7 +5,7 @@
 
 by Sulian Thual (2020)
 
-An adventure game with a twist: you draw everything! Your hero is on a quest to save his/her partner, and will meet many characters along the way. Free to play, supports keyboard and mouse controls, and takes about one hour to complete. Made with Python and Pygame (2021). 
+A visual novel with a twist: you draw everything! Your hero is on a quest to save his/her partner, and will meet many characters along the way. Free to play, supports keyboard and mouse controls, and takes about one hour to complete. Made with Python and Pygame (2021). 
 
 
 Github reference: [link](https://github.com/sulianthual/thebookofthings)
