@@ -850,8 +850,9 @@ class obj_scene_ch5p28a(page.obj_chapterpage):
         self.text=[\
                 '"I am so impressed that I will tell you the second part of the password. It is:',\
                 ('"persevere"',share.colors.password),'. ',\
-                'That\'s my motto: always persevere!, that I taught to ',\
-                ('{villainname}',share.colors.villain),'." ',\
+                'That\'s my motto: "always persevere!" I taught it to ',\
+                ('{villainname}',share.colors.villain),' when ',\
+                ('{villain_he}',share.colors.villain2),' was my student." ',\
                   ]
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
         animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)

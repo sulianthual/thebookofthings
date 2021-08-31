@@ -919,9 +919,10 @@ class obj_world_fishing(obj_world):
         self.hook.ry=30
         self.hook.r=30
         self.hook.addpart( 'line',draw.obj_image('hookline',(640,100-390),path='data/premade') )
+        self.hook.addpart( 'img_hook',draw.obj_image('hook',(640,100),scale=0.25) )
         self.hook.addpart( 'img_fish',draw.obj_image('fish',(640,100+50),scale=0.25,rotate=-90) )
         self.hook.dict['img_fish'].show=False
-        self.hook.addpart( 'img_hook',draw.obj_image('hook',(640,100),scale=0.25) )
+
         self.dydown=5
         self.dyup=2
         # fish status
@@ -996,10 +997,15 @@ class obj_world_fishing(obj_world):
 
 # Mini Game: Fishing (with a gun)
 # *FISH *GUN
-class obj_world_fishing_withgun(obj_world):
+class obj_world_fishing_withgun_OLD(obj_world):
     def setup(self,**kwargs):
+        #
+        self.doelectricfish=False# replace fish with electric fish shooting lightning
+        # scene tuning
+        if kwargs is not None:
+            if 'electricfish' in kwargs: self.doelectricfish=kwargs["electricfish"]
+        #
         self.done=False# mini game is finished
-
         # hook (gun)
         self.ygun=150
         self.hook=obj_grandactor(self,(80,self.ygun))
@@ -1124,6 +1130,140 @@ class obj_world_fishing_withgun(obj_world):
                 self.done=True
 
 
+
+# Mini Game: Fishing (with a gun)
+# *FISH *GUN
+class obj_world_fishing_withgun(obj_world):
+    def setup(self,**kwargs):
+        #
+        self.doelectricfish=False# replace fish with electric fish shooting lightning
+        # scene tuning
+        if kwargs is not None:
+            if 'electricfish' in kwargs: self.doelectricfish=kwargs["electricfish"]
+        #
+        self.done=False# mini game is finished
+        # hook (gun)
+        self.ygun=150
+        self.hook=obj_grandactor(self,(80,self.ygun))
+        self.hook.addpart( 'gun1',draw.obj_image('gun',(80,self.ygun),scale=0.25,rotate=0) )
+        self.hook.addpart( 'gun2',draw.obj_image('hookline',(80,self.ygun-390),path='data/premade') )
+        self.dydown=5
+        self.dyup=2
+        # bullets
+        # cannonballs
+        self.cannonballs=[]# empty list
+        self.timerreload=tool.obj_timer(30)#reload time
+        # fish status
+        self.fishfree=True# fish not caugth (yet)
+        # fish animation
+        self.fish=obj_grandactor(self,(640,360))
+        animation=draw.obj_animation('fishmovevertigun1','fish',(640,360),imgscale=1)
+        # animation.addsound( "fishing_swim", [13, 97, 258, 316, 510, 565, 734, 766] )
+        self.fish.addpart( 'anim_fish',animation )
+        self.fish.addpart( 'dead_fish',draw.obj_image('fish',(640,360),scale=0.25,flipv=True) )
+        self.fish.dict['dead_fish'].show=False
+        # fish hit box
+        self.fishbox=obj_grandactor(self,(340,360))
+        self.fishbox.actortype='fish'
+        self.fishbox.rx=60
+        self.fishbox.ry=30
+        self.fishbox.r=1
+        # short timer at end
+        self.timerend=tool.obj_timer(90)# 90
+        # textbox when caught
+        self.text1=obj_grandactor(self,(640,360))
+        tempo='['+share.datamanager.controlname('arrows')+': move/shoot]'
+        self.textboxclick=draw.obj_textbox(tempo,(640,650),color=share.colors.instructions,hover=True)
+        self.text1.addpart( 'textbox1',self.textboxclick )
+        self.text2=obj_grandactor(self,(640,650))
+        self.text2.addpart( 'textbox2',draw.obj_textbox('Pew pew pew!',(640,650)) )
+        self.text1.show=True
+        self.text2.show=False
+        #
+        self.soundreel=draw.obj_sound('fishing_reel')
+        self.creator.addpart(self.soundreel)
+        self.soundcatch=draw.obj_sound('fishing_catch')
+        self.creator.addpart(self.soundcatch)
+        self.soundhit=draw.obj_sound('fishing_hit')
+        self.creator.addpart(self.soundhit)
+        self.soundshoot=draw.obj_sound('fishing_shoot')
+        self.creator.addpart(self.soundshoot)
+    def triggerlowerhook(self,controls):
+        return controls.gd or self.textboxclick.isholdclicked(controls)
+    def makecannonball(self,x,y):# shoot
+        self.soundreel.stop()
+        self.soundshoot.play()
+        cannonball=obj_grandactor(self,(x,y))
+        cannonball.addpart('img', draw.obj_image('bullet',(x,y),scale=0.25,fliph=False,rotate=0) )
+        cannonball.rx=30# hitbox
+        cannonball.ry=30
+        cannonball.r=1
+        cannonball.speed=12
+        self.cannonballs.append(cannonball)
+    def killcannonball(self,cannonball):
+        self.cannonballs.remove(cannonball)
+        cannonball.kill()
+    def update(self,controls):
+        super().update(controls)
+        self.textboxclick.trackhover(controls)
+
+        # motion (even during ending)
+        if self.cannonballs:
+            for i in self.cannonballs:
+                i.movex(i.speed)
+                if i.x>1280+50: self.killcannonball(i)# disappears on bottom edge of screen        #
+        # game
+        if self.fishfree:
+            # move gun
+            if self.triggerlowerhook(controls) and self.fishfree:
+                if controls.gdc or self.textboxclick.isclicked(controls):
+                    self.soundreel.play(loop=True)
+                    # self.soundreel.play()
+                if self.hook.y<720-50:
+                    self.hook.movey(self.dydown)
+                else:
+                    self.soundreel.stop()
+            else:
+                self.soundreel.stop()
+                if self.hook.y>80+50: self.hook.movey(-self.dyup)
+            # shoot
+            if self.timerreload.off:
+                if controls.gr and controls.grc:
+                    self.makecannonball(self.hook.x+95,self.hook.y)
+                    self.timerreload.start()
+            else:# reload
+                self.timerreload.update()
+
+            # fish box
+            self.fishbox.x=self.fish.dict['anim_fish'].devxy[0]# hitbox follows animation
+            self.fishbox.y=self.fish.dict['anim_fish'].devxy[1]
+            # check collision
+            if self.cannonballs:
+                for i in self.cannonballs:
+                    if tool.checkrectcollide(i,self.fishbox):
+                        #
+                        # self.fish.dict['dead_fish'].x=i.x+95
+                        # self.fish.dict['dead_fish'].y=i.y
+                        self.fish.dict['dead_fish'].x=self.fish.dict['anim_fish'].devxy[0]
+                        self.fish.dict['dead_fish'].y=self.fish.dict['anim_fish'].devxy[1]
+                        self.fish.dict['anim_fish'].show=False
+                        self.fish.dict['dead_fish'].show=True
+                        self.killcannonball(i)
+                        #
+                        self.timerend.start()
+                        self.fishfree=False
+                        self.soundreel.stop()
+                        self.soundcatch.play()
+                        self.soundhit.play()
+                        self.text1.show=False
+                        self.text2.show=True
+
+        else:
+            # end of mini-game
+            self.timerend.update()
+            self.fish.dict['dead_fish'].movey(-1)
+            if self.timerend.ring:
+                self.done=True
 
 
 
@@ -3115,30 +3255,25 @@ class obj_world_stompfight(obj_world):
 #*LYING *BUNNY
 class obj_world_lying(obj_world):
     def setup(self,**kwargs):
-        #
         # parameters
         self.statements={}# full list of statements
         self.statdict={}# dictionary of 3 statements among full list
         self.statkeys=[]# the statement type(key) for the 3 statements
         self.stat01=[]# the statement boolean (True or False version) for the 3 statements
         self.fqstatdict={}# former question
-
-        #
-        # Statements Database
-        self.statements={}# marked with key, statement negative (0), statement positive (1)
-        self.statements['apple']=['I hate apples','I love apples']
-        self.statements['banana']=['I hate bananas','I love bananas']
-        self.statements['shower']=['I never shower','I always shower']
-        self.statements['teeth']=['I never brush my teeth','I always brush my teeth']
-        self.statements['spider']=['I am not scared of spiders','I am scared of spiders']
-        self.statements['booger']=['I dont eat my boogers','I eat my boogers']
-        self.statements['underwear']=['I never wear dirty underwears','I always wear dirty underwears']
+        # get statements from database
+        self.datastatements()
         # Make 3 random statements upon creation
         self.makestatements()
         # Determine order in which statements will be used to make questions
         self.qcycle=tool.randsample([0,1,2],3)# cycle for asking questions
         self.iquestion=0# current index for question
-        #
+    def datastatements(self):
+        # Statements Database
+        self.statements={}# marked with key, statement negative (0), statement positive (1)
+        self.statements['apple']=['I hate apples','I love apples']
+        self.statements['spider']=['I am not scared of spiders','I am scared of spiders']
+        self.statements['shower']=['I never shower','I always shower']
     def makestatements(self):
         # Pick up 3 statements from large database
         self.statkeys=[]# choose statements type (must be unique)
@@ -3200,6 +3335,15 @@ class obj_world_lying(obj_world):
             else:
                 return share.datamanager.getword('choice_yesno') != share.datamanager.getword('truth_yesno')
 
+# Same world but different questions (for round 2)
+class obj_world_lying2(obj_world_lying):
+    def datastatements(self):
+        # Statements Database
+        self.statements={}# marked with key, statement negative (0), statement positive (1)
+        self.statements['banana']=['I hate bananas','I love bananas']
+        self.statements['teeth']=['I never brush my teeth','I always brush my teeth']
+        self.statements['booger']=['I dont eat my boogers','I eat my boogers']
+        self.statements['underwear']=['I never wear dirty underwears','I always wear dirty underwears']
 ####################################################################################################################
 
 

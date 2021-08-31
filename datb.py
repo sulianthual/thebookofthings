@@ -887,12 +887,24 @@ class obj_snapshotmanager:
 
         #
         # chapter items
-        if name in ['happyfacedraw','fish']:
+        if name=='fishdraw':
+            # fish draw
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('fishback',(640,360),scale=1,path='data/premade'))
+            dispgroup1.addpart('part2',draw.obj_image('fishdraw',(640,360),scale=1))
+            dispgroup1.snapshot((640,360,300,200),'fish')
+        if name in ['happyfacedraw','fishdraw']:
             # combine hero+fish into: hero holding fish
             dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup1.addpart('part1',draw.obj_image('herobase',(640,452), scale=0.7))
             dispgroup1.addpart('part2',draw.obj_image('fish',(776,486), scale=0.4,rotate=-90))
             dispgroup1.snapshot((700,452,200,260),'herobasefish')
+        # love heart draw
+        if name=='lovedraw':
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('lovedraw',(640,360),scale=4/3))
+            dispgroup1.snapshot((640,360,300,200),'love')
+
         if name=='housedraw':
             # house redux
             dispgroup1=draw.obj_dispgroup((640,360))
@@ -1020,7 +1032,7 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
             dispgroup1.addpart( 'part3', draw.obj_image('villainmechbase_noface',(640,360)) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-        if name in ['housedraw','bushdraw','fish','flowerdraw','sailboat']:
+        if name in ['housedraw','bushdraw','fishdraw','flowerdraw','sailboat']:
             # heromech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='data/premade') )

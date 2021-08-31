@@ -511,13 +511,13 @@ class obj_scene_ch4p17(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p15())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingstart())
+        share.scenemanager.switchscene(obj_scene_lyingpart1())
     def setup(self):
         self.text=[\
                 '"So you want to know ',\
                 ('my part of the tower\'s password',share.colors.password),'. ',\
                 'Tell you what, I will give it to you if you win my ',('lying game',share.colors.grandmaster2),\
-                '." ',\
+                '. Now lets get started." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -541,40 +541,10 @@ class obj_scene_ch4p17(page.obj_chapterpage):
 # Lying game
 # *LYING
 #
-class obj_scene_lyingstart(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p17())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart1())
-    def setup(self):
-        share.datamanager.setbookmark('ch4_startlying')
-        self.text=[\
-                '"The lying game is all about having a good memory and mastering the art of deception, said ',\
-                ('{bunnyname}',share.colors.bunny),'. Now lets get started."',\
 
-                   ]
-        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
-        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [128] )
-        animation1.addsound( "bunny3", [43],skip=1 )
-        #
-        self.addpart( draw.obj_music('bunny') )
-
-
-##########################
 class obj_scene_lyingpart1(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingstart())
+        share.scenemanager.switchscene(obj_scene_ch4p17())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingp1q1(world=self.world))
     def setup(self,**kwargs):
@@ -585,8 +555,7 @@ class obj_scene_lyingpart1(page.obj_chapterpage):
             self.world=world.obj_world_lying(self)# or remake it
         # Page Text
         self.text=[\
-                    'This game plays in three rounds. For the first round, ',\
-                    'here are three ',\
+                    'Here are three statements ',\
                     ('true statements',share.colors.darkgreen),' you need to remember. ',\
                     'You can even take some notes at the bottom of the screen. '
                    ]
@@ -621,8 +590,6 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_lyingp1q2(world=self.world))
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart1(world=self.world))
-    def text_lyinggame(self):
-        return ['Now tell me if this is true or false (1/3):']
     def textchoice_lyinggame(self):
         textchoice=draw.obj_textchoice('choice_yesno',default='yes')
         textchoice.addchoice('True','yes',(640-100,250))
@@ -654,6 +621,9 @@ class obj_scene_lyingp1q1(page.obj_chapterpage):
         self.sound.play()
         #
         self.addpart( draw.obj_music('bunny') )
+        #
+    def text_lyinggame(self):
+        return ['Now tell me if this is true or false (1/3):']
 
 
 class obj_scene_lyingp1q2(obj_scene_lyingp1q1):# child of lying 1
@@ -668,10 +638,7 @@ class obj_scene_lyingp1q3(obj_scene_lyingp1q1):# child of lying 1
         share.scenemanager.switchscene(obj_scene_lyingpart1win())# forget lying game database
     def text_lyinggame(self):
         return ['Now tell me if this is true or false (3/3):']
-    def firstsound(self):
-        self.sound=draw.obj_sound('bunny2')
-        self.addpart(self.sound)
-        self.sound.play()
+
 
 class obj_scene_lyingfailpart1(page.obj_chapterpage):
     def prevpage(self):
@@ -757,16 +724,16 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         if (kwargs is not None) and ('world' in kwargs):
             self.world=kwargs["world"]# inherit lying database
         else:
-            self.world=world.obj_world_lying(self)# or remake it
+            self.world=world.obj_world_lying2(self)# or remake it
         # Page Text
-        self.text=['For the second round, ',('I will now be lying',share.colors.red),'. ',\
-                    'Let me tell you three statements. They are ',\
-                    ('all false ',share.colors.red),' because I am lying. ',\
+        self.text=['For the second round, remember these three ',('true statements',share.colors.darkgreen),'. ',\
+                    'But from now on I want you to lie to me',\
+                    ' and only give me only ',('wrong answers',share.colors.red),'.',\
                    ]
         # Same text but showing the opposite statements (the boolean reverse remains true)
-        self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0,lying=True),(400,220),xleft=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox( '2. '+self.world.getstatement(1,lying=True),(400,290),xleft=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox( '3. '+self.world.getstatement(2,lying=True),(400,360),xleft=True,color=share.colors.red) )
+        self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0,lying=False),(400,220),xleft=True,color=share.colors.darkgreen) )
+        self.addpart( draw.obj_textbox( '2. '+self.world.getstatement(1,lying=False),(400,290),xleft=True,color=share.colors.darkgreen) )
+        self.addpart( draw.obj_textbox( '3. '+self.world.getstatement(2,lying=False),(400,360),xleft=True,color=share.colors.darkgreen) )
         # Drawing
         drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
         if (kwargs is not None) and ('world' in kwargs):
@@ -783,27 +750,64 @@ class obj_scene_lyingpart2(page.obj_chapterpage):
         self.addpart( draw.obj_music('bunny') )
 
 
-class obj_scene_lyingp2q1(obj_scene_lyingp1q1):# child of lying 1
+class obj_scene_lyingp2q1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart2(world=self.world))
+    def nextpage(self):
+        if self.world.isanswercorrect(lying=True):# hero must lie
+            self.nextpage_lyinggame()
+        else:
+            self.nextpage_lyingfail()
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp2q2(world=self.world))
     def nextpage_lyingfail(self):
         share.scenemanager.switchscene(obj_scene_lyingfailpart2(world=self.world))
+
+    def textchoice_lyinggame(self):
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('"True"','yes',(640-100,250))
+        textchoice.addchoice('"False"','no',(640+100,250))
+        self.addpart( textchoice )
+    def textboxset(self):
+        self.textboxopt={'xy':(640,350),'text':'[confirm]','align':'center'}
+    def setup(self,**kwargs):
+        # inherit world
+        if (kwargs is not None) and ('world' in kwargs):
+            self.world=kwargs["world"]# inherit lying database
+        else:
+            self.world=world.obj_world_lying2(self)# or remake it
+        self.world.makequestion()
+        # Page text
+        self.text=self.text_lyinggame()
+        self.addpart( draw.obj_textbox( '" '+self.world.getquestion()+'"',(640,150)) )
+        self.textchoice_lyinggame()
+        # Drawing
+        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
+        self.addpart( drawing )
+        # animation
+        animation1=draw.obj_animation('ch3_bunnheadwobble','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch3_bunnheadwobble2','herohead',(640,360),record=False, sync=animation1) )
+        #
+        self.sound=draw.obj_sound('bunny3')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('bunny') )
     def text_lyinggame(self):
-        return ['Now tell me if this is true or false (1/3):']
+        return ['Now "lyingly" tell me if this is true or false (1/3):']
 
 class obj_scene_lyingp2q2(obj_scene_lyingp2q1):# child of lying 2
     def nextpage_lyinggame(self):
         share.scenemanager.switchscene(obj_scene_lyingp2q3(world=self.world))
     def text_lyinggame(self):
-        return ['Now tell me if this is true or false (2/3):']
+        return ['Now "lyingly" tell me if this is true or false (2/3):']
 
 class obj_scene_lyingp2q3(obj_scene_lyingp2q1):# child of lying 2
     def nextpage_lyinggame(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart2win())# forget lying game database
+        share.scenemanager.switchscene(obj_scene_lyingend())# forget lying game database
     def text_lyinggame(self):
-        return ['Now tell me if this is true or false (3/3):']
+        return ['Now "lyingly" tell me if this is true or false (3/3):']
 
 
 class obj_scene_lyingfailpart2(page.obj_chapterpage):
@@ -822,12 +826,11 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
         if (kwargs is not None) and ('world' in kwargs):
             self.world=kwargs["world"]# inherit lying database
         else:
-            self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    ' You gave me the wrong answer. ',\
-                    'For this second round, remember that ',\
-                    ('all my statements are false',share.colors.red),'. ',\
-                    'Now go back and win this second round. ',\
+            self.world=world.obj_world_lying2(self)# or remake it
+        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),', that was actually correct! ',\
+                    'For this second round, remember to always give me the ',\
+                    ('wrong answer',share.colors.red),'. ',\
+                    'Now go back and win this. ',\
                                 ]
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
@@ -843,168 +846,10 @@ class obj_scene_lyingfailpart2(page.obj_chapterpage):
         self.sound.play()
         #
         self.addpart( draw.obj_music('bunny') )
-
-
-class obj_scene_lyingpart2win(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart2())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart3())
-    def setup(self):
-        share.datamanager.setbookmark('ch4_winlying2')
-        self.text=[\
-                    'Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
-                    'you won the ',\
-                    ('second round',share.colors.grandmaster2),'! ',\
-                   ]
-        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
-        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
-        self.addpart( animation1 )
-        animation3=draw.obj_animation('ch4_herowalkbunny2love','love',(640,360),record=False,sync=animation1)
-        animation3.addimage('empty',path='data/premade')
-        self.addpart( animation3 )
-        animation4=draw.obj_animation('ch4_herowalkbunny2love2','love',(640,360),record=False,sync=animation1)
-        animation4.addimage('empty',path='data/premade')
-        self.addpart( animation4 )
-        #
-        self.sound=draw.obj_sound('unlock')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny4", [43,128] )
-        # animation1.addsound( "bunny3", [43],skip=1 )
-        #
-        self.addpart( draw.obj_music('bunny') )
-
-
-##########################
-class obj_scene_lyingpart3(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart2win())# forget lying game database
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingp3q1(world=self.world))
-    def setup(self,**kwargs):
-        # inherit world
-        if (kwargs is not None) and ('world' in kwargs):
-            self.world=kwargs["world"]# inherit lying database
-        else:
-            self.world=world.obj_world_lying(self)# or remake it
-        # Page Text
-        self.text=['For the last round, ',('I will be lying and so will you',share.colors.red),'! ',\
-                    'I am giving you three ',\
-                    ('false statements',share.colors.red),', and ',\
-                    'you will only give me ',\
-                    ('wrong answers',share.colors.red),'. ',\
-                   ]
-        # Same text but showing the opposite statements (the boolean reverse remains true)
-        self.addpart( draw.obj_textbox( '1. '+self.world.getstatement(0,lying=True),(400,220),xleft=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox( '2. '+self.world.getstatement(1,lying=True),(400,290),xleft=True,color=share.colors.red) )
-        self.addpart( draw.obj_textbox( '3. '+self.world.getstatement(2,lying=True),(400,360),xleft=True,color=share.colors.red) )
-        # Drawing
-        drawing=draw.obj_drawing('lyingnote',(640,530),shadow=(590,120),legend='Take some notes',brush=share.brushes.smallpen)
-        if (kwargs is not None) and ('world' in kwargs):
-            pass
-        else:
-            drawing.clear()# erase drawing
-        self.addpart(drawing)
-        self.addpart( draw.obj_image('bunnyhead',(1150,300),scale=0.35,rotate=0,fliph=True,flipv=False) )
-        #
-        self.sound=draw.obj_sound('bunny2')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('bunny') )
-
-
-class obj_scene_lyingp3q1(obj_scene_lyingp1q1):# child of lying 1
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart3(world=self.world))
-    def nextpage_lyinggame(self):
-        share.scenemanager.switchscene(obj_scene_lyingp3q2(world=self.world))
-    def nextpage(self):
-        if self.world.isanswercorrect(lying=True):# hero must lie too
-            self.nextpage_lyinggame()
-        else:
-            self.nextpage_lyingfail()
-    def nextpage_lyingfail(self):
-        share.scenemanager.switchscene(obj_scene_lyingfailpart3(world=self.world))
-    def text_lyinggame(self):
-        return ['Now tell me if this is true or false ',\
-                ' (but lie and give me the ',\
-                ('wrong answer',share.colors.red),') (1/3): ']
-    def textchoice_lyinggame(self):# textchoice is "ironic"
-        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('"True"','yes',(640-100,250))
-        textchoice.addchoice('"False"','no',(640+100,250))
-        self.addpart( textchoice )
-
-class obj_scene_lyingp3q2(obj_scene_lyingp3q1):# child of lying 3
-    def nextpage_lyinggame(self):
-        share.scenemanager.switchscene(obj_scene_lyingp3q3(world=self.world))
-    def text_lyinggame(self):
-        return ['Now tell me if this is true or false ',\
-                ' (but lie and give me the ',\
-                ('wrong answer',share.colors.red),') (2/3): ']
-
-class obj_scene_lyingp3q3(obj_scene_lyingp3q1):# child of lying 3
-    def nextpage_lyinggame(self):
-        share.scenemanager.switchscene(obj_scene_lyingend())# forget lying game database
-    def text_lyinggame(self):
-        return ['Now tell me if this is true or false ',\
-                ' (but lie and give me the ',\
-                ('wrong answer',share.colors.red),') (3/3): ']
-
-
-class obj_scene_lyingfailpart3(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart3(world=self.world))
-    def nextpage(self):
-        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_lyingpart3(world=self.world))
-        else:
-            share.scenemanager.switchscene(obj_scene_lyingend())# forget lying game database
-    def textboxset(self):
-        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
-    def setup(self,**kwargs):
-        # inherit world
-        if (kwargs is not None) and ('world' in kwargs):
-            self.world=kwargs["world"]# inherit lying database
-        else:
-            self.world=world.obj_world_lying(self)# or remake it
-        self.text=['Sorry, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                    'For this round, remember that ',\
-                    ('all my statements are false',share.colors.red),\
-                    ', and that you must ',\
-                    ('always give me the wrong answer',share.colors.red),'. ',\
-                    'Now go back and win this third round. ',\
-                                ]
-        animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        y1=200
-        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
-        textchoice.addchoice('Retry','yes',(540,y1))
-        textchoice.addchoice('Abandon (skip)','no',(740,y1))
-        self.addpart( textchoice )
-        #
-        self.sound=draw.obj_sound('bunny5')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('bunny') )
-
 
 class obj_scene_lyingend(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_lyingpart3())
+        share.scenemanager.switchscene(obj_scene_lyingpart2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p18())
     def setup(self):
@@ -1012,7 +857,7 @@ class obj_scene_lyingend(page.obj_chapterpage):
         self.text=[\
                     '"Well done, said ',('{bunnyname}',share.colors.bunny),', ',\
                     'you won my ',('lying game',share.colors.grandmaster2),'! ',\
-                    ' You are truly a great deceiver!"',\
+                    ' You are truly a great liar!"',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -1061,7 +906,7 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         self.text=[\
                     '"The first part of the tower\'s password is: ',\
                     ('"fight"',share.colors.password),'. ',\
-                    'That\'s my motto: fight in any situation, that I taught to ',\
+                    'That\'s my motto: "fight in any situation". I taught it to ',\
                     ('{villainname}',share.colors.villain),' when ',\
                     ('{villain_he}',share.colors.villain2),' was my student." ',\
                    ]

@@ -1349,7 +1349,7 @@ class obj_scene_ch6p44(page.obj_chapterpage):
         self.text=[\
                    '"One last thing, the last part of the  tower\'s password is: ',\
                    ('"overcome"',share.colors.password),'. ',\
-                    'That\'s my motto: overcome everything. ',\
+                    'That\'s my motto: "overcome everything". ',\
                     'Till next time squid".',\
 
                    ]

@@ -122,7 +122,8 @@ class obj_scene_ch2p2(page.obj_chapterpage):
                  'Lets start by drawing a ',\
                  ('love heart',share.colors.item),'. ',\
                    ]
-        self.addpart( draw.obj_drawing('love',(640,450),legend='love heart',shadow=(300,200),brush=share.brushes.bigpen) )
+        # self.addpart( draw.obj_drawing('love',(640,450),legend='love heart',shadow=(300,200),brush=share.brushes.bigpen) )
+        self.addpart( draw.obj_drawing('lovedraw',(640,450),legend='love heart',shadow=(225,150),brush=share.brushes.pen12) )#smaller
         #
         self.addpart( draw.obj_music('partner') )
 
