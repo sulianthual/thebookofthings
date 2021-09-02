@@ -204,6 +204,8 @@ class obj_sounds:
         self.dict['fishing_hit']=( 'world/fish/die_02.wav' , 1 )
         self.dict['fishing_throw']=( 'world/fish/swish-9.wav' , 0.5 )
         self.dict['fishing_boomerang']=( 'world/fish/swosh-06.wav' , 2 )#
+        self.dict['fishing_lightshoot']=( 'world/fish/lightshoot.wav' , 2 )#
+        self.dict['fishing_lighthit']=( 'world/fish/lighthit.wav' , 1 )#
         # eating
         self.dict['eat']=( 'world/eat/eatgulp2.wav' , 1 )
         self.dict['eatend']=( 'world/eat/eat_burp.wav' , 1 )

@@ -1130,7 +1130,6 @@ class obj_world_fishing_withgun_OLD(obj_world):
                 self.done=True
 
 
-
 # Mini Game: Fishing (with a gun)
 # *FISH *GUN
 class obj_world_fishing_withgun(obj_world):
@@ -1147,12 +1146,19 @@ class obj_world_fishing_withgun(obj_world):
         self.hook=obj_grandactor(self,(80,self.ygun))
         self.hook.addpart( 'gun1',draw.obj_image('gun',(80,self.ygun),scale=0.25,rotate=0) )
         self.hook.addpart( 'gun2',draw.obj_image('hookline',(80,self.ygun-390),path='data/premade') )
+        self.hook.rx=60
+        self.hook.ry=30
         self.dydown=5
         self.dyup=2
         # bullets
         # cannonballs
         self.cannonballs=[]# empty list
         self.timerreload=tool.obj_timer(30)#reload time
+        # lightballs
+        self.lightballs=[]# empty list
+        self.timerlight=tool.obj_timer(50)#reload time lightning
+        if self.doelectricfish:
+                self.timerlight.start()
         # fish status
         self.fishfree=True# fish not caugth (yet)
         # fish animation
@@ -1188,9 +1194,15 @@ class obj_world_fishing_withgun(obj_world):
         self.creator.addpart(self.soundhit)
         self.soundshoot=draw.obj_sound('fishing_shoot')
         self.creator.addpart(self.soundshoot)
+        #
+        if self.doelectricfish:
+            self.soundlightshoot=draw.obj_sound('fishing_lightshoot')
+            self.creator.addpart(self.soundlightshoot)
+            self.soundlighthit=draw.obj_sound('fishing_lighthit')
+            self.creator.addpart(self.soundlighthit)
     def triggerlowerhook(self,controls):
         return controls.gd or self.textboxclick.isholdclicked(controls)
-    def makecannonball(self,x,y):# shoot
+    def makecannonball(self,x,y):# shoot bullet
         self.soundreel.stop()
         self.soundshoot.play()
         cannonball=obj_grandactor(self,(x,y))
@@ -1203,15 +1215,30 @@ class obj_world_fishing_withgun(obj_world):
     def killcannonball(self,cannonball):
         self.cannonballs.remove(cannonball)
         cannonball.kill()
+    def makelightball(self,x,y):# shoot lightning
+        lightball=obj_grandactor(self,(x,y))
+        lightball.addpart('img', draw.obj_image('lightningbolt',(x,y),scale=0.25,fliph=False,rotate=-90) )
+        lightball.rx=30# hitbox
+        lightball.ry=30
+        lightball.r=1
+        lightball.speed=-6#-12
+        self.lightballs.append(lightball)
+    def killlightball(self,lightball):
+        self.lightballs.remove(lightball)
+        lightball.kill()
     def update(self,controls):
         super().update(controls)
         self.textboxclick.trackhover(controls)
 
-        # motion (even during ending)
+        # motion ob bullets/lightning (even during ending)
         if self.cannonballs:
             for i in self.cannonballs:
                 i.movex(i.speed)
                 if i.x>1280+50: self.killcannonball(i)# disappears on bottom edge of screen        #
+        if self.lightballs:
+            for i in self.lightballs:
+                i.movex(i.speed)
+                if i.x<-50: self.killlightball(i)# disappears on bottom edge of screen        #
         # game
         if self.fishfree:
             # move gun
@@ -1237,7 +1264,7 @@ class obj_world_fishing_withgun(obj_world):
             # fish box
             self.fishbox.x=self.fish.dict['anim_fish'].devxy[0]# hitbox follows animation
             self.fishbox.y=self.fish.dict['anim_fish'].devxy[1]
-            # check collision
+            # check collisions bullet-fish
             if self.cannonballs:
                 for i in self.cannonballs:
                     if tool.checkrectcollide(i,self.fishbox):
@@ -1257,6 +1284,35 @@ class obj_world_fishing_withgun(obj_world):
                         self.soundhit.play()
                         self.text1.show=False
                         self.text2.show=True
+            #
+            # fish shoots electric lightning
+            if self.doelectricfish:
+                self.timerlight.update()
+                if self.timerlight.off:
+                    self.makelightball(self.fishbox.x-95,self.fishbox.y)
+                    self.timerlight.start()
+                    self.soundlightshoot.play()
+                #
+                # check collisions bullet-lighting
+                if self.cannonballs:
+                    for i in self.cannonballs:
+                        for j in self.lightballs:#
+                            if tool.checkrectcollide(i,j):
+                                self.killcannonball(i)
+                                self.killlightball(j)
+                                self.soundlighthit.play()
+                                break# ok to break loop (should have one collision/frame anyway)
+                #
+                # check collisions gun-lightning
+                if self.lightballs:
+                    for i in self.lightballs:
+                        if tool.checkrectcollide(i,self.hook):
+                            self.killlightball(i)
+                            self.soundlighthit.play()
+                            break
+
+
+
 
         else:
             # end of mini-game

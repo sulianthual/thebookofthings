@@ -405,7 +405,7 @@ class obj_scene_ch8pond(page.obj_chapterpage):
         textchoice=draw.obj_textchoice('numchoice',default='1')
         textchoice.addchoice('1. Hook','1',(640-300,y1))
         textchoice.addchoice('2. Gun','2',(640-100,y1))
-        textchoice.addchoice('3. Scissors','3',(640+100,y1))
+        textchoice.addchoice('3. Electric Fish','3',(640+100,y1))
         textchoice.addchoice('4. Nevermind','4',(640+300,y1))
         self.addpart( textchoice )
         #
@@ -459,6 +459,7 @@ class obj_scene_ch8pondfish_withgun(page.obj_chapterpage):
         # self.addpart( draw.obj_music('piano') )
         self.addpart( draw.obj_music('hero') )
 
+# Replaced with electric fish scene
 class obj_scene_ch8pondfish_withscissors(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='pond'))
@@ -470,7 +471,8 @@ class obj_scene_ch8pondfish_withscissors(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[' ']
-        self.world=world.obj_world_fishing_withscissors(self)
+        # self.world=world.obj_world_fishing_withscissors(self)
+        self.world=world.obj_world_fishing_withgun(self,electricfish=True)
         self.addpart(self.world)
         #
         # self.addpart( draw.obj_music('piano') )
@@ -518,7 +520,7 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
         textchoice=draw.obj_textchoice('numchoice',default='1')
         textchoice.addchoice('1. Hook','1',(640-300,y1))
         textchoice.addchoice('2. Gun','2',(640-100,y1))
-        textchoice.addchoice('3. Scissors','3',(640+100,y1))
+        textchoice.addchoice('3. Electric Fish','3',(640+100,y1))
         textchoice.addchoice('4. Nevermind','4',(640+300,y1))
         self.addpart( textchoice )
         #

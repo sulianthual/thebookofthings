@@ -174,12 +174,13 @@ class obj_scene_ch6p5(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
+                    '        ',\
                     '"',('{hero_he}',share.colors.hero),\
                      ' went to the pond and caught a fish ',\
-                      '(with newly aquired scissors).',\
+                      '(it was an electric fish).',\
                        '"\n ',\
                    ]
-        self.world=world.obj_world_fishing_withscissors(self)
+        self.world=world.obj_world_fishing_withgun(self,electricfish=True)# fish shoots lightning bolts
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('ch6') )
