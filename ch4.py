@@ -513,6 +513,7 @@ class obj_scene_ch4p17(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1())
     def setup(self):
+        share.datamanager.setbookmark('ch4_lyinggame')
         self.text=[\
                 '"So you want to know ',\
                 ('my part of the tower\'s password',share.colors.password),'. ',\

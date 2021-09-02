@@ -289,7 +289,7 @@ class obj_gotobookmark():
             # self.dict['ch4_checkmail']='read the mail'
             self.dict['ch4_drawcave']='draw the cave and tree'
             self.dict['ch4_writebunny']='draw and name the bunny'
-            self.dict['ch4_startlying']='play the lying game'
+            self.dict['ch4_lyinggame']='play the lying game'
             # self.dict['ch4_winlying1']='lying game round 2'
             # self.dict['ch4_winlying2']='lying game round 3'
             # self.dict['ch4_winlying3']='back at home'
@@ -307,8 +307,8 @@ class obj_gotobookmark():
                 bookmarkscene=ch4.obj_scene_ch4p9()
             elif bookmarkname == 'ch4_writebunny' :
                 bookmarkscene=ch4.obj_scene_ch4p11()
-            elif bookmarkname == 'ch4_startlying' :
-                bookmarkscene=ch4.obj_scene_lyingstart()
+            elif bookmarkname == 'ch4_lyinggame' :
+                bookmarkscene=ch4.obj_scene_ch4p17()
             elif bookmarkname == 'ch4_winlying1' :
                 bookmarkscene=ch4.obj_scene_lyingpart1win()
             elif bookmarkname == 'ch4_winlying2' :
