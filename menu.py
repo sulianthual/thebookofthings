@@ -53,6 +53,7 @@ class obj_quickscene():
             # quickscene=ch2.obj_scene_ch2p12()
             # quickscene=ch2.obj_scene_ch2play3a()
             # quickscene=ch3.obj_scene_ch3p19death()
+            quickscene=ch3.obj_scene_ch3p26()
             # quickscene=ch3.obj_scene_ch3p32()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p5()
@@ -80,7 +81,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
             # quickscene=ch7.obj_scene_ch7ending()
-            quickscene=ch8.obj_scene_ch8pond()
+            # quickscene=ch8.obj_scene_ch8pond()
             # quickscene=ch8.obj_scene_ch8islandreplay()
             # quickscene=ch8.obj_scene_ch8southridestandby()
             # quickscene=ch8.obj_scene_ch8roam()
@@ -796,7 +797,43 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('cake',(640,525),scale=0.66,rotate=0,fliph=False,flipv=False) )
         else:
             pass# dont draw anything
-
+    #
+    # add saxophone to play with arrows (>chapter 2)
+    def setup_saxophone(self):
+        self.timernote=tool.obj_timer(5)# note duration
+        self.playednote=False
+        self.soundnoted=draw.obj_sound('noted')
+        self.addpart(self.soundnoted)
+        self.soundnotel=draw.obj_sound('notel')
+        self.addpart(self.soundnotel)
+        self.soundnoter=draw.obj_sound('noter')
+        self.addpart(self.soundnoter)
+        self.soundnoteu=draw.obj_sound('noteu')
+        self.addpart(self.soundnoteu)
+    def update_saxophone(self,controls):
+        self.timernote.update()
+        if self.timernote.off:
+            if controls.gu and controls.guc:
+                self.playednote='U'
+            elif controls.gl and controls.glc:
+                self.playednote='L'
+            elif controls.gd and controls.gdc:
+                self.playednote='D'
+            elif controls.gr and controls.grc:
+                self.playednote='R'
+            else:
+                self.playednote=False
+        if self.playednote:
+            self.timernote.start()
+            if self.playednote=='U':
+                self.soundnoteu.play()
+            elif self.playednote=='L':
+                self.soundnotel.play()
+            elif self.playednote=='D':
+                self.soundnoted.play()
+            elif self.playednote=='R':
+                self.soundnoter.play()
+            self.playednote=False
 
     def setup(self):
         #
@@ -811,10 +848,10 @@ class obj_scene_realtitlescreen(page.obj_page):
         self.textboxtitle=draw.obj_textbox('The Book of Things',(640,80),fontsize='big')
         self.addpart(self.textboxtitle)
         #
-        self.textboxswapdeco=draw.obj_textbox('*',(20,30),fontsize='medium',hover=self.hasbook)
-        self.addpart(self.textboxswapdeco)
         self.doswapdeco=self.hasbook and self.maxchapter>3
-        self.textboxswapdeco.show=self.doswapdeco
+        # self.textboxswapdeco=draw.obj_textbox('*',(20,30),fontsize='medium',hover=self.hasbook)
+        # self.addpart(self.textboxswapdeco)
+        # self.textboxswapdeco.show=self.doswapdeco
         # menu
         xref=640
         yref=200#+100
@@ -822,7 +859,7 @@ class obj_scene_realtitlescreen(page.obj_page):
         xleftref=False
         fontref='small'
         if not self.hasbook:
-            self.sprite_continue=draw.obj_textbox('start new book',(xref,yref),fontsize=fontref,xleft=xleftref,hover=True)
+            self.sprite_continue=draw.obj_textbox('read',(xref,yref),fontsize=fontref,xleft=xleftref,hover=True)
             self.sprite_settings=draw.obj_textbox('settings',(xref,yref+dyref),fontsize=fontref,xleft=xleftref,hover=True)
             self.sprite_exit=draw.obj_textbox('exit',(xref,yref+2*dyref),fontsize=fontref,xleft=xleftref,hover=True)
             self.addpart(self.sprite_continue)
@@ -845,6 +882,12 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_music('piano') )
         else:
             self.addpart( draw.obj_music('tension') )
+        #
+        # play the saxophone with arrows (>chapt 2)
+        if self.maxchapter>2:
+            self.setup_saxophone()
+
+        #
         # devtools
         if share.devaccess:
             tempo='developper mode is on (edit settings.txt to change) '
@@ -879,11 +922,14 @@ class obj_scene_realtitlescreen(page.obj_page):
                 share.scenemanager.switchscene(obj_scene_settings())
             elif self.sprite_exit.isclicked(controls):
                 share.quitgame()
-            elif self.doswapdeco and self.textboxswapdeco.isclicked(controls):# reload
+            elif self.doswapdeco and self.textboxtitle.isclicked(controls):# reload
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(share.titlescreen,initstart=True)
 
-            #
+        # play the saxophone with arrows (>chapt 2)
+        if self.maxchapter>2:
+            self.update_saxophone(controls)
+
 
         #
         #############################################3
