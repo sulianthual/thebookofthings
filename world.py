@@ -4777,9 +4777,12 @@ class obj_world_ridecow(obj_world):
             shot.hurts=True
             shot.rx,shot.ry=25,15# hitbox
         elif dice=='bush':
-            shot.addpart('img', draw.obj_image('bush',(x,y),scale=0.25,fliph=tool.randbool()) )
+            # dont show bushes, they confuse the player as obstacles
+            # shot.addpart('img', draw.obj_image('bush',(x,y),scale=0.25,fliph=tool.randbool()) )
             shot.hurts=False# harmless
-            shot.rx,shot.ry=1,1# hitbox (irrelevant if harmless)
+            shot.rx,shot.ry=15,15# hitbox (irrelevant if harmless)
+
+
         shot.speed=s# speed
         self.shots.append(shot)
     def killshot(self,shot):
