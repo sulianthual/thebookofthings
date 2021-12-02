@@ -1810,7 +1810,7 @@ class obj_world_travel(obj_world):
         self.staticactor11.addpart( 'textref', draw.obj_textbox('Home Sweet Home',(640,360+120),color=share.colors.location) )
         self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
         if 'pond' not in self.removelist:
-            self.staticactor11.addpart( 'textref2', draw.obj_textbox('Pond',(640-320,360-180+120),color=share.colors.location) )
+            self.staticactor11.addpart( 'textref2', draw.obj_textbox('Lake',(640-320,360-180+120),color=share.colors.location) )
             self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(640-320,360-180),scale=0.5) )
         self.staticactor11.addpart( 'ref3', draw.obj_image('mailbox',(834,182),scale=0.25) )
         #

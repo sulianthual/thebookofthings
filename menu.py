@@ -216,7 +216,7 @@ class obj_gotobookmark():
             self.dict['ch2_drawmail']='draw the mailbox and mail letter'
             self.dict['ch2_drawmusic']='draw the saxophone and music notes'
             self.dict['ch2_drawhouse']='draw the house and flower'
-            self.dict['ch2_drawbush']='draw the pond and bush'
+            self.dict['ch2_drawbush']='draw the lake and bush'
             self.dict['ch2_startplay']='replay the story'
             # self.dict['ch2_endunlock']='Chapter End'
             if bookmarkname == 'ch2_start':
@@ -251,7 +251,7 @@ class obj_gotobookmark():
             self.dict['ch3_drawgun']='draw the gun and bullet'
             self.dict['ch3_startdodge']='fight the villain'
             self.dict['ch3_windodge']='enter the password'
-            self.dict['ch3_gohome']='back at home'
+            self.dict['ch3_gohome']='go back home'
             self.dict['ch3_startbug']='draw and name the bug'
             # self.dict['ch3_endbug']='go to sleep'
             # self.dict['ch3_endunlock']='Chapter End'
@@ -291,11 +291,11 @@ class obj_gotobookmark():
             # self.dict['ch4_checkmail']='read the mail'
             self.dict['ch4_drawcave']='draw the cave and tree'
             self.dict['ch4_writebunny']='draw and name the bunny'
-            self.dict['ch4_lyinggame']='play the lying game'
-            # self.dict['ch4_winlying1']='lying game round 2'
+            self.dict['ch4_lyinggame']='play the lying game (round 1)'
+            self.dict['ch4_winlying1']='play the lying game (round 2)'
             # self.dict['ch4_winlying2']='lying game round 3'
             # self.dict['ch4_winlying3']='back at home'
-            self.dict['ch4_gohome']='back at home'
+            self.dict['ch4_gohome']='go back home'
             # self.dict['ch4_endunlock']='Chapter End'
             if bookmarkname == 'ch4_start':
                 bookmarkscene=ch4.obj_scene_chapter4()

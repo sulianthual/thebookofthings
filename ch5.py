@@ -169,7 +169,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
         self.text=[\
                     '        ',\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish".\n ',
+                     ' went to the lake and shot a fish".\n ',
                    ]
         self.world=world.obj_world_fishing_withgun(self)
         self.addpart(self.world)

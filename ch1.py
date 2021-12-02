@@ -421,6 +421,7 @@ class obj_scene_ch1play1(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play())
     def nextpage(self):
+        # share.scenemanager.switchscene(obj_scene_ch1play3())
         share.scenemanager.switchscene(obj_scene_ch1play2())
     def triggernextpage(self,controls):
         return self.world.done
@@ -472,6 +473,7 @@ class obj_scene_ch1play2(page.obj_chapterpage):
 
 class obj_scene_ch1play3(page.obj_chapterpage):
     def prevpage(self):
+        # share.scenemanager.switchscene(obj_scene_ch1play1())
         share.scenemanager.switchscene(obj_scene_ch1play2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch1play4())
@@ -484,6 +486,8 @@ class obj_scene_ch1play3(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',\
+                    # ('{heroname}',share.colors.hero),' caught a ',
+                    # ('fish',share.colors.item2),' and ate it for dinner." ',\
                     ('{heroname}',share.colors.hero),' ate the ',
                     ('fish',share.colors.item2),' for dinner." ',\
                    ]

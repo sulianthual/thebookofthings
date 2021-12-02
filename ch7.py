@@ -143,7 +143,7 @@ class obj_scene_ch7p4(page.obj_chapterpage):
         self.text=[\
                     '        ',\
                     '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught an electric fish ',\
+                     ' went to the lake and caught an electric fish.',\
                        '"\n ',\
                    ]
         self.world=world.obj_world_fishing_withgun(self,electricfish=True)# fish shoots lightning bolts

@@ -476,11 +476,11 @@ class obj_scene_ch2p13(page.obj_chapterpage):
         share.datamanager.setbookmark('ch2_drawbush')
         self.text=[\
                    'So cute! Lets finish by adding a ',\
-                   ('pond',share.colors.item),' with some ',\
+                   ('lake',share.colors.item),' with some ',\
                    ('bushes',share.colors.item),' where our hero goes fishing. ',\
                    ]
         # self.addpart( draw.obj_drawing('bush',(340,450),legend='Bush',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('ponddraw',(340,450-50),legend='pond',shadow=(250,250),brush=share.brushes.pen10) )
+        self.addpart( draw.obj_drawing('ponddraw',(340,450-50),legend='lake',shadow=(250,250),brush=share.brushes.pen10) )
         self.addpart( draw.obj_drawing('bushdraw',(940,450-50),legend='bush',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('partner') )
@@ -533,7 +533,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
         self.text=[\
                 '"Once upon a time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' ',\
-                'that lived in a house with a pond and a garden. ',\
+                'that lived in a house with a lake and a garden. ',\
                 'It was morning and the sun was rising." ',\
                    ]
         self.world=world.obj_world_sunrise(self)
@@ -553,6 +553,7 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
+                '"',\
                 ('{heroname}',share.colors.hero),' ',\
                 'woke up from ',('bed',share.colors.item2),' ',\
                 'with ',('{hero_his}',share.colors.hero2),\
@@ -563,9 +564,6 @@ class obj_scene_ch2play1a(page.obj_chapterpage):
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
-
-
-
 
 
 class obj_scene_ch2play2(page.obj_chapterpage):
@@ -579,13 +577,15 @@ class obj_scene_ch2play2(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
-                    '"',('{hero_he}',share.colors.hero),\
-                     ' went to the pond and caught a fish."\n ',\
+                    '"',\
+                    ('{heroname}',share.colors.hero),' caught a ',\
+                    ('fish',share.colors.item2),' and they ate it for breakfast."',\
                    ]
-        self.world=world.obj_world_fishing(self)
+        self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
+
 
 
 
@@ -594,32 +594,6 @@ class obj_scene_ch2play3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2play2())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3a())
-    def setup(self):
-        self.text=[\
-                   '"Then, ',('{heroname}',share.colors.hero),' received a letter from ',\
-                   ('{partnername}',share.colors.partner),' that said ',\
-                   ('{partner_he}',share.colors.partner2),' loved ',\
-                   ('{hero_him}',share.colors.hero2),' very very much." ',\
-                   ]
-        self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
-        animation1.addimage('empty',path='data/premade')
-        self.addpart(animation1)
-        self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),record=False,sync=animation1) )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'hero1','hero2','hero3','hero4','hero5','hero6','mailjump') )
-        animation1.addsound( "hero2", [82] )
-        animation1.addsound( "mailjump", [7] )
-        #
-        self.addpart( draw.obj_music('piano') )
-
-
-class obj_scene_ch2play3a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play3())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play3b())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -627,9 +601,7 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '"',\
-                    ('{heroname}',share.colors.hero),' and ',\
-                    ('{partnername}',share.colors.partner),\
-                    ' spent the day talking and walking, then they went back home."',\
+                    'They spent the day talking and walking, then went back home."',\
                    ]
         self.world=world.obj_world_travel(self,start=(-610,-330),goal='home',chapter=2,partner=True)
         self.addpart(self.world)
@@ -639,10 +611,9 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('piano') )
 
-
-class obj_scene_ch2play3b(page.obj_chapterpage):
+class obj_scene_ch2play3a(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play3a())
+        share.scenemanager.switchscene(obj_scene_ch2play3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play4())
     def triggernextpage(self,controls):
@@ -651,16 +622,12 @@ class obj_scene_ch2play3b(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
-                    '"In the evening, ',\
-                    ('{heroname}',share.colors.hero),' and ',\
-                    ('{partnername}',share.colors.partner),' ate the ',\
-                    ('fish',share.colors.item2),' for dinner." ',\
+                '"It was already night."',\
                    ]
-        self.world=world.obj_world_eatfish(self,partner=True)
+        self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
-
 
 class obj_scene_ch2play4(page.obj_chapterpage):
     def prevpage(self):
@@ -673,6 +640,7 @@ class obj_scene_ch2play4(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
+                    '"In the evening, ',\
                    '"',('{heroname}',share.colors.hero),' charmed ',\
                    ('{partnername}',share.colors.partner),' with a serenade..." ',\
                    ]
@@ -687,7 +655,7 @@ class obj_scene_ch2play5(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play4())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play5a())
+        share.scenemanager.switchscene(obj_scene_ch2play6())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -702,28 +670,28 @@ class obj_scene_ch2play5(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch2play5a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play5())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play6())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                '"It was already night."',\
-                   ]
-        self.world=world.obj_world_sunset(self)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
+# class obj_scene_ch2play5a(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2play5())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2play6())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                 '"It was already night."',\
+#                    ]
+#         self.world=world.obj_world_sunset(self)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch2play6(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play5a())
+        share.scenemanager.switchscene(obj_scene_ch2play5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def triggernextpage(self,controls):
@@ -734,7 +702,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
         self.text=[\
                    '"',\
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
-                   ' went to back to bed." ',\
+                   ' went to back to bed. They were very happy." ',\
                    ]
         self.world=world.obj_world_gotobed(self,partner=True)
         self.addpart(self.world)
