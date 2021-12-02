@@ -112,7 +112,7 @@ class obj_scene_ch7p3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p2())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p4())
+        share.scenemanager.switchscene(obj_scene_ch7p5())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -129,42 +129,42 @@ class obj_scene_ch7p3(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('ch7') )
 
+# remove fishing (repetitive)
+# class obj_scene_ch7p4(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch7p3())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch7p5())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                     '        ',\
+#                     '"',('{hero_he}',share.colors.hero),\
+#                      ' went to the lake and caught an electric fish.',\
+#                        '"\n ',\
+#                    ]
+#         self.world=world.obj_world_fishing_withgun(self,electricfish=True)# fish shoots lightning bolts
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('ch7') )
 
-class obj_scene_ch7p4(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p3())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p5())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                    '        ',\
-                    '"',('{hero_he}',share.colors.hero),\
-                     ' went to the lake and caught an electric fish.',\
-                       '"\n ',\
-                   ]
-        self.world=world.obj_world_fishing_withgun(self,electricfish=True)# fish shoots lightning bolts
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('ch7') )
 
-        # animation1=draw.obj_animation('fishmoveskeleton','skeletonheaddraw',(640,360),record=True)
-        # self.addpart( animation1 )
 
 
 class obj_scene_ch7p5(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p4())
+        share.scenemanager.switchscene(obj_scene_ch7p3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p6())
     def setup(self):
         share.datamanager.setbookmark('ch7_checkmail')
         self.text=[\
                   '"',\
-                    ('{heroname}',share.colors.hero),' came back home and checked ',\
+                    # ('{heroname}',share.colors.hero),' came back home and checked ',\
+                    ('{heroname}',share.colors.hero),' checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
                     'three ',' letters". ',\

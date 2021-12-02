@@ -341,7 +341,7 @@ class obj_gotobookmark():
             # self.dict['ch5_eldercheatsecret']='how to cheat'
             self.dict['ch5_rps3']='play rock paper scissors'
             # self.dict['ch5_winrps3']='win rock paper scissors'
-            self.dict['ch5_gohome']='back at home'
+            self.dict['ch5_gohome']='go back home'
             # self.dict['ch5_endunlock']='Chapter End'
             if bookmarkname == 'ch5_start':
                 bookmarkscene=ch5.obj_scene_chapter5()
@@ -399,7 +399,7 @@ class obj_gotobookmark():
             self.dict['ch6_startride']='play the chase game'
             # self.dict['ch6_winride']='made it to the ship'
             # self.dict['ch6_byesailor']='bye bye sailor'
-            self.dict['ch6_gohome']='back at home'
+            self.dict['ch6_gohome']='go back home'
             # self.dict['ch6_endunlock']='Chapter End'
             if bookmarkname == 'ch6_start':
                 bookmarkscene=ch6.obj_scene_chapter6()
@@ -456,7 +456,7 @@ class obj_gotobookmark():
             self.dict['ch7_startdodge']='fight the villain (guns)'
             self.dict['ch7_startstomp']='fight the villain (kicks)'
             # self.dict['ch7_winstomp']='victory'
-            self.dict['ch7_gohome']='back at home'
+            self.dict['ch7_gohome']='go back home'
             # self.dict['ch7_villainagain']='the villain is back'
             self.dict['ch7_startmech']='super-mech-fight'
             # self.dict['ch7_winmech']='victory again'
