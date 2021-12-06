@@ -62,14 +62,14 @@ class obj_quickscene():
             # quickscene=ch4.obj_scene_lyingfailpart2()
             # quickscene=ch5.obj_scene_ch5p5()
             # quickscene=ch5.obj_scene_ch5p28a()
-            # quickscene=ch5.obj_scene_ch5p37()
+            quickscene=ch5.obj_scene_ch5p34()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
             # quickscene=ch6.obj_scene_ch6p5()
             # quickscene=ch6.obj_scene_ch6p13()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p38()
-            quickscene=ch6.obj_scene_ch6p39()
+            # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch6.obj_scene_ch6p39death()
             # quickscene=ch6.obj_scene_ch6p44()
             # quickscene=ch7.obj_scene_ch7p4()
@@ -334,11 +334,8 @@ class obj_gotobookmark():
             # self.dict['ch5_climb']='climb the peak'
             self.dict['ch5_writeelder']='draw and name the elder'
             self.dict['ch5_drawrock']='draw rock paper scissors'
-            # self.dict['ch5_rps1']='learn rock paper scissors'
-            # self.dict['ch5_lostrps1']='loose'
-            # self.dict['ch5_lostrps2']='loose again'
-            # self.dict['ch5_strongwilled']='what a strong willed character'
-            # self.dict['ch5_eldercheatsecret']='how to cheat'
+            self.dict['ch5_learnrps']='learn rock paper scissors'
+
             self.dict['ch5_rps3']='play rock paper scissors'
             # self.dict['ch5_winrps3']='win rock paper scissors'
             self.dict['ch5_gohome']='go back home'
@@ -357,16 +354,8 @@ class obj_gotobookmark():
                 bookmarkscene=ch5.obj_scene_ch5p14()
             elif bookmarkname == 'ch5_drawrock' :
                 bookmarkscene=ch5.obj_scene_ch5p21()
-            elif bookmarkname == 'ch5_rps1' :
+            elif bookmarkname == 'ch5_learnrps' :
                 bookmarkscene=ch5.obj_scene_ch5p22()
-            elif bookmarkname == 'ch5_lostrps1' :
-                bookmarkscene=ch5.obj_scene_ch5p25()
-            elif bookmarkname == 'ch5_lostrps2' :
-                bookmarkscene=ch5.obj_scene_ch5p27()
-            elif bookmarkname == 'ch5_strongwilled' :
-                bookmarkscene=ch5.obj_scene_ch5p28()
-            elif bookmarkname == 'ch5_eldercheatsecret' :
-                bookmarkscene=ch5.obj_scene_ch5p32()
             elif bookmarkname == 'ch5_rps3' :
                 bookmarkscene=ch5.obj_scene_ch5p35a()
             elif bookmarkname == 'ch5_winrps3' :
