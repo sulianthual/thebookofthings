@@ -962,7 +962,7 @@ class obj_scene_ch4p20(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p19())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p21())
+        share.scenemanager.switchscene(obj_scene_ch4p22())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -978,32 +978,32 @@ class obj_scene_ch4p20(page.obj_chapterpage):
         self.addpart( draw.obj_music(None) )
 
 
-
-class obj_scene_ch4p21(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p20())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p22())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                   '"Back at home, ',\
-                   ('{heroname}',share.colors.hero), ' remembered how ',\
-                   ('{hero_he}',share.colors.hero2),' used to charm ',\
-                   ('{partnername}',share.colors.partner),' with a serenade. ',\
-                   ]
-        self.world=world.obj_world_serenade(self,partner=False,heroangry=True)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
+### removed (avoid repetitions)
+# class obj_scene_ch4p21(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p20())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p22())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                    '"Back at home, ',\
+#                    ('{heroname}',share.colors.hero), ' remembered how ',\
+#                    ('{hero_he}',share.colors.hero2),' used to charm ',\
+#                    ('{partnername}',share.colors.partner),' with a serenade. ',\
+#                    ]
+#         self.world=world.obj_world_serenade(self,partner=False,heroangry=True)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch4p22(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p21())
+        share.scenemanager.switchscene(obj_scene_ch4p20())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p23())
     def triggernextpage(self,controls):
@@ -1012,10 +1012,13 @@ class obj_scene_ch4p22(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
-                   '"This made ',('{hero_him}',share.colors.hero2),\
-                   ' so sad that ',\
-                   ('{hero_he}',share.colors.hero),\
-                   ' went straight to bed." ',\
+                   # '"This made ',('{hero_him}',share.colors.hero2),\
+                   # ' so sad that ',\
+                   # ('{hero_he}',share.colors.hero),\
+                   # ' went straight to bed." ',\
+                   '"Back at home, ',\
+                   ('{heroname}',share.colors.hero),\
+                   ' went straight to bed. He was still sad and lonely." ',\
                    ]
         self.world=world.obj_world_gotobed(self,bug=True,addmoon=False,addsun=True)
         self.addpart(self.world)
@@ -1034,7 +1037,7 @@ class obj_scene_ch4p23(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
-                '"The night fell, but tomorrow would be another day."',\
+                '"The night fell, and tomorrow would be another day."',\
                    ]
         self.world=world.obj_world_sunset(self)
         self.addpart(self.world)
