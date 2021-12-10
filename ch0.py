@@ -339,14 +339,19 @@ class obj_scene_ch0p13b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch0p14())
     def setup(self):
         share.datamanager.setbookmark('ch0_drawingtips')
-        self.text=[\
-                    'There are ',\
-                    ('40',share.colors.red),\
-                    ' more drawings to do: ',\
-                    'you dont need to draw them too well, and you dont need to fill up all the drawing area. ',\
-                    'But remember, everything is up to you! This story will be whatever you make of it.  ',\
-                    ]
+        # self.text=[\
+        #             'There are still many ',\
+        #             ('drawings',share.colors.red),\
+        #             ' to do: ',\
+        #             'you dont need to draw them perfectly, and you dont need to fill up all the drawing area. ',\
+        #             'But remember, everything is up to you! This story will be whatever you make of it.  ',\
+        #             ]
         #
+        self.text=[\
+                    'You dont need to ',('draw',share.colors.red),\
+                    ' perfectly, and you dont need to fill up all the drawing area. ',\
+                    'But remember, everything is up to you! This story will be whatever you make of it.',\
+                    ]
         ydr=420
         xdr1=640-200
         xdr2=640+200
