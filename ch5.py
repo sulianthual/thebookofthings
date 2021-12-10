@@ -1068,7 +1068,7 @@ class obj_scene_ch5p38(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p37a())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p41())
+        share.scenemanager.switchscene(obj_scene_ch5p39())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -1083,13 +1083,11 @@ class obj_scene_ch5p38(page.obj_chapterpage):
 
 
 
-
-
-class obj_scene_ch5p41(page.obj_chapterpage):
+class obj_scene_ch5p39(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p38())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p42())
+        share.scenemanager.switchscene(obj_scene_ch5p41())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -1098,7 +1096,31 @@ class obj_scene_ch5p41(page.obj_chapterpage):
         self.text=[\
                    '"Back at home, ',\
                    ('{heroname}',share.colors.hero),\
-                   ' went straight to bed. He was still sad and lonely." ',\
+                   ' was feeling a little better. ',\
+                    ('{hero_he}',share.colors.hero2),' ate a ',\
+                    ('fish',share.colors.item2),' to gather some strength."',\
+                   ]
+        self.world=world.obj_world_eatfish(self)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
+class obj_scene_ch5p41(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p39())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p42())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def setup(self):
+        self.text=[\
+                   '"Then, ',\
+                   ('{heroname}',share.colors.hero),\
+                   ' went to bed. ',\
+                   ('{hero_he}',share.colors.hero2),' was still sad and lonely." ',\
                    ]
         self.world=world.obj_world_gotobed(self,bug=True,addmoon=False,addsun=True,alarmclock=False)
         self.addpart(self.world)

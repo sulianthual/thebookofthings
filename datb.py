@@ -226,6 +226,7 @@ class obj_sounds:
         self.dict['kiss_kiss']=( 'world/kiss/kiss_cartoon-kiss-cjohnstone.wav' , 1 )
         self.dict['kiss_cheer']=( 'world/kiss/haha-girlp2.wav' , 1 )
         self.dict['kiss_cheer2']=( 'world/kiss/haha01.wav' , 1 )
+        self.dict['kiss_ohgah']=( 'world/kiss/grunt_female__oh-gah.wav' , 1 )
         # travel
         self.dict['travel_forest']=( 'world/travel/forest-birds-loop-02.wav' , 1 )
         self.dict['travel_ocean']=( 'world/travel/ocean-waves.wav' , 1 )

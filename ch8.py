@@ -403,9 +403,9 @@ class obj_scene_ch8pond(page.obj_chapterpage):
                    ]
         y1=200
         textchoice=draw.obj_textchoice('numchoice',default='1')
-        textchoice.addchoice('1. Hook','1',(640-400,y1))
-        textchoice.addchoice('2. Gun','2',(640-150,y1))
-        textchoice.addchoice('3. Electric Fish','3',(640+100,y1))
+        textchoice.addchoice('1. Hook','1',(640-450,y1))
+        textchoice.addchoice('2. Gun','2',(640-200,y1))
+        textchoice.addchoice('3. Electric Fish','3',(640+70,y1))
         textchoice.addchoice('4. Nevermind','4',(640+400,y1))
         self.addpart( textchoice )
         #

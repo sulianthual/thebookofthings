@@ -1244,7 +1244,7 @@ class obj_scene_ch7p31(page.obj_chapterpage):
         self.text=[\
                     '"',('{heroname}',share.colors.hero),' and ',\
                     ('{partnername}',share.colors.partner),' were so happy to be home. ',\
-                    'They ate the ',\
+                    'They ate a ',\
                     # ('{heroname}',share.colors.hero),' and ',\
                     # ('{partnername}',share.colors.partner),' ate the ',\
                     ('fish',share.colors.item2),' for dinner". ',\

@@ -907,9 +907,8 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         self.text=[\
                     '"The first part of the tower\'s password is: ',\
                     ('"fight"',share.colors.password),'. ',\
-                    'That\'s my motto: "fight in any situation". I taught it to ',\
-                    ('{villainname}',share.colors.villain),' when ',\
-                    ('{villain_he}',share.colors.villain2),' was my student." ',\
+                    'That\'s my motto: fight in any situation."',\
+
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -1018,7 +1017,8 @@ class obj_scene_ch4p22(page.obj_chapterpage):
                    # ' went straight to bed." ',\
                    '"Back at home, ',\
                    ('{heroname}',share.colors.hero),\
-                   ' went straight to bed. He was still sad and lonely." ',\
+                   ' went straight to bed. ',\
+                   ('{hero_he}',share.colors.hero2),' was still sad and lonely." ',\
                    ]
         self.world=world.obj_world_gotobed(self,bug=True,addmoon=False,addsun=True)
         self.addpart(self.world)

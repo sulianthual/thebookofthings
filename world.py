@@ -5808,9 +5808,11 @@ class obj_world_kiss(obj_world):
     def setup(self,**kwargs):
         # default options
         self.noending=True# skip the completion part of minigame
+        self.withfish=False# partner is replaced by a fish
         # scene tuning
         if kwargs is not None:
             if 'noending' in kwargs: self.noending=kwargs["noending"]
+            if 'withfish' in kwargs: self.withfish=kwargs["withfish"]
         #
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
@@ -5832,17 +5834,27 @@ class obj_world_kiss(obj_world):
         # self.staticactor.addpart( 'img1',   )
         # start actor
         self.startactor.addpart( 'img1', draw.obj_image('herobase',(240,400),scale=0.7) )
-        self.startactor.addpart( 'img2', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7) )
+        if not self.withfish:
+            self.startactor.addpart( 'img2', draw.obj_image('partnerbase',(1040,400),fliph=True,scale=0.7) )
+        else:
+            self.startactor.addpart( 'img2', draw.obj_image('fish',(1040,400),fliph=False,scale=0.7) )
         # ungoing actor
-        self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','partnerbase',(640,360)) )# partner first (background)
+        if not self.withfish:
+            self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','partnerbase',(640,360)) )
+        else:
+            self.ungoingactor.addpart( 'anim2', draw.obj_animation('ch2_kiss2','fish',(640,360),imgfliph=True) )
         self.animation=draw.obj_animation('ch2_kiss1','herobase',(640,360))
         self.ungoingactor.addpart( 'anim1', self.animation )
         self.animation.addsound('kiss_kiss',100)
         # finish actor
-        self.finishactor.addpart( 'img1', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
+        if not self.withfish:
+            self.finishactor.addpart( 'img1', draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
+        else:
+            self.finishactor.addpart( 'img1', draw.obj_image('fish',(710,390),scale=0.7,fliph=False,rotate=15) )
         self.finishactor.addpart( 'img2', draw.obj_image('herobase',(580,400),scale=0.7,rotate=-15) )
-        self.finishactor.addpart( 'anim1', draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
-        self.finishactor.addpart( 'anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
+        if not self.withfish:
+            self.finishactor.addpart( 'anim1', draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
+            self.finishactor.addpart( 'anim2', draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
 
         # text
         self.textboxclick=draw.obj_textbox(\
@@ -5850,7 +5862,10 @@ class obj_world_kiss(obj_world):
         +']+['+share.datamanager.controlname('right')+'] to kiss',\
         (640,660),color=share.colors.instructions,hover=True)
         self.text_undone.addpart( 'text1', self.textboxclick )
-        self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
+        if not self.withfish:
+            self.text_done.addpart( 'text1', draw.obj_textbox('So Much Tongue!',(640,660)) )
+        else:
+            self.text_done.addpart( 'text1', draw.obj_textbox('smells kinda fishy!',(640,660)) )
         # timer for ungoing part
         self.timer=tool.obj_timer(180)# ungoing part
         self.timerend=tool.obj_timer(130)# goal to done
@@ -5858,10 +5873,15 @@ class obj_world_kiss(obj_world):
         #
         self.soundstart=draw.obj_sound('kiss_start')
         self.creator.addpart(self.soundstart)
-        self.soundend=draw.obj_sound('kiss_cheer')
-        self.creator.addpart(self.soundend)
-        self.soundend2=draw.obj_sound('kiss_cheer2')
-        self.creator.addpart(self.soundend2)
+        if not self.withfish:
+            self.soundend=draw.obj_sound('kiss_cheer')
+            self.creator.addpart(self.soundend)
+            self.soundend2=draw.obj_sound('kiss_cheer2')
+            self.creator.addpart(self.soundend2)
+        if self.withfish:
+            self.soundohgad=draw.obj_sound('kiss_ohgah')# if fish
+            self.creator.addpart(self.soundohgad)
+
 
     def triggerungoing(self,controls):
         return ( (controls.gl and controls.gr) and (controls.glc or controls.grc) ) or (True and self.textboxclick.isclicked(controls))
@@ -5903,8 +5923,11 @@ class obj_world_kiss(obj_world):
                         self.text_undone.show=False
                         self.text_done.show=True
                         self.timerend.start()
-                        self.soundend.play()
-                        self.soundend2.play()
+                        if not self.withfish:
+                            self.soundend.play()
+                            self.soundend2.play()
+                        else:
+                            self.soundohgad.play()
 
         else:
             # goal reached state

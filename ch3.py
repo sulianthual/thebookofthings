@@ -1082,7 +1082,7 @@ class obj_scene_ch3p27(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p26())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p28())
+        share.scenemanager.switchscene(obj_scene_ch3p29())
     def triggernextpage(self,controls):
         return self.world.done# quick skip
     def textboxset(self):
@@ -1090,47 +1090,25 @@ class obj_scene_ch3p27(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"Then, ',\
-                   ('{heroname}',share.colors.hero),' remembered how ',\
-                   ('{hero_he}',share.colors.hero2),' and ',\
-                   ('{partnername}',share.colors.partner),' used to kiss." ',\
+                   ('{hero_he}',share.colors.hero2),' remembered how ',\
+                   ('{hero_he}',share.colors.hero2),' used to kiss ',\
+                   ('{partnername}',share.colors.partner),'. ',\
+                   'But ',\
+                  ('{heroname}',share.colors.hero),' was only kissing the ',\
+                  ('fish',share.colors.item2),' that ',\
+                  ('{hero_he}',share.colors.hero2),' had caught earlier". ',\
                    ]
-        self.world=world.obj_world_kiss(self,noending=True)
+        # self.world=world.obj_world_kiss(self,noending=True)
+        self.world=world.obj_world_kiss(self,withfish=True,noending=False)
         self.addpart(self.world)
         #
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch3p28(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p27())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p29())
-    def setup(self):
-        self.text=[\
-                   '"But ',\
-                   ('{partnername}',share.colors.partner),' wasnt there, and ',\
-                   ('{heroname}',share.colors.hero),' was only kissing the ',\
-                   ('fish',share.colors.item2),' that ',\
-                   ('{hero_he}',share.colors.hero2),' had caught earlier". ',\
-                   ]
-
-        # self.addpart( draw.obj_image('partnerbase',(710,390),scale=0.7,rotate=15) )
-        self.addpart( draw.obj_image('fish',(785,467),scale=0.84,rotate=-68,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('herobaseangry',(580,400),scale=0.7,rotate=-15) )
-        # self.addpart( draw.obj_imageplacer(self,'fish'))
-        self.addpart( draw.obj_animation('ch2_lovem2','love',(340,360),scale=0.4) )
-        self.addpart( draw.obj_animation('ch2_lovem3','love',(940,360),scale=0.4) )
-        #
-        self.sound=draw.obj_sound('partner_scared')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('piano') )
-
 
 class obj_scene_ch3p29(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p28())
+        share.scenemanager.switchscene(obj_scene_ch3p27())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p30())
     def triggernextpage(self,controls):
@@ -1213,7 +1191,7 @@ class obj_scene_ch3p32(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
         animation1.addsound( "bug1", [26, 37, 208],skip=1 )
         #
-        self.addpart( draw.obj_textinput('bug',20,(640,260), legend='Most Terrifying Bug') )
+        self.addpart( draw.obj_textinput('bug',20,(640,260), legend='The Most Terrifying Bug') )
         #
         self.addpart( draw.obj_music('tension') )
 
@@ -1297,17 +1275,17 @@ class obj_scene_ch3p36(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p35())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p37())
+        share.scenemanager.switchscene(obj_scene_ch3p38())
     def setup(self):
         self.text=[\
-                 '"In fact I am here to help you, said the ',('{bug}',share.colors.bug),'. ',\
+                 '"I am here to help you, said the ',('{bug}',share.colors.bug),'. ',\
                  'I know how to unlock ',('{villainname}',share.colors.villain),\
                  '\'s ',('evil tower',share.colors.location2),'!" ',\
                    ]
-        self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
         #
         self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks1','bug',(340,360))
@@ -1317,41 +1295,36 @@ class obj_scene_ch3p36(page.obj_chapterpage):
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116],skip=1 )
         #
-        # self.addpart( draw.obj_imageplacer(self,'mountain','sun') )
-        sound1=draw.obj_sound('unlock')
-        self.addpart(sound1)
-        sound1.play()
         #
         self.addpart( draw.obj_music('bug') )
 
-
-class obj_scene_ch3p37(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p36())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p38())
-    def setup(self):
-        self.text=[\
-                   '"See, before this I used to crawl under ',('{villainname}',share.colors.villain),'\'s bed. ',\
-                  'And I even heard ',('{villain_him}',share.colors.villain2),' talk in ',\
-                  ('{villain_his}',share.colors.villain2),' sleep. ', \
-                   ]
-        self.addpart( draw.obj_image('bed',(1280-440,500), scale=0.75,fliph=True) )
-        self.addpart( draw.obj_image('villainbase',(1280-420,490), scale=0.7,rotate=80,fliph=True) )
-        self.addpart( draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
-        animation1=draw.obj_animation('ch3_bugtalks2','bug',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'wakeup_snore1','wakeup_snore2') )
-        animation1.addsound( "wakeup_snore1", [18, 216] )
-        animation1.addsound( "wakeup_snore2", [103, 289] )
-        #
-        self.addpart( draw.obj_music('bug') )
+### skipped to shorten the story
+# class obj_scene_ch3p37(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch3p36())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch3p38())
+#     def setup(self):
+#         self.text=[\
+#                    '"See, before this I used to crawl under ',('{villainname}',share.colors.villain),'\'s bed. ',\
+#                   'And I even heard ',('{villain_him}',share.colors.villain2),' talk in ',\
+#                   ('{villain_his}',share.colors.villain2),' sleep. ', \
+#                    ]
+#         self.addpart( draw.obj_image('bed',(1280-440,500), scale=0.75,fliph=True) )
+#         self.addpart( draw.obj_image('villainbase',(1280-420,490), scale=0.7,rotate=80,fliph=True) )
+#         self.addpart( draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
+#         animation1=draw.obj_animation('ch3_bugtalks2','bug',(640,360),record=False)
+#         self.addpart( animation1 )
+#         #
+#         animation1.addsound( "wakeup_snore1", [18, 216] )
+#         animation1.addsound( "wakeup_snore2", [103, 289] )
+#         #
+#         self.addpart( draw.obj_music('bug') )
 
 
 class obj_scene_ch3p38(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p37())
+        share.scenemanager.switchscene(obj_scene_ch3p36())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p39())
     def setup(self):
@@ -1360,25 +1333,23 @@ class obj_scene_ch3p38(page.obj_chapterpage):
                    ('{villainname}',share.colors.villain),\
                    ' has learned all ',('{villain_his}',share.colors.villain2),\
                    ' evil ways from three ',('grandmasters of deceit',share.colors.grandmaster),'. ',\
-                   'And they each know ',\
-                   ('one part',share.colors.password),' of the tower\'s password." ',\
-                   ]
+                    'Each of them knows one part of the tower\'s ',\
+                    ('password',share.colors.password),'." ',\
 
-        self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(74,361),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('moon',(988,238),scale=0.37,rotate=0,fliph=False,flipv=False) )
+                   ]
         #
-        self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('villainhead',(524,530),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='data/premade')
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='data/premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
-        # self.addpart( draw.obj_imageplacer(self,'tower','villainhead') )
         #
-        self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
-        animation1.addsound( "villain2", [111],skip=1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4') )
+        # animation1.addsound( "villain2", [111],skip=1 )
+        #
+        animation1.addsound( "bug1", [15, 100] )
+        animation1.addsound( "bug2", [116],skip=1 )
         #
         self.addpart( draw.obj_music('bug') )
 
@@ -1393,24 +1364,27 @@ class obj_scene_ch3p39(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"If we visit all three ',\
-                   ('grandmasters',share.colors.grandmaster),\
-                   ', we will be able to put the password together! ',\
-                   'The first ', ('grandmaster',share.colors.grandmaster2),\
-                   ' lives not too far from here. ',\
-                   'Tomorrow, I will show you where". ',\
+                   ('grandmasters of deceit',share.colors.grandmaster),\
+                   ', we will be able to ',\
+                   ('put the password together',share.colors.password),'! ',\
+                   'Tomorrow, I will show you where to go". ',\
                    ]
-
+        #
+        self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         animation2=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='data/premade')
         self.addpart( animation2 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(137,564),path='data/premade') )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
 
-        animation1=draw.obj_animation('ch3_bugtalks1','bug',(640,360))
+        animation1=draw.obj_animation('ch3_bugtalks1','bug',(340,360))
         self.addpart( animation1 )
         #
-        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
         animation1.addsound( "bug1", [15, 100] )
         animation1.addsound( "bug2", [116],skip=1 )
+        #
+        sound1=draw.obj_sound('unlock')
+        self.addpart(sound1)
+        sound1.play()
         #
         self.addpart( draw.obj_music('bug') )
 
