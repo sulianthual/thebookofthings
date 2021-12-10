@@ -440,6 +440,7 @@ class obj_brushes:
         self.smallpen=('data/pen.png',(4,4))
         self.tinypen=('data/pen.png',(2,2))
         self.shadowpen=('data/shadowpen.png',(64,64))
+        self.emptypen=('data/emptypen.png',(8,8))
 
 
 ####################################################################################################################

@@ -283,7 +283,7 @@ class obj_scene_ch0p13(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p11())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p14())
+        share.scenemanager.switchscene(obj_scene_ch0p13b())
     def setup(self):
         share.datamanager.setbookmark('ch0_checkcontrols')
         self.doazertymode=share.datamanager.doazerty# True/False
@@ -321,7 +321,7 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360),record=True,sync=animation1,path='data/premade')
+        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640,360),record=False,sync=animation1,path='data/premade')
         animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
@@ -332,9 +332,52 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-class obj_scene_ch0p14(page.obj_chapterpage):
+class obj_scene_ch0p13b(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p13())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p14())
+    def setup(self):
+        share.datamanager.setbookmark('ch0_drawingtips')
+        self.text=[\
+                    'There are ',\
+                    ('40',share.colors.red),\
+                    ' more drawings to do: ',\
+                    'you dont need to draw them too well, and you dont need to fill up all the drawing area. ',\
+                    'But remember, everything is up to you! This story will be whatever you make of it.  ',\
+                    ]
+        #
+        ydr=420
+        xdr1=640-200
+        xdr2=640+200
+        # self.addpart( draw.obj_image('stickbase',(640,390),scale=0.5,path='data/premade') )
+        self.addpart( draw.obj_image('drawtip_good',(xdr1,ydr),scale=0.5,path='data/premade') )
+        drawing1=draw.obj_drawing('drawtip1',(xdr1,ydr),legend='Good',shadow=(150,200))
+        drawing1.brush.makebrush(share.brushes.emptypen)# cant draw
+        self.addpart(drawing1)
+        #
+        self.addpart( draw.obj_image('drawtip_bad',(xdr2,ydr),scale=0.5,path='data/premade') )
+        drawing1=draw.obj_drawing('drawtip2',(xdr2,ydr),legend='Not So Good',shadow=(150,200))
+        drawing1.brush.makebrush(share.brushes.emptypen)# cant draw
+        self.addpart(drawing1)
+        #
+        animation1=draw.obj_animation('ch0_bookinstructions','book',(640-1040,360),record=False,imgfliph=True)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch0_bookinstructionsmark','exclamationmark',(640-1040,360),imgfliph=True,sync=animation1,path='data/premade')
+        animation2.addimage('empty',path='data/premade')
+        self.addpart( animation2 )
+        #
+        animation1.addsound( "book3", [107] )
+        animation1.addsound( "book2", [270] )
+        animation1.addsound( "book1", [200],skip=1 )
+        #
+        self.addpart( draw.obj_music('piano') )
+
+
+
+class obj_scene_ch0p14(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch0p13b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
