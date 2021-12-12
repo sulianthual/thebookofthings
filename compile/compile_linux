@@ -11,6 +11,14 @@ appnamepre='thebookofthings'
 
 ###############################
 
+# Notes: use a python virtual environment to execute
+# $pip install virtualenv
+# $virtualenv venvbot# create virtual environment (somewhere)
+# $source venvbot/bin/active# activate venv
+# $pip install pygame# (all this while venv is activated)
+# $pip install pyinstaller
+# $cd .... thebookofthings/compile/# get to this script folder
+# $./compile_linux# launch
 
 # compile with pyinstaller (and main.spec file)
 # this creates executable folder in dist
