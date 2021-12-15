@@ -1007,11 +1007,11 @@ class obj_scene_testtrailer_p2a(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('a story so unoriginal',(640,80),fontsize='huge') )
+        self.addpart ( draw.obj_textbox('a story about a hero',(640,80),fontsize='huge') )
         #
         self.addpart( draw.obj_image('bed',(440,500), scale=0.75) )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
-        self.addpart( draw.obj_image('alarmclock8am',(100,370),scale=0.4) )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # self.addpart( draw.obj_image('alarmclock8am',(100,370),scale=0.4) )
         animation1=draw.obj_animation('ch1_hero1inbed','herobase',(360,360),record=False)
         self.addpart(animation1)
         self.addpart( draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),record=True,sync=animation1,path='data/premade'))
@@ -1046,16 +1046,17 @@ class obj_scene_testtrailer_p3(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('it\'s about some hero',(640,80),fontsize='huge') )
+        self.addpart ( draw.obj_textbox('a story about a hero',(640,80),fontsize='huge') )
         #
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75) )
-        animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
-        animation1.addsound( "wakeup_alarm", [5] )
-        self.addpart(animation1 )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
-        self.addpart( draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7) )
+        # animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
+        # animation1.addsound( "wakeup_alarm", [5] )
+        # self.addpart(animation1 )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        animation2=draw.obj_animation('ch1_heroawakes','herobase',(640,360),scale=0.7)
+        self.addpart(animation2)
         # animation1.addsound( "hero1", [28] )
-        animation1.addsound( "wakeup_wake2", [28] )
+        animation2.addsound( "wakeup_wake2", [28] )
         #
         self.addpart( draw.obj_music('ch5') )
         # share.musicplayer.setmastervolume(2)
@@ -1081,13 +1082,13 @@ class obj_scene_testtrailer_p4(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('it\'s about some hero',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('a story about a hero',(640,80),fontsize='huge') )
         #
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75) )
-        animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
-        animation1.addsound( "wakeup_alarm", [5] )
-        self.addpart(animation1 )
-        self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
+        # animation1=draw.obj_animation('wakeup_alarmclock','alarmclock8am',(640,360+50))
+        # animation1.addsound( "wakeup_alarm", [5] )
+        # self.addpart(animation1 )
+        # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
         animation2=draw.obj_animation('ch1_awaken','herobase',(640,360),record=False,scale=0.7)
         self.addpart(animation2)
         # self.addpart( draw.obj_soundplacer(animation,'hero1','hero2','hero3') )
@@ -1165,7 +1166,7 @@ class obj_scene_testtrailer_p7(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch5') )
         #
         self.addpart( draw.obj_textbox('           ',(640,40),fontsize='huge',fillcolor=share.colors.white) )# over the reel
-        self.addpart( draw.obj_textbox('graphics soooo crappy',(640,80),fontsize='huge',fillcolor=share.colors.white) )
+        self.addpart( draw.obj_textbox('with a twist',(640,80),fontsize='huge',fillcolor=share.colors.white) )
         #
         self.timer=tool.obj_timer(200)
         self.addpart(self.timer)
@@ -1219,7 +1220,7 @@ class obj_scene_testtrailer_p9(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart ( draw.obj_textbox('so many confusing minigames',(640,80),fontsize='huge'))
+        self.addpart ( draw.obj_textbox('minigames',(640,80),fontsize='huge'))
         #
         self.world=world.obj_world_serenade(self,partner=True,heroangry=False)# big clap
         # self.world=world.obj_world_serenade(self,partner=False,heroangry=True)# small clap
@@ -1256,7 +1257,7 @@ class obj_scene_testtrailer_p10(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('overly cheesy humor',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('cheesy humor',(640,80),fontsize='huge') )
         #
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -1313,7 +1314,7 @@ class obj_scene_testtrailer_p11(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('forgettable characters',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('memorable characters',(640,80),fontsize='huge') )
         #
         self.addpart( draw.obj_image('tree',(982,295),scale=0.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1100,365),scale=0.4,rotate=0,fliph=True,flipv=False) )
@@ -1360,7 +1361,7 @@ class obj_scene_testtrailer_p12(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('not spooky at all',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('spooooooooky',(640,80),fontsize='huge') )
         #
         self.addpart( draw.obj_image('palmtree',(1198,227),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(1108,285),scale=0.32,rotate=0,fliph=True,flipv=False) )
@@ -1408,7 +1409,7 @@ class obj_scene_testtrailer_p13(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('no adventure',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('adventure',(640,80),fontsize='huge') )
         #
         self.world=world.obj_world_travel(self,start=(610-1280,375+200+1440),goal='everywhere',chapter=8,boat=True,noending=True)
         self.addpart(self.world)
@@ -1450,7 +1451,7 @@ class obj_scene_testtrailer_p14(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('no passion',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('passion',(640,80),fontsize='huge') )
         #
 
         animation2=draw.obj_animation('ch2_kiss2','partnerbase',(640,360))
@@ -1499,7 +1500,7 @@ class obj_scene_testtrailer_p15(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('no suspense',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('suspense',(640,80),fontsize='huge') )
         #
 
         # animation1=draw.obj_animation('mechfight_heropunches1','heromechbase',(640,360))
@@ -1625,7 +1626,7 @@ class obj_scene_testtrailer_p18(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('dont buy it (its free)',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('free to download',(640,80),fontsize='huge') )
         #
         animation1=draw.obj_animation('bookmove','book',(640+200,360-50),record=False)
         self.addpart( animation1 )
@@ -1658,7 +1659,7 @@ class obj_scene_testtrailer_p19(page.obj_chapterpage):
         return (controls.ga and controls.gac) or self.timer.off
     def setup(self):
         self.text=[]
-        self.addpart( draw.obj_textbox('(dont tell all your friends)',(640,80),fontsize='huge') )
+        self.addpart( draw.obj_textbox('for windows, mac and linux',(640,80),fontsize='huge') )
         #
         animation1=draw.obj_animation('bookmove','book',(640+200,360-50),record=False)
         self.addpart( animation1 )
