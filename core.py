@@ -336,12 +336,15 @@ class obj_sprite_image(obj_sprite):
         self.rx=None# half-width
         self.ry=None# half-heigth
         self.colorkey=share.colorkey# transparent color
+        self.rxref=None# reference half-width (if scaling from reference)
+        self.ryref=None# reference half-height
     def make(self):# create empty
         pass
     def makeempty(self,rx,ry):
         self.surf=pygame.Surface((2*rx,2*ry))
         self.addtransparency()
         self.fill(self.colorkey)
+        self.recordscale()# record reference scale
     def load(self,path,convert=True,failsafe=True,replacewhite=True):
         if tool.ospathexists(path):
             if convert:
@@ -351,10 +354,12 @@ class obj_sprite_image(obj_sprite):
             self.addtransparency()
             if replacewhite:
                 self.replacewhite()# white to gray
+            self.recordscale()# record reference scale
             return True# load succeeded
         elif failsafe:
             self.surf=pygame.image.load('data/error.png').convert()
             self.addtransparency()
+            self.recordscale()# record reference scale
             return True
         else:
             return False# load failed
@@ -394,6 +399,13 @@ class obj_sprite_image(obj_sprite):
                 self.surf=pygame.transform.scale(self.surf, (int(termx),int(termy)) )
         else:
                 self.surf=pygame.transform.scale(self.surf, (int(scaling[0]),int(scaling[1])) )
+    def recordscale(self):# record current scale (to scale with respect to it)
+        self.rxref=self.getrx()
+        self.ryref=self.getry()
+    def scaleto(self,scaling):# scale with respect to reference scale
+        termx=self.rxref*2*scaling
+        termy=self.ryref*2*scaling
+        self.surf=pygame.transform.scale(self.surf, (int(termx),int(termy)) )
     def rotate(self,angle):# returns position offset from rotation
         if angle !=0:
             xold,yold=self.surf.get_rect().center

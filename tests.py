@@ -1915,15 +1915,12 @@ class obj_scene_testforestgame(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        self.text=['Forest with enemies: ',\
-                   'for chapt 4 ',\
-                   ]
-        tempo='['+share.datamanager.controlname('down')+']. '
-        self.text=['The hero went fishing but with a gun']
-        self.world=world.obj_world_fishing_withgun(self)# fishing mini-game
+        self.text=['Find the rabbit']
+        self.world=world.obj_world_3dforest(self)# fishing mini-game
         self.addpart(self.world)
-        animation1=draw.obj_animation('fishmovegun1','fish',(640,360),record=True)
+        self.addpart( draw.obj_music('forest') )
         # self.addpart( animation1 )
+        # self.addpart( draw.obj_drawing('forestline',(640,360),shadow=(640,200),brush=share.brushes.smallpen) )
 
 
 

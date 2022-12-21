@@ -52,12 +52,15 @@ def cos(x):
     return math_cos(x*pi()/180)
 def sin(x):
     return math_sin(x*pi()/180)
+def sqrt(x):
+    return math_sqrt(x)
+def distance(a_xy,b_xy):# distance between points a=(x,y) and b=(x,y)
+    return math_sqrt( (b_xy[0]-a_xy[0])**2+(b_xy[1]-a_xy[1])**2 )
 def angle(a_xy,b_xy):# angle between points a=(x,y) and b=(x,y)
     return math_atan2(b_xy[1]-a_xy[1],b_xy[0]-a_xy[0])*180/pi()# in DEG
 def actorsangle(a,b):# angle between actors a,b (with attributes a.x,a.y) in radian
     return math_atan2(b.y-a.y,b.x-a.x)*180/pi()# in DEG
-def sqrt(x):
-    return math_sqrt(x)
+
 
 # module random
 def randint(minrange,maxrange):# returns integer within range with equal probabilities

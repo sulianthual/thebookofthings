@@ -286,6 +286,11 @@ class obj_grandactor():
             self.dicty[i] *= s
             self.dict[i].movetox(self.x+self.dictx[i])
             self.dict[i].movetoy(self.y+self.dicty[i])
+
+    def scaleelementsto(self,s):# ONLY SCALES ELEMENTS INDIVIDUALLY, NOT PARTS NOR HITBOX
+        for i in self.dict.keys():
+            self.dict[i].scaleto(s)
+
     def rotate90(self,r):
         r=int(round(r%360/90,0)*90)# in 0,90,180,270
         self.r += r
@@ -6056,9 +6061,164 @@ class obj_world_gotobed(obj_world):
 ####################################################################################################################
 
 
+# Mini Game: Find way in the forest (3D view)
+# *FOREST
+class obj_world_3dforest(obj_world):
+    def setup(self):
+        #
+        #
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        # horizon line background
+        self.horizonline=obj_grandactor(self,(640,360))# text always in front
+        self.horizonline.addpart("img", draw.obj_image('forestline',(640,520),path='data/premade') )
+        self.set3dworld()# make the 3d world
+        # TEXTBOX
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_undone.show=True
+        tempo ='['+share.datamanager.controlname('arrows')+': move] '
+        tempo +='['+share.datamanager.controlname('action')+': strafe] '
+        self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(640,720-50),color=share.colors.instructions) )
+    #
+    # Set 3d world level
+    def set3dworld(self):
+        # Make a 2D system for object placement
+        # the player (position and angle)
+        self.xp=0# x position
+        self.yp=0# y postion
+        self.zp=1# z postion (=1 at vision)
+        self.op=90# horitonzal angle of vision (facing north=90)
+        self.ozp=0# vertical angle of vision (always =0 horizontal)
+        self.up=0.03# moving speed
+        # boundaries of world
+        self.xpmax=5
+        self.xpmin=-5
+        self.ypmax=5
+        self.ypmin=-5
+        # Populate the world (static objects, no hitboxes)
+        self.treexy=[]
+        # self.placetree('gun',0,1,1,1)# TEST ELEMENT
+        # for ix in [-5,-4,-3,-2,-1,0,1,2,3,4,5]:# trees at vision level
+            # for iy in [-5,-4,-3,-2,-1,0,1,2,3,4,5]:
+        for ix in [-5,-3,-1,1,3,5]:# trees at vision level
+            for iy in [-5,-3,-1,1,3,5]:
+                self.placetree('tree',ix,iy,1,1)
+        for i in range(20):# flowers randomly placed near the ground
+            ix=tool.randint(0,100)/10-5
+            iy=tool.randint(0,100)/10-5
+            self.placetree('flower',ix,iy,0.2,0.5)
+        for i in range(20):# bushes randomly placed near the ground
+            ix=tool.randint(0,100)/10-5
+            iy=tool.randint(0,100)/10-5
+            self.placetree('bush',ix,iy,0.3,0.6)
+        # sun and moon in the sky, (non-scalable, )
+        self.placetree('sun',0,60,100,24)# sun north
+        self.placetree('moon',0,-60,100,24)# moon south
+        self.placetree('mountain',60,0,20,40)# mountain east
+        self.placetree('mountain',60,20,15,30)# mountains
+        self.placetree('mountain',60,-30,15,30)# mountains
+        self.placetree('musicnote',60,60,100,24)
+        self.placetree('musicnote',-60,60,100,24)
+        self.placetree('musicnote',60,-60,100,24)
+        self.placetree('musicnote',-60,-60,100,24)
+        # self.placetree('forestline',60,0,0,100,premade=True)
 
 
 
+    # place a tree (any static image in the world)
+    def placetree(self,imagename,x,y,z,scale,premade=False):
+        actor=obj_grandactor(self,(640,360))# MUST BE SINGLE IMAGE ELEMENT ONLY!
+        actor.show=False
+        name='tree'# name of image
+        if premade:# premade image
+            actor.addpart("img", draw.obj_image(imagename,(640,360),path='data/premade') )
+        else:
+            actor.addpart("img", draw.obj_image(imagename,(640,360)) )
+        # save counter, actor object, name of image (if needs reloading),x,y,z positions, reference scale
+        self.treexy.append([0,actor,imagename,x,y,z,scale])
+
+    def update(self,controls):
+        super().update(controls)
+        #
+        # Update player coordinates
+        # Look left or right (or strafe if action button on)
+        if controls.ga:
+            # strafe
+            if controls.gr:
+                self.xp+=0.03*tool.sin(self.op)
+                self.yp+=-0.03*tool.cos(self.op)
+            if controls.gl:
+                self.xp+=-0.03*tool.sin(self.op)
+                self.yp+=0.03*tool.cos(self.op)
+        else:
+            # look
+            if controls.gr: self.op-=2
+            if controls.gl: self.op+=2
+        if controls.gu:
+            self.xp+=0.06*tool.cos(self.op)
+            self.yp+=0.06*tool.sin(self.op)
+        if controls.gd:
+            self.xp+=-0.06*tool.cos(self.op)
+            self.yp+=-0.06*tool.sin(self.op)
+        # control boundaries
+        if self.xp>self.xpmax: self.xp=self.xpmax
+        if self.xp<self.xpmin: self.xp=self.xpmin
+        if self.yp>self.ypmax: self.yp=self.ypmax
+        if self.yp<self.ypmin: self.yp=self.ypmin
+        #
+        # Make a render of world within player vision
+
+        for cc,tree in enumerate(self.treexy):
+            # Get tree characteristics
+            scalet=tree[0]# varying scale
+            act=tree[1]
+            namet=tree[2]
+            xt=tree[3]
+            yt=tree[4]
+            zt=tree[5]
+            scale0t=tree[6]# reference scale
+            # Compare to player position and vision
+            # compute length and angle with player vision
+            lt=tool.distance((self.xp,self.yp),(xt,yt))
+            ot=tool.angle((self.xp,self.yp),(xt,yt))# horizontal angle
+            wt=tool.angle((0,self.zp),(lt,zt))# vertical angle
+            # Display if within field of vision (and not too far or close)
+            # if abs( (ot-self.op) % 360)>self.visionp or lt<0.5:
+            if tool.cos(ot-self.op)<0.5 or lt<0.5:
+                # outside range
+                act.show=False
+            else:
+                # if reintering range of vision, reload image:
+                if act.show==False:
+                    act.dict["img"].load(namet)# reload image
+                    act.show=True
+                # Set x position on screen (from horizontal angle)
+                # xscreen_=(640+100)*( (self.op-ot) % 360)/30+640# convert horizontal angle to 0-1080 screen position
+                xscreen_=(640+100)*((self.op-ot +180)%360 -180)/50+640# convert horizontal angle to 0-1080 screen position
+                act.movetox(xscreen_)
+                # set y position on screen (from vertical screen)
+                yscreen_=(320+50)*(self.ozp-wt)/90+320# convert horizontal angle to 0-1080 screen position
+                act.movetoy(yscreen_)
+                # Rescale image ( if too much scaling, eventually reload the image)
+                sscreen_=scale0t/lt
+                if scalet>30:# rate of reloading, too much lowers fps, too little destroys image
+                    act.dict["img"].load(namet)# reload image
+                    tree[0]=0# reset counter
+                act.scaleelementsto(sscreen_)
+                tree[0]+=1# increase scaling counter
+
+
+
+
+
+
+
+
+
+
+
+####################################################################################################################
 
 
 

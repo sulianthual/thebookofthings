@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        if True :
-        # if False :
+        # if True :
+        if False :
             # regular scenes
             #
             # quickscene=obj_scene_settings()
@@ -120,7 +120,8 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_testtrailer_p1()
             # quickscene=tests.obj_scene_testforestgame()
             #
-            # quickscene=tests.obj_scene_testdrafting()
+            quickscene=tests.obj_scene_testforestgame()
+
             #
             #
             share.scenemanager.switchscene(quickscene,initstart=True)# (must initstart because are inventoried)

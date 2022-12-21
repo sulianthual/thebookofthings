@@ -866,6 +866,9 @@ class obj_image:
     def scale(self,s): # scale image by given factor s (permanent)
         self.s *= s
         self.sprite.scale(s)
+    def scaleto(self,s):# NOT TESTED
+        self.s=s
+        self.sprite.scaleto(s)
     def rotate(self,r): # rotate image (permanent)
         self.r += r# (do not overdo, enlargens image with memory issues)
         self.sprite.rotate(r)
