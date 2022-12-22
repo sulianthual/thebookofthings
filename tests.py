@@ -1914,6 +1914,9 @@ class obj_scene_testforestgame(page.obj_chapterpage):
         return self.world.done
     def textboxset(self):
         self.textboxopt={'do':False}
+    def postpostsetup(self):# foreground do not show mouse pointer
+        pass
+        # self.addpart(draw.obj_pagemousepointer())
     def setup(self):
         self.text=['Find the rabbit']
         self.world=world.obj_world_3dforest(self)# fishing mini-game
@@ -1921,6 +1924,7 @@ class obj_scene_testforestgame(page.obj_chapterpage):
         self.addpart( draw.obj_music('forest') )
         # self.addpart( animation1 )
         # self.addpart( draw.obj_drawing('forestline',(640,360),shadow=(640,200),brush=share.brushes.smallpen) )
+        # self.addpart( draw.obj_drawing('crossershooter',(640,360),shadow=(25,25),brush=share.brushes.smallpen) )
 
 
 

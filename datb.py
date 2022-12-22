@@ -59,7 +59,7 @@ class obj_musics:
         # ch4
         self.dict['ch4']=( 'ch4/POL-azure-waters-short.wav' , tempo )# start day (energetic cute)
         self.dict['bunny']=( 'ch4/POL-mutant-jackrabbit-short.wav' , tempo )
-        self.dict['forest']=( 'ch4/POL-forgotten-woods-short.wav' , tempo )
+        self.dict['forest']=( 'ch4/POL-illusion-castle-short.wav' , tempo )
         # ch5
         self.dict['ch5']=( 'ch5/POL-king-of-coins-short.wav' , tempo )# start the day (energetic)
         self.dict['elder']=( 'ch5/POL-find-the-exit-short.wav' , tempo )# elder music (for rps game)

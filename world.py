@@ -6071,15 +6071,21 @@ class obj_world_3dforest(obj_world):
         self.goal=False# minigame goal reached
         self.ungoing=False# ungoing or back to start
         # horizon line background
-        self.horizonline=obj_grandactor(self,(640,360))# text always in front
-        self.horizonline.addpart("img", draw.obj_image('forestline',(640,520),path='data/premade') )
+        self.staticactor=obj_grandactor(self,(640,360))# text always in front
+        # self.staticactor.addpart("img", draw.obj_image('forestline',(640,520),path='data/premade') )
         self.set3dworld()# make the 3d world
+        self.staticactor.addpart("img", draw.obj_image('gun',(640+200,720),fliph=True,rotate=45) )
+        self.staticactor.addpart("img2", draw.obj_image('crossershooter',(640,360)) )
         # TEXTBOX
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_undone.show=True
         tempo ='['+share.datamanager.controlname('arrows')+': move] '
-        tempo +='['+share.datamanager.controlname('action')+': strafe] '
+        # tempo +='['+share.datamanager.controlname('action')+': strafe] '
+        tempo +='[mouse: look] '
         self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(640,720-50),color=share.colors.instructions) )
+        # SOUNDS
+        self.soundshoot=draw.obj_sound('fishing_shoot')
+        self.creator.addpart(self.soundshoot)
     #
     # Set 3d world level
     def set3dworld(self):
@@ -6096,55 +6102,80 @@ class obj_world_3dforest(obj_world):
         self.xpmin=-5
         self.ypmax=5
         self.ypmin=-5
+        # grab current mouse position
+        self.grabbedmouse=False
+        self.reloadtimer=tool.obj_timer(40)# time to reload gun
+        self.reloading=False
         # Populate the world (static objects, no hitboxes)
         self.treexy=[]
-        # self.placetree('gun',0,1,1,1)# TEST ELEMENT
-        # for ix in [-5,-4,-3,-2,-1,0,1,2,3,4,5]:# trees at vision level
-            # for iy in [-5,-4,-3,-2,-1,0,1,2,3,4,5]:
+        # Static elements
         for ix in [-5,-3,-1,1,3,5]:# trees at vision level
             for iy in [-5,-3,-1,1,3,5]:
-                self.placetree('tree',ix,iy,1,1)
+                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
         for i in range(20):# flowers randomly placed near the ground
             ix=tool.randint(0,100)/10-5
             iy=tool.randint(0,100)/10-5
-            self.placetree('flower',ix,iy,0.2,0.5)
+            self.placetree('flower',ix,iy,0.2,0.5,'static',randomfliph=True)
         for i in range(20):# bushes randomly placed near the ground
             ix=tool.randint(0,100)/10-5
             iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6)
+            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky, (non-scalable, )
-        self.placetree('sun',0,60,100,24)# sun north
-        self.placetree('moon',0,-60,100,24)# moon south
-        self.placetree('mountain',60,0,20,40)# mountain east
-        self.placetree('mountain',60,20,15,30)# mountains
-        self.placetree('mountain',60,-30,15,30)# mountains
-        self.placetree('musicnote',60,60,100,24)
-        self.placetree('musicnote',-60,60,100,24)
-        self.placetree('musicnote',60,-60,100,24)
-        self.placetree('musicnote',-60,-60,100,24)
-        # self.placetree('forestline',60,0,0,100,premade=True)
+        self.placetree('sun',0,60,100,24,'static')# sun north
+        self.placetree('moon',0,-60,100,24,'static')# moon south
+        self.placetree('mountain',60,0,20,40,'static')# mountain east
+        self.placetree('mountain',60,20,15,30,'static')# mountains
+        self.placetree('mountain',60,-30,15,30,'static')# mountains
+        # Moving elements (e.g. attackers)
+        self.totalrabbits=100# how many rabbits generated total (after that, stop generating)
+        self.maxrabbits=10# max rabbits possible at a given time
+        self.rabbitcount=0# how many rabbits total at a given time
+        self.rabbittotalcount=0# how many rabbits generated over all time
+        self.timerrabbits=tool.obj_timer(10)# generation time of new rabbits
+        self.timerrabbits.start()
+        for i in range(5):# place first rabbits
+            self.placerabbit()
 
+    # place a rabbit randomly
+    def placerabbit(self):
+        ix=tool.randint(0,100)/10-5
+        iy=tool.randint(0,100)/10-5
+        self.placetree('bunnybase',ix,iy,1,1,'rabbit')#
+        self.rabbitcount+=1
+        self.rabbittotalcount+=1
 
 
     # place a tree (any static image in the world)
-    def placetree(self,imagename,x,y,z,scale,premade=False):
+    def placetree(self,imagename,x,y,z,scale,type,premade=False,randomfliph=False):
         actor=obj_grandactor(self,(640,360))# MUST BE SINGLE IMAGE ELEMENT ONLY!
         actor.show=False
         name='tree'# name of image
         if premade:# premade image
             actor.addpart("img", draw.obj_image(imagename,(640,360),path='data/premade') )
         else:
-            actor.addpart("img", draw.obj_image(imagename,(640,360)) )
-        # save counter, actor object, name of image (if needs reloading),x,y,z positions, reference scale
-        self.treexy.append([0,actor,imagename,x,y,z,scale])
+            if randomfliph:
+                actor.addpart("img", draw.obj_image(imagename,(640,360),fliph=tool.randbool()) )
+            else:
+                actor.addpart("img", draw.obj_image(imagename,(640,360)) )
+        # save counter for reloading sprite, actor object, name of image (if needs reloading)
+        # x,y,z positions, reference scale, type (static/villain....)
+        # kill switch (to remove from list), distance to player (to only kill closest)
+        self.treexy.append([0,actor,imagename,x,y,z,scale,type,0,100])
 
     def update(self,controls):
+        # Grab mouse controls at world start
+        if not self.grabbedmouse:
+            self.gmx0=controls.gmx
+            self.gmy0=controls.gmy
+            self.grabbedmouse=True
+
         super().update(controls)
         #
         # Update player coordinates
-        # Look left or right (or strafe if action button on)
-        if controls.ga:
-            # strafe
+        # Look+Strafe Mouse
+        if True:
+            self.op+=0.3*(self.gmx0-controls.gmx)
+            self.gmx0=controls.gmx
             if controls.gr:
                 self.xp+=0.03*tool.sin(self.op)
                 self.yp+=-0.03*tool.cos(self.op)
@@ -6152,23 +6183,43 @@ class obj_world_3dforest(obj_world):
                 self.xp+=-0.03*tool.sin(self.op)
                 self.yp+=0.03*tool.cos(self.op)
         else:
-            # look
-            if controls.gr: self.op-=2
-            if controls.gl: self.op+=2
+            # Look+Strafe Space
+            if controls.ga:
+                if controls.gr:
+                    self.xp+=0.03*tool.sin(self.op)
+                    self.yp+=-0.03*tool.cos(self.op)
+                if controls.gl:
+                    self.xp+=-0.03*tool.sin(self.op)
+                    self.yp+=0.03*tool.cos(self.op)
+            else:
+                if controls.gr: self.op-=2
+                if controls.gl: self.op+=2
+        # Move
         if controls.gu:
             self.xp+=0.06*tool.cos(self.op)
             self.yp+=0.06*tool.sin(self.op)
         if controls.gd:
             self.xp+=-0.06*tool.cos(self.op)
             self.yp+=-0.06*tool.sin(self.op)
+        # reload
+        if self.reloading:
+            self.reloadtimer.update()
+            if self.reloadtimer.ring:
+                self.reloading=False
+        # Shoot
+        self.playershoot=not self.reloading and controls.gm1 and controls.gm1c
+        if self.playershoot:
+            self.soundshoot.play()
+            self.reloading=True
+            self.reloadtimer.start()
         # control boundaries
         if self.xp>self.xpmax: self.xp=self.xpmax
         if self.xp<self.xpmin: self.xp=self.xpmin
         if self.yp>self.ypmax: self.yp=self.ypmax
         if self.yp<self.ypmin: self.yp=self.ypmin
         #
-        # Make a render of world within player vision
-
+        # Update and Make a render of world within player vision
+        lt0=False# shortest distance to any attacker
         for cc,tree in enumerate(self.treexy):
             # Get tree characteristics
             scalet=tree[0]# varying scale
@@ -6178,12 +6229,36 @@ class obj_world_3dforest(obj_world):
             yt=tree[4]
             zt=tree[5]
             scale0t=tree[6]# reference scale
+            typet=tree[7]# type (static, rabbit)
+            killt=tree[8]# if not =0 kill element
+            distpt=tree[9]# distance to player
             # Compare to player position and vision
             # compute length and angle with player vision
             lt=tool.distance((self.xp,self.yp),(xt,yt))
             ot=tool.angle((self.xp,self.yp),(xt,yt))# horizontal angle
             wt=tool.angle((0,self.zp),(lt,zt))# vertical angle
-            # Display if within field of vision (and not too far or close)
+            #
+            #######
+            # Moving actors
+            if typet=='rabbit':
+                # moves towards the player
+                tree[3]-=0.01*tool.cos(ot)
+                tree[4]-=0.01*tool.sin(ot)
+                # small random chance of fliph
+                randfliphrabb_=tool.randint(0,300)
+                if randfliphrabb_>300-2:
+                    act.dict["img"].fliph()
+                    act.dict["img"].fh=True# reforce fh (is changed)
+                # If shot, kill target
+                if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2:
+                    tree[8]=1# Kill element (tag for later)
+                    tree[9]=lt# store distance to player
+                    # act.show=False
+                    # act.kill()# Remove from world
+
+
+            #######
+            # Display any element within field of vision (and not too far or close)
             # if abs( (ot-self.op) % 360)>self.visionp or lt<0.5:
             if tool.cos(ot-self.op)<0.5 or lt<0.5:
                 # outside range
@@ -6191,8 +6266,8 @@ class obj_world_3dforest(obj_world):
             else:
                 # if reintering range of vision, reload image:
                 if act.show==False:
-                    act.dict["img"].load(namet)# reload image
                     act.show=True
+                    # act.dict["img"].load(namet)# reload image (must flip it too)
                 # Set x position on screen (from horizontal angle)
                 # xscreen_=(640+100)*( (self.op-ot) % 360)/30+640# convert horizontal angle to 0-1080 screen position
                 xscreen_=(640+100)*((self.op-ot +180)%360 -180)/50+640# convert horizontal angle to 0-1080 screen position
@@ -6204,9 +6279,41 @@ class obj_world_3dforest(obj_world):
                 sscreen_=scale0t/lt
                 if scalet>30:# rate of reloading, too much lowers fps, too little destroys image
                     act.dict["img"].load(namet)# reload image
+                    if act.dict["img"].fh:# reflip if needed
+                        act.dict["img"].fliph()
+                        act.dict["img"].fh=True# reforce fh (is changed)
                     tree[0]=0# reset counter
                 act.scaleelementsto(sscreen_)
                 tree[0]+=1# increase scaling counter
+        ####
+        # Relax killed tag to only closest attacker
+        killedattackers=[i for i in self.treexy if i[7]=='rabbit' and i[8]==1]
+        if killedattackers:
+            alldists_=[i[9] for i in killedattackers]
+            mindist_=min(alldists_)
+            for i in killedattackers:
+                if i[9]>mindist_:# do not kill if farther
+                    i[8]=0
+        # Kill rabbits with the tag
+        for cc,tree in enumerate(self.treexy):
+            if tree[7]=='rabbit' and tree[8]!=0:
+                tree[1].show=False
+                tree[1].kill()# Remove from world
+                self.rabbitcount-=1# less rabbits on screen
+        # Kill all discarted elements (remove from list)
+        self.treexy=[i for i in self.treexy if i[8]==0 ]
+        ####
+        # Generate new rabbits (timer)
+        self.timerrabbits.update()
+        if self.timerrabbits.ring:
+            # Below max number of generated rabbits all time
+            if self.rabbittotalcount<self.totalrabbits:
+                # Below max number on screen at one time
+                if self.rabbitcount<self.maxrabbits:
+                    self.placerabbit()
+            # reset timer
+            self.timerrabbits.start()
+
 
 
 
