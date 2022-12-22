@@ -6128,12 +6128,12 @@ class obj_world_3dforest(obj_world):
         self.placetree('mountain',60,-30,15,30,'static')# mountains
         # Moving elements (e.g. attackers)
         self.totalrabbits=100# how many rabbits generated total (after that, stop generating)
-        self.maxrabbits=10# max rabbits possible at a given time
+        self.maxrabbits=5# max rabbits possible at a given time
         self.rabbitcount=0# how many rabbits total at a given time
         self.rabbittotalcount=0# how many rabbits generated over all time
-        self.timerrabbits=tool.obj_timer(10)# generation time of new rabbits
+        self.timerrabbits=tool.obj_timer(200)# generation time of new rabbits
         self.timerrabbits.start()
-        for i in range(5):# place first rabbits
+        for i in range(3):# place first rabbits
             self.placerabbit()
 
     # place a rabbit randomly
