@@ -529,6 +529,7 @@ class obj_controls:
     def __init__(self):
         self.azerty=share.datamanager.doazerty# azerty mode (modified by datb/datamanager)
         self.events=pygame.event.get()
+        # pygame.event.set_grab(True)# grab the mouse (cannot escape window)
         self.setup_quit()
         self.setup_mouse()
         self.setup_keys()
@@ -557,6 +558,7 @@ class obj_controls:
         # self.mouse3c=False
         # self.mouse4c=False
         # self.mouse5c=False
+        #
     def getmouse(self):
         self.mouse1c=False# left click
         self.mouse2c=False# right click

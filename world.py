@@ -6075,7 +6075,7 @@ class obj_world_3dforest(obj_world):
         # self.staticactor.addpart("img", draw.obj_image('forestline',(640,520),path='data/premade') )
         self.set3dworld()# make the 3d world
         self.staticactor.addpart("img", draw.obj_image('gun',(640+200,720),fliph=True,rotate=45) )
-        self.staticactor.addpart("img2", draw.obj_image('crossershooter',(640,360)) )
+        self.staticactor.addpart("img2", draw.obj_image('crossershooter',(640,360),path='data/premade') )
         # TEXTBOX
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_undone.show=True
