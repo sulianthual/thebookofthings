@@ -148,6 +148,15 @@ class obj_actor:
     def update(self ,controls):
         pass
 
+# Boundary (basic actor)
+class obj_actor_bdry(obj_actor):# basic actor
+    def __init__(self,creator,bounds=(100,1280-100,100,720-100),push=(3,-3,3,-3)):
+        super().__init__(creator)
+        self.bdry_lim=bounds# limits (xmin,xmax,ymin,ymax).
+        self.bdry_push=push# push rate at boundaries (if =0, boundary not applied)
+    def setup(self):
+        super().setup()
+        self.actortype='bdry'
 
 # Template for grand actors in world (hero, items, enemies..., obstacles...)
 # A grand actor is more elaborate:
@@ -286,11 +295,6 @@ class obj_grandactor():
             self.dicty[i] *= s
             self.dict[i].movetox(self.x+self.dictx[i])
             self.dict[i].movetoy(self.y+self.dicty[i])
-
-    def scaleelementsto(self,s):# ONLY SCALES ELEMENTS INDIVIDUALLY, NOT PARTS NOR HITBOX
-        for i in self.dict.keys():
-            self.dict[i].scaleto(s)
-
     def rotate90(self,r):
         r=int(round(r%360/90,0)*90)# in 0,90,180,270
         self.r += r
@@ -315,6 +319,31 @@ class obj_grandactor():
         if self.show: self.play(controls)
         if share.devmode: self.devtools()
 
+# 3D actor: like a grand actor but targeted at being in 3D world
+# has:
+# - 3d coordinates, counter for refresh...
+# - Single image named "img", counter for refresh and reference scale
+# - scaling with respect to reference scale
+class obj_3dactor(obj_grandactor):
+    def setup(self):
+        super().setup()
+        #
+    # Additional features (must be called separately from init)
+    def setup3d(self,image3d,x3d,y3d,z3d,refscale3d,type3d,refreshcount,killswitch,distanceplayer):
+        self.image3d=image3d# name of actor image (save it for frequent reloads)
+        self.x3d=x3d# position in 3d world
+        self.y3d=y3d
+        self.z3d=z3d
+        self.refscale3d=refscale3d# reference scale of image (for frequent relative scaling)
+        self.type3d=type3d# type in world (static, rabbit=attacker, for game rules)
+        self.refreshcount=refreshcount# counter for frequent image refresh
+        self.killswitch=killswitch# switch for killing actor (turn on to kill later)
+        self.distanceplayer=distanceplayer# actor distance to player (for game rules)
+    #
+    # Scale actor elements individually (not hitbox or distances between parts)
+    def scaleelementsto(self,s):
+        for i in self.dict.keys():
+            self.dict[i].scaleto(s)
 
 # Template: grand actor with rigidbody fonctionalities
 # - rigidbody controls speed u,v inducing additional movement to x,y
@@ -363,15 +392,7 @@ class obj_rbodyactor(obj_grandactor):
         super().update(controls)
         if not self.stalling: self.rigidbodyupdate()
 
-# Boundary (basic actor)
-class obj_actor_bdry(obj_actor):# basic actor
-    def __init__(self,creator,bounds=(100,1280-100,100,720-100),push=(3,-3,3,-3)):
-        super().__init__(creator)
-        self.bdry_lim=bounds# limits (xmin,xmax,ymin,ymax).
-        self.bdry_push=push# push rate at boundaries (if =0, boundary not applied)
-    def setup(self):
-        super().setup()
-        self.actortype='bdry'
+
 
 ####################################################################################################################
 ####################################################################################################################
@@ -6070,10 +6091,11 @@ class obj_world_3dforest(obj_world):
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         self.ungoing=False# ungoing or back to start
-        # horizon line background
-        self.staticactor=obj_grandactor(self,(640,360))# text always in front
-        # self.staticactor.addpart("img", draw.obj_image('forestline',(640,520),path='data/premade') )
-        self.set3dworld()# make the 3d world
+        #
+        # make the 3d world
+        self.set3dworld()
+        # Manage 2d elements:
+        self.staticactor=obj_grandactor(self,(640,360))# things in front
         self.staticactor.addpart("img", draw.obj_image('gun',(640+200,720),fliph=True,rotate=45) )
         self.staticactor.addpart("img2", draw.obj_image('crossershooter',(640,360),path='data/premade') )
         # TEXTBOX
@@ -6107,7 +6129,7 @@ class obj_world_3dforest(obj_world):
         self.reloadtimer=tool.obj_timer(40)# time to reload gun
         self.reloading=False
         # Populate the world (static objects, no hitboxes)
-        self.treexy=[]
+        self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
         for ix in [-5,-3,-1,1,3,5]:# trees at vision level
             for iy in [-5,-3,-1,1,3,5]:
@@ -6144,12 +6166,11 @@ class obj_world_3dforest(obj_world):
         self.rabbitcount+=1
         self.rabbittotalcount+=1
 
-
     # place a tree (any static image in the world)
-    def placetree(self,imagename,x,y,z,scale,type,premade=False,randomfliph=False):
-        actor=obj_grandactor(self,(640,360))# MUST BE SINGLE IMAGE ELEMENT ONLY!
+    def placetree(self,imagename,x,y,z,refscale,type,premade=False,randomfliph=False):
+        actor=obj_3dactor(self,(640,360))# special type of actor
         actor.show=False
-        name='tree'# name of image
+        # Add image
         if premade:# premade image
             actor.addpart("img", draw.obj_image(imagename,(640,360),path='data/premade') )
         else:
@@ -6157,10 +6178,11 @@ class obj_world_3dforest(obj_world):
                 actor.addpart("img", draw.obj_image(imagename,(640,360),fliph=tool.randbool()) )
             else:
                 actor.addpart("img", draw.obj_image(imagename,(640,360)) )
-        # save counter for reloading sprite, actor object, name of image (if needs reloading)
-        # x,y,z positions, reference scale, type (static/villain....)
-        # kill switch (to remove from list), distance to player (to only kill closest)
-        self.treexy.append([0,actor,imagename,x,y,z,scale,type,0,100])
+        # Set 3d characteristics
+        # image name, x,y,z positions, reference image scale, type (static/rabbit=attacker)
+        # counter for image refresh, kill switch (to remove from list), distance to player (for game rules)
+        actor.setup3d(imagename,x,y,z,refscale,type,0,0,100)
+        self.actor3dlist.append(actor)# add to 3d world actor list
 
     def update(self,controls):
         # Grab mouse controls at world start
@@ -6168,7 +6190,6 @@ class obj_world_3dforest(obj_world):
             self.gmx0=controls.gmx
             self.gmy0=controls.gmy
             self.grabbedmouse=True
-
         super().update(controls)
         #
         # Update player coordinates
@@ -6220,30 +6241,19 @@ class obj_world_3dforest(obj_world):
         #
         # Update and Make a render of world within player vision
         lt0=False# shortest distance to any attacker
-        for cc,tree in enumerate(self.treexy):
-            # Get tree characteristics
-            scalet=tree[0]# varying scale
-            act=tree[1]
-            namet=tree[2]
-            xt=tree[3]
-            yt=tree[4]
-            zt=tree[5]
-            scale0t=tree[6]# reference scale
-            typet=tree[7]# type (static, rabbit)
-            killt=tree[8]# if not =0 kill element
-            distpt=tree[9]# distance to player
+        for cc,act in enumerate(self.actor3dlist):# all 3d actors
             # Compare to player position and vision
             # compute length and angle with player vision
-            lt=tool.distance((self.xp,self.yp),(xt,yt))
-            ot=tool.angle((self.xp,self.yp),(xt,yt))# horizontal angle
-            wt=tool.angle((0,self.zp),(lt,zt))# vertical angle
+            lt=tool.distance((self.xp,self.yp),(act.x3d,act.y3d))
+            ot=tool.angle((self.xp,self.yp),(act.x3d,act.y3d))# horizontal angle
+            wt=tool.angle((0,self.zp),(lt,act.z3d))# vertical angle
             #
             #######
             # Moving actors
-            if typet=='rabbit':
+            if act.type3d=='rabbit':
                 # moves towards the player
-                tree[3]-=0.01*tool.cos(ot)
-                tree[4]-=0.01*tool.sin(ot)
+                act.x3d-=0.01*tool.cos(ot)
+                act.y3d-=0.01*tool.sin(ot)
                 # small random chance of fliph
                 randfliphrabb_=tool.randint(0,300)
                 if randfliphrabb_>300-2:
@@ -6251,12 +6261,8 @@ class obj_world_3dforest(obj_world):
                     act.dict["img"].fh=True# reforce fh (is changed)
                 # If shot, kill target
                 if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2:
-                    tree[8]=1# Kill element (tag for later)
-                    tree[9]=lt# store distance to player
-                    # act.show=False
-                    # act.kill()# Remove from world
-
-
+                    act.killswitch=1# Kill element (tag for later)
+                    act.distanceplayer=lt# store distance to player
             #######
             # Display any element within field of vision (and not too far or close)
             # if abs( (ot-self.op) % 360)>self.visionp or lt<0.5:
@@ -6267,7 +6273,6 @@ class obj_world_3dforest(obj_world):
                 # if reintering range of vision, reload image:
                 if act.show==False:
                     act.show=True
-                    # act.dict["img"].load(namet)# reload image (must flip it too)
                 # Set x position on screen (from horizontal angle)
                 # xscreen_=(640+100)*( (self.op-ot) % 360)/30+640# convert horizontal angle to 0-1080 screen position
                 xscreen_=(640+100)*((self.op-ot +180)%360 -180)/50+640# convert horizontal angle to 0-1080 screen position
@@ -6276,32 +6281,31 @@ class obj_world_3dforest(obj_world):
                 yscreen_=(320+50)*(self.ozp-wt)/90+320# convert horizontal angle to 0-1080 screen position
                 act.movetoy(yscreen_)
                 # Rescale image ( if too much scaling, eventually reload the image)
-                sscreen_=scale0t/lt
-                if scalet>30:# rate of reloading, too much lowers fps, too little destroys image
-                    act.dict["img"].load(namet)# reload image
+                if act.refreshcount>30:# rate of reloading, too much lowers fps, too little destroys image
+                    act.dict["img"].load(act.image3d)# reload image
                     if act.dict["img"].fh:# reflip if needed
                         act.dict["img"].fliph()
                         act.dict["img"].fh=True# reforce fh (is changed)
-                    tree[0]=0# reset counter
-                act.scaleelementsto(sscreen_)
-                tree[0]+=1# increase scaling counter
+                    act.refreshcount=0# reset counter
+                act.scaleelementsto(act.refscale3d/lt)# rescale based on player distance
+                act.refreshcount+=1# increase scaling counter
         ####
+        # KILL AND GENERATE RABBITS
         # Relax killed tag to only closest attacker
-        killedattackers=[i for i in self.treexy if i[7]=='rabbit' and i[8]==1]
+        killedattackers=[i for i in self.actor3dlist if i.type3d=='rabbit' and i.killswitch==1]
         if killedattackers:
-            alldists_=[i[9] for i in killedattackers]
+            alldists_=[i.distanceplayer for i in killedattackers]
             mindist_=min(alldists_)
             for i in killedattackers:
-                if i[9]>mindist_:# do not kill if farther
-                    i[8]=0
+                if i.distanceplayer>mindist_:# do not kill if farther
+                    i.killswitch=0
         # Kill rabbits with the tag
-        for cc,tree in enumerate(self.treexy):
-            if tree[7]=='rabbit' and tree[8]!=0:
-                tree[1].show=False
-                tree[1].kill()# Remove from world
+        for cc,act in enumerate(self.actor3dlist):
+            if act.type3d=='rabbit' and act.killswitch!=0:
+                act.show=False
+                act.kill()# Remove from world
                 self.rabbitcount-=1# less rabbits on screen
-        # Kill all discarted elements (remove from list)
-        self.treexy=[i for i in self.treexy if i[8]==0 ]
+        self.actor3dlist=[i for i in self.actor3dlist if i.killswitch==0 ]# exclude killed from world actor3d list
         ####
         # Generate new rabbits (timer)
         self.timerrabbits.update()
