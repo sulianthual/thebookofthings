@@ -150,7 +150,8 @@ class obj_sounds:
         self.dict['tower4']=( 'tower/robot_4.wav' , 0.5 )
         self.dict['tower5']=( 'tower/r2d2.wav' , 1 )
         self.dict['tower6']=( 'tower/robot_classic-computing-sound_short.wav' , 1 )
-        self.dict['bug1']=( 'bug/move.wav' , 1 )
+        # self.dict['bug1']=( 'bug/move.wav' , 1 )
+        self.dict['bug1']=( 'bug/misc_menu.wav' , 1 )
         self.dict['bug2']=( 'bug/alien_09.wav' , 1 )
         # ch4
         self.dict['bunny1']=( 'bunny/cute_07.wav' , 1 )
@@ -294,6 +295,8 @@ class obj_sounds:
         self.dict['mech_counter']=( 'world/mech/Whip.wav', 1 )
         self.dict['mech_correct']=( 'world/mech/confirmation_002.wav', 1 )
         self.dict['mech_wrong']=( 'world/mech/fail.wav', 1 )
+        # 3d forest
+        self.dict['3dforest_gunreload']=( 'world/3dforest/gunreload.wav' , 0.5 )
         #
     def getsoundfilename(self,name):
         if name in self.dict.keys():

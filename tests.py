@@ -1856,10 +1856,20 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_drawing('stickbodyrest',(940,460),shadow=(200,200)) )
         # self.addpart( draw.obj_image('villainhead',(940+80,200+50),scale=0.5,rotate=-10) )
 
-        dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        dispgroup1.addpart('part1',draw.obj_image('stickbodyrest',(640,460),path='data/premade') )
-        dispgroup1.addpart('part2',draw.obj_image('villainhead',(640+80,200+50),scale=0.5,rotate=-10) )
-        dispgroup1.snapshot((640,330,200,330),'villainbaserest')
+        # dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
+        # dispgroup1.addpart('part1',draw.obj_image('stickbodyrest',(640,460),path='data/premade') )
+        # dispgroup1.addpart('part2',draw.obj_image('villainhead',(640+80,200+50),scale=0.5,rotate=-10) )
+        # dispgroup1.snapshot((640,330,200,330),'villainbaserest')
+        # self.addpart(draw.obj_image('gun',(640,360),fliph=True,rotate=45))
+        # animation=draw.obj_animation('gunwobble','gun',(640,360),record=True)
+        # animation=draw.obj_animation('gunshoot','gun',(640,360),record=True)
+        # animation=draw.obj_animation('gunreload','gun',(640,360),record=True)
+        # animation=draw.obj_animation('ch4_bunnywillendyou','bunnybase',(640,360),record=True)
+        #
+        # animation=draw.obj_animation('ch4_heroinbushes','herobase',(640,360),record=True)
+        # animation.addimage('testimage2')
+        # animation.addimage('testimage3')
+        # self.addpart(animation)
 
 ####################################################################################################################
 ####################################################################################################################
@@ -1909,7 +1919,6 @@ class obj_scene_testforestgame(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_testmenu())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_testmenu())
-
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -1918,7 +1927,7 @@ class obj_scene_testforestgame(page.obj_chapterpage):
         pass
         # self.addpart(draw.obj_pagemousepointer())
     def setup(self):
-        self.text=['Find the rabbit']
+        # self.text=['Find the rabbit']
         self.world=world.obj_world_3dforest(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('forest') )

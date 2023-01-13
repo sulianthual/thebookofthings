@@ -650,7 +650,6 @@ class obj_textbox:
             self.xoffset=-self.rx
         if self.ytop:
             self.yoffset=self.ry
-
     def replacetext(self,text):
         self.text=text
         formattextkwargs=share.datamanager.getwords()
@@ -811,10 +810,17 @@ class obj_image:
         if path is not None:
             self.path=path
         self.sprite.load(self.path+'/'+name+'.png')
-        # reapply historial of transformations
-        self.sprite.flip(self.fh,self.fv)
-        self.sprite.scale(self.s)
-        self.sprite.rotate(self.r)
+        self.retransform()
+    def reload(self,name):# reload image and apply all existing transformations
+        self.sprite.load(self.path+'/'+name+'.png')
+        self.retransform()
+    def retransform(self):# reapply historial of transformations
+        if not self.fh or not self.fv:
+            self.sprite.flip(self.fh,self.fv)
+        if self.s!=1:
+            self.sprite.scale(self.s)
+        if self.r!=0:
+            self.sprite.rotate(self.r)
     def replacecolor(self,color,newcolor,treshold=(5,5,5)):
         self.sprite.replacecolor(color,newcolor,treshold=treshold)
     def xytoxyini(self):# reinitialize initial coordinates to current ones
@@ -866,7 +872,7 @@ class obj_image:
     def scale(self,s): # scale image by given factor s (permanent)
         self.s *= s
         self.sprite.scale(s)
-    def scaleto(self,s):# NOT TESTED
+    def scaleto(self,s):# NOT FULLPROOF TESTED
         self.s=s
         self.sprite.scaleto(s)
     def rotate(self,r): # rotate image (permanent)

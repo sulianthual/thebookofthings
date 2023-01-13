@@ -559,6 +559,8 @@ class obj_controls:
         # self.mouse4c=False
         # self.mouse5c=False
         #
+    def setmouse(self,x,y):
+        pygame.mouse.set_pos([x,y])
     def getmouse(self):
         self.mouse1c=False# left click
         self.mouse2c=False# right click

@@ -37,8 +37,8 @@ import ch8
 class obj_quickscene():
      def __call__(self):
         #
-        # if True :
-        if False :
+        if True:
+        # if False:
             # regular scenes
             #
             # quickscene=obj_scene_settings()
@@ -53,13 +53,14 @@ class obj_quickscene():
             # quickscene=ch2.obj_scene_ch2p3()
             # quickscene=ch2.obj_scene_ch2p12()
             # quickscene=ch2.obj_scene_ch2play3a()
-            quickscene=ch3.obj_scene_ch3p19()
+            # quickscene=ch3.obj_scene_ch3p19()
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p27()
             # quickscene=ch3.obj_scene_ch3p32()
             # quickscene=ch3.obj_scene_ch3p36()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p5()
+            quickscene=ch4.obj_scene_ch4p16g()
             # quickscene=ch4.obj_scene_lyingpart1()
             # quickscene=ch4.obj_scene_lyingfailpart1()
             # quickscene=ch4.obj_scene_lyingfailpart2()
@@ -120,7 +121,7 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_testtrailer_p1()
             # quickscene=tests.obj_scene_testforestgame()
             #
-            quickscene=tests.obj_scene_testforestgame()
+            # quickscene=tests.obj_scene_testforestgame()
 
             #
             #
@@ -297,9 +298,11 @@ class obj_gotobookmark():
             # self.dict['ch4_startstory']='start the day'
             # self.dict['ch4_checkmail']='read the mail'
             self.dict['ch4_drawcave']='draw the cave and tree'
+            self.dict['ch4_enterforest']='enter the forest'
             self.dict['ch4_writebunny']='draw and name the bunny'
-            self.dict['ch4_lyinggame']='play the lying game (round 1)'
-            self.dict['ch4_winlying1']='play the lying game (round 2)'
+            self.dict['ch4_shootrabbits']='shoot the bunnies'
+            self.dict['ch4_lyinggame']='play the lying game'
+            # self.dict['ch4_winlying1']='play the lying game (round 2)'
             # self.dict['ch4_winlying2']='lying game round 3'
             # self.dict['ch4_winlying3']='back at home'
             self.dict['ch4_gohome']='go back home'
@@ -314,8 +317,12 @@ class obj_gotobookmark():
                 bookmarkscene=ch4.obj_scene_ch4p6()
             elif bookmarkname == 'ch4_drawcave' :
                 bookmarkscene=ch4.obj_scene_ch4p9()
+            elif bookmarkname == 'ch4_enterforest' :
+                bookmarkscene=ch4.obj_scene_ch4p10a()
             elif bookmarkname == 'ch4_writebunny' :
                 bookmarkscene=ch4.obj_scene_ch4p11()
+            elif bookmarkname == 'ch4_shootrabbits' :
+                bookmarkscene=ch4.obj_scene_ch4p16g()
             elif bookmarkname == 'ch4_lyinggame' :
                 bookmarkscene=ch4.obj_scene_ch4p17()
             elif bookmarkname == 'ch4_winlying1' :
