@@ -8,15 +8,6 @@
 #
 ###########################################################
 ###########################################################
-* Main Guidelines:
-
-
-* Mottos:
-Keep it simple or will never finish this game !!!:
-No more advanced physics! Only simple goofy minigames
-No more advanced drawings! Only simple and goofy.
-No more advanced modular story! Only one linear story.
-No more advanced gaming. All games easily won with very few controls.
 
 * Game Progression:
 - Chapter I, II: set hero, partner, home (story setting)
@@ -25,102 +16,65 @@ No more advanced gaming. All games easily won with very few controls.
 - Chapter IV, V, VI: parts of quests
                     retrieve 3 parts of password in 3 locations (north,west,south)
 - Chapter VII: final fight against villain, rescue the princess
-
-
-* General Story Arc:
-Each day/chapter of the story follows somewhat an arc (even if varying in content):
-arc:     wake up -> morning game -> travel1 -> midday quest -> travel -> afternoon fight (game) -> travel2 -> aftermath -> ending
-phases:      *          morning             |                           afternoon               |        evening       *
-tension level: 0           2           1         2                 1           3                 1            2          0
-morning games: morning breakfast, fishing, hunting, drinking, picking up flowers (no consequences)
-midday quest: elder on mountain, gather crew, find villain's weakness....
-final fight: dodge bullets, stomp fight, cut rope stealthily, takedown henchmens....
-aftermath games: eat diner, serenade/kiss...(happy ending or not)
-travel1: home to evil lair, or other (pirate island, iceberg?? space station??,timemachine)
-travel2: X go back home, or to some location for an ending
-*** Add a quest (between morning game and afternoon fight)
+Each day/chapter of the story follows follows a similar arc:
+arc:     wake up -> morning games -> travel -> quest  -> travel -> evening games -> go to sleep
 
 
 * Drawings:
-DO NOT propose shadows for drawings, it makes people lazy and skip drawing (defeating the purpose)
-KEEP the premade stickmans (do NOT make player draw them):
-     because the stickmans drawings need to be precise and have many variations (crouch, dodge, zapped, mechs...)
+The drawings are kept simple (not shadows as it makes them lazy for drawing)
+Some is premade (e.g. the stickman) or it would be too complex
 
 
 * Minigames:
-DO NOT add complex minigames that require a physics engine (e.g. platformer, brawler...)
-It is NOT worth it to do with pygame (too painful to build from ground up, prefer other softwares like godot)
+The minigames do not have complex physics or it would be too painful to build with pygame
 Keep few controls and make all minigames easily won: this is a game for non-gamers too.
 
 ###########################################################
 ###########################################################
 * Ideas (implement maybe later or never, not so important):
 
-- make all games easier to win, with fewer controls
-
-- tff file: this font cannot do interrogation marks.
-
 
 
 
 *Content
-- Chapter 2: is a bit long with lots of drawings. Add minigames:
-             can be tennis (play pong) with partner
 
-- Chapter 4: add zelda like minigame while in hero enters the woods (like in the lost woods of zelda oot)
-            1.) do smallish scenes with trees, bushes, flowers
-            2.) scenes exits are several doors, all lead back to beginning of scene except one (that has music)
-            3.) add a weapon to hero (sword?), and battle 2 critters: draw a bat, and a rat (can be reused later on), or a snake
-            or....
-            4.) meet bunny at entrance, then have to chase it through the woods.
-            5.) add minigame with 3 bushes (similar to 3 cups and a ball) quickly shuffled before must guess in which bunny is hidding.
+- Chapter 8: make a COMPETITIVE version of each minigame
+             has a highscore that is saved and can be improved (e.g. number of bunny killed, time survived)
+             difficulty start easy and increases on a timer (to a constant that is near impossible)
+             serenade: notes scroll and must play like guitar hero
+             shoot bunnies: survive as long as possible with increasing waves (bunnies can now hit from behind)
+             cow ride: survive as long as possible (will go gradually faster)
+             
 
-- Chapter 4: to make the lying game slightly more engaging:
-             put two platforms, one for True, one for False
-             then have the hero physically move/jump on one platform to make his choice
-             (or make them large switches to activate: wrong answer makes a snake fall that has to be killed)
+- Chapter 5: after rock-paper-scissors, the elder escapes
+             must do platform jumps in the sky (and clouds) to catch him (with a small hero/big head for better control)
+             ends with boss fight (the elders head at top of screen) 
+             with moving platforms, and waves of moving rock (vertical), scissors (horizontal), paper (diagonal)
+             to win the hero must survive all waves (and go hit the elder at top of screen)
+             
 
-- Chapter 4: add the stomping minigame with the bunny (just adapt it)
-             could add doom-like scary game in the forest
-             could add stomping minigame with bunny (bunny demultiplies, jumps on hero, hero jumps on all bunnies)
-             could add stomping minigame combined with lying minigame: fight/avoid while using correct True/Wrong (e.g. go to either area).
+- Chapter 6: when meeting the sailor, must earn his trust by drinking together (reuse minigame draft)
+             must drink some number of glasses than him (a lot), but wasted meter is shorter so will end drunk
+             to win, must trow away own drink while sailor is not watching (else will drink triple)
 
-- Chapter 5: Add a minigame: maybe falling boulders when climbing the peak
-             could add stomping minigame combined with rockpaperscissors minigame: fight/avoid obstacles while using correct prompts
-            could make climbing minigame longer
-            should reuse the rps minigame later on (easy to adapt)
 
-- Chapter 6: should cannon and parachute hero into island (from the boat)
-             make minigame where has to aim the cannon (A,D), shoot (W)
-            then open parachute at the right time (S). Should fall vertically to correct area (the island)
-            should reuse the sneaking minigame later on (easy to adapt, e.g. in the villain's quarters)
+- Somewhere...: Add a game with parabolic shooting ? left-right to aim then shoot
+              e.g. naval battle with cannon against skeleton boat (turn by turn) when leaving skeleton island, 
+              or arc and bow for hunting
+             
 
-- Chapter 6: running cow game: can instead do vertical (like google dinosaur game)
-
-- Chapter 7: extend it reusing all games from previous chapter (e.g. sneak in villains room, etc...)
-- Chapter 7: boss fight, add ligntningbolts that villain can throw horizontally
-
-- Somewhere...: Add a game with parabolic shooting ?
-             can be done easily with naval battle and a cannon
-             (could have been arc and bow for hunting too)
-             or can be arc+bow on beach: multiple skeleton running from right to left (very slowly)
--Somewhere: recycle the breakfast drinking minigame
-            (change the animations)
-            e.g. use it to cut a rope, when the hero sneaks in castle and unties partner
-- Somewhere...: fps game with simple shooting + arrows to move
-            should be fairly simple to code, just enemies/items with small animations
-            and that are always facing the player (only scale and fliph them)
-
-Somwhere:
+- Somwhere:
   rewrite story parts  with twists:
     1) point of view changes (shortly tell story from villain, partner, bug point of view)
-    2) cut the chronology (like Pulp fiction type), justified by the book jumping between pages
+    2) cut the chronology (like Pulp fiction), justified by the book jumping between pages
     3) Add better character customization (influences text only):
       name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
 
 - Somewhere:
+- an iceberg, space station, time machine
 - medieval setting with a fight for the partner=princess
-- space setting (villain is the father?) (space element on everyone)
+- space station, the moon (space helmet on everyone)
+- a time machine (replay some former scenes)
 - the hero is an anti-hero. partner rescues the hero
 - parodie (they are "playing" their adventure)
 - the fish becomes a river spirit (is huge)
