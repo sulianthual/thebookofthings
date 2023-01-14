@@ -6121,7 +6121,7 @@ class obj_world_3dforest(obj_world):
         self.set3dworld()
         # Manage 2d elements:
         self.staticactor=obj_grandactor(self,(640,360))# things in front
-        self.staticactor.addpart("img2", draw.obj_image('crossershooter',(640,360),path='data/premade') )
+        self.staticactor.addpart("cross", draw.obj_image('crossershooter',(640,360),path='data/premade') )
         # self.staticactor.addpart("img", draw.obj_image('gun',(640+200,720),fliph=True,rotate=45) )
         # gun
         self.staticactor.addpart("gunwobble", draw.obj_animation('gunwobble','gun',(640+200,720)) )
@@ -6152,7 +6152,7 @@ class obj_world_3dforest(obj_world):
         self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(640,720-50),color=share.colors.instructions) )
         self.text_died=obj_grandactor(self,(640,360))# text always in front
         self.text_died.show=False
-        self.text_died.addpart('text1', draw.obj_textbox('you are dead',(640,150),fontsize='huge') )
+        self.text_died.addpart('text1', draw.obj_textbox('you are dead',(640,550),fontsize='huge') )
         self.text_exit=obj_grandactor(self,(640,360))# text always in front
         self.text_exit.show=False
         tempo ='['+share.datamanager.controlname('action')+': enter] '
@@ -6162,7 +6162,7 @@ class obj_world_3dforest(obj_world):
         self.text_rabbitsleft.addpart('text1', draw.obj_textbox('Rabbits left: ',(150,100),fontsize='medium') )
         self.text_victory=obj_grandactor(self,(640,360))# text always in front
         self.text_victory.show=False
-        self.text_victory.addpart('text1', draw.obj_textbox('Victory!',(640,150),fontsize='huge') )
+        self.text_victory.addpart('text1', draw.obj_textbox('Victory!',(640,100),fontsize='huge') )
         # SOUNDS
         self.soundshoot=draw.obj_sound('fishing_shoot')
         self.soundgunreload=draw.obj_sound('3dforest_gunreload')
@@ -6252,6 +6252,7 @@ class obj_world_3dforest(obj_world):
         self.isdeaddead=False# player has fallen to ground, show death message
         self.timerplayerdie=tool.obj_timer(100)# timer to fall on ground
         self.timerplayerisdead=tool.obj_timer(150)# timer when dead until end
+        self.freezeworld=False# freeze world for tutorial
     def setgun(self):
         self.maxbullets=5# max number of bullets
         self.bullets=self.maxbullets# number of bullets (max 5)
@@ -6265,7 +6266,7 @@ class obj_world_3dforest(obj_world):
         self.rabbitcount=0# how many rabbits total at a given time
         self.rabbittotalcount=0# how many rabbits generated over all time
         self.totalrabbitskilled=0
-        self.timerrabbits=tool.obj_timer(150)# generation time of new rabbits
+        self.timerrabbits=tool.obj_timer(50)# generation time of new rabbits
         self.timerrabbits.start()
         for i in range(self.startrabbits):# place first rabbits
             self.placerabbit()
@@ -6379,113 +6380,114 @@ class obj_world_3dforest(obj_world):
             self.gmy0=controls.gmy
             self.grabbedmouse=True
         super().update(controls)
-        # controls.setmouse(640,720)
-        #
-        if not self.isalive:# player is dying
-            if not self.isdeaddead:# player agonize (fall to ground)
-                if self.zp>0:
-                    self.zp-=0.014
-                # Look
-                if controls.gm2: self.op-=1.5
-                if controls.gm1: self.op+=1.5
-                # agonize
-                self.timerplayerdie.update()
-                if self.timerplayerdie.ring:
-                    self.text_died.show=True
-                    self.isdeaddead=True
-                    self.timerplayerisdead.start()
-            else:
-                self.timerplayerisdead.update()
-                if self.timerplayerisdead.ring:
-                    self.win=False# has not won
-                    self.done=True# exit world
-        else:# player is alive
-            # Update player coordinates
-            # Look+Strafe Mouse
-            if False:# strafe with keys, look with mouse (regular fps game)
-                self.op+=0.5*(self.gmx0-controls.gmx)
-                self.gmx0=controls.gmx
-                if controls.gr:
-                    self.xp+=0.03*tool.sin(self.op)
-                    self.yp+=-0.03*tool.cos(self.op)
-                if controls.gl:
-                    self.xp+=-0.03*tool.sin(self.op)
-                    self.yp+=0.03*tool.cos(self.op)
-                # Move
-                if controls.gu:
-                    self.xp+=0.06*tool.cos(self.op)
-                    self.yp+=0.06*tool.sin(self.op)
-                if controls.gd:
-                    self.xp+=-0.06*tool.cos(self.op)
-                    self.yp+=-0.06*tool.sin(self.op)
-            else:# look with mouse 1,2 strafe with keys, shoot with space
-                # Look
-                if controls.gm2: self.op-=1.5
-                if controls.gm1: self.op+=1.5
-                # Strafe
-                if controls.gr:
-                    self.xp+=0.03*tool.sin(self.op)
-                    self.yp+=-0.03*tool.cos(self.op)
-                if controls.gl:
-                    self.xp+=-0.03*tool.sin(self.op)
-                    self.yp+=0.03*tool.cos(self.op)
-                # Move
-                if controls.gu:
-                    self.xp+=0.06*tool.cos(self.op)
-                    self.yp+=0.06*tool.sin(self.op)
-                if controls.gd:
-                    self.xp+=-0.06*tool.cos(self.op)
-                    self.yp+=-0.06*tool.sin(self.op)
-            # Manage Gun
-            if self.hasgun:
-                # delay between shots
-                if self.reloading:
-                    self.reloadtimer.update()
-                    if self.reloadtimer.ring:
-                        self.reloading=False
-                        if self.bullets<1:# out of bullets
-                            self.bigreloading=True
-                            self.soundgunreload.play(loop=True)
-                            self.bigreloadtimer.start()
-                            self.staticactor.dict["gunshoot"].show=False
-                            self.staticactor.dict["gunreload"].rewind()
-                            self.staticactor.dict["gunreload"].show=True
-                        else:# still some bullets
-                            self.staticactor.dict["gunshoot"].show=False
+        # MANAGE PLAYER
+        if not self.freezeworld:
+            #
+            if not self.isalive:# player is dying
+                if not self.isdeaddead:# player agonize (fall to ground)
+                    if self.zp>0:
+                        self.zp-=0.014
+                    # Look
+                    if controls.gm2: self.op-=1.5
+                    if controls.gm1: self.op+=1.5
+                    # agonize
+                    self.timerplayerdie.update()
+                    if self.timerplayerdie.ring:
+                        self.text_died.show=True
+                        self.isdeaddead=True
+                        self.timerplayerisdead.start()
+                else:
+                    self.timerplayerisdead.update()
+                    if self.timerplayerisdead.ring:
+                        self.win=False# has not won
+                        self.done=True# exit world
+            else:# player is alive
+                # Update player coordinates
+                # Look+Strafe Mouse
+                if False:# strafe with keys, look with mouse (regular fps game)
+                    self.op+=0.5*(self.gmx0-controls.gmx)
+                    self.gmx0=controls.gmx
+                    if controls.gr:
+                        self.xp+=0.03*tool.sin(self.op)
+                        self.yp+=-0.03*tool.cos(self.op)
+                    if controls.gl:
+                        self.xp+=-0.03*tool.sin(self.op)
+                        self.yp+=0.03*tool.cos(self.op)
+                    # Move
+                    if controls.gu:
+                        self.xp+=0.06*tool.cos(self.op)
+                        self.yp+=0.06*tool.sin(self.op)
+                    if controls.gd:
+                        self.xp+=-0.06*tool.cos(self.op)
+                        self.yp+=-0.06*tool.sin(self.op)
+                else:# look with mouse 1,2 strafe with keys, shoot with space
+                    # Look
+                    if controls.gm2: self.op-=1.5
+                    if controls.gm1: self.op+=1.5
+                    # Strafe
+                    if controls.gr:
+                        self.xp+=0.03*tool.sin(self.op)
+                        self.yp+=-0.03*tool.cos(self.op)
+                    if controls.gl:
+                        self.xp+=-0.03*tool.sin(self.op)
+                        self.yp+=0.03*tool.cos(self.op)
+                    # Move
+                    if controls.gu:
+                        self.xp+=0.06*tool.cos(self.op)
+                        self.yp+=0.06*tool.sin(self.op)
+                    if controls.gd:
+                        self.xp+=-0.06*tool.cos(self.op)
+                        self.yp+=-0.06*tool.sin(self.op)
+                # Manage Gun
+                if self.hasgun:
+                    # delay between shots
+                    if self.reloading:
+                        self.reloadtimer.update()
+                        if self.reloadtimer.ring:
+                            self.reloading=False
+                            if self.bullets<1:# out of bullets
+                                self.bigreloading=True
+                                self.soundgunreload.play(loop=True)
+                                self.bigreloadtimer.start()
+                                self.staticactor.dict["gunshoot"].show=False
+                                self.staticactor.dict["gunreload"].rewind()
+                                self.staticactor.dict["gunreload"].show=True
+                            else:# still some bullets
+                                self.staticactor.dict["gunshoot"].show=False
+                                self.staticactor.dict["gunwobble"].rewind()
+                                self.staticactor.dict["gunwobble"].show=True
+                    # Reload when out of bullets
+                    if self.bigreloading:
+                        self.bigreloadtimer.update()
+                        if self.bigreloadtimer.ring:
+                            self.bigreloading=False
+                            self.bullets=self.maxbullets
+                            self.updatebullets()
+                            self.soundgunreload.stop()
+                            self.staticactor.dict["gunreload"].show=False
                             self.staticactor.dict["gunwobble"].rewind()
                             self.staticactor.dict["gunwobble"].show=True
-                # Reload when out of bullets
-                if self.bigreloading:
-                    self.bigreloadtimer.update()
-                    if self.bigreloadtimer.ring:
-                        self.bigreloading=False
-                        self.bullets=self.maxbullets
+                    # Shoot
+                    # self.playershoot=not self.reloading and not self.bigreloading and controls.gm1 and controls.gm1c
+                    self.playershoot=not self.reloading and not self.bigreloading and controls.ga
+                    if self.playershoot:
+                        self.soundshoot.play()
+                        self.bullets-=1
+                        self.reloading=True
+                        self.reloadtimer.start()
+                        self.staticactor.dict["gunwobble"].show=False
+                        self.staticactor.dict["gunshoot"].rewind()
+                        self.staticactor.dict["gunshoot"].show=True
                         self.updatebullets()
-                        self.soundgunreload.stop()
-                        self.staticactor.dict["gunreload"].show=False
-                        self.staticactor.dict["gunwobble"].rewind()
-                        self.staticactor.dict["gunwobble"].show=True
-                # Shoot
-                # self.playershoot=not self.reloading and not self.bigreloading and controls.gm1 and controls.gm1c
-                self.playershoot=not self.reloading and not self.bigreloading and controls.ga
-                if self.playershoot:
-                    self.soundshoot.play()
-                    self.bullets-=1
-                    self.reloading=True
-                    self.reloadtimer.start()
-                    self.staticactor.dict["gunwobble"].show=False
-                    self.staticactor.dict["gunshoot"].rewind()
-                    self.staticactor.dict["gunshoot"].show=True
-                    self.updatebullets()
-        # control boundaries
-        if self.xp>self.xpmax: self.xp=self.xpmax
-        if self.xp<self.xpmin: self.xp=self.xpmin
-        if self.yp>self.ypmax: self.yp=self.ypmax
-        if self.yp<self.ypmin: self.yp=self.ypmin
+            # control boundaries
+            if self.xp>self.xpmax: self.xp=self.xpmax
+            if self.xp<self.xpmin: self.xp=self.xpmin
+            if self.yp>self.ypmax: self.yp=self.ypmax
+            if self.yp<self.ypmin: self.yp=self.ypmin
         #
 
         ###################
-        # Update all elements and make a render of world
+        # UPDATE AND RENDER 3D ELEMENTS
         lt0=False# shortest distance to any attacker
         for cc,act in enumerate(self.actor3dlist):# all 3d actors
             # Compare to player position and vision
@@ -6494,201 +6496,203 @@ class obj_world_3dforest(obj_world):
             ot=tool.angle((self.xp,self.yp),(act.x3d,act.y3d))# horizontal angle
             wt=tool.angle((0,self.zp),(lt,act.z3d))# vertical angle
             #
-            #######
-            # Pickup items
-            if act.type3d=='pickup':
-                if act.subtype3d=='gun':# get the gun
-                    if lt<0.5:# picked up
-                        act.killswitch=1# remove it
-                        self.hasgun=True
-                        # update instructions
-                        pass_=self.text_undone.dict['text1'].text
-                        pass2_=pass_+'['+share.datamanager.controlname('action')+': shoot] '
-                        self.text_undone.dict['text1'].replacetext(pass2_)
-                        # start with big reloading
-                        self.bigreloading=True
-                        self.soundgunreload.play(loop=True)
-                        self.bigreloadtimer.start()
-                        self.staticactor.dict["gunreload"].rewind()
-                        self.staticactor.dict["gunreload"].show=True
-                elif act.subtype3d=='saxophone':# get the sax
-                    if lt<0.5:# picked up
-                        act.killswitch=1# remove it
-                        self.hassax=True
-                        self.staticactor.dict["saxwobble"].rewind()
-                        self.staticactor.dict["saxwobble"].show=True
-                elif act.subtype3d=='exit':# exit the level (press action)
-                    if lt<1.3 and lt>0.5:
-                        if tool.cos(ot-self.op)>0.9:
-                            self.text_exit.show=True
-                            if controls.ga and controls.gac:
-                                self.done=True# exit level
-                                self.win=True
-                        else:
-                            self.text_exit.show=False
-                    else:
-                        self.text_exit.show=False
-                elif act.subtype3d=='exitgun':# exit the level with gun (press action)
-                    if lt<1.3 and lt>0.5:
-                        if tool.cos(ot-self.op)>0.9:
-                            self.text_exit.show=True
-                            if controls.ga and controls.gac and self.hasgun:
-                                self.done=True# exit level
-                                self.win=True
-                        else:
-                            self.text_exit.show=False
-                    else:
-                        self.text_exit.show=False
-                elif act.subtype3d=='exitsax':# exit the level with gun (press action)
-                    if lt<1.3 and lt>0.5:
-                        # if abs(lt*tool.sin(ot-self.op))<0.2:
-                        if tool.cos(ot-self.op)>0.9:
-                            self.text_exit.show=True
-                            if controls.ga and controls.gac and self.hassax:
-                                self.done=True# exit level
-                                self.win=True
-                        else:
-                            self.text_exit.show=False
-                    else:
-                        self.text_exit.show=False
-
-
-            #######
-            # Rabbits (a type of enemy)
-            if act.type3d=='rabbit':
-                # Regular bunny (hits and dies)
-                if not act.isattacking: # not attacking
-                    if tool.cos(ot-self.op)<0.7:#0.5,1 take slightly above
-                        # Outside vision of player just place
-                        # move laterally but much faster
-                        arate=0.01*lt
-                        if act.fliph3d:
-                            act.x3d-=arate*tool.sin(ot)
-                            act.y3d+=arate*tool.cos(ot)
-                        else:
-                            act.x3d+=arate*tool.sin(ot)
-                            act.y3d-=arate*tool.cos(ot)
-                        # back up if too close
-                        if lt>5:
-                            # moves towards the player
-                            act.x3d-=0.01*tool.cos(ot)
-                            act.y3d-=0.01*tool.sin(ot)
-                        elif lt<2.5:
-                            # moves back from the player
-                            act.x3d+=0.04*tool.cos(ot)
-                            act.y3d+=0.04*tool.sin(ot)
-                        else:
-                            # moves towards the player (extremely slowly)
-                            act.x3d-=0.001*tool.cos(ot)
-                            act.y3d-=0.001*tool.sin(ot)
-                    else:
-                        # Within vision of player
-                        if lt>2:# moves slowly towards player
-                            # moves towards the player
-                            act.x3d-=0.01*tool.cos(ot)
-                            act.y3d-=0.01*tool.sin(ot)
-
-                            # move laterally (depending on its fliph)
-                            if lt>3:
-                                arate=0.01
+            # UPDATE ACTORS
+            if not self.freezeworld:
+                #######
+                # Pickup items
+                if act.type3d=='pickup':
+                    if act.subtype3d=='gun':# get the gun
+                        if lt<0.5:# picked up
+                            act.killswitch=1# remove it
+                            self.hasgun=True
+                            # update instructions
+                            pass_=self.text_undone.dict['text1'].text
+                            pass2_=pass_+'['+share.datamanager.controlname('action')+': shoot] '
+                            self.text_undone.dict['text1'].replacetext(pass2_)
+                            # start with big reloading
+                            self.bigreloading=True
+                            self.soundgunreload.play(loop=True)
+                            self.bigreloadtimer.start()
+                            self.staticactor.dict["gunreload"].rewind()
+                            self.staticactor.dict["gunreload"].show=True
+                    elif act.subtype3d=='saxophone':# get the sax
+                        if lt<0.5:# picked up
+                            act.killswitch=1# remove it
+                            self.hassax=True
+                            self.staticactor.dict["saxwobble"].rewind()
+                            self.staticactor.dict["saxwobble"].show=True
+                    elif act.subtype3d=='exit':# exit the level (press action)
+                        if lt<1.3 and lt>0.5:
+                            if tool.cos(ot-self.op)>0.9:
+                                self.text_exit.show=True
+                                if controls.ga and controls.gac:
+                                    self.done=True# exit level
+                                    self.win=True
                             else:
-                                arate=0.005
+                                self.text_exit.show=False
+                        else:
+                            self.text_exit.show=False
+                    elif act.subtype3d=='exitgun':# exit the level with gun (press action)
+                        if lt<1.3 and lt>0.5:
+                            if tool.cos(ot-self.op)>0.9:
+                                self.text_exit.show=True
+                                if controls.ga and controls.gac and self.hasgun:
+                                    self.done=True# exit level
+                                    self.win=True
+                            else:
+                                self.text_exit.show=False
+                        else:
+                            self.text_exit.show=False
+                    elif act.subtype3d=='exitsax':# exit the level with gun (press action)
+                        if lt<1.3 and lt>0.5:
+                            # if abs(lt*tool.sin(ot-self.op))<0.2:
+                            if tool.cos(ot-self.op)>0.9:
+                                self.text_exit.show=True
+                                if controls.ga and controls.gac and self.hassax:
+                                    self.done=True# exit level
+                                    self.win=True
+                            else:
+                                self.text_exit.show=False
+                        else:
+                            self.text_exit.show=False
+
+
+                #######
+                # Rabbits (a type of enemy)
+                if act.type3d=='rabbit':
+                    # Regular bunny (hits and dies)
+                    if not act.isattacking: # not attacking
+                        if tool.cos(ot-self.op)<0.7:#0.5,1 take slightly above
+                            # Outside vision of player just place
+                            # move laterally but much faster
+                            arate=0.01*lt
                             if act.fliph3d:
                                 act.x3d-=arate*tool.sin(ot)
                                 act.y3d+=arate*tool.cos(ot)
                             else:
                                 act.x3d+=arate*tool.sin(ot)
                                 act.y3d-=arate*tool.cos(ot)
-                            # small random chance of fliph
-                            randfliphrabb_=tool.randint(0,500)
-                            if randfliphrabb_>500-2:
-                                act.dict["img"].fliph()
-                                act.fliph3d=not act.fliph3d
+                            # back up if too close
+                            if lt>5:
+                                # moves towards the player
+                                act.x3d-=0.01*tool.cos(ot)
+                                act.y3d-=0.01*tool.sin(ot)
+                            elif lt<2.5:
+                                # moves back from the player
+                                act.x3d+=0.04*tool.cos(ot)
+                                act.y3d+=0.04*tool.sin(ot)
+                            else:
+                                # moves towards the player (extremely slowly)
+                                act.x3d-=0.001*tool.cos(ot)
+                                act.y3d-=0.001*tool.sin(ot)
                         else:
-                            # start attacking
-                            act.isattacking=True
-                            self.soundbunnyscream.play()
-                            act.timer3d.start()# start attack timer
-                            act.attackangle=ot# save attack angle
-                else:# is attacking
-                    if not act.isreloading:
-                        if lt>0.5:# sprint towards player (but keep initial direction)
-                            act.x3d-=0.02*tool.cos(act.attackangle)
-                            act.y3d-=0.02*tool.sin(act.attackangle)
+                            # Within vision of player
+                            if lt>2:# moves slowly towards player
+                                # moves towards the player
+                                act.x3d-=0.01*tool.cos(ot)
+                                act.y3d-=0.01*tool.sin(ot)
+
+                                # move laterally (depending on its fliph)
+                                if lt>3:
+                                    arate=0.01
+                                else:
+                                    arate=0.005
+                                if act.fliph3d:
+                                    act.x3d-=arate*tool.sin(ot)
+                                    act.y3d+=arate*tool.cos(ot)
+                                else:
+                                    act.x3d+=arate*tool.sin(ot)
+                                    act.y3d-=arate*tool.cos(ot)
+                                # small random chance of fliph
+                                randfliphrabb_=tool.randint(0,500)
+                                if randfliphrabb_>500-2:
+                                    act.dict["img"].fliph()
+                                    act.fliph3d=not act.fliph3d
+                            else:
+                                # start attacking
+                                act.isattacking=True
+                                self.soundbunnyscream.play()
+                                act.timer3d.start()# start attack timer
+                                act.attackangle=ot# save attack angle
+                    else:# is attacking
+                        if not act.isreloading:
+                            if lt>0.5:# sprint towards player (but keep initial direction)
+                                act.x3d-=0.02*tool.cos(act.attackangle)
+                                act.y3d-=0.02*tool.sin(act.attackangle)
+                                act.timer3d.update()
+                                if act.timer3d.ring:# finish attack
+                                    act.isattacking=False
+                            else:# reached the player
+                                act.isreloading=True# enemy "reloads" attack
+                                act.timer3d.start()# reuse same timer
+                                self.health-=1# damage player
+                                # act.killswitch=1# Kill element (tag for later)
+                                # check player health
+                                if self.health>0:
+                                    self.soundbunnystrike.play()
+                                    self.soundhit.play()
+                                    self.updatehealth()
+                                else:
+                                    self.soundbunnystrike.play()
+                                    self.killplayer()
+                        else:# is reloading (after succesfull attack)
+                            # moves back from player
+                            act.x3d+=0.01*tool.cos(ot)
+                            act.y3d+=0.01*tool.sin(ot)
+                            # move laterally (depending on its fliph)
+                            if act.fliph3d:
+                                act.x3d-=0.007*tool.sin(ot)
+                                act.y3d+=0.007*tool.cos(ot)
+                            else:
+                                act.x3d+=0.007*tool.sin(ot)
+                                act.y3d-=0.007*tool.cos(ot)
                             act.timer3d.update()
                             if act.timer3d.ring:# finish attack
-                                act.isattacking=False
-                        else:# reached the player
-                            act.isreloading=True# enemy "reloads" attack
-                            act.timer3d.start()# reuse same timer
-                            self.health-=1# damage player
-                            # act.killswitch=1# Kill element (tag for later)
-                            # check player health
-                            if self.health>0:
-                                self.soundbunnystrike.play()
-                                self.soundhit.play()
-                                self.updatehealth()
-                            else:
-                                self.soundbunnystrike.play()
-                                self.killplayer()
-                    else:# is reloading (after succesfull attack)
-                        # moves back from player
+                                act.isattacking=False# return to non attack state
+                                act.isreloading=False
+                    # If rabbit shot, mark target (only closest will die)
+                    if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2 and lt<7:
+                        act.shotswitch=1# shot element (tag for later, we will only kill closest one)
+                        act.distanceplayer=lt# store distance to player
+
+                #######
+                # Big Rabbit (slowly moves to player and kills him)
+                if act.type3d=='bigrabbit':
+                    if not self.isalive:
+                        # if dead slowly retreat
                         act.x3d+=0.01*tool.cos(ot)
                         act.y3d+=0.01*tool.sin(ot)
-                        # move laterally (depending on its fliph)
-                        if act.fliph3d:
-                            act.x3d-=0.007*tool.sin(ot)
-                            act.y3d+=0.007*tool.cos(ot)
-                        else:
-                            act.x3d+=0.007*tool.sin(ot)
-                            act.y3d-=0.007*tool.cos(ot)
-                        act.timer3d.update()
-                        if act.timer3d.ring:# finish attack
-                            act.isattacking=False# return to non attack state
-                            act.isreloading=False
-                # If rabbit shot, mark target (only closest will die)
-                if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2:
-                    act.shotswitch=1# shot element (tag for later, we will only kill closest one)
-                    act.distanceplayer=lt# store distance to player
-
-            #######
-            # Big Rabbit (slowly moves to player and kills him)
-            if act.type3d=='bigrabbit':
-                if not self.isalive:
-                    # if dead slowly retreat
-                    act.x3d+=0.01*tool.cos(ot)
-                    act.y3d+=0.01*tool.sin(ot)
-                    if act.isattacking:# reuse same key for laugh
-                        if lt>1:
-                            act.isattacking=False
-                            self.soundbunnyhaha.play()
-                else:
-                    if not act.isattacking: # not attacking
-                        if lt>2:# moves slowly towards player
-                            # moves towards the player
-                            act.x3d-=0.01*tool.cos(ot)
-                            act.y3d-=0.01*tool.sin(ot)
-                        else:
-                            # start attacking
-                            act.isattacking=True
-                            self.soundbunnyscream.play()
-                            act.timer3d.start()# start attack timer
-                            act.attackangle=ot# save attack angle
-                    else:# is attacking
-                        if lt>0.5:# sprint towards player (but keep initial direction)
-                            act.x3d-=0.02*tool.cos(act.attackangle)
-                            act.y3d-=0.02*tool.sin(act.attackangle)
-                            act.timer3d.update()
-                            if act.timer3d.ring:# finish attack
+                        if act.isattacking:# reuse same key for laugh
+                            if lt>1:
                                 act.isattacking=False
-                        else:# reached the player
-                            self.soundbunnystrike.play()
-                            self.killplayer()# kill the player
-                # If rabbit shot, laugh
-                if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2:
-                    self.soundbunnyhaha.play()
-                    # place a poof that will disappear
-                    self.placetree('poof',self.xp+lt*tool.cos(self.op),self.yp+lt*tool.sin(self.op),1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
+                                self.soundbunnyhaha.play()
+                    else:
+                        if not act.isattacking: # not attacking
+                            if lt>2:# moves slowly towards player
+                                # moves towards the player
+                                act.x3d-=0.01*tool.cos(ot)
+                                act.y3d-=0.01*tool.sin(ot)
+                            else:
+                                # start attacking
+                                act.isattacking=True
+                                self.soundbunnyscream.play()
+                                act.timer3d.start()# start attack timer
+                                act.attackangle=ot# save attack angle
+                        else:# is attacking
+                            if lt>0.5:# sprint towards player (but keep initial direction)
+                                act.x3d-=0.02*tool.cos(act.attackangle)
+                                act.y3d-=0.02*tool.sin(act.attackangle)
+                                act.timer3d.update()
+                                if act.timer3d.ring:# finish attack
+                                    act.isattacking=False
+                            else:# reached the player
+                                self.soundbunnystrike.play()
+                                self.killplayer()# kill the player
+                    # If rabbit shot, laugh
+                    if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2 and lt<7:
+                        self.soundbunnyhaha.play()
+                        # place a poof that will disappear
+                        self.placetree('poof',self.xp+lt*tool.cos(self.op),self.yp+lt*tool.sin(self.op),1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
 
             #######
             # Display any element within field of vision (and not too far or close)
@@ -6751,6 +6755,11 @@ class obj_world_3dforest(obj_world):
 
 # enter the forest
 class obj_world_3dforest_enter(obj_world_3dforest):
+    def setup(self):
+        super().setup()
+        # hide health bar
+        for i in range(1,self.maxhealth+1):
+            self.staticactor.dict["health"+str(i)].show=False
     # Set 3d world level
     def set3dworld(self):
         # mouse for 3d
@@ -6799,6 +6808,11 @@ class obj_world_3dforest_enter(obj_world_3dforest):
 
 # keep going in deeper forest
 class obj_world_3dforest_enter2(obj_world_3dforest):
+    def setup(self):
+        super().setup()
+        # hide health bar
+        for i in range(1,self.maxhealth+1):
+            self.staticactor.dict["health"+str(i)].show=False
     # Set 3d world level
     def set3dworld(self):
         # mouse for 3d
@@ -6860,6 +6874,9 @@ class obj_world_3dforest_checkcave(obj_world_3dforest):
         # replace exit text
         tempo ='['+share.datamanager.controlname('action')+': check] '
         self.text_exit.dict['text1'].replacetext(tempo)
+        # hide health bar
+        for i in range(1,self.maxhealth+1):
+            self.staticactor.dict["health"+str(i)].show=False
     def set3dworld(self):
         # mouse for 3d
         self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)

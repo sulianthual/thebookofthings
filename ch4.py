@@ -393,7 +393,7 @@ class obj_scene_ch4p11(page.obj_chapterpage):
                 # ' met an extremely cute ',('bunny',share.colors.bunny),'." ',\
                 # 'Awww, how nice said the book of things. Choose a name for the ',('bunny',share.colors.bunny),'. ',\
                 ' met a ',('bunny',share.colors.bunny),'." ',\
-                'It looked pretty mean. Choose a name for the ',('bunny',share.colors.bunny),'. ',\
+                'It looked pretty mean and was wearing a nice outfit. Choose a name for the ',('bunny',share.colors.bunny),'. ',\
                    ]
         yref=260
         dyref=120
@@ -441,7 +441,7 @@ class obj_scene_ch4p12a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p13())
     def setup(self):
         self.text=[' ']
-        self.addpart( draw.obj_drawing('bunnybodydraw',(640,400+98-100),legend='draw the bunny\'s body (facing right)',shadow=(300,233)) )
+        self.addpart( draw.obj_drawing('bunnybodydraw',(640,400+98-100),legend='draw the bunny\'s outfit and body (facing right)',shadow=(300,233)) )
         self.addpart( draw.obj_image('bunnyhead',(640,400-225-100),scale=0.75) )
         #
         self.addpart( draw.obj_music('ch4') )
@@ -563,10 +563,10 @@ class obj_scene_ch4p16(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p15())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16a())
+        share.scenemanager.switchscene(obj_scene_ch4p16tuto())
     def setup(self):
         self.text=[\
-                'And now I... will... kill... you...',\
+                'And now, ',('I... will... kill... you...',share.colors.red),\
                    ]
         animation1=draw.obj_animation('ch4_bunnywillendyou','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
@@ -576,9 +576,47 @@ class obj_scene_ch4p16(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('bunny') )
 
-class obj_scene_ch4p16a(page.obj_chapterpage):
+class obj_scene_ch4p16tuto(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16tuto2())
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=['This is your health. Dont loose it or you will ',('die',share.colors.red),'.']
+        self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
+        self.world.freezeworld=True# freeze the world
+        self.world.staticactor.dict["cross"].show=False# hide cross
+        self.addpart(self.world)
+        self.addpart(draw.obj_image('show1',(900,200),path='data/premade',fliph=True,flipv=True))
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p16tuto2(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16a())
+    def triggernextpage(self,controls):
+        return controls.ga and controls.gac
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def postpostsetup(self):# foreground do not show mouse pointer
+        pass
+    def setup(self):
+        tempo='['+share.datamanager.controlname('action')+']'
+        self.text=[' Press ',\
+                    (tempo,share.colors.instructions),\
+                    ' when you are ready. ']
+        self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
+        self.world.freezeworld=True# freeze the world
+        self.world.staticactor.dict["cross"].show=False# hide cross
+        self.addpart(self.world)
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,200),color=share.colors.instructions) )
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p16a(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16tuto2())
     def nextpage(self):
         if share.devmode or self.world.win:
             share.scenemanager.switchscene(obj_scene_ch4p16b())
@@ -852,7 +890,7 @@ class obj_scene_ch4p16h(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
         animation1.addsound( "bunny5", [19, 138],skip=1)
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('bunny') )
 
 class obj_scene_ch4p16i(page.obj_chapterpage):
     def prevpage(self):
@@ -1044,8 +1082,11 @@ class obj_scene_ch4p16o(page.obj_chapterpage):
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
         animation1.addsound( "bunny1", [327],skip=1 )
         animation1.addsound( "bunny4", [213, 262, 354] )
-        animation1.addsound( "bunny5", [140] )
-        animation1.addsound( "revealscary", [1])  #
+        animation1.addsound( "unlock", [140])
+        #
+        self.sound=draw.obj_sound('revealscary')
+        self.addpart(self.sound)
+        self.sound.play()
         #
         self.addpart( draw.obj_music('tension') )
 
