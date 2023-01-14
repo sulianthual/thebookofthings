@@ -338,7 +338,7 @@ class obj_scene_ch4p10a(page.obj_chapterpage):
         pass
     def setup(self):
         share.datamanager.setbookmark('ch4_enterforest')
-        self.text=['enter the forest']
+        self.text=['go to the ',('marker',share.colors.red),'.']
         self.world=world.obj_world_3dforest_enter(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('ch4') )
@@ -355,7 +355,7 @@ class obj_scene_ch4p10b(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        self.text=['keep going']
+        self.text=['go to the next ',('marker',share.colors.red),'.']
         self.world=world.obj_world_3dforest_enter2(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('ch4') )
@@ -372,7 +372,7 @@ class obj_scene_ch4p10c(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        self.text=['check the magical cave']
+        self.text=['check the ',('magical cave',share.colors.red),'.']
         self.world=world.obj_world_3dforest_checkcave(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('ch4') )
@@ -591,7 +591,7 @@ class obj_scene_ch4p16a(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        self.text=['run away!!!']
+        self.text=['Find an ',('exit',share.colors.red),'.']
         self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('bunny') )
@@ -636,7 +636,6 @@ class obj_scene_ch4p16b(page.obj_chapterpage):
                 ', its a ',('gun',share.colors.item),' right there! Better grab it.'\
                    ]
         self.addpart( draw.obj_image('gun',(640,500), scale=0.5,rotate=90) )
-        # self.addpart(draw.obj_imageplacer(self,'herobase','tree','bush'))self.addpart( draw.obj_image('herobase',(1035,320),scale=0.54,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('bush',(841,376),scale=0.37,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(361,418),scale=0.55,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('bush',(143,511),scale=0.45,rotate=0,fliph=False,flipv=False) )
@@ -655,7 +654,7 @@ class obj_scene_ch4p16b(page.obj_chapterpage):
 
 class obj_scene_ch4p16c(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16a())
+        share.scenemanager.switchscene(obj_scene_ch4p16b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16d())
     def triggernextpage(self,controls):
@@ -665,7 +664,7 @@ class obj_scene_ch4p16c(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        self.text=['Get the gun.']
+        self.text=['Get the ',('gun',share.colors.item),'.']
         self.world=world.obj_world_3dforest_findgun(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('bunny') )
@@ -686,7 +685,7 @@ class obj_scene_ch4p16d(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        self.text=['shoot the rabbit']
+        self.text=['shoot the ',('bunny',share.colors.bunny),'.']
         self.world=world.obj_world_3dforest_rabbitshootone(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('bunny') )
@@ -794,7 +793,7 @@ class obj_scene_ch4p16g(page.obj_chapterpage):
         pass
     def setup(self):
         share.datamanager.setbookmark('ch4_shootrabbits')
-        self.text=['shoot all the rabbits']
+        self.text=['shoot all the ',('bunnies',share.colors.bunny),'.']
         self.world=world.obj_world_3dforest_rabbitshoot(self)# fishing mini-game
         self.addpart(self.world)
         self.addpart( draw.obj_music('bunny') )
@@ -807,7 +806,7 @@ class obj_scene_ch4p16gdeath(page.obj_chapterpage):
         if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
             share.scenemanager.switchscene(obj_scene_ch4p16g())
         else:
-            share.scenemanager.switchscene(obj_scene_ch4p16h())# skip
+            share.scenemanager.switchscene(obj_scene_ch4p16i())# skip
     def textboxset(self):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
@@ -831,10 +830,11 @@ class obj_scene_ch4p16h(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16g())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p17())
+        share.scenemanager.switchscene(obj_scene_ch4p16i())
     def setup(self):
         self.text=[\
-                'Fine you win this time, lets move on said the ',('bunny',share.colors.bunny),'.',\
+                'No no no noooo, said the ',('bunny',share.colors.bunny),'.',\
+                'This is humiliating. '\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'herobase','bunnybase','tree','bush','sun','cave'))
         self.addpart( draw.obj_image('herobase',(261,390),scale=0.59,rotate=0,fliph=False,flipv=False) )
@@ -854,9 +854,221 @@ class obj_scene_ch4p16h(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('tension') )
 
-class obj_scene_ch4p17(page.obj_chapterpage):
+class obj_scene_ch4p16i(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16h())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16j())
+    def setup(self):
+        self.text=[\
+                'But that is fine. Now witness my final form, Expand and Destroy!'\
+                   ]
+        # self.addpart(draw.obj_imageplacer(self,'tree','bush','sun','cave'))
+        self.addpart( draw.obj_image('tree',(290,477),scale=0.67,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(97,486),scale=0.46,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('cave',(1148,504),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(933,502),scale=0.41,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('sun',(1073,176),scale=0.41,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch4_bunnygrwos','bunnybase',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny2", [280] )
+        animation1.addsound( "bunny4", [50, 174] )
+        # animation1.addsound( "bunny5", [19, 138],skip=1)
+        #
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p16j(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16i())
+    def nextpage(self):
+        if share.devmode or self.world.win:
+            share.scenemanager.switchscene(obj_scene_ch4p16k())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch4p16jdeath())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def postpostsetup(self):# foreground do not show mouse pointer
+        pass
+    def setup(self):
+        self.text=['find an ',('exit',share.colors.red),'.']
+        self.world=world.obj_world_3dforest_rabbitescapebig(self)
+        self.addpart(self.world)
+        self.addpart( draw.obj_music('bunny') )
+
+
+class obj_scene_ch4p16jdeath(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16j())
+    def nextpage(self):
+        if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch4p16j())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch4p16k())# skip
+    def textboxset(self):
+        self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
+    def setup(self):
+        self.text=[\
+                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                'Well, that doesnt sound right, said the book of things. ',\
+                'Now go back and try to act more "heroic"',\
+                ' (or you can always abandon and skip the fight). ',\
+                   ]
+        self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
+        self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
+        y1=200
+        textchoice=draw.obj_textchoice('choice_yesno',default='yes')
+        textchoice.addchoice('Retry','yes',(500,y1))
+        textchoice.addchoice('Abandon (skip)','no',(820,y1))
+        self.addpart( textchoice )
+        #
+        self.addpart( draw.obj_music('tension') )
+
+class obj_scene_ch4p16k(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16j())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16l())
+    def setup(self):
+        self.text=[\
+                ('{heroname}',share.colors.hero),' valiantly retreated into the bushes once more. ',\
+                'Look, said the ',('{bug}',share.colors.bug),\
+                ', this time its the ',('saxophone',share.colors.item),'! What could it possibly do.'\
+                   ]
+        # self.addpart(draw.obj_imageplacer(self,'saxophone','tree','bush'))
+        self.addpart( draw.obj_image('saxophone',(624,441),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(841,376),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(361,418),scale=0.55,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(143,511),scale=0.45,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(517,235),scale=0.45,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(311,243),scale=0.45,rotate=0,fliph=True,flipv=False) )
+        animation1=draw.obj_animation('ch4_heroinbushes','herobase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch4_buginbushes','bug',(640,360),record=False,sync=animation1)
+        self.addpart( animation2 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p16l(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16k())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16m())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def postpostsetup(self):# foreground do not show mouse pointer
+        pass
+    def setup(self):
+        self.text=['Get the ',('saxophone',share.colors.item),'.']
+        self.world=world.obj_world_3dforest_findsax(self)# fishing mini-game
+        self.addpart(self.world)
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p16m(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16l())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16n())
+    def setup(self):
+        self.text=[\
+                ('{heroname}',share.colors.hero),' came back with the ',('saxophone',share.colors.item),\
+                '. And what exactly are you gonna do with that, said ',('{bunnyname}',share.colors.bunny),\
+                '. I guess you can play a tune while dying.'\
+                   ]
+        # self.addpart(draw.obj_imageplacer(self,'herobase','bunnybase','tree','bush','sun','cave','saxophone'))
+        self.addpart( draw.obj_image('cave',(1142,468),scale=0.57,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('herobase',(168,502),scale=0.45,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sun',(388,263),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(389,448),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(512,499),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('saxophone',(259,509),scale=0.28,rotate=4,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch4_bigbunnydubious','bunnybase',(640,360),record=False)
+        self.addpart( animation1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny2", [241, 359],skip=1 )
+        animation1.addsound( "bunny5", [92],skip=1)
+        # animation1.addsound( "revealscary", [1],skip=1 )
+        #
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p16n(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16m())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16o())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def soundnextpage(self):
+        pass# no sound
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def setup(self):
+        tempo='['+share.datamanager.controlname('arrows')+']'
+        self.text=[\
+                   'Play the melody with the '+tempo+'. '\
+                   ]
+        self.world=world.obj_world_serenade(self,bigrabbit=True)# serenade mini-game
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music(None) )
+
+class obj_scene_ch4p16o(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16n())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16p())
+    def setup(self):
+        self.text=[\
+                'what, what, said ',('{bunnyname}',share.colors.bunny),\
+                '. This is so cute! I cannot be mad at you anymore, I am too delighted. '\
+                   ]
+        # self.addpart(draw.obj_imageplacer(self,'herobase','bunnybase','tree','bush','sun','cave','saxophone'))
+        self.addpart( draw.obj_image('cave',(1142,468),scale=0.57,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('herobase',(168,502),scale=0.45,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sun',(388,263),scale=0.41,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(389,448),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(512,499),scale=0.43,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('saxophone',(259,509),scale=0.28,rotate=4,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch4_bigbunnyhappy','bunnybase',(640,360),record=False)
+        self.addpart( animation1 )
+        animation2=draw.obj_animation('ch4_bigbunnyhappy_note','musicnote',(640,360),record=False,sync=animation1)
+        self.addpart( animation2 )
+        animation3=draw.obj_animation('ch4_bigbunnyhappy_note','musicnote',(640+500,360-40),record=False,sync=animation1)
+        self.addpart( animation3 )
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny1", [327],skip=1 )
+        animation1.addsound( "bunny4", [213, 262, 354] )
+        animation1.addsound( "bunny5", [140] )
+        animation1.addsound( "revealscary", [1])  #
+        #
+        self.addpart( draw.obj_music('tension') )
+
+class obj_scene_ch4p16p(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16o())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p17())
+    def setup(self):
+        self.text=[\
+                'Lets take back a more suitable form, said ',('{bunnyname}',share.colors.bunny),\
+                '.'\
+                   ]
+        animation1=draw.obj_animation('ch4_bigbunnyshrinks','bunnybase',(640,360),record=False)
+        self.addpart( animation1 )
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )#
+        animation1.addsound( "bunny2", [310] )
+        animation1.addsound( "bunny4", [64, 193] )
+        self.addpart( draw.obj_music('ch4') )
+
+class obj_scene_ch4p17(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16p())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_lyingpart1())
     def setup(self):
@@ -864,8 +1076,8 @@ class obj_scene_ch4p17(page.obj_chapterpage):
         self.text=[\
                 '"So you want to know ',\
                 ('my part of the tower\'s password',share.colors.password),'. ',\
-                'After this blatant humiliation, I wont give it so easily. ',\
-                'Unless... you win my ',('lying game',share.colors.grandmaster2),\
+                'I wont give it so easily, ',\
+                'unless... you win my ',('lying game',share.colors.grandmaster2),\
                 '! Now lets get started." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )

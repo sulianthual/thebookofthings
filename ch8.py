@@ -1012,14 +1012,24 @@ class obj_scene_ch8east(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='forest'))
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch8eastbye())
+        if share.datamanager.getword('yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch8eastshoot())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch8eastbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
                 '"Welcome back, said ',\
                 ('{bunnyname}',share.colors.bunny),'. ',\
-                'If you want to replay my lying game, just go back to ',\
-                ('Chapter VI',share.colors.instructions),'." ',\
+                'Do you want to play my shooting game'\
                    ]
+        y1=200
+        textchoice=draw.obj_textchoice('yesno',default='yes')
+        textchoice.addchoice('1. Yes','yes',(450,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
+        self.addpart( textchoice )
+        #
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
@@ -1036,6 +1046,23 @@ class obj_scene_ch8east(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('bunny') )
 
+class obj_scene_ch8eastshoot(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8eastbye())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch8eastreplay())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def postpostsetup(self):# foreground do not show mouse pointer
+        pass
+    def setup(self):
+        self.text=['shoot all the ',('bunnies',share.colors.bunny),'.']
+        self.world=world.obj_world_3dforest_rabbitshoot(self)# fishing mini-game
+        self.addpart(self.world)
+        self.addpart( draw.obj_music('bunny') )
+
 class obj_scene_ch8eastbye(page.obj_chapterpage):
     def prevpage(self):
         pass
@@ -1046,6 +1073,44 @@ class obj_scene_ch8eastbye(page.obj_chapterpage):
                 '"Alright bye, said ',\
                 ('{bunnyname}',share.colors.bunny),'." ',\
                    ]
+        # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
+        self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bunnybody',(867,605),scale=0.59,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
+        self.addpart( animation1 )
+        #
+        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
+        animation1.addsound( "bunny2", [128] )
+        animation1.addsound( "bunny3", [43],skip=1 )
+        #
+        self.addpart( draw.obj_music('bunny') )
+
+
+class obj_scene_ch8eastreplay(page.obj_chapterpage):
+    def prevpage(self):
+        pass
+    def nextpage(self):
+        if share.datamanager.getword('yesno')=='yes':
+            share.scenemanager.switchscene(obj_scene_ch8eastshoot())
+        else:
+            share.scenemanager.switchscene(obj_scene_ch8eastbye())
+    def textboxset(self):
+        self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
+    def setup(self):
+        self.text=[\
+                '"That was fun. Do you want to play again'\
+                   ]
+        y1=200
+        textchoice=draw.obj_textchoice('yesno',default='no')
+        textchoice.addchoice('1. Yes','yes',(450,y1))
+        textchoice.addchoice('2. No','no',(650,y1))
+        self.addpart( textchoice )
+        #
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cave',(1149,374),scale=0.62,rotate=0,fliph=False,flipv=False) )

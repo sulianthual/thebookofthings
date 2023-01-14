@@ -60,7 +60,7 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p36()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
             # quickscene=ch4.obj_scene_ch4p5()
-            quickscene=ch4.obj_scene_ch4p16g()
+            quickscene=ch4.obj_scene_ch4p16n()
             # quickscene=ch4.obj_scene_lyingpart1()
             # quickscene=ch4.obj_scene_lyingfailpart1()
             # quickscene=ch4.obj_scene_lyingfailpart2()
@@ -121,7 +121,7 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_testtrailer_p1()
             # quickscene=tests.obj_scene_testforestgame()
             #
-            # quickscene=tests.obj_scene_testforestgame()
+            quickscene=tests.obj_scene_testforestgame()
 
             #
             #

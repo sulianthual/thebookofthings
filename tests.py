@@ -1864,6 +1864,8 @@ class obj_scene_testdrafting(obj_testpage):
         # animation=draw.obj_animation('gunwobble','gun',(640,360),record=True)
         # animation=draw.obj_animation('gunshoot','gun',(640,360),record=True)
         # animation=draw.obj_animation('gunreload','gun',(640,360),record=True)
+        # self.addpart(draw.obj_image('saxophone',(640,360),fliph=True,rotate=45))
+        # animation=draw.obj_animation('saxwobble','saxophone',(640,360),record=True)
         # animation=draw.obj_animation('ch4_bunnywillendyou','bunnybase',(640,360),record=True)
         #
         # animation=draw.obj_animation('ch4_heroinbushes','herobase',(640,360),record=True)
@@ -1928,9 +1930,10 @@ class obj_scene_testforestgame(page.obj_chapterpage):
         # self.addpart(draw.obj_pagemousepointer())
     def setup(self):
         # self.text=['Find the rabbit']
-        self.world=world.obj_world_3dforest(self)# fishing mini-game
+        # self.world=world.obj_world_3dforest(self)
+        self.world=world.obj_world_3dforest_rabbitescapebig(self)
         self.addpart(self.world)
-        self.addpart( draw.obj_music('forest') )
+        self.addpart( draw.obj_music('bunny') )
         # self.addpart( animation1 )
         # self.addpart( draw.obj_drawing('forestline',(640,360),shadow=(640,200),brush=share.brushes.smallpen) )
         # self.addpart( draw.obj_drawing('crossershooter',(640,360),shadow=(25,25),brush=share.brushes.smallpen) )
