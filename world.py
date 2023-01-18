@@ -6163,26 +6163,41 @@ class obj_world_3dforest(obj_world):
         self.text_victory=obj_grandactor(self,(640,360))# text always in front
         self.text_victory.show=False
         self.text_victory.addpart('text1', draw.obj_textbox('Victory!',(640,100),fontsize='huge') )
+
         # SOUNDS
-        self.soundshoot=draw.obj_sound('fishing_shoot')
+        self.soundshoot=draw.obj_sound('3dforest_shoot')
         self.soundgunreload=draw.obj_sound('3dforest_gunreload')
         self.creator.addpart(self.soundshoot)
         self.creator.addpart(self.soundgunreload)
-        self.soundhit=draw.obj_sound('dodgebullets_hit')
+        self.soundhit=draw.obj_sound('3dforest_hit')
         self.creator.addpart(self.soundhit)
-        self.sounddie=draw.obj_sound('dodgebullets_die')
+        self.sounddie=draw.obj_sound('3dforest_die')
         self.creator.addpart(self.sounddie)
+        self.soundpickupsax=draw.obj_sound('3dforest_pickupsax')
+        self.creator.addpart(self.soundpickupsax)
         # bunnies
-        self.soundbunnyscream=draw.obj_sound('bunny5')# bunny screams when attacking
+        self.soundbunnyscream=draw.obj_sound('3dforest_bunnyscream')# bunny screams when attacking
         self.creator.addpart(self.soundbunnyscream)
-        self.soundbunnystrike=draw.obj_sound('stomp_contact')# bunny hits player
+        self.soundbunnystrike=draw.obj_sound('3dforest_bunnystrike')# bunny hits player
         self.creator.addpart(self.soundbunnystrike)
-        self.soundrabbitdie=draw.obj_sound('stomp_strike')# bunny screams when attacking
+        self.soundrabbitdie=draw.obj_sound('3dforest_bunnydie')# bunny screams when attacking
         self.creator.addpart(self.soundrabbitdie)
-        self.soundbunnyhaha=draw.obj_sound('bunny2')# bunny screams when attacking
+        self.soundbunnyhaha=draw.obj_sound('3dforest_bunnyhaha')# bunny screams when attacking
         self.creator.addpart(self.soundbunnyhaha)
-        self.soundwin=draw.obj_sound('stomp_win')
+        self.soundwin=draw.obj_sound('3dforest_win')
         self.creator.addpart(self.soundwin)
+        self.startfightmessage=False# show start fight message (False here)
+    # add start fight message (call on specific pages)
+    def addstartfightmessage(self):#
+        self.startfightmessage=True
+        # fight message at beginning
+        self.text_start=obj_grandactor(self,(640,360))# text message at start
+        self.text_start.addpart( 'fightmessage', draw.obj_animation('dodgebullets_fightmessage','messagefight',(640,360), path='data/premade') )
+        self.text_start.show=True
+        self.timerfightmessage=tool.obj_timer(80)
+        self.timerfightmessage.start()
+        self.soundstart=draw.obj_sound('stomp_start')
+        self.soundstart.play()# at start
     #
     # Set 3d world level (this one with all technical stuff, basis for childrens)
     def set3dworld(self):
@@ -6251,7 +6266,7 @@ class obj_world_3dforest(obj_world):
         self.isalive=True# player is not dead
         self.isdeaddead=False# player has fallen to ground, show death message
         self.timerplayerdie=tool.obj_timer(100)# timer to fall on ground
-        self.timerplayerisdead=tool.obj_timer(150)# timer when dead until end
+        self.timerplayerisdead=tool.obj_timer(200)# timer when dead until end
         self.freezeworld=False# freeze world for tutorial
     def setgun(self):
         self.maxbullets=5# max number of bullets
@@ -6374,6 +6389,12 @@ class obj_world_3dforest(obj_world):
             self.updatehealth()
             self.timerplayerdie.start()
     def update(self,controls):
+        # start fight message
+        if self.startfightmessage:
+            self.timerfightmessage.update()
+            if self.timerfightmessage.ring:
+                self.text_start.show=False
+                self.startfightmessage=False
         # Grab mouse controls at world start
         if not self.grabbedmouse:
             self.gmx0=controls.gmx
@@ -6519,6 +6540,7 @@ class obj_world_3dforest(obj_world):
                         if lt<0.5:# picked up
                             act.killswitch=1# remove it
                             self.hassax=True
+                            self.soundpickupsax.play()
                             self.staticactor.dict["saxwobble"].rewind()
                             self.staticactor.dict["saxwobble"].show=True
                     elif act.subtype3d=='exit':# exit the level (press action)
@@ -6559,7 +6581,8 @@ class obj_world_3dforest(obj_world):
 
                 #######
                 # Rabbits (a type of enemy)
-                if act.type3d=='rabbit':
+
+                elif act.type3d=='rabbit':
                     # Regular bunny (hits and dies)
                     if not act.isattacking: # not attacking
                         if tool.cos(ot-self.op)<0.7:#0.5,1 take slightly above
@@ -6656,29 +6679,64 @@ class obj_world_3dforest(obj_world):
                         act.distanceplayer=lt# store distance to player
 
                 #######
-                # Big Rabbit (slowly moves to player and kills him)
-                if act.type3d=='bigrabbit':
-                    if not self.isalive:
-                        # if dead slowly retreat
-                        act.x3d+=0.01*tool.cos(ot)
-                        act.y3d+=0.01*tool.sin(ot)
-                        if act.isattacking:# reuse same key for laugh
-                            if lt>1:
-                                act.isattacking=False
-                                self.soundbunnyhaha.play()
-                    else:
-                        if not act.isattacking: # not attacking
+                # Big Rabbit (slowly moves to player and hits harder, cannot be killed)
+                elif act.type3d=='bigrabbit':
+                    # Regular bunny (hits and dies)
+                    if not act.isattacking: # not attacking
+                        if tool.cos(ot-self.op)<0.7:#0.5,1 take slightly above
+                            # Outside vision of player just place
+                            # move laterally but much faster
+                            arate=0.01*lt
+                            if act.fliph3d:
+                                act.x3d-=arate*tool.sin(ot)
+                                act.y3d+=arate*tool.cos(ot)
+                            else:
+                                act.x3d+=arate*tool.sin(ot)
+                                act.y3d-=arate*tool.cos(ot)
+                            # back up if too close
+                            if lt>5:
+                                # moves towards the player
+                                act.x3d-=0.01*tool.cos(ot)
+                                act.y3d-=0.01*tool.sin(ot)
+                            elif lt<2.5:
+                                # moves back from the player
+                                act.x3d+=0.04*tool.cos(ot)
+                                act.y3d+=0.04*tool.sin(ot)
+                            else:
+                                # moves towards the player (extremely slowly)
+                                act.x3d-=0.001*tool.cos(ot)
+                                act.y3d-=0.001*tool.sin(ot)
+                        else:
+                            # Within vision of player
                             if lt>2:# moves slowly towards player
                                 # moves towards the player
                                 act.x3d-=0.01*tool.cos(ot)
                                 act.y3d-=0.01*tool.sin(ot)
+
+                                # move laterally (depending on its fliph)
+                                if lt>3:
+                                    arate=0.01
+                                else:
+                                    arate=0.005
+                                if act.fliph3d:
+                                    act.x3d-=arate*tool.sin(ot)
+                                    act.y3d+=arate*tool.cos(ot)
+                                else:
+                                    act.x3d+=arate*tool.sin(ot)
+                                    act.y3d-=arate*tool.cos(ot)
+                                # small random chance of fliph
+                                randfliphrabb_=tool.randint(0,500)
+                                if randfliphrabb_>500-2:
+                                    act.dict["img"].fliph()
+                                    act.fliph3d=not act.fliph3d
                             else:
                                 # start attacking
                                 act.isattacking=True
                                 self.soundbunnyscream.play()
                                 act.timer3d.start()# start attack timer
                                 act.attackangle=ot# save attack angle
-                        else:# is attacking
+                    else:# is attacking
+                        if not act.isreloading:
                             if lt>0.5:# sprint towards player (but keep initial direction)
                                 act.x3d-=0.02*tool.cos(act.attackangle)
                                 act.y3d-=0.02*tool.sin(act.attackangle)
@@ -6686,15 +6744,43 @@ class obj_world_3dforest(obj_world):
                                 if act.timer3d.ring:# finish attack
                                     act.isattacking=False
                             else:# reached the player
-                                self.soundbunnystrike.play()
-                                self.killplayer()# kill the player
+                                act.isreloading=True# enemy "reloads" attack
+                                act.timer3d.start()# reuse same timer
+                                self.health-=4# damage player
+                                # act.killswitch=1# Kill element (tag for later)
+                                # check player health
+                                if self.health>0:
+                                    self.soundbunnystrike.play()
+                                    self.soundhit.play()
+                                    self.updatehealth()
+                                else:
+                                    self.soundbunnystrike.play()
+                                    self.killplayer()
+                        else:# is reloading (after succesfull attack)
+                            # moves back from player
+                            act.x3d+=0.01*tool.cos(ot)
+                            act.y3d+=0.01*tool.sin(ot)
+                            # move laterally (depending on its fliph)
+                            if act.fliph3d:
+                                act.x3d-=0.007*tool.sin(ot)
+                                act.y3d+=0.007*tool.cos(ot)
+                            else:
+                                act.x3d+=0.007*tool.sin(ot)
+                                act.y3d-=0.007*tool.cos(ot)
+                            act.timer3d.update()
+                            if act.timer3d.ring:# finish attack
+                                act.isattacking=False# return to non attack state
+                                act.isreloading=False
                     # If rabbit shot, laugh
                     if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2 and lt<7:
                         self.soundbunnyhaha.play()
                         # place a poof that will disappear
                         self.placetree('poof',self.xp+lt*tool.cos(self.op),self.yp+lt*tool.sin(self.op),1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
 
-            #######
+
+
+            ########################################################
+            ########################################################
             # Display any element within field of vision (and not too far or close)
             if act.type3d=='background':
                 #### Any element in the background (far enough, dont rescale)

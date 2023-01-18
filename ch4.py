@@ -583,7 +583,7 @@ class obj_scene_ch4p16tuto(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p16tuto2())
     def setup(self):
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=['This is your health. Dont loose it or you will ',('die',share.colors.red),'.']
+        self.text=['This is your health. Dont loose it all or you will ',('die',share.colors.red),'.']
         self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
         self.world.freezeworld=True# freeze the world
         self.world.staticactor.dict["cross"].show=False# hide cross
@@ -593,7 +593,7 @@ class obj_scene_ch4p16tuto(page.obj_chapterpage):
 
 class obj_scene_ch4p16tuto2(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16())
+        share.scenemanager.switchscene(obj_scene_ch4p16tuto())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16a())
     def triggernextpage(self,controls):
@@ -632,6 +632,7 @@ class obj_scene_ch4p16a(page.obj_chapterpage):
         self.text=['Find an ',('exit',share.colors.red),'.']
         self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
         self.addpart(self.world)
+        self.world.addstartfightmessage()# add start fight message
         self.addpart( draw.obj_music('bunny') )
 
 
@@ -834,6 +835,7 @@ class obj_scene_ch4p16g(page.obj_chapterpage):
         self.text=['shoot all the ',('bunnies',share.colors.bunny),'.']
         self.world=world.obj_world_3dforest_rabbitshoot(self)# fishing mini-game
         self.addpart(self.world)
+        self.world.addstartfightmessage()# add start fight message
         self.addpart( draw.obj_music('bunny') )
 
 
@@ -935,6 +937,7 @@ class obj_scene_ch4p16j(page.obj_chapterpage):
         self.text=['find an ',('exit',share.colors.red),'.']
         self.world=world.obj_world_3dforest_rabbitescapebig(self)
         self.addpart(self.world)
+        self.world.addstartfightmessage()# add start fight message
         self.addpart( draw.obj_music('bunny') )
 
 

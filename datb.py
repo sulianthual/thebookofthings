@@ -297,6 +297,17 @@ class obj_sounds:
         self.dict['mech_wrong']=( 'world/mech/fail.wav', 1 )
         # 3d forest
         self.dict['3dforest_gunreload']=( 'world/3dforest/gunreload.wav' , 0.5 )
+        self.dict['3dforest_pickupsax']=( 'world/3dforest/swish-9.wav' , 1 )
+        self.dict['3dforest_shoot']=( 'world/3dforest/gun-5.wav' , 0.5 )
+        self.dict['3dforest_hit']=( 'world/3dforest/die_02.wav' , 1 )
+        self.dict['3dforest_die']=( 'world/3dforest/die_04.wav' , 1 )
+        self.dict['3dforest_bunnyhaha']=( 'world/3dforest/giggle__dumb-heh.wav' , 1 )
+        self.dict['3dforest_bunnyscream']=( 'world/3dforest/Pixie.wav' , 1 )
+        self.dict['3dforest_bunnydie']=( 'world/3dforest/Death1.wav', 0.5 )
+        self.dict['3dforest_win']=( 'world/3dforest/cheer1.wav', 0.5 )
+        self.dict['3dforest_bunnystrike']=( 'world/3dforest/Punch4.wav', 1 )
+
+
         #
     def getsoundfilename(self,name):
         if name in self.dict.keys():
