@@ -2105,6 +2105,8 @@ class obj_scene_ch7unlocknext(page.obj_chapterpage):
         share.datamanager.setbookmark('ch7_endunlock')
         self.text=['You have unlocked the ',\
                     ('epilogue',share.colors.instructions),'! ',\
+                    'You can access it from the ',\
+                    ('main menu',share.colors.instructions),'.'\
                    ]
         share.datamanager.updateprogress(chapter=8)# chapter 8 (epilogue))
         sound1=draw.obj_sound('unlock')

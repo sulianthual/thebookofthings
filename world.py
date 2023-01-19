@@ -2219,7 +2219,7 @@ class obj_world_travel(obj_world):
                             i.movex(self.heromx)
                     for k in self.hitboxes:
                         k.movex(self.heromx)
-                if controls.glc:
+                if controls.glc or not controls.gr:
                     self.herofaceright=False
             if controls.gr:
                 if self.xhw<self.xhwmax:
@@ -2229,7 +2229,7 @@ class obj_world_travel(obj_world):
                             i.movex(-self.heromx)
                     for k in self.hitboxes:
                         k.movex(-self.heromx)
-                    if controls.grc:
+                    if controls.grc or not controls.gl:
                         self.herofaceright=True
             if controls.gu:
                 if self.yhw>self.yhwmin:
@@ -3581,7 +3581,7 @@ class obj_world_rockpaperscissors(obj_world):
         self.elderthinks=True# can see what the elder is thinking
         self.elderpeaks=False# elder peaks on last countdown to counter
         self.herohealthmax=5# health bar
-        self.elderhealthmax=7#3#
+        self.elderhealthmax=5#3#
         self.dotutorial=False# do tutorial
         self.dotutorialnothinks=False# remove what hero/elder is thinking (for extended tutorial)
         # scene tuning
@@ -5555,6 +5555,7 @@ class obj_world_serenade(obj_world):
         # default options
         self.addpartner=True# add the partnercd
         self.heroangry=False# hero is angry (and alone)
+        self.addbigrabbit=False# put big rabbit
         # scene tuning
         if kwargs is not None:
             if 'partner' in kwargs: self.addpartner=kwargs["partner"]# partner options
@@ -6146,10 +6147,14 @@ class obj_world_3dforest(obj_world):
         # TEXTBOX
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_undone.show=True
-        tempo ='['+share.datamanager.controlname('arrows')+': move] '
-        # tempo +='['+share.datamanager.controlname('action')+': strafe] '
-        tempo +='[mouse: look] '
-        self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(640,720-50),color=share.colors.instructions) )
+        tempo ='['+share.datamanager.controlname('arrows')+': move]'
+        self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(120,720-150),color=share.colors.instructions) )
+        tempo ='[mouse: look]'
+        # tempo='['+share.datamanager.controlname('mouse1')+', '+share.datamanager.controlname('mouse2')+': look]'
+        self.text_undone.addpart( 'text2',draw.obj_textbox(tempo,(120,720-100),color=share.colors.instructions) )
+        if self.hasgun:
+            tempo ='['+share.datamanager.controlname('action')+': shoot] '
+            self.text_undone.addpart( 'text3',draw.obj_textbox(tempo,(120,720-50),color=share.colors.instructions) )
         self.text_died=obj_grandactor(self,(640,360))# text always in front
         self.text_died.show=False
         self.text_died.addpart('text1', draw.obj_textbox('you are dead',(640,550),fontsize='huge') )
@@ -6527,9 +6532,8 @@ class obj_world_3dforest(obj_world):
                             act.killswitch=1# remove it
                             self.hasgun=True
                             # update instructions
-                            pass_=self.text_undone.dict['text1'].text
-                            pass2_=pass_+'['+share.datamanager.controlname('action')+': shoot] '
-                            self.text_undone.dict['text1'].replacetext(pass2_)
+                            tempo ='['+share.datamanager.controlname('action')+': shoot] '
+                            self.text_undone.addpart( 'text3',draw.obj_textbox(tempo,(120,720-50),color=share.colors.instructions) )
                             # start with big reloading
                             self.bigreloading=True
                             self.soundgunreload.play(loop=True)
@@ -6601,9 +6605,9 @@ class obj_world_3dforest(obj_world):
                                 act.x3d-=0.01*tool.cos(ot)
                                 act.y3d-=0.01*tool.sin(ot)
                             elif lt<2.5:
-                                # moves back from the player
-                                act.x3d+=0.04*tool.cos(ot)
-                                act.y3d+=0.04*tool.sin(ot)
+                                # moves back from the player (very slow)
+                                act.x3d+=0.005*tool.cos(ot)
+                                act.y3d+=0.005*tool.sin(ot)
                             else:
                                 # moves towards the player (extremely slowly)
                                 act.x3d-=0.001*tool.cos(ot)

@@ -136,7 +136,7 @@ class obj_scene_ch5p4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p3())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p6())
+        share.scenemanager.switchscene(obj_scene_ch5p5())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -155,31 +155,31 @@ class obj_scene_ch5p4(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('ch5') )
 
-# remove fish scene (repetitive)
-# class obj_scene_ch5p5(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch5p4())
-#     def nextpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch5p6())
-#     def triggernextpage(self,controls):
-#         return self.world.done
-#     def textboxset(self):
-#         self.textboxopt={'do':False}
-#     def setup(self):
-#         self.text=[\
-#                     '        ',\
-#                     '"',('{hero_he}',share.colors.hero),\
-#                      ' went to the lake and shot a fish".\n ',
-#                    ]
-#         self.world=world.obj_world_fishing_withgun(self)
-#         self.addpart(self.world)
-#         #
-#         self.addpart( draw.obj_music('ch5') )
+class obj_scene_ch5p5(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p4())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch5p6())
+    def triggernextpage(self,controls):
+        return self.world.done
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def setup(self):
+        self.text=[\
+                    '        ',\
+                    '"',('{hero_he}',share.colors.hero),\
+                     ' went to the lake and shot a fish ',\
+                      'with ',('{hero_his}',share.colors.hero),' ',('gun',share.colors.item),'.'\
+                   ]
+        self.world=world.obj_world_fishing_withgun(self)
+        self.addpart(self.world)
+        #
+        self.addpart( draw.obj_music('ch5') )
 
 
 class obj_scene_ch5p6(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p4())
+        share.scenemanager.switchscene(obj_scene_ch5p5())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p7())
     def soundnextpage(self):
@@ -579,7 +579,7 @@ class obj_scene_ch5p22(page.obj_chapterpage):
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
         self.addpart(self.world)
         self.addpart( draw.obj_image('show3',(380,300),path='data/premade') )
-        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
+        # self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('elder') )
 
@@ -598,7 +598,7 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         self.addpart(self.world)
         self.addpart( draw.obj_image('show3',(280,150),scale=0.65,fliph=False,flipv=True,path='data/premade') )
         self.addpart( draw.obj_image('show3',(620,150),scale=0.65,fliph=True,flipv=True,path='data/premade') )
-        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
+        # self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.sound=draw.obj_sound('elder3')
         self.addpart(self.sound)
@@ -861,8 +861,8 @@ class obj_scene_ch5p33(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'Now let me teach you a little secret: ',\
-                   'you can peek and ',\
-                  ('counter me at the last moment',share.colors.instructions),'. ',\
+                   'you can cheat and ',\
+                  ('peek at what I am about to play',share.colors.instructions),'. ',\
                   ]
         self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True,herohealth=2)
         self.addpart(self.world)
@@ -871,7 +871,7 @@ class obj_scene_ch5p33(page.obj_chapterpage):
         animation1.addimage('scissors')
         self.addpart( animation1 )
         self.addpart( draw.obj_image('show3',(640+220+40,246+70),path='data/premade',fliph=True) )
-        self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
+        # self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('elder') )
 
@@ -1178,6 +1178,8 @@ class obj_scene_ch5unlocknext(page.obj_chapterpage):
         share.datamanager.setbookmark('ch5_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter VI',share.colors.instructions),'! ',\
+                    'You can access it from the ',\
+                    ('main menu',share.colors.instructions),'.'\
                    ]
         share.datamanager.updateprogress(chapter=6)# chapter 6 becomes available
         sound1=draw.obj_sound('unlock')

@@ -1061,6 +1061,7 @@ class obj_scene_ch8eastshoot(page.obj_chapterpage):
         self.text=['shoot all the ',('bunnies',share.colors.bunny),'.']
         self.world=world.obj_world_3dforest_rabbitshoot(self)# fishing mini-game
         self.addpart(self.world)
+        self.world.addstartfightmessage()# add start fight message
         self.addpart( draw.obj_music('bunny') )
 
 class obj_scene_ch8eastbye(page.obj_chapterpage):
@@ -1118,7 +1119,7 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(946,307),scale=0.39,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(761,293),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(1148,596),scale=0.51,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('tree',(599,273),scale=0.32,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch4_herowalkbunny2','bunnyhead',(640,360),record=False)
         self.addpart( animation1 )
         #

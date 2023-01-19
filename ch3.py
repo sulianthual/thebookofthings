@@ -86,7 +86,7 @@ class obj_scene_ch3p1(page.obj_chapterpage):
         animation.addsound( "wakeup_snore1", [619] )
         animation.addsound( "wakeup_snore2", [623] )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch3p1a(page.obj_chapterpage):
@@ -111,7 +111,7 @@ class obj_scene_ch3p1a(page.obj_chapterpage):
         animation1.addsound( "book2", [170] )
         animation1.addsound( "book3", [155],skip=1 )
         #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('piano') )
 
 
 class obj_scene_ch3p2(page.obj_chapterpage):
@@ -1462,6 +1462,8 @@ class obj_scene_ch3unlocknext(page.obj_chapterpage):
         share.datamanager.setbookmark('ch3_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter IV',share.colors.instructions),'! ',\
+                    'You can access it from the ',\
+                    ('main menu',share.colors.instructions),'.'\
                    ]
         share.datamanager.updateprogress(chapter=4)# chapter 4 becomes available
         #

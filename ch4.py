@@ -155,7 +155,8 @@ class obj_scene_ch4p4(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p3())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p5())
+        # share.scenemanager.switchscene(obj_scene_ch4p5())
+        share.scenemanager.switchscene(obj_scene_ch4p6())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -172,33 +173,32 @@ class obj_scene_ch4p4(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('ch4') )
 
-class obj_scene_ch4p5(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p4())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p6())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                    '        ',\
-                    '"',('{hero_he}',share.colors.hero),\
-                     ' went to the lake and shot a fish ',\
-                      'with a gun.',\
-                       '"\n ',\
-                   ]
-        self.world=world.obj_world_fishing_withgun(self)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('ch4') )
-        # self.addpart(draw.obj_animation('fishmovegun1','fish',(640,360),record=False))
-        # self.addpart(draw.obj_animation('fishmovevertigun1','fish',(640,360),record=True))
+# class obj_scene_ch4p5(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p4())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p6())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                     '        ',\
+#                     '"',('{hero_he}',share.colors.hero),\
+#                      ' went to the lake and shot a fish ',\
+#                       'with a gun.',\
+#                        '"\n ',\
+#                    ]
+#         self.world=world.obj_world_fishing_withgun(self)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('ch4') )
 
 class obj_scene_ch4p6(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p5())
+        # share.scenemanager.switchscene(obj_scene_ch4p5())
+        share.scenemanager.switchscene(obj_scene_ch4p4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p7())
     def soundnextpage(self):
@@ -1681,6 +1681,8 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
         share.datamanager.setbookmark('ch4_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter V',share.colors.instructions),'! ',\
+                    'You can access it from the ',\
+                    ('main menu',share.colors.instructions),'.'\
                    ]
         share.datamanager.updateprogress(chapter=5)# chapter 5 becomes available
         sound1=draw.obj_sound('unlock')

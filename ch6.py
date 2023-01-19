@@ -1518,6 +1518,8 @@ class obj_scene_ch6unlocknext(page.obj_chapterpage):
         share.datamanager.setbookmark('ch6_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter VII',share.colors.instructions),'! ',\
+                    'You can access it from the ',\
+                    ('main menu',share.colors.instructions),'.'\
                    ]
         share.datamanager.updateprogress(chapter=7)# chapter 7 becomes available
         sound1=draw.obj_sound('unlock')

@@ -390,7 +390,7 @@ class obj_scene_ch0p14(page.obj_chapterpage):
         self.text=[\
                     'One last thing: ',\
                     'if you ever skip a drawing or miss something, you can always go back! ',\
-                    'Return to any chapter part you have already read from the main menu. ',\
+                    'Return to any chapter you have already read from the main menu. ',\
                     ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
         self.addpart( animation1 )
@@ -429,6 +429,8 @@ class obj_scene_ch0unlocknext(page.obj_chapterpage):
         share.datamanager.setbookmark('ch0_endunlock')
         self.text=['You have unlocked a new chapter, ',\
                     ('Chapter I',share.colors.instructions),'! ',\
+                    'You can access it from the ',\
+                    ('main menu',share.colors.instructions),'.'\
                    ]
         share.datamanager.updateprogress(chapter=1)# chapter 1 becomes available
         #

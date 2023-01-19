@@ -1459,9 +1459,10 @@ class obj_scene_erasebook(page.obj_chapterpage):
         self.textboxopt={'text':'[back]'}
     def setup(self):
         tempo= 'Press ['+share.datamanager.controlname('left')
-        tempo+= '+'+share.datamanager.controlname('up')
+        # tempo+= '+'+share.datamanager.controlname('up')
         tempo+= '+'+share.datamanager.controlname('right')
-        tempo+= '+'+share.datamanager.controlname('down')
+        # tempo+= '+'+share.datamanager.controlname('down')
+        tempo+= '+'+share.datamanager.controlname('action')
         tempo+= '] to erase the book. '
         tempo+= 'You will loose all your drawings and progress. '
         self.text=[tempo]
@@ -1476,8 +1477,9 @@ class obj_scene_erasebook(page.obj_chapterpage):
         self.addpart( draw.obj_music('tension') )
     def page(self,controls):
         # erase the book
-        if controls.gl and controls.gu and controls.gr and controls.gd:
-            if not self.haserasedbook:
+        if not self.haserasedbook:
+            # if controls.gl and controls.gu and controls.gr and controls.gd:
+            if controls.gl and controls.gr and controls.ga:
                 share.datamanager.erasebook()
                 self.textbox1.replacetext('the book has vanished...')
                 self.sound1.play()
