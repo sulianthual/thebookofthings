@@ -615,7 +615,8 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play3())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play4())
+        # share.scenemanager.switchscene(obj_scene_ch2play4())
+        share.scenemanager.switchscene(obj_scene_ch2play6())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -629,45 +630,45 @@ class obj_scene_ch2play3a(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('piano') )
 
-class obj_scene_ch2play4(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play3a())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play5())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                    '"In the evening, ',\
-                   '"',('{heroname}',share.colors.hero),' charmed ',\
-                   ('{partnername}',share.colors.partner),' with a serenade..." ',\
-                   ]
-        self.world=world.obj_world_serenade(self)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
+# class obj_scene_ch2play4(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2play3a())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2play5())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                     '"In the evening, ',\
+#                    '"',('{heroname}',share.colors.hero),' charmed ',\
+#                    ('{partnername}',share.colors.partner),' with a serenade..." ',\
+#                    ]
+#         self.world=world.obj_world_serenade(self)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 
-
-class obj_scene_ch2play5(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play4())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play6())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                   '"...and then they kissed."   ',\
-                   ]
-        self.world=world.obj_world_kiss(self,noending=False)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('piano') )
+# shorten the story, remove this
+# class obj_scene_ch2play5(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2play4())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2play6())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                    '"...and then they kissed."   ',\
+#                    ]
+#         self.world=world.obj_world_kiss(self,noending=False)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 
 # class obj_scene_ch2play5a(page.obj_chapterpage):
@@ -691,7 +692,8 @@ class obj_scene_ch2play5(page.obj_chapterpage):
 
 class obj_scene_ch2play6(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play5())
+        # share.scenemanager.switchscene(obj_scene_ch2play5())
+        share.scenemanager.switchscene(obj_scene_ch2play3a())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2playend())
     def triggernextpage(self,controls):
@@ -702,7 +704,7 @@ class obj_scene_ch2play6(page.obj_chapterpage):
         self.text=[\
                    '"',\
                    ('{heroname}',share.colors.hero),' and ',('{partnername}',share.colors.partner),\
-                   ' went to back to bed. They were very happy." ',\
+                   ' kissed and went to back to bed. They were very happy." ',\
                    ]
         self.world=world.obj_world_gotobed(self,partner=True)
         self.addpart(self.world)

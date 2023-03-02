@@ -2270,7 +2270,9 @@ class obj_world_travel(obj_world):
                 self.hero.dict['boat_right'].show=False
                 self.hero.dict['boat_left'].show=False
                 # walking or standing
-                if controls.gl or controls.gr or controls.gu or controls.gd:
+                # if controls.gl or controls.gr or controls.gu or controls.gd:
+                if (controls.gl and not controls.gr) or (controls.gr and not controls.gl)\
+                 or (controls.gu and not controls.gd) or (controls.gd and not controls.gu):
                     self.herowalking=True
                 else:
                     self.herowalking=False

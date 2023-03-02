@@ -94,7 +94,7 @@ class obj_scene_ch6p2(page.obj_chapterpage):
                   '"',\
                 'So far, the tower\'s password is ',('"fight persevere"',share.colors.password),'. ',\
                      ('{heroname}',share.colors.hero),' must visit one last ',\
-                     ('grandmaster of deceit',share.colors.grandmaster),\
+                     ('evil grandmaster',share.colors.grandmaster),\
                      ' to figure out the last part." ',\
                    ]
         # self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
@@ -494,7 +494,7 @@ class obj_scene_ch6p17(page.obj_chapterpage):
         self.text=[\
                '"The ',('sailor',share.colors.sailor),' said: so you have received my note. ',\
                'My name is ',('{sailorname}',share.colors.sailor),', I am the ',\
-               ('grandmaster of deceit',share.colors.grandmaster),' of the south! ',\
+               ('evil grandmaster',share.colors.grandmaster),' of the south! ',\
                'Aye Aye, I can teach you all sorts of evil ways." ',\
                   ]
         animation1=draw.obj_animation('ch6sailortalks1','sailorbase',(640,360),record=False)

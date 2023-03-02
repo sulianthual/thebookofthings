@@ -57,11 +57,11 @@ class obj_scene_ch5p1(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',\
-                     ('{heroname}',share.colors.hero),' is visiting the ',\
-                     ('grandmasters of deceit',share.colors.grandmaster),\
+                     ('{heroname}',share.colors.hero),' was visiting the ',\
+                     ('evil grandmasters',share.colors.grandmaster),\
                      ' to figure out the tower\'s ',\
                      ('password',share.colors.password2),'. ',\
-                   'So far, the first part of the password is ',('"fight"',share.colors.password),'. ',\
+                     ('{hero_he}',share.colors.hero2),' had already figured out the first part.'\
                    ]
         # self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -442,7 +442,7 @@ class obj_scene_ch5p17(page.obj_chapterpage):
         self.text=[\
                '"The ',('elder',share.colors.elder),' said: oh, a visitor. ',\
                'I am ',('{eldername}',share.colors.elder),' the ',\
-               ('grandmaster of deceit',share.colors.grandmaster),' of the north! ',\
+               ('evil grandmaster',share.colors.grandmaster),' of the north! ',\
                'I can teach you all sorts of evil ways, he he he". ',\
                   ]
         animation1=draw.obj_animation('ch5eldertalks1','elderbase',(640,360),record=False)

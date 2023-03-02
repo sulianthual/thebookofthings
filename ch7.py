@@ -56,7 +56,7 @@ class obj_scene_ch7p1(page.obj_chapterpage):
         self.text=[\
                     '"',\
                     ('{heroname}',share.colors.hero),' has visited all three ',\
-                    ('grandmasters of deceit',share.colors.grandmaster2),' and figured the tower\'s ',\
+                    ('evil grandmasters',share.colors.grandmaster2),' and figured the tower\'s ',\
                     ('password',share.colors.password),'. ',\
                     'Today ',('{hero_he}',share.colors.hero2),' will finally confront ',\
                     ('{villainname}',share.colors.villain),'!" ',\
@@ -242,7 +242,7 @@ class obj_scene_ch7p7(page.obj_chapterpage):
                   '\nCongratulations on completing all our challenges. ',\
                     'The password to the tower is: ',('"fight persevere overcome"',share.colors.password),'.',\
                     ' Good luck fighting ',('{villainname}',share.colors.villain),'. ',\
-                  '\n\nsigned: ',('the grandmasters of deceit',share.colors.grandmaster),\
+                  '\n\nsigned: ',('the evil grandmasters',share.colors.grandmaster),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('bunnyhead',(1065+60,305+50),scale=0.3) )
@@ -469,7 +469,7 @@ class obj_scene_ch7p13(page.obj_chapterpage):
         self.text=[\
                 '"You have entered: ',('"fight persevere overcome"',share.colors.password),' . ',\
                 'Wait a minute, said the tower\'s a.s.s. ',\
-                'These are the mottos from the ',('grandmasters of deceit',share.colors.grandmaster),'". ',\
+                'These are the mottos from the ',('evil grandmasters',share.colors.grandmaster),'". ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -568,7 +568,7 @@ class obj_scene_ch7p16(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p17())
     def setup(self):
         self.text=[\
-                  '"The mottos from the ',('grandmasters of deceit',share.colors.grandmaster),\
+                  '"The mottos from the ',('evil grandmasters',share.colors.grandmaster),\
                   ' are: fight, persevere and overcome. ',\
                   'These are the teachings that the grandmasters gave to ',('{villainname}',share.colors.villain),\
                    ', and that ',('{villain_he}',share.colors.villain2),\
@@ -1593,7 +1593,7 @@ class obj_scene_ch7p44(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p45())
     def setup(self):
         self.text=[\
-            '"Suddendly, the  ',('grandmasters of deceit',share.colors.grandmaster),' appeared out of nowhere. ',\
+            '"Suddendly, the  ',('evil grandmasters',share.colors.grandmaster),' appeared out of nowhere. ',\
             'They said: not so fast ',('{villainname}',share.colors.villain),'! ',\
             ('{heroname}',share.colors.hero),' has been trained in our ',\
             ('evil ways',share.colors.grandmaster2),' too so ',\
@@ -1906,7 +1906,7 @@ class obj_scene_ch7p51(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p52())
     def setup(self):
         self.text=[\
-            '"The  ',('grandmasters of deceit',share.colors.grandmaster),' shouted: ',\
+            '"The  ',('evil grandmasters',share.colors.grandmaster),' shouted: ',\
             'Loooser, loooser! ',\
             'You still have a lot to learn about the evil ways, ',('{villainname}',share.colors.villain),'. ',\
             'Now go back to training immediately!" ',\
@@ -1938,7 +1938,7 @@ class obj_scene_ch7p52(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p53())
     def setup(self):
         self.text=[\
-            '"Now its time to party, said the  ',('grandmasters of deceit',share.colors.grandmaster),'. ',\
+            '"Now its time to party, said the  ',('evil grandmasters',share.colors.grandmaster),'. ',\
             'Absolutely everyone is here! ',\
             'Why, because it is the end of the story silly." ',\
                 ]
