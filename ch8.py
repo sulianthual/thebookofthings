@@ -102,10 +102,9 @@ class obj_scene_ch8home(page.obj_chapterpage):
         self.textboxopt={'xy':(550,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                '"Welcome back, said the ',\
+                '"Welcome back, said ',\
                 ('{bug}',share.colors.bug),'. ',\
-                'Do you want to sleep. " ',\
-                   ]
+                'Do you want to sleep." ']
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')
         textchoice.addchoice('1. Yes','yes',(450,y1))
@@ -200,9 +199,8 @@ class obj_scene_ch8homebye(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='home'))
     def setup(self):
         self.text=[\
-                '"Have a nice day, said the ',\
-                ('{bug}',share.colors.bug),'." ',\
-                   ]
+                '"Have a nice day, said ',\
+                ('{bug}',share.colors.bug),'." ']
         self.addpart( draw.obj_image('bed',(440,500),scale=0.75)  )
         # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
         # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )

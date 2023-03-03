@@ -57,28 +57,27 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p27()
             # quickscene=ch3.obj_scene_ch3p32()
-            # quickscene=ch3.obj_scene_ch3p36()
+            # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p30c()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_ch4p10a()
-            quickscene=ch4.obj_scene_ch4p16o()
+            # quickscene=ch4.obj_scene_ch4p18()
             # quickscene=ch4.obj_scene_lyingpart1()
             # quickscene=ch4.obj_scene_lyingfailpart1()
             # quickscene=ch4.obj_scene_lyingfailpart2()
-            # quickscene=ch5.obj_scene_ch5p5()
-            # quickscene=ch5.obj_scene_ch5p11()
+            # quickscene=ch5.obj_scene_ch5p8()
+            # quickscene=ch5.obj_scene_ch5p18()
             # quickscene=ch5.obj_scene_ch5p28a()
-            # quickscene=ch5.obj_scene_ch5p34()
+            # quickscene=ch5.obj_scene_ch5p37()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
-            # quickscene=ch6.obj_scene_ch6p5()
+            # quickscene=ch6.obj_scene_ch6p44()
             # quickscene=ch6.obj_scene_ch6p13()
             # quickscene=ch6.obj_scene_ch6p30a()
             # quickscene=ch6.obj_scene_ch6p38()
             # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch6.obj_scene_ch6p39death()
             # quickscene=ch6.obj_scene_ch6p44()
-            # quickscene=ch7.obj_scene_ch7p4()
+            quickscene=ch7.obj_scene_ch7p50()
             # quickscene=ch7.obj_scene_ch7p18()
             # quickscene=ch7.obj_scene_ch7p22death()
             # quickscene=ch7.obj_scene_ch7p25()
@@ -284,7 +283,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch3_gohome' :
                 bookmarkscene=ch3.obj_scene_ch3p25a()
             elif bookmarkname == 'ch3_startbug' :
-                bookmarkscene=ch3.obj_scene_ch3p32()
+                bookmarkscene=ch3.obj_scene_ch3p30a()
             elif bookmarkname == 'ch3_endbug' :
                 bookmarkscene=ch3.obj_scene_ch3p39a()
             elif bookmarkname == 'ch3_endunlock':
@@ -354,10 +353,9 @@ class obj_gotobookmark():
             self.dict['ch5_writeelder']='draw and name the elder'
             self.dict['ch5_drawrock']='draw rock paper scissors'
             self.dict['ch5_learnrps']='learn rock paper scissors'
-
             self.dict['ch5_rps3']='play rock paper scissors'
             # self.dict['ch5_winrps3']='win rock paper scissors'
-            self.dict['ch5_gohome']='go back home'
+            # self.dict['ch5_gohome']='go back home'
             # self.dict['ch5_endunlock']='Chapter End'
             if bookmarkname == 'ch5_start':
                 bookmarkscene=ch5.obj_scene_chapter5()
@@ -407,7 +405,7 @@ class obj_gotobookmark():
             self.dict['ch6_startride']='play the chase game'
             # self.dict['ch6_winride']='made it to the ship'
             # self.dict['ch6_byesailor']='bye bye sailor'
-            self.dict['ch6_gohome']='go back home'
+            # self.dict['ch6_gohome']='go back home'
             # self.dict['ch6_endunlock']='Chapter End'
             if bookmarkname == 'ch6_start':
                 bookmarkscene=ch6.obj_scene_chapter6()

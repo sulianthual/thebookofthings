@@ -26,7 +26,7 @@ import world
 
 class obj_scene_chapter4(page.obj_chapterpage):
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p1())
+        share.scenemanager.switchscene(obj_scene_ch4p3())
     def setup(self):
         share.datamanager.setbookmark('ch4_start')
         self.text=['-----   Chapter IV: Down the Rabbit Hole   -----   ',\
@@ -49,44 +49,10 @@ class obj_scene_chapter4(page.obj_chapterpage):
 
 
 
-class obj_scene_ch4p1(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter4())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p3())
-    def setup(self):
-        self.text=[\
-                  '"',
-                   ('{partnername}',share.colors.partner),' was held captive in ',\
-                    ('{villainname}',share.colors.villain),'\'s ',\
-                     ('evil tower',share.colors.location2),', and ',\
-                     ('{heroname}',share.colors.hero),' needed to visit three ',\
-                     ('evil grandmasters',share.colors.grandmaster),' to reveal the tower\'s ',\
-                     ('password',share.colors.password2),'." ',\
-                   ]
-        self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
-        self.addpart( draw.obj_image('tower',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(981,265),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(866,243),scale=0.23,rotate=0,fliph=True,flipv=False) )
-        animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
-        animation1.addimage('villainholdspartner')
-        self.addpart( animation1 )
-        animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='data/premade')
-        self.addpart( animation2 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
-        animation1.addsound( "villain1", [20] )
-        animation1.addsound( "villain2", [300] )
-        animation1.addsound( "villain3", [155] )
-        animation1.addsound( "partner_scared", [228] )
-        #
-        self.addpart( draw.obj_music('piano') )
-
 
 class obj_scene_ch4p3(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p1())
+        share.scenemanager.switchscene(obj_scene_chapter4())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p4())
     def triggernextpage(self,controls):
@@ -99,7 +65,11 @@ class obj_scene_ch4p3(page.obj_chapterpage):
         share.datamanager.setbookmark('ch4_startstory')
         self.text=[\
                'Here we go, said the book of things: ',\
-                '"It was morning and the sun was rising." ',\
+               ('{partnername}',share.colors.partner),' was captive in the ',\
+                 ('evil tower',share.colors.location2),', and ',\
+                 ('{heroname}',share.colors.hero),' needed to visit three ',\
+                 ('evil grandmasters',share.colors.grandmaster),'. ',\
+                'It was morning and the sun was rising." ',\
                    ]
         self.world=world.obj_world_sunrise(self)
         self.addpart(self.world)
@@ -248,7 +218,7 @@ class obj_scene_ch4p10a(page.obj_chapterpage):
         pass
     def setup(self):
         share.datamanager.setbookmark('ch4_enterforest')
-        self.text=['"The forest was in 3D with next generation graphics." ',\
+        self.text=['"The forest was all 3D with next generation graphics." ',\
         'Go to the ',('marker',share.colors.red),'. ']
         self.world=world.obj_world_3dforest_enter(self)# fishing mini-game
         self.addpart(self.world)
@@ -436,16 +406,14 @@ class obj_scene_ch4p15(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p14())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16())
+        share.scenemanager.switchscene(obj_scene_ch4p16tuto())
     def setup(self):
         self.text=[\
-                '"Hahaha, said the ',('bunny',share.colors.bunny),'. ',\
-                'Do not underestimate me. ',\
+                '"Hahaha, said the ',('bunny',share.colors.bunny),', ',\
+                'do not underestimate me. ',\
                 'I am ',('{bunnyname}',share.colors.bunny),\
                 ', the ',('evil grandmaster',share.colors.grandmaster),\
-                ' of the east! ',\
-                'Tremble before me." ',\
-                   ]
+                ' of the east, and I will break your bones!"']
         animation1=draw.obj_animation('ch4_bunnytalking1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -456,26 +424,9 @@ class obj_scene_ch4p15(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('bunny') )
 
-class obj_scene_ch4p16(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p15())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16tuto())
-    def setup(self):
-        self.text=[\
-                'And now, ',('I... will... kill... you...',share.colors.red),\
-                   ]
-        animation1=draw.obj_animation('ch4_bunnywillendyou','bunnybase',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [25,75,125,175,225])
-        #
-        self.addpart( draw.obj_music('bunny') )
-
 class obj_scene_ch4p16tuto(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16())
+        share.scenemanager.switchscene(obj_scene_ch4p15())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16tuto2())
     def setup(self):
@@ -508,7 +459,7 @@ class obj_scene_ch4p16tuto2(page.obj_chapterpage):
         self.world.freezeworld=True# freeze the world
         self.world.staticactor.dict["cross"].show=False# hide cross
         self.addpart(self.world)
-        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,200),color=share.colors.instructions) )
+        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,150),color=share.colors.instructions) )
         self.addpart( draw.obj_music('bunny') )
 
 class obj_scene_ch4p16a(page.obj_chapterpage):
@@ -955,28 +906,25 @@ class obj_scene_ch4p16n(page.obj_chapterpage):
         self.world=world.obj_world_serenade(self,bigrabbit=True)# serenade mini-game
         self.addpart(self.world)
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_ch4p16o(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16n())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4end())
+        share.scenemanager.switchscene(obj_scene_ch4p17())
     def setup(self):
         self.text=[\
-                'Aaaargh, this melody is so dull and random, said ',('{bunnyname}',share.colors.bunny),',',\
-                ' please make it stop! '\
-                'The first part of the tower\'s password is ',\
-                ('"fight"',share.colors.password),', now go away.',\
-                   ]
+                'Aaaargh, this melody is so dull and random, said ',('{bunnyname}',share.colors.bunny),'. ',\
+                'Make it stop, I beg you! I will even give you my ',('clue',share.colors.password),'. ']
         # self.addpart(draw.obj_imageplacer(self,'saxophone','herobase','bunnybase','tree','bush','sun','cave'))
         self.addpart( draw.obj_image('herobase',(261,390),scale=0.59,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('bush',(519,402),scale=0.41,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('bush',(519,402),scale=0.41,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('bush',(1172,530),scale=0.41,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('sun',(1094,183),scale=0.38,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('sun',(1094,183),scale=0.38,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cave',(1166,318),scale=0.52,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('tree',(660,285),scale=0.53,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('tree',(660,285),scale=0.53,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tree',(469,271),scale=0.39,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('tree',(92,258),scale=0.39,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('saxophone',(369,391),scale=0.41,rotate=0,fliph=False,flipv=False) )
@@ -989,17 +937,91 @@ class obj_scene_ch4p16o(page.obj_chapterpage):
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)
         self.sound.play()
+        self.addpart( draw.obj_music('bunny') )
+
+class obj_scene_ch4p17(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p16o())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p18())
+    def triggernextpage(self,controls):
+        return self.world.done# quick skip
+    def textboxset(self):
+        self.textboxopt={'do':False}
+    def setup(self):
+        self.text=[\
+                   'Alright, you now what to do. Put your hands up in the air like you just dont care. '\
+                   ]
+        self.world=world.obj_world_getitem(self,item='tower')
+        self.addpart(self.world)
+        # background
+        self.addpart( draw.obj_image('tree',(110,351),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cave',(1154,357),scale=0.51,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sun',(1117,173),scale=0.39,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(282,337),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        #
+        self.sound=draw.obj_sound('bookscene')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music(None) )
+
+class obj_scene_ch4p18(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p17())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p19())
+    def setup(self):
+        self.text=[\
+                 'You have received a ',('clue',share.colors.password),' from ',('{bunnyname}',share.colors.bunny),\
+                 '! Here it goes... ']
+        # background
+        self.addpart( draw.obj_image('tree',(110,351),scale=0.54,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('cave',(1154,357),scale=0.51,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('sun',(1117,173),scale=0.39,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('tree',(282,337),scale=0.32,rotate=0,fliph=False,flipv=False) )
+        # raise arms
+        self.addpart(draw.obj_image('heroarmsfaceup',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False))
+        self.addpart(draw.obj_image('tower',(618,230),scale=0.4,rotate=0,fliph=False,flipv=False))
+        self.addpart(draw.obj_image('cluesparkles',(618,230),scale=0.7,path='data/premade'))
+        animation1=draw.obj_animation('bughovertoright1','bug',(640,360))
+        self.addpart( animation1 )
+
         self.addpart( draw.obj_music('piano') )
+
+class obj_scene_ch4p19(page.obj_chapterpage):
+    def prevpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4p18())
+    def nextpage(self):
+        share.scenemanager.switchscene(obj_scene_ch4end())
+    def setup(self):
+        self.text=[\
+                 'The first part of the password that unlocks the ',\
+                 ('evil tower',share.colors.location2),' is "',('abra',share.colors.password),'". ',\
+                 'Now you only need to find two more parts. ']
+        self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
+        self.addpart(draw.obj_image('cluesparkles',(754,418),scale=1,path='data/premade'))
+
+        animation1=draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='data/premade')
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','bunnyhead',(137,564-150),scale=0.3) )
+        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
+        self.addpart( draw.obj_textbox('abra',(137,564+50),color=share.colors.password) )
+        # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
+        animation1.addsound( "bug1", [15, 120, 140])
+        self.addpart( draw.obj_music('piano') )
+
+
 
 class obj_scene_ch4end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p16o())
+        share.scenemanager.switchscene(obj_scene_ch4p18())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4unlocknext())
     def setup(self):
         self.text=[\
                     'Well that wasnt too hard after all, said the book of things. ',\
-                   'Only two grandmasters to go, lets see what happens tomorrow. ',\
+                   'Keep going and lets see what happens tomorrow. ',\
                    ]
         animation1=draw.obj_animation('bookmove','book',(640,360))
         self.addpart( animation1 )
@@ -1040,6 +1062,41 @@ class obj_scene_ch4unlocknext(page.obj_chapterpage):
 ####################################################################################
 ####################################################################################
 
+
+
+# class obj_scene_ch4p1(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_chapter4())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p3())
+#     def setup(self):
+#         self.text=[\
+#                   '"',
+#                    ('{partnername}',share.colors.partner),' was held captive in ',\
+#                     ('{villainname}',share.colors.villain),'\'s ',\
+#                      ('evil tower',share.colors.location2),', and ',\
+#                      ('{heroname}',share.colors.hero),' needed to visit three ',\
+#                      ('evil grandmasters',share.colors.grandmaster),' to reveal the tower\'s ',\
+#                      ('password',share.colors.password2),'." ',\
+#                    ]
+#         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
+#         self.addpart( draw.obj_image('tower',(1156,312),scale=0.54,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(981,265),scale=0.35,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(866,243),scale=0.23,rotate=0,fliph=True,flipv=False) )
+#         animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
+#         animation1.addimage('villainholdspartner')
+#         self.addpart( animation1 )
+#         animation2=draw.obj_animation('ch4_villaincapture2','partnerbase',(640,360),record=False,sync=animation1)
+#         animation2.addimage('empty',path='data/premade')
+#         self.addpart( animation2 )
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'villain1','villain2','villain3','villain4','partner_scared') )
+#         animation1.addsound( "villain1", [20] )
+#         animation1.addsound( "villain2", [300] )
+#         animation1.addsound( "villain3", [155] )
+#         animation1.addsound( "partner_scared", [228] )
+#         #
+#         self.addpart( draw.obj_music('piano') )
 
 # remove to shorten
 # class obj_scene_ch4p2(page.obj_chapterpage):

@@ -73,7 +73,7 @@ class obj_scene_ch0p2(page.obj_chapterpage):
                   '\n ',\
                    ]# last line for [back][next] adjustment
         self.textkeys={'pos':(50,20),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
-        self.addpart( draw.obj_drawing('pendraw',(940,360),legend=' Draw a Pen') )
+        self.addpart(draw.obj_drawing('pendraw',(940,360),legend=' Draw a Pen') )
         self.addpart(draw.obj_textbox('hold '+tempo1+' to draw',(420,400),color=share.colors.instructions))
         self.addpart(draw.obj_textbox('press '+tempo2+' to erase',(420,500),color=share.colors.instructions))
         #

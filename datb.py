@@ -152,7 +152,9 @@ class obj_sounds:
         self.dict['tower6']=( 'tower/robot_classic-computing-sound_short.wav' , 1 )
         # self.dict['bug1']=( 'bug/move.wav' , 1 )
         self.dict['bug1']=( 'bug/misc_menu.wav' , 1 )
-        self.dict['bug2']=( 'bug/alien_09.wav' , 1 )
+        self.dict['bug2']=( 'bug/negative_2.wav' , 1 )
+        self.dict['bugitem1']=( 'bug/clean_trumpet.wav' , 1 )
+        self.dict['bugitem2']=( 'bug/tadaam.wav' , 0.7 )
         # ch4
         self.dict['bunny1']=( 'bunny/cute_07.wav' , 1 )
         self.dict['bunny2']=( 'bunny/giggle__dumb-heh.wav' , 1 )
@@ -704,11 +706,21 @@ class obj_snapshotmanager:
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
             dispgroup1.snapshot((640,360,200,300),'herobase')
-            # make herobaseangry (obsolete, used to be with angry head)
+            # combine herohead+stickbodyarmsup = heroarmsup
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+            dispgroup1.addpart('part1',draw.obj_image('stickbodyarmsup',(640,460),path='data/premade') )
             dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
-            dispgroup1.snapshot((640,360,200,300),'herobaseangry')
+            dispgroup1.snapshot((640,360,200,300),'heroarmsup')
+            # combine herohead(rotated)+stickbodyarmsup = heroarmfacesup
+            dispgroup1=draw.obj_dispgroup((640,360))
+            dispgroup1.addpart('part1',draw.obj_image('stickbodyarmsup',(640,460),path='data/premade') )
+            dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5,rotate=90) )
+            dispgroup1.snapshot((640,360,200,300),'heroarmsfaceup')
+            # make herobaseangry (obsolete, used to be with angry head)
+            # dispgroup1=draw.obj_dispgroup((640,360))
+            # dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
+            # dispgroup1.addpart('part2',draw.obj_image('herohead',(640,200),scale=0.5) )
+            # dispgroup1.snapshot((640,360,200,300),'herobaseangry')
             # herohead+stickbody+zapaura=herozapped
             dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
             dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )

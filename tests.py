@@ -1828,50 +1828,24 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_imageplacer(self,'fish') )
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','skeletonbase','skeletonbase_sailorhat','palmtree','bush','mountain','moon') )
         # dxref=330
-        # dyref=300
-        # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','skeletonbase','palmtree','wave','cloud','sailboat','mountain','bush') )
-        # self.addpart( draw.obj_imageplacer(self,'bunnybase','elderbase','sailorbase') )
-        # self.addpart( draw.obj_imageplacer(self,'herobase','partnerbase','love') )
-        # self.addpart( draw.obj_imageplacer(self,'mountain','cloud','moon','wave') )
-        # self.addpart( draw.obj_imageplacer(self,'mailletter','mailbox','flower','bush') )
+        self.addpart( draw.obj_imageplacer(self,'sun','wave','palmtree','sailboat') )
+        self.addpart( draw.obj_image('palmtree',(1074,557),scale=0.6,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('palmtree',(1192,387),scale=0.46,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('sun',(1153,205),scale=0.41,rotate=0,fliph=True,flipv=True) )
+        self.addpart(draw.obj_image('heroarmsfaceup',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False))
+        self.addpart(draw.obj_image('tower',(618,230),scale=0.4,rotate=0,fliph=False,flipv=False))
+        self.addpart(draw.obj_image('cluesparkles',(618,230),scale=0.7,path='data/premade'))
+        animation1=draw.obj_animation('bughovertoright1','bug',(640,360))
+        self.addpart( animation1 )
+        self.addpart( draw.obj_animation('bug_armsraising','bug',(640,360)) )
+        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(374,346),path='data/premade'))
+        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','bunnyhead',(137,564)) )
+        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
+        # self.addpart( draw.obj_animation('ch3_bugtalks3intmark2','bunnyhead',(640,360),record=False,sync=animation1) )
 
 
-        # self.addpart( draw.obj_image('partnerbase',(320,426),scale=0.54,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('musicnote',(485,278),scale=0.36,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('musicnote',(356,189),scale=0.22,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('mailbox',(1073,463),scale=1,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('bush',(772,595),scale=0.54,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
-        # self.addpart( draw.obj_image('mailletter',(252,96),scale=0.39,rotate=0,fliph=False,flipv=False) )
+ #
 
-        # save villain full body (slightly different than hero, because originally we could include partnerhair)
-        # dispgroup2=draw.obj_dispgroup((640,360))# create dispgroup
-        # dispgroup2.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )
-        # dispgroup2.addpart('part2',draw.obj_image('villainhead',(640,200),scale=0.5) )
-        # dispgroup2.snapshot((640,330,200,330),'villainbaserest')
-        # self.addpart( dispgroup2)
-        # self.addpart( draw.obj_image('stickbody',(340,460),path='data/premade') )
-        # self.addpart( draw.obj_image('villainhead',(340,200),scale=0.5) )
-        # self.addpart( draw.obj_drawing('stickbodyrest',(940,460),shadow=(200,200)) )
-        # self.addpart( draw.obj_image('villainhead',(940+80,200+50),scale=0.5,rotate=-10) )
-
-        # dispgroup1=draw.obj_dispgroup((640,360))# create dispgroup
-        # dispgroup1.addpart('part1',draw.obj_image('stickbodyrest',(640,460),path='data/premade') )
-        # dispgroup1.addpart('part2',draw.obj_image('villainhead',(640+80,200+50),scale=0.5,rotate=-10) )
-        # dispgroup1.snapshot((640,330,200,330),'villainbaserest')
-        # self.addpart(draw.obj_image('gun',(640,360),fliph=True,rotate=45))
-        # animation=draw.obj_animation('gunwobble','gun',(640,360),record=True)
-        # animation=draw.obj_animation('gunshoot','gun',(640,360),record=True)
-        # animation=draw.obj_animation('gunreload','gun',(640,360),record=True)
-        # self.addpart(draw.obj_image('saxophone',(640,360),fliph=True,rotate=45))
-        # animation=draw.obj_animation('saxwobble','saxophone',(640,360),record=True)
-        # animation=draw.obj_animation('ch4_bunnywillendyou','bunnybase',(640,360),record=True)
-        #
-        # animation=draw.obj_animation('ch4_heroinbushes','herobase',(640,360),record=True)
-        # animation.addimage('testimage2')
-        # animation.addimage('testimage3')
-        # self.addpart(animation)
 
 ####################################################################################################################
 ####################################################################################################################

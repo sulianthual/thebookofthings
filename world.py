@@ -338,6 +338,7 @@ class obj_3dactor(obj_grandactor):
         self.refscale3d=refscale3d# reference scale of image (for frequent relative scaling)
         self.type3d=type3d# type in world (static, rabbit=attacker, for game rules)
         self.subtype3d=subtype# subtype (if needed e.g. for pickup items)
+        self.reshow=False# actor is rready to be reshown on next frame (excluding background actors)
         self.refreshcount=refreshcount# counter for image reload
         self.rescalecount=100# counter for image rescale
         self.shotswitch=0# has been in line of shot
@@ -586,8 +587,6 @@ class obj_world_wakeup(obj_world):
         self.startactor.addpart( 'anim1a', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700,400),path='data/premade'))
         self.startactor.addpart( 'anim1b', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+60,400-20),path='data/premade',imgscale=0.7))
         self.startactor.addpart( 'anim1c', draw.obj_animation('ch1_heroinbedZ','sleepZ',(700+100,400-30),path='data/premade',imgscale=0.5))
-
-
         # ungoing actor
         if self.addpartner:# add partner in love
             self.ungoingactor.addpart( 'animadd1', draw.obj_animation('ch1_heroawakes',self.partnerbaseimg,(640+100,360-50),scale=0.7) )
@@ -668,7 +667,111 @@ class obj_world_wakeup(obj_world):
             if self.timerend.ring:
                 self.done=True# end of minigame
 
+####################################################################################################################
 
+
+# Mini Game: get item (raise your arms)
+# *GET ITEM
+class obj_world_getitem(obj_world):
+    def setup(self,**kwargs):
+        # default options
+        self.itemname='book'# the name of image for displayed item
+        # scene tuning
+        if kwargs is not None:
+            if 'item' in kwargs: self.itemname=kwargs["item"]# what is displayed
+        #
+        # change base picture
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.ungoing=False# ungoing or back to start
+        #
+        # layering
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.startactor=obj_grandactor(self,(640,360))
+        self.ungoingactor=obj_grandactor(self,(640,360))
+        self.finishactor=obj_grandactor(self,(640,360))
+        self.text_undone=obj_grandactor(self,(640,360))# text always in front
+        self.text_done=obj_grandactor(self,(640,360))
+        self.staticactor.show=True
+        self.startactor.show=True
+        self.ungoingactor.show=False
+        self.finishactor.show=False
+        self.text_undone.show=True
+        self.text_done.show=False
+        # static actor
+        # self.staticactor.addpart( 'img1', draw.obj_image('bed',(440,500),scale=0.75) )
+        # start actor
+        self.startactor.addpart( 'img1', draw.obj_image('herobase',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False) )
+        self.startactor.addpart( 'anim1', draw.obj_animation('bughovertoright1','bug',(640,360)) )
+        # ungoing actor
+        self.ungoingactor.addpart( 'anim1', draw.obj_animation('heroarmsraising','heroarmsup',(640,360)) )
+        self.ungoingactor.addpart( 'anim2', draw.obj_animation('bug_armsraising','bug',(640,360)) )
+        self.finishactor.addpart( 'img1', draw.obj_image('heroarmsfaceup',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False) )
+        self.finishactor.addpart( 'img2', draw.obj_image(self.itemname,(618,230),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        self.finishactor.addpart( 'img3', draw.obj_image('cluesparkles',(618,230),scale=0.7,path='data/premade') )
+        self.finishactor.addpart( 'anim1', draw.obj_animation('bug_armsraising2','bug',(640,360)) )
+        # text
+        self.textboxclick=draw.obj_textbox('[Hold '+share.datamanager.controlname('up')+' to raise your arms]',(250,620),color=share.colors.instructions,hover=True)
+        self.text_undone.addpart( 'text1', self.textboxclick )
+        self.text_done.addpart( 'text1', draw.obj_textbox('My precious!',(250,620)) )
+
+        # timer for ungoing part
+        self.timer=tool.obj_timer(200)# ungoing part
+        self.timerend=tool.obj_timer(120)# goal to done
+        self.timer.start()# reset ungoing timer
+        # audio
+        self.soundstart=draw.obj_sound('bugitem1')
+        self.creator.addpart(self.soundstart)
+        self.sounddone=draw.obj_sound('bugitem2')
+        self.creator.addpart(self.sounddone)
+
+    def triggerungoing(self,controls):
+        return controls.gu and controls.guc or (True and self.textboxclick.isclicked(controls))
+    def triggerstart(self,controls):
+        return not controls.gu and not self.textboxclick.isholdclicked(controls)
+    def update(self,controls):
+        super().update(controls)
+        self.textboxclick.trackhover(controls)
+        if not self.goal:
+            # goal unreached state
+            if not self.ungoing:
+                # start substate
+                if self.triggerungoing(controls):# flip to ungoing
+                    self.soundstart.play()
+                    self.ungoing=True
+                    self.startactor.show=False
+                    self.ungoingactor.show=True
+                    self.finishactor.show=False
+                    self.ungoingactor.dict["anim1"].rewind()
+                    self.ungoingactor.dict["anim2"].rewind()
+                    # if self.addbug:
+                        # self.ungoingactor.dict["animadd2"].rewind()
+            else:
+                # ungoing substate
+                self.timer.update()
+                if self.triggerstart(controls):# flip to start
+                    # self.soundback.play()
+                    self.ungoing=False
+                    self.startactor.show=True
+                    self.ungoingactor.show=False
+                    self.finishactor.show=False
+                    self.soundstart.stop()
+                    self.timer.start()# reset ungoing timer
+                    self.startactor.dict["anim1"].rewind()
+                if self.timer.ring:# flip to goal reached
+                    self.goal=True
+                    self.sounddone.play()
+                    self.timerend.start()
+                    self.startactor.show=False
+                    self.ungoingactor.show=False
+                    self.finishactor.show=True
+                    self.text_undone.show=False
+                    self.text_done.show=True
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
 ####################################################################################################################
 
 # Mini Game: sneak drink at breakfast
@@ -6163,13 +6266,13 @@ class obj_world_3dforest(obj_world):
         self.text_exit=obj_grandactor(self,(640,360))# text always in front
         self.text_exit.show=False
         tempo ='['+share.datamanager.controlname('action')+': enter] '
-        self.text_exit.addpart('text1', draw.obj_textbox(tempo,(640,100),fontsize='large',color=share.colors.instructions) )
+        self.text_exit.addpart('text1', draw.obj_textbox(tempo,(640,150),fontsize='large',color=share.colors.instructions) )
         self.text_rabbitsleft=obj_grandactor(self,(640,360))# text always in front
         self.text_rabbitsleft.show=False
         self.text_rabbitsleft.addpart('text1', draw.obj_textbox('Rabbits left: ',(150,100),fontsize='medium') )
         self.text_victory=obj_grandactor(self,(640,360))# text always in front
         self.text_victory.show=False
-        self.text_victory.addpart('text1', draw.obj_textbox('Victory!',(640,100),fontsize='huge') )
+        self.text_victory.addpart('text1', draw.obj_textbox('Victory!',(640,150),fontsize='huge') )
 
         # SOUNDS
         self.soundshoot=draw.obj_sound('3dforest_shoot')
@@ -6214,7 +6317,19 @@ class obj_world_3dforest(obj_world):
         # set the gun
         self.hasgun=False# the player has a gun at a given time
         self.setgun()
-        # Make a 2D system for object placement
+        # Static elements
+        self.makebasearea_default()# the main area where we return
+        # Pickups (e.g. gun)
+        self.placetree('gun',0,3,0.5,0.6,'pickup',subtype='gun')# specify subtype
+        # Level exit
+        self.placetree('exclamationmarkred',0,5,1,2,'pickup',subtype='exit',premade=True)
+        # Moving actors (e.g. attackers)
+        self.startrabbits=1# starting number of rabbits
+        self.maxrabbits=1# max rabbits possible at a given time
+        self.totalrabbits=21# how many rabbits generated total
+        self.setrabbits()
+    def makebasearea_default(self,caveinback=True):
+        # The base area (often used)
         # the player (position and angle)
         self.xp=0# x position
         self.yp=0# y postion
@@ -6223,48 +6338,44 @@ class obj_world_3dforest(obj_world):
         self.ozp=0# vertical angle of vision (always =0 horizontal)
         self.up=0.03# moving speed
         # boundaries of world
-        self.xpmax=5
-        self.xpmin=-5
-        self.ypmax=5
-        self.ypmin=-5
+        self.xpmax=3.6
+        self.xpmin=-3.6
+        self.ypmax=3.6
+        self.ypmin=-3.6
         # Populate the world (static objects, no hitboxes)
         self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        aplace=[-5,-3,-1,1,3,5]
+
+        # Static elements
+        # aplace=[-5,-3,-1,1,3,5]
+        aplace=[-4,4]
+        for ix in [-4,-1.3,1.3,4]:# trees at vision level
+            for iy in [-4,4]:
+                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
+        for ix in [-4,4]:# trees at vision level
+            for iy in [-1.3,1.3]:
+                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
+        aplace=[-2,2]
         for ix in aplace:# trees at vision level
             for iy in aplace:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(8):# bushes randomly placed near the ground
-            ix=tool.randint(0,100)/10-5
-            iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
+                self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
-        # self.placetree('cave',0,60,10,24,'background')
+        self.placetree('cave',0,5,1.5,3,'static',randomfliph=False)
         self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('mountain',60,-60,20,40,'background')
-        self.placetree('mountain',60,-80,15,30,'background')
-        self.placetree('mountain',60,-30,15,30,'background')
-        self.placetree('mountain',-60,-60,20,40,'background')
-        self.placetree('mountain',-60,-80,15,30,'background')
-        self.placetree('mountain',-60,-30,15,30,'background')
+        # self.placetree('mountain',60,-60,20,40,'background')
+        # self.placetree('mountain',60,-80,15,30,'background')
+        # self.placetree('mountain',60,-30,15,30,'background')
+        # self.placetree('mountain',-60,-60,20,40,'background')
+        # self.placetree('mountain',-60,-80,15,30,'background')
+        # self.placetree('mountain',-60,-30,15,30,'background')
         # additional trees in background
-        for ix in range(30):# trees at vision level
+        for ix in range(0):#30 trees at vision level
             passlt_=20+tool.randint(0,100)/100*40
             passot_=tool.randint(5,95)/100*360
             ixr=passlt_*tool.sin(passot_)
             iyr=passlt_*tool.cos(passot_)
             self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
-        # Pickups (e.g. gun)
-        self.placetree('gun',0,3,0.5,0.6,'pickup',subtype='gun')# specify subtype
-        # Level exit
-        self.placetree('cave',0,5,1.5,3,'static',randomfliph=False)
-        self.placetree('exclamationmarkred',0,5,1,2,'pickup',subtype='exit',premade=True)
-        # Moving actors (e.g. attackers)
-        self.startrabbits=1# starting number of rabbits
-        self.maxrabbits=1# max rabbits possible at a given time
-        self.totalrabbits=30# how many rabbits generated total
-        self.setrabbits()
     def sethealth(self):# set everything player health
         # set the health
         self.maxhealth=5# default is always 5
@@ -6347,7 +6458,7 @@ class obj_world_3dforest(obj_world):
         for cc,act in enumerate(self.actor3dlist):
             if act.type3d=='rabbit' and act.killswitch!=0:
                 act.show=False
-                self.soundrabbitdie.play()
+                # self.soundrabbitdie.play()
                 # place a poof (disappears)
                 self.placetree('poof',act.x3d,act.y3d,1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
                 act.kill()# Remove from world
@@ -6550,8 +6661,8 @@ class obj_world_3dforest(obj_world):
                             self.staticactor.dict["saxwobble"].rewind()
                             self.staticactor.dict["saxwobble"].show=True
                     elif act.subtype3d=='exit':# exit the level (press action)
-                        if lt<1.3 and lt>0.5:
-                            if tool.cos(ot-self.op)>0.9:
+                        if lt<2.5 and lt>0.5:
+                            if tool.cos(ot-self.op)>0.8:
                                 self.text_exit.show=True
                                 if controls.ga and controls.gac:
                                     self.done=True# exit level
@@ -6561,7 +6672,7 @@ class obj_world_3dforest(obj_world):
                         else:
                             self.text_exit.show=False
                     elif act.subtype3d=='exitgun':# exit the level with gun (press action)
-                        if lt<1.3 and lt>0.5:
+                        if lt<2.5 and lt>0.5:
                             if tool.cos(ot-self.op)>0.9:
                                 self.text_exit.show=True
                                 if controls.ga and controls.gac and self.hasgun:
@@ -6572,7 +6683,7 @@ class obj_world_3dforest(obj_world):
                         else:
                             self.text_exit.show=False
                     elif act.subtype3d=='exitsax':# exit the level with gun (press action)
-                        if lt<1.3 and lt>0.5:
+                        if lt<2.5 and lt>0.5:
                             # if abs(lt*tool.sin(ot-self.op))<0.2:
                             if tool.cos(ot-self.op)>0.9:
                                 self.text_exit.show=True
@@ -6587,7 +6698,6 @@ class obj_world_3dforest(obj_world):
 
                 #######
                 # Rabbits (a type of enemy)
-
                 elif act.type3d=='rabbit':
                     # Regular bunny (hits and dies)
                     if not act.isattacking: # not attacking
@@ -6806,30 +6916,39 @@ class obj_world_3dforest(obj_world):
             else:
                 ##### Any element that is 3d placed
                 # if abs( (ot-self.op) % 360)>self.visionp or lt<0.5:
-                if tool.cos(ot-self.op)<0.5 or lt<0.5 or lt>7:
+                if tool.cos(ot-self.op)<0.5 or lt<0.5 or lt>10:
                     # outside range of vision or too close, too far (excludes background elements)
                     act.show=False
                 else:
-                    # if reintering range of vision, reload image:
-                    if act.show==False:
-                        act.show=True
                     # Set x position on screen (from horizontal angle)
                     # xscreen_=(640+100)*( (self.op-ot) % 360)/30+640# convert horizontal angle to 0-1080 screen position
                     xscreen_=(640+100)*((self.op-ot +180)%360 -180)/50+640# convert horizontal angle to 0-1080 screen position
-                    act.movetox(xscreen_)
+                    # act.movetox(xscreen_)
                     # set y position on screen (from vertical screen)
                     yscreen_=(320+50)*(self.ozp-wt)/90+320# convert horizontal angle to 0-1080 screen position
-                    act.movetoy(yscreen_)
+                    # act.movetoy(yscreen_)
+                    # if reintering range of vision, reload image:
+                    if act.show:
+                        act.movetox(xscreen_)
+                        act.movetoy(yscreen_)
                     # Rescale image ( if too much scaling, eventually reload the image)
-                    if act.refreshcount>30:# rate of reloading, too much lowers fps, too little destroys image
+                    if act.refreshcount>20:# rate of reloading, too much lowers fps, too little destroys image
                         act.refreshcount=0# reset counter
                         act.dict["img"].reload(act.image3d)# reload image
                         act.rescalecount=100# force rescaling
-                    act.refreshcount+=1# increase scaling counter
                     if act.rescalecount>1:# every 2 frames
                         act.rescalecount=0
                         act.scaleelementsto(act.refscale3d/lt)# rescale based on player distance
+                        # act.movetox(xscreen_)
+                        # act.movetoy(yscreen_)
+                    act.refreshcount+=1# increase scaling counter
                     act.rescalecount+=1
+                    if act.reshow==True:
+                        act.show=True
+                        act.reshow=False
+                    if act.show==False:
+                        act.reshow=True# prepare to show next frame after scaling
+                        # act.show=True
         ####
         # generate rabbits or kill them
         self.birthkillrabbits()
@@ -6863,23 +6982,23 @@ class obj_world_3dforest_enter(obj_world_3dforest):
         # Make a 2D system for object placement
         # the player (position and angle)
         self.xp=0# x position
-        self.yp=0# y postion
+        self.yp=1# y postion
         self.zp=1# z postion (=1 at vision)
         self.op=90# horitonzal angle of vision (facing north=90)
         self.ozp=0# vertical angle of vision (always =0 horizontal)
         self.up=0.03# moving speed
         # boundaries of world
-        self.xpmax=1
-        self.xpmin=-1
-        self.ypmax=12
-        self.ypmin=0
+        self.xpmax=0.4
+        self.xpmin=-0.4
+        self.ypmax=11.4
+        self.ypmin=0.6
         # Populate the world (static objects, no hitboxes)
         self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        for ix in [-1,1]:# trees at vision level
+        for ix in [-1.6,1.6]:# trees at vision level
             for iy in [0,2,4,6,8,10,12]:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(12):# flowers randomly placed near the ground
+                self.placetree('bush',ix,iy,1,1,'static',randomfliph=True)
+        for i in range(0):# flowers randomly placed near the ground
             ix=tool.randint(0,100)/100*2-1
             iy=tool.randint(0,100)/100*12
             self.placetree('flower',ix,iy,0.2,0.5,'static',randomfliph=True)
@@ -6891,7 +7010,7 @@ class obj_world_3dforest_enter(obj_world_3dforest):
         self.placetree('mailbox',-7,-60,6,12,'background')
         # Pickups (e.g. gun)
         # Level exit
-        self.placetree('exclamationmarkred',0,12,1,2,'pickup',subtype='exit',premade=True)
+        self.placetree('exclamationmarkred',0,13,1,2,'pickup',subtype='exit',premade=True)
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=0# max rabbits possible at a given time
@@ -6916,25 +7035,25 @@ class obj_world_3dforest_enter2(obj_world_3dforest):
         # Make a 2D system for object placement
         # the player (position and angle)
         self.xp=0# x position
-        self.yp=0# y postion
+        self.yp=1# y postion
         self.zp=1# z postion (=1 at vision)
-        self.op=120# horitonzal angle of vision (facing north=90)
+        self.op=90# horitonzal angle of vision (facing north=90)
         self.ozp=0# vertical angle of vision (always =0 horizontal)
         self.up=0.03# moving speed
         # boundaries of world
-        self.xpmax=0.5
-        self.xpmin=-0.5
-        self.ypmax=24
-        self.ypmin=0
+        self.xpmax=1.5
+        self.xpmin=-1.5
+        self.ypmax=23.4
+        self.ypmin=0.6
         # Populate the world (static objects, no hitboxes)
         self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        for ix in [-0.5,0.5]:# trees at vision level
+        for ix in [-2.1,2.1]:# trees at vision level
             for iy in [0,3,6,9,12,15,18,21,24]:
                 self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
         self.placetree('tree',-0.25,-1,1,1,'static')
         self.placetree('tree',0.25,-1,1,1,'static')
-        for i in range(12):# bushes randomly placed near the ground
+        for i in range(0):# bushes randomly placed near the ground
             ix=tool.randint(0,100)/100*1-0.5
             iy=tool.randint(0,100)/100*24
             self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
@@ -6951,7 +7070,7 @@ class obj_world_3dforest_enter2(obj_world_3dforest):
             self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
         # Pickups (e.g. gun)
         # Level exit
-        self.placetree('exclamationmarkred',0,24,1,2,'pickup',subtype='exit',premade=True)
+        self.placetree('exclamationmarkred',0,25,1,2,'pickup',subtype='exit',premade=True)
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=0# max rabbits possible at a given time
@@ -6977,48 +7096,9 @@ class obj_world_3dforest_checkcave(obj_world_3dforest):
         self.hasgun=False# the player has a gun at a given time
         self.setgun()
         # Make a 2D system for object placement
-        # the player (position and angle)
-        self.xp=0# x position
-        self.yp=0# y postion
-        self.zp=1# z postion (=1 at vision)
-        self.op=90# horitonzal angle of vision (facing north=90)
-        self.ozp=0# vertical angle of vision (always =0 horizontal)
-        self.up=0.03# moving speed
-        # boundaries of world
-        self.xpmax=5
-        self.xpmin=-5
-        self.ypmax=5
-        self.ypmin=-5
-        # Populate the world (static objects, no hitboxes)
-        self.actor3dlist=[]# list of 3d actors in world (excluding player)
-        # Static elements
-        aplace=[-5,-3,-1,1,3,5]
-        for ix in aplace:# trees at vision level
-            for iy in aplace:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(0):# bushes randomly placed near the ground
-            ix=tool.randint(0,100)/10-5
-            iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
-        # sun and moon in the sky,
-        # self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
-        self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('mountain',60,-60,20,40,'background')
-        self.placetree('mountain',60,-80,15,30,'background')
-        self.placetree('mountain',60,-30,15,30,'background')
-        self.placetree('mountain',-60,-60,20,40,'background')
-        self.placetree('mountain',-60,-80,15,30,'background')
-        self.placetree('mountain',-60,-30,15,30,'background')
-        # additional trees in background
-        for ix in range(0):# trees at vision level
-            passlt_=20+tool.randint(0,100)/100*40
-            passot_=tool.randint(5,95)/100*360
-            ixr=passlt_*tool.sin(passot_)
-            iyr=passlt_*tool.cos(passot_)
-            self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
+        self.makebasearea_default(caveinback=False)
         # Level exit
-        self.placetree('cave',0,5,1.5,3,'static',randomfliph=False)
+        # self.placetree('cave',0,5,1.5,3,'static',randomfliph=False)
         self.placetree('exclamationmarkred',0,5,1,2,'pickup',subtype='exit',premade=True)
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
@@ -7035,47 +7115,8 @@ class obj_world_3dforest_rabbitescape(obj_world_3dforest):
         # set the gun
         self.hasgun=False# the player has a gun at a given time
         self.setgun()
-        # Make a 2D system for object placement
-        # the player (position and angle)
-        self.xp=0# x position
-        self.yp=0# y postion
-        self.zp=1# z postion (=1 at vision)
-        self.op=90# horitonzal angle of vision (facing north=90)
-        self.ozp=0# vertical angle of vision (always =0 horizontal)
-        self.up=0.03# moving speed
-        # boundaries of world
-        self.xpmax=5
-        self.xpmin=-5
-        self.ypmax=5
-        self.ypmin=-5
-        # Populate the world (static objects, no hitboxes)
-        self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        aplace=[-5,-3,-1,1,3,5]
-        for ix in aplace:# trees at vision level
-            for iy in aplace:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(0):# bushes randomly placed near the ground
-            ix=tool.randint(0,100)/10-5
-            iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
-        # sun and moon in the sky,
-        self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
-        self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('mountain',60,-60,20,40,'background')
-        self.placetree('mountain',60,-80,15,30,'background')
-        self.placetree('mountain',60,-30,15,30,'background')
-        self.placetree('mountain',-60,-60,20,40,'background')
-        self.placetree('mountain',-60,-80,15,30,'background')
-        self.placetree('mountain',-60,-30,15,30,'background')
-        # additional trees in background
-        for ix in range(0):# trees at vision level
-            passlt_=20+tool.randint(0,100)/100*40
-            passot_=tool.randint(5,95)/100*360
-            ixr=passlt_*tool.sin(passot_)
-            iyr=passlt_*tool.cos(passot_)
-            self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
+        self.makebasearea_default(caveinback=True)
         # Level exit
         self.placetree('exclamationmarkred',-5,-4,1,2,'pickup',subtype='exit',premade=True)
         # Moving actors (e.g. attackers)
@@ -7084,7 +7125,7 @@ class obj_world_3dforest_rabbitescape(obj_world_3dforest):
         self.totalrabbits=1# how many rabbits generated total
         self.setrabbits()
         # just place a single rabbit (bypass generation system)
-        self.placetree('bunnybase',0,4,1,1,'rabbit',timer=150,subtype='smallrabbit')
+        self.placetree('bunnybase',-0.7,4,1,1,'rabbit',timer=150,subtype='smallrabbit')
         self.rabbitcount+=1
         self.rabbittotalcount+=1
 
@@ -7107,35 +7148,32 @@ class obj_world_3dforest_findgun(obj_world_3dforest):
         # Make a 2D system for object placement
         # the player (position and angle)
         self.xp=0# x position
-        self.yp=-1.5# y postion
+        self.yp=1# y postion
         self.zp=1# z postion (=1 at vision)
         self.op=90# horitonzal angle of vision (facing north=90)
         self.ozp=0# vertical angle of vision (always =0 horizontal)
         self.up=0.03# moving speed
         # boundaries of world
-        self.xpmax=1.5
-        self.xpmin=-1.5
-        self.ypmax=1.5
-        self.ypmin=-2.5
+        self.xpmax=0.4
+        self.xpmin=-0.4
+        self.ypmax=7.4
+        self.ypmin=0.6
         # Populate the world (static objects, no hitboxes)
         self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        for ix in [-1.5,-0.75,0.75,1.5]:# trees at vision level
-            self.placetree('tree',ix,1.5,1,1,'static',randomfliph=True)
-            self.placetree('tree',ix,-2.5,1,1,'static',randomfliph=True)
-        for iy in [-0.75,0.75]:# trees at vision level
-            self.placetree('tree',1.5,iy,1,1,'static',randomfliph=True)
-            self.placetree('tree',-2.5,iy,1,1,'static',randomfliph=True)
-        for ix in [-1,1]:# bushes randomly placed near the ground
-            self.placetree('bush',ix,1,0.3,0.6,'static',randomfliph=True)
-            self.placetree('bush',ix,-1,0.3,0.6,'static',randomfliph=True)
+        for ix in [-1.6,1.6]:# trees at vision level
+            for iy in [0,2,4,6,8]:
+                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
+        for ix in [-0.7,0.7]:# trees at vision level
+            self.placetree('bush',ix,0,0.3,0.6,'static',randomfliph=True)
+            self.placetree('bush',ix,8,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
         # self.placetree('cave',0,60,10,24,'background')
         self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
         # Level exit
-        self.placetree('gun',0,0,0.5,0.6,'pickup',subtype='gun')# specify subtype
-        self.placetree('exclamationmarkred',0,-2.5,1,2,'pickup',subtype='exitgun',premade=True)
+        self.placetree('gun',0,4,0.5,0.6,'pickup',subtype='gun')# specify subtype
+        self.placetree('exclamationmarkred',0,9,1,2,'pickup',subtype='exitgun',premade=True)
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=0# max rabbits possible at a given time
@@ -7153,54 +7191,15 @@ class obj_world_3dforest_rabbitshootone(obj_world_3dforest):
         # set the gun
         self.hasgun=True# the player has a gun at a given time
         self.setgun()
-        # Make a 2D system for object placement
-        # the player (position and angle)
-        self.xp=0# x position
-        self.yp=0# y postion
-        self.zp=1# z postion (=1 at vision)
-        self.op=90# horitonzal angle of vision (facing north=90)
-        self.ozp=0# vertical angle of vision (always =0 horizontal)
-        self.up=0.03# moving speed
-        # boundaries of world
-        self.xpmax=5
-        self.xpmin=-5
-        self.ypmax=5
-        self.ypmin=-5
-        # Populate the world (static objects, no hitboxes)
-        self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        aplace=[-5,-3,-1,1,3,5]
-        for ix in aplace:# trees at vision level
-            for iy in aplace:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(0):# bushes randomly placed near the ground
-            ix=tool.randint(0,100)/10-5
-            iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
-        # sun and moon in the sky,
-        self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
-        self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('mountain',60,-60,20,40,'background')
-        self.placetree('mountain',60,-80,15,30,'background')
-        self.placetree('mountain',60,-30,15,30,'background')
-        self.placetree('mountain',-60,-60,20,40,'background')
-        self.placetree('mountain',-60,-80,15,30,'background')
-        self.placetree('mountain',-60,-30,15,30,'background')
-        # additional trees in background
-        for ix in range(0):# trees at vision level
-            passlt_=20+tool.randint(0,100)/100*40
-            passot_=tool.randint(5,95)/100*360
-            ixr=passlt_*tool.sin(passot_)
-            iyr=passlt_*tool.cos(passot_)
-            self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
+        self.makebasearea_default(caveinback=True)
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=0# max rabbits possible at a given time
         self.totalrabbits=1# how many rabbits generated total
         self.setrabbits()
         # just place a single rabbit (bypass generation system)
-        self.placetree('bunnybase',0,4,1,1,'rabbit',timer=150)
+        self.placetree('bunnybase',0.7,4,1,1,'rabbit',timer=150)
         self.rabbitcount+=1
         self.rabbittotalcount+=1
 
@@ -7215,51 +7214,12 @@ class obj_world_3dforest_rabbitshoot(obj_world_3dforest):
         self.hasgun=True# the player has a gun at a given time
         self.setgun()
         # Make a 2D system for object placement
-        # the player (position and angle)
-        self.xp=0# x position
-        self.yp=0# y postion
-        self.zp=1# z postion (=1 at vision)
-        self.op=90# horitonzal angle of vision (facing north=90)
-        self.ozp=0# vertical angle of vision (always =0 horizontal)
-        self.up=0.03# moving speed
-        # boundaries of world
-        self.xpmax=5
-        self.xpmin=-5
-        self.ypmax=5
-        self.ypmin=-5
-        # Populate the world (static objects, no hitboxes)
-        self.actor3dlist=[]# list of 3d actors in world (excluding player)
-        # Static elements
-        aplace=[-5,-3,-1,1,3,5]
-        for ix in aplace:# trees at vision level
-            for iy in aplace:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(0):# bushes randomly placed near the ground
-            ix=tool.randint(0,100)/10-5
-            iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
-        # sun and moon in the sky,
-        self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
-        self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('mountain',60,-60,20,40,'background')
-        self.placetree('mountain',60,-80,15,30,'background')
-        self.placetree('mountain',60,-30,15,30,'background')
-        self.placetree('mountain',-60,-60,20,40,'background')
-        self.placetree('mountain',-60,-80,15,30,'background')
-        self.placetree('mountain',-60,-30,15,30,'background')
-        # additional trees in background
-        for ix in range(0):#30 trees at vision level
-            passlt_=20+tool.randint(0,100)/100*40
-            passot_=tool.randint(5,95)/100*360
-            ixr=passlt_*tool.sin(passot_)
-            iyr=passlt_*tool.cos(passot_)
-            self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
+        self.makebasearea_default()# the main area where we return
         # Level exit
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=5# max rabbits possible at a given time
-        self.totalrabbits=31# how many rabbits generated total
+        self.totalrabbits=21# how many rabbits generated total
         self.setrabbits()
         # set first rabbits manually
         self.placetree('bunnybase',-2,5,1,1,'rabbit',timer=150)
@@ -7278,47 +7238,8 @@ class obj_world_3dforest_rabbitescapebig(obj_world_3dforest):
         # set the gun
         self.hasgun=True# the player has a gun at a given time
         self.setgun()
-        # Make a 2D system for object placement
-        # the player (position and angle)
-        self.xp=0# x position
-        self.yp=0# y postion
-        self.zp=1# z postion (=1 at vision)
-        self.op=90# horitonzal angle of vision (facing north=90)
-        self.ozp=0# vertical angle of vision (always =0 horizontal)
-        self.up=0.03# moving speed
-        # boundaries of world
-        self.xpmax=5
-        self.xpmin=-5
-        self.ypmax=5
-        self.ypmin=-5
-        # Populate the world (static objects, no hitboxes)
-        self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        aplace=[-5,-3,-1,1,3,5]
-        for ix in aplace:# trees at vision level
-            for iy in aplace:
-                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(0):# bushes randomly placed near the ground
-            ix=tool.randint(0,100)/10-5
-            iy=tool.randint(0,100)/10-5
-            self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
-        # sun and moon in the sky,
-        self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
-        self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('mountain',60,-60,20,40,'background')
-        self.placetree('mountain',60,-80,15,30,'background')
-        self.placetree('mountain',60,-30,15,30,'background')
-        self.placetree('mountain',-60,-60,20,40,'background')
-        self.placetree('mountain',-60,-80,15,30,'background')
-        self.placetree('mountain',-60,-30,15,30,'background')
-        # additional trees in background
-        for ix in range(0):# trees at vision level
-            passlt_=20+tool.randint(0,100)/100*40
-            passot_=tool.randint(5,95)/100*360
-            ixr=passlt_*tool.sin(passot_)
-            iyr=passlt_*tool.cos(passot_)
-            self.placetree('tree',ixr,iyr,3,6,'background',randomfliph=True)
+        self.makebasearea_default()# the main area where we return
         # level exit
         self.placetree('exclamationmarkred',5,-4,1,2,'pickup',subtype='exit',premade=True)
         # Moving actors (e.g. attackers)
@@ -7327,7 +7248,7 @@ class obj_world_3dforest_rabbitescapebig(obj_world_3dforest):
         self.totalrabbits=1# how many rabbits generated total
         self.setrabbits()
         # just place a single rabbit (bypass generation system)
-        self.placetree('bunnybase',0,7,2,2,'bigrabbit',timer=150)
+        self.placetree('bunnybase',-0.8,7,2,2,'bigrabbit',timer=150)
         self.rabbitcount+=1
         self.rabbittotalcount+=1
 
@@ -7350,35 +7271,32 @@ class obj_world_3dforest_findsax(obj_world_3dforest):
         # Make a 2D system for object placement
         # the player (position and angle)
         self.xp=0# x position
-        self.yp=-1.5# y postion
+        self.yp=1# y postion
         self.zp=1# z postion (=1 at vision)
         self.op=90# horitonzal angle of vision (facing north=90)
         self.ozp=0# vertical angle of vision (always =0 horizontal)
         self.up=0.03# moving speed
         # boundaries of world
-        self.xpmax=1.5
-        self.xpmin=-1.5
-        self.ypmax=1.5
-        self.ypmin=-2.5
+        self.xpmax=0.4
+        self.xpmin=-0.4
+        self.ypmax=7.4
+        self.ypmin=0.6
         # Populate the world (static objects, no hitboxes)
         self.actor3dlist=[]# list of 3d actors in world (excluding player)
         # Static elements
-        for ix in [-1.5,-0.75,0.75,1.5]:# trees at vision level
-            self.placetree('tree',ix,1.5,1,1,'static',randomfliph=True)
-            self.placetree('tree',ix,-2.5,1,1,'static',randomfliph=True)
-        for iy in [-0.75,0.75]:# trees at vision level
-            self.placetree('tree',1.5,iy,1,1,'static',randomfliph=True)
-            self.placetree('tree',-2.5,iy,1,1,'static',randomfliph=True)
-        for ix in [-1,1]:# bushes randomly placed near the ground
-            self.placetree('bush',ix,1,0.3,0.6,'static',randomfliph=True)
-            self.placetree('bush',ix,-1,0.3,0.6,'static',randomfliph=True)
+        for ix in [-1.6,1.6]:# trees at vision level
+            for iy in [0,2,4,6,8]:
+                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
+        for ix in [-0.7,0.7]:# trees at vision level
+            self.placetree('bush',ix,0,0.3,0.6,'static',randomfliph=True)
+            self.placetree('bush',ix,8,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
         # self.placetree('cave',0,60,10,24,'background')
         self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
         # Level exit
-        self.placetree('saxophone',0,0,0.5,0.6,'pickup',subtype='saxophone')# specify subtype
-        self.placetree('exclamationmarkred',0,-2.5,1,2,'pickup',subtype='exitsax',premade=True)
+        self.placetree('saxophone',0,4,0.5,0.6,'pickup',subtype='saxophone')# specify subtype
+        self.placetree('exclamationmarkred',0,9,1,2,'pickup',subtype='exitsax',premade=True)
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=0# max rabbits possible at a given time
