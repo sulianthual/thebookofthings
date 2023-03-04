@@ -1193,7 +1193,7 @@ class obj_scene_ch6p44(page.obj_chapterpage):
                    'Put your hands up in the air to receive the final ',
                    ('clue',share.colors.password),'! '\
                    ]
-        self.world=world.obj_world_getitem(self,item='tower')
+        self.world=world.obj_world_getitem(self,item='sailorhead',imgscale=0.6,imgxy=(0,0))
         self.addpart(self.world)
         # background
         # self.addpart( draw.obj_image('sailboat',(107,314),scale=0.36,rotate=0,fliph=False,flipv=False) )
@@ -1223,7 +1223,7 @@ class obj_scene_ch6p45(page.obj_chapterpage):
         self.text=[\
                    'The last part of the ',('password',share.colors.password),\
                    ' is actually up to you, said ',('{sailorname}',share.colors.sailor),\
-                   '. You just have to make it a little punny. It goes like this: ',\
+                   '. It goes like this: ',\
                    ('abracada...',share.colors.password),' '\
                    ]
         #
@@ -1249,13 +1249,13 @@ class obj_scene_ch6p46(page.obj_chapterpage):
         animation1=draw.obj_animation('ch3_bugtalks3intmark','elderhead',(374,346-100),scale=0.25)
         self.addpart( animation1 )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','bunnyhead',(137,564-150),scale=0.3) )
-        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','sailorhead',(1099,444-150),scale=0.3) )
+        self.addpart( draw.obj_animation('ch3_bugtalks3intmark','sailorhead',(1099,444-150),scale=0.2) )
         # self.addpart( draw.obj_textbox('abra',(137,564+50),color=share.colors.password) )
         # self.addpart( draw.obj_textbox('cada',(374,346+50),color=share.colors.password) )
         # self.addpart( draw.obj_textbox('{passwordend}',(1099,444+50),color=share.colors.password) )
         self.addpart( draw.obj_textbox('abracada{passwordend}',(754,418+200),color=share.colors.password) )
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [15, 120, 140])
+        # animation1.addsound( "bug1", [15, 120, 140])
         self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch6end(page.obj_chapterpage):

@@ -952,7 +952,7 @@ class obj_scene_ch4p17(page.obj_chapterpage):
         self.text=[\
                    'Alright, you now what to do. Put your hands up in the air like you just dont care. '\
                    ]
-        self.world=world.obj_world_getitem(self,item='tower')
+        self.world=world.obj_world_getitem(self,item='bunnyhead',imgscale=0.7,imgxy=(0,-20))
         self.addpart(self.world)
         # background
         self.addpart( draw.obj_image('tree',(110,351),scale=0.54,rotate=0,fliph=False,flipv=False) )
@@ -982,7 +982,7 @@ class obj_scene_ch4p18(page.obj_chapterpage):
         self.addpart( draw.obj_image('tree',(282,337),scale=0.32,rotate=0,fliph=False,flipv=False) )
         # raise arms
         self.addpart(draw.obj_image('heroarmsfaceup',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False))
-        self.addpart(draw.obj_image('tower',(618,230),scale=0.4,rotate=0,fliph=False,flipv=False))
+        self.addpart(draw.obj_image('bunnyhead',(618,230-20),scale=0.4*0.7,rotate=0,fliph=False,flipv=False))
         self.addpart(draw.obj_image('cluesparkles',(618,230),scale=0.7,path='data/premade'))
         animation1=draw.obj_animation('bughovertoright1','bug',(640,360))
         self.addpart( animation1 )
@@ -1008,7 +1008,7 @@ class obj_scene_ch4p19(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
         self.addpart( draw.obj_textbox('abra',(137,564+50),color=share.colors.password) )
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [15, 120, 140])
+        # animation1.addsound( "bug1", [15, 120, 140])
         self.addpart( draw.obj_music('piano') )
 
 

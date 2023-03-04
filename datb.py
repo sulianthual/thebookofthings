@@ -879,7 +879,7 @@ class obj_snapshotmanager:
             dispgroup1=draw.obj_dispgroup((640,450))# create dispgroup
             dispgroup1.addpart('part1',draw.obj_image('sailorbaldhead',(640,450),scale=1))
             dispgroup1.addpart('part2',draw.obj_image('sailorhat',(640,450-200)))
-            dispgroup1.snapshot((640,325+50,250,275),'sailorhead')
+            dispgroup1.snapshot((640,325+50,400,275),'sailorhead')# 250, 275
             # combine herohead+stickbody = herobase
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('stickbody',(640,460),path='data/premade') )

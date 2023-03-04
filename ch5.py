@@ -62,7 +62,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch5_startstory')
         self.text=[\
-                'Ok here we go, lets write: "',\
+                '"',\
                  ('{heroname}',share.colors.hero),' had figured the first part of the tower\'s ',\
                  ('password',share.colors.password2),' and needed to visit two more ',\
                  ('evil grandmasters',share.colors.grandmaster),'. ',\
@@ -119,7 +119,7 @@ class obj_scene_ch5p6(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p7())
+        share.scenemanager.switchscene(obj_scene_ch5p8())
     def soundnextpage(self):
         pass# no sound
     def setup(self):
@@ -130,16 +130,16 @@ class obj_scene_ch5p6(page.obj_chapterpage):
                     # ('{heroname}',share.colors.hero),' came back home and checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
-                    'two ',' letters". ',\
+                    'a ',' letter". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)
         animation1.addimage('empty',path='data/premade')
         self.addpart(animation1)
-        animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),sync=animation1)
-        animation2.addimage('empty',path='data/premade')
-        self.addpart( animation2  )
+        # animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),sync=animation1)
+        # animation2.addimage('empty',path='data/premade')
+        # self.addpart( animation2  )
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'hero2','mailjump') )
@@ -149,57 +149,23 @@ class obj_scene_ch5p6(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch5') )
 
 
-class obj_scene_ch5p7(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p6())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p8())
-    def soundnextpage(self):
-        pass# no sound
-    def textboxset(self):
-        self.textboxopt={'xy':(1230-180,55)}
-    def setup(self):
-        self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
-        xmargin=100
-        ymargin=230
-        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
-        self.text=[\
-                    'Dear ',('{heroname}',share.colors.hero),', ',\
-                    '\nI am still waiting for you, but boy are you slow to pay me a visit. Hurry up! ',\
-                    # 'I heard you met my former master the ',\
-                    # ('bunny',share.colors.bunny),'. Good for you, whatever. ',\
-                    '\n\nsigned: ',('{villainname}',share.colors.villain),\
-                   ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
-        # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
-        #
-        animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
-        self.addpart(animation1)
-        animation1.addsound( "villain2", [100],skip=1 )
-        #
-        self.sound=draw.obj_sound('mailopen')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('ch5') )
-
-
 class obj_scene_ch5p8(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p7())
+        share.scenemanager.switchscene(obj_scene_ch5p6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p9())
     def textboxset(self):
         self.textboxopt={'xy':(1230-180,55)}
     def setup(self):
-        self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
+        self.addpart( draw.obj_textbox('"The letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
-                  '\nDont ever come back to play your garbage music around here. ',\
-                    'Anyway good luck in your quest. ',\
+                  '\nDont ever play your garbage music near me. ',\
+                    'Another ',('evil grandmaster',share.colors.grandmaster),' lives on top of the ',\
+                    ('highest peak',share.colors.location2),', you should go visit him. ',\
                   '\n\nsigned: ',('{bunnyname}',share.colors.bunny),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
@@ -224,10 +190,10 @@ class obj_scene_ch5p9(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch5_drawcloud')
         self.text=[\
-                  'The second  ',('grandmaster',share.colors.grandmaster),\
-                  ' lives in the north, on top of the ',\
-                  ('highest peak',share.colors.location2),', It is always covered by stormy clouds, so ',\
-                  'draw a ',('cloud',share.colors.item),' and a ',\
+                  # 'The second  ',('grandmaster',share.colors.grandmaster),\
+                  # ' lives in the north, on top of the ',\
+                  'The ',('highest peak',share.colors.location2),' is a large mountain covered by stormy clouds. ',\
+                  'Draw a ',('cloud',share.colors.item),' and a ',\
                   ('lightning bolt',share.colors.item),'. ',\
                    ]
         self.addpart( draw.obj_drawing('clouddraw',(340,450-50),legend='cloud',shadow=(250,250),brush=share.brushes.pen10) )
@@ -449,10 +415,15 @@ class obj_scene_ch5p22(page.obj_chapterpage):
         self.text=[\
                'Instructions: change selection with the '+tempo+'. ',\
                   ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
+        self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True)
         self.addpart(self.world)
+        # elder thinks
+        animation1=draw.obj_animation('ch5_eldershufflerps','rock',(640,360),record=False)
+        animation1.addimage('paper')
+        animation1.addimage('scissors')
+        self.addpart( animation1 )
+        #
         self.addpart( draw.obj_image('show3',(380,300),path='data/premade') )
-        # self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.addpart( draw.obj_music('elder') )
 
@@ -462,15 +433,21 @@ class obj_scene_ch5p23(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p22())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p23a())
+        share.scenemanager.switchscene(obj_scene_ch5p33())
     def setup(self):
         self.text=[\
                '"These are the healthbars. You loose a round, you loose a health. ',\
                   ]
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
+        self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True)
         self.addpart(self.world)
-        self.addpart( draw.obj_image('show3',(280,150),scale=0.65,fliph=False,flipv=True,path='data/premade') )
-        self.addpart( draw.obj_image('show3',(620,150),scale=0.65,fliph=True,flipv=True,path='data/premade') )
+        # elder thinks
+        animation1=draw.obj_animation('ch5_eldershufflerps','rock',(640,360),record=False)
+        animation1.addimage('paper')
+        animation1.addimage('scissors')
+        self.addpart( animation1 )
+        #
+        self.addpart( draw.obj_image('show3',(640,150),scale=0.65,fliph=False,flipv=True,path='data/premade') )
+        self.addpart( draw.obj_image('show3',(640,150),scale=0.65,fliph=True,flipv=True,path='data/premade') )
         # self.addpart( draw.obj_textbox('(not the actual fight)',(640,300),color=share.colors.instructions) )
         #
         self.sound=draw.obj_sound('elder3')
@@ -479,265 +456,19 @@ class obj_scene_ch5p23(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('elder') )
 
-
-
-class obj_scene_ch5p23a(page.obj_chapterpage):
+class obj_scene_ch5p33(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p23())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p24())
-    def triggernextpage(self,controls):
-        return controls.ga and controls.gac
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        tempo='['+share.datamanager.controlname('action')+']'
-        self.text=[' Press ',\
-                    (tempo,share.colors.instructions),\
-                    ' when you are ready. ']
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
-        self.addpart(self.world)
-        self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
-        #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('winds') )
-
-
-
-class obj_scene_ch5p24(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p23a())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p25())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=['\n ']
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('elder') )
-
-
-class obj_scene_ch5p25(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p24())
-    def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch5p26())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch5p25fail())
-    def textboxset(self):
-        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
-    def setup(self):
-        share.datamanager.setbookmark('ch5_lostrps1')
-        self.text=[\
-               '"Oh, you lost, said ',('{eldername}',share.colors.elder),'. ',\
-               'Better luck next time, he he he. ',\
-               'Do you want to play again". ',\
-                  ]
-        y1=200
-        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
-        textchoice=draw.obj_textchoice('yesno',default='yes')
-        textchoice.addchoice('1. Yes','yes',(340,y1))
-        textchoice.addchoice('2. No','no',(540,y1))
-        self.addpart( textchoice )
-        # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
-        # self.addpart( draw.obj_image('elderbase',(627,638),scale=1.37,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(68,662),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(173,679),scale=0.19,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
-        animation1=draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
-        animation1.addsound( "elder2", [200], skip=1 )
-        animation1.addsound( "elder3", [36] )
-        #
-        self.addpart( draw.obj_music('winds') )
-
-
-class obj_scene_ch5p25fail(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p25())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p25())
+        share.scenemanager.switchscene(obj_scene_ch5p34())
+    # def textboxset(self):
+        # self.textboxopt={'xy':(1230-100,660)}
     def setup(self):
         self.text=[\
-               'Giving up already. ',\
-               'Well, that doesnt seem to be the story, said the book of things.  ',\
-               'It looks like you should just go back and ',\
-               ('persevere',share.colors.grandmaster),' a little more. ',\
+                   'This is what the elder is about to play, you need to ',\
+                  ('counter',share.colors.instructions),' him. ',\
                   ]
-        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
-        self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5whatbook2','interrogationmark',(640,360),record=False,path='data/premade',sync=animation1)
-        animation2.addimage('empty',path='data/premade')
-        self.addpart( animation2 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
-        animation1.addsound( "book1", [13] )
-        animation1.addsound( "book2", [170] )
-        animation1.addsound( "book3", [155],skip=1 )
-        #
-        self.addpart( draw.obj_music('winds') )
-
-
-
-class obj_scene_ch5p26(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p25())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p27())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=['\n ']
-        self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('elder') )
-
-
-class obj_scene_ch5p27(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p26())
-    def nextpage(self):
-        if share.datamanager.getword('yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch5p28())
-        else:
-            share.scenemanager.switchscene(obj_scene_ch5p27fail())
-    def textboxset(self):
-        self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
-    def setup(self):
-        share.datamanager.setbookmark('ch5_lostrps2')
-        self.text=[\
-               '"Oh noooo, you lost one more time, said ',('{eldername}',share.colors.elder),'. ',\
-               'But you are getting better, he he he. ',\
-               'Do you want to play one last time". ',\
-                  ]
-        y1=200
-        self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
-        textchoice=draw.obj_textchoice('yesno',default='yes')
-        textchoice.addchoice('1. Yes','yes',(340,y1))
-        textchoice.addchoice('2. No','no',(540,y1))
-        self.addpart( textchoice )
-        # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
-        # self.addpart( draw.obj_image('elderbase',(627,638),scale=1.37,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(68,662),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(173,679),scale=0.19,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
-        animation1=draw.obj_animation('ch5eldertalks4','elderbase',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
-        animation1.addsound( "elder1", [22] )
-        animation1.addsound( "elder3", [67],skip=1 )
-        #
-        self.addpart( draw.obj_music('winds') )
-
-
-class obj_scene_ch5p27fail(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p27())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p27())
-    def setup(self):
-        self.text=[\
-               'Oh, you want to give up. ',\
-               'Sorry, that doesnt seem to be in the story, said the book of things.  ',\
-               'It looks like you should just go back and ',\
-               ('persevere',share.colors.grandmaster),' a little more. ',\
-                  ]
-        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
-        self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5whatbook2','interrogationmark',(640,360),record=False,path='data/premade',sync=animation1)
-        animation2.addimage('empty',path='data/premade')
-        self.addpart( animation2 )
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
-        animation1.addsound( "book1", [13] )
-        animation1.addsound( "book2", [170] )
-        animation1.addsound( "book3", [155],skip=1 )
-        #
-        self.addpart( draw.obj_music('winds') )
-
-
-class obj_scene_ch5p28(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p27())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p33())
-    def setup(self):
-        share.datamanager.setbookmark('ch5_strongwilled')
-        self.text=[\
-                '"What a strong willed character, said ',('{eldername}',share.colors.elder),'. ',\
-                'Even when you were loosing, you never gave up. You had it in you all the time!" ',\
-                  ]
-        # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
-        animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)
-        self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5eldertalks5a','lightningbolt',(640,360),record=False,sync=animation1)
-        animation2.addimage('empty',path='data/premade')
-        self.addpart( animation2 )
-        animation3=draw.obj_animation('ch5eldertalks5b','lightningbolt',(640,360),record=False,sync=animation1)
-        animation3.addimage('empty',path='data/premade')
-        self.addpart( animation3 )
-        #
-        self.sound=draw.obj_sound('unlock')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4','elder5','elder6') )
-        animation1.addsound( "elder1", [47] )
-        animation1.addsound( "elder3", [302] )
-        animation1.addsound( "elder4", [190,406] )
-        animation1.addsound( "elder5", [76] )
-        #
-        self.addpart( draw.obj_music('elder') )
-
-
-
-
-class obj_scene_ch5p33(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p28())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p35())
-    def textboxset(self):
-        self.textboxopt={'xy':(1230-100,660)}
-    def setup(self):
-        self.text=[\
-                   'Now let me teach you a little secret: ',\
-                   'you can cheat and ',\
-                  ('peek at what I am about to play',share.colors.instructions),'. ',\
-                  ]
-        self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True,herohealth=2)
+        self.world=world.obj_world_rockpaperscissors(self,tutorial=True,nothinks=True)
         self.addpart(self.world)
         animation1=draw.obj_animation('ch5_eldershufflerps','rock',(640,360),record=False)
         animation1.addimage('paper')
@@ -749,45 +480,9 @@ class obj_scene_ch5p33(page.obj_chapterpage):
         self.addpart( draw.obj_music('elder') )
 
 
-
-
-class obj_scene_ch5p35(page.obj_chapterpage):
+class obj_scene_ch5p34(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p33())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p35a())
-    def setup(self):
-        self.text=[\
-               '"Now lets play for real, ',\
-               'said ',('{eldername}',share.colors.elder),', ',\
-               'and if you win I will tell you my part of the ',\
-               ('password',share.colors.password),'". ',\
-                  ]
-        self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(68,662),scale=0.25,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('mountain',(173,679),scale=0.19,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
-        animation1=draw.obj_animation('ch5eldertalks4','elderbase',(640,360),record=False)
-        self.addpart( animation1 )
-        #
-        self.sound=draw.obj_sound('bookscene')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
-        animation1.addsound( "elder1", [22] )
-        animation1.addsound( "elder4", [67],skip=1 )
-        #
-        self.addpart( draw.obj_music('winds') )
-
-
-class obj_scene_ch5p35a(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p35())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p36())
     def triggernextpage(self,controls):
@@ -810,7 +505,7 @@ class obj_scene_ch5p35a(page.obj_chapterpage):
 
 class obj_scene_ch5p36(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p35a())
+        share.scenemanager.switchscene(obj_scene_ch5p34())
     def nextpage(self):
         if self.world.win:
             share.scenemanager.switchscene(obj_scene_ch5p37())
@@ -830,19 +525,18 @@ class obj_scene_ch5p36(page.obj_chapterpage):
 
 class obj_scene_ch5p36fail(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p35a())
+        share.scenemanager.switchscene(obj_scene_ch5p34())
     def nextpage(self):
         if share.devmode or share.datamanager.getword('choice_yesno')=='yes':
-            share.scenemanager.switchscene(obj_scene_ch5p35a())
+            share.scenemanager.switchscene(obj_scene_ch5p34())
         else:
             share.scenemanager.switchscene(obj_scene_ch5p37())
     def textboxset(self):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-               'Oh no, you lost again said ',('{eldername}',share.colors.elder),'. ',\
+               'Oh no, you lost said ',('{eldername}',share.colors.elder),'. ',\
                'Remember to ',\
-               ('peek',share.colors.instructions),' at my selection and ',\
                ('counter me at the last moment',share.colors.instructions),'. ',\
                'You can do this. ',\
                   ]
@@ -922,7 +616,7 @@ class obj_scene_ch5p37a(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(414,474),scale=0.28,rotate=0,fliph=False,flipv=False) )
         # raise arms
         self.addpart(draw.obj_image('heroarmsfaceup',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False))
-        self.addpart(draw.obj_image('tower',(618,230),scale=0.4,rotate=0,fliph=False,flipv=False))
+        self.addpart(draw.obj_image('elderhead',(618,230),scale=0.4*0.7,rotate=0,fliph=False,flipv=False))
         self.addpart(draw.obj_image('cluesparkles',(618,230),scale=0.7,path='data/premade'))
         animation1=draw.obj_animation('bughovertoright1','bug',(640,360))
         self.addpart( animation1 )
@@ -955,7 +649,7 @@ class obj_scene_ch5p37b(page.obj_chapterpage):
         self.addpart( draw.obj_textbox('abra',(137,564+50),color=share.colors.password) )
         self.addpart( draw.obj_textbox('cada',(374,346+50),color=share.colors.password) )
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
-        animation1.addsound( "bug1", [15, 120, 140])
+        # animation1.addsound( "bug1", [15, 120, 140])
         self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch5end(page.obj_chapterpage):
@@ -1231,4 +925,315 @@ class obj_scene_ch5unlocknext(page.obj_chapterpage):
 #         self.addpart( draw.obj_music('piano') )
 
 
+# class obj_scene_ch5p7(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p6())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p8())
+#     def soundnextpage(self):
+#         pass# no sound
+#     def textboxset(self):
+#         self.textboxopt={'xy':(1230-180,55)}
+#     def setup(self):
+#         self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
+#         xmargin=100
+#         ymargin=230
+#         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
+#         self.text=[\
+#                     'Dear ',('{heroname}',share.colors.hero),', ',\
+#                     '\nI am still waiting for you, but boy are you slow to pay me a visit. Hurry up! ',\
+#                     # 'I heard you met my former master the ',\
+#                     # ('bunny',share.colors.bunny),'. Good for you, whatever. ',\
+#                     '\n\nsigned: ',('{villainname}',share.colors.villain),\
+#                    ]
+#         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
+#         # self.addpart( draw.obj_image('villainhead',(1065,305),scale=0.5) )
+#         #
+#         animation1=draw.obj_animation('ch2_mailhead','villainhead',(640,360),imgscale=0.7)
+#         self.addpart(animation1)
+#         animation1.addsound( "villain2", [100],skip=1 )
+#         #
+#         self.sound=draw.obj_sound('mailopen')
+#         self.addpart(self.sound)
+#         self.sound.play()
+#         #
+#         self.addpart( draw.obj_music('ch5') )
+
+#################################
+# ROCK PAPER SCISSORS
+
+
 #
+# class obj_scene_ch5p23a(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p23())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p24())
+#     def triggernextpage(self,controls):
+#         return controls.ga and controls.gac
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         tempo='['+share.datamanager.controlname('action')+']'
+#         self.text=[' Press ',\
+#                     (tempo,share.colors.instructions),\
+#                     ' when you are ready. ']
+#         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,herohealth=1,tutorial=True)
+#         self.addpart(self.world)
+#         self.addpart( draw.obj_textbox('press '+tempo+' to start',(640,300),color=share.colors.instructions) )
+#         #
+#         self.sound=draw.obj_sound('bookscene')
+#         self.addpart(self.sound)
+#         self.sound.play()
+#         #
+#         self.addpart( draw.obj_music('winds') )
+#
+#
+#
+# class obj_scene_ch5p24(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p23a())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p25())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=['\n ']
+#         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=1)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('elder') )
+#
+#
+# class obj_scene_ch5p25(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p24())
+#     def nextpage(self):
+#         if share.datamanager.getword('yesno')=='yes':
+#             share.scenemanager.switchscene(obj_scene_ch5p26())
+#         else:
+#             share.scenemanager.switchscene(obj_scene_ch5p25fail())
+#     def textboxset(self):
+#         self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
+#     def setup(self):
+#         share.datamanager.setbookmark('ch5_lostrps1')
+#         self.text=[\
+#                '"Oh, you lost, said ',('{eldername}',share.colors.elder),'. ',\
+#                'Better luck next time, he he he. ',\
+#                'Do you want to play again". ',\
+#                   ]
+#         y1=200
+#         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+#         textchoice=draw.obj_textchoice('yesno',default='yes')
+#         textchoice.addchoice('1. Yes','yes',(340,y1))
+#         textchoice.addchoice('2. No','no',(540,y1))
+#         self.addpart( textchoice )
+#         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
+#         # self.addpart( draw.obj_image('elderbase',(627,638),scale=1.37,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(68,662),scale=0.25,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(173,679),scale=0.19,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
+#         animation1=draw.obj_animation('ch5eldertalks3','elderbase',(640,360),record=False)
+#         self.addpart( animation1 )
+#         #
+#         self.sound=draw.obj_sound('bookscene')
+#         self.addpart(self.sound)
+#         self.sound.play()
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+#         animation1.addsound( "elder2", [200], skip=1 )
+#         animation1.addsound( "elder3", [36] )
+#         #
+#         self.addpart( draw.obj_music('winds') )
+#
+#
+# class obj_scene_ch5p25fail(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p25())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p25())
+#     def setup(self):
+#         self.text=[\
+#                'Giving up already. ',\
+#                'Well, that doesnt seem to be the story, said the book of things.  ',\
+#                'It looks like you should just go back and ',\
+#                ('persevere',share.colors.grandmaster),' a little more. ',\
+#                   ]
+#         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+#         self.addpart( animation1 )
+#         animation2=draw.obj_animation('ch5whatbook2','interrogationmark',(640,360),record=False,path='data/premade',sync=animation1)
+#         animation2.addimage('empty',path='data/premade')
+#         self.addpart( animation2 )
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+#         animation1.addsound( "book1", [13] )
+#         animation1.addsound( "book2", [170] )
+#         animation1.addsound( "book3", [155],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('winds') )
+#
+#
+#
+# class obj_scene_ch5p26(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p25())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p27())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=['\n ']
+#         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,elderwins=True,herohealth=2)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('elder') )
+#
+#
+# class obj_scene_ch5p27(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p26())
+#     def nextpage(self):
+#         if share.datamanager.getword('yesno')=='yes':
+#             share.scenemanager.switchscene(obj_scene_ch5p28())
+#         else:
+#             share.scenemanager.switchscene(obj_scene_ch5p27fail())
+#     def textboxset(self):
+#         self.textboxopt={'xy':(440,280),'text':'[confirm]','align':'center'}
+#     def setup(self):
+#         share.datamanager.setbookmark('ch5_lostrps2')
+#         self.text=[\
+#                '"Oh noooo, you lost one more time, said ',('{eldername}',share.colors.elder),'. ',\
+#                'But you are getting better, he he he. ',\
+#                'Do you want to play one last time". ',\
+#                   ]
+#         y1=200
+#         self.addpart( draw.obj_textbox('Play again:',(130,y1)) )
+#         textchoice=draw.obj_textchoice('yesno',default='yes')
+#         textchoice.addchoice('1. Yes','yes',(340,y1))
+#         textchoice.addchoice('2. No','no',(540,y1))
+#         self.addpart( textchoice )
+#         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
+#         # self.addpart( draw.obj_image('elderbase',(627,638),scale=1.37,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(68,662),scale=0.25,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(173,679),scale=0.19,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
+#         animation1=draw.obj_animation('ch5eldertalks4','elderbase',(640,360),record=False)
+#         self.addpart( animation1 )
+#         #
+#         self.sound=draw.obj_sound('bookscene')
+#         self.addpart(self.sound)
+#         self.sound.play()
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+#         animation1.addsound( "elder1", [22] )
+#         animation1.addsound( "elder3", [67],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('winds') )
+#
+#
+# class obj_scene_ch5p27fail(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p27())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p27())
+#     def setup(self):
+#         self.text=[\
+#                'Oh, you want to give up. ',\
+#                'Sorry, that doesnt seem to be in the story, said the book of things.  ',\
+#                'It looks like you should just go back and ',\
+#                ('persevere',share.colors.grandmaster),' a little more. ',\
+#                   ]
+#         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+#         self.addpart( animation1 )
+#         animation2=draw.obj_animation('ch5whatbook2','interrogationmark',(640,360),record=False,path='data/premade',sync=animation1)
+#         animation2.addimage('empty',path='data/premade')
+#         self.addpart( animation2 )
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+#         animation1.addsound( "book1", [13] )
+#         animation1.addsound( "book2", [170] )
+#         animation1.addsound( "book3", [155],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('winds') )
+#
+#
+# class obj_scene_ch5p28(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p27())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p33())
+#     def setup(self):
+#         share.datamanager.setbookmark('ch5_strongwilled')
+#         self.text=[\
+#                 '"What a strong willed character, said ',('{eldername}',share.colors.elder),'. ',\
+#                 'Even when you were loosing, you never gave up. You had it in you all the time!" ',\
+#                   ]
+#         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))
+#         animation1=draw.obj_animation('ch5eldertalks5','elderbase',(640,360),record=False)
+#         self.addpart( animation1 )
+#         animation2=draw.obj_animation('ch5eldertalks5a','lightningbolt',(640,360),record=False,sync=animation1)
+#         animation2.addimage('empty',path='data/premade')
+#         self.addpart( animation2 )
+#         animation3=draw.obj_animation('ch5eldertalks5b','lightningbolt',(640,360),record=False,sync=animation1)
+#         animation3.addimage('empty',path='data/premade')
+#         self.addpart( animation3 )
+#         #
+#         self.sound=draw.obj_sound('unlock')
+#         self.addpart(self.sound)
+#         self.sound.play()
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4','elder5','elder6') )
+#         animation1.addsound( "elder1", [47] )
+#         animation1.addsound( "elder3", [302] )
+#         animation1.addsound( "elder4", [190,406] )
+#         animation1.addsound( "elder5", [76] )
+#         #
+#         self.addpart( draw.obj_music('elder') )
+#
+
+# class obj_scene_ch5p35(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p33())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p35a())
+#     def setup(self):
+#         self.text=[\
+#                '"Now lets play for real, ',\
+#                'said ',('{eldername}',share.colors.elder),', ',\
+#                'and if you win I will tell you my part of the ',\
+#                ('password',share.colors.password),'". ',\
+#                   ]
+#         self.addpart( draw.obj_image('sun',(1062,324),scale=0.47,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(1195,633),scale=0.4,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(1044,667),scale=0.25,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(68,662),scale=0.25,rotate=0,fliph=True,flipv=False) )
+#         self.addpart( draw.obj_image('mountain',(173,679),scale=0.19,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(109,486),scale=0.32,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(920,560),scale=0.31,rotate=0,fliph=False,flipv=False) )
+#         self.addpart( draw.obj_image('cloud',(279,571),scale=0.42,rotate=0,fliph=True,flipv=False) )
+#         animation1=draw.obj_animation('ch5eldertalks4','elderbase',(640,360),record=False)
+#         self.addpart( animation1 )
+#         #
+#         self.sound=draw.obj_sound('bookscene')
+#         self.addpart(self.sound)
+#         self.sound.play()
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'elder1','elder2','elder3','elder4') )
+#         animation1.addsound( "elder1", [22] )
+#         animation1.addsound( "elder4", [67],skip=1 )
+#         #
+#         self.addpart( draw.obj_music('winds') )

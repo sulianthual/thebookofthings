@@ -135,7 +135,7 @@ class obj_scene_ch7p5(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p3())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p6())
+        share.scenemanager.switchscene(obj_scene_ch7p7())
     def setup(self):
         share.datamanager.setbookmark('ch7_checkmail')
         self.text=[\
@@ -144,7 +144,7 @@ class obj_scene_ch7p5(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
-                    'three ',' letters". ',\
+                    'two ',' letters". ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -154,9 +154,9 @@ class obj_scene_ch7p5(page.obj_chapterpage):
         animation2=draw.obj_animation('ch2_mail3','mailletter',(640,360),sync=animation1)
         animation2.addimage('empty',path='data/premade')
         self.addpart( animation2  )
-        animation3=draw.obj_animation('ch2_mail4add','mailletter',(640,360),sync=animation1,record=False)
-        animation3.addimage('empty',path='data/premade')
-        self.addpart( animation3 )
+        # animation3=draw.obj_animation('ch2_mail4add','mailletter',(640,360),sync=animation1,record=False)
+        # animation3.addimage('empty',path='data/premade')
+        # self.addpart( animation3 )
         self.addpart( draw.obj_animation('ch2_mail2','sun',(640,360),sync=animation1) )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'hero2','mailjump') )
@@ -166,11 +166,13 @@ class obj_scene_ch7p5(page.obj_chapterpage):
         self.addpart( draw.obj_music('ch7') )
 
 
-class obj_scene_ch7p6(page.obj_chapterpage):
+
+
+class obj_scene_ch7p7(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p7())
+        share.scenemanager.switchscene(obj_scene_ch7p8())
     def textboxset(self):
         self.textboxopt={'xy':(1230-180,55)}
     def setup(self):
@@ -180,41 +182,8 @@ class obj_scene_ch7p6(page.obj_chapterpage):
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
-                  '\nThanks again for finding my ',\
-                  ('treasure',share.colors.cow),\
-                  ', we should really get drunk sometime burp. ',\
-                  '\n\nsigned: ',('{sailorname}',share.colors.sailor),\
-                   ]
-        self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
-        # self.addpart( draw.obj_image('sailorhead',(1065,305),scale=0.5) )
-        #
-        animation1=draw.obj_animation('ch2_mailhead','sailorhead',(640,360),imgscale=0.7)
-        self.addpart(animation1)
-        animation1.addsound( "sailor2", [100],skip=1 )
-        #
-        self.sound=draw.obj_sound('mailopen')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('ch7') )
-
-
-class obj_scene_ch7p7(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p6())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch7p8())
-    def textboxset(self):
-        self.textboxopt={'xy':(1230-180,55)}
-    def setup(self):
-        self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
-        xmargin=100
-        ymargin=230
-        self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
-        self.text=[\
-                    'Dear ',('{heroname}',share.colors.hero),', ',\
                   '\nCongratulations on completing all our challenges, that was cool. ',\
-                    'And good luck fighting ',('{villainname}',share.colors.villain),'. ',\
+                    'Good luck fighting ',('{villainname}',share.colors.villain),'. ',\
                   '\n\nsigned: ',('the evil grandmasters',share.colors.grandmaster),\
                    ]
         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
@@ -247,7 +216,7 @@ class obj_scene_ch7p8(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(1230-180,55)}
     def setup(self):
-        self.addpart( draw.obj_textbox('"The third letter said:"',(50,53),xleft=True) )
+        self.addpart( draw.obj_textbox('"The second letter said:"',(50,53),xleft=True) )
         xmargin=100
         ymargin=230
         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
@@ -406,9 +375,9 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
         share.datamanager.setbookmark('ch7_putpassword2')
         trypassword=share.datamanager.getword('towerpassword')
         self.text=[\
-                '"You have entered: ',(trypassword,share.colors.password),' .',\
-                'Ha ha, thats a good one blasted the ',('tower',share.colors.location2),\
-                '\'s a.s.s. Well, You may now enter". '\
+                '"You have entered: ',(trypassword,share.colors.password),\
+                ', blasted the ',('tower',share.colors.location2),\
+                '\'s a.s.s. That is correct, you may now enter". '\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -1811,6 +1780,39 @@ class obj_scene_ch7unlocknext(page.obj_chapterpage):
 #                    ]
 #         self.world=world.obj_world_fishing_withgun(self,electricfish=True)# fish shoots lightning bolts
 #         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('ch7') )
+
+
+# class obj_scene_ch7p6(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch7p5())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch7p7())
+#     def textboxset(self):
+#         self.textboxopt={'xy':(1230-180,55)}
+#     def setup(self):
+#         self.addpart( draw.obj_textbox('"The first letter said:"',(50,53),xleft=True) )
+#         xmargin=100
+#         ymargin=230
+#         self.textkeys={'pos':(xmargin,ymargin),'xmin':xmargin,'xmax':770}# same as ={}
+#         self.text=[\
+#                     'Dear ',('{heroname}',share.colors.hero),', ',\
+#                   '\nThanks again for finding my ',\
+#                   ('treasure',share.colors.cow),\
+#                   ', we should really get drunk sometime burp. ',\
+#                   '\n\nsigned: ',('{sailorname}',share.colors.sailor),\
+#                    ]
+#         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
+#         # self.addpart( draw.obj_image('sailorhead',(1065,305),scale=0.5) )
+#         #
+#         animation1=draw.obj_animation('ch2_mailhead','sailorhead',(640,360),imgscale=0.7)
+#         self.addpart(animation1)
+#         animation1.addsound( "sailor2", [100],skip=1 )
+#         #
+#         self.sound=draw.obj_sound('mailopen')
+#         self.addpart(self.sound)
+#         self.sound.play()
 #         #
 #         self.addpart( draw.obj_music('ch7') )
 

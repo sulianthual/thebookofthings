@@ -676,9 +676,13 @@ class obj_world_getitem(obj_world):
     def setup(self,**kwargs):
         # default options
         self.itemname='book'# the name of image for displayed item
+        self.imgscale=1# the name of image for displayed item
+        self.imgxy=(0,0)# the offset of image for displayed item
         # scene tuning
         if kwargs is not None:
             if 'item' in kwargs: self.itemname=kwargs["item"]# what is displayed
+            if 'imgscale' in kwargs: self.imgscale=kwargs["imgscale"]# scale what is displayed
+            if 'imgxy' in kwargs: self.imgxy=kwargs["imgxy"]# scale what is displayed
         #
         # change base picture
         self.done=False# end of minigame
@@ -707,7 +711,7 @@ class obj_world_getitem(obj_world):
         self.ungoingactor.addpart( 'anim1', draw.obj_animation('heroarmsraising','heroarmsup',(640,360)) )
         self.ungoingactor.addpart( 'anim2', draw.obj_animation('bug_armsraising','bug',(640,360)) )
         self.finishactor.addpart( 'img1', draw.obj_image('heroarmsfaceup',(620,513),scale=0.69,rotate=0,fliph=False,flipv=False) )
-        self.finishactor.addpart( 'img2', draw.obj_image(self.itemname,(618,230),scale=0.4,rotate=0,fliph=False,flipv=False) )
+        self.finishactor.addpart( 'img2', draw.obj_image(self.itemname,(618+self.imgxy[0],230+self.imgxy[1]),scale=0.4*self.imgscale,rotate=0,fliph=False,flipv=False) )
         self.finishactor.addpart( 'img3', draw.obj_image('cluesparkles',(618,230),scale=0.7,path='data/premade') )
         self.finishactor.addpart( 'anim1', draw.obj_animation('bug_armsraising2','bug',(640,360)) )
         # text

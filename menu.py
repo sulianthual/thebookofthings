@@ -60,14 +60,14 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p30c()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_ch4p18()
+            # quickscene=ch4.obj_scene_ch4p17()
             # quickscene=ch4.obj_scene_lyingpart1()
             # quickscene=ch4.obj_scene_lyingfailpart1()
             # quickscene=ch4.obj_scene_lyingfailpart2()
-            # quickscene=ch5.obj_scene_ch5p8()
-            # quickscene=ch5.obj_scene_ch5p18()
+            # quickscene=ch5.obj_scene_ch5p6()
+            quickscene=ch5.obj_scene_ch5p22()
             # quickscene=ch5.obj_scene_ch5p28a()
-            # quickscene=ch5.obj_scene_ch5p37()
+            # quickscene=ch5.obj_scene_ch5p37a()
             # quickscene=ch5.obj_scene_ch5p40()
             # quickscene=ch5.obj_scene_ch5p36fail()
             # quickscene=ch6.obj_scene_ch6p44()
@@ -77,7 +77,7 @@ class obj_quickscene():
             # quickscene=ch6.obj_scene_ch6p39()
             # quickscene=ch6.obj_scene_ch6p39death()
             # quickscene=ch6.obj_scene_ch6p44()
-            quickscene=ch7.obj_scene_ch7p50()
+            # quickscene=ch7.obj_scene_ch7p5()
             # quickscene=ch7.obj_scene_ch7p18()
             # quickscene=ch7.obj_scene_ch7p22death()
             # quickscene=ch7.obj_scene_ch7p25()
@@ -156,10 +156,10 @@ class obj_gotobookmark():
             self.dict['ch0_drawpen']='draw the pen'
             self.dict['ch0_draweraser']='draw the eraser'
             self.dict['ch0_drawbook']='draw the book'
-            self.dict['ch0_meetbook']='write your mood'
+            # self.dict['ch0_meetbook']='write your mood'
             self.dict['ch0_checkcontrols']='check the game controls'
             self.dict['ch0_drawingtips']='drawing tips'
-            self.dict['ch0_learnbrowse']='learn to go back'
+            # self.dict['ch0_learnbrowse']='learn to go back'
             # self.dict['ch0_endunlock']='Prologue End'
             if bookmarkname == 'ch0_start':# also default in datb.py if book is empty
                 bookmarkscene=ch0.obj_scene_prologue()
@@ -193,7 +193,7 @@ class obj_gotobookmark():
             self.dict['ch1_drawfish']='draw the fish and hook'
             # self.dict['ch1_gotfish']='caugth a fish'
             self.dict['ch1_drawsun']='draw the sun and moon'
-            self.dict['ch1_startplay']='replay the story'
+            # self.dict['ch1_startplay']='replay the story'
             # self.dict['ch1_endunlock']='Chapter End'
             if bookmarkname == 'ch1_start':
                 bookmarkscene=ch1.obj_scene_chapter1()
@@ -226,7 +226,7 @@ class obj_gotobookmark():
             self.dict['ch2_drawmusic']='draw the saxophone and music notes'
             self.dict['ch2_drawhouse']='draw the house and flower'
             self.dict['ch2_drawbush']='draw the lake and bush'
-            self.dict['ch2_startplay']='replay the story'
+            # self.dict['ch2_startplay']='replay the story'
             # self.dict['ch2_endunlock']='Chapter End'
             if bookmarkname == 'ch2_start':
                 bookmarkscene=ch2.obj_scene_chapter2()
@@ -259,7 +259,7 @@ class obj_gotobookmark():
             self.dict['ch3_drawmountain']='draw the tower and mountain'
             self.dict['ch3_drawgun']='draw the gun and bullet'
             self.dict['ch3_startdodge']='fight the villain'
-            self.dict['ch3_windodge']='enter the password'
+            # self.dict['ch3_windodge']='enter the password'
             # self.dict['ch3_gohome']='go back home'
             self.dict['ch3_startbug']='draw and name the sidekick'
             # self.dict['ch3_endbug']='go to sleep'
@@ -299,7 +299,7 @@ class obj_gotobookmark():
             # self.dict['ch4_startstory']='start the day'
             # self.dict['ch4_checkmail']='read the mail'
             self.dict['ch4_drawcave']='draw the cave and tree'
-            self.dict['ch4_enterforest']='enter the forest'
+            # self.dict['ch4_enterforest']='enter the forest'
             self.dict['ch4_writebunny']='draw and name the bunny'
             self.dict['ch4_shootrabbits']='shoot the bunnies'
             self.dict['ch4_playsax']='play the sax'
@@ -352,7 +352,7 @@ class obj_gotobookmark():
             # self.dict['ch5_climb']='climb the peak'
             self.dict['ch5_writeelder']='draw and name the elder'
             self.dict['ch5_drawrock']='draw rock paper scissors'
-            self.dict['ch5_learnrps']='learn rock paper scissors'
+            # self.dict['ch5_learnrps']='learn rock paper scissors'
             self.dict['ch5_rps3']='play rock paper scissors'
             # self.dict['ch5_winrps3']='win rock paper scissors'
             # self.dict['ch5_gohome']='go back home'
@@ -374,7 +374,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch5_learnrps' :
                 bookmarkscene=ch5.obj_scene_ch5p22()
             elif bookmarkname == 'ch5_rps3' :
-                bookmarkscene=ch5.obj_scene_ch5p35a()
+                bookmarkscene=ch5.obj_scene_ch5p34()
             elif bookmarkname == 'ch5_winrps3' :
                 bookmarkscene=ch5.obj_scene_ch5p37()
             elif bookmarkname == 'ch5_gohome' :
