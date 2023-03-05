@@ -43,8 +43,7 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        self.text=['One could always press [next] to continue, ',\
-        'unless there was something else to do. ',\
+        self.text=['One could press [next] to continue. ',\
         'One could also press [esc] to go back to the main menu. ']
         # self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
@@ -69,7 +68,7 @@ class obj_scene_ch0p2(page.obj_chapterpage):
         tempo2='['+share.datamanager.controlname('mouse2')+']'
         self.text=['There was going to be a pen. ',\
                    'The pen was drawn with '+tempo1+' and erased with '+tempo2+'. ',\
-                   'It didnt have to follow exactly the grayed area. ',\
+                   'It didnt have to follow the grayed area exactly. ',\
                   '\n ',\
                    ]# last line for [back][next] adjustment
         self.textkeys={'pos':(50,20),'xmin':50,'xmax':760,'linespacing':55,'fontsize':'medium'}# same as ={}
@@ -348,9 +347,9 @@ class obj_scene_ch0p13b(page.obj_chapterpage):
         #             ]
         #
         self.text=[\
-                    'You dont need to ',('draw',share.colors.red),\
-                    ' perfectly, and you dont need to fill up all the drawing area. ',\
-                    'But remember, everything is up to you! This story will be whatever you make of it.',\
+                    'When ',('drawing',share.colors.red),\
+                    ' it is better not to go near the edges, but it is entirely up to you. ',\
+                    'Just draw what you feel like. ',\
                     ]
         ydr=420
         xdr1=640-200
@@ -388,13 +387,12 @@ class obj_scene_ch0p14(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch0_learnbrowse')
         self.text=[\
-                    'One last thing: ',\
-                    'if you ever skip a drawing or miss something, you can always go back! ',\
-                    'Return to any chapter you have already read from the main menu. ',\
+                    'One last thing: if you ever skip a drawing or miss something, ',\
+                    'you can always go back from the main menu with [esc]. ',\
                     ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
         self.addpart( animation1 )
-        self.addpart(draw.obj_textbox('press [esc] to return to the main menu',(640,200),color=share.colors.instructions))
+        # self.addpart(draw.obj_textbox('press [esc] to return to the main menu',(640,200),color=share.colors.instructions))
         #
         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
         animation1.addsound( "book1", [13] )

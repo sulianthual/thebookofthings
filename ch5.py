@@ -558,7 +558,7 @@ class obj_scene_ch5p21d(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        self.text=['Next, the style of the paper, convoluted and supple like life itself.',\
+        self.text=['Next, the style of the paper, suppled and convoluted like life itself.',\
         ' Hold the keys in the correct order to fold yourself. ']
         self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -734,7 +734,7 @@ class obj_scene_ch5p34(page.obj_chapterpage):
         share.datamanager.setbookmark('ch5_rps3')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
-                    '"Steady like rock, supple like paper and swift like scissors." Now lets duel. '\
+                    'Be steady like rock, supple like paper and swift like scissors. Now lets duel. '\
                     ]
         self.world=world.obj_world_rockpaperscissors(self,elderthinks=False,tutorial=True)
         self.addpart(self.world)

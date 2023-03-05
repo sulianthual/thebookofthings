@@ -681,7 +681,7 @@ class obj_scene_ch4p16g(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch4_shootrabbits')
         self.text=['shoot all the ',('bunnies',share.colors.bunny),'.']
-        self.world=world.obj_world_3dforest_rabbitshoot(self)# fishing mini-game
+        self.world=world.obj_world_3dforest_rabbitshoot(self)
         self.addpart(self.world)
         self.world.addstartfightmessage()# add start fight message
         self.addpart( draw.obj_music('bunny') )

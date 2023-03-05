@@ -3736,7 +3736,7 @@ class obj_world_masterthepaper(obj_world):
         # main goals
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
-        self.max_step=8# total number of step
+        self.max_step=7# total number of step
         self.current_step=0# current step
         # End
         self.timerend=tool.obj_timer(200)# timer of end
@@ -3754,7 +3754,6 @@ class obj_world_masterthepaper(obj_world):
         self.hero.addpart('paper4', draw.obj_image('paper',(508,464+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.hero.addpart('paper5', draw.obj_image('paper',(404,290+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.hero.addpart('paper6', draw.obj_image('paper',(515,173+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.hero.addpart('paper7', draw.obj_image('paper',(717,308+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.hero.addpart('head0', draw.obj_image('herohead',(640,360-35+yoff_),scale=0.3) )
         self.hero.addpart('head4', draw.obj_image('herohead',(640-100,360-35+yoff_),scale=0.3,fliph=True) )
         # chain of instructions
@@ -3763,9 +3762,8 @@ class obj_world_masterthepaper(obj_world):
         self.instrus.append('Hold'+' [Up]'+'  Add'+' [Right]')
         self.instrus.append('Hold'+' [Right]'+'  Add'+' [Left]')
         self.instrus.append('Hold'+' [Left]'+'  Add'+' [Space]')
-        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+'  Add'+' [Right Mouse]')
-        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+' Hold'+' [Right Mouse]'+'  Add'+' [Left Mouse]')
-        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+' Hold'+' [Right Mouse]'+' Hold'+' [Left Mouse]')
+        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+'  Add'+' [Left Mouse]')
+        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+' Hold'+' [Left Mouse]')
         self.hero.addpart('commands',draw.obj_textbox('text here',(250,160),xleft=True,color=share.colors.instructions))
         # Set at step 0
         self.showonestep(0)
@@ -3824,14 +3822,9 @@ class obj_world_masterthepaper(obj_world):
                 if controls.glc:
                     tofail=True
             elif self.current_step==5:
-                if controls.gm2 and controls.gm2c:
-                    tonextstep=True
-                if controls.glc or controls.gac:
-                    tofail=True
-            elif self.current_step==6:
                 if controls.gm1 and controls.gm1c:
                     tonextstep=True
-                if controls.glc or controls.gac or controls.gm2c:
+                if controls.glc or controls.gac:
                     tofail=True
             # To next step
             if tofail:
@@ -3888,7 +3881,6 @@ class obj_world_masterthescissors(obj_world):
         self.force_gravimax=10# max gravity
         self.force_gravi=self.force_gravi0# force can reset
         self.timer_kick=tool.obj_timer(3)# kick sound
-        self.timer_kick.start()
         # 5 secs above
         self.isabove=False
         self.posi_ytreshstart=250# starts chrono
@@ -3957,6 +3949,10 @@ class obj_world_masterthescissors(obj_world):
             self.pressleft=True
         if self.goal:# no more pushing after winning
             pushing=0
+        # Lift off sound
+        if self.posi_ynow==self.posi_ymin and pushing==1:
+            self.soundkick.play()
+            self.timer_kick.start()
         # Evolving force
         if pushing==0:
             self.force_gravi*=self.force_gravidtmult
@@ -7253,6 +7249,10 @@ class obj_world_3dforest(obj_world):
                     # outside range of vision or too close, too far (excludes background elements)
                     act.show=False
                 else:
+                    if act.show==False:
+                        act.show=True
+                        act.refreshcount=100# force
+                        act.rescalecount=100
                     # Set x position on screen (from horizontal angle)
                     # xscreen_=(640+100)*( (self.op-ot) % 360)/30+640# convert horizontal angle to 0-1080 screen position
                     xscreen_=(640+100)*((self.op-ot +180)%360 -180)/50+640# convert horizontal angle to 0-1080 screen position
@@ -7261,9 +7261,8 @@ class obj_world_3dforest(obj_world):
                     yscreen_=(320+50)*(self.ozp-wt)/90+320# convert horizontal angle to 0-1080 screen position
                     # act.movetoy(yscreen_)
                     # if reintering range of vision, reload image:
-                    if act.show:
-                        act.movetox(xscreen_)
-                        act.movetoy(yscreen_)
+                    act.movetox(xscreen_)
+                    act.movetoy(yscreen_)
                     # Rescale image ( if too much scaling, eventually reload the image)
                     if act.refreshcount>20:# rate of reloading, too much lowers fps, too little destroys image
                         act.refreshcount=0# reset counter
@@ -7276,12 +7275,7 @@ class obj_world_3dforest(obj_world):
                         # act.movetoy(yscreen_)
                     act.refreshcount+=1# increase scaling counter
                     act.rescalecount+=1
-                    if act.reshow==True:
-                        act.show=True
-                        act.reshow=False
-                    if act.show==False:
-                        act.reshow=True# prepare to show next frame after scaling
-                        # act.show=True
+
         ####
         # generate rabbits or kill them
         self.birthkillrabbits()
