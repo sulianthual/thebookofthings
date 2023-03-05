@@ -1014,15 +1014,10 @@ class obj_scene_ch7p37(page.obj_chapterpage):
                 ('{partnername}',share.colors.partner),' and they would live happily ever after. ',\
                ' It was almost the end of the story..." ',\
                    ]
-
-        self.addpart(  draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
         self.addpart(  draw.obj_image('horizon',(640,720-150),path='data/premade') )
         self.addpart(  draw.obj_image('house',(296,443),scale=0.5) )
-        self.addpart(  draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
         self.addpart(  draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
         self.addpart(  draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
-        self.addpart(  draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.addpart(  draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
         # self.addpart(  draw.obj_image('moon',(660,270),scale=0.5) )
         self.addpart( draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
         #
@@ -1103,17 +1098,12 @@ class obj_scene_ch7p40(page.obj_chapterpage):
                     ('{villain_he}',share.colors.villain2),' said: ',\
                     'muahaha, I told you I would be back. I have one last trick up my sleeve for you". ',\
                    ]
-        # self.addpart( draw.obj_imageplacer(self,'house','flower','pond','bush','cloud','moon','mailbox') )
+        # self.addpart( draw.obj_imageplacer(self,'house','bush','cloud','moon','mailbox') )
         self.addpart( draw.obj_image('moon',(235,250),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1201,342),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1048,611),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1133,519),scale=0.33,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1165,675),scale=0.33,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1257,558),scale=0.33,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(464,228),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1060,286),scale=0.29,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1201,193),scale=0.22,rotate=0,fliph=False,flipv=False) )
@@ -1181,12 +1171,10 @@ class obj_scene_ch7p42(page.obj_chapterpage):
         self.text=['"and now: ',\
                 ('super-mech-villain',share.colors.villain),', expand!" ']
         #
-        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','cloud','moon') )
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','cloud','moon') )
         # self.addpart( draw.obj_image('herobase',(503,629),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('house',(101,617),scale=0.41,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(240,654),scale=0.21,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('moon',(317,239),scale=0.34,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(333,657),scale=0.24,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(283,467),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(90,405),scale=0.31,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(543,430),scale=0.3,rotate=0,fliph=True,flipv=False) )
@@ -1219,7 +1207,7 @@ class obj_scene_ch7p43(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','cloud','moon') )
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','cloud','moon') )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -1244,16 +1232,13 @@ class obj_scene_ch7p44(page.obj_chapterpage):
             'surely you wont mind if we help  ',\
             ('{hero_him}',share.colors.hero2),' a bit." ',\
                 ]
-        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','bush','cloud','moon','bunnybase','elderbase','sailorbase') )
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','bush','cloud','moon','bunnybase','elderbase','sailorbase') )
         # self.addpart( draw.obj_image('bunnybase',(723,512),scale=0.65,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('elderbase',(500,431),scale=0.65,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('sailorbase',(277,449),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('house',(1041,376),scale=0.48,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('moon',(869,277),scale=0.27,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(81,478),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1174,607),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1078,555),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1184,499),scale=0.24,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch7_villainmech_masters1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
         animation2=draw.obj_animation('ch7_villainmech_masters2','elderbase',(640,360),record=False,sync=animation1)
@@ -1287,7 +1272,7 @@ class obj_scene_ch7p45(page.obj_chapterpage):
         animation2=draw.obj_animation('ch7_villainmech_assemble_larm','fish',(640,360),record=False,imgfliph=True)
         animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
-        animation3=draw.obj_animation('ch7_villainmech_assemble_rarm','flower',(640,360),record=False,imgfliph=True,imgflipv=True)
+        animation3=draw.obj_animation('ch7_villainmech_assemble_rarm','scissors',(640,360),record=False,imgfliph=True,imgflipv=True)
         animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch7_villainmech_assemble_lleg','sailboat',(640-10,360),record=False,imgscale=0.7)
@@ -1322,7 +1307,7 @@ class obj_scene_ch7p46(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p47())
     def setup(self):
         self.text=['"and now: ',('super-mech-hero',share.colors.hero),', expand!" ']
-        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase','house','flower','pond','cloud','moon') )
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','heromechbase','house','cloud','moon') )
         self.addpart( draw.obj_image('moon',(105,229),scale=0.34,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(744,568),scale=0.28,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1264,440),scale=0.27,rotate=0,fliph=True,flipv=False) )
@@ -1354,7 +1339,7 @@ class obj_scene_ch7p47(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(342,618),scale=0.35,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1209,561),scale=0.43,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('moon',(205,297),scale=0.4,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','flower','pond','cloud','moon') )
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase','herobase','house','cloud','moon') )
         animation1=draw.obj_animation('ch7_villainmech_walks1','villainmechbase',(640,360),record=False)
         self.addpart( animation1 )
         #
@@ -1513,7 +1498,7 @@ class obj_scene_ch7p50(page.obj_chapterpage):
             ' fell over and started smoking. ',\
             'Ugh, I guess you won, said ',('{villainname}',share.colors.villain),'. Well played, I admit my defeat."',\
                 ]
-        # self.addpart( draw.obj_imageplacer(self,'villainmechbase_noface','villainbase','moon','heromechbase','cloud','house','bush','pond','flower') )
+        # self.addpart( draw.obj_imageplacer(self,'villainmechbase_noface','villainbase','moon','heromechbase','cloud','house','bush') )
         self.addpart( draw.obj_image('villainmechbase_noface',(1029,524),scale=0.73,rotate=-118,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch7villainfrommec','villainbase',(640,360),record=False)
         animation1.addimage('empty',path='data/premade')
@@ -1522,8 +1507,6 @@ class obj_scene_ch7p50(page.obj_chapterpage):
         self.addpart( draw.obj_image('bush',(760,582),scale=0.23,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('bush',(539,601),scale=0.27,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('moon',(195,310),scale=0.46,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(349,603),scale=0.22,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(412,627),scale=0.22,rotate=0,fliph=True,flipv=False) )
         # animation2=draw.obj_animation('ch7villainfrommec_cloud1','cloud',(640,360),record=False,sync=animation1)
         # self.addpart( animation2 )
         self.addpart( draw.obj_animation('ch7villainfrommec_cloud1','cloud',(820,300),record=False,sync=animation1) )
@@ -1556,9 +1539,6 @@ class obj_scene_ch7p51(page.obj_chapterpage):
         self.addpart( draw.obj_image('house',(1041,376),scale=0.48,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('moon',(869,277),scale=0.27,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(81,478),scale=0.38,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1174,607),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1078,555),scale=0.31,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1184,499),scale=0.24,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch7_villainmech_masters1','bunnybase',(640,360),record=False)
         self.addpart( animation1 )
         animation2=draw.obj_animation('ch7_villainmech_masters2','elderbase',(640,360),record=False,sync=animation1)
@@ -1644,17 +1624,12 @@ class obj_scene_ch7ending(page.obj_chapterpage):
         # self.addpart( draw.obj_image('mountain',(80,190),scale=0.29,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('tower',(220,200),scale=0.25,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('house',(325,201),scale=0.3,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('pond',(446,262),scale=0.26,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(532,297),scale=0.18,rotate=0,fliph=False,flipv=False) )
-        # self.addpart( draw.obj_image('flower',(562,268),scale=0.15,rotate=0,fliph=True,flipv=False) )
         # self.addpart( draw.obj_image('bush',(357,273),scale=0.16,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('mountain',(50,235),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tower',(142,259),scale=0.25,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(215,255),scale=0.2,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(309,278),scale=0.2,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('house',(449,289),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(523,308),scale=0.2,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(380,260),scale=0.2,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('bush',(248,309),scale=0.15,rotate=0,fliph=True,flipv=False) )
  #
         self.addpart( draw.obj_image('moon',(1035,72),scale=0.25,rotate=0,fliph=False,flipv=False) )
@@ -1690,7 +1665,7 @@ class obj_scene_ch7ending(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch7_endwobble7','villainbase',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_animation('ch7_endwobble8','bug',(640,360),sync=animation1,record=False) )
         self.addpart( draw.obj_image('cake',(680,549),scale=0.51,rotate=0,fliph=False,flipv=False) )
-        # self.addpart(draw.obj_imageplacer(self,'house','flower','bush','pond','tower','tree','mountain','cave','tree','palmtree','sailboat','wave','skeletonhead','moon','cloud'))
+        # self.addpart(draw.obj_imageplacer(self,'house','bush','tower','tree','mountain','cave','tree','palmtree','sailboat','wave','skeletonhead','moon','cloud'))
         #
         # text
         self.gameendingtext()

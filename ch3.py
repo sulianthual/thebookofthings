@@ -56,8 +56,7 @@ class obj_scene_ch3p1(page.obj_chapterpage):
     def setup(self):
         self.text=['Lets see here... " the ',('hero',share.colors.hero),\
                    ' and ',('{hero_his}',share.colors.hero2),' ',('partner',share.colors.partner),\
-                    ' woke up... mmmh... they caught a ',('fish',share.colors.item2),', ate it...  ',\
-                     'played a serenade, ',('kissed',share.colors.partner2),\
+                    ' woke up... ',('kissed',share.colors.partner2),'... blah blah...',\
                     ' and went back to ',('bed',share.colors.item2),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
@@ -125,7 +124,7 @@ class obj_scene_ch3p2(page.obj_chapterpage):
         share.datamanager.setbookmark('ch3_writevillain')
         self.text=[\
                    'Let\'s add a ',\
-                   ('villain',share.colors.villain), ' to our story, all evil and despicable. ',\
+                   ('villain',share.colors.villain), ' to our story that is pure hatred and evil. ',\
                 'First, choose a name and gender for this ',('villain',share.colors.villain),'. '\
                    ]
         yref=260
@@ -152,7 +151,7 @@ class obj_scene_ch3p3(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p3a())
     def setup(self):
         self.text=[\
-                    'Great! Now draw an ',('angry face',share.colors.item),' for ',\
+                    'Now draw an ',('angry face',share.colors.item),' for ',\
                     ('{villainname}',share.colors.villain),\
                     ', and make ',('{villain_him}',share.colors.villain2),\
                     ' look slightly to the right. ',\
@@ -170,7 +169,6 @@ class obj_scene_ch3p3a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p4())
     def setup(self):
         self.text=[\
-                  'Almost done, said the book of things. ',\
                  ('{villainname}',share.colors.villain),' has probably been hurt a lot, ',\
                  'so lets add a big ',('scar',share.colors.item),' on ',\
                  ('{villain_his}',share.colors.villain2),' face. ',\
@@ -189,7 +187,6 @@ class obj_scene_ch3p4(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     'This is what ',('{villainname}',share.colors.villain),' looks like. ',\
-                    'Not bad, said the book of things. ',\
                    'Indeed, ',('{villain_he}',share.colors.villain2),' looks very scary! ',\
                    ]
         animation1=draw.obj_animation('ch1_hero1','villainbase',(360,360),record=False)
@@ -212,7 +209,7 @@ class obj_scene_ch3p4a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'This should get interesting, said the book of things. ',\
-                   'Now lets continue our story. ',\
+                   'Lets continue our story. ',\
                    ]
         animation=draw.obj_animation('ch1_book1','book',(640,360),record=False)
         animation2=draw.obj_animation('ch1_pen1','pen',(900,480),record=False,sync=animation,scale=0.5)
@@ -431,8 +428,7 @@ class obj_scene_ch3p11(page.obj_chapterpage):
         self.text=[\
                   '"Indeed, ',\
                   ('{villainname}',share.colors.villain),' had managed to capture ',\
-                  ('{partnername}',share.colors.partner),' in  ',('{partner_his}',share.colors.partner2),\
-                  ' sleep while ',('{heroname}',share.colors.hero),' was gone." ',\
+                  ('{partnername}',share.colors.partner),' while ',('{heroname}',share.colors.hero),' was gone." ',\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
@@ -501,9 +497,9 @@ class obj_scene_ch3p14(page.obj_chapterpage):
                   '"',\
                   ('{heroname}',share.colors.hero),\
                     ' arrived at the ',('evil tower',share.colors.location2),'. ',\
-                  ('{villainname}',share.colors.villain),' said: muahaha, who dares appear before me. ',\
-                  'Get ready to ',\
-                  ('fight',share.colors.villain2),'!". ',\
+                  ('{villainname}',share.colors.villain),' said: muahaha, ',\
+                  'get ready to ',\
+                  ('fight',share.colors.villain2),'!" ',\
                    ]
         self.addpart( draw.obj_image('tower',(1100,310), scale=0.7) )
         # self.addpart( draw.obj_image('partnerbase',(1100,530), scale=0.4,rotate=90) )
@@ -752,7 +748,7 @@ class obj_scene_ch3p21(page.obj_chapterpage):
                   'muahaha, my ',\
                   ('tower',share.colors.location2),' is locked tight and protected by a ',\
                   ('password',share.colors.password),'. ',\
-                  'You will never get in!".  ',\
+                  'You will never get in!"  ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -777,7 +773,7 @@ class obj_scene_ch3p22(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p21())
     def nextpage(self):
         trypassword=share.datamanager.getword('towerpassword')
-        earlypassword='lie cheat steal'
+        earlypassword='abracadabra'
         if share.devmode or tool.comparestringparts(trypassword,earlypassword):
             share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
         else:
@@ -787,11 +783,12 @@ class obj_scene_ch3p22(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
+        share.datamanager.setbookmark('ch3_trypwd')
         self.text=[\
                   '"The  ',('tower',share.colors.location2),'\'s a.s.s.',\
                   ' (automated security system) blasted: ',\
                   'lockdown engaged, password required. Please enter ',\
-                  ('password',share.colors.password),'". ',\
+                  ('password',share.colors.password),'." ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -819,7 +816,7 @@ class obj_scene_ch3p22easteregg(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p22easteregg2())
     def setup(self):
         self.text=[\
-                '"You have entered: ',('"lie cheat steal"',share.colors.password),' . ',\
+                '"You have entered: ',('"abracadabra"',share.colors.password),' . ',\
                 'That... that is correct, said the tower\'s a.s.s. ',\
                 'But how... how could you possibly know. ',\
                 'I... I guess you may come in then". ',\
@@ -851,12 +848,12 @@ class obj_scene_ch3p22easteregg2(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch3p25())
+        share.scenemanager.switchscene(obj_scene_ch3p24())
     def setup(self):
         self.text=[\
                   '"Just joking, blasted the ',('tower',share.colors.location2),'\'s a.s.s., ',\
                   ' there is ',('NOOOO WAAAAY',share.colors.red),' i am letting you in this early in the game! ',\
-                  'Nice try tho you little cheat." ',\
+                  'Nice try you little cheat." ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -951,7 +948,7 @@ class obj_scene_ch3p24a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p24())
     def nextpage(self):
         trypassword=share.datamanager.getword('towerpassword')
-        earlypassword='lie cheat steal'
+        earlypassword='abracadabra'
         if share.devmode or tool.comparestringparts(trypassword,earlypassword):
             share.scenemanager.switchscene(obj_scene_ch3p22easteregg())
         else:
@@ -1069,7 +1066,7 @@ class obj_scene_ch3p30b(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3p30c())
     def setup(self):
         self.text=[\
-                   '"Now draw ',('{bug}',share.colors.bug),' the sidekick, said the book of things. ',\
+                   '"Now draw ',('{bug}',share.colors.bug),' the sidekick. ',\
                    'It will be hovering and very small, like a flying pet." ',\
                    ]
         animation1=draw.obj_animation('ch1_sun','empty',(640,360),path='data/premade')
@@ -1199,7 +1196,6 @@ class obj_scene_ch3p37(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch3end())
     def setup(self):
         self.text=[\
-                'Oh but it wont be easy, said ',('{bug}',share.colors.bug),'. ',\
                 'It will be very scary and dangerous with 99 percent chance to fail but good luck anyways. ']
         # self.addpart( draw.obj_image('mountain',(1177,324),scale=0.46,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('mountain',(996,367),scale=0.37,rotate=0,fliph=False,flipv=False) )

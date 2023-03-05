@@ -90,7 +90,7 @@ class obj_scene_ch2p1a(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p2())
     def setup(self):
         self.text=[\
-                   'Well, this ',('{heroname}',share.colors.hero),' feels a bit lonely, said the book of things, ',\
+                   'Well, this ',('{heroname}',share.colors.hero),' feels a bit lonely. ',\
                   ('{hero_he}',share.colors.hero2),' could surely use some company. ',\
                    ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
@@ -117,9 +117,8 @@ class obj_scene_ch2p2(page.obj_chapterpage):
         self.text=[\
                'I want ',('{heroname}',share.colors.hero),' to have a ',\
                ('partner',share.colors.partner),\
-                 ' and I want them to be madly in love, ',\
-                 'said the book of things, ',\
-                 'Lets start by drawing a ',\
+                 ' and I want them to be madly in love. ',\
+                 'First draw a ',\
                  ('love heart',share.colors.item),'. ',\
                    ]
         # self.addpart( draw.obj_drawing('love',(640,450),legend='love heart',shadow=(300,200),brush=share.brushes.bigpen) )
@@ -195,7 +194,7 @@ class obj_scene_ch2p5(page.obj_chapterpage):
         self.text=[\
                    'Lets see who is this mysterious ',('{partnername}',share.colors.partner),' ',\
                   'under all that pretty hair. ',\
-                  ' The tension is killing me, quickly, turn the page! ',\
+                  ' The tension is killing me! ',\
                    ]
         animation=draw.obj_animation('ch2_love2','love',(220,360),scale=0.3)
         self.addpart(animation)
@@ -216,9 +215,9 @@ class obj_scene_ch2p6(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch2p6a())
     def setup(self):
         self.text=[\
-                   'Uh...Well...aint ',('{partner_he}',share.colors.partner2),' pretty. ',\
+                   'Uh...Well... ',\
                   ('{heroname}',share.colors.hero),' and ',\
-                 ('{partnername}',share.colors.partner),' do look alike a bit, but thats all cool. ',\
+                 ('{partnername}',share.colors.partner),' do look a bit alike, but thats cool. ',\
                    'They aint siblings at least (unless you are into that). ',\
                    ]
         animation=draw.obj_animation('ch2_love2','love',(220,360),scale=0.3)
@@ -245,7 +244,7 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch2_drawmail')
         self.text=[\
-                   'Alright, so first our lovers want to send each other some passionate letters. ',\
+                   'Alright, our lovers want to send passionate letters to each other. ',\
                    'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
                    ]
         # self.textkeys={'pos':(500,20),'xmin':500}# same as ={}
@@ -415,75 +414,22 @@ class obj_scene_ch2p11(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p10())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p12())
+        share.scenemanager.switchscene(obj_scene_ch2play())
     def setup(self):
         share.datamanager.setbookmark('ch2_drawhouse')
         self.text=[\
                    'Ewww gross, get some privacy next time. ',\
                    'Moving on, lets draw a ',\
-                   ('house',share.colors.item),' with some ',\
-                   ('flowers',share.colors.item),' where they live happily together. ',\
+                   ('house',share.colors.item),' with some big ',\
+                   ('bushes',share.colors.item),' where they live happily together. ',\
                    ]
         # self.addpart( draw.obj_drawing('house',(940,450),legend='House',shadow=(200,200)) )
         self.addpart( draw.obj_drawing('housedraw',(340,450-50),legend='House',shadow=(250,250)) )
-        self.addpart( draw.obj_drawing('flowerdraw',(940,450-50),legend='flower',shadow=(250,250),brush=share.brushes.pen10) )
+        self.addpart( draw.obj_drawing('bushdraw',(940,450-50),legend='Big Bush',shadow=(250,250),brush=share.brushes.pen10) )
         #
         self.addpart( draw.obj_music('partner') )
 
 
-# class obj_scene_ch2p12(page.obj_chapterpage):
-#     def prevpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch2p11())
-#     def nextpage(self):
-#         share.scenemanager.switchscene(obj_scene_ch2p13())
-#     def setup(self):
-#         self.text=[\
-#                   'This is what the house looks like. Move around to check it out. ',\
-#                    ]
-#         self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,remove=['bush','pond'])
-#         self.addpart(self.world)
-#         #
-#         self.addpart( draw.obj_music('partner') )
-
-
-class obj_scene_ch2p12(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p11())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p13())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                  'This is what the house looks like. Go to the garden and pick up a flower for ',\
-                  ('{partnername}',share.colors.partner),'. ',\
-                   ]
-        self.world=world.obj_world_travel(self,start=(240-640,540-360),\
-        goal='atpartner',chapter=2,minigame='flowers',remove=['bush','pond'])
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('partner') )
-
-
-class obj_scene_ch2p13(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p12())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2play())
-    def setup(self):
-        share.datamanager.setbookmark('ch2_drawbush')
-        self.text=[\
-                   'So cute! Lets finish by adding a ',\
-                   ('lake',share.colors.item),' with some ',\
-                   ('bushes',share.colors.item),' where our hero goes fishing. ',\
-                   ]
-        # self.addpart( draw.obj_drawing('bush',(340,450),legend='Bush',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('ponddraw',(340,450-50),legend='lake',shadow=(250,250),brush=share.brushes.pen10) )
-        self.addpart( draw.obj_drawing('bushdraw',(940,450-50),legend='bush',shadow=(250,250),brush=share.brushes.pen10) )
-        #
-        self.addpart( draw.obj_music('partner') )
 
 
 ##########################################################
@@ -492,7 +438,7 @@ class obj_scene_ch2p13(page.obj_chapterpage):
 
 class obj_scene_ch2play(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch2p13())
+        share.scenemanager.switchscene(obj_scene_ch2p11())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2play1())
     def setup(self):
@@ -533,7 +479,7 @@ class obj_scene_ch2play1(page.obj_chapterpage):
         self.text=[\
                 '"Once upon a time, there was a ',('hero',share.colors.hero),' ',\
                 'called  ',('{heroname}',share.colors.hero),' ',\
-                'that lived in a house with a lake and a garden. ',\
+                'that lived in a house with some bushes. ',\
                 'It was morning and the sun was rising." ',\
                    ]
         self.world=world.obj_world_sunrise(self)
@@ -755,4 +701,40 @@ class obj_scene_ch2unlocknext(page.obj_chapterpage):
         self.addpart( draw.obj_music('piano') )
 
 
-#
+#######################################################################
+
+
+# class obj_scene_ch2p12(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2p11())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2p13())
+#     def setup(self):
+#         self.text=[\
+#                   'This is what the house looks like. Move around to check it out. ',\
+#                    ]
+#         self.world=world.obj_world_travel(self,start=(-140,-110),goal='nowhere',chapter=2,remove=['bush','pond'])
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('partner') )
+
+
+# class obj_scene_ch2p12(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2p11())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch2p13())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                   'This is what the house looks like. Go to the garden and pick up a flower for ',\
+#                   ('{partnername}',share.colors.partner),'. ',\
+#                    ]
+#         self.world=world.obj_world_travel(self,start=(240-640,540-360),\
+#         goal='atpartner',chapter=2,minigame='flowers',remove=['bush','pond'])
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('partner') )

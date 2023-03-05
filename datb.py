@@ -58,7 +58,7 @@ class obj_musics:
         self.dict['bug']=( 'ch3/POL-bomb-carrier-short.wav' , tempo )# bug (tense)
         # ch4
         self.dict['ch4']=( 'ch4/POL-azure-waters-short.wav' , tempo )# start day (energetic cute)
-        self.dict['bunny']=( 'ch4/POL-mutant-jackrabbit-short.wav' , tempo )
+        self.dict['bunny']=( 'ch4/POL-lone-wolf-short.wav' , tempo )
         self.dict['forest']=( 'ch4/POL-illusion-castle-short.wav' , tempo )
         # ch5
         self.dict['ch5']=( 'ch5/POL-king-of-coins-short.wav' , tempo )# start the day (energetic)
@@ -1063,7 +1063,7 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part2', draw.obj_image('scar',(640,360),scale=0.5,fliph=True) )
             dispgroup1.addpart( 'part3', draw.obj_image('villainmechbase_noface',(640,360)) )
             dispgroup1.snapshot((640,360,410,330),'villainmechbase')
-        if name in ['housedraw','bushdraw','fishdraw','flowerdraw','sailboat']:
+        if name in ['housedraw','bushdraw','fishdraw','scissors','sailboat']:
             # heromech complete no face
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature_noface',(640,360),path='data/premade') )
@@ -1071,11 +1071,11 @@ class obj_snapshotmanager:
             dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
             dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
             dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
-            dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+            dispgroup1.addpart( 'part6', draw.obj_image('scissors',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
             dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
             dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
             dispgroup1.snapshot((640,360,410,330),'heromechbase_noface')
-        if name in ['happyfacedraw','housedraw','bushdraw','fish','flowerdraw','sailboat']:
+        if name in ['happyfacedraw','housedraw','bushdraw','fish','scissors','sailboat']:
             # heromech complete
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart( 'part1', draw.obj_image('heromecharmature',(640,360)) )

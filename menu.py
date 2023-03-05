@@ -52,7 +52,7 @@ class obj_quickscene():
             # quickscene=ch1.obj_scene_ch1play3()
             # quickscene=ch2.obj_scene_ch2p3()
             # quickscene=ch2.obj_scene_ch2p12()
-            # quickscene=ch2.obj_scene_ch2play3a()
+            # quickscene=ch2.obj_scene_ch2play3()
             # quickscene=ch3.obj_scene_ch3p19()
             # quickscene=ch3.obj_scene_ch3p19death()
             # quickscene=ch3.obj_scene_ch3p27()
@@ -60,10 +60,7 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p30c()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            quickscene=ch4.obj_scene_ch4p16g()
-            # quickscene=ch4.obj_scene_lyingpart1()
-            # quickscene=ch4.obj_scene_lyingfailpart1()
-            # quickscene=ch4.obj_scene_lyingfailpart2()
+            quickscene=ch4.obj_scene_ch4p10a()
             # quickscene=ch5.obj_scene_ch5p6()
             # quickscene=ch5.obj_scene_ch5p21d()
             # quickscene=ch5.obj_scene_ch5p28a()
@@ -224,8 +221,8 @@ class obj_gotobookmark():
             self.dict['ch2_writepartner']='draw and name the partner'
             self.dict['ch2_drawmail']='draw the mailbox and mail letter'
             self.dict['ch2_drawmusic']='draw the saxophone and music notes'
-            self.dict['ch2_drawhouse']='draw the house and flower'
-            self.dict['ch2_drawbush']='draw the lake and bush'
+            self.dict['ch2_drawhouse']='draw the house and bush'
+            # self.dict['ch2_drawbush']='draw the lake and bush'
             # self.dict['ch2_startplay']='replay the story'
             # self.dict['ch2_endunlock']='Chapter End'
             if bookmarkname == 'ch2_start':
@@ -259,7 +256,7 @@ class obj_gotobookmark():
             self.dict['ch3_drawmountain']='draw the tower and mountain'
             self.dict['ch3_drawgun']='draw the gun and bullet'
             self.dict['ch3_startdodge']='fight the villain'
-            # self.dict['ch3_windodge']='enter the password'
+            self.dict['ch3_trypwd']='enter the password'
             # self.dict['ch3_gohome']='go back home'
             self.dict['ch3_startbug']='draw and name the sidekick'
             # self.dict['ch3_endbug']='go to sleep'
@@ -278,8 +275,8 @@ class obj_gotobookmark():
                 bookmarkscene=ch3.obj_scene_ch3p15()
             elif bookmarkname == 'ch3_startdodge' :
                 bookmarkscene=ch3.obj_scene_ch3p18a()
-            elif bookmarkname == 'ch3_windodge' :
-                bookmarkscene=ch3.obj_scene_ch3p20()
+            elif bookmarkname == 'ch3_trypwd' :
+                bookmarkscene=ch3.obj_scene_ch3p22()
             elif bookmarkname == 'ch3_gohome' :
                 bookmarkscene=ch3.obj_scene_ch3p25a()
             elif bookmarkname == 'ch3_startbug' :
@@ -403,6 +400,7 @@ class obj_gotobookmark():
             # self.dict['ch6_sneak4']='sneak game round 4'
             self.dict['ch6_drawcow']='draw treasure'
             self.dict['ch6_startride']='play the chase game'
+            self.dict['ch6_choosepwd']='finish the password'
             # self.dict['ch6_winride']='made it to the ship'
             # self.dict['ch6_byesailor']='bye bye sailor'
             # self.dict['ch6_gohome']='go back home'
@@ -443,6 +441,8 @@ class obj_gotobookmark():
                 bookmarkscene=ch6.obj_scene_ch6p40()
             elif bookmarkname == 'ch6_byesailor':
                 bookmarkscene=ch6.obj_scene_ch6p42()
+            elif bookmarkname == 'ch6_choosepwd':
+                bookmarkscene=ch6.obj_scene_ch6p45()
             elif bookmarkname == 'ch6_gohome':
                 bookmarkscene=ch6.obj_scene_ch6p46()
             elif bookmarkname == 'ch6_endunlock':
@@ -624,7 +624,6 @@ class obj_scene_realtitlescreen(page.obj_page):
         elif decochoice=='partner2':
             self.addpart( draw.obj_image('bush',(1071,266),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(876,282),scale=0.4,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('pond',(997,404),scale=0.62,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(1154,613),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('partnerbase',(209,478),scale=0.51,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('musicnote',(385,344),scale=0.39,rotate=0,fliph=False,flipv=False) )
@@ -633,20 +632,19 @@ class obj_scene_realtitlescreen(page.obj_page):
         elif decochoice=='house':
             self.addpart( draw.obj_image('house',(640,453),scale=0.51,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('mailbox',(827,360),scale=0.25,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('pond',(272,260),scale=0.49,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(122,338),scale=0.36,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(472,223),scale=0.36,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('bush',(155,96),scale=0.36,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('flower',(981,588),scale=0.3,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1090,567),scale=0.3,rotate=0,fliph=True,flipv=False) )
-            self.addpart( draw.obj_image('flower',(926,515),scale=0.3,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1056,477),scale=0.3,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1165,492),scale=0.3,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(981,588),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1090,567),scale=0.3,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(926,515),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1056,477),scale=0.3,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1165,492),scale=0.3,rotate=0,fliph=True,flipv=False) )
         elif decochoice=='mailbox':
             self.addpart( draw.obj_image('mailbox',(1073,463),scale=1,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(772,595),scale=0.54,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(586,587),scale=0.44,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(444,556),scale=0.39,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('mailletter',(252,96),scale=0.39,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='villain':
             self.addpart( draw.obj_image('herobase',(200,500-50),scale=0.5) )
@@ -659,7 +657,6 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('mountain',(1194,94),scale=0.28,rotate=0,fliph=True,flipv=False) )
         elif decochoice=='villain2':
             self.addpart( draw.obj_image('villainbase',(819,626),scale=1.33,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1127,557),scale=0.63,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('love',(1001,253),scale=0.34,rotate=0,fliph=False,flipv=False) )
         elif decochoice=='tower':
             self.addpart( draw.obj_image('tower',(955,414),scale=1.3,rotate=0,fliph=True,flipv=False) )
@@ -778,9 +775,9 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('house',(1041,376),scale=0.48,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('moon',(869,277),scale=0.27,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(81,478),scale=0.38,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1174,607),scale=0.31,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1078,555),scale=0.31,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(1184,499),scale=0.24,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1174,607),scale=0.31,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1078,555),scale=0.31,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(1184,499),scale=0.24,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('bunnybase',(724,501),scale=0.63,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('elderbase',(505,432),scale=0.63,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('sailorbase',(277,442),scale=0.63,rotate=0,fliph=False,flipv=False) )
@@ -795,8 +792,8 @@ class obj_scene_realtitlescreen(page.obj_page):
             self.addpart( draw.obj_image('bush',(129,606),scale=0.52,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('bush',(760,582),scale=0.23,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('bush',(539,601),scale=0.27,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(349,603),scale=0.22,rotate=0,fliph=False,flipv=False) )
-            self.addpart( draw.obj_image('flower',(412,627),scale=0.22,rotate=0,fliph=True,flipv=False) )
+            self.addpart( draw.obj_image('bush',(349,603),scale=0.22,rotate=0,fliph=False,flipv=False) )
+            self.addpart( draw.obj_image('bush',(412,627),scale=0.22,rotate=0,fliph=True,flipv=False) )
             self.addpart( draw.obj_image('cloud',(820,301),scale=0.32,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('cloud',(985,223),scale=0.32,rotate=0,fliph=False,flipv=False) )
             self.addpart( draw.obj_image('cloud',(1207,321),scale=0.32,rotate=0,fliph=False,flipv=False) )

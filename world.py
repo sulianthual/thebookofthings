@@ -443,16 +443,15 @@ class obj_world_sunrise(obj_world):
         self.text_undone.show=True
         self.text_done.show=False
         # static actor
-        self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img3", draw.obj_image('bush',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
         #
         self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
         self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
-        self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
         #
         self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
         self.staticactor.addpart( "img2", draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
-        self.staticactor.addpart( "img4", draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
-        self.staticactor.addpart( "img5", draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        self.staticactor.addpart( "img4", draw.obj_image('bush',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
+        self.staticactor.addpart( "img5", draw.obj_image('bush',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
         #
         # start actor
         # self.startactor.addpart( 'img1', draw.obj_image('sun',(660,300),scale=0.5) )
@@ -1655,7 +1654,7 @@ class obj_world_travel(obj_world):
         self.removelist=[]# force to remove specific items (if they dont exit yet)
         self.addpartner=False# add partner walking with hero
         self.addsailor=False# add sailor walking with hero
-        self.minigame=None# add mini-game on the travel game (minigame='flowers',etc....)
+        self.minigame=None# add mini-game on the travel game (minigame='logs',etc....)
         self.addbeachquestionmark=False# add a question mark on the beach
         self.addbeachmark=False# add a cross mark on the beach
         self.addsailorwait=False# add the sailor (waiting on the beach)
@@ -1824,23 +1823,17 @@ class obj_world_travel(obj_world):
         # textpass=share.datamanager.getword('housename')
         self.staticactor11.addpart( 'textref', draw.obj_textbox('Home Sweet Home',(640,360+120),color=share.colors.location) )
         self.staticactor11.addpart( 'ref', draw.obj_image('house',(640,360),scale=0.5) )
-        if 'pond' not in self.removelist:
-            self.staticactor11.addpart( 'textref2', draw.obj_textbox('Lake',(640-320,360-180+120),color=share.colors.location) )
-            self.staticactor11.addpart( 'ref2', draw.obj_image('pond',(640-320,360-180),scale=0.5) )
         self.staticactor11.addpart( 'ref3', draw.obj_image('mailbox',(834,182),scale=0.25) )
         #
-        if 'garden' not in self.removelist:
-            self.staticactor11.addpart( 'textref3', draw.obj_textbox('Garden',(640+320+100,360+120),color=share.colors.location) )
-        if 'flower' not in self.removelist:
-            self.staticactor11.addpart( "img1", draw.obj_image('flower',(925+100,362),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img2", draw.obj_image('flower',(990+100,266),scale=0.34,rotate=0,fliph=True,flipv=False) )
-            self.staticactor11.addpart( "img3", draw.obj_image('flower',(1040+100,369),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img4", draw.obj_image('flower',(1103+100,259),scale=0.34,rotate=0,fliph=False,flipv=False) )
-            self.staticactor11.addpart( "img5", draw.obj_image('flower',(851+100,280),scale=0.34,rotate=0,fliph=True,flipv=False) )
         if 'bush' not in self.removelist:
             self.staticactor11.addpart( "img6", draw.obj_image('bush',(523,170),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img9_bush", draw.obj_image('bush',(916,565),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img10_bush", draw.obj_image('bush',(1132,412),scale=0.41,rotate=0,fliph=False,flipv=False) )
+            self.staticactor11.addpart( "img11_bush", draw.obj_image('bush',(1029,235),scale=0.33,rotate=0,fliph=True,flipv=False) )
+            self.staticactor11.addpart( "img12_bush", draw.obj_image('bush',(439,478),scale=0.33,rotate=0,fliph=False,flipv=False) )
+
         if self.chapter>=8:
             self.staticactor11.addpart( 'refcake', draw.obj_image('cake',(640+210,360-50),scale=0.25) )
             self.staticactor11.addpart( 'refmark_cake', draw.obj_image('exclamationmarkred',(640+210,360-50),scale=0.5,path='data/premade') )
@@ -1852,7 +1845,7 @@ class obj_world_travel(obj_world):
             self.staticactor11.addpart( 'refroam_mech', draw.obj_image('villainmechbase_noface',(1100,10),scale=0.4,rotate=-118,fliph=False,flipv=False) )
             self.staticactor11.addpart( 'refmark_mech', draw.obj_image('exclamationmarkred',(1100,10),scale=0.5,path='data/premade') )
             #
-        if self.chapter>=8 or self.minigame=='flowers':
+        if self.chapter>=8:
             self.staticactor11.addpart( 'refroam_partner', draw.obj_image('partnerbase',(172-50,571),scale=0.25,fliph=False) )
         if self.chapter>=8:
             self.staticactor11.addpart( 'refmark_atpartner', draw.obj_image('exclamationmarkred',(172,571),scale=0.5,path='data/premade') )
@@ -2155,8 +2148,6 @@ class obj_world_travel(obj_world):
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': investigate]',(640,680),color=share.colors.instructions) )
         elif self.chapter>=8:
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': interact]',(640,680),color=share.colors.instructions) )
-        elif self.minigame=='flowers':
-            self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': give flower]',(640,680),color=share.colors.instructions) )
         else:# enter a location
             self.text_undoneenter.addpart( 'textenter', draw.obj_textbox('['+share.datamanager.controlname('action')+': go inside]',(640,680),color=share.colors.instructions) )
         #
@@ -2181,38 +2172,6 @@ class obj_world_travel(obj_world):
             self.ambiencesoundname='forest'# name of ambience sound name (default one)
             self.soundambience=self.soundambience_forest
             self.soundambience.play(loop=True)# should die when exit page
-
-        #####
-        # minigame flowers
-        # *FLOWERS
-        self.flowercount=0# picked flowers
-        self.flowerneed=1# needed flowers for goal
-        self.floweractors=[]# make a list of grandactors flowers
-        if self.minigame=='flowers':
-            if self.flowerneed == 1:
-                print(share.datamanager.getbackcolor())
-                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flower',(640,610),color=share.colors.instructions)
-            else:
-                self.flowermessage=draw.obj_textbox('You have collected 0/'+str(self.flowerneed)+' flowers',(640,610),color=share.colors.instructions)
-            self.text_undone.addpart( 'textflowers', self.flowermessage  )
-            for i in self.panels:# remove flower from panels and make them into individual grandactors
-                panelflowerkeys=[]# list of flowers keys in this panel
-                for k in i.dict.keys():# browse elements
-                    j=i.dict[k]
-                    if j.type=='image' and j.name=='flower':
-                        passactor=obj_grandactor(self,(j.x,j.y),foreground=False)# make a new grandactor (in background)
-                        j.xytoxyini()# reinitialize initial coordinates of image
-                        passactor.addpart('img', j )# add flower image to it
-                        passactor.rx=25# hitbox
-                        passactor.ry=25
-                        self.floweractors.append(passactor)
-                        panelflowerkeys.append(k)
-                for j in panelflowerkeys:# remove flowers from panels
-                    i.removepart(j)
-            for k in self.floweractors:# append flower actors to tracked hitboxes
-                self.hitboxes.append(k)
-            self.soundpickflower=draw.obj_sound('travel_pickflower')
-            self.creator.addpart(self.soundpickflower)
         #
         #####
         # minigame logs (go on logs an pickup with Space)
@@ -2231,7 +2190,7 @@ class obj_world_travel(obj_world):
                     if j.type=='image' and (j.name=='tree' or j.name=='palmtree'):
                         passactor=obj_grandactor(self,(j.x,j.y))# make a new grandactor
                         j.xytoxyini()# reinitialize initial coordinates of image
-                        passactor.addpart('img', j )# add flower image to it
+                        passactor.addpart('img', j )# add image to it
                         passactor.rx=75# hitbox
                         passactor.ry=75
                         self.logactors.append(passactor)
@@ -2417,24 +2376,6 @@ class obj_world_travel(obj_world):
             # goals
             if not self.minigame:# no minigame, just reach a point on map
                 self.reachgoal(controls)
-            elif self.minigame=='flowers':# mini-game pickup some flowers
-                if self.flowercount<self.flowerneed:
-                    tokill=[]
-                    for i in self.floweractors:
-                        if tool.checkrectcollide(self.hero,i):
-                            self.flowercount += 1
-                            if self.flowerneed == 1:
-                                self.flowermessage.replacetext('You have collected '+str(self.flowercount)+'/'+str(self.flowerneed)+' flower')
-                            else:
-                                self.flowermessage.replacetext('You have collected '+str(self.flowercount)+'/'+str(self.flowerneed)+' flowers')
-                            tokill.append(i)
-                    for i in tokill:
-                        self.floweractors.remove(i)
-                        i.clearparts()
-                        i.kill()
-                        self.soundpickflower.play()
-                else:# when obtained all flowers can reach goal
-                    self.reachgoal(controls)
             #
             elif self.minigame=='logs':# mini-game chop some wood
                 if self.logcount<self.logneed:
@@ -5332,7 +5273,7 @@ class obj_world_mechfight(obj_world):
         # dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         # dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         # dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
-        # dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('scissors',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
         # dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
         # dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
         # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='data/premade',fliph=True) )
@@ -5354,7 +5295,7 @@ class obj_world_mechfight(obj_world):
         # dispgroup1.addpart( 'part3', draw.obj_image('bush',(640-170,240),scale=0.4,rotate=45,fliph=False) )
         # dispgroup1.addpart( 'part4', draw.obj_image('bush',(640+170,240),scale=0.4,rotate=45,fliph=True) )
         # dispgroup1.addpart( 'part5', draw.obj_image('fish',(640-300,470),scale=0.3,rotate=45,fliph=False) )
-        # dispgroup1.addpart( 'part6', draw.obj_image('flower',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
+        # dispgroup1.addpart( 'part6', draw.obj_image('scissors',(640+300,470),scale=0.35,rotate=-45,flipv=True) )
         # dispgroup1.addpart( 'part7', draw.obj_image('sailboat',(640-70-10,620),scale=0.25,fliph=True) )
         # dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
         # dispgroup1.addpart( 'part9', draw.obj_image('villainmech_legs1',(640,520),path='data/premade',fliph=True) )
@@ -5388,7 +5329,7 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part7', draw.obj_image('fish',(233,373),scale=0.3,rotate=0,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(585,619),scale=0.25,rotate=0,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part9', draw.obj_image('sailboat',(838,617),scale=0.25,rotate=0,fliph=False,flipv=False) )
-        dispgroup1.addpart( 'part10', draw.obj_image('flower',(907,479),scale=0.35,rotate=54,fliph=True,flipv=True) )
+        dispgroup1.addpart( 'part10', draw.obj_image('scissors',(907,479),scale=0.35,rotate=54,fliph=True,flipv=True) )
         dispgroup1.snapshot((640-50,360,500-50,330),'heromechpunch')
         # villainmech block
         dispgroup1=draw.obj_dispgroup((640,360))
@@ -5417,7 +5358,7 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part8', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
         dispgroup1.addpart( 'part9', draw.obj_image('mechblock',(640-200,360),path='data/premade') )
         dispgroup1.addpart( 'part10', draw.obj_image('fish',(242,316),scale=0.3,rotate=-66,fliph=False,flipv=False) )
-        dispgroup1.addpart( 'part11', draw.obj_image('flower',(378,324),scale=0.35,rotate=174,fliph=False,flipv=True) )
+        dispgroup1.addpart( 'part11', draw.obj_image('scissors',(378,324),scale=0.35,rotate=174,fliph=False,flipv=True) )
         dispgroup1.snapshot((640-80,360,500-80,330),'heromechblock')
         # villainmech hit
         dispgroup1=draw.obj_dispgroup((640,360))
@@ -5446,7 +5387,7 @@ class obj_world_mechfight(obj_world):
         dispgroup1.addpart( 'part6', draw.obj_image('sailboat',(640+70+10,620),scale=0.25,fliph=False) )
         dispgroup1.addpart( 'part7', draw.obj_image('mechhit',(640,360-100),path='data/premade') )
         dispgroup1.addpart( 'part8', draw.obj_image('fish',(467,104),scale=0.3,rotate=90,fliph=True,flipv=True) )
-        dispgroup1.addpart( 'part9', draw.obj_image('flower',(821,102),scale=0.35,fliph=False,flipv=False) )
+        dispgroup1.addpart( 'part9', draw.obj_image('scissors',(821,102),scale=0.35,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part10', draw.obj_image('bush',(640-200,400),scale=0.4,rotate=115,fliph=False,flipv=False) )
         dispgroup1.addpart( 'part11', draw.obj_image('bush',(640+200,400),scale=0.4,rotate=115,fliph=True,flipv=False) )
         dispgroup1.addpart( 'part12', draw.obj_image('mechsparks',(640+240,270),scale=1,rotate=0,fliph=False,flipv=False,path='data/premade') )
@@ -6325,14 +6266,13 @@ class obj_world_sunset(obj_world):
             self.staticactor.addpart( "img9", draw.obj_image('islandsunset',(840,550),path='data/premade') )
             self.staticactor.addpart( "img2", draw.obj_image('skeletonhead',(837,456),scale=0.35,rotate=0,fliph=False,flipv=False) )
         else:
-            self.staticactor.addpart( "img3", draw.obj_image('flower',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
+            self.staticactor.addpart( "img3", draw.obj_image('bush',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
             self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
             self.staticactor.addpart( 'imgref2', draw.obj_image('house',(296,443),scale=0.5) )
-            self.staticactor.addpart( "imgref3", draw.obj_image('pond',(650,611),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img1", draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img2", draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
-            self.staticactor.addpart( "img4", draw.obj_image('flower',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
-            self.staticactor.addpart( "img5", draw.obj_image('flower',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
+            self.staticactor.addpart( "img4", draw.obj_image('bush',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
+            self.staticactor.addpart( "img5", draw.obj_image('bush',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
         #
         # start actor
         self.startactor.addpart( 'img1', draw.obj_image('sun',(660,270),scale=0.5) )
@@ -6551,7 +6491,6 @@ class obj_world_3dforest(obj_world):
         self.goal=False# minigame goal reached
         self.timergoal=tool.obj_timer(150)# goal reached to win
         # self.ungoing=False# ungoing or back to start
-        #
         # make the 3d world
         self.set3dworld()
         # Manage 2d elements:
@@ -6626,6 +6565,10 @@ class obj_world_3dforest(obj_world):
         self.soundwin=draw.obj_sound('3dforest_win')
         self.creator.addpart(self.soundwin)
         self.startfightmessage=False# show start fight message (False here)
+        self.soundbigstomp=draw.obj_sound('mech_stomp')
+        self.creator.addpart(self.soundbigstomp)
+        self.timerbigstomp=tool.obj_timer(100)# timer for big rabbit stomp
+        self.timerbigstomp.start()
     # add start fight message (call on specific pages)
     def addstartfightmessage(self):#
         self.startfightmessage=True
@@ -6641,7 +6584,6 @@ class obj_world_3dforest(obj_world):
     # Set 3d world level (this one with all technical stuff, basis for childrens)
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time
@@ -6655,7 +6597,7 @@ class obj_world_3dforest(obj_world):
         # Moving actors (e.g. attackers)
         self.startrabbits=1# starting number of rabbits
         self.maxrabbits=1# max rabbits possible at a given time
-        self.totalrabbits=21# how many rabbits generated total
+        self.totalrabbits=15# how many rabbits generated total
         self.setrabbits()
     def makebasearea_default(self,caveinback=True):
         # The base area (often used)
@@ -6842,11 +6784,6 @@ class obj_world_3dforest(obj_world):
             if self.timerfightmessage.ring:
                 self.text_start.show=False
                 self.startfightmessage=False
-        # Grab mouse controls at world start
-        if not self.grabbedmouse:
-            self.gmx0=controls.gmx
-            self.gmy0=controls.gmy
-            self.grabbedmouse=True
         super().update(controls)
         # MANAGE PLAYER
         if not self.freezeworld:
@@ -7126,6 +7063,11 @@ class obj_world_3dforest(obj_world):
                 #######
                 # Big Rabbit (slowly moves to player and hits harder, cannot be killed)
                 elif act.type3d=='bigrabbit':
+                    # Does a big stomp
+                    self.timerbigstomp.update()
+                    if self.timerbigstomp.ring:
+                        self.soundbigstomp.play()
+                        self.timerbigstomp.start()
                     # Regular bunny (hits and dies)
                     if not act.isattacking: # not attacking
                         if tool.cos(ot-self.op)<0.7:#0.5,1 take slightly above
@@ -7301,7 +7243,6 @@ class obj_world_3dforest_enter(obj_world_3dforest):
     # Set 3d world level
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time
@@ -7325,10 +7266,6 @@ class obj_world_3dforest_enter(obj_world_3dforest):
         for ix in [-1.6,1.6]:# trees at vision level
             for iy in [0,2,4,6,8,10,12]:
                 self.placetree('bush',ix,iy,1,1,'static',randomfliph=True)
-        for i in range(0):# flowers randomly placed near the ground
-            ix=tool.randint(0,100)/100*2-1
-            iy=tool.randint(0,100)/100*12
-            self.placetree('flower',ix,iy,0.2,0.5,'static',randomfliph=True)
         # sun and moon in the sky,
         self.placetree('cave',0,60,10,24,'background')
         self.placetree('sun',60,60,100,24,'background')
@@ -7354,7 +7291,6 @@ class obj_world_3dforest_enter2(obj_world_3dforest):
     # Set 3d world level
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time
@@ -7417,7 +7353,6 @@ class obj_world_3dforest_checkcave(obj_world_3dforest):
             self.staticactor.dict["health"+str(i)].show=False
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time
@@ -7437,7 +7372,6 @@ class obj_world_3dforest_checkcave(obj_world_3dforest):
 class obj_world_3dforest_rabbitescape(obj_world_3dforest):
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time
@@ -7467,7 +7401,6 @@ class obj_world_3dforest_findgun(obj_world_3dforest):
         self.text_exit.dict['text1'].replacetext(tempo)
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time
@@ -7513,7 +7446,6 @@ class obj_world_3dforest_findgun(obj_world_3dforest):
 class obj_world_3dforest_rabbitshootone(obj_world_3dforest):
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=True# the player has a gun at a given time
@@ -7535,7 +7467,6 @@ class obj_world_3dforest_rabbitshootone(obj_world_3dforest):
 class obj_world_3dforest_rabbitshoot(obj_world_3dforest):
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=True# the player has a gun at a given time
@@ -7560,7 +7491,6 @@ class obj_world_3dforest_rabbitshoot(obj_world_3dforest):
 class obj_world_3dforest_rabbitescapebig(obj_world_3dforest):
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=True# the player has a gun at a given time
@@ -7590,7 +7520,6 @@ class obj_world_3dforest_findsax(obj_world_3dforest):
         self.text_exit.dict['text1'].replacetext(tempo)
     def set3dworld(self):
         # mouse for 3d
-        self.grabbedmouse=False# we have already grabbed initial mouse (obsolete)
         self.sethealth()# set player health stuff
         # set the gun
         self.hasgun=False# the player has a gun at a given time

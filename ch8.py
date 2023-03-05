@@ -262,13 +262,8 @@ class obj_scene_ch8atpartner(page.obj_chapterpage):
         textchoice.addchoice('2. No','no',(650,y1))
         self.addpart( textchoice )
         #
-        # self.addpart(draw.obj_imageplacer(self,'mailbox','flower','cloud'))
+        # self.addpart(draw.obj_imageplacer(self,'mailbox,'cloud'))
         self.addpart( draw.obj_image('mailbox',(167,347),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(138,627),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(268,559),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('flower',(438,636),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1186,633),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1008,560),scale=0.44,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7)
         self.addpart( animation1 )
         #
@@ -337,11 +332,6 @@ class obj_scene_ch8atpartnerreplay(page.obj_chapterpage):
         self.addpart( textchoice )
         #
         self.addpart( draw.obj_image('mailbox',(167,347),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(138,627),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(268,559),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('flower',(438,636),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1186,633),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1008,560),scale=0.44,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7)
         self.addpart( animation1 )
         #
@@ -363,11 +353,6 @@ class obj_scene_ch8atpartnerbye(page.obj_chapterpage):
                 ('{partnername}',share.colors.partner),'". ',\
                    ]
         self.addpart( draw.obj_image('mailbox',(167,347),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(138,627),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(268,559),scale=0.44,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('flower',(438,636),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1186,633),scale=0.44,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('flower',(1008,560),scale=0.44,rotate=0,fliph=True,flipv=False) )
         animation1=draw.obj_animation('ch1_awaken','partnerbase',(640+100,360),scale=0.7)
         self.addpart( animation1 )
         #
@@ -407,7 +392,6 @@ class obj_scene_ch8pond(page.obj_chapterpage):
         textchoice.addchoice('4. Nevermind','4',(640+400,y1))
         self.addpart( textchoice )
         #
-        self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
@@ -575,7 +559,7 @@ class obj_scene_ch8mech(page.obj_chapterpage):
         animation2=draw.obj_animation('ch7_villainmech_assemble_larm','fish',(640,360),record=False,imgfliph=True)
         animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
-        animation3=draw.obj_animation('ch7_villainmech_assemble_rarm','flower',(640,360),record=False,imgfliph=True,imgflipv=True)
+        animation3=draw.obj_animation('ch7_villainmech_assemble_rarm','scissors',(640,360),record=False,imgfliph=True,imgflipv=True)
         animation3.addimage('empty',path='data/premade')
         self.addpart( animation3 )
         animation4=draw.obj_animation('ch7_villainmech_assemble_lleg','sailboat',(640-10,360),record=False,imgscale=0.7)

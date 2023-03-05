@@ -220,7 +220,7 @@ class obj_scene_ch0p10(page.obj_chapterpage):
         tempok='['+share.datamanager.controlname('keyboard')+']'
         self.text=['Well hello, said the book of things, ',\
                 'very nice to meet you. ',\
-                    'How are you feeling today, could you tell me your current mood. ',\
+                    'How are you feeling today. ',\
                  ]
         self.addpart( draw.obj_textbox('select the box with '+tempo1+' and type a mood with the '+tempok+'. ',(50,220),color=share.colors.instructions,xleft=True) )
         self.addpart( draw.obj_textinput('playermood',30,(640,330), legend='write down your mood') )
@@ -335,7 +335,7 @@ class obj_scene_ch0p13b(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p13())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p14())
+        share.scenemanager.switchscene(obj_scene_ch0end())
     def setup(self):
         share.datamanager.setbookmark('ch0_drawingtips')
         # self.text=[\
@@ -379,31 +379,31 @@ class obj_scene_ch0p13b(page.obj_chapterpage):
 
 
 
-class obj_scene_ch0p14(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p13b())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0end())
-    def setup(self):
-        share.datamanager.setbookmark('ch0_learnbrowse')
-        self.text=[\
-                    'One last thing: if you ever skip a drawing or miss something, ',\
-                    'you can always go back from the main menu with [esc]. ',\
-                    ]
-        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
-        self.addpart( animation1 )
-        # self.addpart(draw.obj_textbox('press [esc] to return to the main menu',(640,200),color=share.colors.instructions))
-        #
-        # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
-        animation1.addsound( "book1", [13] )
-        animation1.addsound( "book2", [170] )
-        animation1.addsound( "book3", [155],skip=1 )
+# class obj_scene_ch0p14(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch0p13b())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch0end())
+#     def setup(self):
+#         share.datamanager.setbookmark('ch0_learnbrowse')
+#         self.text=[\
+#                     'You can return to any previous drawing from the main menu, ',\
+#                     'you can always go back from the main menu with [esc]. ',\
+#                     ]
+#         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+#         self.addpart( animation1 )
+#         # self.addpart(draw.obj_textbox('press [esc] to return to the main menu',(640,200),color=share.colors.instructions))
+#         #
+#         # self.addpart( draw.obj_soundplacer(animation1,'book1','book2','book3') )
+#         animation1.addsound( "book1", [13] )
+#         animation1.addsound( "book2", [170] )
+#         animation1.addsound( "book3", [155],skip=1 )
         #
         self.addpart( draw.obj_music('piano') )
 
 class obj_scene_ch0end(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch0p14())
+        share.scenemanager.switchscene(obj_scene_ch0p13b())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0unlocknext())
     def setup(self):

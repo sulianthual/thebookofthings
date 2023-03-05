@@ -64,7 +64,7 @@ class obj_scene_ch4p3(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch4_startstory')
         self.text=[\
-               'Here we go, said the book of things: ',\
+               '"',\
                ('{partnername}',share.colors.partner),' was captive in the ',\
                  ('evil tower',share.colors.location2),', and ',\
                  ('{heroname}',share.colors.hero),' needed to visit three ',\
@@ -146,7 +146,7 @@ class obj_scene_ch4p7(page.obj_chapterpage):
         self.text=[\
                     'Dear ',('{heroname}',share.colors.hero),', ',\
                     '\nWasup. Last time I checked, ',('{partnername}',share.colors.partner),\
-                    ' is still being held hostage in my ',\
+                    ' is still in my ',\
                      ('evil tower',share.colors.location2),'. Come save ',\
                      ('{partner_him}',share.colors.partner2),' if you dare. ',\
                      'Whenever, muahahahaha. ',\
@@ -173,9 +173,10 @@ class obj_scene_ch4p9(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p10())
     def setup(self):
         share.datamanager.setbookmark('ch4_drawcave')
-        self.text=['"The first ',\
+        self.text=['"',\
+                    ('{heroname}',share.colors.hero),' went to seek the first ',\
                     ('evil grandmaster',share.colors.grandmaster),\
-                    ' lived in a magical cave in a dark forest." ',\
+                    ' that lived in a magical cave in a dark forest." ',\
                     'Draw a ',('cave',share.colors.item),\
                     ' and a ',('tree',share.colors.item),'. ',\
                    ]
@@ -218,7 +219,7 @@ class obj_scene_ch4p10a(page.obj_chapterpage):
         pass
     def setup(self):
         share.datamanager.setbookmark('ch4_enterforest')
-        self.text=['"The forest was all 3D with next generation graphics." ',\
+        self.text=['"The forest was all 3D with next generation graphics, Wow." ',\
         'Go to the ',('marker',share.colors.red),'. ']
         self.world=world.obj_world_3dforest_enter(self)# fishing mini-game
         self.addpart(self.world)
@@ -324,7 +325,6 @@ class obj_scene_ch4p13(page.obj_chapterpage):
         pass# no sound
     def setup(self):
         self.text=[\
-                'Moving on, said the book of things: ',\
                 '"',('{heroname}',share.colors.hero),\
                 ' met a ',('bunny',share.colors.bunny),' called ',\
                 ('{bunnyname}',share.colors.bunny),'. ',\
@@ -787,6 +787,7 @@ class obj_scene_ch4p16j(page.obj_chapterpage):
         self.addpart(self.world)
         self.world.addstartfightmessage()# add start fight message
         self.addpart( draw.obj_music('bunny') )
+
 
 
 class obj_scene_ch4p16jdeath(page.obj_chapterpage):

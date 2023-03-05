@@ -1848,18 +1848,23 @@ class obj_scene_testdrafting(obj_testpage):
         # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','bunnyhead',(137,564)) )
         # self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
         # self.addpart( draw.obj_animation('ch3_bugtalks3intmark2','bunnyhead',(640,360),record=False,sync=animation1) )
-        self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.addpart( draw.obj_image('sun',(1166,268),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        self.addpart(draw.obj_image('floor_scissors',(640,360+200),path='data/premade') )
-        self.addpart( draw.obj_image('scissors',(1004,565),scale=0.4,rotate=90,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        # self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('sun',(1166,268),scale=0.37,rotate=0,fliph=False,flipv=False) )
+        # self.addpart(draw.obj_image('floor_scissors',(640,360+200),path='data/premade') )
+        # self.addpart( draw.obj_image('scissors',(1004,565),scale=0.4,rotate=90,fliph=False,flipv=False) )
+        #
+        # # self.addpart(draw.obj_image('herobase',(640,360+200),scale=0.5) )
+        # animation1=draw.obj_animation('hero_hovers','herobase',(640,360),record=False)
+        # self.addpart( animation1 )
+        self.addpart( draw.obj_imageplacer(self,'bush') )
 
-        # self.addpart(draw.obj_image('herobase',(640,360+200),scale=0.5) )
-        animation1=draw.obj_animation('hero_hovers','herobase',(640,360),record=False)
-        self.addpart( animation1 )
-        self.addpart( draw.obj_imageplacer(self,'scissors') )
 
-
+        self.addpart( draw.obj_image('house',(640,360),scale=0.5) )
+        self.addpart( draw.obj_image('mailbox',(834,182),scale=0.25) )
+        self.addpart( draw.obj_image('bush',(523,170),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
 
 
 ####################################################################################################################
