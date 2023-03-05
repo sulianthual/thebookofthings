@@ -65,7 +65,7 @@ class obj_quickscene():
             # quickscene=ch4.obj_scene_lyingfailpart1()
             # quickscene=ch4.obj_scene_lyingfailpart2()
             # quickscene=ch5.obj_scene_ch5p6()
-            quickscene=ch5.obj_scene_ch5p22()
+            quickscene=ch5.obj_scene_ch5p37b()
             # quickscene=ch5.obj_scene_ch5p28a()
             # quickscene=ch5.obj_scene_ch5p37a()
             # quickscene=ch5.obj_scene_ch5p40()
@@ -122,7 +122,7 @@ class obj_quickscene():
             # quickscene=tests.obj_scene_testtrailer_p1()
             # quickscene=tests.obj_scene_testforestgame()
             #
-            quickscene=tests.obj_scene_testforestgame()
+            quickscene=tests.obj_scene_masterrps1()
 
             #
             #
@@ -352,7 +352,7 @@ class obj_gotobookmark():
             # self.dict['ch5_climb']='climb the peak'
             self.dict['ch5_writeelder']='draw and name the elder'
             self.dict['ch5_drawrock']='draw rock paper scissors'
-            # self.dict['ch5_learnrps']='learn rock paper scissors'
+            self.dict['ch5_learnrps']='become rock paper scissors'
             self.dict['ch5_rps3']='play rock paper scissors'
             # self.dict['ch5_winrps3']='win rock paper scissors'
             # self.dict['ch5_gohome']='go back home'
@@ -372,7 +372,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch5_drawrock' :
                 bookmarkscene=ch5.obj_scene_ch5p21()
             elif bookmarkname == 'ch5_learnrps' :
-                bookmarkscene=ch5.obj_scene_ch5p22()
+                bookmarkscene=ch5.obj_scene_ch5p21aa()
             elif bookmarkname == 'ch5_rps3' :
                 bookmarkscene=ch5.obj_scene_ch5p34()
             elif bookmarkname == 'ch5_winrps3' :

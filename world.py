@@ -3662,9 +3662,323 @@ class obj_world_climbpeak(obj_world):
 
 ####################################################################################################################
 
+# Mini Game: master the rock
+# *ROCK *MASTER
+class obj_world_mastertherock(obj_world):
+    def setup(self,**kwargs):
+        #
+        # main goals
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.win=False# has won or lost
+        # timer of not moving
+        self.timer=tool.obj_timer(1300)# time to wait standing still
+        self.timer.start()# start at beginning
+        self.timerend=tool.obj_timer(150)# timer of end
+        # background
+        self.staticactor=obj_grandactor(self,(640,360))
+        # End
+        self.staticactor.addpart( 'textwin', draw.obj_textbox('success!',(640,150),fontsize='huge') )
+        self.staticactor.addpart( 'textloose', draw.obj_textbox('failed!',(640,150),fontsize='huge') )
+        self.staticactor.dict['textwin'].show=False
+        self.staticactor.dict['textloose'].show=False
+        # hero
+        self.heroxystart=(400,500)# where hero starts
+        self.hero=obj_grandactor(self,self.heroxystart)
+        self.hero.addpart( 'stand_right', draw.obj_image('herobase',self.heroxystart,scale=0.5) )
+        self.hero.addpart( 'stand_left', draw.obj_image('herobase',self.heroxystart,scale=0.5,fliph=True) )
+        self.hero.dict['stand_right'].show=True
+        self.hero.dict['stand_left'].show=False
+        # sounds
+        self.soundwin=draw.obj_sound('unlock')
+        self.creator.addpart(self.soundwin)
+        self.soundloose=draw.obj_sound('climb_fall')
+        self.creator.addpart(self.soundloose)
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            self.timer.update()
+            # Any control movement
+            if controls.gl or controls.gr:
+                self.goal=True
+                self.win=False
+                self.soundloose.play()
+                self.timerend.start()
+                self.staticactor.dict['textloose'].show=True
+            # Didnt move until the end
+            elif self.timer.ring:#
+                self.goal=True
+                self.win=True
+                self.soundwin.play()
+                self.timerend.start()
+                self.staticactor.dict['textwin'].show=True
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+        # Free movements regardless of win/loose
+        if controls.gr and self.hero.x<1280-100 and not controls.gl:
+            self.hero.movex(12)
+            self.hero.dict['stand_right'].show=True
+            self.hero.dict['stand_left'].show=False
+        if controls.gl and self.hero.x>0+100 and not controls.gr:
+            self.hero.movex(-12)
+            self.hero.dict['stand_right'].show=False
+            self.hero.dict['stand_left'].show=True
+
+
+# Mini Game: master the paper
+# *PAPER *MASTER
+class obj_world_masterthepaper(obj_world):
+    def setup(self,**kwargs):
+        #
+        # main goals
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        self.max_step=8# total number of step
+        self.current_step=0# current step
+        # End
+        self.timerend=tool.obj_timer(200)# timer of end
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.staticactor.addpart('textwin', draw.obj_textbox('success!',(200,300),fontsize='huge') )
+        self.staticactor.dict['textwin'].show=False
+        self.hero=obj_grandactor(self,(640,360))
+        yoff_=100# offset I added afterwards
+        pox_,posy_,scal_=640,360+yoff_,0.7
+        for i in range(self.max_step):
+            self.hero.addpart('step'+str(i), draw.obj_image('herofolding'+str(i),(pox_,posy_),scale=scal_,path='data/premade') )
+        self.hero.addpart('paper1', draw.obj_image('paper',(860,452+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('paper2', draw.obj_image('paper',(725,165+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('paper3', draw.obj_image('paper',(870,267+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('paper4', draw.obj_image('paper',(508,464+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('paper5', draw.obj_image('paper',(404,290+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('paper6', draw.obj_image('paper',(515,173+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('paper7', draw.obj_image('paper',(717,308+yoff_),scale=0.33,rotate=0,fliph=False,flipv=False) )
+        self.hero.addpart('head0', draw.obj_image('herohead',(640,360-35+yoff_),scale=0.3) )
+        self.hero.addpart('head4', draw.obj_image('herohead',(640-100,360-35+yoff_),scale=0.3,fliph=True) )
+        # chain of instructions
+        self.instrus=['Hold [Down]']
+        self.instrus.append('Hold'+' [Down]'+'  Add'+' [Up]')
+        self.instrus.append('Hold'+' [Up]'+'  Add'+' [Right]')
+        self.instrus.append('Hold'+' [Right]'+'  Add'+' [Left]')
+        self.instrus.append('Hold'+' [Left]'+'  Add'+' [Space]')
+        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+'  Add'+' [Right Mouse]')
+        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+' Hold'+' [Right Mouse]'+'  Add'+' [Left Mouse]')
+        self.instrus.append('Hold'+' [Left]'+' Hold'+' [Space]'+' Hold'+' [Right Mouse]'+' Hold'+' [Left Mouse]')
+        self.hero.addpart('commands',draw.obj_textbox('text here',(250,160),xleft=True,color=share.colors.instructions))
+        # Set at step 0
+        self.showonestep(0)
+        self.soundwin=draw.obj_sound('unlock')
+        self.creator.addpart(self.soundwin)
+        self.soundloose=draw.obj_sound('climb_fall')
+        self.creator.addpart(self.soundloose)
+        self.soundfold=draw.obj_sound('mailopen')
+        self.creator.addpart(self.soundfold)
+
+    # show one of the step and hide all the others
+    def showonestep(self,step):
+        for i in range(self.max_step):
+            self.hero.dict['step'+str(i)].show=False
+        self.hero.dict['step'+str(step)].show=True
+        if step>4:
+            self.hero.dict['head0'].show=False
+            self.hero.dict['head4'].show=True
+        else:
+            self.hero.dict['head0'].show=True
+            self.hero.dict['head4'].show=False
+        for i in range(1,self.max_step):
+            if i<step+1:
+                self.hero.dict['paper'+str(i)].show=True
+            else:
+                self.hero.dict['paper'+str(i)].show=False
+        self.hero.dict['commands'].replacetext(self.instrus[step])
+
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # 'Hold [Down][Up][Right][Left][Space][Right Mouse][Left Mouse]'
+            tonextstep=False
+            tofail=False
+            if self.current_step==0:
+                if controls.gd and controls.gdc:
+                    tonextstep=True
+            elif self.current_step==1:
+                if controls.gu and controls.guc:
+                    tonextstep=True
+                if controls.gdc:
+                    tofail=True
+            elif self.current_step==2:
+                if controls.gr and controls.grc:
+                    tonextstep=True
+                if controls.guc:
+                    tofail=True
+            elif self.current_step==3:
+                if controls.gl and controls.glc:
+                    tonextstep=True
+                if controls.grc:
+                    tofail=True
+            elif self.current_step==4:
+                if controls.ga and controls.gac:
+                    tonextstep=True
+                if controls.glc:
+                    tofail=True
+            elif self.current_step==5:
+                if controls.gm2 and controls.gm2c:
+                    tonextstep=True
+                if controls.glc or controls.gac:
+                    tofail=True
+            elif self.current_step==6:
+                if controls.gm1 and controls.gm1c:
+                    tonextstep=True
+                if controls.glc or controls.gac or controls.gm2c:
+                    tofail=True
+            # To next step
+            if tofail:
+                self.current_step=0
+                self.showonestep(self.current_step)
+                self.soundloose.play()
+            elif tonextstep:
+                self.current_step+=1
+                self.current_step=min(self.current_step,self.max_step-1)
+                self.showonestep(self.current_step)
+                self.soundfold.play()
+            if self.current_step==self.max_step-1:# won
+                self.goal=True
+                self.soundwin.play()
+                self.timerend.start()
+                self.staticactor.dict['textwin'].show=True
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+
+
+
+# Mini Game: master the paper
+# *PAPER *MASTER
+class obj_world_masterthescissors(obj_world):
+    def setup(self,**kwargs):
+        #
+        # main goals
+        self.done=False# end of minigame
+        self.goal=False# minigame goal reached
+        # End
+        self.timerend=tool.obj_timer(200)# timer of end
+        self.staticactor=obj_grandactor(self,(640,360))
+        self.staticactor.addpart('textwin', draw.obj_textbox('Victory!',(640-300,300),fontsize='huge') )
+        self.staticactor.dict['textwin'].show=False
+        # background
+        self.staticactor.addpart('commands',draw.obj_textbox('Alternate [Left] and [Right] quickly to hover',(640,160),color=share.colors.instructions))
+        self.staticactor.addpart('img1', draw.obj_image('floor_scissors',(640,600),path='data/premade') )
+        self.staticactor.addpart('img2', draw.obj_image('scissors',(1010,600),scale=0.4,rotate=90,fliph=False,flipv=False) )
+        self.staticactor.addpart('countabove',draw.obj_textbox(' ',(640+300,300),fontsize='huge'))
+        # hero
+        self.hero=obj_grandactor(self,(640,360))
+        self.hero.addpart('img1', draw.obj_image('herobase',(640,360+200),scale=0.5) )
+        # Hovering
+        self.pressleft=False# press left now (otherwise right)
+        self.posi_ymin=360# RELATIVE TO HERE
+        self.posi_ymax=200
+        self.posi_ynow=self.posi_ymin# current position
+        self.force_push=-20# push force (only if pushed)
+        self.force_gravi0=1.2# gravity force
+        self.force_gravidtmult=1.1# increment of gravity (if not pushing)
+        self.force_gravimax=10# max gravity
+        self.force_gravi=self.force_gravi0# force can reset
+        self.timer_kick=tool.obj_timer(3)# kick sound
+        self.timer_kick.start()
+        # 5 secs above
+        self.isabove=False
+        self.posi_ytreshstart=250# starts chrono
+        self.posi_ytreshend=300# stops chrono
+        self.timer_timeabove=tool.obj_timer(100)# countdown
+        self.timeabove=0# in iterations of the timer
+        self.ntimeabove=4# how many iterations to win
+        # sounds
+        self.soundwin=draw.obj_sound('unlock')
+        self.creator.addpart(self.soundwin)
+        self.soundbigwin=draw.obj_sound('rps_win')
+        self.creator.addpart(self.soundbigwin)
+        self.soundloose=draw.obj_sound('climb_fall')
+        self.creator.addpart(self.soundloose)
+        self.soundcount=draw.obj_sound('rps_count')
+        self.creator.addpart(self.soundcount)
+        self.soundstart=draw.obj_sound('wakeup_wake1')
+        self.creator.addpart(self.soundstart)
+        self.soundkick=draw.obj_sound('stomp_kick')
+        self.creator.addpart(self.soundkick)
+    def update(self,controls):
+        super().update(controls)
+        if not self.goal:
+            # coutn above
+            if not self.isabove:
+                if self.posi_ynow<self.posi_ytreshstart:
+                    self.timer_timeabove.start()
+                    self.isabove=True
+                    self.soundcount.play()
+                    self.timer_kick.start()
+                    self.staticactor.dict['countabove'].replacetext('1...')
+            else:
+                if self.posi_ynow>self.posi_ytreshend:
+                    self.timeabove=0
+                    self.isabove=False
+                    self.soundloose.play()
+                    self.timer_kick.start()
+                    self.staticactor.dict['countabove'].replacetext(' ')
+                else:
+                    self.timer_timeabove.update()
+                    if self.timeabove>self.ntimeabove-1:
+                        # Won
+                        self.goal=True
+                        self.soundwin.play()
+                        self.soundbigwin.play()
+                        self.staticactor.dict['countabove'].replacetext('5!')
+                        self.timerend.start()
+                        self.staticactor.dict['textwin'].show=True
+                    elif self.timer_timeabove.ring:
+                        self.timeabove+=1
+                        self.soundcount.play()
+                        self.staticactor.dict['countabove'].replacetext(str(self.timeabove+1)+'...')
+                        self.timer_timeabove.start()
+        else:
+            # goal reached state
+            self.timerend.update()
+            if self.timerend.ring:
+                self.done=True# end of minigame
+        # Movement regardless of status
+        pushing=0# pushing upwards this frame
+        if self.pressleft and controls.gl and controls.glc:
+            pushing=1
+            self.pressleft=False
+        elif not self.pressleft and controls.gr and controls.grc:
+            pushing=1
+            self.pressleft=True
+        if self.goal:# no more pushing after winning
+            pushing=0
+        # Evolving force
+        if pushing==0:
+            self.force_gravi*=self.force_gravidtmult
+        else:
+            self.force_gravi=self.force_gravi0
+        self.force_gravi=min([self.force_gravi,self.force_gravimax])
+        # Apply movement
+        self.posi_ynow+=pushing*self.force_push+self.force_gravi
+        self.posi_ynow=min([self.posi_ynow,self.posi_ymin])
+        self.posi_ynow=max([self.posi_ynow,self.posi_ymax])
+        self.hero.movetoy(self.posi_ynow)
+        if pushing==1:
+            self.timer_kick.update()
+            if self.timer_kick.ring:
+                self.soundkick.play()
+                self.timer_kick.start()
+
+####################################################################################################################
+
 
 # Mini Game: Play Rock Paper Scissors
-# *ROCK *PAPER *SCISSORS
+# *ROCK *PAPER *SCISSORS *RPS
 class obj_world_rockpaperscissors(obj_world):
     def setup(self,**kwargs):
         ##########################3
@@ -3749,15 +4063,16 @@ class obj_world_rockpaperscissors(obj_world):
         # self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(640-80,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
         # self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(640,yrpsinfo),fontsize='small',color=share.colors.instructions) )
         # self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(640+90,yrpsinfo+50),fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(40,480),xleft=True,fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(40,480+55),xleft=True,fontsize='small',color=share.colors.instructions) )
-        self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(40,480+55*2),xleft=True,fontsize='small',color=share.colors.instructions) )
+        self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('action')+']: switch',(40,480),xleft=True,fontsize='small',color=share.colors.instructions) )
+        # self.instructions.addpart( 'texta', draw.obj_textbox('['+share.datamanager.controlname('left')+']: rock',(40,480),xleft=True,fontsize='small',color=share.colors.instructions) )
+        # self.instructions.addpart( 'textw', draw.obj_textbox('['+share.datamanager.controlname('up')+']: paper',(40,480+55),xleft=True,fontsize='small',color=share.colors.instructions) )
+        # self.instructions.addpart( 'textd', draw.obj_textbox('['+share.datamanager.controlname('right')+']: scissors',(40,480+55*2),xleft=True,fontsize='small',color=share.colors.instructions) )
         self.instructions.addpart( 'texts', draw.obj_textbox('['+share.datamanager.controlname('action')+']: start game',(640,yrpsinfo),color=share.colors.instructions) )
         self.instructions.addpart( 'textn', draw.obj_textbox('['+share.datamanager.controlname('action')+']: next round',(640,yrpsinfo),color=share.colors.instructions) )
         self.instructions.addpart( 'texte', draw.obj_textbox('['+share.datamanager.controlname('action')+']: end game',(640,yrpsinfo),color=share.colors.instructions) )
         self.instructions.dict['texta'].show=True
-        self.instructions.dict['textw'].show=True
-        self.instructions.dict['textd'].show=True
+        # self.instructions.dict['textw'].show=True
+        # self.instructions.dict['textd'].show=True
         self.instructions.dict['texts'].show=True
         self.instructions.dict['textn'].show=False
         self.instructions.dict['texte'].show=False
@@ -3851,8 +4166,8 @@ class obj_world_rockpaperscissors(obj_world):
         self.checking=False# checking result or not
         self.countdowning=False# doing countdown or not #######!!!CHANGED
         self.icountdown=3
-        self.countdowntime=80
-        self.countdowntimelast=90# on last count, slightly more time to decide
+        self.countdowntime=60
+        self.countdowntimelast=70# on last count, slightly more time to decide
         if self.elderalwayswin or self.elderalwaysloose:# if win/loose just hurry it
             self.countdowntimelast=self.countdowntime
         self.countdowntimer=tool.obj_timer(self.countdowntime)# timer
@@ -3921,25 +4236,39 @@ class obj_world_rockpaperscissors(obj_world):
                 if self.timerfightmessage.ring:
                     self.text_start.show=False
             if not self.checking: # deciding state
-                # print('VALUE='+str(self.icountdown)+'----:'+str(self.countdowntimer.t))
-                if controls.gl and controls.glc:
-                    if not self.herochoice==0: self.soundselect.play()
-                    self.herochoice=0
+                #
+                # if False:# CHOOSE WITH ARROWS
+                #     if controls.gl and controls.glc:
+                #         if not self.herochoice==0: self.soundselect.play()
+                #         self.herochoice=0
+                #         self.hero.dict['rock'].show=self.herochoice==0
+                #         self.hero.dict['paper'].show=self.herochoice==1
+                #         self.hero.dict['scissors'].show=self.herochoice==2
+                #     elif controls.gu and controls.guc:
+                #         if not self.herochoice==1: self.soundselect.play()
+                #         self.herochoice=1
+                #         self.hero.dict['rock'].show=self.herochoice==0
+                #         self.hero.dict['paper'].show=self.herochoice==1
+                #         self.hero.dict['scissors'].show=self.herochoice==2
+                #     elif controls.gr and controls.grc:
+                #         if not self.herochoice==2: self.soundselect.play()
+                #         self.herochoice=2
+                #         self.hero.dict['rock'].show=self.herochoice==0
+                #         self.hero.dict['paper'].show=self.herochoice==1
+                #         self.hero.dict['scissors'].show=self.herochoice==2
+                if controls.ga and controls.gac:# CONTROL WITH SPACE
+                    if self.herochoice==0:
+                        self.herochoice=1
+                    elif self.herochoice==1:
+                        self.herochoice=2
+                    elif self.herochoice==2:
+                        self.herochoice=0
+                    # change
+                    self.soundselect.play()
                     self.hero.dict['rock'].show=self.herochoice==0
                     self.hero.dict['paper'].show=self.herochoice==1
                     self.hero.dict['scissors'].show=self.herochoice==2
-                elif controls.gu and controls.guc:
-                    if not self.herochoice==1: self.soundselect.play()
-                    self.herochoice=1
-                    self.hero.dict['rock'].show=self.herochoice==0
-                    self.hero.dict['paper'].show=self.herochoice==1
-                    self.hero.dict['scissors'].show=self.herochoice==2
-                elif controls.gr and controls.grc:
-                    if not self.herochoice==2: self.soundselect.play()
-                    self.herochoice=2
-                    self.hero.dict['rock'].show=self.herochoice==0
-                    self.hero.dict['paper'].show=self.herochoice==1
-                    self.hero.dict['scissors'].show=self.herochoice==2
+
                 if not self.countdowning:# not countdown
                     if not self.dotutorial:
                         self.countdowning=True# flip to countdown
@@ -3954,8 +4283,8 @@ class obj_world_rockpaperscissors(obj_world):
                         self.elder.dict['paper'].show=self.elderchoice==1
                         self.elder.dict['scissors'].show=self.elderchoice==2
                         self.instructions.dict['texta'].show=True
-                        self.instructions.dict['textw'].show=True
-                        self.instructions.dict['textd'].show=True
+                        # self.instructions.dict['textw'].show=True
+                        # self.instructions.dict['textd'].show=True
                         self.instructions.dict['texts'].show=False
                         self.instructions.dict['textn'].show=False
                         self.instructions.dict['texte'].show=False
@@ -4041,8 +4370,8 @@ class obj_world_rockpaperscissors(obj_world):
                             self.countdown.dict['2'].show=False
                             self.countdown.dict['1'].show=False
                             self.instructions.dict['texta'].show=False
-                            self.instructions.dict['textw'].show=False
-                            self.instructions.dict['textd'].show=False
+                            # self.instructions.dict['textw'].show=False
+                            # self.instructions.dict['textd'].show=False
                             self.instructions.dict['texts'].show=False
                             self.instructions.dict['textn'].show=True
                             self.instructions.dict['texte'].show=False
@@ -4150,8 +4479,8 @@ class obj_world_rockpaperscissors(obj_world):
                         self.hero.dict['thinkcloud'].show=False
                         self.elder.dict['thinkcloud'].show=False
                         self.instructions.dict['texta'].show=False
-                        self.instructions.dict['textw'].show=False
-                        self.instructions.dict['textd'].show=False
+                        # self.instructions.dict['textw'].show=False
+                        # self.instructions.dict['textd'].show=False
                         self.instructions.dict['texts'].show=False
                     else:
                         if self.elderchoice==0:# elder does a new random choice
@@ -4169,8 +4498,8 @@ class obj_world_rockpaperscissors(obj_world):
                         self.hero.dict['thinkcloud'].show=True
                         self.elder.dict['thinkcloud'].show=True
                         self.instructions.dict['texta'].show=True
-                        self.instructions.dict['textw'].show=True
-                        self.instructions.dict['textd'].show=True
+                        # self.instructions.dict['textw'].show=True
+                        # self.instructions.dict['textd'].show=True
                         self.instructions.dict['texts'].show=True
                     self.result.dict['herorock'].show=False
                     self.result.dict['heropaper'].show=False
