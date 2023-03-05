@@ -106,7 +106,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '        ',\
-                    '"The gun was getting rusty so ',('{hero_he}',share.colors.hero),\
+                    '"The gun was too rusty so ',('{heroname}',share.colors.hero),\
                      ' used it to fish." '\
                    ]
         self.world=world.obj_world_fishing_withgun(self)
@@ -447,7 +447,7 @@ class obj_scene_ch5p21aa(page.obj_chapterpage):
         share.datamanager.setbookmark('ch5_learnrps')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['First you must master the style of the rock, ',\
-            'sturdy and steady like the Earth. Just stand still for an ENTIRE DAY. ']
+            'steady like the Earth. Just stand still for an ENTIRE DAY. ']
         self.addpart( draw.obj_image('rock',(886,435),scale=1.1,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -558,7 +558,7 @@ class obj_scene_ch5p21d(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        self.text=['Next, the style of the paper, suppled and convoluted like life itself.',\
+        self.text=['Next, the style of the paper, supple like life itself.',\
         ' Hold the keys in the correct order to fold yourself. ']
         self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -606,7 +606,7 @@ class obj_scene_ch5p21f(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        self.text=['Next, the style of the scissors, swift and loose like the wind. ',\
+        self.text=['Next, the style of the scissors, swift like the wind. ',\
         ' Hover in the air for 5 seconds above the line. ']
         self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -625,7 +625,7 @@ class obj_scene_ch5p21g(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 '"You did it, said ',('{eldername}',share.colors.elder),\
-                '! Now you are ready to challenge me, the master itself, to a mighty fight of rock-paper scissors. ',\
+                '! Now you are ready to challenge me, the master itself, to a fight of rock-paper scissors. ',\
                 'If you win, I will give you my ',\
                 ('clue',share.colors.password),' as promised." ']
         # self.addpart(draw.obj_imageplacer(self,'sun','cloud','mountain','elderbase'))

@@ -60,7 +60,7 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p30c()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            quickscene=ch4.obj_scene_ch4p10a()
+            # quickscene=ch4.obj_scene_ch4p10a()
             # quickscene=ch5.obj_scene_ch5p6()
             # quickscene=ch5.obj_scene_ch5p21d()
             # quickscene=ch5.obj_scene_ch5p28a()
@@ -79,7 +79,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22death()
             # quickscene=ch7.obj_scene_ch7p25()
             # quickscene=ch7.obj_scene_ch7p25death()
-            # quickscene=ch7.obj_scene_ch7p48()
+            quickscene=ch7.obj_scene_ch7p37()
             # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
@@ -398,7 +398,7 @@ class obj_gotobookmark():
             # self.dict['ch6_sneak2']='sneak game round 2'
             # self.dict['ch6_sneak3']='sneak game round 3'
             # self.dict['ch6_sneak4']='sneak game round 4'
-            self.dict['ch6_drawcow']='draw treasure'
+            self.dict['ch6_drawcow']='draw the cow'
             self.dict['ch6_startride']='play the chase game'
             self.dict['ch6_choosepwd']='finish the password'
             # self.dict['ch6_winride']='made it to the ship'

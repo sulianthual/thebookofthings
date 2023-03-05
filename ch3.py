@@ -56,8 +56,8 @@ class obj_scene_ch3p1(page.obj_chapterpage):
     def setup(self):
         self.text=['Lets see here... " the ',('hero',share.colors.hero),\
                    ' and ',('{hero_his}',share.colors.hero2),' ',('partner',share.colors.partner),\
-                    ' woke up... ',('kissed',share.colors.partner2),'... blah blah...',\
-                    ' and went back to ',('bed',share.colors.item2),'". '\
+                    ' woke up, they were madly in love, they kissed, ',\
+                    'and then they went back to ',('bed',share.colors.item2),'". '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation=draw.obj_animation('ch3_summary','herobase',(640,360),record=False,scale=0.7)

@@ -612,7 +612,7 @@ class obj_scene_ch7p24a(page.obj_chapterpage):
         self.text=[\
                   'Kick ',\
                   ('{villainname}',share.colors.villain),' to bring ',\
-                  ('{villain_his}',share.colors.villain2),' health down (when the fight starts). ',\
+                  ('{villain_his}',share.colors.villain2),' health down. ',\
                    ]
         self.world=world.obj_world_stompfight(self,tutorial=True)
         self.addpart(self.world)
@@ -792,7 +792,7 @@ class obj_scene_ch7p28(page.obj_chapterpage):
                   ('{partnername}',share.colors.partner),' said: ',\
                   'this little thing is ',\
                   ('soooo cuuuute',share.colors.partner),'! ',\
-                  'Of course you can stay with us, you can be our house pet." ',\
+                  'Of course you can stay with us." ',\
                    ]
         # self.addpart( draw.obj_image('herobase',(286,635),scale=1.4,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
@@ -830,7 +830,7 @@ class obj_scene_ch7p29(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch7p30())
     def setup(self):
         self.text=[\
-                    'Well, it looks everything is working out, said the book of things. ',
+                    'Well, it looks like everything is working out, said the book of things. ',
                    'You made it, congratulations! ',\
                    ]
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
@@ -840,9 +840,9 @@ class obj_scene_ch7p29(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(360,245),scale=0.32,rotate=2,fliph=True,flipv=False) )
         self.addpart( draw.obj_animation('ch3_villainretreatssun','sun',(640,360),record=False) )
         #
-        animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
+        animation1=draw.obj_animation('ch5whatbook1','book',(640-200,360+40),record=False)
         self.addpart( animation1 )
-        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640,360),record=False,path='data/premade',sync=animation1)
+        animation2=draw.obj_animation('ch5whatbook2','exclamationmark',(640-200,360+40),record=False,path='data/premade',sync=animation1)
         animation2.addimage('empty',path='data/premade')
         self.addpart( animation2 )
         #
@@ -1018,7 +1018,10 @@ class obj_scene_ch7p37(page.obj_chapterpage):
         self.addpart(  draw.obj_image('house',(296,443),scale=0.5) )
         self.addpart(  draw.obj_image('bush',(827,452),scale=0.32,rotate=0,fliph=False,flipv=False) )
         self.addpart(  draw.obj_image('bush',(486,648),scale=0.32,rotate=0,fliph=True,flipv=False) )
-        # self.addpart(  draw.obj_image('moon',(660,270),scale=0.5) )
+        self.addpart( draw.obj_image('bush',(186,615),scale=0.28,rotate=0,fliph=False,flipv=False) )
+        self.addpart( draw.obj_image('bush',(101,567),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        self.addpart( draw.obj_image('bush',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
+        #
         self.addpart( draw.obj_animation('ch1_sun','moon',(640,360),scale=0.5) )
         #
         self.addpart( draw.obj_music('piano') )
@@ -1064,7 +1067,7 @@ class obj_scene_ch7p39(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"',\
-                   ('{heroname}',share.colors.hero),' woke back up and went to open the door". ',\
+                   ('{heroname}',share.colors.hero),' woke back up and went to open the door." ',\
                    ]
         # self.addpart( draw.obj_image('alarmclock12am',(100,370),scale=0.4) )
         # self.addpart( draw.obj_image('nightstand',(100,530),scale=0.5) )
@@ -1096,7 +1099,7 @@ class obj_scene_ch7p40(page.obj_chapterpage):
                   '"',\
                     ('{villainname}',share.colors.villain),' was outside the house! ',\
                     ('{villain_he}',share.colors.villain2),' said: ',\
-                    'muahaha, I told you I would be back. I have one last trick up my sleeve for you". ',\
+                    'muahaha, I told you I would be back. I have one last trick up my sleeve for you." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'house','bush','cloud','moon','mailbox') )
         self.addpart( draw.obj_image('moon',(235,250),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -1403,8 +1406,7 @@ class obj_scene_ch7p48b(page.obj_chapterpage):
         self.text=[\
                   'Hit ',\
                   ('{villainname}',share.colors.villain),' to bring ',\
-                  ('{villain_his}',share.colors.villain2),' health down ',\
-                  '(when the fight starts). ',\
+                  ('{villain_his}',share.colors.villain2),' health down. '\
                    ]
         self.world=world.obj_world_mechfight(self,tutorial=True)#,prompt=False)
         self.addpart(self.world)
@@ -1599,7 +1601,7 @@ class obj_scene_ch7p53(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch7_drawcake')
         self.text=[\
-            'Draw a ',('cake',share.colors.item),', said the book things. Lets celebrate! ',\
+            'Draw a ',('cake',share.colors.item),', said the book of things. Lets celebrate! ',\
                 ]
         self.addpart( draw.obj_drawing('cakedraw',(640,450-50),legend='Cake',shadow=(250,250),brush=share.brushes.pen10) )
         #

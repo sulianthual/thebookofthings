@@ -506,7 +506,6 @@ class obj_scene_ch8pondreplay(page.obj_chapterpage):
         textchoice.addchoice('4. Nevermind','4',(640+300,y1))
         self.addpart( textchoice )
         #
-        self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
@@ -528,7 +527,6 @@ class obj_scene_ch8pondbye(page.obj_chapterpage):
     def setup(self):
         self.text=['"Alright bye". ']
         #
-        self.addpart( draw.obj_image('pond',(205,476),scale=0.52,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(79,376),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(368,411),scale=0.31,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('bush',(113,631),scale=0.31,rotate=0,fliph=True,flipv=False) )
@@ -742,7 +740,7 @@ class obj_scene_ch8west(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch8roam(start='tower'))
     def nextpage(self):
         trypassword=share.datamanager.getword('towerpassword')
-        shouldpassword='lie cheat steal'
+        shouldpassword='abracada'+share.datamanager.getword('passwordend')
         if share.devmode or tool.comparestringparts(trypassword,shouldpassword):
             share.scenemanager.switchscene(obj_scene_ch8westcorrectpassword())
         else:
@@ -750,6 +748,7 @@ class obj_scene_ch8west(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
+        shouldpassword='abracada'+share.datamanager.getword('passwordend')
         self.text=[\
                   '"Welcome back, blasted the tower\'s a.s.s. (automated security system). ',\
                   'Please enter the ',('password',share.colors.password),
@@ -759,7 +758,7 @@ class obj_scene_ch8west(page.obj_chapterpage):
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(465,427),scale=0.35,rotate=0,fliph=False,flipv=False) )
-        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default='lie cheat steal')
+        self.textinput=draw.obj_textinput('towerpassword',30,(380,180), legend='tower password',default=shouldpassword)
         self.addpart( self.textinput )
         #
         animation1=draw.obj_animation('ch3_towertalk','herobase',(640,360),record=False)
@@ -778,9 +777,7 @@ class obj_scene_ch8westwrongpassword(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Wrong, blasted the tower\'s ',\
-                  'a.s.s., zapping engaged! In case you already forgot, the password is ',\
-                ('"lie cheat steal"',share.colors.password),\
-                '. Now try again". ',\
+                  'a.s.s., zapping engaged! Now try again". ',\
                    ]
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
@@ -1004,7 +1001,7 @@ class obj_scene_ch8east(page.obj_chapterpage):
         self.text=[\
                 '"Welcome back, said ',\
                 ('{bunnyname}',share.colors.bunny),'. ',\
-                'Do you want to play my shooting game'\
+                'Do you want to play the shooting game. '\
                    ]
         y1=200
         textchoice=draw.obj_textchoice('yesno',default='yes')

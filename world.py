@@ -3698,7 +3698,7 @@ class obj_world_masterthepaper(obj_world):
         self.hero.addpart('head0', draw.obj_image('herohead',(640,360-35+yoff_),scale=0.3) )
         self.hero.addpart('head4', draw.obj_image('herohead',(640-100,360-35+yoff_),scale=0.3,fliph=True) )
         # chain of instructions
-        self.instrus=['Hold [Down]']
+        self.instrus=['Press [Down]']
         self.instrus.append('Hold'+' [Down]'+'  Add'+' [Up]')
         self.instrus.append('Hold'+' [Up]'+'  Add'+' [Right]')
         self.instrus.append('Hold'+' [Right]'+'  Add'+' [Left]')
@@ -3804,7 +3804,7 @@ class obj_world_masterthescissors(obj_world):
         self.staticactor.addpart('textwin', draw.obj_textbox('Victory!',(640-300,300),fontsize='huge') )
         self.staticactor.dict['textwin'].show=False
         # background
-        self.staticactor.addpart('commands',draw.obj_textbox('Alternate [Left] and [Right] quickly to hover',(640,160),color=share.colors.instructions))
+        self.staticactor.addpart('commands',draw.obj_textbox('Mash [Left] and [Right] to hover',(640,160),color=share.colors.instructions))
         self.staticactor.addpart('img1', draw.obj_image('floor_scissors',(640,600),path='data/premade') )
         self.staticactor.addpart('img2', draw.obj_image('scissors',(1010,600),scale=0.4,rotate=90,fliph=False,flipv=False) )
         self.staticactor.addpart('countabove',draw.obj_textbox(' ',(640+300,300),fontsize='huge'))
@@ -4907,7 +4907,7 @@ class obj_world_ridecow(obj_world):
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecow')
         # combine herobase+cow=heroridecow
         dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5,flipv=True) )
+        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5,flipv=True) )
         dispgroup1.addpart('part2',draw.obj_image('cow',(640,360+100)) )
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecowangry')
         # cow alone in combo
@@ -4916,7 +4916,7 @@ class obj_world_ridecow(obj_world):
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecownohero')
         # hero alone in combo
         dispgroup1=draw.obj_dispgroup((640,360))
-        dispgroup1.addpart('part1',draw.obj_image('herobaseangry',(640,360-100),scale=0.5,flipv=True) )
+        dispgroup1.addpart('part1',draw.obj_image('herobase',(640,360-100),scale=0.5,flipv=True) )
         dispgroup1.snapshot((640,360+25,300,300-25),'heroridecownocow')
         ##########################33
         self.done=False# end of minigame
@@ -6520,14 +6520,10 @@ class obj_world_3dforest(obj_world):
         # TEXTBOX
         self.text_undone=obj_grandactor(self,(640,360))# text always in front
         self.text_undone.show=True
-        tempo ='['+share.datamanager.controlname('arrows')+': move]'
-        self.text_undone.addpart( 'text1',draw.obj_textbox(tempo,(120,720-150),color=share.colors.instructions) )
-        tempo ='[mouse: look]'
-        # tempo='['+share.datamanager.controlname('mouse1')+', '+share.datamanager.controlname('mouse2')+': look]'
-        self.text_undone.addpart( 'text2',draw.obj_textbox(tempo,(120,720-100),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text1',draw.obj_textbox(' ',(120,720-150),color=share.colors.instructions) )
+        self.text_undone.addpart( 'text2',draw.obj_textbox('[Arrows: move]',(120,720-100),color=share.colors.instructions) )
         if self.hasgun:
-            tempo ='['+share.datamanager.controlname('action')+': shoot] '
-            self.text_undone.addpart( 'text3',draw.obj_textbox(tempo,(120,720-50),color=share.colors.instructions) )
+            self.text_undone.addpart( 'text3',draw.obj_textbox('[Left Mouse: shoot]',(140,720-50),color=share.colors.instructions) )
         self.text_died=obj_grandactor(self,(640,360))# text always in front
         self.text_died.show=False
         self.text_died.addpart('text1', draw.obj_textbox('you are dead',(640,550),fontsize='huge') )
@@ -6808,16 +6804,11 @@ class obj_world_3dforest(obj_world):
                         self.done=True# exit world
             else:# player is alive
                 # Update player coordinates
-                # Look+Strafe Mouse
-                if False:# strafe with keys, look with mouse (regular fps game)
-                    self.op+=0.5*(self.gmx0-controls.gmx)
-                    self.gmx0=controls.gmx
+                if True:# Look and Move with keys
                     if controls.gr:
-                        self.xp+=0.03*tool.sin(self.op)
-                        self.yp+=-0.03*tool.cos(self.op)
+                        self.op-=1.5
                     if controls.gl:
-                        self.xp+=-0.03*tool.sin(self.op)
-                        self.yp+=0.03*tool.cos(self.op)
+                        self.op+=1.5
                     # Move
                     if controls.gu:
                         self.xp+=0.06*tool.cos(self.op)
@@ -6873,8 +6864,8 @@ class obj_world_3dforest(obj_world):
                             self.staticactor.dict["gunwobble"].rewind()
                             self.staticactor.dict["gunwobble"].show=True
                     # Shoot
-                    # self.playershoot=not self.reloading and not self.bigreloading and controls.gm1 and controls.gm1c
-                    self.playershoot=not self.reloading and not self.bigreloading and controls.ga
+                    self.playershoot=not self.reloading and not self.bigreloading and controls.gm1 and controls.gm1c
+                    # self.playershoot=not self.reloading and not self.bigreloading and controls.ga
                     if self.playershoot:
                         self.soundshoot.play()
                         self.bullets-=1

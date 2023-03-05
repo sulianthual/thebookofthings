@@ -867,9 +867,9 @@ class obj_scene_ch4p16m(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p16n())
     def setup(self):
         self.text=[\
-                ('{heroname}',share.colors.hero),' came back with the ',('saxophone',share.colors.item),\
+                '"',('{heroname}',share.colors.hero),' came back with the ',('saxophone',share.colors.item),\
                 '. And what exactly are you gonna do with that, said ',('{bunnyname}',share.colors.bunny),\
-                '. I guess you can play a tune while dying.'\
+                '. I guess you can play a tune while dying."'\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'herobase','bunnybase','tree','bush','sun','cave','saxophone'))
         self.addpart( draw.obj_image('cave',(1142,468),scale=0.57,rotate=0,fliph=True,flipv=False) )
@@ -918,7 +918,7 @@ class obj_scene_ch4p16o(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 'Aaaargh, this melody is so dull and random, said ',('{bunnyname}',share.colors.bunny),'. ',\
-                'Make it stop, I beg you! I will even give you my ',('clue',share.colors.password),'. ']
+                'Make it stop, I beg you! I will even give you my ',('clue',share.colors.password),'! ']
         # self.addpart(draw.obj_imageplacer(self,'saxophone','herobase','bunnybase','tree','bush','sun','cave'))
         self.addpart( draw.obj_image('herobase',(261,390),scale=0.59,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('bush',(519,402),scale=0.41,rotate=0,fliph=True,flipv=False) )
@@ -1008,6 +1008,7 @@ class obj_scene_ch4p19(page.obj_chapterpage):
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','bunnyhead',(137,564-150),scale=0.3) )
         self.addpart( draw.obj_animation('ch3_bugtalks3intmark','interrogationmark',(1099,444),path='data/premade') )
         self.addpart( draw.obj_textbox('abra',(137,564+50),color=share.colors.password) )
+        self.addpart( draw.obj_textbox('abra...',(754,418+200),color=share.colors.password) )
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
         # animation1.addsound( "bug1", [15, 120, 140])
         self.addpart( draw.obj_music('piano') )
