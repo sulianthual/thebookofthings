@@ -938,7 +938,7 @@ class obj_snapshotmanager:
             # fish draw
             dispgroup1=draw.obj_dispgroup((640,360))
             dispgroup1.addpart('part1',draw.obj_image('fishback',(640,360),scale=1,path='data/premade'))
-            dispgroup1.addpart('part2',draw.obj_image('fishdraw',(640,360),scale=1))
+            dispgroup1.addpart('part2',draw.obj_image('fishdraw',(640,360),fliph=True,scale=1))
             dispgroup1.snapshot((640,360,300,200),'fish')
         if name in ['happyfacedraw','fishdraw']:
             # combine hero+fish into: hero holding fish

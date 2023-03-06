@@ -296,7 +296,7 @@ class obj_scene_ch4p12(page.obj_chapterpage):
     def setup(self):
         self.text=['"The ',('monster',share.colors.bunny),\
             '\'s face had a weird everything. ',\
-            'It may have been some many eyes, fangs, horns, hair or gills, but something clearly wasn\'t right." ']
+            'It may have been the many eyes, fangs, horns, hair or gills, but something clearly wasn\'t right." ']
         # self.addpart( draw.obj_image('bunnystickhead',(640,360+150-10),scale=0.75,path='data/premade') )
         # self.addpart( draw.obj_drawing('bunnyfacedraw',(640,360-10),legend='draw a bunny head (facing right)',shadow=(400,300)) )
         self.addpart( draw.obj_image('bunnystickheadnew',(640,260-10),path='data/premade') )
@@ -313,7 +313,7 @@ class obj_scene_ch4p12a(page.obj_chapterpage):
     def setup(self):
         self.text=['"The ',('monster',share.colors.bunny),\
             '\'s body was even worse. ',\
-            'It may have been some many hairy legs, scales, wings or tentacles, but it was clearly beyond description." ']
+            'It may have been the many hairy legs, scales, wings or tentacles, but it was clearly beyond description." ']
         self.textkeys={'pos':(50,200),'xmax':600}
         self.addpart( draw.obj_drawing('bunnybodydraw',(640+300,400+98-100),legend='draw the monster\'s body (facing right)',shadow=(300,233)) )
         self.addpart( draw.obj_image('bunnyhead',(640+300,400-225-100),scale=0.75) )
@@ -886,7 +886,7 @@ class obj_scene_ch4p16o(page.obj_chapterpage):
         self.sound=draw.obj_sound('unlock')
         self.addpart(self.sound)
         self.sound.play()
-        self.addpart( draw.obj_music('bunny') )
+        self.addpart( draw.obj_music('tension') )
 
 class obj_scene_ch4p17(page.obj_chapterpage):
     def prevpage(self):
@@ -913,7 +913,7 @@ class obj_scene_ch4p17(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('tension') )
 
 class obj_scene_ch4p18(page.obj_chapterpage):
     def prevpage(self):

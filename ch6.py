@@ -1197,7 +1197,7 @@ class obj_scene_ch6p44(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('tension') )
 
 
 class obj_scene_ch6p45(page.obj_chapterpage):

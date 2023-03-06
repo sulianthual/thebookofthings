@@ -428,7 +428,7 @@ class obj_scene_ch3p11(page.obj_chapterpage):
         self.text=[\
                   '"Indeed, ',\
                   ('{villainname}',share.colors.villain),' had managed to capture ',\
-                  ('{partnername}',share.colors.partner),' while ',('{heroname}',share.colors.hero),' was gone." ',\
+                  ('{partnername}',share.colors.partner),' while ',('{heroname}',share.colors.hero),' was gone fishing." ',\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation1=draw.obj_animation('ch4_villaincapture1','villainbase',(640,360),record=False)
