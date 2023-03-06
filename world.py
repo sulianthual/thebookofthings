@@ -6725,7 +6725,7 @@ class obj_world_3dforest(obj_world):
         for cc,act in enumerate(self.actor3dlist):
             if act.type3d=='rabbit' and act.killswitch!=0:
                 act.show=False
-                # self.soundrabbitdie.play()
+                self.soundrabbitdie.play()
                 # place a poof (disappears)
                 self.placetree('poof',act.x3d,act.y3d,1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
                 act.kill()# Remove from world

@@ -60,7 +60,7 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p30c()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
-            # quickscene=ch4.obj_scene_ch4p10a()
+            quickscene=ch4.obj_scene_ch4p17()
             # quickscene=ch5.obj_scene_ch5p6()
             # quickscene=ch5.obj_scene_ch5p21d()
             # quickscene=ch5.obj_scene_ch5p28a()
@@ -79,7 +79,7 @@ class obj_quickscene():
             # quickscene=ch7.obj_scene_ch7p22death()
             # quickscene=ch7.obj_scene_ch7p25()
             # quickscene=ch7.obj_scene_ch7p25death()
-            quickscene=ch7.obj_scene_ch7p37()
+            # quickscene=ch7.obj_scene_ch7p37()
             # quickscene=ch7.obj_scene_ch7p49()
             # quickscene=ch7.obj_scene_ch7p49death()
             # quickscene=ch7.obj_scene_ch7p53()
@@ -290,15 +290,15 @@ class obj_gotobookmark():
         elif chapter==4:
             #
             # ch4
-            self.chaptertext='Chapter IV: Down the Rabbit Hole'
+            self.chaptertext='Chapter IV: That Thing'
             self.dict['ch4_start']='start chapter'
             # self.dict['ch4_drawalarm']='draw the night stand and alarm clock'# BROKEN
             # self.dict['ch4_startstory']='start the day'
             # self.dict['ch4_checkmail']='read the mail'
             self.dict['ch4_drawcave']='draw the cave and tree'
             # self.dict['ch4_enterforest']='enter the forest'
-            self.dict['ch4_writebunny']='draw and name the bunny'
-            self.dict['ch4_shootrabbits']='shoot the bunnies'
+            self.dict['ch4_writebunny']='draw and name the monster'
+            self.dict['ch4_shootrabbits']='shoot the monsters'
             self.dict['ch4_playsax']='play the sax'
             # self.dict['ch4_lyinggame']='play the lying game'
             # self.dict['ch4_winlying1']='play the lying game (round 2)'
@@ -988,7 +988,7 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
             self.sprite_ch3=draw.obj_textbox('Chapter III: In Another Castle',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch3)
         if self.maxchapter>3:
-            self.sprite_ch4=draw.obj_textbox('Chapter IV: Down the Rabbit Hole',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.sprite_ch4=draw.obj_textbox('Chapter IV: The Thing',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch4)
         if self.maxchapter>4:
             self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(xref,yref+5*dyref),fontsize=fontref,xleft=True, hover=True)

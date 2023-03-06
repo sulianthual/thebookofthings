@@ -305,7 +305,7 @@ class obj_sounds:
         self.dict['3dforest_die']=( 'world/3dforest/die_04.wav' , 1 )
         self.dict['3dforest_bunnyhaha']=( 'world/3dforest/giggle__dumb-heh.wav' , 1 )
         self.dict['3dforest_bunnyscream']=( 'world/3dforest/Pixie.wav' , 1 )
-        self.dict['3dforest_bunnydie']=( 'world/3dforest/Death1.wav', 0.5 )
+        self.dict['3dforest_bunnydie']=( 'world/3dforest/squish.wav', 0.5 )
         self.dict['3dforest_win']=( 'world/3dforest/cheer1.wav', 0.5 )
         self.dict['3dforest_bunnystrike']=( 'world/3dforest/Punch4.wav', 1 )
 
@@ -393,7 +393,7 @@ class obj_colors:
         #
         self.grandmaster=self.red
         self.grandmaster2=self.text
-        self.bunny=self.darkorange
+        self.bunny=self.darkgreen#self.darkorange
         self.bunny2=self.text
         self.elder=self.darkgray
         self.elder2=self.text
@@ -832,11 +832,27 @@ class obj_snapshotmanager:
             dispgroup1.snapshot((640,360,200,200),'bug')
 
         # grandmasters
+        # if name =='bunnyfacedraw':
+        #     # save bunny head
+        #     dispgroup1=draw.obj_dispgroup((640,360))
+        #     dispgroup1.addpart('part1',draw.obj_image('bunnystickhead',(640,360+150),scale=0.75,path='data/premade'))
+        #     dispgroup1.addpart('part2',draw.obj_image('bunnyfacedraw',(640,360)))
+        #     dispgroup1.snapshot((640,360,400,300),'bunnyhead')
+        # if name in ['bunnyfacedraw','bunnybodydraw']:
+        #     # bunny body redux
+        #     dispgroup1=draw.obj_dispgroup((640,360))
+        #     dispgroup1.addpart('part1',draw.obj_image('bunnybodydraw',(640,360),scale=0.666))
+        #     dispgroup1.snapshot((640,360,200,155),'bunnybody')
+        #     # bunny head+body
+        #     dispgroup1=draw.obj_dispgroup((640,360))
+        #     dispgroup1.addpart('part1',draw.obj_image('bunnybody',(640,360+65)))
+        #     dispgroup1.addpart('part2',draw.obj_image('bunnyhead',(640,360-150),scale=0.5))
+        #     dispgroup1.snapshot((640,295,200,235+50),'bunnybase')
         if name =='bunnyfacedraw':
             # save bunny head
             dispgroup1=draw.obj_dispgroup((640,360))
-            dispgroup1.addpart('part1',draw.obj_image('bunnystickhead',(640,360+150),scale=0.75,path='data/premade'))
-            dispgroup1.addpart('part2',draw.obj_image('bunnyfacedraw',(640,360)))
+            dispgroup1.addpart('part1',draw.obj_image('bunnystickheadnew',(640,360),path='data/premade'))
+            dispgroup1.addpart('part2',draw.obj_image('bunnyfacedraw',(640,360+100)))
             dispgroup1.snapshot((640,360,400,300),'bunnyhead')
         if name in ['bunnyfacedraw','bunnybodydraw']:
             # bunny body redux

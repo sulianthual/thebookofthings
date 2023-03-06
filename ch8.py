@@ -1037,7 +1037,7 @@ class obj_scene_ch8eastshoot(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        self.text=['shoot all the ',('bunnies',share.colors.bunny),'.']
+        self.text=['shoot all the ',('monsters',share.colors.bunny),'.']
         self.world=world.obj_world_3dforest_rabbitshoot(self)# fishing mini-game
         self.addpart(self.world)
         self.world.addstartfightmessage()# add start fight message
