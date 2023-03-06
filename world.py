@@ -6687,7 +6687,7 @@ class obj_world_3dforest(obj_world):
             else:
                 ix,iy=iis,7
         # Place rabbit: has internal timer (for attack)
-        self.placetree('bunnybase',ix,iy,1,1,'rabbit',timer=150)
+        self.placetree('bunnybase',ix,iy,0.75,0.75,'rabbit',timer=150)
         self.rabbitcount+=1
         self.rabbittotalcount+=1
     # place a tree (any static image in the world)
@@ -6727,7 +6727,7 @@ class obj_world_3dforest(obj_world):
                 act.show=False
                 self.soundrabbitdie.play()
                 # place a poof (disappears)
-                self.placetree('poof',act.x3d,act.y3d,1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
+                self.placetree('poof',act.x3d,act.y3d,0.75,0.75,'static',premade=True,subtype='poof',timer=50,timerstart=True)
                 act.kill()# Remove from world
                 self.rabbitcount-=1# less rabbits on screen
                 self.totalrabbitskilled+=1
@@ -7153,7 +7153,7 @@ class obj_world_3dforest(obj_world):
                     if self.playershoot and abs(lt*tool.sin(ot-self.op))<0.2 and lt<7:
                         self.soundbunnyhaha.play()
                         # place a poof that will disappear
-                        self.placetree('poof',self.xp+lt*tool.cos(self.op),self.yp+lt*tool.sin(self.op),1,1,'static',premade=True,subtype='poof',timer=50,timerstart=True)
+                        self.placetree('poof',self.xp+lt*tool.cos(self.op),self.yp+lt*tool.sin(self.op),0.75,0.75,'static',premade=True,subtype='poof',timer=50,timerstart=True)
 
 
 
@@ -7377,7 +7377,7 @@ class obj_world_3dforest_rabbitescape(obj_world_3dforest):
         self.totalrabbits=1# how many rabbits generated total
         self.setrabbits()
         # just place a single rabbit (bypass generation system)
-        self.placetree('bunnybase',-0.7,4,1,1,'rabbit',timer=150,subtype='smallrabbit')
+        self.placetree('bunnybase',-0.7,4,0.75,0.75,'rabbit',timer=150,subtype='smallrabbit')
         self.rabbitcount+=1
         self.rabbittotalcount+=1
 
@@ -7449,7 +7449,7 @@ class obj_world_3dforest_rabbitshootone(obj_world_3dforest):
         self.totalrabbits=1# how many rabbits generated total
         self.setrabbits()
         # just place a single rabbit (bypass generation system)
-        self.placetree('bunnybase',0.7,4,1,1,'rabbit',timer=150)
+        self.placetree('bunnybase',0.7,4,0.75,0.75,'rabbit',timer=150)
         self.rabbitcount+=1
         self.rabbittotalcount+=1
 
@@ -7471,8 +7471,8 @@ class obj_world_3dforest_rabbitshoot(obj_world_3dforest):
         self.totalrabbits=21# how many rabbits generated total
         self.setrabbits()
         # set first rabbits manually
-        self.placetree('bunnybase',-2,5,1,1,'rabbit',timer=150)
-        self.placetree('bunnybase',2,5,1,1,'rabbit',timer=150)
+        self.placetree('bunnybase',-2,5,0.75,0.75,'rabbit',timer=150)
+        self.placetree('bunnybase',2,5,0.75,0.75,'rabbit',timer=150)
         self.rabbitcount+=2
         self.rabbittotalcount+=2
 

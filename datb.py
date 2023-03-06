@@ -42,7 +42,7 @@ class obj_musics:
         tempo=0.15# reference (0.2 or less)
         # general
         self.dict['error']=( 'general/error.wav' , 1 )# when a music cant be found
-        self.dict['tension']=( 'general/dungeon_ambient_1.wav' , 0.8 )# tense silence
+        self.dict['tension']=( 'general/whitenoise_ambient.wav' , 0.8 )# tense silence
         self.dict['test']=self.dict['tension']
         # upbeat musics
         # ch0

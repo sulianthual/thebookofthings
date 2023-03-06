@@ -280,7 +280,11 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         self.addpart( draw.obj_textbox("the monster\'s name was:",(200,yref)) )
         self.addpart( draw.obj_textinput('bunnyname',20,(750,yref), legend='monster name') )
         #
-        self.addpart( draw.obj_music('ch4') )
+        self.sound=draw.obj_sound('revealscary')
+        self.addpart(self.sound)
+        self.sound.play()
+        #
+        self.addpart( draw.obj_music('tension') )
         #
 
 
@@ -292,13 +296,13 @@ class obj_scene_ch4p12(page.obj_chapterpage):
     def setup(self):
         self.text=['"The ',('monster',share.colors.bunny),\
             '\'s face had a weird everything. ',\
-            'It may have been some eyes, fangs, horns, hair or gills, but something clearly wasn\'t right." ']
+            'It may have been some many eyes, fangs, horns, hair or gills, but something clearly wasn\'t right." ']
         # self.addpart( draw.obj_image('bunnystickhead',(640,360+150-10),scale=0.75,path='data/premade') )
         # self.addpart( draw.obj_drawing('bunnyfacedraw',(640,360-10),legend='draw a bunny head (facing right)',shadow=(400,300)) )
         self.addpart( draw.obj_image('bunnystickheadnew',(640,260-10),path='data/premade') )
         self.addpart( draw.obj_drawing('bunnyfacedraw',(640,260+100-10),legend='draw the monster head (facing right)',shadow=(200,200)) )
         #
-        self.addpart( draw.obj_music('ch4') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 class obj_scene_ch4p12a(page.obj_chapterpage):
@@ -314,7 +318,7 @@ class obj_scene_ch4p12a(page.obj_chapterpage):
         self.addpart( draw.obj_drawing('bunnybodydraw',(640+300,400+98-100),legend='draw the monster\'s body (facing right)',shadow=(300,233)) )
         self.addpart( draw.obj_image('bunnyhead',(640+300,400-225-100),scale=0.75) )
         #
-        self.addpart( draw.obj_music('ch4') )
+        self.addpart( draw.obj_music('bunny') )
 
 class obj_scene_ch4p13(page.obj_chapterpage):
     def prevpage(self):
@@ -328,7 +332,7 @@ class obj_scene_ch4p13(page.obj_chapterpage):
                 'Lets do this: "',\
                 '"The ',('monster',share.colors.bunny),' called ',\
                 ('{bunnyname}',share.colors.bunny),' emerged from the magical cave. ',\
-                ' It was rather short but still terrifying." ',\
+                ' It was rather short but terrifying." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -346,11 +350,7 @@ class obj_scene_ch4p13(page.obj_chapterpage):
         animation1.addsound( "bunny2", [128] )
         animation1.addsound( "bunny3", [43],skip=1 )
         #
-        self.sound=draw.obj_sound('revealscary')
-        self.addpart(self.sound)
-        self.sound.play()
-        #
-        self.addpart( draw.obj_music('tension') )
+        self.addpart( draw.obj_music('bunny') )
 
 
 
@@ -450,8 +450,7 @@ class obj_scene_ch4p16adeath(page.obj_chapterpage):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic"',\
-                ' (or you can always abandon and skip the fight). ',\
+                'Now go back and try to act more "heroic". '\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
@@ -544,8 +543,7 @@ class obj_scene_ch4p16ddeath(page.obj_chapterpage):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic"',\
-                ' (or you can always abandon and skip the fight). ',\
+                'Now go back and try to act more "heroic". '\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
@@ -653,8 +651,7 @@ class obj_scene_ch4p16gdeath(page.obj_chapterpage):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic"',\
-                ' (or you can always abandon and skip the fight). ',\
+                'Now go back and try to act more "heroic". '\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )
@@ -756,8 +753,7 @@ class obj_scene_ch4p16jdeath(page.obj_chapterpage):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic"',\
-                ' (or you can always abandon and skip the fight). ',\
+                'Now go back and try to act more "heroic". '\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )

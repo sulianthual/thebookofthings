@@ -171,7 +171,7 @@ class obj_scene_ch5p8(page.obj_chapterpage):
         self.addpart( draw.obj_image('mailframe',(640,400),path='data/premade') )
         # self.addpart( draw.obj_image('bunnyhead',(1065,305-50),scale=0.5) )
         #
-        animation1=draw.obj_animation('ch2_mailhead','bunnyhead',(640,360),imgscale=0.7)
+        animation1=draw.obj_animation('ch2_mailhead','bunnyhead',(640,300),imgscale=0.7)
         self.addpart(animation1)
         animation1.addsound( "bunny2", [100],skip=1 )
         #

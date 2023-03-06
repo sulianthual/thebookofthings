@@ -1065,8 +1065,7 @@ class obj_scene_ch6p39death(page.obj_chapterpage):
         self.text=[\
                   '"... and then the ',('hero',share.colors.hero),' died". ',\
                 'Well, that doesnt sound right, said the book of things. ',\
-                'Now go back and try to act more "heroic"',\
-                ' (or you can always abandon and skip the chase). ',\
+                'Now go back and try to act more "heroic". '\
                    ]
         self.addpart(draw.obj_image('herobase',(640,540),scale=0.5,rotate=120))
         self.addpart(draw.obj_textbox('You are Dead',(1030,500),fontsize='large') )

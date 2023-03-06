@@ -1,0 +1,111 @@
+
+# The Book of Things
+# Game by sul
+# Started Sept 2020
+#
+# ideas.txt: random note and ideas
+#           this file not loaded
+#
+###########################################################
+###########################################################
+
+* Game Progression:
+- Chapter I, II: set hero, partner, home (story setting)
+- Chapter III: villain captures partner (disruption)
+               hero meets sidekick, starts quest (find password to open evil lair)
+- Chapter IV, V, VI: parts of quests
+                    retrieve 3 parts of password in 3 locations (north,west,south)
+- Chapter VII: final fight against villain, rescue the princess
+Each day/chapter of the story follows follows a similar arc:
+arc:     wake up -> morning games -> travel -> quest  -> travel -> evening games -> go to sleep
+
+
+* Drawings:
+The drawings are kept simple (not shadows as it makes them lazy for drawing)
+Some is premade (e.g. the stickman) or it would be too complex
+
+
+* Minigames:
+The minigames do not have complex physics or it would be too painful to build with pygame
+Keep few controls and make all minigames easily won: this is a game for non-gamers too.
+
+###########################################################
+###########################################################
+* Ideas (implement maybe later or never, not so important):
+
+
+
+
+*Content
+
+- Chapter 8: make a COMPETITIVE version of each minigame
+             has a highscore that is saved and can be improved (e.g. number of bunny killed, time survived)
+             difficulty start easy and increases on a timer (to a constant that is near impossible)
+             serenade: notes scroll and must play like guitar hero
+             shoot bunnies: survive as long as possible with increasing waves (bunnies can now hit from behind)
+             cow ride: survive as long as possible (will go gradually faster)
+             
+
+- Chapter 5: after rock-paper-scissors, the elder escapes
+             must do platform jumps in the sky (and clouds) to catch him (with a small hero/big head for better control)
+             ends with boss fight (the elders head at top of screen) 
+             with moving platforms, and waves of moving rock (vertical), scissors (horizontal), paper (diagonal)
+             to win the hero must survive all waves (and go hit the elder at top of screen)
+             
+
+- Chapter 6: when meeting the sailor, must earn his trust by drinking together (reuse minigame draft)
+             must drink some number of glasses than him (a lot), but wasted meter is shorter so will end drunk
+             to win, must trow away own drink while sailor is not watching (else will drink triple)
+
+
+- Somewhere...: Add a game with parabolic shooting ? left-right to aim then shoot
+              e.g. naval battle with cannon against skeleton boat (turn by turn) when leaving skeleton island, 
+              or arc and bow for hunting
+             
+
+- Somwhere:
+  rewrite story parts  with twists:
+    1) point of view changes (shortly tell story from villain, partner, bug point of view)
+    2) cut the chronology (like Pulp fiction), justified by the book jumping between pages
+    3) Add better character customization (influences text only):
+      name, gender, catchphrase, temper (choose one), favorite/hated item, etc..., specie...
+
+- Somewhere:
+- an iceberg, space station, time machine
+- medieval setting with a fight for the partner=princess
+- space station, the moon (space helmet on everyone)
+- a time machine (replay some former scenes)
+- the hero is an anti-hero. partner rescues the hero
+- parodie (they are "playing" their adventure)
+- the fish becomes a river spirit (is huge)
+- they are all super-heroes
+- the fabric of reality: break everything, swapping images randomly
+- add a mirror in villain chapter? in his lair?
+
+- Some minigame ideas:
+Hunt = Arrow Parabolic Arc [A][D] then [W]
+Flappy Bird [W]
+Play Pong [W][S] (tennis with partner)
+stomping game [A][D]+[W] (with bunny that multiplies, add several bunnies that stomp)
+Mario level= move [A][D] and jump [W] (kind of already done)
+avoid falling boulders=[A][D]
+space invaders=[A][D]
+Basketball=jump and shoot Holding [S] in moving hoop laterally
+Bait=guide monster to trap [WASD]. It charges straigth
+Shooter=Cannon on fast rotating wheel, shoot stuff with [W]
+Indiana jones ball behind=[A][D] to avoid obstacles
+breakout game (pad, ball and horizontal layers of bricks)
+helicopters for hero/villain with flappy bird and shooting
+writing game: type quickly text or answer to it. What is your favorite color? ...etc...
+skiing game like classic game
+
+
+space invaders but from the right:
+jump and throw stone horizontally to right.
+3 bats (3 heights) coming from right very slowly, must stone all 3 before reach player
+
+
+####################################################################################################################
+###################################################################################################################
+####################################################################################################################
+####################################################################################################################
