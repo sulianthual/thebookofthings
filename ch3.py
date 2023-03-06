@@ -57,7 +57,7 @@ class obj_scene_ch3p1(page.obj_chapterpage):
         self.text=['Lets see here... " the ',('hero',share.colors.hero),\
                    ' and ',('{hero_his}',share.colors.hero2),' ',('partner',share.colors.partner),\
                     ' woke up, they were madly in love, they kissed, ',\
-                    'and then they went back to ',('bed',share.colors.item2),'". '\
+                    'and then they went back to ',('bed',share.colors.item2),'." '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation=draw.obj_animation('ch3_summary','herobase',(640,360),record=False,scale=0.7)
@@ -335,7 +335,7 @@ class obj_scene_ch3p9a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"',\
-                    ('{heroname}',share.colors.hero),' carefully opened the letter and started reading". ',\
+                    ('{heroname}',share.colors.hero),' carefully opened the letter and started reading." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -365,7 +365,7 @@ class obj_scene_ch3p9b(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Suddendly, ',\
-                    ('{heroname}',share.colors.hero),' shouted: No, No, No, this cannot be!". ',\
+                    ('{heroname}',share.colors.hero),' shouted: No, No, No, this cannot be!." ',\
                    ]
         # self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -456,7 +456,7 @@ class obj_scene_ch3p12(page.obj_chapterpage):
         share.datamanager.setbookmark('ch3_drawmountain')
         self.text=[\
 
-                 'Lets continue: "the evil lair was a tower in the mountains". '\
+                 'Lets continue: "the evil lair was a tower in the mountains." '\
                  'Draw an ',('tower',share.colors.item),\
                  ' and a ',('mountain',share.colors.item),'. ',\
                    ]
@@ -679,7 +679,7 @@ class obj_scene_ch3p19death(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
@@ -708,7 +708,7 @@ class obj_scene_ch3p20(page.obj_chapterpage):
                   ('{villainname}',share.colors.villain),\
                   ' ran out of bullets and headed towards ',\
                   ('{villain_his}',share.colors.villain2),' ',\
-                  ('evil tower',share.colors.location2),'". ',\
+                  ('evil tower',share.colors.location2),'." ',\
                    ]
         self.addpart( draw.obj_image('mountain',(840,390),scale=0.5) )
         self.addpart( draw.obj_image('mountain',(930,290),scale=0.4) )
@@ -818,7 +818,7 @@ class obj_scene_ch3p22easteregg(page.obj_chapterpage):
                 '"You have entered: ',('"abracadabra"',share.colors.password),' . ',\
                 'That... that is correct, said the tower\'s a.s.s. ',\
                 'But how... how could you possibly know. ',\
-                'I... I guess you may come in then". ',\
+                'I... I guess you may come in then." ',\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -886,7 +886,7 @@ class obj_scene_ch3p23(page.obj_chapterpage):
                   '"You have entered: ',('"'+trypassword+'"',share.colors.password),' . ',\
                   'Wrong password, blasted the ',('tower',share.colors.location2),\
                   '\'s a.s.s.! And it zapped ',\
-                  ('{heroname}',share.colors.hero),' with an electric shock". ']
+                  ('{heroname}',share.colors.hero),' with an electric shock." ']
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
@@ -922,7 +922,7 @@ class obj_scene_ch3p24(page.obj_chapterpage):
         self.textboxopt={'xy':(330,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"Leave or dare to try another password, blased the  ',\
+                  '"Leave or dare to try another password, blasted the  ',\
                   ('tower',share.colors.location2),'\'s a.s.s. (automated security system).']
         self.addpart( draw.obj_image('tower',(1000,450),scale=1.3,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mountain',(631,464),scale=0.56,rotate=0,fliph=False,flipv=False) )
@@ -1132,7 +1132,7 @@ class obj_scene_ch3p31(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
-        self.addpart( draw.obj_music(None) )
+        self.addpart( draw.obj_music('tension') )
 
 class obj_scene_ch3p32(page.obj_chapterpage):
     def prevpage(self):

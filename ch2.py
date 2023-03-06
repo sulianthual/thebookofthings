@@ -141,7 +141,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
                 '"',('{heroname}',share.colors.hero),\
                 ' and ',('{hero_his}',share.colors.hero2),' ',\
                 ('partner',share.colors.partner),' were madly in ',\
-                ('love',share.colors.partner2),'". '\
+                ('love',share.colors.partner2),'." '\
                 'Choose a name and gender for this ',('partner',share.colors.partner),'. '\
                    ]
         yref=260

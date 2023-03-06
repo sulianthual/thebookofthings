@@ -130,7 +130,7 @@ class obj_scene_ch5p6(page.obj_chapterpage):
                     # ('{heroname}',share.colors.hero),' came back home and checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
-                    'a ',' letter". ',\
+                    'a ',' letter." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -259,7 +259,7 @@ class obj_scene_ch5p14(page.obj_chapterpage):
                 ' reached the top of the ',('peak',share.colors.location2),\
                 ', ',('{hero_he}',share.colors.hero2),\
                 ' encountered a mysterious ',\
-                ('elder',share.colors.elder),'". ',\
+                ('elder',share.colors.elder),'." ',\
                 'Choose a name and gender for this ',\
                 ('elder',share.colors.elder),'. ',\
                    ]
@@ -343,7 +343,7 @@ class obj_scene_ch5p17(page.obj_chapterpage):
                '"The ',('elder',share.colors.elder),' said: oh, a visitor. ',\
                'I am ',('{eldername}',share.colors.elder),' the ',\
                ('evil grandmaster',share.colors.grandmaster),' of the north! ',\
-               'I can teach you all sorts of evil ways, he he he". ',\
+               'I can teach you all sorts of evil ways, he he he." ',\
                   ]
         animation1=draw.obj_animation('ch5eldertalks1','elderbase',(640,360),record=False)
         self.addpart( animation1 )

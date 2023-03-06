@@ -157,10 +157,11 @@ class obj_sounds:
         self.dict['bugitem2']=( 'bug/tadaam.wav' , 0.7 )
         # ch4
         self.dict['bunny1']=( 'bunny/cute_07.wav' , 1 )
-        self.dict['bunny2']=( 'bunny/giggle__dumb-heh.wav' , 1 )
-        self.dict['bunny3']=( 'bunny/cute_08.wav' , 1 )
-        self.dict['bunny4']=( 'bunny/grunt_femalegrunt1.wav' , 1 )
-        self.dict['bunny5']=( 'bunny/Pixie.wav' , 1 )
+        # self.dict['bunny2']=( 'bunny/giggle__dumb-heh.wav' , 1 )# hinhin
+        self.dict['bunny2']=( 'bunny/evil_laugh_02.wav' , 1 )# hinhin
+        self.dict['bunny3']=( 'bunny/cute_08.wav' , 1 )# oh
+        self.dict['bunny4']=( 'bunny/grunt_femalegrunt1.wav' , 1 )# grrr
+        self.dict['bunny5']=( 'bunny/Pixie.wav' , 1 )# niaaaah
         self.dict['bunny_hit']=( 'bunny/Punch4.wav' , 1 )
         # ch5
         self.dict['elder1']=( 'elder/grunt_malegrunt1.wav' , 1 )
@@ -308,7 +309,6 @@ class obj_sounds:
         self.dict['3dforest_bunnydie']=( 'world/3dforest/squish.wav', 0.5 )
         self.dict['3dforest_win']=( 'world/3dforest/cheer1.wav', 0.5 )
         self.dict['3dforest_bunnystrike']=( 'world/3dforest/Punch4.wav', 1 )
-
 
         #
     def getsoundfilename(self,name):

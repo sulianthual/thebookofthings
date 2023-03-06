@@ -144,7 +144,7 @@ class obj_scene_ch7p5(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
-                    'two ',' letters". ',\
+                    'two ',' letters." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -377,7 +377,7 @@ class obj_scene_ch7p19(page.obj_chapterpage):# NB: jump to here from first passw
         self.text=[\
                 '"You have entered: ',(trypassword,share.colors.password),\
                 ', blasted the ',('tower',share.colors.location2),\
-                '\'s a.s.s. That is correct, you may now enter". '\
+                '\'s a.s.s. That is correct, you may now enter." '\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'tower','mountain','herobase','villainbase'))
         # self.addpart( draw.obj_image('herobase',(175,542),scale=0.47,rotate=0,fliph=False,flipv=False) )
@@ -538,7 +538,7 @@ class obj_scene_ch7p22death(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
@@ -562,7 +562,7 @@ class obj_scene_ch7p23(page.obj_chapterpage):
         self.text=[\
                   '"This isnt over yet, said ',\
                     ('{villainname}',share.colors.villain),\
-                    '. I am going to crush you with my bare hands". ',\
+                    '. I am going to crush you with my bare hands." ',\
                    ]
         animation1=draw.obj_animation('ch7_villainsays1','villainbase',(640,360),record=False)
         self.addpart( animation1 )
@@ -676,7 +676,7 @@ class obj_scene_ch7p25death(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
@@ -892,7 +892,7 @@ class obj_scene_ch7p31(page.obj_chapterpage):
                     'They ate a ',\
                     # ('{heroname}',share.colors.hero),' and ',\
                     # ('{partnername}',share.colors.partner),' ate the ',\
-                    ('fish',share.colors.item2),' for dinner". ',\
+                    ('fish',share.colors.item2),' for dinner." ',\
                    ]
         self.world=world.obj_world_eatfish(self,partner=True)
         self.addpart(self.world)
@@ -932,7 +932,7 @@ class obj_scene_ch7p33(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    '"...and then they kissed. It was the ',\
-                   ('best kiss ever',share.colors.partner),'!".   ',\
+                   ('best kiss ever',share.colors.partner),'!"   ',\
                    ]
         self.world=world.obj_world_kiss(self,noending=False)
         self.addpart(self.world)
@@ -1469,7 +1469,7 @@ class obj_scene_ch7p49death(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]

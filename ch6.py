@@ -106,7 +106,7 @@ class obj_scene_ch6p6(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' came back home and checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
-                    'two ',' letters". ',\
+                    'two ',' letters." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -294,7 +294,7 @@ class obj_scene_ch6p13(page.obj_chapterpage):
         self.text=[\
                 '"On the beach, ',('{heroname}',share.colors.hero),\
                 ' met a mysterious ',\
-                ('sailor',share.colors.sailor),'". ',\
+                ('sailor',share.colors.sailor),'." ',\
                 'Choose a name and gender for the ',\
                 ('sailor',share.colors.sailor),'. ',\
                    ]
@@ -442,7 +442,7 @@ class obj_scene_ch6p20(page.obj_chapterpage):
         self.text=[\
                     '"First, we need to build a ship. ',\
                     'Go get me some wood, I need ',\
-                    ('10 logs',share.colors.instructions),'". '
+                    ('10 logs',share.colors.instructions),'." '
                   ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','sailorbase','palmtree','wave','cloud','sun') )
         self.addpart( draw.obj_image('palmtree',(1150,423),scale=0.58,rotate=0,fliph=False,flipv=False) )
@@ -487,7 +487,7 @@ class obj_scene_ch6p22(page.obj_chapterpage):
         self.text=[\
                    '"Great job on getting that wood, said ',\
                    ('{sailorname}',share.colors.sailor),\
-                   ', lets start building". ',\
+                   ', lets start building." ',\
                    'Draw a ',('sailboat',share.colors.item),'. ',\
                    '\n ',\
                    ]
@@ -535,7 +535,7 @@ class obj_scene_ch6p24(page.obj_chapterpage):
         share.datamanager.setbookmark('ch6_drawskull')
         self.text=[\
                    '"You see, I lost my ',('treasure',share.colors.cow),\
-                   ' in a very scary place called skull island". ',\
+                   ' in a very scary place called skull island." ',\
                    ]
         self.addpart( draw.obj_drawing('skeletonheaddraw',(640,450-50),legend='draw a skull (facing right)',shadow=(250,250)) )
         #
@@ -909,7 +909,7 @@ class obj_scene_ch6p37(page.obj_chapterpage):
                    ('{sailorname}',share.colors.sailor),'. ',\
                    'Its time to make a run for it! ',\
                   'Ride ',('treasure',share.colors.cow),\
-                  ' and make it back to the ship". ',\
+                  ' and make it back to the ship." ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','skeletonbase','cow','bush','palmtree','moon','heroridecow') )
         # self.addpart(draw.obj_animation('ch1_hero1','heroridecow',(360,360)))
@@ -1063,7 +1063,7 @@ class obj_scene_ch6p39death(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]

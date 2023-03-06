@@ -115,7 +115,7 @@ class obj_scene_ch4p6(page.obj_chapterpage):
                     ('{heroname}',share.colors.hero),' checked ',\
                     ('{hero_his}',share.colors.hero2),' mailbox. ',\
                     ('{hero_he}',share.colors.hero2),' had received ',\
-                    'a ',' letter". ',\
+                    'a ',' letter." ',\
                    ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
@@ -280,7 +280,7 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         self.addpart( draw.obj_textbox("the monster\'s name was:",(200,yref)) )
         self.addpart( draw.obj_textinput('bunnyname',20,(750,yref), legend='monster name') )
         #
-        self.sound=draw.obj_sound('revealscary')
+        self.sound=draw.obj_sound('bookscene')
         self.addpart(self.sound)
         self.sound.play()
         #
@@ -347,8 +347,8 @@ class obj_scene_ch4p13(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [128] )
-        animation1.addsound( "bunny3", [43],skip=1 )
+        # animation1.addsound( "bunny2", [128] )
+        animation1.addsound( "bunny4", [43,128],skip=1 )
         #
         self.addpart( draw.obj_music('bunny') )
 
@@ -370,9 +370,8 @@ class obj_scene_ch4p15(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny3", [16] )
-        animation1.addsound( "bunny4", [73] )
-        animation1.addsound( "bunny5", [103],skip=1)
+        animation1.addsound( "bunny2", [80] )
+        animation1.addsound( "bunny5", [16],skip=1)
         #
         self.addpart( draw.obj_music('bunny') )
 
@@ -448,7 +447,7 @@ class obj_scene_ch4p16adeath(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
@@ -541,7 +540,7 @@ class obj_scene_ch4p16ddeath(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
@@ -607,8 +606,8 @@ class obj_scene_ch4p16f(page.obj_chapterpage):
         self.addpart( animation4 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [50] )
-        animation1.addsound( "bunny4", [141] )
+        animation1.addsound( "bunny4", [50] )
+        animation1.addsound( "bunny2", [141] )
 
         # animation1.addsound( "bunny5", [19, 138],skip=1)
         #
@@ -649,7 +648,7 @@ class obj_scene_ch4p16gdeath(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
@@ -710,8 +709,8 @@ class obj_scene_ch4p16i(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [280] )
-        animation1.addsound( "bunny4", [50, 174] )
+        animation1.addsound( "bunny4", [70,270,360] )
+        animation1.addsound( "bunny2", [100, 174] )
         # animation1.addsound( "bunny5", [19, 138],skip=1)
         #
         self.addpart( draw.obj_music('bunny') )
@@ -751,7 +750,7 @@ class obj_scene_ch4p16jdeath(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died". ',\
+                  '"... and then the ',('hero',share.colors.hero),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
