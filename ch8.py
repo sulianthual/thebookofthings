@@ -1065,8 +1065,8 @@ class obj_scene_ch8eastbye(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [128] )
-        animation1.addsound( "bunny3", [43],skip=1 )
+        animation1.addsound( "bunny5", [128] )
+        animation1.addsound( "bunny2", [43],skip=1 )
         #
         self.addpart( draw.obj_music('bunny') )
 
@@ -1103,8 +1103,8 @@ class obj_scene_ch8eastreplay(page.obj_chapterpage):
         self.addpart( animation1 )
         #
         # self.addpart( draw.obj_soundplacer(animation1,'bunny1','bunny2','bunny3','bunny4','bunny5') )
-        animation1.addsound( "bunny2", [128] )
-        animation1.addsound( "bunny3", [43],skip=1 )
+        animation1.addsound( "bunny5", [128] )
+        animation1.addsound( "bunny2", [43],skip=1 )
         #
         self.addpart( draw.obj_music('bunny') )
 

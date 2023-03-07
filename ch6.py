@@ -1184,13 +1184,14 @@ class obj_scene_ch6p44(page.obj_chapterpage):
                    ]
         self.world=world.obj_world_getitem(self,item='sailorhead',imgscale=0.6,imgxy=(0,0))
         self.addpart(self.world)
-        # background
+        # self.addpart( draw.obj_imageplacer(self,'cow','sailorbase','palmtree','wave','cloud','sun','sailboat') )
+        self.addpart( draw.obj_image('sailorbase',(144,398),scale=0.47,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('sailboat',(107,314),scale=0.36,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('wave',(295,369),scale=0.36,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('wave',(419,385),scale=0.36,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(1074,557),scale=0.6,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('palmtree',(1192,387),scale=0.46,rotate=0,fliph=True,flipv=False) )
-        self.addpart( draw.obj_image('palmtree',(105,399),scale=0.46,rotate=0,fliph=False,flipv=False) )
+        # self.addpart( draw.obj_image('palmtree',(105,399),scale=0.46,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('sun',(1153,205),scale=0.41,rotate=0,fliph=True,flipv=True) )
         #
         self.sound=draw.obj_sound('bookscene')
@@ -1231,7 +1232,8 @@ class obj_scene_ch6p46(page.obj_chapterpage):
                 'Alright, the full password to the ',\
                  ('evil tower',share.colors.location2),' is: ',\
                  ('"abracada{passwordend}"',share.colors.password),'. ',\
-                 'That\'s it, said the book of things, you can finally go rescue ',('{partnername}',share.colors.partner),'"! ']
+                 'That\'s it, said ',('{bug}',share.colors.bug),\
+                 ', you can finally go rescue ',('{partnername}',share.colors.partner),'"! ']
         self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         self.addpart(draw.obj_image('cluesparkles',(754,418),scale=1,path='data/premade'))
 
@@ -1245,7 +1247,15 @@ class obj_scene_ch6p46(page.obj_chapterpage):
         self.addpart( draw.obj_textbox('abracada{passwordend}',(754,418+200),color=share.colors.password) )
         # self.addpart( draw.obj_soundplacer(animation1,'bug1','bug2') )
         # animation1.addsound( "bug1", [15, 120, 140])
+        animation2=draw.obj_animation('ch3_bugtalks1aaa','bug',(340,360))
+        self.addpart( animation2 )
+        animation2.addsound( "bug1", [45] )
+        animation2.addsound( "bug2", [70, 130, 150])
         self.addpart( draw.obj_music('piano') )
+
+
+
+
 
 class obj_scene_ch6end(page.obj_chapterpage):
     def prevpage(self):

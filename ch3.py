@@ -365,7 +365,7 @@ class obj_scene_ch3p9b(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                   '"Suddendly, ',\
-                    ('{heroname}',share.colors.hero),' shouted: No, No, No, this cannot be!." ',\
+                    ('{heroname}',share.colors.hero),' shouted: No, No, No, this cannot be!" ',\
                    ]
         # self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )

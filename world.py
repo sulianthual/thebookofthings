@@ -3633,7 +3633,7 @@ class obj_world_mastertherock(obj_world):
         # sounds
         self.soundwin=draw.obj_sound('unlock')
         self.creator.addpart(self.soundwin)
-        self.soundloose=draw.obj_sound('climb_fall')
+        self.soundloose=draw.obj_sound('master_fail')
         self.creator.addpart(self.soundloose)
     def update(self,controls):
         super().update(controls)
@@ -3680,7 +3680,7 @@ class obj_world_masterthepaper(obj_world):
         self.max_step=7# total number of step
         self.current_step=0# current step
         # End
-        self.timerend=tool.obj_timer(200)# timer of end
+        self.timerend=tool.obj_timer(150)# timer of end
         self.staticactor=obj_grandactor(self,(640,360))
         self.staticactor.addpart('textwin', draw.obj_textbox('success!',(200,300),fontsize='huge') )
         self.staticactor.dict['textwin'].show=False
@@ -3710,9 +3710,9 @@ class obj_world_masterthepaper(obj_world):
         self.showonestep(0)
         self.soundwin=draw.obj_sound('unlock')
         self.creator.addpart(self.soundwin)
-        self.soundloose=draw.obj_sound('climb_fall')
+        self.soundloose=draw.obj_sound('master_fail')
         self.creator.addpart(self.soundloose)
-        self.soundfold=draw.obj_sound('mailopen')
+        self.soundfold=draw.obj_sound('master_fold')
         self.creator.addpart(self.soundfold)
 
     # show one of the step and hide all the others
@@ -3799,7 +3799,7 @@ class obj_world_masterthescissors(obj_world):
         self.done=False# end of minigame
         self.goal=False# minigame goal reached
         # End
-        self.timerend=tool.obj_timer(200)# timer of end
+        self.timerend=tool.obj_timer(150)# timer of end
         self.staticactor=obj_grandactor(self,(640,360))
         self.staticactor.addpart('textwin', draw.obj_textbox('Victory!',(640-300,300),fontsize='huge') )
         self.staticactor.dict['textwin'].show=False
@@ -3832,15 +3832,13 @@ class obj_world_masterthescissors(obj_world):
         # sounds
         self.soundwin=draw.obj_sound('unlock')
         self.creator.addpart(self.soundwin)
-        self.soundbigwin=draw.obj_sound('rps_win')
+        self.soundbigwin=draw.obj_sound('master_win')
         self.creator.addpart(self.soundbigwin)
-        self.soundloose=draw.obj_sound('climb_fall')
+        self.soundloose=draw.obj_sound('master_fail')
         self.creator.addpart(self.soundloose)
-        self.soundcount=draw.obj_sound('rps_count')
+        self.soundcount=draw.obj_sound('master_count')
         self.creator.addpart(self.soundcount)
-        self.soundstart=draw.obj_sound('wakeup_wake1')
-        self.creator.addpart(self.soundstart)
-        self.soundkick=draw.obj_sound('stomp_kick')
+        self.soundkick=draw.obj_sound('master_kick')
         self.creator.addpart(self.soundkick)
     def update(self,controls):
         super().update(controls)
@@ -4978,12 +4976,12 @@ class obj_world_ridecow(obj_world):
 
         #
         # shots (they are actually obstacles)
-        self.nshots=100#50# number of shots before winning
+        self.nshots=200#50# number of shots before winning
         self.ishots=self.nshots
         self.shooting=True# shoot new ones or not
         self.shots=[]# empty list
-        self.shottimer=tool.obj_timer(20)#tool.obj_timer(20)# time between obstacles
-        self.runspeed=8#7#5# moving speed of background and obstacles
+        self.shottimer=tool.obj_timer(10)#tool.obj_timer(20)# time between obstacles
+        self.runspeed=12#8#7#5# moving speed of background and obstacles
         self.shottimer.start()
         self.shotx0=1280+200
         self.shoty0min=self.heroymin-50
@@ -6265,6 +6263,8 @@ class obj_world_sunset(obj_world):
             self.staticactor.addpart( "img8", draw.obj_image('mountain',(671,438),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor.addpart( "img9", draw.obj_image('islandsunset',(840,550),path='data/premade') )
             self.staticactor.addpart( "img2", draw.obj_image('skeletonhead',(837,456),scale=0.35,rotate=0,fliph=False,flipv=False) )
+        elif self.landtype=='forest':
+            self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
         else:
             self.staticactor.addpart( "img3", draw.obj_image('bush',(102,440),scale=0.28,rotate=0,fliph=True,flipv=False) )
             self.staticactor.addpart( 'imgref1', draw.obj_image('horizon',(640,720-150),path='data/premade') )
@@ -6493,6 +6493,7 @@ class obj_world_3dforest(obj_world):
         # self.ungoing=False# ungoing or back to start
         # make the 3d world
         self.set3dworld()
+        self.dop=0# angle stirring rate (variable)
         # Manage 2d elements:
         self.staticactor=obj_grandactor(self,(640,360))# things in front
         self.staticactor.addpart("cross", draw.obj_image('crossershooter',(640,360),path='data/premade') )
@@ -6622,13 +6623,12 @@ class obj_world_3dforest(obj_world):
         for ix in [-4,4]:# trees at vision level
             for iy in [-1.3,1.3]:
                 self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
-        aplace=[-2,2]
-        for ix in aplace:# trees at vision level
-            for iy in aplace:
-                self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
+        # aplace=[-2,2]
+        # for ix in aplace:# trees at vision level
+            # for iy in aplace:
+                # self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
         self.placetree('cave',0,5,1.5,3,'static',randomfliph=False)
-        self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
         # self.placetree('mountain',60,-60,20,40,'background')
         # self.placetree('mountain',60,-80,15,30,'background')
@@ -6789,8 +6789,8 @@ class obj_world_3dforest(obj_world):
                     if self.zp>0:
                         self.zp-=0.014
                     # Look
-                    if controls.gm2: self.op-=1.5
-                    if controls.gm1: self.op+=1.5
+                    if controls.gr: self.op-=1.5
+                    if controls.gl: self.op+=1.5
                     # agonize
                     self.timerplayerdie.update()
                     if self.timerplayerdie.ring:
@@ -6805,10 +6805,14 @@ class obj_world_3dforest(obj_world):
             else:# player is alive
                 # Update player coordinates
                 if True:# Look and Move with keys
-                    if controls.gr:
-                        self.op-=1.5
-                    if controls.gl:
-                        self.op+=1.5
+                    if controls.gr and not controls.gl:
+                        self.op-=self.dop
+                        self.dop=min(1.05*(self.dop+0.1),1.5)
+                    elif controls.gl and not controls.gr:
+                        self.op+=self.dop
+                        self.dop=min(1.05*(self.dop+0.1),1.5)
+                    else:
+                        self.dop=0
                     # Move
                     if controls.gu:
                         self.xp+=0.06*tool.cos(self.op)
@@ -7256,13 +7260,14 @@ class obj_world_3dforest_enter(obj_world_3dforest):
         # Static elements
         for ix in [-1.6,1.6]:# trees at vision level
             for iy in [0,2,4,6,8,10,12]:
-                self.placetree('bush',ix,iy,1,1,'static',randomfliph=True)
+                self.placetree('tree',ix,iy,1,1,'static',randomfliph=True)
+        self.placetree('tree',-0.5,0,1,1,'static')
+        self.placetree('tree',0.5,0,1,1,'static')
         # sun and moon in the sky,
         self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
-        self.placetree('house',0,-60,10,20,'background')
-        self.placetree('mailbox',-7,-60,6,12,'background')
+        # self.placetree('house',0,-60,10,20,'background')
+        # self.placetree('mailbox',-7,-60,6,12,'background')
         # Pickups (e.g. gun)
         # Level exit
         self.placetree('exclamationmarkred',0,13,1,2,'pickup',subtype='exit',premade=True)
@@ -7313,7 +7318,6 @@ class obj_world_3dforest_enter2(obj_world_3dforest):
             self.placetree('bush',ix,iy,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
         self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
         # additional trees in background
         for ix in range(0):# trees at vision level
@@ -7350,6 +7354,7 @@ class obj_world_3dforest_checkcave(obj_world_3dforest):
         self.setgun()
         # Make a 2D system for object placement
         self.makebasearea_default(caveinback=False)
+        self.yp=-3.5# place hero in outer
         # Level exit
         # self.placetree('cave',0,5,1.5,3,'static',randomfliph=False)
         self.placetree('exclamationmarkred',0,5,1,2,'pickup',subtype='exit',premade=True)
@@ -7420,7 +7425,6 @@ class obj_world_3dforest_findgun(obj_world_3dforest):
             self.placetree('bush',ix,8,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
         # self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
         # Level exit
         self.placetree('gun',0,4,0.5,0.6,'pickup',subtype='gun')# specify subtype
@@ -7443,6 +7447,9 @@ class obj_world_3dforest_rabbitshootone(obj_world_3dforest):
         self.setgun()
         # Static elements
         self.makebasearea_default(caveinback=True)
+        self.xp=-3.5# x position
+        self.yp=-3.5# y postion
+        self.op=60#
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=0# max rabbits possible at a given time
@@ -7464,17 +7471,19 @@ class obj_world_3dforest_rabbitshoot(obj_world_3dforest):
         self.setgun()
         # Make a 2D system for object placement
         self.makebasearea_default()# the main area where we return
+        self.yp=-3.5# y postion
         # Level exit
         # Moving actors (e.g. attackers)
         self.startrabbits=0# starting number of rabbits
         self.maxrabbits=5# max rabbits possible at a given time
-        self.totalrabbits=21# how many rabbits generated total
+        self.totalrabbits=15# how many rabbits generated total
         self.setrabbits()
         # set first rabbits manually
-        self.placetree('bunnybase',-2,5,0.75,0.75,'rabbit',timer=150)
-        self.placetree('bunnybase',2,5,0.75,0.75,'rabbit',timer=150)
-        self.rabbitcount+=2
-        self.rabbittotalcount+=2
+        for i in [-2,-1,0,1,2]:
+            self.placetree('bunnybase',i,5,0.75,0.75,'rabbit',timer=150)
+        # self.placetree('bunnybase',2,5,0.75,0.75,'rabbit',timer=150)
+        self.rabbitcount+=5
+        self.rabbittotalcount+=5
 
 
 
@@ -7539,7 +7548,6 @@ class obj_world_3dforest_findsax(obj_world_3dforest):
             self.placetree('bush',ix,8,0.3,0.6,'static',randomfliph=True)
         # sun and moon in the sky,
         # self.placetree('cave',0,60,10,24,'background')
-        self.placetree('sun',60,60,100,24,'background')
         self.placetree('moon',-60,60,100,24,'background')
         # Level exit
         self.placetree('saxophone',0,4,0.5,0.6,'pickup',subtype='saxophone')# specify subtype

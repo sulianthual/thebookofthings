@@ -163,6 +163,7 @@ class obj_sounds:
         self.dict['bunny4']=( 'bunny/grunt_femalegrunt1.wav' , 1 )# grrr
         self.dict['bunny5']=( 'bunny/Pixie.wav' , 1 )# niaaaah
         self.dict['bunny_hit']=( 'bunny/Punch4.wav' , 1 )
+        self.dict['bunny_cave']=( 'bunny/monster-growl_with-reverb.wav' , 1 )
         # ch5
         self.dict['elder1']=( 'elder/grunt_malegrunt1.wav' , 1 )
         self.dict['elder2']=( 'elder/hahaha_elder.wav' , 1 )
@@ -305,10 +306,17 @@ class obj_sounds:
         self.dict['3dforest_hit']=( 'world/3dforest/die_02.wav' , 1 )
         self.dict['3dforest_die']=( 'world/3dforest/die_04.wav' , 1 )
         self.dict['3dforest_bunnyhaha']=( 'world/3dforest/giggle__dumb-heh.wav' , 1 )
+        # self.dict['3dforest_bunnyhaha']=( 'world/3dforest/evil_laugh_02.wav' , 1 )
         self.dict['3dforest_bunnyscream']=( 'world/3dforest/Pixie.wav' , 1 )
         self.dict['3dforest_bunnydie']=( 'world/3dforest/squish.wav', 0.5 )
         self.dict['3dforest_win']=( 'world/3dforest/cheer1.wav', 0.5 )
         self.dict['3dforest_bunnystrike']=( 'world/3dforest/Punch4.wav', 1 )
+        # master rps
+        self.dict['master_fail']=( 'world/rpsmaster/fall4.wav' , 1 )
+        self.dict['master_fold']=( 'world/rpsmaster/paper_01.wav' , 1 )
+        self.dict['master_win']=( 'world/rpsmaster/cheer1.wav' , 0.2 )
+        self.dict['master_count']=( 'world/rpsmaster/FX01.wav' , 1 )
+        self.dict['master_kick']=( 'world/rpsmaster/swish-9.wav', 1 )
 
         #
     def getsoundfilename(self,name):

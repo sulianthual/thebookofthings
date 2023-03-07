@@ -363,6 +363,10 @@ class obj_scene_ch7p18fail(page.obj_chapterpage):
         self.addpart(self.sound)
         self.sound.play()
         #
+        # self.addpart( draw.obj_soundplacer(animation1,'tower_elec','tower_hurt') )
+        animation1.addsound( "tower_elec", [1, 115,261] )
+        animation1.addsound( "tower_hurt", [0,115,261],skip=1 )
+        #
         self.addpart( draw.obj_music('ch7') )
 
 
@@ -1247,7 +1251,7 @@ class obj_scene_ch7p44(page.obj_chapterpage):
         animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
         #
-        animation1.addsound( "bunny4", [60] )
+        animation1.addsound( "bunny2", [60] )
         animation1.addsound( "elder4", [100] )
         animation1.addsound( "sailor5", [171],skip=1 )
         #
@@ -1545,7 +1549,7 @@ class obj_scene_ch7p51(page.obj_chapterpage):
         animation3=draw.obj_animation('ch7_villainmech_masters3','sailorbase',(640,360),record=False,sync=animation1)
         self.addpart( animation3 )
         #
-        animation1.addsound( "bunny4", [60] )
+        animation1.addsound( "bunny2", [60] )
         animation1.addsound( "elder4", [100] )
         animation1.addsound( "sailor5", [171],skip=1 )
         #

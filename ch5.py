@@ -106,7 +106,7 @@ class obj_scene_ch5p5(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                     '        ',\
-                    '"The gun was too rusty so ',('{heroname}',share.colors.hero),\
+                    '"The gun was no good so ',('{heroname}',share.colors.hero),\
                      ' used it to fish." '\
                    ]
         self.world=world.obj_world_fishing_withgun(self)
