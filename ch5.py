@@ -652,6 +652,7 @@ class obj_scene_ch5p22(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p23())
     def setup(self):
+        share.datamanager.setbookmark('ch5_rps3')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                'Instructions: switch selection with '+tempo+'. ',\
@@ -731,7 +732,6 @@ class obj_scene_ch5p34(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch5_rps3')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[\
                     'Be steady like rock, supple like paper and swift like scissors. Now lets duel. '\
@@ -811,6 +811,7 @@ class obj_scene_ch5p37(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p37a())
     def setup(self):
+        share.datamanager.setbookmark('ch5_getclue')
         self.text=[\
                '"Well done, said ',('{eldername}',share.colors.elder),', you won! ',\
                 'As promised, here is your ',\

@@ -549,7 +549,7 @@ class obj_scene_ch8mech(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8mech2())
     def setup(self):
-        self.text=['"',('super-mech-hero',share.colors.hero),', assemble!". ']
+        self.text=['"',('super-mech-hero',share.colors.hero),', assemble!" ']
         # Mech buildup
         animation1=draw.obj_animation('ch7_villainmech_assemble1','herobase',(640,360),record=False,imgfliph=True)
         animation1.addimage('heromecharmature')
@@ -590,7 +590,7 @@ class obj_scene_ch8mech2(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch8mech3())
     def setup(self):
-        self.text=['"',('super-mech-hero',share.colors.hero),', expand!". ']
+        self.text=['"',('super-mech-hero',share.colors.hero),', expand!" ']
         self.addpart( draw.obj_image('moon',(105,229),scale=0.34,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(744,568),scale=0.28,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('cloud',(1264,440),scale=0.27,rotate=0,fliph=True,flipv=False) )

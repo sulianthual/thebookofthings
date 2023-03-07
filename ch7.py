@@ -472,6 +472,7 @@ class obj_scene_ch7p21a(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch7p21b())
     def setup(self):
+        share.datamanager.setbookmark('ch7_startdodge')
         self.text=[\
                   '"I will not let you win this time, said ',\
                   ('{villainname}',share.colors.villain),'."',\
@@ -499,7 +500,6 @@ class obj_scene_ch7p21b(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch7_startdodge')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=[' Press ',\
                     (tempo,share.colors.instructions),\
@@ -589,6 +589,7 @@ class obj_scene_ch7p24(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(1230-80,620)}
     def setup(self):
+        share.datamanager.setbookmark('ch7_startstomp')
         self.text=[\
                   'Instructions: ',\
                     'move with ','['+share.datamanager.controlname('arrows')+'/',\
@@ -636,7 +637,6 @@ class obj_scene_ch7p24b(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch7_startstomp')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -1364,6 +1364,7 @@ class obj_scene_ch7p48(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(1230-180,220)}
     def setup(self):
+        share.datamanager.setbookmark('ch7_startmech')
         self.text=[\
                     'Oh boy, that is one epic fight, said the book of things. ',\
                     'Lets get started. ',\
@@ -1429,7 +1430,6 @@ class obj_scene_ch7p48c(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch7_startmech')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\

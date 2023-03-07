@@ -572,6 +572,7 @@ class obj_scene_ch3p16(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p17())
     def setup(self):
+        share.datamanager.setbookmark('ch3_startdodge')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Instructions: ',\
         'Jump and crouch with the '+tempo+'. ',\
@@ -633,7 +634,6 @@ class obj_scene_ch3p18a(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch3_startdodge')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -739,6 +739,7 @@ class obj_scene_ch3p21(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p22())
     def setup(self):
+        share.datamanager.setbookmark('ch3_trypwd')
         self.text=[\
                   '"',\
                   ('{villainname}',share.colors.villain),' entered ',\
@@ -782,7 +783,6 @@ class obj_scene_ch3p22(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(380,300),'text':'[enter]','align':'center'}
     def setup(self):
-        share.datamanager.setbookmark('ch3_trypwd')
         self.text=[\
                   '"The  ',('tower',share.colors.location2),'\'s a.s.s.',\
                   ' (automated security system) blasted: ',\
@@ -1117,6 +1117,7 @@ class obj_scene_ch3p31(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
+        share.datamanager.setbookmark('ch3_getclue')
         self.text=[\
                    'Alright, now raise your arms and receive the ',('clue',share.colors.password),'. '\
                    ]

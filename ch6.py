@@ -659,6 +659,7 @@ class obj_scene_ch6p29(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p30())
     def setup(self):
+        share.datamanager.setbookmark('ch6_startsneak')
         self.text=[\
                    '"I will be on the radio if you need any help, ',\
                    'now get in that bush and start sneaking." ',\
@@ -703,7 +704,6 @@ class obj_scene_ch6p30(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch6_startsneak')
         self.text=['"You are doing great, said ',\
                    ('{sailorname}',share.colors.sailor),' on the radio. ',\
                    'Keep moving right." ',\
@@ -942,6 +942,7 @@ class obj_scene_ch6p38(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p38a())
     def setup(self):
+        share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=['Instructions: ',\
                     'move ',('treasure',share.colors.cow),' around with the '+tempo+'. ',\
@@ -1014,7 +1015,6 @@ class obj_scene_ch6p38c(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
-        share.datamanager.setbookmark('ch6_startride')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['Press ',\
                     (tempo,share.colors.instructions),\
@@ -1233,7 +1233,7 @@ class obj_scene_ch6p46(page.obj_chapterpage):
                  ('evil tower',share.colors.location2),' is: ',\
                  ('"abracada{passwordend}"',share.colors.password),'. ',\
                  'That\'s it, said ',('{bug}',share.colors.bug),\
-                 ', you can finally go rescue ',('{partnername}',share.colors.partner),'"! ']
+                 ', you can finally go rescue ',('{partnername}',share.colors.partner),'!" ']
         self.addpart( draw.obj_image('tower',(754,418),scale=0.74,rotate=0,fliph=False,flipv=False) )
         self.addpart(draw.obj_image('cluesparkles',(754,418),scale=1,path='data/premade'))
 

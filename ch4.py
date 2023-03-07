@@ -29,7 +29,7 @@ class obj_scene_chapter4(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p3())
     def setup(self):
         share.datamanager.setbookmark('ch4_start')
-        self.text=['-----   Chapter IV: Down the Rabbit Hole   -----   ',\
+        self.text=['-----   Chapter IV: Cave Dwellers   -----   ',\
                    '\n It was the next day for the book of things, the pen and the eraser. ',\
                   'The book of things said: well, lets continue our story where we left. ',\
                    ]
@@ -331,7 +331,7 @@ class obj_scene_ch4p11(page.obj_chapterpage):
         share.datamanager.setbookmark('ch4_writebunny')
         self.text=[\
                 '"Inside the ',('magical cave',share.colors.location2),' ',\
-                'was a small but terrifying ',('monster',share.colors.bunny),'." ',\
+                'was a terrifying ',('monster',share.colors.bunny),'." ',\
                 'Uh oh, this doesnt look too good, said the book of things. ',\
                 'Choose a name for the ',('monster',share.colors.bunny),'. ',\
                    ]
@@ -387,8 +387,8 @@ class obj_scene_ch4p13(page.obj_chapterpage):
         self.text=[\
                 'Lets do this: "',\
                 '"The ',('monster',share.colors.bunny),' called ',\
-                ('{bunnyname}',share.colors.bunny),' emerged from the magical cave. ',\
-                ' It was rather short for a monster, so a bit less terrifying." ',\
+                ('{bunnyname}',share.colors.bunny),' emerged from the magical cave." ',\
+                ' Dont be fooled by its short size, said the book of things, this thing is nasty. ',\
                    ]
         # self.addpart( draw.obj_imageplacer(self,'herobase','cave','tree','bunnybody') )
         self.addpart( draw.obj_image('herobase',(249,491),scale=0.62,rotate=0,fliph=False,flipv=False) )
@@ -438,6 +438,7 @@ class obj_scene_ch4p16tuto(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16tuto2())
     def setup(self):
+        share.datamanager.setbookmark('ch4_fightsmallbunny')
         tempo='['+share.datamanager.controlname('action')+']'
         self.text=['This is your health. Dont loose it or you will ',('die',share.colors.red),'.']
         self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
@@ -647,6 +648,7 @@ class obj_scene_ch4p16f(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16g())
     def setup(self):
+        share.datamanager.setbookmark('ch4_shootrabbits')
         self.text=[\
                 'Now witness my power, said ',('{bunnyname}',share.colors.bunny),'. ',\
                 'Demultiply and attack!'\
@@ -686,7 +688,6 @@ class obj_scene_ch4p16g(page.obj_chapterpage):
     def postpostsetup(self):# foreground do not show mouse pointer
         pass
     def setup(self):
-        share.datamanager.setbookmark('ch4_shootrabbits')
         self.text=['shoot all the ',('monsters',share.colors.bunny),'.']
         self.world=world.obj_world_3dforest_rabbitshoot(self)
         self.addpart(self.world)
@@ -752,6 +753,7 @@ class obj_scene_ch4p16i(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p16j())
     def setup(self):
+        share.datamanager.setbookmark('ch4_fightbigbunny')
         self.text=[\
                 'But that is fine. Now witness my final form, Expand and Destroy!'\
                    ]
@@ -919,6 +921,7 @@ class obj_scene_ch4p16o(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch4p17())
     def setup(self):
+        share.datamanager.setbookmark('ch4_getclue')
         self.text=[\
                 'Aaaargh, this melody is so dull and random, said ',('{bunnyname}',share.colors.bunny),'. ',\
                 'Make it stop, I beg you! I will even give you my ',('clue',share.colors.password),'! ']

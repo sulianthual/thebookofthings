@@ -190,7 +190,7 @@ class obj_gotobookmark():
             self.dict['ch1_drawfish']='draw the fish and hook'
             # self.dict['ch1_gotfish']='caugth a fish'
             self.dict['ch1_drawsun']='draw the sun and moon'
-            # self.dict['ch1_startplay']='replay the story'
+            self.dict['ch1_startplay']='replay the story'
             # self.dict['ch1_endunlock']='Chapter End'
             if bookmarkname == 'ch1_start':
                 bookmarkscene=ch1.obj_scene_chapter1()
@@ -223,7 +223,7 @@ class obj_gotobookmark():
             self.dict['ch2_drawmusic']='draw the saxophone and music notes'
             self.dict['ch2_drawhouse']='draw the house and bush'
             # self.dict['ch2_drawbush']='draw the lake and bush'
-            # self.dict['ch2_startplay']='replay the story'
+            self.dict['ch2_startplay']='replay the story'
             # self.dict['ch2_endunlock']='Chapter End'
             if bookmarkname == 'ch2_start':
                 bookmarkscene=ch2.obj_scene_chapter2()
@@ -256,9 +256,10 @@ class obj_gotobookmark():
             self.dict['ch3_drawmountain']='draw the tower and mountain'
             self.dict['ch3_drawgun']='draw the gun and bullet'
             self.dict['ch3_startdodge']='fight the villain'
-            self.dict['ch3_trypwd']='enter the password'
+            self.dict['ch3_trypwd']='reach the tower'
             # self.dict['ch3_gohome']='go back home'
             self.dict['ch3_startbug']='draw and name the sidekick'
+            self.dict['ch3_getclue']='get a clue'
             # self.dict['ch3_endbug']='go to sleep'
             # self.dict['ch3_endunlock']='Chapter End'
             if bookmarkname == 'ch3_start':
@@ -274,15 +275,15 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch3_drawgun' :
                 bookmarkscene=ch3.obj_scene_ch3p15()
             elif bookmarkname == 'ch3_startdodge' :
-                bookmarkscene=ch3.obj_scene_ch3p18a()
+                bookmarkscene=ch3.obj_scene_ch3p16()
             elif bookmarkname == 'ch3_trypwd' :
-                bookmarkscene=ch3.obj_scene_ch3p22()
+                bookmarkscene=ch3.obj_scene_ch3p21()
             elif bookmarkname == 'ch3_gohome' :
                 bookmarkscene=ch3.obj_scene_ch3p25a()
             elif bookmarkname == 'ch3_startbug' :
                 bookmarkscene=ch3.obj_scene_ch3p30a()
-            elif bookmarkname == 'ch3_endbug' :
-                bookmarkscene=ch3.obj_scene_ch3p39a()
+            elif bookmarkname == 'ch3_getclue' :
+                bookmarkscene=ch3.obj_scene_ch3p31()
             elif bookmarkname == 'ch3_endunlock':
                 bookmarkscene=ch3.obj_scene_ch3unlocknext()
             else:
@@ -290,7 +291,7 @@ class obj_gotobookmark():
         elif chapter==4:
             #
             # ch4
-            self.chaptertext='Chapter IV: That Thing'
+            self.chaptertext='Chapter IV: Cave Dwellers'
             self.dict['ch4_start']='start chapter'
             # self.dict['ch4_drawalarm']='draw the night stand and alarm clock'# BROKEN
             # self.dict['ch4_startstory']='start the day'
@@ -298,8 +299,11 @@ class obj_gotobookmark():
             self.dict['ch4_drawcave']='draw the cave and tree'
             # self.dict['ch4_enterforest']='enter the forest'
             self.dict['ch4_writebunny']='draw and name the monster'
-            self.dict['ch4_shootrabbits']='shoot the monsters'
-            self.dict['ch4_playsax']='play the sax'
+            self.dict['ch4_fightsmallbunny']='fight the monster'
+            self.dict['ch4_shootrabbits']='fight the many monsters'
+            self.dict['ch4_fightbigbunny']='fight the big monster'
+            # self.dict['ch4_playsax']='play the sax'
+            self.dict['ch4_getclue']='get a clue'
             # self.dict['ch4_lyinggame']='play the lying game'
             # self.dict['ch4_winlying1']='play the lying game (round 2)'
             # self.dict['ch4_winlying2']='lying game round 3'
@@ -320,20 +324,16 @@ class obj_gotobookmark():
                 bookmarkscene=ch4.obj_scene_ch4p10a()
             elif bookmarkname == 'ch4_writebunny' :
                 bookmarkscene=ch4.obj_scene_ch4p11()
+            elif bookmarkname == 'ch4_fightsmallbunny' :
+                bookmarkscene=ch4.obj_scene_ch4p16tuto()
             elif bookmarkname == 'ch4_shootrabbits' :
-                bookmarkscene=ch4.obj_scene_ch4p16g()
+                bookmarkscene=ch4.obj_scene_ch4p16f()
+            elif bookmarkname == 'ch4_fightbigbunny' :
+                bookmarkscene=ch4.obj_scene_ch4p16i()
             elif bookmarkname == 'ch4_playsax' :
                 bookmarkscene=ch4.obj_scene_ch4p16n()
-            elif bookmarkname == 'ch4_lyinggame' :
-                bookmarkscene=ch4.obj_scene_ch4p17()
-            elif bookmarkname == 'ch4_winlying1' :
-                bookmarkscene=ch4.obj_scene_lyingpart1win()
-            elif bookmarkname == 'ch4_winlying2' :
-                bookmarkscene=ch4.obj_scene_lyingpart2win()
-            elif bookmarkname == 'ch4_winlying3' :
-                bookmarkscene=ch4.obj_scene_lyingend()
-            elif bookmarkname == 'ch4_gohome' :
-                bookmarkscene=ch4.obj_scene_ch4p20()
+            elif bookmarkname == 'ch4_getclue' :
+                bookmarkscene=ch4.obj_scene_ch4p16o()
             elif bookmarkname == 'ch4_endunlock':
                 bookmarkscene=ch4.obj_scene_ch4unlocknext()
             else:
@@ -351,6 +351,7 @@ class obj_gotobookmark():
             self.dict['ch5_drawrock']='draw rock paper scissors'
             self.dict['ch5_learnrps']='become rock paper scissors'
             self.dict['ch5_rps3']='play rock paper scissors'
+            self.dict['ch5_getclue']='get a clue'
             # self.dict['ch5_winrps3']='win rock paper scissors'
             # self.dict['ch5_gohome']='go back home'
             # self.dict['ch5_endunlock']='Chapter End'
@@ -371,8 +372,10 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch5_learnrps' :
                 bookmarkscene=ch5.obj_scene_ch5p21aa()
             elif bookmarkname == 'ch5_rps3' :
-                bookmarkscene=ch5.obj_scene_ch5p34()
+                bookmarkscene=ch5.obj_scene_ch5p22()
             elif bookmarkname == 'ch5_winrps3' :
+                bookmarkscene=ch5.obj_scene_ch5p37()
+            elif bookmarkname == 'ch5_getclue' :
                 bookmarkscene=ch5.obj_scene_ch5p37()
             elif bookmarkname == 'ch5_gohome' :
                 bookmarkscene=ch5.obj_scene_ch5p38()
@@ -400,7 +403,7 @@ class obj_gotobookmark():
             # self.dict['ch6_sneak4']='sneak game round 4'
             self.dict['ch6_drawcow']='draw the cow'
             self.dict['ch6_startride']='play the chase game'
-            self.dict['ch6_choosepwd']='finish the password'
+            self.dict['ch6_choosepwd']='get a clue'
             # self.dict['ch6_winride']='made it to the ship'
             # self.dict['ch6_byesailor']='bye bye sailor'
             # self.dict['ch6_gohome']='go back home'
@@ -424,7 +427,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch6_startskullisland':
                 bookmarkscene=ch6.obj_scene_ch6p27()
             elif bookmarkname == 'ch6_startsneak':
-                bookmarkscene=ch6.obj_scene_ch6p30()
+                bookmarkscene=ch6.obj_scene_ch6p29()
             elif bookmarkname == 'ch6_sneak1':
                 bookmarkscene=ch6.obj_scene_ch6p30a()
             elif bookmarkname == 'ch6_sneak2':
@@ -436,7 +439,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch6_drawcow':
                 bookmarkscene=ch6.obj_scene_ch6p34()
             elif bookmarkname == 'ch6_startride':
-                bookmarkscene=ch6.obj_scene_ch6p38c()
+                bookmarkscene=ch6.obj_scene_ch6p38()
             elif bookmarkname == 'ch6_winride':
                 bookmarkscene=ch6.obj_scene_ch6p40()
             elif bookmarkname == 'ch6_byesailor':
@@ -457,12 +460,12 @@ class obj_gotobookmark():
             # self.dict['ch7_startstory']='start the day'
             # self.dict['ch7_checkmail']='read the mail'
             # self.dict['ch7_gototower']='go the the tower'
-            self.dict['ch7_putpassword1']='enter the password'
+            self.dict['ch7_putpassword1']='enter the tower'
             # self.dict['ch7_putpassword2']='enter the correct password'
             self.dict['ch7_startdodge']='fight the villain (guns)'
             self.dict['ch7_startstomp']='fight the villain (kicks)'
-            # self.dict['ch7_winstomp']='victory'
-            self.dict['ch7_gohome']='go back home'
+            self.dict['ch7_winstomp']='victory'
+            # self.dict['ch7_gohome']='go back home'
             # self.dict['ch7_villainagain']='the villain is back'
             self.dict['ch7_startmech']='super-mech-fight'
             # self.dict['ch7_winmech']='victory again'
@@ -481,9 +484,9 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch7_putpassword2':
                 bookmarkscene=ch7.obj_scene_ch7p19()
             elif bookmarkname == 'ch7_startdodge':
-                bookmarkscene=ch7.obj_scene_ch7p21b()
+                bookmarkscene=ch7.obj_scene_ch7p21a()
             elif bookmarkname == 'ch7_startstomp':
-                bookmarkscene=ch7.obj_scene_ch7p24b()
+                bookmarkscene=ch7.obj_scene_ch7p24()
             elif bookmarkname == 'ch7_winstomp':
                 bookmarkscene=ch7.obj_scene_ch7p26()
             elif bookmarkname == 'ch7_gohome':
@@ -491,7 +494,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch7_villainagain':
                 bookmarkscene=ch7.obj_scene_ch7p40()
             elif bookmarkname == 'ch7_startmech':
-                bookmarkscene=ch7.obj_scene_ch7p48c()
+                bookmarkscene=ch7.obj_scene_ch7p48()
             elif bookmarkname == 'ch7_winmech':
                 bookmarkscene=ch7.obj_scene_ch7p50()
             elif bookmarkname == 'ch7_drawcake':
@@ -988,7 +991,7 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
             self.sprite_ch3=draw.obj_textbox('Chapter III: In Another Castle',(xref,yref+3*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch3)
         if self.maxchapter>3:
-            self.sprite_ch4=draw.obj_textbox('Chapter IV: The Thing',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
+            self.sprite_ch4=draw.obj_textbox('Chapter IV: Cave Dwellers',(xref,yref+4*dyref),fontsize=fontref,xleft=True, hover=True)
             self.addpart(self.sprite_ch4)
         if self.maxchapter>4:
             self.sprite_ch5=draw.obj_textbox('Chapter V: Higher and Higher',(xref,yref+5*dyref),fontsize=fontref,xleft=True, hover=True)
