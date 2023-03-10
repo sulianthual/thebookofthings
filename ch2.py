@@ -55,7 +55,7 @@ class obj_scene_ch2p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch2p1a())
     def setup(self):
-        self.text=['Lets see here... "the ',('hero',share.colors.hero),\
+        self.text=['Lets see here... "the ',('hero',share.colors.hero2),\
                     ' woke up... mmmh... caught a ',('fish',share.colors.item2),', ate it ',\
                     'and went back to ',('bed',share.colors.item2),'." '\
                    ]
@@ -115,10 +115,8 @@ class obj_scene_ch2p2(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch2_drawlove')
         self.text=[\
-               'I want ',('{heroname}',share.colors.hero),' to have a ',\
-               ('partner',share.colors.partner),\
-                 ' and I want them to be madly in love. ',\
-                 'First draw a ',\
+               'I want ',('{heroname}',share.colors.hero),\
+               ' to  be madly in love with someone. First draw a ',\
                  ('love heart',share.colors.item),'. ',\
                    ]
         # self.addpart( draw.obj_drawing('love',(640,450),legend='love heart',shadow=(300,200),brush=share.brushes.bigpen) )
@@ -140,7 +138,7 @@ class obj_scene_ch2p3(page.obj_chapterpage):
                  'Great, lets write: ',\
                 '"',('{heroname}',share.colors.hero),\
                 ' and ',('{hero_his}',share.colors.hero2),' ',\
-                ('partner',share.colors.partner),' were madly in ',\
+                ('partner',share.colors.partner2),' were madly in ',\
                 ('love',share.colors.partner2),'." '\
                 'Choose a name and gender for this ',('partner',share.colors.partner),'. '\
                    ]
@@ -245,10 +243,10 @@ class obj_scene_ch2p6a(page.obj_chapterpage):
         share.datamanager.setbookmark('ch2_drawmail')
         self.text=[\
                    'Alright, our lovers want to send passionate letters to each other. ',\
-                   'Draw a ',('mailbox',share.colors.item),' (on a pole) and a ',('mail letter',share.colors.item),'. ',\
+                   'Draw a ',('mailbox on a pole',share.colors.item),' and a ',('mail letter',share.colors.item),'. ',\
                    ]
         # self.textkeys={'pos':(500,20),'xmin':500}# same as ={}
-        self.addpart( draw.obj_drawing('mailbox',(340,450-50),legend='Mailbox (on a pole)',shadow=(200,250)) )
+        self.addpart( draw.obj_drawing('mailbox',(340,450-50),legend='Mailbox on a pole',shadow=(200,250)) )
         self.addpart( draw.obj_drawing('mailletter',(1280-340,450),legend='Mail Letter',shadow=(200,200)) )
         #
         self.addpart( draw.obj_music('partner') )
@@ -328,12 +326,12 @@ class obj_scene_ch2p7(page.obj_chapterpage):
                     'Aww that is so sweet. ',\
                    ('{heroname}',share.colors.hero),' wants to show ',\
                    ('{hero_his}',share.colors.hero2),' love too. ',\
-                   'Draw a ',('saxophone',share.colors.item),' and ',('music notes',share.colors.item),\
+                   'Draw a ',('saxophone',share.colors.item),' and a ',('music note',share.colors.item),\
                    ' so ',('{hero_he}',share.colors.hero2),' can play ',\
                    ('{partnername}',share.colors.partner),' a serenade. ',\
                    ]
         self.addpart( draw.obj_drawing('saxophone',(340,450),legend='Saxophone (facing right)',shadow=(200,200)) )
-        self.addpart( draw.obj_drawing('musicnote',(1280-340,450),legend='Music Notes',shadow=(200,200)) )
+        self.addpart( draw.obj_drawing('musicnote',(1280-340,450),legend='Music Note',shadow=(200,200)) )
         #
         self.addpart( draw.obj_music('partner') )
 
@@ -477,8 +475,8 @@ class obj_scene_ch2play1(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
-                '"Once upon a time, there was a ',('hero',share.colors.hero),' ',\
-                'called  ',('{heroname}',share.colors.hero),' ',\
+                '"Once upon a time, there was a ',('hero',share.colors.hero2),' ',\
+                'called ',('{heroname}',share.colors.hero),' ',\
                 'that lived in a house with some bushes. ',\
                 'It was morning and the sun was rising." ',\
                    ]

@@ -54,10 +54,9 @@ class obj_scene_ch3p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch3p1a())
     def setup(self):
-        self.text=['Lets see here... " the ',('hero',share.colors.hero),\
-                   ' and ',('{hero_his}',share.colors.hero2),' ',('partner',share.colors.partner),\
-                    ' woke up, they were madly in love, they kissed, ',\
-                    'and then they went back to ',('bed',share.colors.item2),'." '\
+        self.text=['Lets see here... " the ',('hero',share.colors.hero2),\
+                   ' and ',('{hero_his}',share.colors.hero2),' ',('partner',share.colors.partner2),\
+                    ' were madly in love. They would just eat fish and kiss all day." '\
                    ]
         self.addpart( draw.obj_image('bed',(340,500), scale=0.75) )
         animation=draw.obj_animation('ch3_summary','herobase',(640,360),record=False,scale=0.7)
@@ -96,7 +95,7 @@ class obj_scene_ch3p1a(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                    'Well, this story reads too much like a ',\
-                   ('chick flick',share.colors.partner),', said the book of things, ',\
+                   ('chick flick',share.colors.partner2),', said the book of things, ',\
                    'It needs more action, more suspense! ',\
                    ]
         animation1=draw.obj_animation('ch5whatbook1','book',(640,360),record=False)
@@ -242,7 +241,7 @@ class obj_scene_ch3p5(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch3_startstory')
         self.text=[\
-                '"Once upon a Time, there was a ',('hero',share.colors.hero),' ',\
+                '"Once upon a Time, there was a ',('hero',share.colors.hero2),' ',\
                 'called  ',('{heroname}',share.colors.hero),'. ',\
                 'It was morning and the sun was rising." ',\
                    ]
@@ -285,7 +284,7 @@ class obj_scene_ch3p8(page.obj_chapterpage):
         self.textboxopt={'do':False}
     def setup(self):
         self.text=[\
-                    '"',('{hero_he}',share.colors.hero),\
+                    '"',('{hero_he}',share.colors.hero2),\
                      ' went to the lake and caught a fish."\n ',\
                    ]
         self.world=world.obj_world_fishing(self)
@@ -679,7 +678,7 @@ class obj_scene_ch3p19death(page.obj_chapterpage):
         self.textboxopt={'xy':(640,280),'text':'[confirm]','align':'center'}
     def setup(self):
         self.text=[\
-                  '"... and then the ',('hero',share.colors.hero),' died." ',\
+                  '"... and then the ',('hero',share.colors.hero2),' died." ',\
                 'Well, that doesnt sound right, said the book of things. ',\
                 'Now go back and try to act more "heroic". '\
                    ]
