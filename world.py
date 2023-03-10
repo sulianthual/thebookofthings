@@ -1827,7 +1827,7 @@ class obj_world_travel(obj_world):
         #
         if 'bush' not in self.removelist:
             self.staticactor11.addpart( "img6", draw.obj_image('bush',(523,170),scale=0.34,rotate=0,fliph=True,flipv=False) )
-            self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
+            # self.staticactor11.addpart( "img7", draw.obj_image('bush',(214,46),scale=0.34,rotate=0,fliph=True,flipv=False) )
             self.staticactor11.addpart( "img8", draw.obj_image('bush',(164,261),scale=0.34,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img9_bush", draw.obj_image('bush',(916,565),scale=0.41,rotate=0,fliph=False,flipv=False) )
             self.staticactor11.addpart( "img10_bush", draw.obj_image('bush',(1132,412),scale=0.41,rotate=0,fliph=False,flipv=False) )
@@ -1960,7 +1960,7 @@ class obj_world_travel(obj_world):
                 # self.staticactor02.addpart( 'refmark', draw.obj_image('smallcross',(640,360-120),path='data/premade') )
             self.staticactor02.addpart( 'textref', draw.obj_textbox('beach',(640,360),color=share.colors.location) )
             self.staticactor02.addpart( "img1", draw.obj_image('palmtree',(1040,199),scale=0.5,rotate=0,fliph=True,flipv=False) )
-            self.staticactor02.addpart( "img2", draw.obj_image('palmtree',(255,21),scale=0.5,rotate=0,fliph=True,flipv=False) )
+            self.staticactor02.addpart( "img2", draw.obj_image('palmtree',(255,71),scale=0.5,rotate=0,fliph=True,flipv=False) )
             self.staticactor02.addpart( "img3", draw.obj_image('palmtree',(776,3),scale=0.5,rotate=0,fliph=False,flipv=False) )
             self.staticactor02.addpart( "img1a", draw.obj_image('wave',(281,341),scale=0.4,rotate=0,fliph=False,flipv=False) )
             self.staticactor02.addpart( "img2a", draw.obj_image('wave',(501,610),scale=0.4,rotate=0,fliph=False,flipv=False) )
