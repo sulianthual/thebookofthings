@@ -445,7 +445,7 @@ class obj_gotobookmark():
             elif bookmarkname == 'ch6_byesailor':
                 bookmarkscene=ch6.obj_scene_ch6p42()
             elif bookmarkname == 'ch6_choosepwd':
-                bookmarkscene=ch6.obj_scene_ch6p45()
+                bookmarkscene=ch6.obj_scene_ch6p43()
             elif bookmarkname == 'ch6_gohome':
                 bookmarkscene=ch6.obj_scene_ch6p46()
             elif bookmarkname == 'ch6_endunlock':

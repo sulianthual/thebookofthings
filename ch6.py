@@ -1140,6 +1140,7 @@ class obj_scene_ch6p43(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p44())
     def setup(self):
+        share.datamanager.setbookmark('ch6_choosepwd')
         self.text=[\
                    '"I cannot thank you enough for saving ',\
                    ('treasure',share.colors.cow),', said ',\
@@ -1209,7 +1210,6 @@ class obj_scene_ch6p45(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'xy':(640,410),'text':'[confirm]','align':'center'}
     def setup(self):
-        share.datamanager.setbookmark('ch6_choosepwd')
         self.text=[\
                    'The last part of the ',('password',share.colors.password),\
                    ' is actually up to you, said ',('{sailorname}',share.colors.sailor),\

@@ -6538,6 +6538,9 @@ class obj_world_3dforest(obj_world):
         self.text_victory=obj_grandactor(self,(640,360))# text always in front
         self.text_victory.show=False
         self.text_victory.addpart('text1', draw.obj_textbox('Victory!',(640,150),fontsize='huge') )
+        self.text_victory.addpart( 'textfunny',draw.obj_textbox('Come get some',(640,250),fontsize='medium') )# only if gun
+        # self.text_victory.dict['textfunny'].show=True
+
 
         # SOUNDS
         self.soundshoot=draw.obj_sound('3dforest_shoot')
