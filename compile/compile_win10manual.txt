@@ -1,0 +1,11 @@
+Compile on windows manually if code fails:
+
+Have python 3 installed, pip install pygame and pysinstaller
+copy main.spec into code folder
+open terminal, go to code folder, execute: python -m PyInstaller main.spec 
+output is in dist folder, copy launcher.bat inside too
+zip code folder and launcher.bat into bookofthings_win10.zip
+cleanup the rest, remove main.spec, build, pycache (and dist once done)
+
+
+
