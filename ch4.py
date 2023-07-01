@@ -26,7 +26,7 @@ import world
 
 class obj_scene_chapter4(page.obj_chapterpage):
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p3())
+        share.scenemanager.switchscene(obj_scene_ch4p4())
     def setup(self):
         share.datamanager.setbookmark('ch4_start')
         self.text=['-----   Chapter IV: Cave Dwellers   -----   ',\
@@ -50,36 +50,36 @@ class obj_scene_chapter4(page.obj_chapterpage):
 
 
 
-class obj_scene_ch4p3(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter4())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p4())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def soundnextpage(self):
-        pass# no sound
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        share.datamanager.setbookmark('ch4_startstory')
-        self.text=[\
-               '"',\
-               ('{partnername}',share.colors.partner),' was captive in the ',\
-                 ('evil tower',share.colors.location2),', and ',\
-                 ('{heroname}',share.colors.hero),' needed to visit three ',\
-                 ('evil grandmasters',share.colors.grandmaster),'. ',\
-                'It was morning and the sun was rising." ',\
-                   ]
-        self.world=world.obj_world_sunrise(self)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('ch4') )
+# class obj_scene_ch4p3(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_chapter4())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch4p4())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def soundnextpage(self):
+#         pass# no sound
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         share.datamanager.setbookmark('ch4_startstory')
+#         self.text=[\
+#                '"',\
+#                ('{partnername}',share.colors.partner),' was captive in the ',\
+#                  ('evil tower',share.colors.location2),', and ',\
+#                  ('{heroname}',share.colors.hero),' needed to visit three ',\
+#                  ('evil grandmasters',share.colors.grandmaster),'. ',\
+#                 'It was morning and the sun was rising." ',\
+#                    ]
+#         self.world=world.obj_world_sunrise(self)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('ch4') )
 
 
 class obj_scene_ch4p4(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch4p3())
+        share.scenemanager.switchscene(obj_scene_chapter4())
     def nextpage(self):
         # share.scenemanager.switchscene(obj_scene_ch4p5())
         share.scenemanager.switchscene(obj_scene_ch4p6())
@@ -94,6 +94,19 @@ class obj_scene_ch4p4(page.obj_chapterpage):
                 ('{hero_his}',share.colors.hero2),\
                 ' loyal sidekick ',('{bug}',share.colors.bug),'." ',\
                    ]
+        self.text=[\
+               '"',\
+               ('{partnername}',share.colors.partner),' was captive in the ',\
+                 ('evil tower',share.colors.location2),', and ',\
+                 ('{heroname}',share.colors.hero),' needed to visit three ',\
+                 ('evil grandmasters',share.colors.grandmaster),'. ',\
+                ('{hero_he}',share.colors.hero2),' ',\
+                'woke up with ',\
+                ('{hero_his}',share.colors.hero2),\
+                ' loyal sidekick ',('{bug}',share.colors.bug),'." ',\
+                   ]
+
+
         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
         self.addpart(self.world)
         #
@@ -386,7 +399,7 @@ class obj_scene_ch4p13(page.obj_chapterpage):
     def setup(self):
         self.text=[\
                 'Lets do this: "',\
-                '"The ',('monster',share.colors.bunny),' called ',\
+                '"The ',('monster',share.colors.bunny2),' called ',\
                 ('{bunnyname}',share.colors.bunny),' emerged from the magical cave." ',\
                 ' Dont be fooled by its short size, said the book of things, this thing is nasty. ',\
                    ]
@@ -440,7 +453,7 @@ class obj_scene_ch4p16tuto(page.obj_chapterpage):
     def setup(self):
         share.datamanager.setbookmark('ch4_fightsmallbunny')
         tempo='['+share.datamanager.controlname('action')+']'
-        self.text=['This is your health. Dont loose it or you will ',('die',share.colors.red),'.']
+        self.text=['This is your health. Dont loose it or you will die.']
         self.world=world.obj_world_3dforest_rabbitescape(self)# fishing mini-game
         self.world.freezeworld=True# freeze the world
         self.world.staticactor.dict["cross"].show=False# hide cross
@@ -529,7 +542,7 @@ class obj_scene_ch4p16b(page.obj_chapterpage):
         self.text=[\
                 ('{heroname}',share.colors.hero),' valiantly retreated into the bushes. ',\
                 'Look, said ',('{bug}',share.colors.bug),\
-                ', its a ',('gun',share.colors.item),' right there! Better grab it.'\
+                ', its a gun right there! Better grab it.'\
                    ]
         self.addpart( draw.obj_image('gun',(640,500), scale=0.5,rotate=90) )
         self.addpart( draw.obj_image('bush',(841,376),scale=0.37,rotate=0,fliph=False,flipv=False) )
@@ -831,7 +844,7 @@ class obj_scene_ch4p16k(page.obj_chapterpage):
         self.text=[\
                 ('{heroname}',share.colors.hero),' valiantly retreated into the bushes once more. ',\
                 'Look, said ',('{bug}',share.colors.bug),\
-                ', this time its the ',('saxophone',share.colors.item),'! What could it possibly do.'\
+                ', this time its the saxophone! What could it possibly do.'\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'saxophone','tree','bush'))
         self.addpart( draw.obj_image('saxophone',(624,441),scale=0.54,rotate=0,fliph=False,flipv=False) )
@@ -872,8 +885,8 @@ class obj_scene_ch4p16m(page.obj_chapterpage):
         share.scenemanager.switchscene(obj_scene_ch4p16n())
     def setup(self):
         self.text=[\
-                '"',('{heroname}',share.colors.hero),' came back with the ',('saxophone',share.colors.item),\
-                '. And what exactly are you gonna do with that, said ',('{bunnyname}',share.colors.bunny),\
+                '"',('{heroname}',share.colors.hero),' came back with the saxophone. ',\
+                'And what exactly are you gonna do with that, said ',('{bunnyname}',share.colors.bunny),\
                 '. I guess you can play a tune while dying."'\
                    ]
         # self.addpart(draw.obj_imageplacer(self,'herobase','bunnybase','tree','bush','sun','cave','saxophone'))
@@ -907,7 +920,7 @@ class obj_scene_ch4p16n(page.obj_chapterpage):
         share.datamanager.setbookmark('ch4_playsax')
         tempo='['+share.datamanager.controlname('arrows')+']'
         self.text=[\
-                   'Play the melody with the '+tempo+'. '\
+                   'Play the melody with the ',('[arrows]',share.colors.instructions),'. '\
                    ]
         self.world=world.obj_world_serenade(self,bigrabbit=True)# serenade mini-game
         self.addpart(self.world)

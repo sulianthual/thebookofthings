@@ -1194,7 +1194,7 @@ class obj_world_fishing_withgun(obj_world):
         self.timerend=tool.obj_timer(90)# 90
         # textbox when caught
         self.text1=obj_grandactor(self,(640,360))
-        tempo='['+share.datamanager.controlname('arrows')+': move/shoot]'
+        tempo='['+share.datamanager.controlname('arrows')+': move, Space: shoot]'
         self.textboxclick=draw.obj_textbox(tempo,(640,650),color=share.colors.instructions,hover=True)
         self.text1.addpart( 'textbox1',self.textboxclick )
         self.text2=obj_grandactor(self,(640,650))
@@ -1271,7 +1271,7 @@ class obj_world_fishing_withgun(obj_world):
                 if self.hook.y>80+50: self.hook.movey(-self.dyup)
             # shoot
             if self.timerreload.off:
-                if controls.gr and controls.grc:
+                if controls.ga and controls.gac:
                     self.makecannonball(self.hook.x+95,self.hook.y)
                     self.timerreload.start()
             else:# reload
@@ -1383,7 +1383,7 @@ class obj_world_fishing_withscissors(obj_world):
         self.timerend=tool.obj_timer(90)# 90
         # textbox when caught
         self.text1=obj_grandactor(self,(840,500))
-        tempo='['+share.datamanager.controlname('arrows')+': move/shoot]'
+        tempo='['+share.datamanager.controlname('arrows')+': move, shoot]'
         self.textboxclick=draw.obj_textbox(tempo,(1100,460),color=share.colors.instructions,hover=True)
         self.text1.addpart( 'textbox1',self.textboxclick )
         self.text2=obj_grandactor(self,(840,500))
@@ -1401,15 +1401,10 @@ class obj_world_fishing_withscissors(obj_world):
         self.creator.addpart(self.soundthrow)
         self.soundboomerang=draw.obj_sound('fishing_boomerang')
         self.creator.addpart(self.soundboomerang)
-
-
-
     def update(self,controls):
         super().update(controls)
         self.textboxclick.trackhover(controls)
-
         # motion (even during ending)
-
         # game
         if self.fishfree:
             # move gun
@@ -3613,9 +3608,9 @@ class obj_world_mastertherock(obj_world):
         self.goal=False# minigame goal reached
         self.win=False# has won or lost
         # timer of not moving
-        self.timer=tool.obj_timer(1300)# time to wait standing still
+        self.timer=tool.obj_timer(800)# time to wait standing still
         self.timer.start()# start at beginning
-        self.timerend=tool.obj_timer(150)# timer of end
+        self.timerend=tool.obj_timer(100)# timer of end
         # background
         self.staticactor=obj_grandactor(self,(640,360))
         # End
@@ -6909,8 +6904,8 @@ class obj_world_3dforest(obj_world):
                             act.killswitch=1# remove it
                             self.hasgun=True
                             # update instructions
-                            tempo ='['+share.datamanager.controlname('action')+': shoot] '
-                            self.text_undone.addpart( 'text3',draw.obj_textbox(tempo,(120,720-50),color=share.colors.instructions) )
+                            tempo ='[Left Mouse: shoot] '
+                            self.text_undone.addpart( 'text3',draw.obj_textbox(tempo,(140,720-50),color=share.colors.instructions) )
                             # start with big reloading
                             self.bigreloading=True
                             self.soundgunreload.play(loop=True)

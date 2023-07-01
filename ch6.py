@@ -26,7 +26,7 @@ import world
 
 class obj_scene_chapter6(page.obj_chapterpage):
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p3())
+        share.scenemanager.switchscene(obj_scene_ch6p6())
     def setup(self):
         share.datamanager.setbookmark('ch6_start')
         self.text=['-----   Chapter VI: Treasure Hunt   -----   ',\
@@ -47,67 +47,75 @@ class obj_scene_chapter6(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('piano') )
 
-class obj_scene_ch6p3(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_chapter6())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p4())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def soundnextpage(self):
-        pass# no sound
-    def setup(self):
-        share.datamanager.setbookmark('ch6_startstory')
-        self.text=[\
-                '"',\
-                ('{partnername}',share.colors.partner),' was captive in the ',\
-                ('evil tower',share.colors.location2),', and ',\
-                ('{heroname}',share.colors.hero),' needed to visit one last ',\
-                ('evil grandmaster',share.colors.grandmaster),'. ',\
-                ' It was the next day and the sun was rising." ']
-        self.world=world.obj_world_sunrise(self)
-        self.addpart(self.world)
-        # #
-        self.addpart( draw.obj_music('ch6') )
-
-
-class obj_scene_ch6p4(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p3())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p6())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                ('{heroname}',share.colors.hero),' ',\
-                'woke up ',\
-                'with ',('{hero_his}',share.colors.hero2),\
-                ' loyal sidekick ',('{bug}',share.colors.bug),'." ',\
-                   ]
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('ch6') )
+# class obj_scene_ch6p3(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_chapter6())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch6p4())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def soundnextpage(self):
+#         pass# no sound
+#     def setup(self):
+#         share.datamanager.setbookmark('ch6_startstory')
+#         self.text=[\
+#                 '"',\
+#                 ('{partnername}',share.colors.partner),' was captive in the ',\
+#                 ('evil tower',share.colors.location2),', and ',\
+#                 ('{heroname}',share.colors.hero),' needed to visit one last ',\
+#                 ('evil grandmaster',share.colors.grandmaster),'. ',\
+#                 ' It was the next day and the sun was rising." ']
+#         self.world=world.obj_world_sunrise(self)
+#         self.addpart(self.world)
+#         # #
+#         self.addpart( draw.obj_music('ch6') )
+#
+#
+# class obj_scene_ch6p4(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch6p3())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch6p6())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                 ('{heroname}',share.colors.hero),' ',\
+#                 'woke up ',\
+#                 'with ',('{hero_his}',share.colors.hero2),\
+#                 ' loyal sidekick ',('{bug}',share.colors.bug),'." ',\
+#                    ]
+#         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('ch6') )
 
 class obj_scene_ch6p6(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch6p4())
+        share.scenemanager.switchscene(obj_scene_chapter6())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch6p7())
     def setup(self):
         share.datamanager.setbookmark('ch6_checkmail')
+        # self.text=[\
+        #           '"',\
+        #             ('{heroname}',share.colors.hero),' came back home and checked ',\
+        #             ('{hero_his}',share.colors.hero2),' mailbox. ',\
+        #             ('{hero_he}',share.colors.hero2),' had received ',\
+        #             'two ',' letters." ',\
+        #            ]
         self.text=[\
-                  '"',\
-                    ('{heroname}',share.colors.hero),' came back home and checked ',\
-                    ('{hero_his}',share.colors.hero2),' mailbox. ',\
-                    ('{hero_he}',share.colors.hero2),' had received ',\
-                    'two ',' letters." ',\
-                   ]
+                '"',\
+                ('{heroname}',share.colors.hero),' needed to visit only one last ',\
+                ('evil grandmaster',share.colors.grandmaster),'. ',\
+                ('{hero_he}',share.colors.hero2),' woke up, checked ',\
+                ('{hero_his}',share.colors.hero2),' mailbox ',\
+                'and there were two  letters."',\
+               ]
         self.addpart( draw.obj_image('herobase',(204,470),scale=0.65,rotate=0,fliph=False,flipv=False) )
         self.addpart( draw.obj_image('mailbox',(1059,526),scale=0.65,rotate=0,fliph=False,flipv=False) )
         animation1=draw.obj_animation('ch2_mail1','mailletter',(640,360),record=False)

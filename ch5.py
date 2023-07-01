@@ -52,7 +52,7 @@ class obj_scene_ch5p3(page.obj_chapterpage):
     def prevpage(self):
         share.scenemanager.switchscene(obj_scene_chapter5())
     def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p4())
+        share.scenemanager.switchscene(obj_scene_ch5p5())
     def triggernextpage(self,controls):
         return self.world.done
     def textboxset(self):
@@ -72,31 +72,31 @@ class obj_scene_ch5p3(page.obj_chapterpage):
         #
         self.addpart( draw.obj_music('ch5') )
 
-
-class obj_scene_ch5p4(page.obj_chapterpage):
-    def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p3())
-    def nextpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p5())
-    def triggernextpage(self,controls):
-        return self.world.done
-    def textboxset(self):
-        self.textboxopt={'do':False}
-    def setup(self):
-        self.text=[\
-                '"',\
-
-                ('{heroname}',share.colors.hero),' woke up with ',\
-                ('{hero_his}',share.colors.hero2),' loyal sidekick ',('{bug}',share.colors.bug),\
-                '." ']
-        self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
-        self.addpart(self.world)
-        #
-        self.addpart( draw.obj_music('ch5') )
+#
+# class obj_scene_ch5p4(page.obj_chapterpage):
+#     def prevpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p3())
+#     def nextpage(self):
+#         share.scenemanager.switchscene(obj_scene_ch5p5())
+#     def triggernextpage(self,controls):
+#         return self.world.done
+#     def textboxset(self):
+#         self.textboxopt={'do':False}
+#     def setup(self):
+#         self.text=[\
+#                 '"',\
+#
+#                 ('{heroname}',share.colors.hero),' woke up with ',\
+#                 ('{hero_his}',share.colors.hero2),' loyal sidekick ',('{bug}',share.colors.bug),\
+#                 '." ']
+#         self.world=world.obj_world_wakeup(self,bug=True,alarmclock=False)
+#         self.addpart(self.world)
+#         #
+#         self.addpart( draw.obj_music('ch5') )
 
 class obj_scene_ch5p5(page.obj_chapterpage):
     def prevpage(self):
-        share.scenemanager.switchscene(obj_scene_ch5p4())
+        share.scenemanager.switchscene(obj_scene_ch5p3())
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch5p6())
     def triggernextpage(self,controls):
@@ -104,11 +104,15 @@ class obj_scene_ch5p5(page.obj_chapterpage):
     def textboxset(self):
         self.textboxopt={'do':False}
     def setup(self):
+        # self.text=[\
+        #             '        ',\
+        #             '"The gun was no good so ',('{heroname}',share.colors.hero),\
+        #              ' used it to fish." '\
+        #            ]
         self.text=[\
-                    '        ',\
-                    '"The gun was no good so ',('{heroname}',share.colors.hero),\
-                     ' used it to fish." '\
-                   ]
+                '        ',\
+                '"',('{heroname}',share.colors.hero),' woke up and went fishing with the gun',\
+                '." ']
         self.world=world.obj_world_fishing_withgun(self)
         self.addpart(self.world)
         #
@@ -476,11 +480,11 @@ class obj_scene_ch5p21b(page.obj_chapterpage):
         self.addpart( draw.obj_image('cloud',(1196,501),scale=0.34,rotate=0,fliph=True,flipv=False) )
         self.addpart( draw.obj_image('cloud',(84,434),scale=0.37,rotate=0,fliph=False,flipv=False) )
         # self.addpart( draw.obj_image('sun',(1166,268),scale=0.37,rotate=0,fliph=False,flipv=False) )
-        animation1=draw.obj_animation('sunhover_toright1','sun',(640,360),record=True)
+        animation1=draw.obj_animation('sunhover_toright1','sun',(640,360),record=False)
         animation1.addimage('moon')
         self.addpart( animation1 )
-        animation1.addsound( "sunrise_end", [1140] )
-        animation1.addsound( "sunset_end", [550] )
+        animation1.addsound( "sunrise_end", [600] )
+        animation1.addsound( "sunset_end", [250] )
         #
         self.world=world.obj_world_mastertherock(self)
         self.addpart(self.world)
