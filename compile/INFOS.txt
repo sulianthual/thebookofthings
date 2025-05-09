@@ -3,7 +3,7 @@ Instructions
 1.) This folder handles compiling of python code into an executable using pyinstaller.
     It will only work if the project has a specific structure (e.g. like in projects bookofthings,bouldershower,billiardknight)
 
-2.) If on windows, have also 7zip installed 
+2.) pipx install pyinstaller (or some pip). If on windows, have also 7zip installed
 
 3.) edit script: the appnamepre is project specific
 
