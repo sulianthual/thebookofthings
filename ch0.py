@@ -43,8 +43,9 @@ class obj_scene_ch0p1(page.obj_chapterpage):
     def nextpage(self):
         share.scenemanager.switchscene(obj_scene_ch0p2())
     def setup(self):
-        self.text=['One could press [next] to continue. ',\
-        'One could also press [esc] to go back to the main menu. ']
+        ## WEB MODIF TEXT
+        self.text=['One could press [enter] or click [next] to continue. ',\
+        'One could also press [tab] to return to previous page, or [esc] to go back to the main menu. ']
         # self.addpart(draw.obj_textbox('press [next] to continue',(640,400),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [back] to go back',(640,500),color=share.colors.instructions))
         # self.addpart(draw.obj_textbox('press [esc] to return to menu',(640,600),color=share.colors.instructions))
@@ -316,6 +317,12 @@ class obj_scene_ch0p13(page.obj_chapterpage):
         self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
         self.addpart( draw.obj_textbox('play',(501,438),color=share.colors.instructions,fontsize='larger') )
         self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        #
+        ## NEW
+        self.addpart( draw.obj_textbox('[tab]',(153,529),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('previous page',(156,575),color=share.colors.instructions) )
+        self.addpart( draw.obj_textbox('[enter]',(953,529),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('next page',(956,575),color=share.colors.instructions) )
 
         #
         animation1=draw.obj_animation('ch0_bookinstructions','book',(640,360),record=False)

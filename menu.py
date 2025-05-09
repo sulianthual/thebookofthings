@@ -42,7 +42,7 @@ class obj_quickscene():
             # regular scenes
             #
             # quickscene=obj_scene_settings()
-            # quickscene=obj_scene_instructions_controls_screen()
+            quickscene=obj_scene_instructions_controls_screen()
 
             # quickscene=ch0.obj_scene_prologue()
             # quickscene=ch0.obj_scene_ch0p13b()
@@ -60,10 +60,12 @@ class obj_quickscene():
             # quickscene=ch3.obj_scene_ch3p31()
             # quickscene=ch3.obj_scene_ch3p30c()
             # quickscene=ch3.obj_scene_ch3p22easteregg()
+            # quickscene=ch4.obj_scene_ch4p10c()
             # quickscene=ch4.obj_scene_ch4p16g()
+
             # quickscene=ch5.obj_scene_ch5p6()
             # quickscene=ch5.obj_scene_ch5p21d()
-            quickscene=ch5.obj_scene_ch5p21b()
+            # quickscene=ch5.obj_scene_ch5p21b()
             # quickscene=ch5.obj_scene_ch5p28a()
             # quickscene=ch5.obj_scene_ch5p37a()
             # quickscene=ch5.obj_scene_ch5p40()
@@ -910,9 +912,10 @@ class obj_scene_realtitlescreen(page.obj_page):
 
     def page(self,controls):
         #
+
         # Hovering
         if not self.hasbook:
-            if self.sprite_continue.isclicked(controls):
+            if self.sprite_continue.isclicked(controls) or (controls.enter and controls.enterc):
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(obj_scene_chaptersscreen())# still go to chapters
                 # share.scenemanager.switchscene(ch0.obj_scene_prologue())# directly to start of prologue
@@ -922,7 +925,8 @@ class obj_scene_realtitlescreen(page.obj_page):
             elif self.sprite_exit.isclicked(controls):
                 share.quitgame()
         else:
-            if self.sprite_chapters.isclicked(controls):
+            # if self.sprite_chapters.isclicked(controls):
+            if self.sprite_chapters.isclicked(controls) or (controls.enter and controls.enterc):# WEB
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(obj_scene_chaptersscreen())# chapters
             elif self.sprite_settings.isclicked(controls):
@@ -1024,7 +1028,7 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
 
     def page(self,controls):
         # hovers
-        if self.sprite_back.isclicked(controls):
+        if self.sprite_back.isclicked(controls) or (controls.tab and controls.tabc):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
         if True:
@@ -1072,6 +1076,15 @@ class obj_scene_chaptersscreen(obj_scene_realtitlescreen):
                 self.sound_menugo.play()
                 share.scenemanager.switchscene(ch8.obj_scene_chapter8())# go directly, there is only one bookmark
                 # share.scenemanager.switchscene(obj_scene_chapterpartsscreen(chapter=8))
+        #
+        # WEB
+        if controls.enter and controls.enterc:
+            self.sound_menugo.play()
+            if self.maxchapter>7:
+                share.scenemanager.switchscene(ch8.obj_scene_chapter8())
+            else:
+                share.scenemanager.switchscene(obj_scene_chapterpartsscreen(chapter=self.maxchapter))
+
 
 
 ####################################################################################################################
@@ -1133,7 +1146,7 @@ class obj_scene_chapterpartsscreen(obj_scene_realtitlescreen):
 
     def page(self,controls):
         # hovers
-        if self.sprite_back.isclicked(controls):
+        if self.sprite_back.isclicked(controls) or (controls.tab and controls.tabc):
             self.sound_menuback.play()
             share.scenemanager.switchscene(obj_scene_chaptersscreen())# back to chapters
         #
@@ -1250,7 +1263,7 @@ class obj_scene_settings(obj_scene_realtitlescreen):
 
     def page(self,controls):
         # go back
-        if self.sprite_back.isclicked(controls):
+        if self.sprite_back.isclicked(controls) or (controls.tab and controls.tabc):
             self.sound_menuback.play()
             share.scenemanager.switchscene(share.titlescreen,initstart=True)# go back to menu
         #
@@ -1395,6 +1408,13 @@ class obj_scene_instructions_controls_screen(page.obj_chapterpage):
         self.addpart( draw.obj_textbox('erase',(1174,305),color=share.colors.instructions,fontsize='larger') )
         self.addpart( draw.obj_textbox('play',(501,438),color=share.colors.instructions,fontsize='larger') )
         self.addpart( draw.obj_textbox('exit',(136,325),color=share.colors.instructions,fontsize='larger') )
+        #
+        ## NEW
+        self.addpart( draw.obj_textbox('[tab]',(153,529),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('previous page',(156,575),color=share.colors.instructions) )
+        self.addpart( draw.obj_textbox('[enter]',(953,529),color=share.colors.black) )
+        self.addpart( draw.obj_textbox('next page',(956,575),color=share.colors.instructions) )
+
         #
         self.sprite_keyboard=draw.obj_textbox('xxx',(640,140),hover=True)
         self.addpart(self.sprite_keyboard)

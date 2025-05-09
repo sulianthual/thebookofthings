@@ -168,10 +168,14 @@ class obj_chapterpage(obj_page):
         self.callexitpage(controls)
     # first level (may customize for pages, e.g. if minigame)
     def triggerprevpage(self,controls):
-        return False
+        return False# PREV
+        # return (controls.tab and controls.tabc)
         # return self.textbox_prev.isclicked(controls)
     def triggernextpage(self,controls):
-        return self.textbox_next.isclicked(controls)
+        return self.textbox_next.isclicked(controls)# PREV
+        ## NEW WEB: enter shortcut if textbox_next exists
+        # return self.textbox_next.isclicked(controls) or (self.dotextboxnextpage and self.textbox_next.text=="[next]" and controls.enter and controls.enterc)
+        # return self.textbox_next.isclicked(controls) or (controls.enter and controls.enterc)
     def triggerexitpage(self,controls):
         return controls.gq and controls.gqc
     # second level (required in rare cases)
@@ -183,9 +187,11 @@ class obj_chapterpage(obj_page):
         return True and self.triggerexitpage(controls)
     # third level (dev)
     def triggerprevpage3(self,controls):
-        return self.triggerprevpage2(controls) or (share.devmode and controls.gb and controls.gbc)
+        # return self.triggerprevpage2(controls) or (share.devmode and controls.gb and controls.gbc)
+        return self.triggerprevpage2(controls) or (share.devmode and controls.gb and controls.gbc) or (controls.tab and controls.tabc)# WEB
     def triggernextpage3(self,controls):
-        return self.triggernextpage2(controls) or (share.devmode and controls.ga and controls.gac)
+        # return self.triggernextpage2(controls) or (share.devmode and controls.ga and controls.gac)
+        return self.triggernextpage2(controls) or (share.devmode and controls.ga and controls.gac) or (controls.enter and controls.enterc)# WEB
     def triggerexitpage3(self,controls):
         return self.triggerexitpage2(controls)
     #############################
